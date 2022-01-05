@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text Appearances -->
+    <attr name="newmTextStyleBody1" format="reference" />
+    <attr name="newmTextStyleHeading1" format="reference" />
+    <attr name="newmTextStyleTitle1" format="reference" />
+
+    <!-- Dimensions -->
+    <attr name="newmDividerWidth" format="reference" />
+    <attr name="newmSpacing0dp" format="reference" />
+    <attr name="newmSpacing4dp" format="reference" />
+    <attr name="newmSpacing8dp" format="reference" />
+    <attr name="newmSpacing12dp" format="reference" />
+    <attr name="newmSpacing16dp" format="reference" />
+    <attr name="newmSpacing24dp" format="reference" />
+    <attr name="newmSpacing32dp" format="reference" />
+    <attr name="newmSpacing40dp" format="reference" />
+    <attr name="newmSpacing48dp" format="reference" />
+
+    <!-- Colors -->
+    <attr name="newmBackgroundDark" format="reference" />
+
+</resources>

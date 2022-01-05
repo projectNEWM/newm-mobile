@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="NewmTextStyle" parent="@android:style/TextAppearance" />
+
+    <style name="NewmTextStyle.Body1">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NewmTextStyle.Heading1">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NewmTextStyle.Title1">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
