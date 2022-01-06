@@ -7,7 +7,9 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.projectnewm.R
 import com.projectnewm.databinding.FragmentCommunityBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CommunityFragment : Fragment(R.layout.fragment_community) {
 
     private val viewModel: CommunityViewModel by viewModels()

@@ -22,6 +22,7 @@ object Versions {
     const val material = "1.4.0"
     const val viewBindingPropertyDelegate = "1.5.3"
 
+    const val hilt = "2.38.1"
     const val espresso = "3.4.0"
     const val junit = "4.13.2"
 }
@@ -44,6 +45,10 @@ object Deps {
         "androidx.navigation:navigation-fragment-ktx:${Versions.androidxNavigation}"
     const val androidxNavigationUiKtx =
         "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
+    const val androidHilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val androidHiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
+
     const val viewBindingPropertyDelegate =
         "com.github.kirich1409:viewbindingpropertydelegate-noreflection:${Versions.viewBindingPropertyDelegate}"
 
@@ -54,6 +59,7 @@ object Deps {
 
     const val gradleVersionsPlugin =
         "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
+    const val gradleHiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
 }
 
 object Repo {

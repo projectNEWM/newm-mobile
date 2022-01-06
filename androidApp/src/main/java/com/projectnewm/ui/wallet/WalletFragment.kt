@@ -7,7 +7,9 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.projectnewm.R
 import com.projectnewm.databinding.FragmentWalletBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WalletFragment : Fragment(R.layout.fragment_wallet) {
 
     private val viewModel: WalletViewModel by viewModels()

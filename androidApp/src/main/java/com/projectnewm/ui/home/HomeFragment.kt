@@ -12,6 +12,7 @@ import com.projectnewm.R
 import com.projectnewm.databinding.FragmentHomeBinding
 import com.projectnewm.ui.genre.GenreFragment
 import com.projectnewm.util.bindTabs
+import dagger.hilt.android.AndroidEntryPoint
 
 val pageTitles by lazy {
     arrayOf(
@@ -23,6 +24,7 @@ val pageTitles by lazy {
     )
 }
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding: FragmentHomeBinding by viewBinding(FragmentHomeBinding::bind)

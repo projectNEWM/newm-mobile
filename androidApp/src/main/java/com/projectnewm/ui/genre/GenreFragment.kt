@@ -10,7 +10,9 @@ import com.projectnewm.R
 import com.projectnewm.databinding.FragmentBannerPageBinding
 import com.projectnewm.databinding.FragmentGenreBinding
 import com.projectnewm.util.bindTabs
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GenreFragment : Fragment(R.layout.fragment_genre) {
 
     companion object {
