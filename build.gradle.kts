@@ -6,6 +6,7 @@ buildscript {
         classpath(Deps.kotlinGradlePlugin)
         classpath(Deps.gradleVersionsPlugin)
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+        classpath(Deps.gradleHiltPlugin)
     }
 }
 

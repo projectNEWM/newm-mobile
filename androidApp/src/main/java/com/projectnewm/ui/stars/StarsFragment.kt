@@ -7,7 +7,9 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.projectnewm.R
 import com.projectnewm.databinding.FragmentStarsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StarsFragment : Fragment(R.layout.fragment_stars) {
 
     private val viewModel: StarsViewModel by viewModels()
