@@ -20,11 +20,8 @@ struct SectionHeader: View {
 	}
 }
 
-extension Image {
-	static func roundImage(_ image: UIImage, size: CGFloat) -> some View {
-		Image(uiImage: image)
-			.resizable()
-			.frame(width: size, height: size, alignment: .center)
-			.cornerRadius(size / 2.0)
-	}
+protocol DataView: View {
+	var ID: String { get }
+	
+	init(ID: String)
 }

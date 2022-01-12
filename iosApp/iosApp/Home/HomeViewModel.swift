@@ -17,14 +17,25 @@ class HomeViewModel: ObservableObject {
 		case alternative
 	}
 	
-	@Published var newmArtists: [NewmArtist] = DummyData.newmArtists
-	@Published var selectedArtist: NewmArtist? = nil
+	@Published var artists: [ArtistCell.Artist] = DummyData.artists
+	@Published var selectedArtist: ArtistCell.Artist? = nil
 	
-	@Published var newmSongs: [NewmSong] = DummyData.newmSongs
-	@Published var selectedSong: NewmSong? = nil
+	@Published var songs: [SongCell.Song] = DummyData.songs
+	@Published var selectedSong: SongCell.Song? = nil
 	
+	@Published var playlists: [PlaylistCell.Playlist] = DummyData.playlists
+	@Published var selectedPlaylist: PlaylistCell.Playlist? = nil
+
 	@Published var selectedSectionIndex: Int = 0
 	let sections = Section.allCases.map(\.description)
+}
+
+extension HomeViewModel {
+	func deselectAll() {
+		selectedArtist = nil
+		selectedSong = nil
+		selectedPlaylist = nil
+	}
 }
 
 extension HomeViewModel.Section: CustomStringConvertible {

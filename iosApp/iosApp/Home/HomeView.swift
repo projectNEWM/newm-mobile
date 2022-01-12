@@ -10,25 +10,24 @@ struct HomeView: View {
 					.frame(maxHeight: .infinity, alignment: .top)
 					.padding()
 					.background(Color.black)
-					.onAppear { viewModel.selectedArtist = nil }
-				NavigationLink(isActive: .constant(viewModel.selectedArtist != nil), destination: {
-					if let artist = viewModel.selectedArtist {
-						ArtistView(artist: artist)
-					} else {
-						EmptyView()
-					}
-				}, label: { EmptyView() })
+					.onAppear { viewModel.deselectAll() }
+				Link<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
+				Link<SongView>(selectedID: viewModel.selectedSong?.songID)
+				Link<PlaylistView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 			}
-			.navigationTitle("NEWM Muthafucka!")
+			.navigationTitle("NEWM")
 			.navigationBarTitleDisplayMode(.automatic)
 		}
 	}
 	
 	private var allViews: some View {
-		VStack {
-			SectionSelectorView(selectedIndex: $viewModel.selectedSectionIndex, sectionTitles: viewModel.sections)
-			HomeScrollingContentView<NewmArtistCell>(selectedDataModel: $viewModel.selectedArtist, dataModels: viewModel.newmArtists, title: "NEWM Artists")
-			HomeScrollingContentView<NewmSongCell>(selectedDataModel: $viewModel.selectedSong, dataModels: viewModel.newmSongs, title: "NEWM Songs")
+		ScrollView {
+			VStack {
+				SectionSelectorView(selectedIndex: $viewModel.selectedSectionIndex, sectionTitles: viewModel.sections)
+				HomeScrollingContentView<ArtistCell>(selectedDataModel: $viewModel.selectedArtist, dataModels: viewModel.artists, title: "NEWM Artists", spacing: 8)
+				HomeScrollingContentView<SongCell>(selectedDataModel: $viewModel.selectedSong, dataModels: viewModel.songs, title: "NEWM Songs", spacing: 8)
+				HomeScrollingContentView<PlaylistCell>(selectedDataModel: $viewModel.selectedPlaylist, dataModels: viewModel.playlists, title: "Curated Playlists", spacing: 12)
+			}
 		}
 	}
 }

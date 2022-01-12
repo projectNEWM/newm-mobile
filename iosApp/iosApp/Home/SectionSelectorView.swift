@@ -30,9 +30,9 @@ struct SectionSelectorView: View {
 	}
 }
 
-//struct SectionSelectorView_Previews: PreviewProvider {
-//	static var previews: some View {
-//		SectionSelectorView(selectedIndex: 0,
-//							sectionTitles: HomeViewModel.Section.allCases.map(\.displayString))
-//	}
-//}
+struct SectionSelectorView_Previews: PreviewProvider {
+	static var previews: some View {
+		SectionSelectorView(selectedIndex: .constant(0),
+							sectionTitles: HomeViewModel.Section.allCases.map(\.description))
+	}
+}

@@ -11,41 +11,60 @@ import UIKit
 import SwiftUI
 
 class DummyData {
-	static func makeNewmArtist(name: String) -> NewmArtist {
-		NewmArtist(image: newmArtistImage.jpegData(compressionQuality: 1.0)!, name: name, genre: "Rock", stars: 12000)
+	static func makeArtist(name: String) -> ArtistCell.Artist {
+		ArtistCell.Artist(image: artistImage.jpegData(compressionQuality: 1.0)!, name: name, genre: "Rock", stars: 12000, artistID: name)
 	}
 	
-	static var newmArtists: [NewmArtist] {
+	static var artists: [ArtistCell.Artist] {
 		[
-			makeNewmArtist(name: "David Bow"),
-			makeNewmArtist(name: "David Bowie2"),
-			makeNewmArtist(name: "David Bowie3"),
-			makeNewmArtist(name: "David Bowie4"),
-			makeNewmArtist(name: "David Bowie5"),
-			makeNewmArtist(name: "David Bowie6asdlkfjsdlkfj")
+			makeArtist(name: "David Bow"),
+			makeArtist(name: "David Bowie2"),
+			makeArtist(name: "David Bowie3"),
+			makeArtist(name: "David Bowie4"),
+			makeArtist(name: "David Bowie5"),
+			makeArtist(name: "David Bowie6asdlkfjsdlkfj")
 		]
 	}
 	
-	static var newmArtistImage: UIImage {
+	static var artistImage: UIImage {
 		UIImage(named: "bowie")!
 	}
 	
 	static var roundArtistImage: some View {
-		Image.roundImage(newmArtistImage, size: 60)
+		CircleImage(image: artistImage, size: 60)
 	}
 	
-	static func makeNewmSong(title: String) -> NewmSong {
-		NewmSong(image: newmArtistImage.jpegData(compressionQuality: 1.0)!, title: title, artist: "Artist")
+	static func makeSong(title: String, isNFT: Bool = false) -> SongCell.Song {
+		SongCell.Song(image: artistImage, title: title, artist: "Artist", isNFT: isNFT, songID: title)
 	}
 	
-	static var newmSongs: [NewmSong] {
+	static var songs: [SongCell.Song] {
 		[
-			makeNewmSong(title: "Song1"),
-			makeNewmSong(title: "Song2"),
-			makeNewmSong(title: "Song3"),
-			makeNewmSong(title: "Song4"),
-			makeNewmSong(title: "Song5"),
-			makeNewmSong(title: "Song6")
+			makeSong(title: "Song1"),
+			makeSong(title: "Song2"),
+			makeSong(title: "Song3", isNFT: true),
+			makeSong(title: "Song4"),
+			makeSong(title: "Song5"),
+			makeSong(title: "Song6")
+		]
+	}
+	
+	static func makePlaylist(id: String) -> PlaylistCell.Playlist {
+		PlaylistCell.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "NEWM", songCount: 32, playlistID: id)
+	}
+	
+	static var playlists: [PlaylistCell.Playlist] {
+		[
+			makePlaylist(id: "1"),
+			makePlaylist(id: "2"),
+			makePlaylist(id: "3"),
+			makePlaylist(id: "4"),
+			makePlaylist(id: "5"),
+			makePlaylist(id: "6"),
+			makePlaylist(id: "7"),
+			makePlaylist(id: "8"),
+			makePlaylist(id: "9")
 		]
 	}
 }
+

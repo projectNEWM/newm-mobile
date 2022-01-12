@@ -8,18 +8,17 @@
 
 import SwiftUI
 
-struct ArtistView: View {
-	let artist: NewmArtist
-//	@EnvironmentObject var homeViewModel: HomeViewModel
+struct ArtistView: DataView {
+	var ID: String
+//	let viewModel: ArtistViewModel
 
     var body: some View {
-		Text(artist.name)
-//			.onDisappear { homeViewModel.selectedArtist = nil }
+		Text("Artist")
     }
 }
 
 //struct ArtistView_Previews: PreviewProvider {
 //    static var previews: some View {
-//		ArtistView()
+//		ArtistView(artist: DummyData.makeArtist(name: "David Bowie"))
 //    }
 //}
