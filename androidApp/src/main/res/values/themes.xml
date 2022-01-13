@@ -36,4 +36,13 @@
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.ProjectNewm.NoActionBar</item>
     </style>
+
+    <style name="Theme.ProjectNewm.SplashScreen.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ProjectNewm.SplashScreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ProjectNewm.SplashScreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

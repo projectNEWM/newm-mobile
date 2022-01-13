@@ -28,10 +28,21 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        useIR = true
     }
     buildFeatures {
+        compose = true
         viewBinding = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.0.4"
+    }
+
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -44,13 +55,21 @@ dependencies {
     implementation(Deps.androidxNavigationFragmentKtx)
     implementation(Deps.androidxNavigationUiKtx)
     implementation(Deps.androidxSplashScreen)
-    implementation(Deps.kotlinStdLib)
     implementation(Deps.material)
     implementation(Deps.viewBindingPropertyDelegate)
     implementation(Deps.androidHilt)
     kapt(Deps.androidHiltCompiler)
     kapt(Deps.hiltCompiler)
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.compose.ui:ui:1.0.5")
+    implementation("androidx.compose.material:material:1.0.5")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.0.5")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
 
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.0.5")
     testImplementation(Deps.junit)
 
     androidTestImplementation(Deps.androidxJUnit)

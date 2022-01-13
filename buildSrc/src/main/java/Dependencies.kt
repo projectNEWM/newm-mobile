@@ -3,13 +3,13 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler
 @Suppress("unused")
 object Versions {
     const val compileSdkVersion = 31
-    const val minSdkVersion = 23
+    const val minSdkVersion = 25
     const val targetSdkVersion = 31
     const val androidGradlePlugin = "7.0.4"
     const val gradleVersionsPlugin = "0.39.0"
 
-    const val kotlin = "1.6.0"
-    const val kotlinCoroutines = "1.5.2"
+    const val kotlin = "1.5.31"
+    const val kotlinCoroutines = "1.5.31"
 
     const val androidxActivity = "1.4.0"
     const val androidxAppCompat = "1.4.0"
@@ -22,16 +22,21 @@ object Versions {
     const val material = "1.4.0"
     const val viewBindingPropertyDelegate = "1.5.3"
 
-    const val hilt = "2.38.1"
+    const val hilt = "2.39"
     const val espresso = "3.4.0"
     const val junit = "4.13.2"
 }
 
 @Suppress("unused")
 object Deps {
-    const val gradlePlugin = "com.android.tools.build:gradle:${Versions.androidGradlePlugin}"
+    object Plugins {
+        const val gradle = "com.android.tools.build:gradle:${Versions.androidGradlePlugin}"
+        const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
+        const val gradleHilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+        const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
+    }
 
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
 
     const val androidxActivity = "androidx.activity:activity-ktx:${Versions.androidxActivity}"
@@ -56,10 +61,6 @@ object Deps {
 
     const val junit = "junit:junit:${Versions.junit}"
     const val espressoTest = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-
-    const val gradleVersionsPlugin =
-        "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
-    const val gradleHiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
 }
 
 object Repo {

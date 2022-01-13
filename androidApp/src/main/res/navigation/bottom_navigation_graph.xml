@@ -29,4 +29,9 @@
         android:label="@string/wallet"
         tools:layout="@layout/fragment_wallet" />
 
+    <activity
+        android:id="@+id/navigation_compose"
+        android:name="com.projectnewm.MainActivity"
+        android:label="MainActivity" />
+
 </navigation>

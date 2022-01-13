@@ -43,7 +43,8 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_community,
                 R.id.navigation_stars,
-                R.id.navigation_wallet
+                R.id.navigation_wallet,
+                R.id.navigation_compose
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
