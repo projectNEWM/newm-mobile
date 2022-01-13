@@ -12,4 +12,6 @@
     <string name="community">Community</string>
     <string name="stars">Stars</string>
     <string name="wallet">Wallet</string>
+    <string name="compose">Compose</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
