@@ -28,7 +28,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun NewmmobileTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun NewmMobileTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
