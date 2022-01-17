@@ -1,28 +1,37 @@
 package com.projectnewm.compose
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.projectnewm.R
 import kotlinx.coroutines.flow.collect
 
 @Composable
 internal fun NewmApp(navController: NavHostController = rememberNavController()) {
+    val currentRootScreen by navController.currentRootScreenAsState()
+
     Scaffold(
         bottomBar = {
-            val currentRootScreen by navController.currentRootScreenAsState()
             NewmBottomNavigation(
                 currentRootScreen = currentRootScreen,
                 onNavigationSelected = { navController.navigate(it.route) }
             )
         }
-    ) { }
+    ) { padding ->
+        Box(modifier = Modifier.padding(padding)) {
+            Navigation(navController)
+        }
+    }
 }
 
 @Composable
@@ -47,7 +56,7 @@ internal fun NewmBottomNavigation(
             icon = R.drawable.ic_stars,
             selected = currentRootScreen == Screen.StarsRoot,
             label = stringResource(R.string.stars),
-            onClick = { onNavigationSelected(Screen.HomeRoot) }
+            onClick = { onNavigationSelected(Screen.StarsRoot) }
         )
         HomeBottomNavigationItem(
             icon = R.drawable.ic_wallet,

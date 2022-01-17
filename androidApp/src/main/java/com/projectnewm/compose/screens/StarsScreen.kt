@@ -13,10 +13,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.projectnewm.R
 
 @Composable
-fun StarsScreen() {
+fun StarsScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
