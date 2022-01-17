@@ -68,7 +68,7 @@ class DummyData {
 	}
 	
 	static func makePlaylistListPlaylist(id: String) -> PlaylistListViewModel.Playlist {
-		PlaylistListViewModel.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "NEWM", genre: "Uplifting", starCount: "☆ 12k", playCount: "▶️ 938k", playlistID: id)
+		PlaylistListViewModel.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "by NEWM", genre: "Uplifting", starCount: "☆ 12k", playCount: "▶️ 938k", playlistID: id)
 	}
 	
 	static var playlistListPlaylists: [PlaylistListViewModel.Playlist] {

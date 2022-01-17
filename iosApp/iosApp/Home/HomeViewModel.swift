@@ -7,7 +7,9 @@
 //
 
 import Foundation
-import SwiftUI
+import Combine
+//TODO: Remove UIImage uses and replace with URLs
+import UIKit.UIImage
 
 class HomeViewModel: ObservableObject {
 	enum Section: CaseIterable {
@@ -27,7 +29,7 @@ class HomeViewModel: ObservableObject {
 	@Published var songs: [HomeViewModel.Song] = DummyData.songs
 	@Published var selectedSong: HomeViewModel.Song? = nil
 	
-	@Published var playlistsSectionTitle: String = "Curated Playlist"
+	@Published var playlistsSectionTitle: String = "Curated Playlists"
 	@Published var playlists: [HomeViewModel.Playlist] = DummyData.playlists
 	@Published var selectedPlaylist: HomeViewModel.Playlist? = nil
 

@@ -6,17 +6,18 @@ struct HomeView: View {
 	var body: some View {
 		NavigationView {
 			ZStack {
+				IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
+				IDLink<SongView>(selectedID: viewModel.selectedSong?.songID)
+				IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 				allViews
 					.frame(maxHeight: .infinity, alignment: .top)
 					.padding()
 					.background(Color.black)
 					.onAppear { viewModel.deselectAll() }
-				IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
-				IDLink<SongView>(selectedID: viewModel.selectedSong?.songID)
-				IDLink<PlaylistDetailsView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 			}
 			.navigationTitle(viewModel.title)
 			.navigationBarTitleDisplayMode(.automatic)
+//			.navigationBarHidden(true)
 		}
 	}
 	
@@ -29,6 +30,7 @@ struct HomeView: View {
 				HomeScrollingContentView<PlaylistCell>(selectedDataModel: $viewModel.selectedPlaylist, dataModels: viewModel.playlists, title: viewModel.playlistsSectionTitle, spacing: 12)
 			}
 		}
+		.ignoresSafeArea()
 	}
 }
 

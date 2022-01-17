@@ -11,7 +11,7 @@ import UIKit.UIImage
 
 class PlaylistListViewModel: ObservableObject {
 	let id: String
-	@Published var playlist: [Playlist] = DummyData.playlistListPlaylists
+	@Published var playlists: [Playlist] = DummyData.playlistListPlaylists
 
 	init(id: String) {
 		self.id = id

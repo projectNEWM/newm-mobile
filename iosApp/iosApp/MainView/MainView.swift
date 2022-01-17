@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
-	@State private var viewModel = MainViewModel()
+	@StateObject private var viewModel = MainViewModel()
 	
 	init() {
 		UITabBar.appearance(for: .init(userInterfaceStyle: .light)).backgroundColor = .black
