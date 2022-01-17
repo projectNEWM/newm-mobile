@@ -1,0 +1,14 @@
+<svg id="Search_Icon" data-name="Search Icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Group_310" data-name="Group 310" transform="translate(-41.096 -86)">
+    <g id="search" transform="translate(53 98)">
+      <g id="Ellipse_155" data-name="Ellipse 155" fill="none" stroke="#fff" stroke-width="2">
+        <circle cx="6.5" cy="6.5" r="6.5" stroke="none"/>
+        <circle cx="6.5" cy="6.5" r="5.5" fill="none"/>
+      </g>
+    </g>
+    <line id="Line_117" data-name="Line 117" x1="5" y1="5" transform="translate(63.5 108.5)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
+  </g>
+  <g id="Group_311" data-name="Group 311" transform="translate(-99.269 -209)">
+    <rect id="Rectangle_97" data-name="Rectangle 97" width="40" height="40" transform="translate(99.269 209)" fill="#fff" opacity="0.002"/>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg id="Previous_Icon" data-name="Previous Icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <rect id="Rectangle_105" data-name="Rectangle 105" width="40" height="40" fill="#fff" opacity="0"/>
+  <path id="Polygon_25" data-name="Polygon 25" d="M7.576,1.623a1,1,0,0,1,1.759,0l6.777,12.511a1,1,0,0,1-.879,1.476H1.679A1,1,0,0,1,.8,14.134Z" transform="translate(11.347 30.072) rotate(-90)" fill="#fff"/>
+  <path id="Polygon_25_-_Outline" data-name="Polygon 25 - Outline" d="M8.456,2.1h0L1.679,14.61H15.232L8.456,2.1m0-1a.99.99,0,0,1,.879.524l6.777,12.511a1,1,0,0,1-.879,1.476H1.679A1,1,0,0,1,.8,14.134L7.576,1.623A.99.99,0,0,1,8.456,1.1Z" transform="translate(11.347 30.072) rotate(-90)" fill="#fff"/>
+  <path id="Line_32" data-name="Line 32" d="M0,16a1,1,0,0,1-1-1V0A1,1,0,0,1,0-1,1,1,0,0,1,1,0V15A1,1,0,0,1,0,16Z" transform="translate(12.043 29.115) rotate(180)" fill="#fff"/>
+</svg>
