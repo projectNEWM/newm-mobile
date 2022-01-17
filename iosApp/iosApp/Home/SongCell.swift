@@ -9,23 +9,14 @@
 import SwiftUI
 
 struct SongCell: View {
-	struct Song: Identifiable {
-		let image: UIImage
-		let title: String
-		let artist: String
-		let isNFT: Bool
-		let songID: String
-		var id: ObjectIdentifier { title.objectIdentifier }
-	}
-	
-	var data: Song
+	var data: HomeViewModel.Song
 	
 	var body: some View {
 		VStack {
 			ZStack(alignment: .top) {
 				CircleImage(image: data.image, size: 60)
 				if data.isNFT {
-					nftLabel
+					NFTTag()
 				}
 			}
 			Text(data.title)
@@ -38,19 +29,10 @@ struct SongCell: View {
 		.fixedSize()
 		.frame(width: 80, height: 150)
 	}
-	
-	private var nftLabel: some View {
-		Text("NFT")
-			.font(.caption3.weight(.bold))
-			.padding([.top, .bottom], 4)
-			.padding([.leading, .trailing], 10)
-			.background(LinearGradient(colors: [.green, .blue], startPoint: .top, endPoint: .bottom))
-			.cornerRadius(20)
-	}
 }
 
-extension SongCell: HomeScrollingCellModel {
-	typealias DataType = Song
+extension SongCell: HomeScrollingCell {
+	typealias DataType = HomeViewModel.Song
 }
 
 struct SongCell_Previews: PreviewProvider {

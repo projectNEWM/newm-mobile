@@ -17,17 +17,51 @@ class HomeViewModel: ObservableObject {
 		case alternative
 	}
 	
-	@Published var artists: [ArtistCell.Artist] = DummyData.artists
-	@Published var selectedArtist: ArtistCell.Artist? = nil
+	@Published var title: String = "NEWM"
 	
-	@Published var songs: [SongCell.Song] = DummyData.songs
-	@Published var selectedSong: SongCell.Song? = nil
+	@Published var artistSectionTitle: String = "NEWM Artists"
+	@Published var artists: [HomeViewModel.Artist] = DummyData.artists
+	@Published var selectedArtist: HomeViewModel.Artist? = nil
 	
-	@Published var playlists: [PlaylistCell.Playlist] = DummyData.playlists
-	@Published var selectedPlaylist: PlaylistCell.Playlist? = nil
+	@Published var songsSectionTitle: String = "NEWM Songs"
+	@Published var songs: [HomeViewModel.Song] = DummyData.songs
+	@Published var selectedSong: HomeViewModel.Song? = nil
+	
+	@Published var playlistsSectionTitle: String = "Curated Playlist"
+	@Published var playlists: [HomeViewModel.Playlist] = DummyData.playlists
+	@Published var selectedPlaylist: HomeViewModel.Playlist? = nil
 
 	@Published var selectedSectionIndex: Int = 0
 	let sections = Section.allCases.map(\.description)
+}
+
+extension HomeViewModel {
+	struct Artist: Identifiable {
+		let image: Data
+		let name: String
+		let genre: String
+		let stars: String
+		let artistID: String
+		var id: ObjectIdentifier { artistID.objectIdentifier }
+	}
+
+	struct Song: Identifiable {
+		let image: UIImage
+		let title: String
+		let artist: String
+		let isNFT: Bool
+		let songID: String
+		var id: ObjectIdentifier { title.objectIdentifier }
+	}
+	
+	struct Playlist: Identifiable {
+		let image: UIImage
+		let title: String
+		let creator: String
+		let songCount: String
+		let playlistID: String
+		var id: ObjectIdentifier { playlistID.objectIdentifier }
+	}
 }
 
 extension HomeViewModel {

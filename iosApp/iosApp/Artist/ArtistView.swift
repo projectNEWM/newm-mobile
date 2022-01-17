@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ArtistView: DataView {
-	var ID: String
+	var id: String
 //	let viewModel: ArtistViewModel
 
     var body: some View {

@@ -9,16 +9,7 @@
 import SwiftUI
 
 struct PlaylistCell: View {
-	struct Playlist: Identifiable {
-		let image: UIImage
-		let title: String
-		let creator: String
-		let songCount: Int
-		let playlistID: String
-		var id: ObjectIdentifier { playlistID.objectIdentifier }
-	}
-
-	let data: Playlist
+	let data: HomeViewModel.Playlist
 	
     var body: some View {
 		VStack {
@@ -31,11 +22,11 @@ struct PlaylistCell: View {
 				.padding(.bottom, 2)
 				.lineLimit(2)
 				.minimumScaleFactor(0.5)
-			Text("by \(data.creator)")
+			Text(data.creator)
 				.foregroundColor(.purple)
 				.font(.caption3)
 				.padding(.bottom, 2)
-			Text("♬ \(data.songCount)")
+			Text(data.songCount)
 				.foregroundColor(.white)
 				.font(.caption4)
 				.padding(.bottom, 4)
@@ -47,12 +38,12 @@ struct PlaylistCell: View {
     }
 }
 
-extension PlaylistCell: HomeScrollingCellModel {
-	typealias DataType = PlaylistCell.Playlist
+extension PlaylistCell: HomeScrollingCell {
+	typealias DataType = HomeViewModel.Playlist
 }
 
 struct PlaylistCell_Previews: PreviewProvider {
     static var previews: some View {
-		PlaylistCell(data: DummyData.makePlaylist(id: "1"))
+		PlaylistCell(data: DummyData.makeHomePlaylist(id: "1"))
     }
 }

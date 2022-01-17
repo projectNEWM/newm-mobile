@@ -9,16 +9,7 @@
 import SwiftUI
 
 struct ArtistCell: View {
-	struct Artist: Identifiable {
-		let image: Data
-		let name: String
-		let genre: String
-		let stars: Int
-		let artistID: String
-		var id: ObjectIdentifier { artistID.objectIdentifier }
-	}
-
-	let data: Artist
+	let data: HomeViewModel.Artist
 	
 	var body: some View {
 		VStack {
@@ -29,7 +20,7 @@ struct ArtistCell: View {
 			Text(data.genre)
 				.foregroundColor(.black)
 				.minimumScaleFactor(0.5)
-			Text("✭ \(data.stars)")
+			Text(data.stars)
 		}
 		.padding()
 		.fixedSize()
@@ -41,8 +32,8 @@ struct ArtistCell: View {
 	}
 }
 
-extension ArtistCell: HomeScrollingCellModel {
-	typealias DataType = Artist
+extension ArtistCell: HomeScrollingCell {
+	typealias DataType = HomeViewModel.Artist
 }
 
 struct ArtistCell_Previews: PreviewProvider {

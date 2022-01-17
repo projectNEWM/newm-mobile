@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SongView: DataView {
-	let ID: String
+	let id: String
 	
     var body: some View {
         Text("Song")
