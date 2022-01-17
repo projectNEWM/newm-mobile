@@ -10,6 +10,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="home">Home</string>
     <string name="community">Community</string>
+    <string name="tribe">Tribe</string>
     <string name="stars">Stars</string>
     <string name="wallet">Wallet</string>
     <string name="compose">Compose</string>
