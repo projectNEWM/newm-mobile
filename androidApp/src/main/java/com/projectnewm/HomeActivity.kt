@@ -62,24 +62,8 @@ class HomeActivity : AppCompatActivity() {
                 ContextCompat.getColor(this, R.color.gradient_green),
             )
         )
-        val fadeGradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.LEFT_RIGHT,
-            intArrayOf(
-                ContextCompat.getColor(this, R.color.gradient_blue_fade),
-                ContextCompat.getColor(this, R.color.gradient_dark_blue_fade),
-                ContextCompat.getColor(this, R.color.gradient_purple_fade),
-                ContextCompat.getColor(this, R.color.gradient_pink_fade),
-                ContextCompat.getColor(this, R.color.gradient_red_fade),
-                ContextCompat.getColor(this, R.color.gradient_orange_fade),
-                ContextCompat.getColor(this, R.color.gradient_yellow_fade),
-                ContextCompat.getColor(this, R.color.gradient_green_fade),
-            )
-        )
-        binding.gradient.background = gradientDrawable
 
-        // Messing around trying to make it glow a little more :-D
-        binding.gradientBottomFade.background = fadeGradientDrawable
-        binding.gradientTopFade.background = fadeGradientDrawable
+        binding.gradient.background = gradientDrawable
 
         navController.addOnDestinationChangedListener { controller, destination, args ->
             binding.tabs.isVisible = when (destination.id) {

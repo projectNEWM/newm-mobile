@@ -23,12 +23,6 @@
             app:navGraph="@navigation/bottom_navigation_graph" />
 
         <View
-            android:id="@+id/gradient_top_fade"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_width"
-            app:layout_constraintBottom_toTopOf="@id/gradient" />
-
-        <View
             android:id="@+id/gradient"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_width"
@@ -47,12 +41,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu" />
-
-        <View
-            android:id="@+id/gradient_bottom_fade"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_width"
-            app:layout_constraintTop_toBottomOf="@id/gradient" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
