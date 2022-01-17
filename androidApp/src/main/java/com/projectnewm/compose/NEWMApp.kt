@@ -13,11 +13,11 @@ import com.projectnewm.R
 import kotlinx.coroutines.flow.collect
 
 @Composable
-internal fun NEWMApp(navController: NavHostController = rememberNavController()) {
+internal fun NewmApp(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = {
             val currentRootScreen by navController.currentRootScreenAsState()
-            NEWMBottomNavigation(
+            NewmBottomNavigation(
                 currentRootScreen = currentRootScreen,
                 onNavigationSelected = { navController.navigate(it.route) }
             )
@@ -26,31 +26,31 @@ internal fun NEWMApp(navController: NavHostController = rememberNavController())
 }
 
 @Composable
-internal fun NEWMBottomNavigation(
+internal fun NewmBottomNavigation(
     currentRootScreen: Screen,
     onNavigationSelected: (Screen) -> Unit
 ) {
     BottomNavigation {
         HomeBottomNavigationItem(
-            icon = R.drawable.ic_home_black_24dp,
+            icon = R.drawable.ic_home,
             selected = currentRootScreen == Screen.HomeRoot,
             label = stringResource(R.string.home),
             onClick = { onNavigationSelected(Screen.HomeRoot) }
         )
         HomeBottomNavigationItem(
-            icon = R.drawable.ic_dashboard_black_24dp,
+            icon = R.drawable.ic_tribe,
             selected = currentRootScreen == Screen.TribeRoot,
             label = stringResource(R.string.tribe),
             onClick = { onNavigationSelected(Screen.TribeRoot) }
         )
         HomeBottomNavigationItem(
-            icon = R.drawable.ic_notifications_black_24dp,
+            icon = R.drawable.ic_stars,
             selected = currentRootScreen == Screen.StarsRoot,
             label = stringResource(R.string.stars),
             onClick = { onNavigationSelected(Screen.HomeRoot) }
         )
         HomeBottomNavigationItem(
-            icon = R.drawable.ic_notifications_black_24dp,
+            icon = R.drawable.ic_wallet,
             selected = currentRootScreen == Screen.WalletRoot,
             label = stringResource(R.string.wallet),
             onClick = { onNavigationSelected(Screen.WalletRoot) }

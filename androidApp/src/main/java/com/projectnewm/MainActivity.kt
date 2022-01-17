@@ -3,7 +3,7 @@ package com.projectnewm
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.projectnewm.compose.NEWMApp
+import com.projectnewm.compose.NewmApp
 import com.projectnewm.ui.theme.NewmMobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewmMobileTheme {
-                NEWMApp()
+                NewmApp()
             }
         }
     }
