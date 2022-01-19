@@ -1,30 +1,29 @@
 package com.projectnewm
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.projectnewm.components.NewmRainbowDivider
 import com.projectnewm.navigation.Navigation
 import com.projectnewm.screens.Screen
 import kotlinx.coroutines.flow.collect
-internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
 @Composable
-internal fun NewmApp(navController: NavHostController = rememberNavController()) {
+internal fun NewmApp(
+    navController: NavHostController = rememberNavController()
+) {
     val currentRootScreen by navController.currentRootScreenAsState()
     Scaffold(
         bottomBar = {
@@ -46,28 +45,11 @@ internal fun NewmBottomNavigation(
     onNavigationSelected: (Screen) -> Unit
 ) {
     Column(Modifier.height(76.dp)) {
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            colorResource(id = R.color.gradient_blue),
-                            colorResource(id = R.color.gradient_dark_blue),
-                            colorResource(id = R.color.gradient_purple),
-                            colorResource(id = R.color.gradient_pink),
-                            colorResource(id = R.color.gradient_red),
-                            colorResource(id = R.color.gradient_orange),
-                            colorResource(id = R.color.gradient_yellow),
-                            colorResource(id = R.color.gradient_green),
-                        )
-                    )
-                )
-        )
+        NewmRainbowDivider()
         BottomNavigation(
             backgroundColor = Color.Black,
             contentColor = Color.White,
-            modifier = Modifier.fillMaxHeight().testTag(TAG_BOTTOM_NAVIGATION)
+            modifier = Modifier.fillMaxHeight()
         ) {
             HomeBottomNavigationItem(
                 icon = R.drawable.ic_home,

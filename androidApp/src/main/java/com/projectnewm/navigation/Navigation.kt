@@ -7,14 +7,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.projectnewm.screens.DetailsScreen
-import com.projectnewm.screens.wallet.WalletScreen
 import com.projectnewm.screens.Screen
 import com.projectnewm.screens.home.HomeScreen
 import com.projectnewm.screens.stars.StarsScreen
 import com.projectnewm.screens.tribe.TribeScreen
+import com.projectnewm.screens.wallet.WalletScreen
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
         startDestination = Screen.HomeRoot.route
@@ -26,13 +28,17 @@ fun Navigation(navController: NavHostController) {
     }
 }
 
-private fun NavGraphBuilder.addHomeTree(navController: NavHostController) {
+private fun NavGraphBuilder.addHomeTree(
+    navController: NavHostController
+) {
     navigation(
         route = Screen.HomeRoot.route,
         startDestination = Screen.HomeLanding.route
     ) {
-        composable(Screen.HomeLanding.route) {
-            HomeScreen(onShowDetails = {param: Int -> navController.navigate(Screen.HomeLanding.Details.route)})
+        composable(route = Screen.HomeLanding.route) {
+            HomeScreen(
+                onShowDetails = { navController.navigate(Screen.HomeLanding.Details.route) }
+            )
         }
 
         composable(Screen.HomeLanding.Details.route) {
