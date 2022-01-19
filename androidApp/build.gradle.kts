@@ -67,6 +67,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation ("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
 
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
     debugImplementation("androidx.compose.ui:ui-tooling:1.0.5")

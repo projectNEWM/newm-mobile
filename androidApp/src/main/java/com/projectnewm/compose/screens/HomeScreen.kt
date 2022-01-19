@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.projectnewm.R
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen( onShowDetails: (Int) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,5 +29,9 @@ fun HomeScreen() {
             textAlign = TextAlign.Center,
             fontSize = 25.sp
         )
+
+        Button(onClick = {onShowDetails(3)}, ) {
+            Text(text = "Go to details page")
+        }
     }
 }
