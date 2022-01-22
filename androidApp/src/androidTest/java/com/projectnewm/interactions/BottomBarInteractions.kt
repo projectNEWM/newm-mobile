@@ -1,24 +1,44 @@
 package com.projectnewm.interactions
 
-import androidx.compose.ui.test.SemanticsNodeInteraction
+import android.content.Context
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.ComposeTestRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.test.platform.app.InstrumentationRegistry
+import com.projectnewm.R
+import com.projectnewm.TAG_BOTTOM_NAVIGATION
 
 fun onBottomBar(composeTestRule: ComposeTestRule, actions: BottomBarInteractions.() -> Unit) {
     actions(BottomBarInteractions(composeTestRule))
 }
 
 class BottomBarInteractions(private val composeTestRule: ComposeTestRule) {
+    private val context: Context get() = InstrumentationRegistry.getInstrumentation().targetContext
+    private val hasBottomBarAncestor = hasAnyAncestor(hasTestTag(TAG_BOTTOM_NAVIGATION))
+
     val homeButtonInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithText("Home")
+        get() {
+            return composeTestRule.onNode(
+                hasContentDescriptionExactly(context.getString(R.string.home))
+                    .and(hasBottomBarAncestor)
+            )
+        }
 
     val walletButtonInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithText("Wallet")
+        get() = composeTestRule.onNode(
+            hasContentDescriptionExactly(context.getString(R.string.wallet))
+                .and(hasBottomBarAncestor)
+        )
 
     val starsButtonInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithText("Stars")
+        get() = composeTestRule.onNode(
+            hasContentDescriptionExactly(context.getString(R.string.stars))
+                .and(hasBottomBarAncestor)
+        )
 
     val tribeButtonInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithText("Tribe")
+        get() = composeTestRule.onNode(
+            hasContentDescriptionExactly(context.getString(R.string.tribe))
+                .and(hasBottomBarAncestor)
+        )
 }
 
