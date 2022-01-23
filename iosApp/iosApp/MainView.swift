@@ -28,12 +28,12 @@ struct MainView: View {
 					Image(MainViewModel.Tab.tribe)
 					Text(MainViewModel.Tab.tribe)
 				}
-			TribeView()
+			StarsView()
 				.tabItem {
 					Image(MainViewModel.Tab.stars)
 					Text(MainViewModel.Tab.stars)
 				}
-			TribeView()
+			WalletView()
 				.tabItem {
 					Image(MainViewModel.Tab.wallet)
 					Text(MainViewModel.Tab.wallet)
