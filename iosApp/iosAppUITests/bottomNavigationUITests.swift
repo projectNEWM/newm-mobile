@@ -9,7 +9,7 @@
 import XCTest
 import iosApp
 
-class iosAppUITests: XCTestCase {
+class bottomNavigationUITests: XCTestCase {
     
     var app: XCUIApplication!
 

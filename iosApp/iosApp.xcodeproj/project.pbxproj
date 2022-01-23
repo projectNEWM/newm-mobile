@@ -28,7 +28,7 @@
 		76AA99BF278EA7F900AE420B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99BE278EA7F900AE420B /* Link.swift */; };
 		76AA99C3278EAA7500AE420B /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99C2278EAA7500AE420B /* SongView.swift */; };
 		76AA99C6278EACA000AE420B /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99C5278EACA000AE420B /* PlaylistView.swift */; };
-		82E6EF1E279DC588003C856A /* iosAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E6EF1D279DC588003C856A /* iosAppUITests.swift */; };
+		82E6EF1E279DC588003C856A /* bottomNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E6EF1D279DC588003C856A /* bottomNavigationUITests.swift */; };
 		82E6EF27279DC7CC003C856A /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E6EF26279DC7CC003C856A /* WalletView.swift */; };
 		82E6EF29279DC812003C856A /* StarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E6EF28279DC812003C856A /* StarsView.swift */; };
 		82E6EF2A279DC9F5003C856A /* TribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762756F8278832CC0012BADB /* TribeView.swift */; };
@@ -82,7 +82,7 @@
 		76AA99C2278EAA7500AE420B /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		76AA99C5278EACA000AE420B /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		82E6EF1B279DC588003C856A /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		82E6EF1D279DC588003C856A /* iosAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppUITests.swift; sourceTree = "<group>"; };
+		82E6EF1D279DC588003C856A /* bottomNavigationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bottomNavigationUITests.swift; sourceTree = "<group>"; };
 		82E6EF26279DC7CC003C856A /* WalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		82E6EF28279DC812003C856A /* StarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,7 +205,7 @@
 		82E6EF1C279DC588003C856A /* iosAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				82E6EF1D279DC588003C856A /* iosAppUITests.swift */,
+				82E6EF1D279DC588003C856A /* bottomNavigationUITests.swift */,
 			);
 			path = iosAppUITests;
 			sourceTree = "<group>";
@@ -365,7 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82E6EF2A279DC9F5003C856A /* TribeView.swift in Sources */,
-				82E6EF1E279DC588003C856A /* iosAppUITests.swift in Sources */,
+				82E6EF1E279DC588003C856A /* bottomNavigationUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
