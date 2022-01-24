@@ -16,6 +16,7 @@ struct SongCell: View {
 				CircleImage(image: data.image, size: 60)
 				if data.isNFT {
 					NFTTag()
+						.padding(.top, -14)
 				}
 			}
 			Text(data.title)

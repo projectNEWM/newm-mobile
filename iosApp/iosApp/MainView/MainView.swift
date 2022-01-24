@@ -10,11 +10,6 @@ import SwiftUI
 struct MainView: View {
 	@StateObject private var viewModel = MainViewModel()
 	
-	init() {
-		UITabBar.appearance(for: .init(userInterfaceStyle: .light)).backgroundColor = .black
-		UITabBar.appearance(for: .init(userInterfaceStyle: .light)).barTintColor = .white
-	}
-	
 	var body: some View {
 		TabView {
 			HomeView()
@@ -38,8 +33,7 @@ struct MainView: View {
 					Text(MainViewModel.Tab.wallet)
 				}
 		}
-		.accentColor(.white)
-		.background(Color.black)
+		.preferredColorScheme(.dark)
 	}
 }
 

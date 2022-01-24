@@ -4,6 +4,12 @@ import SwiftUI
 struct iOSApp: App {
 	@StateObject var viewModel = iOSAppViewModel()
 	
+	init() {
+		UINavigationBar.appearance().tintColor = .white
+		UINavigationBar.appearance().barTintColor = .white
+		UIView.appearance().tintColor = .white
+	}
+	
 	var body: some Scene {
 		WindowGroup {
 			MainView()

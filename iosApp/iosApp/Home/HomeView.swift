@@ -16,8 +16,7 @@ struct HomeView: View {
 					.onAppear { viewModel.deselectAll() }
 			}
 			.navigationTitle(viewModel.title)
-			.navigationBarTitleDisplayMode(.automatic)
-//			.navigationBarHidden(true)
+			.navigationBarTitleDisplayMode(.inline)
 		}
 	}
 	
