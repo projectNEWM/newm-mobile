@@ -2,11 +2,11 @@ buildscript {
     Repo.addRepos(repositories)
 
     dependencies {
-        classpath(Deps.gradlePlugin)
-        classpath(Deps.kotlinGradlePlugin)
-        classpath(Deps.gradleVersionsPlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath(Deps.gradleHiltPlugin)
+        classpath(Deps.Plugins.gradle)
+        classpath(Deps.Plugins.gradleVersions)
+        classpath(Deps.Plugins.kotlinGradle)
+        classpath(Deps.Plugins.kotlinSerialization)
+        classpath(Deps.Plugins.gradleHilt)
     }
 }
 
