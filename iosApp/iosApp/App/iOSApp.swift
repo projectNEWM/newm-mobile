@@ -6,7 +6,6 @@ struct iOSApp: App {
 	
 	init() {
 		UINavigationBar.appearance().tintColor = .white
-		UINavigationBar.appearance().barTintColor = .white
 		UIView.appearance().tintColor = .white
 	}
 	
