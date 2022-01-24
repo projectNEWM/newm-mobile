@@ -9,12 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.projectnewm.R
+
+internal const val TAG_STARS_SCREEN = "TAG_STARS_SCREEN"
 
 @Composable
 fun StarsScreen(navController: NavController) {
@@ -23,6 +26,7 @@ fun StarsScreen(navController: NavController) {
             .fillMaxSize()
             .background(colorResource(id = R.color.purple_500))
             .wrapContentSize(Alignment.Center)
+            .testTag(TAG_STARS_SCREEN)
     ) {
         Text(
             text = "Stars View",
