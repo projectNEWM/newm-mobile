@@ -25,7 +25,9 @@ kotlin {
             }
         }
         val androidMain by getting
+        val androidAndroidTestRelease by getting
         val androidTest by getting {
+            dependsOn(androidAndroidTestRelease)
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")

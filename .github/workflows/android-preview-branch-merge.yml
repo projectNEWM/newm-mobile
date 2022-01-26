@@ -6,7 +6,7 @@ on:
      - "androidApp/**"
      - "shared/**"
      - "buildSrc/**"
-     - ".github/workflows/android-preview-pr.yml"
+     - ".github/workflows/android-preview-branch-merge.yml"
 jobs:
   build_android_debug:
     runs-on: ubuntu-latest
