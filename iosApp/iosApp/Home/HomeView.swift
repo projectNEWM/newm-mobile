@@ -6,17 +6,17 @@ struct HomeView: View {
 	var body: some View {
 		NavigationView {
 			ZStack {
+				IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
+				IDLink<SongView>(selectedID: viewModel.selectedSong?.songID)
+				IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 				allViews
 					.frame(maxHeight: .infinity, alignment: .top)
 					.padding()
 					.background(Color.black)
 					.onAppear { viewModel.deselectAll() }
-				Link<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
-				Link<SongView>(selectedID: viewModel.selectedSong?.songID)
-				Link<PlaylistView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 			}
-			.navigationTitle("NEWM")
-			.navigationBarTitleDisplayMode(.automatic)
+			.navigationTitle(viewModel.title)
+			.navigationBarTitleDisplayMode(.inline)
 		}
 	}
 	
@@ -24,11 +24,12 @@ struct HomeView: View {
 		ScrollView {
 			VStack {
 				SectionSelectorView(selectedIndex: $viewModel.selectedSectionIndex, sectionTitles: viewModel.sections)
-				HomeScrollingContentView<ArtistCell>(selectedDataModel: $viewModel.selectedArtist, dataModels: viewModel.artists, title: "NEWM Artists", spacing: 8)
-				HomeScrollingContentView<SongCell>(selectedDataModel: $viewModel.selectedSong, dataModels: viewModel.songs, title: "NEWM Songs", spacing: 8)
-				HomeScrollingContentView<PlaylistCell>(selectedDataModel: $viewModel.selectedPlaylist, dataModels: viewModel.playlists, title: "Curated Playlists", spacing: 12)
+				HomeScrollingContentView<ArtistCell>(selectedDataModel: $viewModel.selectedArtist, dataModels: viewModel.artists, title: viewModel.artistSectionTitle, spacing: 8)
+				HomeScrollingContentView<SongCell>(selectedDataModel: $viewModel.selectedSong, dataModels: viewModel.songs, title: viewModel.songsSectionTitle, spacing: 8)
+				HomeScrollingContentView<PlaylistCell>(selectedDataModel: $viewModel.selectedPlaylist, dataModels: viewModel.playlists, title: viewModel.playlistsSectionTitle, spacing: 12)
 			}
 		}
+		.ignoresSafeArea()
 	}
 }
 
