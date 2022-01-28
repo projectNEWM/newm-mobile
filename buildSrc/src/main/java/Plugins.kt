@@ -7,7 +7,7 @@ object Plugins {
     const val multiplatform = "multiplatform"
     const val serialization = "plugin.serialization"
     const val sqlDelight = "com.squareup.sqldelight"
-    const val versions = "com.github.ben-manes.versions"
 
-    const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
+    const val benManesVersionsPlugin = "com.github.ben-manes.versions"
+    const val benManesVersionsClasspath = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
 }
