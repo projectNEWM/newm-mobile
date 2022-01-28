@@ -3,6 +3,7 @@ package com.projectnewm.di
 import com.projectnewm.example.ExampleRepository
 import com.projectnewm.example.ExampleService
 import com.projectnewm.example.ExampleUseCase
+import com.projectnewm.repository.db.ExampleDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +25,9 @@ object UseCaseModule {
     @Singleton
     @Provides
     fun provideExampleRepository(
-        exampleService: ExampleService
+        exampleService: ExampleService,
+        exampleDao: ExampleDao
     ): ExampleRepository {
-        return ExampleRepository(exampleService)
+        return ExampleRepository(exampleService, exampleDao)
     }
 }

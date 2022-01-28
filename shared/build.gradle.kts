@@ -2,7 +2,7 @@ plugins {
     kotlin(Plugins.multiplatform)
     kotlin(Plugins.serialization)
     id(Plugins.androidLibrary)
-//    id("com.squareup.sqldelight")
+    id(Plugins.sqlDelight)
 }
 
 kotlin {
@@ -11,7 +11,7 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()// sure all ios dependencies support this target
+        // iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
@@ -78,5 +78,12 @@ android {
     defaultConfig {
         minSdk = 23
         targetSdk = 31
+    }
+}
+
+sqldelight {
+    database("NewmDb") {
+        packageName = "com.projectnewm.repository.db"
+        sourceFolders = listOf("sqldelight")
     }
 }
