@@ -2,8 +2,6 @@
 //  StarsView.swift
 //  iosApp
 //
-//  Copyright © 2022 orgName. All rights reserved.
-//
 
 import SwiftUI
 

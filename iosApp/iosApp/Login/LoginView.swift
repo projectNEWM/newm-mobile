@@ -70,6 +70,7 @@ struct LoginView: View {
 			.background(LinearGradient(colors: [.orange, .red], startPoint: .top, endPoint: .bottom))
 			.cornerRadius(10)
 			.padding(.bottom)
+            .accessibilityIdentifier("enterNewmButton")
 	}
 	
 	var createFreeAccount: some View {
