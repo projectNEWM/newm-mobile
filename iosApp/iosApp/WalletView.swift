@@ -1,8 +1,7 @@
 //
-//  TribeView.swift
+//  StarsView.swift
 //  iosApp
 //
-//  Created by Jose Mateo on 1/23/22.
 //  Copyright © 2022 orgName. All rights reserved.
 //
 
