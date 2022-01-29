@@ -1,0 +1,17 @@
+name: Testing
+on:
+  pull_request:
+    branches:
+    - development
+    - master
+jobs:
+  test:
+    name: Testing iOS app
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Force XCode 13.2
+        run: sudo xcode-select -switch /Applications/Xcode_13.2.app
+      - name: Testing iOS app
+        run: exec ./.github/scripts/test_app.sh
