@@ -17,24 +17,26 @@ class BottomNavigationUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
+        
+        app.buttons["Enter NEWM"].tap()
     }
 
     func testTapOnTribeButtonSwitchesToTribeView() throws {
         tapBottomBarButton(label: "Tribe")
         
-        XCTAssertTrue( app.otherElements["TribeView"].exists)
+        XCTAssertTrue( app.staticTexts["Tribe"].exists)
     }
     
     func testTapOnWalletButtonSwitchesToWalletView() throws {
         tapBottomBarButton(label: "Wallet")
         
-        XCTAssertTrue( app.otherElements["WalletView"].exists)
+        XCTAssertTrue( app.staticTexts["Wallet"].exists)
     }
     
     func testTapOnStarsButtonSwitchesToStarsView() throws {
         tapBottomBarButton(label: "Stars")
         
-        XCTAssertTrue( app.otherElements["StarsView"].exists)
+        XCTAssertTrue( app.staticTexts["Stars"].exists)
     }
     
     fileprivate func tapBottomBarButton(label: String) {

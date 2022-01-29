@@ -3,13 +3,12 @@
 //  iosApp
 //
 //  Created by Marty Ulrich on 1/10/22.
-//  Copyright © 2022 orgName. All rights reserved.
 //
 
 import SwiftUI
 
 struct ArtistView: DataView {
-	var ID: String
+	var id: String
 //	let viewModel: ArtistViewModel
 
     var body: some View {
