@@ -35,7 +35,7 @@ struct LoginView: View {
 	}
 	
 	var newmLogo: some View {
-		Image("NEWM-logo")
+		Image("NEWM-Logo")
 			.resizable()
 			.frame(width: 100, height: 100, alignment: .center)
 	}
