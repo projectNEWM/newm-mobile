@@ -3,19 +3,18 @@
 //  iosApp
 //
 //  Created by Marty Ulrich on 1/10/22.
-//  Copyright © 2022 orgName. All rights reserved.
 //
 
 import Foundation
 import SwiftUI
 
-protocol HomeScrollingCellModel: View where DataType: Identifiable {
+protocol HomeScrollingCell: View where DataType: Identifiable {
 	associatedtype DataType
 	
 	init(data: DataType)
 }
 
-struct HomeScrollingContentView<Model: HomeScrollingCellModel>: View {
+struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 	@Binding var selectedDataModel: Model.DataType?
 	let dataModels: [Model.DataType]
 	let title: String
@@ -25,7 +24,7 @@ struct HomeScrollingContentView<Model: HomeScrollingCellModel>: View {
 		VStack {
 			SectionHeader(title: title)
 			ScrollView(.horizontal, showsIndicators: false) {
-				HStack(alignment: .firstTextBaseline, spacing: nil) {
+				HStack(alignment: .center, spacing: nil) {
 					ForEach(dataModels) { data in
 						Model(data: data)
 							.onTapGesture { selectedDataModel = data }

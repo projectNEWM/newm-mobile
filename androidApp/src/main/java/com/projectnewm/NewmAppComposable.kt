@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.projectnewm.navigation.Navigation
 import com.projectnewm.screens.Screen
 import kotlinx.coroutines.flow.collect
+internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
 @Composable
 internal fun NewmApp(navController: NavHostController = rememberNavController()) {
@@ -65,7 +67,7 @@ internal fun NewmBottomNavigation(
         BottomNavigation(
             backgroundColor = Color.Black,
             contentColor = Color.White,
-            modifier = Modifier.fillMaxHeight()
+            modifier = Modifier.fillMaxHeight().testTag(TAG_BOTTOM_NAVIGATION)
         ) {
             HomeBottomNavigationItem(
                 icon = R.drawable.ic_home,
