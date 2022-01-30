@@ -8,21 +8,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.projectnewm.screens.home.categories.CategoryTabs
 import com.projectnewm.screens.home.categories.MusicalCategoriesViewModel
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 
 @Composable
-fun HomeScreen(onShowDetails: (Int) -> Unit) {
+fun HomeScreen(
+    onShowDetails: (Int) -> Unit,
+    viewModel: MusicalCategoriesViewModel = hiltViewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.LightGray)
             .testTag(TAG_HOME_SCREEN)
     ) {
-        val viewModel: MusicalCategoriesViewModel = viewModel()
+
         val viewState by viewModel.state.collectAsState()
         val selectedCategory = viewState.selectedCategory
 
