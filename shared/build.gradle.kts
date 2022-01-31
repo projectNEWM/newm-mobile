@@ -1,15 +1,17 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
+    kotlin(Plugins.multiplatform)
+    kotlin(Plugins.serialization)
+    id(Plugins.androidLibrary)
+    id(Plugins.sqlDelight)
 }
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()// sure all ios dependencies support this target
+        // iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
@@ -17,15 +19,26 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Ktor.core)
+                implementation(Ktor.clientSerialization)
+                implementation(SqlDelight.runtime)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
         val androidAndroidTestRelease by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Ktor.android)
+                implementation(SqlDelight.androidDriver)
+            }
+        }
         val androidTest by getting {
             dependsOn(androidAndroidTestRelease)
             dependencies {
@@ -41,6 +54,11 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             //iosSimulatorArm64Main.dependsOn(this)
+
+            dependencies {
+                implementation(Ktor.ios)
+                implementation(SqlDelight.nativeDriver)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -60,5 +78,12 @@ android {
     defaultConfig {
         minSdk = 23
         targetSdk = 31
+    }
+}
+
+sqldelight {
+    database("NewmDb") {
+        packageName = "com.projectnewm.repository.db"
+        sourceFolders = listOf("sqldelight")
     }
 }
