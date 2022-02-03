@@ -78,7 +78,7 @@ private extension Image {
 		case .stars: self = Image("Stars Icon")
 		case .tribe: self = Image("Community Icon")
 		case .wallet: self = Image("Wallet Icon")
-		case .more: self = Image(systemName: "...")
+		case .more: self = Image(systemName: "ellipsis")
 		}
 	}
 }
