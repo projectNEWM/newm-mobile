@@ -12,7 +12,7 @@ struct StarsView: View {
 }
 
 struct StarsView_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
         StarsView()
     }
 }

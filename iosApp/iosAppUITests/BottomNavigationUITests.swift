@@ -1,10 +1,3 @@
-//
-//  iosAppUITests.swift
-//  iosAppUITests
-//
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import XCTest
 import iosApp
 
@@ -31,7 +24,7 @@ class BottomNavigationUITests: XCTestCase {
         tapBottomBarButton(label: "Wallet")
         
         XCTAssertTrue( app.staticTexts["Wallet"].exists)
-    }
+	}
     
     func testTapOnStarsButtonSwitchesToStarsView() throws {
         tapBottomBarButton(label: "Stars")

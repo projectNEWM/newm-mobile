@@ -13,5 +13,4 @@ sealed class Screen(val route: String) {
     object TribeLanding : Screen("tribe-landing")
     object StarsLanding : Screen("stars-landing")
     object WalletLanding : Screen("wallet-landing")
-
 }
