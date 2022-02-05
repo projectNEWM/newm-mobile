@@ -1,44 +1,41 @@
 package com.projectnewm.screens.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import com.projectnewm.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.projectnewm.screens.home.categories.CategoryTabs
+import com.projectnewm.screens.home.categories.MusicalCategoriesViewModel
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 
 @Composable
-fun HomeScreen(onShowDetails: (Int) -> Unit) {
+fun HomeScreen(
+    onShowDetails: (Int) -> Unit,
+    viewModel: MusicalCategoriesViewModel = hiltViewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.purple_500))
-            .wrapContentSize(Alignment.Center)
+            .background(Color.LightGray)
             .testTag(TAG_HOME_SCREEN)
     ) {
-        Text(
-            text = "Home Screen",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp
-        )
 
-        Button(onClick = { onShowDetails(3) }) {
-            Text(text = "Go to details page")
+        val viewState by viewModel.state.collectAsState()
+        val selectedCategory = viewState.selectedCategory
+
+        if (viewState.categories.isNotEmpty() && selectedCategory != null) {
+            CategoryTabs(
+                categories = viewState.categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = viewModel::onCategorySelected,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
