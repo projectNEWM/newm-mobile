@@ -15,4 +15,9 @@ object Google {
     const val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.androidxNavigation}"
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.androidxSplashScreen}"
+
+    object Test {
+        const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+        const val hiltAndroidTesting = "com.google.dagger:hilt-android-testing:${Versions.hilt}"
+    }
 }

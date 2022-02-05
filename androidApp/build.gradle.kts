@@ -14,7 +14,7 @@ android {
         targetSdk = Versions.targetSdk
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = JUnit.jUnitRunner
+        testInstrumentationRunner = "com.projectnewm.NewmAndroidJUnitRunner"
     }
 
     buildTypes {
@@ -36,6 +36,14 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+
+    hilt {
+        enableTransformForLocalTests = true
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 
     packagingOptions {
@@ -78,4 +86,8 @@ dependencies {
     kapt(Hilt.hiltAndroidCompiler)
 
     testImplementation(JUnit.jUnit)
+
+    kaptAndroidTest (Hilt.hiltAndroidCompiler)
+    androidTestImplementation(Google.Test.composeUiTestJUnit)
+    androidTestImplementation (Google.Test.hiltAndroidTesting)
 }
