@@ -27,4 +27,11 @@
 
     <color name="orange_song_ring_1">#CC5500</color>
     <color name="orange_song_ring_2">#FFC107</color>
+
+    <color name="purple_artist_ring_1">#AA00FF</color>
+    <color name="purple_artist_ring_2">#20032E</color>
+
+    <color name="purple_artist_background_1">#AA00FF</color>
+    <color name="purple_artist_background_2">#440265</color>
+    <color name="purple_artist_background_3">#29023C</color>
 </resources>

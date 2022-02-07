@@ -58,6 +58,30 @@ fun SongRingBrush(): Brush {
 }
 
 @Composable
+fun ArtistRingBrush(): Brush {
+    return Brush.horizontalGradient(
+        colors = listOf(
+            colorResource(id = R.color.purple_artist_ring_1),
+            colorResource(id = R.color.purple_artist_ring_2),
+            colorResource(id = R.color.purple_artist_ring_1),
+            colorResource(id = R.color.purple_artist_ring_2),
+            colorResource(id = R.color.purple_artist_ring_1),
+        )
+    )
+}
+
+@Composable
+fun ArtistBackgroundBrush(): Brush {
+    return Brush.verticalGradient(
+        colors = listOf(
+            colorResource(id = R.color.purple_artist_background_1),
+            colorResource(id = R.color.purple_artist_background_2),
+            colorResource(id = R.color.purple_artist_background_3),
+        )
+    )
+}
+
+@Composable
 fun RingDecorator(
     modifier: Modifier = Modifier,
     brush: Brush,
