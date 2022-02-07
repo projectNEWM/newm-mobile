@@ -9,12 +9,12 @@ android {
     compileSdk = Versions.compileSdk
 
     defaultConfig {
-        applicationId = "com.projectnewm"
+        applicationId = "io.projectnewm"
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "com.projectnewm.NewmAndroidJUnitRunner"
+        testInstrumentationRunner = "io.projectnewm.NewmAndroidJUnitRunner"
     }
 
     buildTypes {
