@@ -66,7 +66,7 @@ fun SongCard(onSongClicked: () -> Unit) {
                 Image(
                     modifier = modifier
                         .clip(CircleShape),
-                    painter = painterResource(id = R.drawable.ic_person),
+                    painter = painterResource(id = R.drawable.ic_song_icon),
                     contentDescription = "Artist",
                 )
             }
