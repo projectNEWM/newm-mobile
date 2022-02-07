@@ -24,4 +24,7 @@
     <color name="gradient_orange_fade">#73FF9900</color>
     <color name="gradient_yellow_fade">#73FFFF66</color>
     <color name="gradient_green_fade">#7366FF66</color>
+
+    <color name="orange_song_ring_1">#CC5500</color>
+    <color name="orange_song_ring_2">#FFC107</color>
 </resources>

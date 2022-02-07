@@ -2,7 +2,6 @@ package io.projectnewm.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.projectnewm.screens.home.categories.CategoryTabs
 import io.projectnewm.screens.home.categories.MusicalCategoriesViewModel
+import io.projectnewm.screens.home.songs.NewmSongList
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 
@@ -53,7 +53,7 @@ fun HomeScreen(
             NewmArtist()
         }
         item {
-            NewmSongs()
+            NewmSongList()
         }
         item {
             NewAlbums()
@@ -77,21 +77,6 @@ fun NewmArtist() {
 
     ) {
         Text(text = "NEWM Artists")
-    }
-}
-
-@Composable
-fun NewmSongs() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .padding(16.dp)
-            .border(border = BorderStroke(1.dp, color = Color.Black), shape = RectangleShape),
-        contentAlignment = Alignment.Center
-
-    ) {
-        Text(text = "NEWM Songs")
     }
 }
 
