@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import io.projectnewm.screens.home.artists.ArtistList
 import io.projectnewm.screens.home.categories.CategoryTabs
 import io.projectnewm.screens.home.categories.MusicalCategoriesViewModel
 import io.projectnewm.screens.home.songs.NewmSongList
@@ -50,7 +50,7 @@ fun HomeScreen(
             }
         }
         item {
-            NewmArtist()
+            ArtistList()
         }
         item {
             NewmSongList()
@@ -61,22 +61,6 @@ fun HomeScreen(
         item {
             CuratedPlaylists()
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NewmArtist() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(250.dp)
-            .padding(16.dp)
-            .border(border = BorderStroke(1.dp, color = Color.Black), shape = RectangleShape),
-        contentAlignment = Alignment.Center
-
-    ) {
-        Text(text = "NEWM Artists")
     }
 }
 
