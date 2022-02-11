@@ -29,6 +29,13 @@ struct CircleImage: View {
 	
 	var body: some View {
 		Image(uiImage: image)
+			.circleImage(size: size)
+	}
+}
+
+extension Image {
+	func circleImage(size: CGFloat) -> some View {
+		self
 			.resizable()
 			.frame(width: size, height: size, alignment: .center)
 			.cornerRadius(size / 2.0)

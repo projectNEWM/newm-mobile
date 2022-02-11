@@ -15,7 +15,7 @@ struct SongCell: View {
 			ZStack(alignment: .top) {
 				CircleImage(image: data.image, size: 60)
 				if data.isNFT {
-					NFTTag()
+					GradientTag(title: "NFT")
 						.padding(.top, -14)
 				}
 			}

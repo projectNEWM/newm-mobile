@@ -1,5 +1,5 @@
 //
-//  NFTTag.swift
+//  GradientTag.swift
 //  iosApp
 //
 //  Created by Marty Ulrich on 1/16/22.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct NFTTag: View {
+struct GradientTag: View {
+	let title: CustomStringConvertible
+	
     var body: some View {
-		Text("NFT")
+		Text(title.description)
 			.font(.caption3.weight(.bold))
 			.padding([.top, .bottom], 4)
 			.padding([.leading, .trailing], 10)
@@ -18,8 +20,8 @@ struct NFTTag: View {
     }
 }
 
-struct NFTTag_Previews: PreviewProvider {
+struct GradientTag_Previews: PreviewProvider {
     static var previews: some View {
-        NFTTag()
+		GradientTag(title: "NFT")
     }
 }
