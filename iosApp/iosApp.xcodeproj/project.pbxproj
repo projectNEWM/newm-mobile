@@ -31,6 +31,9 @@
 		765163D12794F3ED00210E93 /* iOSAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163D02794F3ED00210E93 /* iOSAppViewModel.swift */; };
 		7683128E27A38F480056BC6B /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683128D27A38F480056BC6B /* iosAppTests.swift */; };
 		768FCAB127B7290600D0C0EB /* StarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB027B7290600D0C0EB /* StarsView.swift */; };
+		768FCAB927B7295200D0C0EB /* iosAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB427B7292C00D0C0EB /* iosAppUITestsLaunchTests.swift */; };
+		768FCABA27B7295200D0C0EB /* BottomNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */; };
+		768FCABB27B7295200D0C0EB /* iosAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB327B7292C00D0C0EB /* iosAppUITests.swift */; };
 		76AA99BF278EA7F900AE420B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99BE278EA7F900AE420B /* Link.swift */; };
 		76AA99C3278EAA7500AE420B /* SongPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99C2278EAA7500AE420B /* SongPlayingView.swift */; };
 		76AA99C6278EACA000AE420B /* PlaylistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99C5278EACA000AE420B /* PlaylistListView.swift */; };
@@ -51,6 +54,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		7683128F27A38F480056BC6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7555FF7A242A565900829871;
+			remoteInfo = iosApp;
+		};
+		82D6508427ACCBF700493EDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
 			proxyType = 1;
@@ -117,6 +127,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7683128827A38F480056BC6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82D6507B27ACCBF700493EDA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -419,6 +436,23 @@
 			productReference = 7683128B27A38F480056BC6B /* iosAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		82D6507D27ACCBF700493EDA /* iosAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82D6508627ACCBF700493EDA /* Build configuration list for PBXNativeTarget "iosAppUITests" */;
+			buildPhases = (
+				82D6507A27ACCBF700493EDA /* Sources */,
+				82D6507B27ACCBF700493EDA /* Frameworks */,
+				82D6507C27ACCBF700493EDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82D6508527ACCBF700493EDA /* PBXTargetDependency */,
+			);
+			name = iosAppUITests;
+			productName = iosAppUITests;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -433,6 +467,10 @@
 						CreatedOnToolsVersion = 11.3.1;
 					};
 					7683128A27A38F480056BC6B = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 7555FF7A242A565900829871;
+					};
+					82D6507D27ACCBF700493EDA = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 7555FF7A242A565900829871;
 					};
@@ -455,6 +493,7 @@
 			targets = (
 				7555FF7A242A565900829871 /* iosApp */,
 				7683128A27A38F480056BC6B /* iosAppTests */,
+				82D6507D27ACCBF700493EDA /* iosAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -471,6 +510,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7683128927A38F480056BC6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82D6507C27ACCBF700493EDA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -551,6 +597,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82D6507A27ACCBF700493EDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				768FCABB27B7295200D0C0EB /* iosAppUITests.swift in Sources */,
+				768FCABA27B7295200D0C0EB /* BottomNavigationUITests.swift in Sources */,
+				768FCAB927B7295200D0C0EB /* iosAppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -558,6 +614,11 @@
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
 			targetProxy = 7683128F27A38F480056BC6B /* PBXContainerItemProxy */;
+		};
+		82D6508527ACCBF700493EDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7555FF7A242A565900829871 /* iosApp */;
+			targetProxy = 82D6508427ACCBF700493EDA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -769,6 +830,47 @@
 			};
 			name = Release;
 		};
+		82D6508727ACCBF700493EDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EXCLUDED_ARCHS = arm64;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iosApp;
+			};
+			name = Debug;
+		};
+		82D6508827ACCBF700493EDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				EXCLUDED_ARCHS = arm64;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iosApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -795,6 +897,15 @@
 			buildConfigurations = (
 				7683129127A38F490056BC6B /* Debug */,
 				7683129227A38F490056BC6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82D6508627ACCBF700493EDA /* Build configuration list for PBXNativeTarget "iosAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82D6508727ACCBF700493EDA /* Debug */,
+				82D6508827ACCBF700493EDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
