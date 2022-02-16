@@ -23,6 +23,10 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
+
+      - name: create google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./androidApp/google-services.json
+      
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
