@@ -83,7 +83,7 @@ android {
 
 sqldelight {
     database("NewmDb") {
-        packageName = "com.projectnewm.repository.db"
+        packageName = "io.projectnewm.repository.db"
         sourceFolders = listOf("sqldelight")
     }
 }
