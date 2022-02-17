@@ -14,5 +14,8 @@ pluginManagement {
 }
 
 rootProject.name = "newm-mobile"
-include(":androidApp")
+include(":androidApps:DemoApp")
+include(":androidApps:ProjectNewm")
+include(":androidCore:core-theme")
+include(":androidFeatures:feature-example")
 include(":shared")
