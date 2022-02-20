@@ -1,5 +1,4 @@
 import SwiftUI
-import shared
 
 struct SongPlayingView: DataView {
 	@ObservedObject var viewModel: SongPlayingViewModel

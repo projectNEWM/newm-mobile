@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import shared
 
 protocol SongInfoUseCase {
 	func execute() -> SongPlayingViewModel.Song
@@ -113,7 +112,8 @@ private extension Int {
 		formatter.allowedUnits = [.hour, .minute, .second]
 		formatter.unitsStyle = .positional
 		guard let playbackTime = formatter.string(from: TimeInterval(self)) else {
-			LoggerKt.printLogD(className: String(describing: Self.self), message: "badPlaybackTimeFormat")
+			//TODO:MU: Uncomment when KMM module added back
+//			LoggerKt.printLogD(className: String(describing: Self.self), message: "badPlaybackTimeFormat")
 			return SongPlayingViewModel.playbackTimePlaceholder
 		}
 		
