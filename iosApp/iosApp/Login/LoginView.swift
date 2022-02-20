@@ -93,5 +93,6 @@ private extension Text {
 struct LoginView_Previews: PreviewProvider {
 	static var previews: some View {
 		LoginView()
+			.preferredColorScheme(.dark)
 	}
 }

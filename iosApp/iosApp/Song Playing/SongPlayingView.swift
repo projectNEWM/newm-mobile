@@ -37,6 +37,7 @@ struct SongPlayingView: DataView {
 			playbackTime
 			lyrics
 				.padding()
+				.frame(minHeight: 100)
 			Image("Tipping Icon")
 				.padding(.bottom, 5)
 				.onTapGesture {
@@ -74,8 +75,15 @@ struct SongPlayingView: DataView {
 		AsyncImage(url: viewModel.song.albumImage) { phase in
 			switch phase {
 			case .success(let image):
-				image
-					.circleImage(size: 200)
+				GeometryReader { geometry in
+					HStack {
+						Spacer()
+						image
+							.circleImage(size: geometry.size.height)
+						Spacer()
+					}
+				}
+				.frame(maxHeight: 200, alignment: .center)
 			default: Color.clear
 			}
 		}
