@@ -1,10 +1,3 @@
-//
-//  SongPlayingViewModel.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 2/2/22.
-//
-
 import Foundation
 import Combine
 import shared

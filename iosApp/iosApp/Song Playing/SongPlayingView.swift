@@ -1,10 +1,3 @@
-//
-//  SongPlayingView.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 1/11/22.
-//
-
 import SwiftUI
 import shared
 

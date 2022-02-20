@@ -1,10 +1,3 @@
-//
-//  PlaylistCell.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 1/11/22.
-//
-
 import SwiftUI
 
 struct PlaylistCell: View {

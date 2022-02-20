@@ -1,10 +1,3 @@
-//
-//  MainViewModel.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 1/16/22.
-//
-
 import Foundation
 
 class MainViewModel: ObservableObject {

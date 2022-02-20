@@ -1,10 +1,3 @@
-//
-//  HomeViewModel.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 1/10/22.
-//
-
 import Foundation
 import Combine
 //TODO: Remove UIImage uses and replace with URLs

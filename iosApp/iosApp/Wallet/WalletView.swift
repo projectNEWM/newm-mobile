@@ -1,11 +1,3 @@
-//
-//  WalletView.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 1/31/22.
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import SwiftUI
 
 struct WalletView: View {
