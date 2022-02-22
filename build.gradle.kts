@@ -5,14 +5,15 @@ buildscript {
 
     dependencies {
         classpath(Build.gradle)
-        classpath(Plugins.benManesVersionsClasspath)
+        classpath(Google.crashlyticsClasspath)
+        classpath(Google.googleServices)
         classpath(Hilt.hiltPlugin)
         classpath(Kotlin.kotlinGradle)
         classpath(Kotlin.serialization)
+        classpath(Plugins.benManesVersionsClasspath)
         classpath(SqlDelight.gradlePlugin)
     }
 }
-
 
 /**
  * Run with `./gradlew dependencyUpdates` and the report will be in:
