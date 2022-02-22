@@ -1,11 +1,3 @@
-//
-//  iosAppUITestsLaunchTests.swift
-//  iosAppUITests
-//
-//  Created by Jose Mateo on 2/3/22.
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import XCTest
 
 class iosAppUITestsLaunchTests: XCTestCase {

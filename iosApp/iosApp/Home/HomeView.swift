@@ -7,7 +7,7 @@ struct HomeView: View {
 		NavigationView {
 			ZStack {
 				IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
-				IDLink<SongView>(selectedID: viewModel.selectedSong?.songID)
+				IDLink<SongPlayingView>(selectedID: viewModel.selectedSong?.songID)
 				IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 				allViews
 					.frame(maxHeight: .infinity, alignment: .top)

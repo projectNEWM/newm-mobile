@@ -1,13 +1,7 @@
-//
-//  DummyData.swift
-//  iosApp
-//
-//  Created by Marty Ulrich on 1/9/22.
-//
-
 import Foundation
 import UIKit
 import SwiftUI
+import Combine
 
 class DummyData {
 	static func makeArtist(name: String) -> HomeViewModel.Artist {
@@ -83,6 +77,30 @@ class DummyData {
 			makePlaylistListPlaylist(id: "9")
 		]
 	}
+	
+	static var songPlayingViewModel: SongPlayingViewModel { SongPlayingViewModel(songInfoUseCase: songInfoUseCase, musicPlayerUseCase: musicPlayerUseCase)}
+	
+	static var songInfoUseCase: SongInfoUseCase { SongInfoUseCaseImpl() }
+	static var musicPlayerUseCase: MusicPlayerUseCase { MusicPlayerUseCaseImpl() }
+}
+
+class SongInfoUseCaseImpl: SongInfoUseCase {
+	func execute() -> SongPlayingViewModel.Song {
+		SongPlayingViewModel.Song(
+			songTitle: "Song Title",
+			artistName: "Artist Name",
+			shareCount: "543",
+			starCount: "48",
+			songLength: 200,
+			lyrics: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			backgroundImage: URL(string: "https://ychef.files.bbci.co.uk/976x549/p01j3jyb.jpg")!,
+			albumImage: URL(string: "https://i.scdn.co/image/ab6761610000e5ebb78f77c5583ae99472dd4a49")!
+		)
+	}
+}
+
+class MusicPlayerUseCaseImpl: MusicPlayerUseCase {
+	var playbackTime: AnyPublisher<Int, Never> = PassthroughSubject<Int, Never>().eraseToAnyPublisher()
 }
 
 class LoggedInUserUseCase: ObservableObject {
