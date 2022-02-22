@@ -27,8 +27,11 @@
 		762756FB27883FB00012BADB /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762756FA27883FB00012BADB /* UIImage+Extensions.swift */; };
 		763EBB4527ACD68800E60021 /* Circular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763EBB4427ACD68800E60021 /* Circular.swift */; };
 		763EBB4A27B20D0600E60021 /* TipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763EBB4927B20D0600E60021 /* TipView.swift */; };
+		763FEAB427C30B8200232093 /* Raleway-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */; };
 		765163CE2794F17200210E93 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163CD2794F17200210E93 /* MainViewModel.swift */; };
 		765163D12794F3ED00210E93 /* iOSAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163D02794F3ED00210E93 /* iOSAppViewModel.swift */; };
+		766874CA27C3243400E64A6C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 766874BD27C3243400E64A6C /* Roboto-Regular.ttf */; };
+		766874D027C3243400E64A6C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 766874C327C3243400E64A6C /* LICENSE.txt */; };
 		7683128E27A38F480056BC6B /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683128D27A38F480056BC6B /* iosAppTests.swift */; };
 		768FCAB127B7290600D0C0EB /* StarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB027B7290600D0C0EB /* StarsView.swift */; };
 		768FCAB927B7295200D0C0EB /* iosAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB427B7292C00D0C0EB /* iosAppUITestsLaunchTests.swift */; };
@@ -93,8 +96,11 @@
 		762756FA27883FB00012BADB /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		763EBB4427ACD68800E60021 /* Circular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circular.swift; sourceTree = "<group>"; };
 		763EBB4927B20D0600E60021 /* TipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
+		763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		765163CD2794F17200210E93 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		765163D02794F3ED00210E93 /* iOSAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAppViewModel.swift; sourceTree = "<group>"; };
+		766874BD27C3243400E64A6C /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		766874C327C3243400E64A6C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7683128B27A38F480056BC6B /* iosAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7683128D27A38F480056BC6B /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
 		768FCAB027B7290600D0C0EB /* StarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
@@ -197,9 +203,7 @@
 				765163D32794F49500210E93 /* Utils */,
 				76E3CA7027A8DD0300C24DC2 /* Wallet */,
 				7555FF8C242A565B00829871 /* Info.plist */,
-				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				058557D7273AAEEB004C7B11 /* Preview Content */,
-				76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */,
+				763FEAB027C30B4500232093 /* Resources */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -231,6 +235,26 @@
 				763EBB4927B20D0600E60021 /* TipView.swift */,
 			);
 			path = Tip;
+			sourceTree = "<group>";
+		};
+		763FEAB027C30B4500232093 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				763FEAB127C30B6300232093 /* Fonts */,
+				76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */,
+				058557D7273AAEEB004C7B11 /* Preview Content */,
+				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		763FEAB127C30B6300232093 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				766874BA27C3243400E64A6C /* Roboto */,
+				766874D527C3251100E64A6C /* Raleway */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		765163CC2794F14B00210E93 /* MainView */ = {
@@ -269,6 +293,23 @@
 				762756FA27883FB00012BADB /* UIImage+Extensions.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		766874BA27C3243400E64A6C /* Roboto */ = {
+			isa = PBXGroup;
+			children = (
+				766874C327C3243400E64A6C /* LICENSE.txt */,
+				766874BD27C3243400E64A6C /* Roboto-Regular.ttf */,
+			);
+			path = Roboto;
+			sourceTree = "<group>";
+		};
+		766874D527C3251100E64A6C /* Raleway */ = {
+			isa = PBXGroup;
+			children = (
+				763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */,
+			);
+			path = Raleway;
 			sourceTree = "<group>";
 		};
 		7683128C27A38F480056BC6B /* iosAppTests */ = {
@@ -506,7 +547,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				763FEAB427C30B8200232093 /* Raleway-VariableFont_wght.ttf in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				766874D027C3243400E64A6C /* LICENSE.txt in Resources */,
+				766874CA27C3243400E64A6C /* Roboto-Regular.ttf in Resources */,
 				76FC55A127C2DD5000A061E5 /* SplashScreen.storyboard in Resources */,
 				76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
@@ -545,7 +589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#cd \"$SRCROOT/..\"\n#./gradlew :shared:embedAndSignAppleFrameworkForXcode -P\"kotlinVersion\"=\"1.5.21\"\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -664,7 +708,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = "";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -683,6 +727,10 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					shared,
+				);
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -726,7 +774,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = "";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -738,6 +786,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-framework",
+					shared,
+				);
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -751,16 +803,16 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = S2X9VNR2UC;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks\"/**";
 				INFOPLIST_FILE = iosApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -774,16 +826,16 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = S2X9VNR2UC;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks\"/**";
 				INFOPLIST_FILE = iosApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
