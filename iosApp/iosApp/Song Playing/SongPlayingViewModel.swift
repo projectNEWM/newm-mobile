@@ -36,7 +36,9 @@ class SongPlayingViewModel: ObservableObject {
 			.sink { [weak self] in self?.playbackTime = $0 }
 			.store(in: &cancellables)
 	}
-	
+}
+
+extension SongPlayingViewModel {
 	func supportArtistTapped() {
 		showTipping = true
 	}
@@ -107,11 +109,12 @@ extension SongPlayingViewModel {
 }
 
 private extension Int {
+	private static let formatter = DateComponentsFormatter()
+
 	var playbackTimeString: String {
-		let formatter = DateComponentsFormatter()
-		formatter.allowedUnits = [.hour, .minute, .second]
-		formatter.unitsStyle = .positional
-		guard let playbackTime = formatter.string(from: TimeInterval(self)) else {
+		Int.formatter.allowedUnits = [.hour, .minute, .second]
+		Int.formatter.unitsStyle = .positional
+		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
 			//TODO:MU: Uncomment when KMM module added back
 //			LoggerKt.printLogD(className: String(describing: Self.self), message: "badPlaybackTimeFormat")
 			return SongPlayingViewModel.playbackTimePlaceholder
