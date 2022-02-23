@@ -1,8 +1,10 @@
 plugins {
     id(Plugins.androidApplication)
+    id(Plugins.crashlytics)
+    id(Plugins.hilt)
+    id(Plugins.googleServices)
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
-    id(Plugins.hilt)
 }
 
 android {
@@ -55,13 +57,13 @@ android {
 
 dependencies {
     androidTestImplementation(Google.espressoTest)
+    androidTestImplementation(Google.Test.composeUiTestJUnit)
+    androidTestImplementation(Google.Test.hiltAndroidTesting)
     androidTestImplementation(JUnit.androidxComposeJUnit)
     androidTestImplementation(JUnit.androidxJUnit)
 
     debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)
-
-    implementation(project(Modules.shared))
 
     implementation(Google.activityCompose)
     implementation(Google.androidxCore)
@@ -70,6 +72,8 @@ dependencies {
     implementation(Google.composeUi)
     implementation(Google.composeUiToolingPreview)
     implementation(Google.constraintLayout)
+    implementation(Google.firebaseAnalytics)
+    implementation(Google.firebaseCrashlytics)
     implementation(Google.lifecycle)
     implementation(Google.material)
     implementation(Google.navigationCompose)
@@ -82,12 +86,14 @@ dependencies {
     implementation(Kotlin.reflect)
     implementation(Ktor.android)
 
+    implementation(platform(Google.firebase))
+
+    implementation(project(Modules.shared))
+
     kapt(Hilt.hiltCompiler)
     kapt(Hilt.hiltAndroidCompiler)
 
-    testImplementation(JUnit.jUnit)
+    kaptAndroidTest(Hilt.hiltAndroidCompiler)
 
-    kaptAndroidTest (Hilt.hiltAndroidCompiler)
-    androidTestImplementation(Google.Test.composeUiTestJUnit)
-    androidTestImplementation (Google.Test.hiltAndroidTesting)
+    testImplementation(JUnit.jUnit)
 }

@@ -14,8 +14,8 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "82D6507D27ACCBF700493EDA"
-               BuildableName = "iosAppUITests"
+               BlueprintIdentifier = "76B770DA27C5EB9C0009A58E"
+               BuildableName = "iosAppUITests.xctest"
                BlueprintName = "iosAppUITests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
@@ -32,9 +32,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "82D6507D27ACCBF700493EDA"
-               BuildableName = "iosAppUITests"
+               BlueprintIdentifier = "76B770DA27C5EB9C0009A58E"
+               BuildableName = "iosAppUITests.xctest"
                BlueprintName = "iosAppUITests"
+               ReferencedContainer = "container:iosApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7683128A27A38F480056BC6B"
+               BuildableName = "iosAppTests.xctest"
+               BlueprintName = "iosAppTests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
