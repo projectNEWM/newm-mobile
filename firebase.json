@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "iosApp/fastlane/screenshots",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
