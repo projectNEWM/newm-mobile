@@ -34,8 +34,8 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "82D6507D27ACCBF700493EDA"
-               BuildableName = "iosAppUITests"
+               BlueprintIdentifier = "82DA37A527C57B7F0020C92C"
+               BuildableName = "iosAppUITests.xctest"
                BlueprintName = "iosAppUITests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>

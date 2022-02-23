@@ -7,8 +7,9 @@ class BottomNavigationUITests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        continueAfterFailure = false
+        continueAfterFailure = true
         app = XCUIApplication()
+        setupSnapshot(app)
         app.launch()
         
         app.buttons["enterNewmButton"].tap()
@@ -17,19 +18,19 @@ class BottomNavigationUITests: XCTestCase {
     func testTapOnTribeButtonSwitchesToTribeView() throws {
         tapBottomBarButton(label: "Tribe")
         
-        XCTAssertTrue( app.staticTexts["Tribe"].exists)
+        snapshot("Tribe")
     }
     
     func testTapOnWalletButtonSwitchesToWalletView() throws {
         tapBottomBarButton(label: "Wallet")
         
-        XCTAssertTrue( app.staticTexts["Wallet"].exists)
+        snapshot("Wallet")
 	}
     
     func testTapOnStarsButtonSwitchesToStarsView() throws {
         tapBottomBarButton(label: "Stars")
         
-        XCTAssertTrue( app.staticTexts["Stars"].exists)
+        snapshot("Stars")
     }
     
     fileprivate func tapBottomBarButton(label: String) {
