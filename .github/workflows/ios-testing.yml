@@ -4,19 +4,9 @@ on:
     branches:
     - development
     - master
-    paths:
-    - '.github/**'
-    - 'build.gradle.kts'
-    - 'gradle/**'
-    - 'gradle.properties'
-    - 'gradlew.bat'
-    - 'iosApp/**'
-    - 'local.properties'
-    - 'settings.gradle.kts'
-    - 'shared/build/xcode-frameworks/**'
-    - 'shared/src/commonMain/**'
-    - 'shared/src/iosMain/**'
-    - 'shared/build.gradle.kts'
+    paths-ignore:
+    - 'androidApp/**'
+
 jobs:
   test:
     name: Testing iOS app
