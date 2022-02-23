@@ -16,4 +16,4 @@ jobs:
         uses: actions/checkout@v1
       - name: Testing iOS app
         working-directory: ./iosApp
-        run: bundle exec fastlane tests
+        run: fastlane tests
