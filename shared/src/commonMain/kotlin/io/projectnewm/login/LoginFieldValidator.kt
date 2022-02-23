@@ -1,12 +1,11 @@
 package io.projectnewm.login
 
-class LoginFieldValidator {
-    public companion object {
+object LoginFieldValidator {
         public fun validate(email: String, password: String): Boolean {
             return isValidEmail(email) && isValidPassword(password)
         }
 
-        private fun isValidEmail(email: CharSequence?): Boolean {
+        private fun isValidEmail(email: String): Boolean {
             val emailAddressRegex = Regex(
                 "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                         "\\@" +
@@ -16,13 +15,10 @@ class LoginFieldValidator {
                         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                         ")+"
             )
-            return email?.matches(emailAddressRegex) ?: false
+            return email.matches(emailAddressRegex)
         }
 
-        private fun isValidPassword(password: String?): Boolean {
-            val password = password?.let { it } ?: return false
-            if (password.isBlank()) { return false }
-            return true
+        private fun isValidPassword(password: String): Boolean {
+            return password.isBlank() == false
         }
-    }
 }

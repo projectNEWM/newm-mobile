@@ -14,8 +14,10 @@ class LoginViewModel: ObservableObject {
 	@Published var email: String = ""
 	@Published var password: String = ""
 	
+	private let loginFieldValidator = LoginFieldValidator()
+	
 	var fieldsAreValid: Bool {
-		LoginFieldValidator.companion.validate(email: email, password: password)
+		loginFieldValidator.validate(email: email, password: password)
 	}
 		
 	@ObservedObject var logInUseCase = LoggedInUserUseCase.shared
