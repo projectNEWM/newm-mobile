@@ -11,20 +11,30 @@ struct SectionSelectorView: View {
 					Button(sectionTitles[index]) {
 						selectedIndex = index
 					}
-					.foregroundColor(selectedIndex == index ? .white : .gray)
-					.font(Font.system(size: 16, weight: selectedIndex == index ? .heavy : .medium, design: .default))
+					.foregroundColor(textColor(for: index))
+					.font(font(for: index))
 				}
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
 			.padding([.top, .bottom])
+			.padding(.leading, 16)
 		}
 		.background(Color.black)
+	}
+	
+	private func textColor(for index: Int) -> Color {
+		selectedIndex == index ? .white : .gray
+	}
+	
+	private func font(for index: Int) -> Font {
+		selectedIndex == index ? .newmFontBold(ofSize: 16) : .newmFont(ofSize: 16)
 	}
 }
 
 struct SectionSelectorView_Previews: PreviewProvider {
+	@State static var selectedIndex: Int = 0
 	static var previews: some View {
-		SectionSelectorView(selectedIndex: .constant(0),
+		SectionSelectorView(selectedIndex: $selectedIndex,
 							sectionTitles: HomeViewModel.Section.allCases.map(\.description))
 	}
 }

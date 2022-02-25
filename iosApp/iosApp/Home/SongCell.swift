@@ -16,11 +16,11 @@ struct SongCell: View {
 				.foregroundColor(.white)
 				.font(.caption3)
 			Text(data.artist)
-				.foregroundColor(.orange)
+				.foregroundColor(.newmOrange)
 				.font(.caption4)
 		}
 		.fixedSize()
-		.frame(width: 80, height: 150)
+		.frame(width: 105, height: 125)
 	}
 }
 
@@ -32,9 +32,8 @@ struct SongCell_Previews: PreviewProvider {
 	static var previews: some View {
 		Group {
 			SongCell(data: DummyData.makeSong(title: "Song", isNFT: false))
-							.background(Color.black)
 			SongCell(data: DummyData.makeSong(title: "Song", isNFT: true))
-							.background(Color.black)
 		}
+		.preferredColorScheme(.dark)
 	}
 }

@@ -28,6 +28,7 @@
 		763EBB4527ACD68800E60021 /* Circular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763EBB4427ACD68800E60021 /* Circular.swift */; };
 		763EBB4A27B20D0600E60021 /* TipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763EBB4927B20D0600E60021 /* TipView.swift */; };
 		763FEAB427C30B8200232093 /* Raleway-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */; };
+		764F7E9227C60A5D00DF29F3 /* LocalizableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764F7E9127C60A5D00DF29F3 /* LocalizableWrapper.swift */; };
 		765163CE2794F17200210E93 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163CD2794F17200210E93 /* MainViewModel.swift */; };
 		765163D12794F3ED00210E93 /* iOSAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163D02794F3ED00210E93 /* iOSAppViewModel.swift */; };
 		766874CA27C3243400E64A6C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 766874BD27C3243400E64A6C /* Roboto-Regular.ttf */; };
@@ -96,6 +97,7 @@
 		763EBB4427ACD68800E60021 /* Circular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circular.swift; sourceTree = "<group>"; };
 		763EBB4927B20D0600E60021 /* TipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
 		763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		764F7E9127C60A5D00DF29F3 /* LocalizableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableWrapper.swift; sourceTree = "<group>"; };
 		765163CD2794F17200210E93 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		765163D02794F3ED00210E93 /* iOSAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAppViewModel.swift; sourceTree = "<group>"; };
 		766874BD27C3243400E64A6C /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				76155AB1278E79C6002DD26D /* String+Extensions.swift */,
 				7602CC5C278D39820091359E /* SwiftUI+Common.swift */,
 				762756FA27883FB00012BADB /* UIImage+Extensions.swift */,
+				764F7E9127C60A5D00DF29F3 /* LocalizableWrapper.swift */,
 				76DC421C27C8453000050D38 /* Colors.swift */,
 			);
 			path = Utils;
@@ -616,6 +619,7 @@
 				76C8C3E4279E86390061BAC8 /* ProfileView.swift in Sources */,
 				76D881C22794DCD7001B73D5 /* PlaylistDetailsView.swift in Sources */,
 				76E3CA7227A8DD1200C24DC2 /* WalletView.swift in Sources */,
+				764F7E9227C60A5D00DF29F3 /* LocalizableWrapper.swift in Sources */,
 				7612F0F5278D5D14002D05AA /* HomeScrolling.swift in Sources */,
 				7602CC36278BE8EF0091359E /* SongCell.swift in Sources */,
 				76D881BF2794CA9D001B73D5 /* PlaylistListViewModel.swift in Sources */,

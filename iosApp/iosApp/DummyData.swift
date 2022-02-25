@@ -2,10 +2,11 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
+import AVFAudio
 
 class DummyData {
 	static func makeArtist(name: String) -> HomeViewModel.Artist {
-		HomeViewModel.Artist(image: artistImage.jpegData(compressionQuality: 1.0)!, name: name, genre: "Rock", stars: "✭ 12000", artistID: name)
+		HomeViewModel.Artist(image: artistImage.jpegData(compressionQuality: 1.0)!, name: name, genre: "Rock", stars: "✭ 12k", artistID: name)
 	}
 	
 	static var artists: [HomeViewModel.Artist] {
@@ -43,7 +44,7 @@ class DummyData {
 	}
 	
 	static func makeHomePlaylist(id: String) -> HomeViewModel.Playlist {
-		HomeViewModel.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "NEWM", songCount: "♬ 32", playlistID: id)
+		HomeViewModel.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "by NEWM", songCount: "♬ 32", playlistID: id)
 	}
 	
 	static var playlists: [HomeViewModel.Playlist] {
@@ -61,7 +62,7 @@ class DummyData {
 	}
 	
 	static func makePlaylistListPlaylist(id: String) -> PlaylistListViewModel.Playlist {
-		PlaylistListViewModel.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "by NEWM", genre: "Uplifting", starCount: "☆ 12k", playCount: "▶️ 938k", playlistID: id)
+		PlaylistListViewModel.Playlist(image: DummyData.artistImage, title: "Music for Gaming", creator: "by NEWM", genre: "Uplifting", starCount: "✭ 12k", playCount: "▶ 938k", playlistID: id)
 	}
 	
 	static var playlistListPlaylists: [PlaylistListViewModel.Playlist] {
@@ -92,7 +93,7 @@ class SongInfoUseCaseImpl: SongInfoUseCase {
 			shareCount: "543",
 			starCount: "48",
 			songLength: 200,
-			lyrics: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			lyrics: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 			backgroundImage: URL(string: "https://ychef.files.bbci.co.uk/976x549/p01j3jyb.jpg")!,
 			albumImage: URL(string: "https://i.scdn.co/image/ab6761610000e5ebb78f77c5583ae99472dd4a49")!
 		)
@@ -100,7 +101,40 @@ class SongInfoUseCaseImpl: SongInfoUseCase {
 }
 
 class MusicPlayerUseCaseImpl: MusicPlayerUseCase {
-	var playbackTime: AnyPublisher<Int, Never> = PassthroughSubject<Int, Never>().eraseToAnyPublisher()
+	enum PlaybackState {
+		case playing
+		case paused
+	}
+	
+	lazy var playbackTime: AnyPublisher<Int, Never> = $_playbackTime.eraseToAnyPublisher()
+	@Published private var _playbackTime: Int = 0
+	
+	//TODO: MU: remove this stuff
+	private var timer: AnyCancellable?
+	private var playbackState: PlaybackState = .paused
+	
+	init() {
+		//TODO: MU remove this
+		timer = Timer.publish(every: 1, tolerance: nil, on: .current, in: .default, options: nil)
+			.autoconnect()
+			.filter { [weak self] _ in self?.playbackState == .playing }
+			.sink { [weak self] _ in
+				self?._playbackTime += 1
+			}
+	}
+		
+	func play() {
+		playbackState = .playing
+	}
+	
+	func pause() {
+		playbackState = .paused
+	}
+	
+	func stop() {
+		pause()
+		_playbackTime = 0
+	}
 }
 
 class LoggedInUserUseCase: ObservableObject {

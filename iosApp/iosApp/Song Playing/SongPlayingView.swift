@@ -10,43 +10,15 @@ struct SongPlayingView: DataView {
 	
 	var body: some View {
 		VStack {
-			Text(viewModel.song.songTitle)
-				.fontWeight(.heavy)
-				.font(.largeTitle)
-				.padding(.bottom, 10)
-			Text(viewModel.song.artistName)
-				.font(.system(size: 16))
-				.foregroundColor(.orange)
-			HStack {
-				Text(viewModel.song.shareCount)
-				Image("Share Icon")
-					.onTapGesture(perform: viewModel.shareTapped)
-				Spacer()
-				Image("Airplay Icon")
-					.onTapGesture(perform: viewModel.airplayTapped)
-				Spacer()
-				Image("Stars Icon")
-					.onTapGesture(perform: viewModel.starTapped)
-				Text(viewModel.song.starCount)
-			}
-			.frame(width: 250)
+			songTitle
+			artistName
+			topButtons
 			albumImage
-				.padding(.top)
 			playControls
-				.padding(.top, -20)
 			playbackTime
 			lyrics
-				.padding()
-				.frame(minHeight: 100)
-			Image("Tipping Icon")
-				.padding(.bottom, 5)
-				.onTapGesture {
-					withAnimation {
-						viewModel.supportArtistTapped()
-					}
-				}
-			Text(viewModel.supportArtistPrompt)
-				.font(.caption3)
+			tipping
+			supportArtistPrompt
 			Spacer()
 		}
 		.background(backgroundImage)
@@ -55,6 +27,68 @@ struct SongPlayingView: DataView {
 				tippingOverlay
 			}
 		}
+	}
+	
+	private var supportArtistPrompt: some View {
+		Text(viewModel.supportArtistPrompt)
+			.font(.caption3)
+	}
+	
+	private var tipping: some View {
+		Image("Tipping Icon")
+			.padding(.bottom, 5)
+			.onTapGesture {
+				withAnimation {
+					viewModel.supportArtistTapped()
+				}
+			}
+	}
+	
+	private var topButtons: some View {
+		HStack {
+			shareButton
+			Spacer()
+			airplayButton
+			Spacer()
+			starButton
+		}
+		.frame(width: 250)
+		.tint(.white)
+	}
+	
+	private var starButton: some View {
+		Button(action: viewModel.starTapped) {
+			Image("Stars Icon")
+			Text(viewModel.song.starCount)
+				.padding(.leading, -5)
+		}
+	}
+	
+	private var airplayButton: some View {
+		Button(action: viewModel.airplayTapped) {
+			Image("Airplay Icon")
+		}
+	}
+	
+	private var shareButton: some View {
+		Button(action: viewModel.shareTapped) {
+			Text(viewModel.song.shareCount)
+				.padding(.trailing, -5)
+			Image("Share Icon")
+		}
+	}
+	
+	private var songTitle: some View {
+		Text(viewModel.song.songTitle)
+			.fontWeight(.heavy)
+			.font(.largeTitle)
+			.padding(.bottom, 10)
+	}
+	
+	private var artistName: some View {
+		Text(viewModel.song.artistName)
+			.font(.system(size: 16))
+			.foregroundColor(.orange)
 	}
 	
 	private var backgroundImage: some View {
@@ -87,50 +121,87 @@ struct SongPlayingView: DataView {
 			default: Color.clear
 			}
 		}
+		.padding(.top)
 	}
 	
 	private var playControls: some View {
 		HStack {
-			Image("Previous Icon")
-				.padding(.bottom, 100)
-				.padding(.trailing, 10)
-				.onTapGesture(perform: viewModel.previousSongTapped)
-			Image("Repeat all Icon")
-				.padding(.bottom, 25)
-				.padding(.trailing, 10)
-				.onTapGesture(perform: viewModel.repeatTapped)
+			prevButton
+			repeatButton
 			switch viewModel.playbackState {
 			case .playing:
-				Image("Pause Icon")
-					.padding(.top, 20)
-					.padding(.trailing, 10)
-					.onTapGesture(perform: viewModel.playTapped)
+				pauseButton
 			case .paused:
-				Image("Play Icon")
-					.padding(.top, 20)
-					.padding(.trailing, 10)
-					.onTapGesture(perform: viewModel.pauseTapped)
+				playButton
 			}
-			Image("Shuffle Icon")
-				.padding(.bottom, 25)
-				.padding(.trailing, 10)
+			shuffleButton
+			nextButton
+		}
+		.frame(height: 100)
+		.padding(.top, -20)
+	}
+	
+	private var nextButton: some View {
+		Button(action: viewModel.nextSongTapped) {
 			Image("Next Icon")
 				.padding(.bottom, 100)
 				.padding(.trailing, 10)
 		}
-		.frame(height: 100)
+	}
+	
+	private var shuffleButton: some View {
+		Button(action: viewModel.shuffleTapped) {
+			Image("Shuffle Icon")
+				.padding(.bottom, 25)
+				.padding(.trailing, 10)
+		}
+	}
+	
+	private var playButton: some View {
+		Button(action: viewModel.playTapped) {
+			Image("Play Icon")
+				.padding(.top, 20)
+				.padding(.trailing, 10)
+		}
+	}
+	
+	private var pauseButton: some View {
+		Button(action: viewModel.pauseTapped) {
+			Image("Pause Icon")
+				.padding(.top, 20)
+				.padding(.trailing, 10)
+		}
+	}
+	
+	private var prevButton: some View {
+		Button(action: viewModel.previousSongTapped) {
+			Image("Previous Icon")
+				.padding(.bottom, 100)
+				.padding(.trailing, 10)
+		}
+	}
+	
+	private var repeatButton: some View {
+		Button(action: viewModel.repeatTapped) {
+			Image("Repeat all Icon")
+				.padding(.bottom, 25)
+				.padding(.trailing, 10)
+		}
 	}
 	
 	private var playbackTime: some View {
 		Text(viewModel.playbackTime)
 			.foregroundColor(.orange)
 			.font(.title2)
+			.monospacedDigit()
 	}
 	
 	private var lyrics: some View {
 		ScrollView(.vertical, showsIndicators: false) {
 			Text(viewModel.song.lyrics)
 		}
+		.padding()
+		.frame(minHeight: 100)
 	}
 	
 	private var tippingOverlay: some View {

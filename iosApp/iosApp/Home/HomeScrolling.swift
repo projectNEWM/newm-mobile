@@ -19,22 +19,26 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 			ScrollView(.horizontal, showsIndicators: false) {
 				HStack(alignment: .center, spacing: nil) {
 					ForEach(dataModels) { data in
-						Model(data: data)
-							.onTapGesture { selectedDataModel = data }
-							.padding(.trailing, spacing)
+						Button(action: { selectedDataModel = data }) {
+							Model(data: data)
+								.padding(.trailing, spacing)
+						}
 					}
 				}
+				.padding(.leading)
 			}
+			.tint(.white)
 		}
 	}
 }
 
 struct HomeScrollingContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		Group {
+		VStack {
 			HomeScrollingContentView<ArtistCell>(selectedDataModel: .constant(nil), dataModels: DummyData.artists, title: "NEWM Artists", spacing: 8)
 			HomeScrollingContentView<SongCell>(selectedDataModel: .constant(nil), dataModels: DummyData.songs, title: "NEWM Songs", spacing: 8)
 			HomeScrollingContentView<PlaylistCell>(selectedDataModel: .constant(nil), dataModels: DummyData.playlists, title: "Curated Playlists", spacing: 12)
 		}
+		.preferredColorScheme(.dark)
 	}
 }

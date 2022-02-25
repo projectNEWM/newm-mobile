@@ -1,15 +1,14 @@
 import Foundation
-import SwiftUI
 import Combine
 import shared
 
 class LoginViewModel: ObservableObject {
-	let title = NSLocalizedString("ENTER_NEWMIVERSE", comment: "")
-	let emailPlaceholder = NSLocalizedString("YOUR_EMAIL", comment: "")
-	let passwordPlaceholder = NSLocalizedString("PASSWORD", comment: "")
-	let forgotPassword = NSLocalizedString("FORGOT_PASSWORD", comment: "")
-	let enterNewm = NSLocalizedString("ENTER_NEWM", comment: "")
-	let createAccount = NSLocalizedString("CREATE_FREE_ACCOUNT", comment: "")
+	@Localizable var title = "ENTER_NEWMIVERSE"
+	@Localizable var emailPlaceholder = "YOUR_EMAIL"
+	@Localizable var passwordPlaceholder = "PASSWORD"
+	@Localizable var forgotPassword = "FORGOT_PASSWORD"
+	@Localizable var enterNewm = "ENTER_NEWM"
+	@Localizable var createAccount = "CREATE_FREE_ACCOUNT"
 	
 	@Published var email: String = ""
 	@Published var password: String = ""
@@ -20,7 +19,7 @@ class LoginViewModel: ObservableObject {
 		loginFieldValidator.validate(email: email, password: password)
 	}
 		
-	@ObservedObject var logInUseCase = LoggedInUserUseCase.shared
+	let logInUseCase = LoggedInUserUseCase.shared
 	
 	func enterNewmTapped() {
 		logInUseCase.logIn()

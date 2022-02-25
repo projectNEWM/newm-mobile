@@ -3,8 +3,8 @@ import SwiftUI
 struct TipView: View {
 	let tipSelected: (TipAmount) -> ()
 	let chooseYourTipPrompt: String = NSLocalizedString("CHOOSE_YOUR_TIP", comment: "")
-
-    var body: some View {
+	
+	var body: some View {
 		VStack {
 			Text(chooseYourTipPrompt)
 				.font(.largeTitle)
@@ -12,20 +12,21 @@ struct TipView: View {
 				.padding(.bottom, 70)
 			Circular {
 				ForEach(TipAmount.allCases) { tipAmount in
-					Color.teal
-						.frame(width: 75, height: 75)
-						.clipShape(Circle())
-						.overlay(Text(tipAmount.description).font(.headline).foregroundColor(.white).allowsTightening(true))
-						.shadow(radius: 3)
-						.onTapGesture {
-							tipSelected(tipAmount)
-						}
+					Button {
+						tipSelected(tipAmount)
+					} label: {
+						Color.teal
+							.frame(width: 75, height: 75)
+							.clipShape(Circle())
+							.overlay(Text(tipAmount.description).font(.headline).foregroundColor(.white).allowsTightening(true))
+							.shadow(radius: 3)
+					}
 				}
 			}
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
 		.background(.ultraThinMaterial)
-    }
+	}
 }
 
 enum TipAmount: CaseIterable, CustomStringConvertible, Identifiable {
