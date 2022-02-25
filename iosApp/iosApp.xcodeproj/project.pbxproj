@@ -27,8 +27,11 @@
 		762756FB27883FB00012BADB /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762756FA27883FB00012BADB /* UIImage+Extensions.swift */; };
 		763EBB4527ACD68800E60021 /* Circular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763EBB4427ACD68800E60021 /* Circular.swift */; };
 		763EBB4A27B20D0600E60021 /* TipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763EBB4927B20D0600E60021 /* TipView.swift */; };
+		763FEAB427C30B8200232093 /* Raleway-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */; };
 		765163CE2794F17200210E93 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163CD2794F17200210E93 /* MainViewModel.swift */; };
 		765163D12794F3ED00210E93 /* iOSAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765163D02794F3ED00210E93 /* iOSAppViewModel.swift */; };
+		766874CA27C3243400E64A6C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 766874BD27C3243400E64A6C /* Roboto-Regular.ttf */; };
+		766874D027C3243400E64A6C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 766874C327C3243400E64A6C /* LICENSE.txt */; };
 		7683128E27A38F480056BC6B /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683128D27A38F480056BC6B /* iosAppTests.swift */; };
 		768FCAB127B7290600D0C0EB /* StarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB027B7290600D0C0EB /* StarsView.swift */; };
 		76AA99BF278EA7F900AE420B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA99BE278EA7F900AE420B /* Link.swift */; };
@@ -48,7 +51,6 @@
 		76E3CA7227A8DD1200C24DC2 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E3CA7127A8DD1200C24DC2 /* WalletView.swift */; };
 		76E3CA7427AB32EE00C24DC2 /* SongPlayingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E3CA7327AB32EE00C24DC2 /* SongPlayingViewModel.swift */; };
 		76FC55A127C2DD5000A061E5 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76FC55A027C2DD5000A061E5 /* SplashScreen.storyboard */; };
-		82DA37A927C57B7F0020C92C /* iosAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DA37A827C57B7F0020C92C /* iosAppUITests.swift */; };
 		82DA37AB27C57B7F0020C92C /* iosAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DA37AA27C57B7F0020C92C /* iosAppUITestsLaunchTests.swift */; };
 		82DA37B127C57B900020C92C /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA609927C574B00066023B /* SnapshotHelper.swift */; };
 		82DA37B227C57B900020C92C /* BottomNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */; };
@@ -62,7 +64,7 @@
 			remoteGlobalIDString = 7555FF7A242A565900829871;
 			remoteInfo = iosApp;
 		};
-		82DA37AC27C57B7F0020C92C /* PBXContainerItemProxy */ = {
+		82970ED727C8A63E00753023 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
 			proxyType = 1;
@@ -94,13 +96,14 @@
 		762756FA27883FB00012BADB /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		763EBB4427ACD68800E60021 /* Circular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circular.swift; sourceTree = "<group>"; };
 		763EBB4927B20D0600E60021 /* TipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
+		763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		765163CD2794F17200210E93 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		765163D02794F3ED00210E93 /* iOSAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAppViewModel.swift; sourceTree = "<group>"; };
+		766874BD27C3243400E64A6C /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		766874C327C3243400E64A6C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7683128B27A38F480056BC6B /* iosAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7683128D27A38F480056BC6B /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
 		768FCAB027B7290600D0C0EB /* StarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
-		768FCAB327B7292C00D0C0EB /* iosAppUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iosAppUITests.swift; sourceTree = "<group>"; };
-		768FCAB427B7292C00D0C0EB /* iosAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iosAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomNavigationUITests.swift; sourceTree = "<group>"; };
 		76AA99BE278EA7F900AE420B /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		76AA99C2278EAA7500AE420B /* SongPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayingView.swift; sourceTree = "<group>"; };
@@ -121,7 +124,6 @@
 		76FC55A027C2DD5000A061E5 /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		82BA609927C574B00066023B /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = iosAppUITests/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		82DA37A627C57B7F0020C92C /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		82DA37A827C57B7F0020C92C /* iosAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppUITests.swift; sourceTree = "<group>"; };
 		82DA37AA27C57B7F0020C92C /* iosAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,13 +136,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7683128827A38F480056BC6B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		82DA37A327C57B7F0020C92C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -163,7 +158,6 @@
 			children = (
 				7555FF7D242A565900829871 /* iosApp */,
 				7683128C27A38F480056BC6B /* iosAppTests */,
-				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
 				82DA37A727C57B7F0020C92C /* iosAppUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
@@ -204,9 +198,7 @@
 				765163D32794F49500210E93 /* Utils */,
 				76E3CA7027A8DD0300C24DC2 /* Wallet */,
 				7555FF8C242A565B00829871 /* Info.plist */,
-				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				058557D7273AAEEB004C7B11 /* Preview Content */,
-				76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */,
+				763FEAB027C30B4500232093 /* Resources */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -238,6 +230,26 @@
 				763EBB4927B20D0600E60021 /* TipView.swift */,
 			);
 			path = Tip;
+			sourceTree = "<group>";
+		};
+		763FEAB027C30B4500232093 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				763FEAB127C30B6300232093 /* Fonts */,
+				76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */,
+				058557D7273AAEEB004C7B11 /* Preview Content */,
+				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		763FEAB127C30B6300232093 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				766874BA27C3243400E64A6C /* Roboto */,
+				766874D527C3251100E64A6C /* Raleway */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		765163CC2794F14B00210E93 /* MainView */ = {
@@ -278,6 +290,23 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		766874BA27C3243400E64A6C /* Roboto */ = {
+			isa = PBXGroup;
+			children = (
+				766874C327C3243400E64A6C /* LICENSE.txt */,
+				766874BD27C3243400E64A6C /* Roboto-Regular.ttf */,
+			);
+			path = Roboto;
+			sourceTree = "<group>";
+		};
+		766874D527C3251100E64A6C /* Raleway */ = {
+			isa = PBXGroup;
+			children = (
+				763FEAB227C30B8100232093 /* Raleway-VariableFont_wght.ttf */,
+			);
+			path = Raleway;
+			sourceTree = "<group>";
+		};
 		7683128C27A38F480056BC6B /* iosAppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,15 +321,6 @@
 				768FCAB027B7290600D0C0EB /* StarsView.swift */,
 			);
 			path = Stars;
-			sourceTree = "<group>";
-		};
-		768FCAB227B7292C00D0C0EB /* iosAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				768FCAB327B7292C00D0C0EB /* iosAppUITests.swift */,
-				768FCAB427B7292C00D0C0EB /* iosAppUITestsLaunchTests.swift */,
-			);
-			path = iosAppUITests;
 			sourceTree = "<group>";
 		};
 		76AA99C0278EA90C00AE420B /* Artist */ = {
@@ -409,7 +429,6 @@
 			children = (
 				82BA609927C574B00066023B /* SnapshotHelper.swift */,
 				768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */,
-				82DA37A827C57B7F0020C92C /* iosAppUITests.swift */,
 				82DA37AA27C57B7F0020C92C /* iosAppUITestsLaunchTests.swift */,
 			);
 			path = iosAppUITests;
@@ -461,7 +480,6 @@
 			buildConfigurationList = 82DA37AE27C57B7F0020C92C /* Build configuration list for PBXNativeTarget "iosAppUITests" */;
 			buildPhases = (
 				82DA37A227C57B7F0020C92C /* Sources */,
-				82DA37A327C57B7F0020C92C /* Frameworks */,
 				82DA37A427C57B7F0020C92C /* Resources */,
 			);
 			buildRules = (
@@ -524,7 +542,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				763FEAB427C30B8200232093 /* Raleway-VariableFont_wght.ttf in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				766874D027C3243400E64A6C /* LICENSE.txt in Resources */,
+				766874CA27C3243400E64A6C /* Roboto-Regular.ttf in Resources */,
 				76FC55A127C2DD5000A061E5 /* SplashScreen.storyboard in Resources */,
 				76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
@@ -563,7 +584,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#cd \"$SRCROOT/..\"\n#./gradlew :shared:embedAndSignAppleFrameworkForXcode -P\"kotlinVersion\"=\"1.5.21\"\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -624,7 +645,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82DA37AB27C57B7F0020C92C /* iosAppUITestsLaunchTests.swift in Sources */,
-				82DA37A927C57B7F0020C92C /* iosAppUITests.swift in Sources */,
 				82DA37B227C57B900020C92C /* BottomNavigationUITests.swift in Sources */,
 				82DA37B127C57B900020C92C /* SnapshotHelper.swift in Sources */,
 			);
@@ -641,7 +661,7 @@
 		82DA37AD27C57B7F0020C92C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
-			targetProxy = 82DA37AC27C57B7F0020C92C /* PBXContainerItemProxy */;
+			targetProxy = 82970ED727C8A63E00753023 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -683,7 +703,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -745,7 +764,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -770,16 +788,20 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = S2X9VNR2UC;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks\"/**";
 				INFOPLIST_FILE = iosApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					shared,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -793,16 +815,20 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = S2X9VNR2UC;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../shared/build/xcode-frameworks\"/**";
 				INFOPLIST_FILE = iosApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					shared,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
