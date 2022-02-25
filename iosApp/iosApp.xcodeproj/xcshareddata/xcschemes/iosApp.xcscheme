@@ -29,13 +29,13 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "YES"
+            skipped = "NO"
             parallelizable = "YES"
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "82D6507D27ACCBF700493EDA"
-               BuildableName = "iosAppUITests"
+               BlueprintIdentifier = "76B770EA27C5F2070009A58E"
+               BuildableName = "iosAppUITests.xctest"
                BlueprintName = "iosAppUITests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
