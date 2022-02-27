@@ -1,5 +1,5 @@
 object Modules {
-    const val coreTheme = ":androidApp:core-theme"
-    const val featureExample = ":androidApp:feature-example"
+    const val coreTheme = ":android:core-theme"
+    const val featureExample = ":android:feature-example"
     const val shared = ":shared"
 }

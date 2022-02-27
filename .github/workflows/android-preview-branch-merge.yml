@@ -3,7 +3,7 @@ on:
     branches:
       - development
     paths:
-     - "androidApp/**"
+     - "android/**"
      - "shared/**"
      - "buildSrc/**"
      - ".github/workflows/android-preview-branch-merge.yml"
@@ -19,7 +19,7 @@ jobs:
           java-version: 11
 
       - name: create google-services.json
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./androidApp/ProjectNewm/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-project-newm/google-services.json
       
       - name: build android app
         run: ./gradlew :androidApp:assembleDebug
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: androidApp/app-project-newm/build/outputs/apk/debug/androidApp-debug.apk
+          path: android/app-project-newm/build/outputs/apk/debug/androidApp-debug.apk
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -35,4 +35,4 @@ jobs:
           appId: ${{secrets.FIREBASE_ANDROID_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: dev-team
-          file: androidApp/app-project-newm/build/outputs/apk/debug/androidApp-debug.apk
+          file: android/app-project-newm/build/outputs/apk/debug/androidApp-debug.apk
