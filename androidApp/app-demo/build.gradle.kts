@@ -50,8 +50,8 @@ dependencies {
     kapt(Hilt.hiltCompiler)
     kapt(Hilt.hiltAndroidCompiler)
 
-    implementation(project(Core.theme))
-    implementation(project(Features.featureExample))
+    implementation(project(Modules.coreTheme))
+    implementation(project(Modules.featureExample))
     implementation(project(Modules.shared))
 
     implementation(Google.activityCompose)

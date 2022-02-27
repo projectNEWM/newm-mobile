@@ -59,7 +59,7 @@ dependencies {
     kapt(Hilt.hiltAndroidCompiler)
 
     implementation(platform(Google.firebase))
-    implementation(project(Core.theme))
+    implementation(project(Modules.coreTheme))
     implementation(project(Modules.shared))
 
     implementation(Google.activityCompose)
