@@ -37,6 +37,8 @@ kotlin {
             dependencies {
                 implementation(Ktor.android)
                 implementation(SqlDelight.androidDriver)
+                implementation(Ktor.logback)
+                implementation(Ktor.logging)
             }
         }
         val androidTest by getting {

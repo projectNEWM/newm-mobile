@@ -1,7 +1,7 @@
 on:
   pull_request:
     paths:
-      - "androidApp/**"
+      - "android/**"
       - "shared/**"
       - "buildSrc/**"
       - ".github/workflows/android-ui-test.yml"
@@ -9,7 +9,7 @@ on:
     branches:
       - development
     paths:
-      - "androidApp/**"
+      - "android/**"
       - "shared/**"
       - "buildSrc/**"
       - ".github/workflows/android-ui-test.yml"
@@ -25,8 +25,8 @@ jobs:
           java-version: '11'
 
       - name: create google-services.json
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./androidApp/google-services.json
-      
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-project-newm/google-services.json
+
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:

@@ -24,6 +24,7 @@ object Versions {
     const val jUnit = "4.13.2"
     const val kotlin = "1.6.10"
     const val ktor = "1.6.7"
+    const val logback = "1.2.10"
     const val material = "1.5.0"
     const val sqlDelight = "1.5.3"
 }
