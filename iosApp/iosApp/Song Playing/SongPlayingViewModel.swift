@@ -1,5 +1,7 @@
 import Foundation
 import Combine
+import shared
+import AVFoundation
 
 protocol SongInfoUseCase {
 	func execute() -> SongPlayingViewModel.Song
@@ -7,6 +9,10 @@ protocol SongInfoUseCase {
 
 protocol MusicPlayerUseCase {
 	var playbackTime: AnyPublisher<Int, Never> { get }
+	
+	func play()
+	func pause()
+	func stop()
 }
 
 class SongPlayingViewModel: ObservableObject {
@@ -61,10 +67,12 @@ extension SongPlayingViewModel {
 	
 	func playTapped() {
 		playbackState = .playing
+		musicPlayerUseCase.play()
 	}
 	
 	func pauseTapped() {
 		playbackState = .paused
+		musicPlayerUseCase.pause()
 	}
 	
 	func airplayTapped() {
@@ -112,11 +120,11 @@ private extension Int {
 	private static let formatter = DateComponentsFormatter()
 
 	var playbackTimeString: String {
-		Int.formatter.allowedUnits = [.hour, .minute, .second]
-		Int.formatter.unitsStyle = .positional
+		Int.formatter.allowedUnits = self > 3600 ? [.hour, .minute, .second] : [.minute, .second]
+		Int.formatter.zeroFormattingBehavior = .pad
 		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
 			//TODO:MU: Uncomment when KMM module added back
-//			LoggerKt.printLogD(className: String(describing: Self.self), message: "badPlaybackTimeFormat")
+			LoggerKt.printLogD(className: String(describing: Self.self), message: "badPlaybackTimeFormat")
 			return SongPlayingViewModel.playbackTimePlaceholder
 		}
 		

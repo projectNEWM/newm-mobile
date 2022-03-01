@@ -9,6 +9,8 @@ struct SectionHeader: View {
 			.frame(maxWidth: .infinity, alignment: .leading)
 			.foregroundColor(.white)
 			.padding(.top)
+			.padding(.leading)
+			.font(.newmFont(ofSize: 16))
 	}
 }
 
@@ -30,7 +32,8 @@ extension Image {
 	func circleImage(size: CGFloat) -> some View {
 		self
 			.resizable()
-			.frame(width: size, height: size, alignment: .center)
+			.frame(maxWidth: size, maxHeight: size, alignment: .center)
+			.aspectRatio(1, contentMode: .fit)
 			.cornerRadius(size / 2.0)
 	}
 }

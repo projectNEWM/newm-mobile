@@ -18,4 +18,8 @@ extension Font {
 	static func roboto(ofSize size: CGFloat) -> Font {
 		custom("Roboto-Regular", size: size)
 	}
+	
+	static func robotoMedium(ofSize size: CGFloat) -> Font {
+		custom("Roboto-Medium", size: size)
+	}
 }

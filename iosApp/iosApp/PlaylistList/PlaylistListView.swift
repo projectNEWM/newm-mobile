@@ -13,6 +13,7 @@ struct PlaylistListView: DataView {
 				ForEach(viewModel.playlists) { playlist in
 					PlaylistListViewCell(playlist: playlist)
 						.padding(5)
+						.padding([.leading, .trailing], 5)
 				}
 			}
 		}

@@ -58,6 +58,7 @@ struct LoginView: View {
 	var emailField: some View {
 		TextField(viewModel.emailPlaceholder, text: $viewModel.email)
 			.formatField()
+			.keyboardType(.emailAddress)
 			.focused($focusedField, equals: .email)
 			.onSubmit {
 				focusedField = .password
@@ -79,17 +80,19 @@ struct LoginView: View {
 	}
 	
 	var enterNewmButton: some View {
-		Button(viewModel.enterNewm, action: viewModel.enterNewmTapped)
-			.padding()
-			.padding([.leading, .trailing], 40)
-			.foregroundColor(.white)
-			.background(LinearGradient(colors: [.orange, .red], startPoint: .top, endPoint: .bottom))
-			.cornerRadius(10)
-			.padding(.bottom)
-			.accessibilityIdentifier("enterNewmButton")
-			.disabled(viewModel.fieldsAreValid == false)
-			.buttonStyle(.plain)
-			.font(.newmFontBold(ofSize: 14))
+		Button(action: viewModel.enterNewmTapped) {
+			Text(viewModel.enterNewm)
+				.padding()
+				.padding([.leading, .trailing], 40)
+				.foregroundColor(.white)
+				.background(LinearGradient(colors: [.orange, .red], startPoint: .top, endPoint: .bottom))
+				.cornerRadius(10)
+				.padding(.bottom)
+				.accessibilityIdentifier("enterNewmButton")
+				.font(.newmFontBold(ofSize: 14))
+		}
+		.disabled(viewModel.fieldsAreValid == false)
+		.buttonStyle(.plain)
 	}
 	
 	var createFreeAccount: some View {
@@ -124,7 +127,6 @@ struct LoginView_Previews: PreviewProvider {
 		Group {
 			LoginView()
 				.preferredColorScheme(.dark)
-			LoginView()
 		}
 	}
 }
