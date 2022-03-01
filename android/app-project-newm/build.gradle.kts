@@ -55,6 +55,7 @@ android {
 
 dependencies {
 
+    kapt(Airbnb.showkaseProcessor)
     kapt(Hilt.hiltCompiler)
     kapt(Hilt.hiltAndroidCompiler)
 
@@ -62,6 +63,7 @@ dependencies {
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.shared))
 
+    implementation(Airbnb.showkase)
     implementation(Google.activityCompose)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)

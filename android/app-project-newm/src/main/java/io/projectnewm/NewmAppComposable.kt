@@ -3,10 +3,13 @@ package io.projectnewm
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -15,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.airbnb.android.showkase.models.Showkase
 import io.projectnewm.components.NewmRainbowDivider
 import io.projectnewm.navigation.Navigation
 import io.projectnewm.screens.Screen
@@ -37,6 +41,27 @@ internal fun NewmApp(
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
             Navigation(navController)
+        }
+
+        if (BuildConfig.DEBUG) {
+            DebugMenuButton()
+        }
+    }
+}
+
+@Composable
+private fun DebugMenuButton() {
+    val context = LocalContext.current
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        IconButton(
+            modifier = Modifier.align(Alignment.TopStart),
+            onClick = { context.startActivity(Showkase.getBrowserIntent(context)) }) {
+            Icon(
+                imageVector = Icons.Default.Build,
+                contentDescription = "Debug",
+                tint = MaterialTheme.colors.onPrimary
+            )
         }
     }
 }
