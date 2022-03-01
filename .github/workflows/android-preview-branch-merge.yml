@@ -3,10 +3,10 @@ on:
     branches:
       - development
     paths:
-     - "android/**"
-     - "shared/**"
-     - "buildSrc/**"
-     - ".github/workflows/android-preview-branch-merge.yml"
+      - "android/**"
+      - "shared/**"
+      - "buildSrc/**"
+      - ".github/workflows/android-preview-branch-merge.yml"
 jobs:
   build_android_debug:
     runs-on: ubuntu-latest
@@ -20,9 +20,9 @@ jobs:
 
       - name: create google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-project-newm/google-services.json
-      
+
       - name: build android app
-        run: ./gradlew :androidApp:assembleDebug
+        run: ./gradlew :app-project-newm:assembleDebug
 
       - uses: actions/upload-artifact@v2
         with:
