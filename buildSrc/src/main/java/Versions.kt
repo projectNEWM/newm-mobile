@@ -3,7 +3,7 @@ object Versions {
     const val minSdk = 25
     const val targetSdk = 31
 
-    const val androidGradlePlugin = "7.1.1"
+    const val androidGradlePlugin = "7.1.2"
     const val androidxActivity = "1.4.0"
     const val androidxAppCompat = "1.4.1"
     const val androidxConstraintLayout = "2.1.3"
