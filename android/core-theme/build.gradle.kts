@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.androidLibrary)
     kotlin(Plugins.android)
+    kotlin(Plugins.kapt)
 }
 
 android {
@@ -18,6 +19,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -25,13 +35,19 @@ android {
 
 dependencies {
 
-    androidTestImplementation(JUnit.androidxJUnit)
-    androidTestImplementation(Google.espressoTest)
+    kapt(Airbnb.showkaseProcessor)
 
+    implementation(Airbnb.showkase)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)
-    implementation(Google.material)
+    implementation(Google.composeMaterial)
+    implementation(Google.composeUi)
+    implementation(Google.composeUiToolingPreview)
     implementation(Google.constraintLayout)
+    implementation(Google.material)
 
     testImplementation(JUnit.jUnit)
+
+    androidTestImplementation(JUnit.androidxJUnit)
+    androidTestImplementation(Google.espressoTest)
 }

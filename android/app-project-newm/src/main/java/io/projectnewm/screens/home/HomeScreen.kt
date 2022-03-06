@@ -28,6 +28,7 @@ internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 @Composable
 fun HomeScreen(
     onShowDetails: (Int) -> Unit,
+    onClickSong: () -> Unit,
     viewModel: MusicalCategoriesViewModel = hiltViewModel()
 ) {
     LazyColumn(
@@ -53,7 +54,7 @@ fun HomeScreen(
             ArtistList()
         }
         item {
-            NewmSongList()
+            NewmSongList(onClickSong)
         }
         item {
             CuratedPlayLists()
