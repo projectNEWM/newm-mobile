@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.projectnewm.screens.home.artists.ArtistList
 import io.projectnewm.screens.home.categories.CategoryTabs
 import io.projectnewm.screens.home.categories.MusicalCategoriesViewModel
+import io.projectnewm.screens.home.curatedplaylists.CuratedPlayLists
 import io.projectnewm.screens.home.songs.NewmSongList
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
@@ -34,7 +35,6 @@ fun HomeScreen(
             .fillMaxSize()
             .testTag(TAG_HOME_SCREEN)
     ) {
-
 
         stickyHeader {
             val viewState by viewModel.state.collectAsState()
@@ -56,10 +56,10 @@ fun HomeScreen(
             NewmSongList()
         }
         item {
-            NewAlbums()
+            CuratedPlayLists()
         }
         item {
-            CuratedPlaylists()
+            NewAlbums()
         }
     }
 }
@@ -75,19 +75,5 @@ fun NewAlbums() {
         contentAlignment = Alignment.Center
     ) {
         Text(text = "New Albums")
-    }
-}
-
-@Composable
-fun CuratedPlaylists() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .padding(16.dp)
-            .border(border = BorderStroke(1.dp, color = Color.Black), shape = RectangleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "Curated Playlists")
     }
 }

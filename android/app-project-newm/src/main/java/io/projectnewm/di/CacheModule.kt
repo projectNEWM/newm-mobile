@@ -1,11 +1,11 @@
 package io.projectnewm.di
 
-import io.projectnewm.NewmApplication
-import io.projectnewm.repository.db.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.projectnewm.NewmApplication
+import io.projectnewm.shared.repository.db.*
 import javax.inject.Singleton
 
 @Module

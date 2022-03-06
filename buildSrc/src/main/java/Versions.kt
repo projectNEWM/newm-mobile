@@ -3,7 +3,7 @@ object Versions {
     const val minSdk = 25
     const val targetSdk = 31
 
-    const val androidGradlePlugin = "7.1.1"
+    const val androidGradlePlugin = "7.1.2"
     const val androidxActivity = "1.4.0"
     const val androidxAppCompat = "1.4.1"
     const val androidxConstraintLayout = "2.1.3"
@@ -26,5 +26,6 @@ object Versions {
     const val ktor = "1.6.7"
     const val logback = "1.2.10"
     const val material = "1.5.0"
+    const val showkase = "1.0.0-beta12"
     const val sqlDelight = "1.5.3"
 }

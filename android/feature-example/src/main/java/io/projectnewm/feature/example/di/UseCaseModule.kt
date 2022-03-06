@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.projectnewm.example.ExampleRepository
-import io.projectnewm.example.ExampleService
-import io.projectnewm.example.ExampleUseCase
-import io.projectnewm.repository.db.ExampleDao
+import io.projectnewm.shared.example.ExampleRepository
+import io.projectnewm.shared.example.ExampleService
+import io.projectnewm.shared.example.ExampleUseCase
+import io.projectnewm.shared.repository.db.ExampleDao
 import javax.inject.Singleton
 
 @Module
