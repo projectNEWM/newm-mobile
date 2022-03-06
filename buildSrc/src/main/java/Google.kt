@@ -21,6 +21,8 @@ object Google {
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.androidxSplashScreen}"
 
+    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:1.2.0-alpha04"
+
     object Test {
         const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
         const val hiltAndroidTesting = "com.google.dagger:hilt-android-testing:${Versions.hilt}"

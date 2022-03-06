@@ -23,7 +23,7 @@ class NewmAppInteractions(private val composeTestRule: ComposeTestRule) {
     private val starsScreenInteraction: SemanticsNodeInteraction
         get() = composeTestRule.onNodeWithTag(TAG_STARS_SCREEN)
 
-    val tribeScreenInteraction: SemanticsNodeInteraction
+    private val tribeScreenInteraction: SemanticsNodeInteraction
         get() = composeTestRule.onNodeWithTag(TAG_TRIBE_SCREEN)
 
     val homeScreenInteraction: SemanticsNodeInteraction

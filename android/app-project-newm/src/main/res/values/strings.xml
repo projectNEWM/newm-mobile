@@ -15,4 +15,6 @@
     <string name="wallet">Wallet</string>
     <string name="compose">Compose</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

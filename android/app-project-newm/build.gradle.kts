@@ -76,6 +76,7 @@ dependencies {
     implementation(Google.lifecycle)
     implementation(Google.material)
     implementation(Google.navigationCompose)
+    implementation(Google.materialIconsExtended)
     implementation(Google.navigationFragmentKtx)
     implementation(Google.navigationUiKtx)
     implementation(Google.splashScreen)
