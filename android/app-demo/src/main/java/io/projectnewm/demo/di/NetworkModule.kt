@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
-import io.projectnewm.KtorClientFactory
-import io.projectnewm.example.ExampleService
-import io.projectnewm.example.ExampleServiceImpl
+import io.projectnewm.shared.KtorClientFactory
+import io.projectnewm.shared.example.ExampleService
+import io.projectnewm.shared.example.ExampleServiceImpl
 import javax.inject.Singleton
 
 @Module

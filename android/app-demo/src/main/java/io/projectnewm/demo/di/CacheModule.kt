@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.projectnewm.demo.DemoApplication
-import io.projectnewm.repository.db.*
+import io.projectnewm.shared.repository.db.*
 import javax.inject.Singleton
 
 @Module
