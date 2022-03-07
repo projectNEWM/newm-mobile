@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -13,13 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,7 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import io.projectnewm.R
-import io.projectnewm.components.ArtistRingBrush
 import io.projectnewm.components.SongRingBrush
 import io.projectnewm.screens.login.email.Email
 import io.projectnewm.screens.login.email.EmailState
@@ -36,19 +32,22 @@ import io.projectnewm.screens.login.password.PasswordState
 import io.projectnewm.utilities.ToBeImplemented
 import io.projectnewm.utilities.shortToast
 
+internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
+
 @Composable
 fun LoginScreen(
     onSignInSubmitted: (email: String, password: String) -> Unit,
-    scrollableState: ScrollState = rememberScrollState()
+    scrollState: ScrollState = rememberScrollState()
 ) {
-    val context = LocalContext.current
+    LoginPageBackgroundImage(backgroundImage = R.drawable.bg_login)
 
-    LoginPageBackgroundImage(backgroundImage = R.drawable.login_background_1)
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 30.dp)
-            .verticalScroll(scrollableState),
+            .verticalScroll(scrollState)
+            .testTag(TAG_LOGIN_SCREEN),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -56,7 +55,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(50.dp))
 
         LoginPageMainImage(R.drawable.ic_newm_logo)
-        LoginPageMainTextImage(textImage = R.drawable.login_enter_newminiverse)
+        LoginPageMainTextImage(textImage = R.drawable.ic_login_enter_newmiverse)
 
         Spacer(modifier = Modifier.height(120.dp))
 
@@ -101,7 +100,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                painter = painterResource(R.drawable.login_enter_newm_button),
+                painter = painterResource(R.drawable.ic_login_enter_newm_button),
                 contentDescription = "Newm Login Welcome Text",
                 contentScale = ContentScale.FillHeight,
             )
@@ -191,7 +190,7 @@ private fun LoginPageMainTextImage(@DrawableRes textImage: Int) {
 private fun LoginPageBackgroundImage(@DrawableRes backgroundImage: Int) {
     Image(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxHeight()
             .fillMaxWidth(),
         painter = painterResource(backgroundImage),
         contentDescription = "Newm Login Screen",

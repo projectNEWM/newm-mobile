@@ -7,6 +7,7 @@ object Google {
     const val composeUiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.composeMaterialIcons}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.androidxConstraintLayout}"
     const val espressoTest = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val firebase = "com.google.firebase:firebase-bom:${Versions.firebase}"
@@ -20,8 +21,6 @@ object Google {
     const val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.androidxNavigation}"
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.androidxSplashScreen}"
-
-    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:1.2.0-alpha04"
 
     object Test {
         const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
