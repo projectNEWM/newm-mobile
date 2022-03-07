@@ -20,13 +20,13 @@ class NewmAppComposableTest {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val composeTestRule = createAndroidComposeRule<io.projectnewm.MainActivity>()
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
 
     @Before
     fun setup() {
         composeTestRule.setContent {
-            io.projectnewm.NewmApp()
+            NewmApp()
         }
     }
 

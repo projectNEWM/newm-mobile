@@ -14,6 +14,7 @@ object Versions {
     const val androidxSplashScreen = "1.0.0-beta01"
     const val composeCompiler = "1.1.0-rc03"
     const val compose = "1.0.5"
+    const val composeMaterialIcons = "1.2.0-alpha04"
     const val crashlyticsClasspath = "2.8.1"
     const val espresso = "3.4.0"
     const val firebase = "29.0.4"

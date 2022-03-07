@@ -7,6 +7,7 @@ object Google {
     const val composeUiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.composeMaterialIcons}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.androidxConstraintLayout}"
     const val espressoTest = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val firebase = "com.google.firebase:firebase-bom:${Versions.firebase}"
