@@ -1,6 +1,7 @@
 package io.projectnewm.screens.login.password
 
 import io.projectnewm.screens.login.TextFieldState
+import io.projectnewm.shared.login.LoginFieldValidator
 
 class PasswordState : TextFieldState(validator = ::isPasswordValid, errorFor = ::passwordValidationError)
 
@@ -22,7 +23,7 @@ private fun passwordAndConfirmationValid(password: String, confirmedPassword: St
 }
 
 private fun isPasswordValid(password: String): Boolean {
-    return password.length > 3
+    return  LoginFieldValidator.isPasswordValid(password)
 }
 
 private fun passwordValidationError(password: String): String {
