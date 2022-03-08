@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import io.projectnewm.feature.now.playing.NowPlayingScreen
 import io.projectnewm.screens.DetailsScreen
 import io.projectnewm.screens.Screen
 import io.projectnewm.screens.home.HomeScreen
@@ -25,6 +26,7 @@ fun Navigation(
         addTribeTree(navController)
         addStarsTree(navController)
         addWalletTree(navController)
+        addNowPlayingTree(navController)
     }
 }
 
@@ -37,7 +39,8 @@ private fun NavGraphBuilder.addHomeTree(
     ) {
         composable(route = Screen.HomeLanding.route) {
             HomeScreen(
-                onShowDetails = { navController.navigate(Screen.HomeLanding.Details.route) }
+                onShowDetails = { navController.navigate(Screen.HomeLanding.Details.route) },
+                onClickSong = { navController.navigate(Screen.NowPlayingLanding.route) }
             )
         }
 
@@ -76,6 +79,17 @@ private fun NavGraphBuilder.addWalletTree(navController: NavHostController) {
     ) {
         composable(Screen.WalletLanding.route) {
             WalletScreen(navController = navController)
+        }
+    }
+}
+
+private fun NavGraphBuilder.addNowPlayingTree(navController: NavHostController) {
+    navigation(
+        route = Screen.NowPlayingRoot.route,
+        startDestination = Screen.NowPlayingLanding.route
+    ) {
+        composable(Screen.NowPlayingLanding.route) {
+            NowPlayingScreen()
         }
     }
 }

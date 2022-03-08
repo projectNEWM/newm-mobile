@@ -7,6 +7,7 @@ sealed class Screen(val route: String) {
     object TribeRoot : Screen("tribe-root")
     object StarsRoot : Screen("stars-root")
     object WalletRoot : Screen("wallet-root")
+    object NowPlayingRoot : Screen("now-playing-root")
 
     object HomeLanding : Screen("home-landing") {
         object Details : Screen("details")
@@ -15,4 +16,6 @@ sealed class Screen(val route: String) {
     object TribeLanding : Screen("tribe-landing")
     object StarsLanding : Screen("stars-landing")
     object WalletLanding : Screen("wallet-landing")
+    object NowPlayingLanding : Screen("now-playing-landing")
+
 }

@@ -61,6 +61,7 @@ dependencies {
 
     implementation(platform(Google.firebase))
     implementation(project(Modules.coreTheme))
+    implementation(project(Modules.nowPlaying))
     implementation(project(Modules.shared))
 
     implementation(Airbnb.showkase)

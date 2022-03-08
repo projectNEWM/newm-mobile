@@ -70,6 +70,9 @@ dependencies {
     implementation(Hilt.hiltNavigationCompose)
     implementation(Ktor.android)
 
+    debugImplementation(Google.composeUiTooling)
+    debugImplementation(Google.composeUiTestManifest)
+
     testImplementation(JUnit.jUnit)
 
     androidTestImplementation(JUnit.androidxJUnit)

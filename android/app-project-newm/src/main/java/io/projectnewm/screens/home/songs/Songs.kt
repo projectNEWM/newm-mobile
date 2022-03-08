@@ -20,7 +20,7 @@ import io.projectnewm.components.SongRingBrush
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NewmSongList() {
+fun NewmSongList(onSongClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,7 +36,7 @@ fun NewmSongList() {
             LazyRow {
                 repeat((0..25).count()) {
                     item {
-                        SongCard({ })
+                        SongCard(onSongClicked)
                     }
                 }
             }
@@ -53,7 +53,7 @@ fun SongCard(onSongClicked: () -> Unit) {
             .width(150.dp)
             .padding(8.dp),
         elevation = 2.dp,
-        onClick = { onSongClicked }
+        onClick = onSongClicked
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
