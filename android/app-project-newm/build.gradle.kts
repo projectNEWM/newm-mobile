@@ -3,6 +3,7 @@ plugins {
     id(Plugins.crashlytics)
     id(Plugins.hilt)
     id(Plugins.googleServices)
+    id(Plugins.shot)
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
 }
@@ -17,6 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "io.projectnewm.NewmAndroidJUnitRunner"
+        testApplicationId = "io.projectnewm.test"
     }
 
     buildTypes {

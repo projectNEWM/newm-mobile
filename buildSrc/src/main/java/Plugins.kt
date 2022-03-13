@@ -12,4 +12,7 @@ object Plugins {
 
     const val benManesVersionsPlugin = "com.github.ben-manes.versions"
     const val benManesVersionsClasspath = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersionsPlugin}"
+
+    const val shotClassPath = "com.karumi:shot:${Versions.shot}"
+    const val shot = "shot"
 }

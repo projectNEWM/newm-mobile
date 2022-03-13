@@ -57,7 +57,7 @@ fun LoginScreen(
         LoginPageMainImage(R.drawable.ic_newm_logo)
         LoginPageMainTextImage(textImage = R.drawable.ic_login_enter_newmiverse)
 
-        Spacer(modifier = Modifier.height(120.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         val focusRequester = remember { FocusRequester() }
         val emailState = remember { EmailState() }
