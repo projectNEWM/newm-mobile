@@ -1,3 +1,4 @@
+name: Distribute Android App
 on:
   push:
     branches:
