@@ -1,3 +1,4 @@
+name: Distribute Android App
 on:
   push:
     branches:
@@ -22,7 +23,7 @@ jobs:
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-project-newm/google-services.json
 
       - name: build android app
-        run: ./gradlew :app-project-newm:assembleDebug
+        run: ./gradlew :android:app-project-newm:assembleDebug
 
       - uses: actions/upload-artifact@v2
         with:
