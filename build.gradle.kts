@@ -12,6 +12,7 @@ buildscript {
         classpath(Kotlin.serialization)
         classpath(Plugins.benManesVersionsClasspath)
         classpath(SqlDelight.gradlePlugin)
+        classpath("com.karumi:shot:5.13.0")
     }
 }
 

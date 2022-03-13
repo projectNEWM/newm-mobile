@@ -1,21 +1,10 @@
-name: Run Android UI Tests
+name: Record Android screenshots
 on:
   pull_request:
-    paths:
-      - "android/**"
-      - "shared/**"
-      - "buildSrc/**"
-      - ".github/workflows/android-ui-test.yml"
-  push:
-    branches:
-      - development
-    paths:
-      - "android/**"
-      - "shared/**"
-      - "buildSrc/**"
-      - ".github/workflows/android-ui-test.yml"
+  workflow_dispatch:
+
 jobs:
-  test:
+  record_screenshots:
     runs-on: macos-latest
     steps:
       - name: checkout
@@ -33,4 +22,9 @@ jobs:
         with:
           api-level: 28
           profile: Nexus 6
-          script: adb shell settings put global hidden_api_policy_p_apps 1 && adb shell settings put global hidden_api_policy_pre_p_apps 1 && ./gradlew debugExecuteScreenshotTests
+          script: adb shell settings put global hidden_api_policy_p_apps 1 && adb shell settings put global hidden_api_policy_pre_p_apps 1 && ./gradlew debugExecuteScreenshotTests -Precord
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: ${{ github.head_ref }}
