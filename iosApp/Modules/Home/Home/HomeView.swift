@@ -4,9 +4,7 @@ import SharedUI
 public struct HomeView: View {
 	@ObservedObject var viewModel = HomeViewModel()
 	
-	public init() {
-		
-	}
+	public init() {}
 	
 	public var body: some View {
 		NavigationView {
