@@ -23,9 +23,6 @@ let package = Package(
 			resources: [
 				.copy("Raleway-VariableFont_wght.ttf"),
 				.copy("Roboto-Regular.ttf")
-			]),
-		.testTarget(
-			name: "FontsTests",
-			dependencies: ["Fonts"]),
+			])
 	]
 )

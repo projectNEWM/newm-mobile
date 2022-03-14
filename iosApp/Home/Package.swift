@@ -29,9 +29,6 @@ let package = Package(
 				"Colors",
 				"Utilities",
 				"Strings"
-			]),
-		.testTarget(
-			name: "HomeTests",
-			dependencies: ["Home"]),
+			])
 	]
 )

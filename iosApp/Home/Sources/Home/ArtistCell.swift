@@ -1,5 +1,6 @@
 import SwiftUI
 import SharedUI
+import Colors
 
 public struct ArtistCell: View {
 	let data: HomeViewModel.Artist

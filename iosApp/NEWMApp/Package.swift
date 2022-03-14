@@ -21,9 +21,6 @@ let package = Package(
 			dependencies: [
 				"Home",
 				"TabBar"
-			]),
-		.testTarget(
-			name: "AppTests",
-			dependencies: ["NEWMApp"]),
+			])
 	]
 )

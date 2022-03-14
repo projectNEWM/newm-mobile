@@ -21,9 +21,6 @@ let package = Package(
             dependencies: [
 				"Colors",
 				"Fonts"
-			]),
-        .testTarget(
-            name: "SharedUITests",
-            dependencies: ["SharedUI"]),
+			])
     ]
 )
