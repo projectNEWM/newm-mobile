@@ -34,18 +34,18 @@ class LoginViewModel: ObservableObject {
 	}
 }
 
-class LoggedInUserUseCase: ObservableObject {
-	static var shared = LoggedInUserUseCase()
+public class LoggedInUserUseCase: ObservableObject {
+	public static var shared = LoggedInUserUseCase()
 
-	@Published var loggedInUser: String? = nil
+	@Published public var loggedInUser: String? = nil
 
 	private init() {}
 
-	func logIn() {
+	public func logIn() {
 		loggedInUser = "mulrich@projectnewm.io"
 	}
 
-	func logOut() {
+	public func logOut() {
 		loggedInUser = nil
 	}
 }

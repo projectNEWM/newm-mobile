@@ -1,16 +1,17 @@
 import Foundation
 import Combine
 import Strings
+import Login
 
 class iOSAppViewModel: ObservableObject {
 	private var cancellables = [AnyCancellable]()
-	@Published var loggedInUser: User? = nil
+	@Published var loggedInUser: String? = nil
 	@Published var selectedTab: Tab = .home
 
 	init() {
-//		LoggedInUserUseCase.shared.$loggedInUser.sink { [weak self] in
-//			self?.loggedInUser = $0
-//		}.store(in: &cancellables)
+		LoggedInUserUseCase.shared.$loggedInUser.sink { [weak self] in
+			self?.loggedInUser = $0
+		}.store(in: &cancellables)
 	}
 }
 
@@ -70,9 +71,4 @@ extension iOSAppViewModel.MoreTab: Hashable {
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(description)
 	}
-}
-
-
-struct User {
-	let email: String
 }
