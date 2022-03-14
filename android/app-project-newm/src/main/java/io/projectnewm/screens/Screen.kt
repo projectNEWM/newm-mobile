@@ -1,21 +1,20 @@
 package io.projectnewm.screens
 
 sealed class Screen(val route: String) {
-    object Login : Screen("login")
-
+    //High Navigation Roots
     object HomeRoot : Screen("home-root")
+    object HomeLanding : Screen("home-landing")
+
     object TribeRoot : Screen("tribe-root")
-    object StarsRoot : Screen("stars-root")
-    object WalletRoot : Screen("wallet-root")
-    object NowPlayingRoot : Screen("now-playing-root")
-
-    object HomeLanding : Screen("home-landing") {
-        object Details : Screen("details")
-    }
-
     object TribeLanding : Screen("tribe-landing")
-    object StarsLanding : Screen("stars-landing")
-    object WalletLanding : Screen("wallet-landing")
-    object NowPlayingLanding : Screen("now-playing-landing")
 
+    object StarsRoot : Screen("stars-root")
+    object StarsLanding : Screen("stars-landing")
+
+    object WalletRoot : Screen("wallet-root")
+    object WalletLanding : Screen("wallet-landing")
+
+    //Single Screens
+    object LoginScreen : Screen("login")
+    object NowPlayingScreen : Screen("now-playing")
 }

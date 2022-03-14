@@ -27,7 +27,6 @@ internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    onShowDetails: (Int) -> Unit,
     onClickSong: () -> Unit,
     viewModel: MusicalCategoriesViewModel = hiltViewModel()
 ) {
