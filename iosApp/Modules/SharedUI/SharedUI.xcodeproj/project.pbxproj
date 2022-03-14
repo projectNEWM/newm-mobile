@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76107BF127DF28090024B27B /* Circular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76107BE027DF28090024B27B /* Circular.swift */; };
 		7654424927DF1ACD003346EE /* SharedUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654424827DF1ACD003346EE /* SharedUIDemoApp.swift */; };
 		7654424B27DF1ACD003346EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654424A27DF1ACD003346EE /* ContentView.swift */; };
 		7654424D27DF1ACE003346EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7654424C27DF1ACE003346EE /* Assets.xcassets */; };
@@ -20,9 +21,17 @@
 		76CF997227DEFEEF00AC185E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF996E27DEFEEF00AC185E /* Link.swift */; };
 		76CF997327DEFEEF00AC185E /* SwiftUI+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF996D27DEFEEF00AC185E /* SwiftUI+Common.swift */; };
 		76CF997427DEFEEF00AC185E /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF997027DEFEEF00AC185E /* UIImage+Extensions.swift */; };
+		76EE07FB27DF374600BA1290 /* Bowie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EE07FA27DF374600BA1290 /* Bowie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		76107BEE27DF28090024B27B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7654423C27DF1AB7003346EE /* Colors.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7654425827DF1D0D003346EE;
+			remoteInfo = ColorsDemo;
+		};
 		7654423A27DF1AB7003346EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7654423627DF1AB7003346EE /* Fonts.xcodeproj */;
@@ -55,6 +64,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		76107BE027DF28090024B27B /* Circular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circular.swift; sourceTree = "<group>"; };
 		7654423627DF1AB7003346EE /* Fonts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Fonts.xcodeproj; path = ../../Fonts/Fonts.xcodeproj; sourceTree = "<group>"; };
 		7654423C27DF1AB7003346EE /* Colors.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Colors.xcodeproj; path = ../../Colors/Colors.xcodeproj; sourceTree = "<group>"; };
 		7654424627DF1ACD003346EE /* SharedUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharedUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +80,7 @@
 		76CF996E27DEFEEF00AC185E /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		76CF996F27DEFEEF00AC185E /* GradientTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTag.swift; sourceTree = "<group>"; };
 		76CF997027DEFEEF00AC185E /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		76EE07FA27DF374600BA1290 /* Bowie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bowie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				7654424127DF1AB7003346EE /* Colors.framework */,
+				76107BEF27DF28090024B27B /* ColorsDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,11 +180,13 @@
 		76CF995F27DEFEEA00AC185E /* SharedUI */ = {
 			isa = PBXGroup;
 			children = (
+				76CF996027DEFEEA00AC185E /* SharedUI.h */,
+				76107BE027DF28090024B27B /* Circular.swift */,
 				76CF996F27DEFEEF00AC185E /* GradientTag.swift */,
 				76CF996E27DEFEEF00AC185E /* Link.swift */,
 				76CF996D27DEFEEF00AC185E /* SwiftUI+Common.swift */,
 				76CF997027DEFEEF00AC185E /* UIImage+Extensions.swift */,
-				76CF996027DEFEEA00AC185E /* SharedUI.h */,
+				76EE07FA27DF374600BA1290 /* Bowie.swift */,
 			);
 			path = SharedUI;
 			sourceTree = "<group>";
@@ -275,6 +289,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		76107BEF27DF28090024B27B /* ColorsDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorsDemo.app;
+			remoteRef = 76107BEE27DF28090024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7654423B27DF1AB7003346EE /* Fonts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -324,7 +345,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76EE07FB27DF374600BA1290 /* Bowie.swift in Sources */,
 				76CF997127DEFEEF00AC185E /* GradientTag.swift in Sources */,
+				76107BF127DF28090024B27B /* Circular.swift in Sources */,
 				76CF997327DEFEEF00AC185E /* SwiftUI+Common.swift in Sources */,
 				76CF997227DEFEEF00AC185E /* Link.swift in Sources */,
 				76CF997427DEFEEF00AC185E /* UIImage+Extensions.swift in Sources */,

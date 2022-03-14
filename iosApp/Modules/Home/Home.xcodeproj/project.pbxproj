@@ -168,6 +168,7 @@
 		765441DB27DF16CA003346EE /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				76CF992527DEFEAB00AC185E /* DummyData.swift */,
 				765441EE27DF1704003346EE /* shared.xcframework */,
 				7654420727DF1738003346EE /* Fonts.xcodeproj */,
 				765441DC27DF16E9003346EE /* SharedUI.xcodeproj */,
@@ -264,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				76CF992727DEFEAB00AC185E /* ArtistCell.swift */,
-				76CF992527DEFEAB00AC185E /* DummyData.swift */,
 				76CF992427DEFEAB00AC185E /* HomeScrolling.swift */,
 				76CF992127DEFEAB00AC185E /* HomeView.swift */,
 				76CF992227DEFEAB00AC185E /* HomeViewModel.swift */,

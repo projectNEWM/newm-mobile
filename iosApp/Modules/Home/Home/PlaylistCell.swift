@@ -19,7 +19,7 @@ struct PlaylistCell: View {
     }
 	
 	private var playlistImage: some View {
-		CircleImage(image: data.image, size: 70)
+		CircleImage(data.image, size: 70)
 			.padding(.top, 5)
 	}
 	

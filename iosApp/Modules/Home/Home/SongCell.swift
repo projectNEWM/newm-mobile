@@ -8,7 +8,7 @@ struct SongCell: View {
 	var body: some View {
 		VStack {
 			ZStack(alignment: .top) {
-				CircleImage(image: data.image, size: 60)
+				CircleImage(data.image, size: 60)
 				if data.isNFT {
 					GradientTag(title: "NFT")
 						.padding(.top, -14)

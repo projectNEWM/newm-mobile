@@ -34,7 +34,7 @@ public struct ArtistCell: View {
 	}
 	
 	private var artistImage: some View {
-		CircleImage(image: UIImage(data: data.image) ?? UIImage.empty, size: 70)
+		CircleImage(UIImage(data: data.image) ?? UIImage.empty, size: 70)
 			.padding(.bottom, 10)
 	}
 	

@@ -32,7 +32,7 @@ public struct LoginView: View {
 	}
 	
 	var background: some View {
-		Image("login-background")
+		Image.loginBackground
 			.resizable(capInsets: EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0), resizingMode: .stretch)
 			.ignoresSafeArea()
 			.scaledToFill()
@@ -41,7 +41,7 @@ public struct LoginView: View {
 	}
 	
 	var newmLogo: some View {
-		Image("NEWM-Logo")
+		Image.newmLogo
 			.resizable()
 			.frame(width: 100, height: 100, alignment: .center)
 	}
