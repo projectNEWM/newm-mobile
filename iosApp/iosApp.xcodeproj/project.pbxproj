@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7638B03127DF036000FB4815 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7638B03027DF036000FB4815 /* shared.xcframework */; };
-		765790ED27D5418A00F82910 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7651D6D327DFA33100FF41B3 /* iOSApp.swift */; };
 		7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
@@ -214,12 +214,18 @@
 			remoteGlobalIDString = 76EE080927DF38C300BA1290;
 			remoteInfo = Wallet;
 		};
+		76EE085627DFA02200BA1290 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7640011527DF03F2000FB31A;
+			remoteInfo = Login;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76107C2227DF287E0024B27B /* Tips.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tips.xcodeproj; path = Tips/Tips.xcodeproj; sourceTree = "<group>"; };
@@ -228,6 +234,8 @@
 		762756F8278832CC0012BADB /* TribeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeView.swift; sourceTree = "<group>"; };
 		7638B03027DF036000FB4815 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = Shared/shared.xcframework; sourceTree = SOURCE_ROOT; };
 		7640012027DF03F2000FB31A /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = Login/Login.xcodeproj; sourceTree = "<group>"; };
+		7651D6C927DFA33000FF41B3 /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		7651D6D327DFA33100FF41B3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7683128B27A38F480056BC6B /* iosAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		768FCAB027B7290600D0C0EB /* StarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
@@ -310,7 +318,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				765163CF2794F3D300210E93 /* App */,
+				7651D6D527DFA35100FF41B3 /* App */,
 				76AA99C0278EA90C00AE420B /* Artist */,
 				76C8C3DF279E85500061BAC8 /* ArtistList */,
 				76C8C3E8279E86890061BAC8 /* Genres */,
@@ -321,6 +329,7 @@
 				765163D22794F48200210E93 /* Tribe */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				763FEAB027C30B4500232093 /* Resources */,
+				7651D6C927DFA33000FF41B3 /* iosApp-Bridging-Header.h */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -369,20 +378,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		765163CF2794F3D300210E93 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				2152FB032600AC8F00CF470E /* iOSApp.swift */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
 		765163D22794F48200210E93 /* Tribe */ = {
 			isa = PBXGroup;
 			children = (
 				762756F8278832CC0012BADB /* TribeView.swift */,
 			);
 			path = Tribe;
+			sourceTree = "<group>";
+		};
+		7651D6D527DFA35100FF41B3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7651D6D327DFA33100FF41B3 /* iOSApp.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		768FCAAF27B7290600D0C0EB /* Stars */ = {
@@ -568,6 +577,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				76EE085727DFA02200BA1290 /* PBXTargetDependency */,
 				76CF99B527DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99B727DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99B927DEFFA000AC185E /* PBXTargetDependency */,
@@ -632,6 +642,7 @@
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1320;
 					};
 					7683128A27A38F480056BC6B = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -901,7 +912,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				765790ED27D5418A00F82910 /* iOSApp.swift in Sources */,
+				7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -972,6 +983,11 @@
 			isa = PBXTargetDependency;
 			name = Strings;
 			targetProxy = 76CF99C227DEFFA000AC185E /* PBXContainerItemProxy */;
+		};
+		76EE085727DFA02200BA1290 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Login;
+			targetProxy = 76EE085627DFA02200BA1290 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1099,6 +1115,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = S2X9VNR2UC;
@@ -1113,6 +1131,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iosApp/iosApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1123,6 +1143,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = S2X9VNR2UC;
@@ -1137,6 +1159,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iosApp/iosApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
