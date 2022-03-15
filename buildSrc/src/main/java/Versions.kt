@@ -27,6 +27,7 @@ object Versions {
     const val ktor = "1.6.7"
     const val logback = "1.2.10"
     const val material = "1.5.0"
+    const val shot = "5.13.0"
     const val showkase = "1.0.0-beta12"
     const val sqlDelight = "1.5.3"
 }
