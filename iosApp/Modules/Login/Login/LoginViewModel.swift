@@ -19,7 +19,7 @@ class LoginViewModel: ObservableObject {
 		loginFieldValidator.validate(email: email, password: password)
 	}
 		
-	let logInUseCase = LoggedInUserUseCase.shared
+	let logInUseCase = LoggedInUserUseCase()
 	
 	func enterNewmTapped() {
 		logInUseCase.logIn()
@@ -34,12 +34,11 @@ class LoginViewModel: ObservableObject {
 	}
 }
 
+import SwiftUI
 public class LoggedInUserUseCase: ObservableObject {
-	public static var shared = LoggedInUserUseCase()
+	@AppStorage("loggedInUser") var loggedInUser: String?
 
-	@Published public var loggedInUser: String? = nil
-
-	private init() {}
+	init() {}
 
 	public func logIn() {
 		loggedInUser = "mulrich@projectnewm.io"

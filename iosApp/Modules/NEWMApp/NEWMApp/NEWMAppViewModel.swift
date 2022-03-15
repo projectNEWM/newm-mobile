@@ -3,19 +3,14 @@ import Combine
 import Strings
 import Login
 
-class iOSAppViewModel: ObservableObject {
+class NEWMAppViewModel: ObservableObject {
 	private var cancellables = [AnyCancellable]()
-	@Published var loggedInUser: String? = nil
 	@Published var selectedTab: Tab = .home
 
-	init() {
-		LoggedInUserUseCase.shared.$loggedInUser.sink { [weak self] in
-			self?.loggedInUser = $0
-		}.store(in: &cancellables)
-	}
+	init() {}
 }
 
-extension iOSAppViewModel {
+extension NEWMAppViewModel {
 	enum Tab: CaseIterable {
 		case home
 		case tribe
@@ -33,7 +28,7 @@ extension iOSAppViewModel {
 	}
 }
 
-extension iOSAppViewModel.Tab: CustomStringConvertible, Identifiable {
+extension NEWMAppViewModel.Tab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
 		case .home: return "Home"
@@ -47,7 +42,7 @@ extension iOSAppViewModel.Tab: CustomStringConvertible, Identifiable {
 	var id: ObjectIdentifier { description.objectIdentifier }
 }
 
-extension iOSAppViewModel.MoreTab: CustomStringConvertible, Identifiable {
+extension NEWMAppViewModel.MoreTab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
 		case .playlists: return "Playlists"
@@ -61,13 +56,13 @@ extension iOSAppViewModel.MoreTab: CustomStringConvertible, Identifiable {
 	var id: ObjectIdentifier { description.objectIdentifier }
 }
 
-extension iOSAppViewModel.Tab: Hashable {
+extension NEWMAppViewModel.Tab: Hashable {
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(description)
 	}
 }
 
-extension iOSAppViewModel.MoreTab: Hashable {
+extension NEWMAppViewModel.MoreTab: Hashable {
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(description)
 	}

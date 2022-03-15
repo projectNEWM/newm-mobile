@@ -17,9 +17,12 @@
 		76A8A15327DF011A00D02C61 /* Strings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15127DF011A00D02C61 /* Strings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A8A15527DF015100D02C61 /* TabBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15427DF015100D02C61 /* TabBar.framework */; };
 		76A8A15627DF015100D02C61 /* TabBar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15427DF015100D02C61 /* TabBar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76B32B2327E0C03700A5B851 /* Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; };
+		76B32B2427E0C03700A5B851 /* Wallet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76B32B3627E0C18D00A5B851 /* TabProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B32B3527E0C18D00A5B851 /* TabProviderFactory.swift */; };
 		76CF994127DEFEC800AC185E /* NEWMApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 76CF994027DEFEC800AC185E /* NEWMApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		76CF995027DEFECF00AC185E /* iOSAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994E27DEFECF00AC185E /* iOSAppViewModel.swift */; };
-		76CF995127DEFECF00AC185E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* iOSApp.swift */; };
+		76CF995027DEFECF00AC185E /* NEWMAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */; };
+		76CF995127DEFECF00AC185E /* NEWMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* NEWMApp.swift */; };
 		76CF995227DEFECF00AC185E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994F27DEFECF00AC185E /* Utilities.swift */; };
 		76EE085527DF9FB900BA1290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76EE085427DF9FB900BA1290 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -81,6 +84,13 @@
 			remoteGlobalIDString = 76CF997F27DEFF0800AC185E;
 			remoteInfo = TabBar;
 		};
+		76B32B3127E0C04500A5B851 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76EE080927DF38C300BA1290;
+			remoteInfo = Wallet;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +103,7 @@
 				76A8A15627DF015100D02C61 /* TabBar.framework in Embed Frameworks */,
 				76A8A14C27DF00C400D02C61 /* Home.framework in Embed Frameworks */,
 				76A8A15327DF011A00D02C61 /* Strings.framework in Embed Frameworks */,
+				76B32B2427E0C03700A5B851 /* Wallet.framework in Embed Frameworks */,
 				7640014527DF0896000FB31A /* Login.framework in Embed Frameworks */,
 				76A8A15027DF00EA00D02C61 /* SharedUI.framework in Embed Frameworks */,
 			);
@@ -112,10 +123,13 @@
 		76A8A14E27DF00EA00D02C61 /* SharedUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8A15127DF011A00D02C61 /* Strings.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Strings.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8A15427DF015100D02C61 /* TabBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TabBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76B32B2227E0C03700A5B851 /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Wallet.xcodeproj; path = ../../Wallet/Wallet.xcodeproj; sourceTree = "<group>"; };
+		76B32B3527E0C18D00A5B851 /* TabProviderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabProviderFactory.swift; sourceTree = "<group>"; };
 		76CF993D27DEFEC800AC185E /* NEWMApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NEWMApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF994027DEFEC800AC185E /* NEWMApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEWMApp.h; sourceTree = "<group>"; };
-		76CF994D27DEFECE00AC185E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		76CF994E27DEFECF00AC185E /* iOSAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAppViewModel.swift; sourceTree = "<group>"; };
+		76CF994D27DEFECE00AC185E /* NEWMApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMApp.swift; sourceTree = "<group>"; };
+		76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMAppViewModel.swift; sourceTree = "<group>"; };
 		76CF994F27DEFECF00AC185E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		76EE085427DF9FB900BA1290 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +142,7 @@
 				76A8A15527DF015100D02C61 /* TabBar.framework in Frameworks */,
 				76A8A14B27DF00C400D02C61 /* Home.framework in Frameworks */,
 				76A8A15227DF011A00D02C61 /* Strings.framework in Frameworks */,
+				76B32B2327E0C03700A5B851 /* Wallet.framework in Frameworks */,
 				7640014427DF0896000FB31A /* Login.framework in Frameworks */,
 				76A8A14F27DF00EA00D02C61 /* SharedUI.framework in Frameworks */,
 			);
@@ -139,6 +154,7 @@
 		7651D67827DFA27200FF41B3 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */,
 				7651D69527DFA29300FF41B3 /* Home.xcodeproj */,
 				7651D67F27DFA29300FF41B3 /* Login.xcodeproj */,
 				7651D68A27DFA29300FF41B3 /* SharedUI.xcodeproj */,
@@ -194,6 +210,7 @@
 		76A8A14927DF00C400D02C61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76B32B2227E0C03700A5B851 /* Wallet.framework */,
 				7640014327DF0896000FB31A /* Login.framework */,
 				76A8A15427DF015100D02C61 /* TabBar.framework */,
 				76A8A15127DF011A00D02C61 /* Strings.framework */,
@@ -201,6 +218,14 @@
 				76A8A14A27DF00C400D02C61 /* Home.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		76B32B2E27E0C04500A5B851 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76B32B3227E0C04500A5B851 /* Wallet.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		76CF993327DEFEC800AC185E = {
@@ -225,10 +250,11 @@
 		76CF993F27DEFEC800AC185E /* NEWMApp */ = {
 			isa = PBXGroup;
 			children = (
-				76CF994D27DEFECE00AC185E /* iOSApp.swift */,
-				76CF994E27DEFECF00AC185E /* iOSAppViewModel.swift */,
+				76CF994D27DEFECE00AC185E /* NEWMApp.swift */,
+				76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */,
 				76CF994F27DEFECF00AC185E /* Utilities.swift */,
 				76CF994027DEFEC800AC185E /* NEWMApp.h */,
+				76B32B3527E0C18D00A5B851 /* TabProviderFactory.swift */,
 			);
 			path = NEWMApp;
 			sourceTree = "<group>";
@@ -320,6 +346,10 @@
 					ProductGroup = 7651D6A327DFA29300FF41B3 /* Products */;
 					ProjectRef = 7651D6A227DFA29300FF41B3 /* TabBar.xcodeproj */;
 				},
+				{
+					ProductGroup = 76B32B2E27E0C04500A5B851 /* Products */;
+					ProjectRef = 76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -385,6 +415,13 @@
 			remoteRef = 7651D6A627DFA29300FF41B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		76B32B3227E0C04500A5B851 /* Wallet.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Wallet.framework;
+			remoteRef = 76B32B3127E0C04500A5B851 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -404,8 +441,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				76CF995227DEFECF00AC185E /* Utilities.swift in Sources */,
-				76CF995027DEFECF00AC185E /* iOSAppViewModel.swift in Sources */,
-				76CF995127DEFECF00AC185E /* iOSApp.swift in Sources */,
+				76B32B3627E0C18D00A5B851 /* TabProviderFactory.swift in Sources */,
+				76CF995027DEFECF00AC185E /* NEWMAppViewModel.swift in Sources */,
+				76CF995127DEFECF00AC185E /* NEWMApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,7 +1,7 @@
 import SwiftUI
 import SharedUI
 
-struct WalletView: View {
+public struct WalletView: View {
 	enum TimeSpan: CaseIterable, Hashable {
 		case ever
 		case oneYear
@@ -10,12 +10,14 @@ struct WalletView: View {
 		case sevenDays
 		case twentyFourHours
 	}
-
+	
 	@State var selectedTimeSpan: TimeSpan = .sixMonths
 	
-    var body: some View {
+	public init() {}
+	
+	public var body: some View {
 		timeSpanSelector
-    }
+	}
 	
 	private var timeSpanSelector: some View {
 		HStack {
@@ -55,16 +57,7 @@ extension WalletView.TimeSpan: CustomStringConvertible {
 
 struct WalletView_Previews: PreviewProvider {
 	static var previews: some View {
-		Group {
-			WalletView()
-			WalletView(selectedTimeSpan: .oneYear)
-		}
-		.preferredColorScheme(.dark)
-		
-		Group {
-			WalletView()
-			WalletView(selectedTimeSpan: .oneYear)
-		}
-		.preferredColorScheme(.light)
+		WalletView()
+			.preferredColorScheme(.dark)
 	}
 }
