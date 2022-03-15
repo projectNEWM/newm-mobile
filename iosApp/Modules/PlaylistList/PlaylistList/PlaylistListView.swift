@@ -1,14 +1,14 @@
 import SwiftUI
 import SharedUI
 
-struct PlaylistListView: DataView {
+public struct PlaylistListView: DataView {
 	@ObservedObject var viewModel: PlaylistListViewModel
 	
-	init(id: String) {
+	public init(id: String) {
 		viewModel = PlaylistListViewModel(id: id)
 	}
 	
-	var body: some View {
+	public var body: some View {
 		ScrollView(.vertical, showsIndicators: false) {
 			VStack {
 				ForEach(viewModel.playlists) { playlist in

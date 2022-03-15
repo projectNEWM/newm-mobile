@@ -1,5 +1,7 @@
 import SwiftUI
 import SharedUI
+import SongPlaying
+import PlaylistList
 
 public struct HomeView: View {
 	@ObservedObject var viewModel = HomeViewModel()
@@ -41,8 +43,8 @@ public struct HomeView: View {
 	private var links: some View {
 		ZStack {
 //			IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
-//			IDLink<SongPlayingView>(selectedID: viewModel.selectedSong?.songID)
-//			IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
+			IDLink<SongPlayingView>(selectedID: viewModel.selectedSong?.songID)
+			IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
 		}
 	}
 	
