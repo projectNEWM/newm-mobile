@@ -28,7 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: android/app-project-newm/build/outputs/apk/debug/androidApp-debug.apk
+          path: android/app-project-newm/build/outputs/apk/debug/app-project-newm-debug.apk
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
