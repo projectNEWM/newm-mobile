@@ -19,7 +19,6 @@
 		76A8A15627DF015100D02C61 /* TabBar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15427DF015100D02C61 /* TabBar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76B32B2327E0C03700A5B851 /* Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; };
 		76B32B2427E0C03700A5B851 /* Wallet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76B32B3627E0C18D00A5B851 /* TabProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B32B3527E0C18D00A5B851 /* TabProviderFactory.swift */; };
 		76CF994127DEFEC800AC185E /* NEWMApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 76CF994027DEFEC800AC185E /* NEWMApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76CF995027DEFECF00AC185E /* NEWMAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */; };
 		76CF995127DEFECF00AC185E /* NEWMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* NEWMApp.swift */; };
@@ -125,7 +124,6 @@
 		76A8A15427DF015100D02C61 /* TabBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TabBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B32B2227E0C03700A5B851 /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Wallet.xcodeproj; path = ../../Wallet/Wallet.xcodeproj; sourceTree = "<group>"; };
-		76B32B3527E0C18D00A5B851 /* TabProviderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabProviderFactory.swift; sourceTree = "<group>"; };
 		76CF993D27DEFEC800AC185E /* NEWMApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NEWMApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF994027DEFEC800AC185E /* NEWMApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEWMApp.h; sourceTree = "<group>"; };
 		76CF994D27DEFECE00AC185E /* NEWMApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMApp.swift; sourceTree = "<group>"; };
@@ -254,7 +252,6 @@
 				76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */,
 				76CF994F27DEFECF00AC185E /* Utilities.swift */,
 				76CF994027DEFEC800AC185E /* NEWMApp.h */,
-				76B32B3527E0C18D00A5B851 /* TabProviderFactory.swift */,
 			);
 			path = NEWMApp;
 			sourceTree = "<group>";
@@ -441,7 +438,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				76CF995227DEFECF00AC185E /* Utilities.swift in Sources */,
-				76B32B3627E0C18D00A5B851 /* TabProviderFactory.swift in Sources */,
 				76CF995027DEFECF00AC185E /* NEWMAppViewModel.swift in Sources */,
 				76CF995127DEFECF00AC185E /* NEWMApp.swift in Sources */,
 			);
