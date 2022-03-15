@@ -13,12 +13,9 @@ struct iOSApp: App {
 //	}
 //
 	var body: some Scene {
-		NEWMApp.iOSApp().body
-//		WindowGroup {
-//			MainView()
-//				.fullScreenCover(isPresented: .constant(viewModel.loggedInUser == nil)) { } content: {
-//					LoginView()
-//				}
-//		}
+//		NEWMApp.iOSApp()
+		WindowGroup {
+			NEWMApp()
+		}
 	}
 }

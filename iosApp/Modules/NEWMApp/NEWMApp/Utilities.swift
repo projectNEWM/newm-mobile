@@ -3,7 +3,7 @@ import SwiftUI
 class ModuleClass {}
 
 extension Image {
-	init(_ tab: iOSAppViewModel.Tab) {
+	init(_ tab: NEWMAppViewModel.Tab) {
 		switch tab {
 		case .home: self = Image("Home Icon", bundle: Bundle(for: ModuleClass.self))
 		case .stars: self = Image("Stars Icon", bundle: Bundle(for: ModuleClass.self))
@@ -15,7 +15,7 @@ extension Image {
 }
 
 extension Image {
-	init(_ tab: iOSAppViewModel.MoreTab) {
+	init(_ tab: NEWMAppViewModel.MoreTab) {
 		switch tab {
 		case .playlists: self = Image(systemName: "Wallet Icon")
 		case .artists: self = Image(systemName: "Wallet Icon")
@@ -29,5 +29,17 @@ extension Image {
 extension View {
 	var erased: AnyView {
 		return AnyView(self)
+	}
+}
+
+//TODO: remove this
+extension NSNotification.Name {
+	public static let deviceDidShakeNotification = NSNotification.Name("MyDeviceDidShakeNotification")
+}
+
+extension UIWindow {
+	open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+		super.motionEnded(motion, with: event)
+		NotificationCenter.default.post(name: .deviceDidShakeNotification, object: event)
 	}
 }
