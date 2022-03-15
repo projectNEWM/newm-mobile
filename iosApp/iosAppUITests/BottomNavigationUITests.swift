@@ -1,5 +1,4 @@
 import XCTest
-import iosApp
 
 class BottomNavigationUITests: XCTestCase {
     
