@@ -30,8 +30,8 @@ class MainActivity : ComponentActivity() {
 fun WelcomeToNewm() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.Login.route) {
-        composable(Screen.Login.route) {
+    NavHost(navController = navController, startDestination = Screen.LoginScreen.route) {
+        composable(Screen.LoginScreen.route) {
             LoginScreen(onSignInSubmitted = { _, _ ->
                 navController.popBackStack()
                 navController.navigate(Screen.HomeRoot.route)
