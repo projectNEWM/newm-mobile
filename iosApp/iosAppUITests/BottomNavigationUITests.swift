@@ -10,7 +10,7 @@ class BottomNavigationUITests: XCTestCase {
         app = XCUIApplication()
         app.launch()
         
-        app.buttons["enterNewmButton"].tap()
+//        app.buttons["enterNewmButton"].tap()
     }
 
     func testTapOnTribeButtonSwitchesToTribeView() throws {
