@@ -20,8 +20,8 @@
 		76B32B2327E0C03700A5B851 /* Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; };
 		76B32B2427E0C03700A5B851 /* Wallet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76CF994127DEFEC800AC185E /* NEWMApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 76CF994027DEFEC800AC185E /* NEWMApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		76CF995027DEFECF00AC185E /* NEWMAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */; };
-		76CF995127DEFECF00AC185E /* NEWMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* NEWMApp.swift */; };
+		76CF995027DEFECF00AC185E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994E27DEFECF00AC185E /* MainViewModel.swift */; };
+		76CF995127DEFECF00AC185E /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* Main.swift */; };
 		76CF995227DEFECF00AC185E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994F27DEFECF00AC185E /* Utilities.swift */; };
 		76EE085527DF9FB900BA1290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76EE085427DF9FB900BA1290 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -124,10 +124,10 @@
 		76A8A15427DF015100D02C61 /* TabBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TabBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B32B2227E0C03700A5B851 /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Wallet.xcodeproj; path = ../../Wallet/Wallet.xcodeproj; sourceTree = "<group>"; };
-		76CF993D27DEFEC800AC185E /* NEWMApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NEWMApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76CF993D27DEFEC800AC185E /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF994027DEFEC800AC185E /* NEWMApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEWMApp.h; sourceTree = "<group>"; };
-		76CF994D27DEFECE00AC185E /* NEWMApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMApp.swift; sourceTree = "<group>"; };
-		76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMAppViewModel.swift; sourceTree = "<group>"; };
+		76CF994D27DEFECE00AC185E /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		76CF994E27DEFECF00AC185E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		76CF994F27DEFECF00AC185E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		76EE085427DF9FB900BA1290 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -231,7 +231,7 @@
 			children = (
 				7651D67827DFA27200FF41B3 /* Dependencies */,
 				76EE085327DF9FA800BA1290 /* Resources */,
-				76CF993F27DEFEC800AC185E /* NEWMApp */,
+				76CF993F27DEFEC800AC185E /* Main */,
 				76CF993E27DEFEC800AC185E /* Products */,
 				76A8A14927DF00C400D02C61 /* Frameworks */,
 			);
@@ -240,20 +240,20 @@
 		76CF993E27DEFEC800AC185E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76CF993D27DEFEC800AC185E /* NEWMApp.framework */,
+				76CF993D27DEFEC800AC185E /* Main.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		76CF993F27DEFEC800AC185E /* NEWMApp */ = {
+		76CF993F27DEFEC800AC185E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				76CF994D27DEFECE00AC185E /* NEWMApp.swift */,
-				76CF994E27DEFECF00AC185E /* NEWMAppViewModel.swift */,
+				76CF994D27DEFECE00AC185E /* Main.swift */,
+				76CF994E27DEFECF00AC185E /* MainViewModel.swift */,
 				76CF994F27DEFECF00AC185E /* Utilities.swift */,
 				76CF994027DEFEC800AC185E /* NEWMApp.h */,
 			);
-			path = NEWMApp;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		76EE085327DF9FA800BA1290 /* Resources */ = {
@@ -278,9 +278,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		76CF993C27DEFEC800AC185E /* NEWMApp */ = {
+		76CF993C27DEFEC800AC185E /* Main */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 76CF994427DEFEC800AC185E /* Build configuration list for PBXNativeTarget "NEWMApp" */;
+			buildConfigurationList = 76CF994427DEFEC800AC185E /* Build configuration list for PBXNativeTarget "Main" */;
 			buildPhases = (
 				76CF993827DEFEC800AC185E /* Headers */,
 				76CF993927DEFEC800AC185E /* Sources */,
@@ -292,9 +292,9 @@
 			);
 			dependencies = (
 			);
-			name = NEWMApp;
+			name = Main;
 			productName = NEWMApp;
-			productReference = 76CF993D27DEFEC800AC185E /* NEWMApp.framework */;
+			productReference = 76CF993D27DEFEC800AC185E /* Main.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -311,7 +311,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 76CF993727DEFEC800AC185E /* Build configuration list for PBXProject "NEWMApp" */;
+			buildConfigurationList = 76CF993727DEFEC800AC185E /* Build configuration list for PBXProject "Main" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -350,7 +350,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				76CF993C27DEFEC800AC185E /* NEWMApp */,
+				76CF993C27DEFEC800AC185E /* Main */,
 			);
 		};
 /* End PBXProject section */
@@ -438,8 +438,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				76CF995227DEFECF00AC185E /* Utilities.swift in Sources */,
-				76CF995027DEFECF00AC185E /* NEWMAppViewModel.swift in Sources */,
-				76CF995127DEFECF00AC185E /* NEWMApp.swift in Sources */,
+				76CF995027DEFECF00AC185E /* MainViewModel.swift in Sources */,
+				76CF995127DEFECF00AC185E /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,7 +627,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		76CF993727DEFEC800AC185E /* Build configuration list for PBXProject "NEWMApp" */ = {
+		76CF993727DEFEC800AC185E /* Build configuration list for PBXProject "Main" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				76CF994227DEFEC800AC185E /* Debug */,
@@ -636,7 +636,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		76CF994427DEFEC800AC185E /* Build configuration list for PBXNativeTarget "NEWMApp" */ = {
+		76CF994427DEFEC800AC185E /* Build configuration list for PBXNativeTarget "Main" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				76CF994527DEFEC800AC185E /* Debug */,

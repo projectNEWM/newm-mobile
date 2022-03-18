@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7628EBD027E550140077ECFD /* Main.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7628EBCF27E550140077ECFD /* Main.framework */; };
+		7628EBD127E550140077ECFD /* Main.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7628EBCF27E550140077ECFD /* Main.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7638B03127DF036000FB4815 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7638B03027DF036000FB4815 /* shared.xcframework */; };
 		7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7651D6D327DFA33100FF41B3 /* iOSApp.swift */; };
 		7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		76B770F627C5F2520009A58E /* BottomNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */; };
-		76CF99B127DEFF6E00AC185E /* NEWMApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76CF994C27DEFEC800AC185E /* NEWMApp.framework */; };
 		76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -116,13 +117,6 @@
 			remoteGlobalIDString = 76CF991127DEFEA600AC185E;
 			remoteInfo = Home;
 		};
-		76CF994B27DEFEC800AC185E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 76CF993D27DEFEC800AC185E;
-			remoteInfo = NEWMApp;
-		};
 		76CF996B27DEFEEA00AC185E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */;
@@ -164,13 +158,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 76CF995C27DEFEEA00AC185E;
 			remoteInfo = SharedUI;
-		};
-		76CF99BA27DEFFA000AC185E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 76CF993C27DEFEC800AC185E;
-			remoteInfo = NEWMApp;
 		};
 		76CF99BC27DEFFA000AC185E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -230,6 +217,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7628EBD127E550140077ECFD /* Main.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -238,6 +239,7 @@
 		760BE85F27E15709000AD1A7 /* Artist.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Artist.xcodeproj; path = Artist/Artist.xcodeproj; sourceTree = "<group>"; };
 		76107C2227DF287E0024B27B /* Tips.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tips.xcodeproj; path = Tips/Tips.xcodeproj; sourceTree = "<group>"; };
 		76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SongPlaying.xcodeproj; path = SongPlaying/SongPlaying.xcodeproj; sourceTree = "<group>"; };
+		7628EBCF27E550140077ECFD /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7638B03027DF036000FB4815 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = "/Users/martyulrich/Repos/newm-mobile/shared/build/XCFrameworks/debug/shared.xcframework"; sourceTree = "<absolute>"; };
 		7640012027DF03F2000FB31A /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = Login/Login.xcodeproj; sourceTree = "<group>"; };
 		7651D6D327DFA33100FF41B3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
@@ -249,7 +251,7 @@
 		76CF98E127DEFE1B00AC185E /* Colors.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Colors.xcodeproj; path = Colors/Colors.xcodeproj; sourceTree = "<group>"; };
 		76CF98FD27DEFE7900AC185E /* Fonts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Fonts.xcodeproj; path = Fonts/Fonts.xcodeproj; sourceTree = "<group>"; };
 		76CF991B27DEFEA600AC185E /* Home.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Home.xcodeproj; path = Home/Home.xcodeproj; sourceTree = "<group>"; };
-		76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NEWMApp.xcodeproj; path = NEWMApp/NEWMApp.xcodeproj; sourceTree = "<group>"; };
+		76CF994727DEFEC800AC185E /* Main.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Main.xcodeproj; path = NEWMApp/Main.xcodeproj; sourceTree = "<group>"; };
 		76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SharedUI.xcodeproj; path = SharedUI/SharedUI.xcodeproj; sourceTree = "<group>"; };
 		76CF998927DEFF0800AC185E /* TabBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TabBar.xcodeproj; path = TabBar/TabBar.xcodeproj; sourceTree = "<group>"; };
 		76CF99A927DEFF2700AC185E /* Utilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Utilities.xcodeproj; path = Utilities/Utilities.xcodeproj; sourceTree = "<group>"; };
@@ -264,7 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7638B03127DF036000FB4815 /* shared.xcframework in Frameworks */,
-				76CF99B127DEFF6E00AC185E /* NEWMApp.framework in Frameworks */,
+				7628EBD027E550140077ECFD /* Main.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +329,7 @@
 		7555FFB0242A642200829871 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7628EBCF27E550140077ECFD /* Main.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -401,7 +404,7 @@
 				76CF98FD27DEFE7900AC185E /* Fonts.xcodeproj */,
 				76CF991B27DEFEA600AC185E /* Home.xcodeproj */,
 				7640012027DF03F2000FB31A /* Login.xcodeproj */,
-				76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */,
+				76CF994727DEFEC800AC185E /* Main.xcodeproj */,
 				76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */,
 				76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */,
 				76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */,
@@ -444,14 +447,6 @@
 			children = (
 				76CF992027DEFEA700AC185E /* Home.framework */,
 				76107BE627DF28090024B27B /* HomeDemo.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		76CF994827DEFEC800AC185E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				76CF994C27DEFEC800AC185E /* NEWMApp.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -508,6 +503,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
+				7628EBD227E550140077ECFD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -516,7 +512,6 @@
 				76CF99B527DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99B727DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99B927DEFFA000AC185E /* PBXTargetDependency */,
-				76CF99BB27DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99BD27DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99BF27DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99C127DEFFA000AC185E /* PBXTargetDependency */,
@@ -622,10 +617,6 @@
 				{
 					ProductGroup = 7640012127DF03F2000FB31A /* Products */;
 					ProjectRef = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
-				},
-				{
-					ProductGroup = 76CF994827DEFEC800AC185E /* Products */;
-					ProjectRef = 76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */;
 				},
 				{
 					ProductGroup = 76EE07CD27DF34A000BA1290 /* Products */;
@@ -752,13 +743,6 @@
 			fileType = wrapper.framework;
 			path = Home.framework;
 			remoteRef = 76CF991F27DEFEA700AC185E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76CF994C27DEFEC800AC185E /* NEWMApp.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = NEWMApp.framework;
-			remoteRef = 76CF994B27DEFEC800AC185E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		76CF996C27DEFEEA00AC185E /* SharedUI.framework */ = {
@@ -904,11 +888,6 @@
 			isa = PBXTargetDependency;
 			name = SharedUI;
 			targetProxy = 76CF99B827DEFFA000AC185E /* PBXContainerItemProxy */;
-		};
-		76CF99BB27DEFFA000AC185E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = NEWMApp;
-			targetProxy = 76CF99BA27DEFFA000AC185E /* PBXContainerItemProxy */;
 		};
 		76CF99BD27DEFFA000AC185E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
