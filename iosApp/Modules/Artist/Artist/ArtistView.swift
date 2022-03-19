@@ -1,4 +1,5 @@
 import SwiftUI
+import SharedUI
 
 struct ArtistView: DataView {
 	var id: String

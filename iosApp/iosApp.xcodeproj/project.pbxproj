@@ -62,12 +62,68 @@
 			remoteGlobalIDString = 76107C5927DF2A240024B27B;
 			remoteInfo = SongPlaying;
 		};
+		7628EBD627E55BC20077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76EE081327DF38C300BA1290 /* Wallet.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 76EE080827DF38C300BA1290;
+			remoteInfo = Wallet;
+		};
+		7628EBDB27E55BE90077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 760BE85F27E15709000AD1A7 /* Artist.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 760BE85427E15709000AD1A7;
+			remoteInfo = Artist;
+		};
+		7628EBDD27E55BE90077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 76EE07C127DF34A000BA1290;
+			remoteInfo = PlaylistList;
+		};
+		7628EBDF27E55BE90077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 76CF993C27DEFEC800AC185E;
+			remoteInfo = Main;
+		};
+		7628EBE127E55BE90077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 76107C5827DF2A240024B27B;
+			remoteInfo = SongPlaying;
+		};
+		7628EBE327E55BE90077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76107C2227DF287E0024B27B /* Tips.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 76107C1727DF287E0024B27B;
+			remoteInfo = Tips;
+		};
+		7628EBE627E55BE90077ECFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF993D27DEFEC800AC185E;
+			remoteInfo = Main;
+		};
 		7640012427DF03F2000FB31A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 7640011627DF03F2000FB31A;
 			remoteInfo = Login;
+		};
+		764C45F927E55C6200423B21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF994727DEFEC800AC185E /* Main.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF993D27DEFEC800AC185E;
+			remoteInfo = Main;
 		};
 		765441B827DF0E86003346EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -242,6 +298,7 @@
 		76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SongPlaying.xcodeproj; path = SongPlaying/SongPlaying.xcodeproj; sourceTree = "<group>"; };
 		7628EBCF27E550140077ECFD /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7628EBD427E551D60077ECFD /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
+		7628EBD827E55BE90077ECFD /* Main.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Main.xcodeproj; path = "/Users/martyulrich/Repos/newm-mobile/iosApp/Modules/NEWMApp/Main.xcodeproj"; sourceTree = "<absolute>"; };
 		7638B03027DF036000FB4815 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = "/Users/martyulrich/Repos/newm-mobile/shared/build/XCFrameworks/debug/shared.xcframework"; sourceTree = "<absolute>"; };
 		7640012027DF03F2000FB31A /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = Login/Login.xcodeproj; sourceTree = "<group>"; };
 		7651D6D327DFA33100FF41B3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
@@ -306,6 +363,7 @@
 				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
+				7628EBD827E55BE90077ECFD /* Main.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -370,6 +428,14 @@
 			path = iosAppTests;
 			sourceTree = "<group>";
 		};
+		7628EBD927E55BE90077ECFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7628EBE727E55BE90077ECFD /* Main.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		763FEAB027C30B4500232093 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +452,14 @@
 			children = (
 				7640012527DF03F2000FB31A /* Login.framework */,
 				765441B927DF0E86003346EE /* LoginDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		764C45F327E55C6000423B21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				764C45FA27E55C6200423B21 /* Main.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -519,14 +593,20 @@
 			buildRules = (
 			);
 			dependencies = (
-				76EE085727DFA02200BA1290 /* PBXTargetDependency */,
-				76CF99B527DEFFA000AC185E /* PBXTargetDependency */,
-				76CF99B727DEFFA000AC185E /* PBXTargetDependency */,
-				76CF99B927DEFFA000AC185E /* PBXTargetDependency */,
-				76CF99BD27DEFFA000AC185E /* PBXTargetDependency */,
-				76CF99BF27DEFFA000AC185E /* PBXTargetDependency */,
+				7628EBDC27E55BE90077ECFD /* PBXTargetDependency */,
 				76CF99C127DEFFA000AC185E /* PBXTargetDependency */,
+				76CF99BF27DEFFA000AC185E /* PBXTargetDependency */,
+				76CF99BD27DEFFA000AC185E /* PBXTargetDependency */,
+				7628EBDE27E55BE90077ECFD /* PBXTargetDependency */,
+				76CF99B527DEFFA000AC185E /* PBXTargetDependency */,
+				76CF99B927DEFFA000AC185E /* PBXTargetDependency */,
 				76CF99C327DEFFA000AC185E /* PBXTargetDependency */,
+				7628EBE027E55BE90077ECFD /* PBXTargetDependency */,
+				76CF99B727DEFFA000AC185E /* PBXTargetDependency */,
+				7628EBE227E55BE90077ECFD /* PBXTargetDependency */,
+				7628EBE427E55BE90077ECFD /* PBXTargetDependency */,
+				7628EBD727E55BC20077ECFD /* PBXTargetDependency */,
+				76EE085727DFA02200BA1290 /* PBXTargetDependency */,
 			);
 			name = iosApp;
 			packageProductDependencies = (
@@ -631,6 +711,14 @@
 					ProjectRef = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
 				},
 				{
+					ProductGroup = 764C45F327E55C6000423B21 /* Products */;
+					ProjectRef = 76CF994727DEFEC800AC185E /* Main.xcodeproj */;
+				},
+				{
+					ProductGroup = 7628EBD927E55BE90077ECFD /* Products */;
+					ProjectRef = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
+				},
+				{
 					ProductGroup = 76EE07CD27DF34A000BA1290 /* Products */;
 					ProjectRef = 76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */;
 				},
@@ -715,11 +803,25 @@
 			remoteRef = 76107C6727DF2A250024B27B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		7628EBE727E55BE90077ECFD /* Main.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Main.framework;
+			remoteRef = 7628EBE627E55BE90077ECFD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7640012527DF03F2000FB31A /* Login.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Login.framework;
 			remoteRef = 7640012427DF03F2000FB31A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		764C45FA27E55C6200423B21 /* Main.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Main.framework;
+			remoteRef = 764C45F927E55C6200423B21 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		765441B927DF0E86003346EE /* LoginDemo.app */ = {
@@ -877,6 +979,36 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		7628EBD727E55BC20077ECFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Wallet;
+			targetProxy = 7628EBD627E55BC20077ECFD /* PBXContainerItemProxy */;
+		};
+		7628EBDC27E55BE90077ECFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Artist;
+			targetProxy = 7628EBDB27E55BE90077ECFD /* PBXContainerItemProxy */;
+		};
+		7628EBDE27E55BE90077ECFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PlaylistList;
+			targetProxy = 7628EBDD27E55BE90077ECFD /* PBXContainerItemProxy */;
+		};
+		7628EBE027E55BE90077ECFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Main;
+			targetProxy = 7628EBDF27E55BE90077ECFD /* PBXContainerItemProxy */;
+		};
+		7628EBE227E55BE90077ECFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SongPlaying;
+			targetProxy = 7628EBE127E55BE90077ECFD /* PBXContainerItemProxy */;
+		};
+		7628EBE427E55BE90077ECFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Tips;
+			targetProxy = 7628EBE327E55BE90077ECFD /* PBXContainerItemProxy */;
+		};
 		7683129027A38F480056BC6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
