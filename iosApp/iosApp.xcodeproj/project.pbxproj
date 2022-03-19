@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7628EBD027E550140077ECFD /* Main.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7628EBCF27E550140077ECFD /* Main.framework */; };
 		7628EBD127E550140077ECFD /* Main.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7628EBCF27E550140077ECFD /* Main.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7628EBD527E551D60077ECFD /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628EBD427E551D60077ECFD /* iosAppTests.swift */; };
 		7638B03127DF036000FB4815 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7638B03027DF036000FB4815 /* shared.xcframework */; };
 		7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7651D6D327DFA33100FF41B3 /* iOSApp.swift */; };
 		7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */; };
@@ -240,6 +241,7 @@
 		76107C2227DF287E0024B27B /* Tips.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tips.xcodeproj; path = Tips/Tips.xcodeproj; sourceTree = "<group>"; };
 		76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SongPlaying.xcodeproj; path = SongPlaying/SongPlaying.xcodeproj; sourceTree = "<group>"; };
 		7628EBCF27E550140077ECFD /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7628EBD427E551D60077ECFD /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
 		7638B03027DF036000FB4815 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = "/Users/martyulrich/Repos/newm-mobile/shared/build/XCFrameworks/debug/shared.xcframework"; sourceTree = "<absolute>"; };
 		7640012027DF03F2000FB31A /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = Login/Login.xcodeproj; sourceTree = "<group>"; };
 		7651D6D327DFA33100FF41B3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				76CF98B927DEFD7100AC185E /* Modules */,
 				7555FF7D242A565900829871 /* iosApp */,
+				7628EBD327E551B50077ECFD /* iosAppTests */,
 				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
@@ -357,6 +360,14 @@
 				76EE07B627DF347200BA1290 /* SongPlayingDemo.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7628EBD327E551B50077ECFD /* iosAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				7628EBD427E551D60077ECFD /* iosAppTests.swift */,
+			);
+			path = iosAppTests;
 			sourceTree = "<group>";
 		};
 		763FEAB027C30B4500232093 /* Resources */ = {
@@ -576,6 +587,7 @@
 					};
 					7683128A27A38F480056BC6B = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 						TestTargetID = 7555FF7A242A565900829871;
 					};
 					76B770EA27C5F2070009A58E = {
@@ -850,6 +862,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7628EBD527E551D60077ECFD /* iosAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1120,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1114,10 +1128,16 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iosApp.app/iosApp";
@@ -1129,12 +1149,18 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.iosAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
