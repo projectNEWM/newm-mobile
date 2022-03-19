@@ -3,14 +3,14 @@ import Combine
 import Strings
 import Login
 
-class NEWMAppViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
 	private var cancellables = [AnyCancellable]()
 	@Published var selectedTab: Tab = .home
 
 	init() {}
 }
 
-extension NEWMAppViewModel {
+extension MainViewModel {
 	enum Tab: CaseIterable {
 		case home
 		case tribe
@@ -28,7 +28,7 @@ extension NEWMAppViewModel {
 	}
 }
 
-extension NEWMAppViewModel.Tab: CustomStringConvertible, Identifiable {
+extension MainViewModel.Tab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
 		case .home: return "Home"
@@ -42,7 +42,7 @@ extension NEWMAppViewModel.Tab: CustomStringConvertible, Identifiable {
 	var id: ObjectIdentifier { description.objectIdentifier }
 }
 
-extension NEWMAppViewModel.MoreTab: CustomStringConvertible, Identifiable {
+extension MainViewModel.MoreTab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
 		case .playlists: return "Playlists"
@@ -56,13 +56,13 @@ extension NEWMAppViewModel.MoreTab: CustomStringConvertible, Identifiable {
 	var id: ObjectIdentifier { description.objectIdentifier }
 }
 
-extension NEWMAppViewModel.Tab: Hashable {
+extension MainViewModel.Tab: Hashable {
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(description)
 	}
 }
 
-extension NEWMAppViewModel.MoreTab: Hashable {
+extension MainViewModel.MoreTab: Hashable {
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(description)
 	}
