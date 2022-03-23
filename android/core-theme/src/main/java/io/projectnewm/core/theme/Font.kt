@@ -6,7 +6,8 @@ import androidx.compose.ui.text.font.FontWeight
 
 
 val raleway = FontFamily(
-    Font(R.font.raleway_bold, weight = FontWeight.Bold)
+    Font(R.font.raleway_bold, weight = FontWeight.Bold),
+    Font(R.font.raleway_medium, weight = FontWeight.Medium)
     // TODO: More fonts
 )
 

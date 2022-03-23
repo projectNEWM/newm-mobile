@@ -75,8 +75,7 @@ fun ArtistBackgroundBrush(): Brush {
     return Brush.verticalGradient(
         colors = listOf(
             colorResource(id = R.color.purple_artist_background_1),
-            colorResource(id = R.color.purple_artist_background_2),
-            colorResource(id = R.color.purple_artist_background_3),
+            colorResource(id = R.color.purple_artist_background_2)
         )
     )
 }

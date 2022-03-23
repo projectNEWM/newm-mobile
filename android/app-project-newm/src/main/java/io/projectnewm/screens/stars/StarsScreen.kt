@@ -25,7 +25,7 @@ fun StarsScreen(navController: NavController) {
             .testTag(TAG_STARS_SCREEN)
     ) {
         Text(
-            text = "Stars View",
+            text = "Coming Soon",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

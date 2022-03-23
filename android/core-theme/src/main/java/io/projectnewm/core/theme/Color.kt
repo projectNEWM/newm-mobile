@@ -6,6 +6,8 @@ import com.airbnb.android.showkase.annotation.ShowkaseColor
 @ShowkaseColor(name = "Primary", group = ColorGroups.darkColors)
 val NewmWhite = Color(0xFFFFFFFF)
 
+val NewmBlack = Color(0xFF0A0A0A)
+
 @ShowkaseColor(name = "Primary", group = ColorGroups.lightColors)
 val Purple500 = Color(0xFF6200EE)
 

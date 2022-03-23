@@ -25,7 +25,7 @@ fun TribeScreen(navController: NavController) {
             .testTag(TAG_TRIBE_SCREEN)
     ) {
         Text(
-            text = "Tribe Screen",
+            text = "Coming Soon",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

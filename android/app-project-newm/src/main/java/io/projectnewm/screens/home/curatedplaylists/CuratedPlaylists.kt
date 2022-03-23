@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.projectnewm.R
@@ -22,7 +23,7 @@ fun CuratedPlayLists() {
         modifier = Modifier
             .fillMaxWidth()
             .height(280.dp)
-            .padding(8.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 8.dp),
         contentAlignment = Alignment.Center
 
     ) {
@@ -30,13 +31,13 @@ fun CuratedPlayLists() {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = "Curated Playlists",
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.body1
             )
 
             LazyRow {
                 repeat((0..25).count()) {
                     item {
-                        PlaylistItem({})
+                        PlaylistItem { }
                     }
                 }
             }
@@ -54,7 +55,8 @@ fun PlaylistItem(onPlaylistClicked: () -> Unit) {
             .padding(8.dp),
         elevation = 2.dp,
         shape = RoundedCornerShape(100.dp),
-        onClick = { onPlaylistClicked }
+        onClick = onPlaylistClicked,
+        backgroundColor = Color.Black
     ) {
         Image(
             modifier = Modifier

@@ -12,11 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import io.projectnewm.R
-import io.projectnewm.components.RingDecorator
-import io.projectnewm.components.SongRingBrush
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -24,14 +26,14 @@ fun NewmSongList(onSongClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
-            .padding(8.dp)
+            .wrapContentHeight()
+            .padding(start = 8.dp, end = 8.dp, top = 8.dp)
     ) {
         Column {
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(16.dp),
                 text = "NEWM Songs",
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.body1
             )
             LazyRow {
                 repeat((0..25).count()) {
@@ -49,29 +51,48 @@ fun NewmSongList(onSongClicked: () -> Unit) {
 fun SongCard(onSongClicked: () -> Unit) {
     Card(
         modifier = Modifier
-            .fillMaxHeight()
-            .width(150.dp)
-            .padding(8.dp),
+            .width(115.dp)
+            .height(140.dp),
         elevation = 2.dp,
-        onClick = onSongClicked
+        onClick = onSongClicked,
+        backgroundColor = Color.Black
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val modifier = Modifier
-                .height(100.dp)
-                .width(100.dp)
-            RingDecorator(modifier = modifier, brush = SongRingBrush()) {
+            Box(
+                modifier = Modifier.offset(y = (-8).dp),
+                contentAlignment = Alignment.Center
+            ) {
                 Image(
-                    modifier = modifier
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    painter = painterResource(id = R.drawable.ic_newm_eclipse_orange_pink),
+                    contentDescription = "Song",
+                )
+                Image(
+                    modifier = Modifier
+                        .width(75.dp)
+                        .height(75.dp)
                         .clip(CircleShape),
-                    painter = painterResource(id = R.drawable.ic_song_icon),
-                    contentDescription = "Artist",
+                    contentScale = ContentScale.Crop,
+                    painter = painterResource(id = R.drawable.ic_bowie_artist),
+                    contentDescription = "Song",
                 )
             }
-            Text(text = "Song Title")
-            Text(text = "Artist /  Band")
+            Text(
+                modifier = Modifier.offset(y = (-20).dp),
+                text = "Song Title",
+                fontSize = 11.sp
+            )
+            Text(
+                modifier = Modifier.offset(y = (-20).dp),
+                text = "Artist / Band",
+                fontSize = 10.sp,
+                color = colorResource(id = R.color.gradient_orange)
+            )
         }
     }
 }
