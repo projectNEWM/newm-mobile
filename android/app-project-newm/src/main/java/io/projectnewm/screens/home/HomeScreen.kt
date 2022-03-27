@@ -2,6 +2,7 @@ package io.projectnewm.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import io.projectnewm.components.NewmRainbowDivider
 import io.projectnewm.screens.home.artists.ArtistList
 import io.projectnewm.screens.home.categories.CategoryTabs
 import io.projectnewm.screens.home.categories.MusicalCategoriesViewModel
@@ -33,8 +35,10 @@ fun HomeScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .testTag(TAG_HOME_SCREEN)
-    ) {
+            .background(Color.Black)
+            .testTag(TAG_HOME_SCREEN),
+
+        ) {
 
         stickyHeader {
             val viewState by viewModel.state.collectAsState()
@@ -48,6 +52,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+            NewmRainbowDivider()
         }
         item {
             ArtistList()
