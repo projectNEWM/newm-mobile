@@ -1,4 +1,4 @@
-package io.projectnewm.screens.login
+package io.projectnewm.feature.login.screen
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

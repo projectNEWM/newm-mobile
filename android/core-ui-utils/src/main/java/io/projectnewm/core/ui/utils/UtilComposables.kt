@@ -1,4 +1,4 @@
-package io.projectnewm.utilities
+package io.projectnewm.core.ui.utils
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

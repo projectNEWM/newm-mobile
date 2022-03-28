@@ -1,8 +1,7 @@
-package io.projectnewm.screens.login.email
+package io.projectnewm.feature.login.screen.email
 
-import io.projectnewm.screens.login.TextFieldState
+import io.projectnewm.feature.login.screen.TextFieldState
 import io.projectnewm.shared.login.LoginFieldValidator
-import java.util.regex.Pattern
 
 class EmailState : TextFieldState(validator = ::isEmailValid, errorFor = ::emailValidationError)
 /**

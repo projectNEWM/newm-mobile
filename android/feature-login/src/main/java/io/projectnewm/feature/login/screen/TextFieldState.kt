@@ -1,4 +1,4 @@
-package io.projectnewm.screens.login
+package io.projectnewm.feature.login.screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

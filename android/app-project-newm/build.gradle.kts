@@ -63,7 +63,10 @@ dependencies {
 
     implementation(platform(Google.firebase))
     implementation(project(Modules.coreTheme))
+    implementation(project(Modules.coreResources))
+    implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.nowPlaying))
+    implementation(project(Modules.login))
     implementation(project(Modules.shared))
 
     implementation(Airbnb.showkase)
@@ -79,7 +82,6 @@ dependencies {
     implementation(Google.lifecycle)
     implementation(Google.material)
     implementation(Google.navigationCompose)
-    implementation(Google.materialIconsExtended)
     implementation(Google.navigationFragmentKtx)
     implementation(Google.navigationUiKtx)
     implementation(Google.splashScreen)

@@ -1,4 +1,4 @@
-package io.projectnewm.screens.login.email
+package io.projectnewm.feature.login.screen.email
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import io.projectnewm.R
-import io.projectnewm.screens.login.TextFieldError
-import io.projectnewm.screens.login.TextFieldState
+import io.projectnewm.feature.login.screen.TextFieldError
+import io.projectnewm.feature.login.screen.TextFieldState
+import io.projectnewm.core.resources.R
 
 @Composable
 fun Email(
