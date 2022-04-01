@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
-        resourcePrefix = "ui-utils"
+        resourcePrefix = "core-ui-utils"
     }
 
     compileOptions {
