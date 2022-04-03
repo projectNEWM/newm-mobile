@@ -4,7 +4,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.karumi.shot.ScreenshotTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.projectnewm.screens.login.LoginScreen
+import io.projectnewm.feature.login.screen.LoginScreen
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

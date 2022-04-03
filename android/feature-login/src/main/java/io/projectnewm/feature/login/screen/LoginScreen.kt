@@ -1,4 +1,4 @@
-package io.projectnewm.screens.login
+package io.projectnewm.feature.login.screen
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
@@ -23,14 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import io.projectnewm.R
-import io.projectnewm.components.SongRingBrush
-import io.projectnewm.screens.login.email.Email
-import io.projectnewm.screens.login.email.EmailState
-import io.projectnewm.screens.login.password.Password
-import io.projectnewm.screens.login.password.PasswordState
-import io.projectnewm.utilities.ToBeImplemented
-import io.projectnewm.utilities.shortToast
+import io.projectnewm.core.ui.utils.SongRingBrush
+import io.projectnewm.core.ui.utils.ToBeImplemented
+import io.projectnewm.core.ui.utils.shortToast
+import io.projectnewm.core.resources.R
+import io.projectnewm.feature.login.screen.email.Email
+import io.projectnewm.feature.login.screen.email.EmailState
+import io.projectnewm.feature.login.screen.password.Password
+import io.projectnewm.feature.login.screen.password.PasswordState
 
 internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 

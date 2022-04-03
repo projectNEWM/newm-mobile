@@ -1,4 +1,4 @@
-package io.projectnewm.screens.login.password
+package io.projectnewm.feature.login.screen.password
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,8 +16,8 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import io.projectnewm.screens.login.TextFieldError
-import io.projectnewm.screens.login.TextFieldState
+import io.projectnewm.feature.login.screen.TextFieldError
+import io.projectnewm.feature.login.screen.TextFieldState
 
 @Composable
 fun Password(

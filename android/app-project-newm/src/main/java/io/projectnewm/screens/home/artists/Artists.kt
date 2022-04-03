@@ -19,8 +19,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.projectnewm.R
-import io.projectnewm.components.ArtistBackgroundBrush
+import io.projectnewm.core.resources.R
+import io.projectnewm.core.ui.utils.ArtistBackgroundBrush
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

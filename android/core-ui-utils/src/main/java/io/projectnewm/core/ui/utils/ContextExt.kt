@@ -1,4 +1,4 @@
-package io.projectnewm.utilities
+package io.projectnewm.core.ui.utils
 
 import android.content.Context
 import android.widget.Toast

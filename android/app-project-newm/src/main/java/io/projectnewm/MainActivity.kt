@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.projectnewm.core.theme.NewmMobileTheme
 import io.projectnewm.screens.Screen
-import io.projectnewm.screens.login.LoginScreen
+import io.projectnewm.feature.login.screen.LoginScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
