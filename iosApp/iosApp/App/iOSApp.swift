@@ -1,9 +1,8 @@
 import SwiftUI
+import Main
 
 @main
 struct iOSApp: App {
-	@StateObject var viewModel = iOSAppViewModel()
-	
 	init() {
 		UINavigationBar.appearance().tintColor = .white
 #if DEBUG
@@ -13,10 +12,7 @@ struct iOSApp: App {
 	
 	var body: some Scene {
 		WindowGroup {
-			MainView()
-				.fullScreenCover(isPresented: .constant(viewModel.loggedInUser == nil)) { } content: {
-					LoginView()
-				}
+			Main()
 		}
 	}
 }
