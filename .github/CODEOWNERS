@@ -1,0 +1,13 @@
+# default
+* @newm-mobile/android
+
+# iOS
+/newm-mobile/iosApp @newm-mobile/ios
+/newm-mobile/shared/src/iosMain @newm-mobile/ios
+
+# Android
+/newm-mobile/android @newm-mobile/ios
+/newm-mobile/shared/androidMain @newm-mobile/ios
+
+# Common
+/newm-mobile/shared/src/commonMain @newm-mobile/ios @newm-mobile/android
