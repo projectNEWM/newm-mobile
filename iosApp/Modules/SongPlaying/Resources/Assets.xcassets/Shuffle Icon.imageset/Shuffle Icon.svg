@@ -1,0 +1,10 @@
+<svg id="Shuffle_Icon" data-name="Shuffle Icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <rect id="Rectangle_138" data-name="Rectangle 138" width="40" height="40" fill="#fff" opacity="0"/>
+  <g id="Player_Shuffle" data-name="Player Shuffle" transform="translate(4.5 5.914)">
+    <path id="Path_2179" data-name="Path 2179" d="M14.2,12.926a5.9,5.9,0,0,0-1.873-1.695A5.673,5.673,0,0,0,9.949,10.5H4.5" transform="translate(0 -0.861)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_2180" data-name="Path 2180" d="M26.334,10.5H21.24c-3.639,0-5.822,6.065-5.822,6.065S13.234,22.63,9.595,22.63H4.5" transform="translate(0 -0.861)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_2181" data-name="Path 2181" d="M19.5,22.5a5.9,5.9,0,0,0,1.873,1.7,5.657,5.657,0,0,0,2.382.73H29.2" transform="translate(-2.87 -3.157)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_2182" data-name="Path 2182" d="M27,6l3.639,3.639L27,13.278" transform="translate(-4.305)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_2183" data-name="Path 2183" d="M27,21l3.639,3.639L27,28.278" transform="translate(-4.305 -2.87)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  </g>
+</svg>
