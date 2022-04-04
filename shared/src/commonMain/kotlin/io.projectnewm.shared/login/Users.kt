@@ -1,6 +1,6 @@
 package io.projectnewm.shared.login
 
-data class LoginUser(val email: String, val password: String)
+data class LogInUser(val email: String, val password: String)
 
 data class NewUser(
     val firstName: String,

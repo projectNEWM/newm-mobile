@@ -1,19 +1,19 @@
 package io.projectnewm.shared.login
 
 //TODO: Handle Error Cases
-class LoginRepository(
-    private val service: LoginService
+class LogInRepository(
+    private val service: LogInService
 ) {
-    suspend fun registerUser(email: String): String {
-        return service.requestSignUpAccess(email)
+    suspend fun requestEmailConfirmationCode(email: String): String {
+        return service.requestEmailConfirmationCode(email)
     }
 
     suspend fun registerUser(user: NewUser): String {
         return service.register(user)
     }
 
-    suspend fun login(email: String, password: String): String {
-        return service.login(LoginUser(email = email, password = password))
+    suspend fun logIn(email: String, password: String): String {
+        return service.logIn(LogInUser(email = email, password = password))
     }
 
     suspend fun registerUser(
