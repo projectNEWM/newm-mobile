@@ -34,16 +34,9 @@
 			remoteGlobalIDString = 76107C8727DF2D2C0024B27B;
 			remoteInfo = SongPlayingDemo;
 		};
-		7628EBDF27E55BE90077ECFD /* PBXContainerItemProxy */ = {
+		7627EA4B27FA6C9F00C0F7DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 76CF993C27DEFEC800AC185E;
-			remoteInfo = Main;
-		};
-		7628EBE627E55BE90077ECFD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
+			containerPortal = 76CF994727DEFEC800AC185E /* Main.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 76CF993D27DEFEC800AC185E;
 			remoteInfo = Main;
@@ -88,7 +81,6 @@
 		76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SongPlaying.xcodeproj; path = ../SongPlaying/SongPlaying.xcodeproj; sourceTree = "<group>"; };
 		7628EBCF27E550140077ECFD /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7628EBD427E551D60077ECFD /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
-		7628EBD827E55BE90077ECFD /* Main.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Main.xcodeproj; path = "/Users/martyulrich/Repos/newm-mobile/iosApp/Modules/NEWMApp/Main.xcodeproj"; sourceTree = "<absolute>"; };
 		7638B03027DF036000FB4815 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = "/Users/martyulrich/Repos/newm-mobile/shared/build/XCFrameworks/debug/shared.xcframework"; sourceTree = "<absolute>"; };
 		7640012027DF03F2000FB31A /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = ../Login/Login.xcodeproj; sourceTree = "<group>"; };
 		7651D6D327DFA33100FF41B3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
@@ -153,7 +145,6 @@
 				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
-				7628EBD827E55BE90077ECFD /* Main.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -229,20 +220,20 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		7627EA4827FA6C9F00C0F7DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7627EA4C27FA6C9F00C0F7DA /* Main.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7628EBD327E551B50077ECFD /* iosAppTests */ = {
 			isa = PBXGroup;
 			children = (
 				7628EBD427E551D60077ECFD /* iosAppTests.swift */,
 			);
 			path = iosAppTests;
-			sourceTree = "<group>";
-		};
-		7628EBD927E55BE90077ECFD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7628EBE727E55BE90077ECFD /* Main.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		763FEAB027C30B4500232093 /* Resources */ = {
@@ -299,7 +290,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7628EBE027E55BE90077ECFD /* PBXTargetDependency */,
 			);
 			name = iosApp;
 			packageProductDependencies = (
@@ -384,8 +374,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 7628EBD927E55BE90077ECFD /* Products */;
-					ProjectRef = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
+					ProductGroup = 7627EA4827FA6C9F00C0F7DA /* Products */;
+					ProjectRef = 76CF994727DEFEC800AC185E /* Main.xcodeproj */;
 				},
 				{
 					ProductGroup = 7627EA3027FA673E00C0F7DA /* Products */;
@@ -416,11 +406,11 @@
 			remoteRef = 7627EA3627FA673E00C0F7DA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7628EBE727E55BE90077ECFD /* Main.framework */ = {
+		7627EA4C27FA6C9F00C0F7DA /* Main.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Main.framework;
-			remoteRef = 7628EBE627E55BE90077ECFD /* PBXContainerItemProxy */;
+			remoteRef = 7627EA4B27FA6C9F00C0F7DA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -501,11 +491,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7628EBE027E55BE90077ECFD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Main;
-			targetProxy = 7628EBDF27E55BE90077ECFD /* PBXContainerItemProxy */;
-		};
 		7683129027A38F480056BC6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
