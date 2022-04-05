@@ -1,13 +1,13 @@
 # default
-* @android
+* @projectNEWM/android
 
 # iOS
-/newm-mobile/iosApp @ios
-/newm-mobile/shared/src/iosMain @ios
+/newm-mobile/iosApp @projectNEWM/ios
+/newm-mobile/shared/src/iosMain @projectNEWM/ios
 
 # Android
-/newm-mobile/android @ios
-/newm-mobile/shared/androidMain @ios
+/newm-mobile/android @projectNEWM/ios
+/newm-mobile/shared/androidMain @projectNEWM/ios
 
 # Common
-/newm-mobile/shared/src/commonMain @ios @android
+/newm-mobile/shared/src/commonMain @projectNEWM/ios @projectNEWM/android
