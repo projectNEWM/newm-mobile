@@ -6,8 +6,8 @@
 /newm-mobile/shared/src/iosMain @projectNEWM/ios
 
 # Android
-/newm-mobile/android @projectNEWM/ios
-/newm-mobile/shared/androidMain @projectNEWM/ios
+/newm-mobile/android @projectNEWM/android
+/newm-mobile/shared/androidMain @projectNEWM/android
 
 # Common
 /newm-mobile/shared/src/commonMain @projectNEWM/ios @projectNEWM/android
