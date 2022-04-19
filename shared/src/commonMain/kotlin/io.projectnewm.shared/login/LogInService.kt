@@ -13,7 +13,7 @@ interface LogInService {
 }
 
 //TODO: Handle Error Cases
-class LogInServiceImpl(
+internal class LogInServiceImpl(
     private val httpClient: HttpClient
 ) : LogInService {
     override suspend fun requestEmailConfirmationCode(email: String): String {

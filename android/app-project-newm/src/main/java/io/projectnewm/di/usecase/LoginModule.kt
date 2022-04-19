@@ -5,10 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
-import io.projectnewm.shared.login.LogInRepository
-import io.projectnewm.shared.login.LogInService
-import io.projectnewm.shared.login.LogInServiceImpl
-import io.projectnewm.shared.login.LoginUseCase
+import io.projectnewm.shared.login.*
 import javax.inject.Singleton
 
 @Module
@@ -17,26 +14,8 @@ object LoginModule {
 
     @Singleton
     @Provides
-    fun provideLoginUseCase(
-        repository: LogInRepository,
-    ): LoginUseCase {
-        return LoginUseCase(repository = repository)
+    fun provideLoginUseCase(): LoginUseCase {
+        return LoginConfig.getLoginUseCase()
     }
 
-    @Singleton
-    @Provides
-    fun provideLoginRepository(
-        service: LogInService,
-    ): LogInRepository {
-        return LogInRepository(service = service)
-    }
-
-    @Singleton
-    @Provides
-    fun provideLoginService(
-        httpClient: HttpClient,
-        service: LogInService,
-    ): LogInService {
-        return LogInServiceImpl(httpClient = httpClient)
-    }
 }

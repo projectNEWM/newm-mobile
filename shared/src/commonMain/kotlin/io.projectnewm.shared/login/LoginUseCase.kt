@@ -1,4 +1,6 @@
 package io.projectnewm.shared.login
 
+interface LoginUseCase
+
 //TODO: To be implemented
-class LoginUseCase(private val repository: LogInRepository)
+internal class LoginUseCaseImpl(private val repository: LogInRepository) : LoginUseCase

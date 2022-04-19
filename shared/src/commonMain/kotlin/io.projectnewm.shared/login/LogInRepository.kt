@@ -1,7 +1,7 @@
 package io.projectnewm.shared.login
 
 //TODO: Handle Error Cases
-class LogInRepository(
+internal class LogInRepository(
     private val service: LogInService
 ) {
     suspend fun requestEmailConfirmationCode(email: String): String {

@@ -3,10 +3,17 @@ package io.projectnewm.shared.login
 import io.ktor.client.*
 import io.projectnewm.shared.KtorClientFactory
 
-object LoginFeature {
+object LoginConfig : LoginFeature {
     private val httpClient: HttpClient = KtorClientFactory().build()
     private val service: LogInService = LogInServiceImpl(httpClient)
     private val repository: LogInRepository = LogInRepository(service)
+    private val useCase: LoginUseCase = LoginUseCaseImpl(repository)
 
-    val useCase: LoginUseCase = LoginUseCase(repository)
+    override fun getLoginUseCase(): LoginUseCase {
+        return useCase
+    }
+}
+
+interface LoginFeature {
+    fun getLoginUseCase(): LoginUseCase
 }
