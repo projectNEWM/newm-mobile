@@ -48,6 +48,125 @@
 			remoteGlobalIDString = 76CF993D27DEFEC800AC185E;
 			remoteInfo = Main;
 		};
+		76814684280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF994727DEFEC800AC185E /* Main.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF993D27DEFEC800AC185E;
+			remoteInfo = Main;
+		};
+		7681468B280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76EE081327DF38C300BA1290 /* Wallet.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76EE080927DF38C300BA1290;
+			remoteInfo = Wallet;
+		};
+		76814691280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF995D27DEFEEA00AC185E;
+			remoteInfo = SharedUI;
+		};
+		76814693280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7654424627DF1ACD003346EE;
+			remoteInfo = SharedUIDemo;
+		};
+		76814699280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF98E127DEFE1B00AC185E /* Colors.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF98D727DEFE1B00AC185E;
+			remoteInfo = Colors;
+		};
+		7681469B280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF98E127DEFE1B00AC185E /* Colors.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7654425827DF1D0D003346EE;
+			remoteInfo = ColorsDemo;
+		};
+		768146A0280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF98FD27DEFE7900AC185E /* Fonts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF98F327DEFE7900AC185E;
+			remoteInfo = Fonts;
+		};
+		768146A6280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF991B27DEFEA600AC185E /* Home.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF991127DEFEA600AC185E;
+			remoteInfo = Home;
+		};
+		768146A8280A04B000AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF991B27DEFEA600AC185E /* Home.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 765441F427DF1715003346EE;
+			remoteInfo = HomeDemo;
+		};
+		768146AD280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76EE07C227DF34A000BA1290;
+			remoteInfo = PlaylistList;
+		};
+		768146B2280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF99A927DEFF2700AC185E /* Utilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF999F27DEFF2700AC185E;
+			remoteInfo = Utilities;
+		};
+		768146B7280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF98BF27DEFD7100AC185E /* Strings.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 769FCB9A27DEFB9B00F654DF;
+			remoteInfo = Strings;
+		};
+		768146BD280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7640011627DF03F2000FB31A;
+			remoteInfo = Login;
+		};
+		768146BF280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7640015E27DF0B77000FB31A;
+			remoteInfo = LoginDemo;
+		};
+		768146C4280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF998927DEFF0800AC185E /* TabBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF997F27DEFF0800AC185E;
+			remoteInfo = TabBar;
+		};
+		768146C9280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 760BE85F27E15709000AD1A7 /* Artist.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 760BE85527E15709000AD1A7;
+			remoteInfo = Artist;
+		};
+		768146CE280A04B100AE6E4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76107C2227DF287E0024B27B /* Tips.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76107C1827DF287E0024B27B;
+			remoteInfo = Tips;
+		};
 		7683128F27A38F480056BC6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -264,6 +383,114 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		76814681280A04B000AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76814685280A04B000AE6E4B /* Main.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76814688280A04B000AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7681468C280A04B000AE6E4B /* Wallet.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7681468D280A04B000AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76814692280A04B000AE6E4B /* SharedUI.framework */,
+				76814694280A04B000AE6E4B /* SharedUIDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76814695280A04B000AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7681469A280A04B000AE6E4B /* Colors.framework */,
+				7681469C280A04B000AE6E4B /* ColorsDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7681469D280A04B000AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146A1280A04B000AE6E4B /* Fonts.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146A2280A04B000AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146A7280A04B000AE6E4B /* Home.framework */,
+				768146A9280A04B000AE6E4B /* HomeDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146AA280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146AE280A04B100AE6E4B /* PlaylistList.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146AF280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146B3280A04B100AE6E4B /* Utilities.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146B4280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146B8280A04B100AE6E4B /* Strings.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146B9280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146BE280A04B100AE6E4B /* Login.framework */,
+				768146C0280A04B100AE6E4B /* LoginDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146C1280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146C5280A04B100AE6E4B /* TabBar.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146C6280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146CA280A04B100AE6E4B /* Artist.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		768146CB280A04B100AE6E4B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				768146CF280A04B100AE6E4B /* Tips.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		768FCAB227B7292C00D0C0EB /* iosAppUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,12 +611,64 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 768146C6280A04B100AE6E4B /* Products */;
+					ProjectRef = 760BE85F27E15709000AD1A7 /* Artist.xcodeproj */;
+				},
+				{
+					ProductGroup = 76814695280A04B000AE6E4B /* Products */;
+					ProjectRef = 76CF98E127DEFE1B00AC185E /* Colors.xcodeproj */;
+				},
+				{
+					ProductGroup = 7681469D280A04B000AE6E4B /* Products */;
+					ProjectRef = 76CF98FD27DEFE7900AC185E /* Fonts.xcodeproj */;
+				},
+				{
+					ProductGroup = 768146A2280A04B000AE6E4B /* Products */;
+					ProjectRef = 76CF991B27DEFEA600AC185E /* Home.xcodeproj */;
+				},
+				{
+					ProductGroup = 768146B9280A04B100AE6E4B /* Products */;
+					ProjectRef = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
+				},
+				{
+					ProductGroup = 76814681280A04B000AE6E4B /* Products */;
+					ProjectRef = 76CF994727DEFEC800AC185E /* Main.xcodeproj */;
+				},
+				{
 					ProductGroup = 7628EBD927E55BE90077ECFD /* Products */;
 					ProjectRef = 7628EBD827E55BE90077ECFD /* Main.xcodeproj */;
 				},
 				{
+					ProductGroup = 768146AA280A04B100AE6E4B /* Products */;
+					ProjectRef = 76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */;
+				},
+				{
+					ProductGroup = 7681468D280A04B000AE6E4B /* Products */;
+					ProjectRef = 76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */;
+				},
+				{
 					ProductGroup = 7627EA3027FA673E00C0F7DA /* Products */;
 					ProjectRef = 76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */;
+				},
+				{
+					ProductGroup = 768146B4280A04B100AE6E4B /* Products */;
+					ProjectRef = 76CF98BF27DEFD7100AC185E /* Strings.xcodeproj */;
+				},
+				{
+					ProductGroup = 768146C1280A04B100AE6E4B /* Products */;
+					ProjectRef = 76CF998927DEFF0800AC185E /* TabBar.xcodeproj */;
+				},
+				{
+					ProductGroup = 768146CB280A04B100AE6E4B /* Products */;
+					ProjectRef = 76107C2227DF287E0024B27B /* Tips.xcodeproj */;
+				},
+				{
+					ProductGroup = 768146AF280A04B100AE6E4B /* Products */;
+					ProjectRef = 76CF99A927DEFF2700AC185E /* Utilities.xcodeproj */;
+				},
+				{
+					ProductGroup = 76814688280A04B000AE6E4B /* Products */;
+					ProjectRef = 76EE081327DF38C300BA1290 /* Wallet.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -421,6 +700,125 @@
 			fileType = wrapper.framework;
 			path = Main.framework;
 			remoteRef = 7628EBE627E55BE90077ECFD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76814685280A04B000AE6E4B /* Main.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Main.framework;
+			remoteRef = 76814684280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7681468C280A04B000AE6E4B /* Wallet.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Wallet.framework;
+			remoteRef = 7681468B280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76814692280A04B000AE6E4B /* SharedUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SharedUI.framework;
+			remoteRef = 76814691280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76814694280A04B000AE6E4B /* SharedUIDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SharedUIDemo.app;
+			remoteRef = 76814693280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7681469A280A04B000AE6E4B /* Colors.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Colors.framework;
+			remoteRef = 76814699280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7681469C280A04B000AE6E4B /* ColorsDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorsDemo.app;
+			remoteRef = 7681469B280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146A1280A04B000AE6E4B /* Fonts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Fonts.framework;
+			remoteRef = 768146A0280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146A7280A04B000AE6E4B /* Home.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Home.framework;
+			remoteRef = 768146A6280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146A9280A04B000AE6E4B /* HomeDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HomeDemo.app;
+			remoteRef = 768146A8280A04B000AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146AE280A04B100AE6E4B /* PlaylistList.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PlaylistList.framework;
+			remoteRef = 768146AD280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146B3280A04B100AE6E4B /* Utilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Utilities.framework;
+			remoteRef = 768146B2280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146B8280A04B100AE6E4B /* Strings.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Strings.framework;
+			remoteRef = 768146B7280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146BE280A04B100AE6E4B /* Login.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Login.framework;
+			remoteRef = 768146BD280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146C0280A04B100AE6E4B /* LoginDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = LoginDemo.app;
+			remoteRef = 768146BF280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146C5280A04B100AE6E4B /* TabBar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TabBar.framework;
+			remoteRef = 768146C4280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146CA280A04B100AE6E4B /* Artist.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Artist.framework;
+			remoteRef = 768146C9280A04B100AE6E4B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		768146CF280A04B100AE6E4B /* Tips.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Tips.framework;
+			remoteRef = 768146CE280A04B100AE6E4B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

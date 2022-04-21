@@ -14,7 +14,6 @@
 		7640012D27DF0484000FB31A /* Strings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7640012B27DF0484000FB31A /* Strings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7640013027DF048B000FB31A /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7640012F27DF048B000FB31A /* Fonts.framework */; };
 		7640013127DF048B000FB31A /* Fonts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7640012F27DF048B000FB31A /* Fonts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7640013327DF052E000FB31A /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7640013227DF052E000FB31A /* shared.xcframework */; };
 		7640013427DF052E000FB31A /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7640013227DF052E000FB31A /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7640015527DF0A34000FB31A /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7640015427DF0A34000FB31A /* shared.xcframework */; };
 		7640016127DF0B77000FB31A /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640016027DF0B77000FB31A /* DemoApp.swift */; };
@@ -122,7 +121,6 @@
 				7640015527DF0A34000FB31A /* shared.xcframework in Frameworks */,
 				7640012C27DF0484000FB31A /* Strings.framework in Frameworks */,
 				7640013027DF048B000FB31A /* Fonts.framework in Frameworks */,
-				7640013327DF052E000FB31A /* shared.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,7 +293,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					7640011527DF03F2000FB31A = {
 						CreatedOnToolsVersion = 13.2.1;

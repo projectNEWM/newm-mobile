@@ -11,7 +11,7 @@ public struct Circular<Items: View>: View {
 	
 	public var body: some View {
 		return ZStack {
-			ForEach(0..<items.count) { idx in
+			ForEach(0..<items.count, id: \.self) { idx in
 				self.items[idx].modifier(self.positionModifier(at: idx))
 			}
 		}
@@ -27,7 +27,7 @@ public struct Circular<Items: View>: View {
 struct Circular_Previews: PreviewProvider {
 	static var previews: some View {
 		Circular {
-			ForEach(0..<max(0, 6)) { i in
+			ForEach(0..<max(0, 6), id: \.self) { i in
 				Color.green
 					.frame(width: 80, height: 80)
 					.clipShape(Circle())

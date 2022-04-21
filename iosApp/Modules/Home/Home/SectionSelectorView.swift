@@ -7,7 +7,7 @@ public struct SectionSelectorView: View {
 	public var body: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
 			HStack {
-				ForEach(0..<sectionTitles.count) { index in
+				ForEach(0..<sectionTitles.count, id: \.self) { index in
 					Button(sectionTitles[index]) {
 						selectedIndex = index
 					}
