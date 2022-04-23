@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		76107BF127DF28090024B27B /* Circular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76107BE027DF28090024B27B /* Circular.swift */; };
+		7627EADF27FA8A9300C0F7DA /* SharedUIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627EADE27FA8A9300C0F7DA /* SharedUIModule.swift */; };
+		7627EAEE27FABDDF00C0F7DA /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAED27FABDDA00C0F7DA /* ModuleLinker.framework */; };
+		7627EAEF27FABDDF00C0F7DA /* ModuleLinker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAED27FABDDA00C0F7DA /* ModuleLinker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7654424927DF1ACD003346EE /* SharedUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654424827DF1ACD003346EE /* SharedUIDemoApp.swift */; };
 		7654424B27DF1ACD003346EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654424A27DF1ACD003346EE /* ContentView.swift */; };
 		7654424D27DF1ACE003346EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7654424C27DF1ACE003346EE /* Assets.xcassets */; };
@@ -21,6 +24,7 @@
 		76CF997227DEFEEF00AC185E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF996E27DEFEEF00AC185E /* Link.swift */; };
 		76CF997327DEFEEF00AC185E /* SwiftUI+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF996D27DEFEEF00AC185E /* SwiftUI+Common.swift */; };
 		76CF997427DEFEEF00AC185E /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF997027DEFEEF00AC185E /* UIImage+Extensions.swift */; };
+		76D09EF627FABE6400E2BAD3 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76D09EF527FABE6400E2BAD3 /* Resolver */; };
 		76EE07FB27DF374600BA1290 /* Bowie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EE07FA27DF374600BA1290 /* Bowie.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +35,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 7654425827DF1D0D003346EE;
 			remoteInfo = ColorsDemo;
+		};
+		7627EAEC27FABDDA00C0F7DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7627EAE827FABDDA00C0F7DA /* ModuleLinker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7627EA6B27FA7FA500C0F7DA;
+			remoteInfo = ModuleLinker;
 		};
 		7654423A27DF1AB7003346EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -57,6 +68,7 @@
 			files = (
 				76A8A16327DF019A00D02C61 /* Colors.framework in Embed Frameworks */,
 				76A8A15F27DF018200D02C61 /* Fonts.framework in Embed Frameworks */,
+				7627EAEF27FABDDF00C0F7DA /* ModuleLinker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +77,8 @@
 
 /* Begin PBXFileReference section */
 		76107BE027DF28090024B27B /* Circular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circular.swift; sourceTree = "<group>"; };
+		7627EADE27FA8A9300C0F7DA /* SharedUIModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUIModule.swift; sourceTree = "<group>"; };
+		7627EAE827FABDDA00C0F7DA /* ModuleLinker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ModuleLinker.xcodeproj; path = ../../../ModuleLinker/ModuleLinker.xcodeproj; sourceTree = "<group>"; };
 		7654423627DF1AB7003346EE /* Fonts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Fonts.xcodeproj; path = ../../Fonts/Fonts.xcodeproj; sourceTree = "<group>"; };
 		7654423C27DF1AB7003346EE /* Colors.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Colors.xcodeproj; path = ../../Colors/Colors.xcodeproj; sourceTree = "<group>"; };
 		7654424627DF1ACD003346EE /* SharedUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharedUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,15 +111,26 @@
 			files = (
 				76A8A16227DF019A00D02C61 /* Colors.framework in Frameworks */,
 				76A8A15E27DF018200D02C61 /* Fonts.framework in Frameworks */,
+				76D09EF627FABE6400E2BAD3 /* Resolver in Frameworks */,
+				7627EAEE27FABDDF00C0F7DA /* ModuleLinker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7627EAE927FABDDA00C0F7DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7627EAED27FABDDA00C0F7DA /* ModuleLinker.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7654423527DF1AA7003346EE /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				7627EAE827FABDDA00C0F7DA /* ModuleLinker.xcodeproj */,
 				7654423C27DF1AB7003346EE /* Colors.xcodeproj */,
 				7654423627DF1AB7003346EE /* Fonts.xcodeproj */,
 			);
@@ -187,6 +212,7 @@
 				76CF996D27DEFEEF00AC185E /* SwiftUI+Common.swift */,
 				76CF997027DEFEEF00AC185E /* UIImage+Extensions.swift */,
 				76EE07FA27DF374600BA1290 /* Bowie.swift */,
+				7627EADE27FA8A9300C0F7DA /* SharedUIModule.swift */,
 			);
 			path = SharedUI;
 			sourceTree = "<group>";
@@ -237,6 +263,9 @@
 			dependencies = (
 			);
 			name = SharedUI;
+			packageProductDependencies = (
+				76D09EF527FABE6400E2BAD3 /* Resolver */,
+			);
 			productName = SharedUI;
 			productReference = 76CF995D27DEFEEA00AC185E /* SharedUI.framework */;
 			productType = "com.apple.product-type.framework";
@@ -268,6 +297,9 @@
 				Base,
 			);
 			mainGroup = 76CF995327DEFEEA00AC185E;
+			packageReferences = (
+				76D09EF427FABE6400E2BAD3 /* XCRemoteSwiftPackageReference "Resolver" */,
+			);
 			productRefGroup = 76CF995E27DEFEEA00AC185E /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -278,6 +310,10 @@
 				{
 					ProductGroup = 7654423727DF1AB7003346EE /* Products */;
 					ProjectRef = 7654423627DF1AB7003346EE /* Fonts.xcodeproj */;
+				},
+				{
+					ProductGroup = 7627EAE927FABDDA00C0F7DA /* Products */;
+					ProjectRef = 7627EAE827FABDDA00C0F7DA /* ModuleLinker.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -294,6 +330,13 @@
 			fileType = wrapper.application;
 			path = ColorsDemo.app;
 			remoteRef = 76107BEE27DF28090024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7627EAED27FABDDA00C0F7DA /* ModuleLinker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ModuleLinker.framework;
+			remoteRef = 7627EAEC27FABDDA00C0F7DA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		7654423B27DF1AB7003346EE /* Fonts.framework */ = {
@@ -347,6 +390,7 @@
 			files = (
 				76EE07FB27DF374600BA1290 /* Bowie.swift in Sources */,
 				76CF997127DEFEEF00AC185E /* GradientTag.swift in Sources */,
+				7627EADF27FA8A9300C0F7DA /* SharedUIModule.swift in Sources */,
 				76107BF127DF28090024B27B /* Circular.swift in Sources */,
 				76CF997327DEFEEF00AC185E /* SwiftUI+Common.swift in Sources */,
 				76CF997227DEFEEF00AC185E /* Link.swift in Sources */,
@@ -622,6 +666,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		76D09EF427FABE6400E2BAD3 /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		76D09EF527FABE6400E2BAD3 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76D09EF427FABE6400E2BAD3 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 76CF995427DEFEEA00AC185E /* Project object */;
 }

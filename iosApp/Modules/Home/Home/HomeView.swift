@@ -2,8 +2,9 @@ import SwiftUI
 import SharedUI
 import SongPlaying
 import PlaylistList
+import ModuleLinker
 
-public struct HomeView: View {
+struct HomeView: View {
 	@ObservedObject var viewModel = HomeViewModel()
 	
 	public init() {}

@@ -9,12 +9,47 @@
 /* Begin PBXBuildFile section */
 		760BE85927E15709000AD1A7 /* Artist.h in Headers */ = {isa = PBXBuildFile; fileRef = 760BE85827E15709000AD1A7 /* Artist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		760BE86F27E15712000AD1A7 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760BE86E27E15712000AD1A7 /* ArtistView.swift */; };
+		7627EAD227FA8A3700C0F7DA /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAD127FA8A3700C0F7DA /* SharedUI.framework */; };
+		7627EAD327FA8A3800C0F7DA /* SharedUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAD127FA8A3700C0F7DA /* SharedUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7627EADA27FA8A4500C0F7DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7627EAD527FA8A4500C0F7DA /* SharedUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF995D27DEFEEA00AC185E;
+			remoteInfo = SharedUI;
+		};
+		7627EADC27FA8A4500C0F7DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7627EAD527FA8A4500C0F7DA /* SharedUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7654424627DF1ACD003346EE;
+			remoteInfo = SharedUIDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7627EAD427FA8A3800C0F7DA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7627EAD327FA8A3800C0F7DA /* SharedUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		760BE85527E15709000AD1A7 /* Artist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Artist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		760BE85827E15709000AD1A7 /* Artist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
 		760BE86E27E15712000AD1A7 /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
+		7627EAD127FA8A3700C0F7DA /* SharedUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7627EAD527FA8A4500C0F7DA /* SharedUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SharedUI.xcodeproj; path = ../../SharedUI/SharedUI.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -22,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7627EAD227FA8A3700C0F7DA /* SharedUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -31,8 +67,10 @@
 		760BE84B27E15709000AD1A7 = {
 			isa = PBXGroup;
 			children = (
+				7627EACF27FA8A2500C0F7DA /* Dependencies */,
 				760BE85727E15709000AD1A7 /* Artist */,
 				760BE85627E15709000AD1A7 /* Products */,
+				7627EAD027FA8A3700C0F7DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,6 +89,31 @@
 				760BE85827E15709000AD1A7 /* Artist.h */,
 			);
 			path = Artist;
+			sourceTree = "<group>";
+		};
+		7627EACF27FA8A2500C0F7DA /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				7627EAD527FA8A4500C0F7DA /* SharedUI.xcodeproj */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		7627EAD027FA8A3700C0F7DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7627EAD127FA8A3700C0F7DA /* SharedUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7627EAD627FA8A4500C0F7DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7627EADB27FA8A4500C0F7DA /* SharedUI.framework */,
+				7627EADD27FA8A4500C0F7DA /* SharedUIDemo.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -75,6 +138,7 @@
 				760BE85127E15709000AD1A7 /* Sources */,
 				760BE85227E15709000AD1A7 /* Frameworks */,
 				760BE85327E15709000AD1A7 /* Resources */,
+				7627EAD427FA8A3800C0F7DA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -110,12 +174,35 @@
 			mainGroup = 760BE84B27E15709000AD1A7;
 			productRefGroup = 760BE85627E15709000AD1A7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7627EAD627FA8A4500C0F7DA /* Products */;
+					ProjectRef = 7627EAD527FA8A4500C0F7DA /* SharedUI.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				760BE85427E15709000AD1A7 /* Artist */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7627EADB27FA8A4500C0F7DA /* SharedUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SharedUI.framework;
+			remoteRef = 7627EADA27FA8A4500C0F7DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7627EADD27FA8A4500C0F7DA /* SharedUIDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SharedUIDemo.app;
+			remoteRef = 7627EADC27FA8A4500C0F7DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		760BE85327E15709000AD1A7 /* Resources */ = {

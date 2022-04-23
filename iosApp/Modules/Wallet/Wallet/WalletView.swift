@@ -1,5 +1,6 @@
 import SwiftUI
-import SharedUI
+import ModuleLinker
+import Resolver
 
 public struct WalletView: View {
 	enum TimeSpan: CaseIterable, Hashable {
@@ -12,6 +13,7 @@ public struct WalletView: View {
 	}
 	
 	@State var selectedTimeSpan: TimeSpan = .sixMonths
+	@Injected var gradientTagProvider: GradientTagProviding
 	
 	public init() {}
 	
@@ -23,7 +25,7 @@ public struct WalletView: View {
 		HStack {
 			ForEach(TimeSpan.allCases, id: \.hashValue) { timeSpan in
 				if timeSpan == selectedTimeSpan {
-					GradientTag(title: timeSpan)
+					gradientTagProvider.gradientTag(title: timeSpan.description)
 				} else {
 					Text(timeSpan.description)
 						.foregroundColor(.gray)

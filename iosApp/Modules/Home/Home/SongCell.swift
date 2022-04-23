@@ -1,16 +1,19 @@
 import SwiftUI
 import SharedUI
 import Colors
+import Resolver
+import ModuleLinker
 
 struct SongCell: View {
 	var data: HomeViewModel.Song
-	
+	@Injected var gradientTagProvider: GradientTagProviding
+		
 	var body: some View {
 		VStack {
 			ZStack(alignment: .top) {
 				CircleImage(data.image, size: 60)
 				if data.isNFT {
-					GradientTag(title: "NFT")
+					gradientTagProvider.gradientTag(title: "NFT")
 						.padding(.top, -14)
 				}
 			}
@@ -27,6 +30,10 @@ struct SongCell: View {
 }
 
 extension SongCell: HomeScrollingCell {
+	init(data: HomeViewModel.Song) {
+		self.data = data
+	}
+	
 	typealias DataType = HomeViewModel.Song
 }
 

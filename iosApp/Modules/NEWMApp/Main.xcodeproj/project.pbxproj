@@ -7,26 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7627EA5127FA6F9300C0F7DA /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627EA5027FA6F9300C0F7DA /* MainModule.swift */; };
+		7627EA5F27FA737200C0F7DA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 7627EA5E27FA737200C0F7DA /* Resolver */; };
+		7627EA8027FA81F100C0F7DA /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EA7F27FA81F100C0F7DA /* ModuleLinker.framework */; };
+		7627EA8127FA81F100C0F7DA /* ModuleLinker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EA7F27FA81F100C0F7DA /* ModuleLinker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7627EA9A27FA82EF00C0F7DA /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EA9927FA82EF00C0F7DA /* Utilities.framework */; };
+		7627EA9B27FA82EF00C0F7DA /* Utilities.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EA9927FA82EF00C0F7DA /* Utilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7640014427DF0896000FB31A /* Login.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7640014327DF0896000FB31A /* Login.framework */; };
 		7640014527DF0896000FB31A /* Login.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7640014327DF0896000FB31A /* Login.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76A8A14B27DF00C400D02C61 /* Home.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A14A27DF00C400D02C61 /* Home.framework */; };
-		76A8A14C27DF00C400D02C61 /* Home.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A14A27DF00C400D02C61 /* Home.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A8A14F27DF00EA00D02C61 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A14E27DF00EA00D02C61 /* SharedUI.framework */; };
 		76A8A15027DF00EA00D02C61 /* SharedUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A14E27DF00EA00D02C61 /* SharedUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A8A15227DF011A00D02C61 /* Strings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15127DF011A00D02C61 /* Strings.framework */; };
 		76A8A15327DF011A00D02C61 /* Strings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15127DF011A00D02C61 /* Strings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A8A15527DF015100D02C61 /* TabBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15427DF015100D02C61 /* TabBar.framework */; };
 		76A8A15627DF015100D02C61 /* TabBar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15427DF015100D02C61 /* TabBar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76B32B2327E0C03700A5B851 /* Wallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; };
-		76B32B2427E0C03700A5B851 /* Wallet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B32B2227E0C03700A5B851 /* Wallet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76CF994127DEFEC800AC185E /* NEWMApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 76CF994027DEFEC800AC185E /* NEWMApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76CF995027DEFECF00AC185E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994E27DEFECF00AC185E /* MainViewModel.swift */; };
-		76CF995127DEFECF00AC185E /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* Main.swift */; };
+		76CF995127DEFECF00AC185E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994D27DEFECE00AC185E /* MainView.swift */; };
 		76CF995227DEFECF00AC185E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF994F27DEFECF00AC185E /* Utilities.swift */; };
+		76D09F0227FACE8C00E2BAD3 /* TabEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D09F0127FACE8C00E2BAD3 /* TabEnums.swift */; };
+		76D09F0727FBDCF200E2BAD3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76D09F0627FBDCF200E2BAD3 /* Localizable.strings */; };
 		76EE085527DF9FB900BA1290 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76EE085427DF9FB900BA1290 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7627EA9527FA823400C0F7DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7627EA9127FA823400C0F7DA /* ModuleLinker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7627EA6B27FA7FA500C0F7DA;
+			remoteInfo = ModuleLinker;
+		};
 		7651D67D27DFA29300FF41B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7651D67927DFA29300FF41B3 /* Strings.xcodeproj */;
@@ -62,20 +73,6 @@
 			remoteGlobalIDString = 7654424627DF1ACD003346EE;
 			remoteInfo = SharedUIDemo;
 		};
-		7651D69E27DFA29300FF41B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7651D69527DFA29300FF41B3 /* Home.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 76CF991127DEFEA600AC185E;
-			remoteInfo = Home;
-		};
-		7651D6A027DFA29300FF41B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7651D69527DFA29300FF41B3 /* Home.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 765441F427DF1715003346EE;
-			remoteInfo = HomeDemo;
-		};
 		7651D6A627DFA29300FF41B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7651D6A227DFA29300FF41B3 /* TabBar.xcodeproj */;
@@ -83,12 +80,12 @@
 			remoteGlobalIDString = 76CF997F27DEFF0800AC185E;
 			remoteInfo = TabBar;
 		};
-		76B32B3127E0C04500A5B851 /* PBXContainerItemProxy */ = {
+		76D09EE227FABE3F00E2BAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */;
+			containerPortal = 7627EAA227FA830500C0F7DA /* Utilities.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 76EE080927DF38C300BA1290;
-			remoteInfo = Wallet;
+			remoteGlobalIDString = 76CF999F27DEFF2700AC185E;
+			remoteInfo = Utilities;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -99,10 +96,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7627EA8127FA81F100C0F7DA /* ModuleLinker.framework in Embed Frameworks */,
+				7627EA9B27FA82EF00C0F7DA /* Utilities.framework in Embed Frameworks */,
 				76A8A15627DF015100D02C61 /* TabBar.framework in Embed Frameworks */,
-				76A8A14C27DF00C400D02C61 /* Home.framework in Embed Frameworks */,
 				76A8A15327DF011A00D02C61 /* Strings.framework in Embed Frameworks */,
-				76B32B2427E0C03700A5B851 /* Wallet.framework in Embed Frameworks */,
 				7640014527DF0896000FB31A /* Login.framework in Embed Frameworks */,
 				76A8A15027DF00EA00D02C61 /* SharedUI.framework in Embed Frameworks */,
 			);
@@ -112,23 +109,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7627EA5027FA6F9300C0F7DA /* MainModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModule.swift; sourceTree = "<group>"; };
+		7627EA7F27FA81F100C0F7DA /* ModuleLinker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ModuleLinker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7627EA9127FA823400C0F7DA /* ModuleLinker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ModuleLinker.xcodeproj; path = ../../../ModuleLinker/ModuleLinker.xcodeproj; sourceTree = "<group>"; };
+		7627EA9927FA82EF00C0F7DA /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7627EAA227FA830500C0F7DA /* Utilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Utilities.xcodeproj; path = ../../Utilities/Utilities.xcodeproj; sourceTree = "<group>"; };
 		7640014327DF0896000FB31A /* Login.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Login.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7651D67927DFA29300FF41B3 /* Strings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Strings.xcodeproj; path = ../../Strings/Strings.xcodeproj; sourceTree = "<group>"; };
 		7651D67F27DFA29300FF41B3 /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = ../../Login/Login.xcodeproj; sourceTree = "<group>"; };
 		7651D68A27DFA29300FF41B3 /* SharedUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SharedUI.xcodeproj; path = ../../SharedUI/SharedUI.xcodeproj; sourceTree = "<group>"; };
-		7651D69527DFA29300FF41B3 /* Home.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Home.xcodeproj; path = ../../Home/Home.xcodeproj; sourceTree = "<group>"; };
 		7651D6A227DFA29300FF41B3 /* TabBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TabBar.xcodeproj; path = ../../TabBar/TabBar.xcodeproj; sourceTree = "<group>"; };
 		76A8A14A27DF00C400D02C61 /* Home.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Home.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8A14E27DF00EA00D02C61 /* SharedUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8A15127DF011A00D02C61 /* Strings.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Strings.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8A15427DF015100D02C61 /* TabBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TabBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B32B2227E0C03700A5B851 /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Wallet.xcodeproj; path = ../../Wallet/Wallet.xcodeproj; sourceTree = "<group>"; };
 		76CF993D27DEFEC800AC185E /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF994027DEFEC800AC185E /* NEWMApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NEWMApp.h; sourceTree = "<group>"; };
-		76CF994D27DEFECE00AC185E /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		76CF994D27DEFECE00AC185E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		76CF994E27DEFECF00AC185E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		76CF994F27DEFECF00AC185E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		76D09F0127FACE8C00E2BAD3 /* TabEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabEnums.swift; sourceTree = "<group>"; };
+		76D09F0627FBDCF200E2BAD3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		76EE085427DF9FB900BA1290 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,10 +140,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A8A15527DF015100D02C61 /* TabBar.framework in Frameworks */,
-				76A8A14B27DF00C400D02C61 /* Home.framework in Frameworks */,
 				76A8A15227DF011A00D02C61 /* Strings.framework in Frameworks */,
-				76B32B2327E0C03700A5B851 /* Wallet.framework in Frameworks */,
 				7640014427DF0896000FB31A /* Login.framework in Frameworks */,
+				7627EA9A27FA82EF00C0F7DA /* Utilities.framework in Frameworks */,
+				7627EA8027FA81F100C0F7DA /* ModuleLinker.framework in Frameworks */,
+				7627EA5F27FA737200C0F7DA /* Resolver in Frameworks */,
 				76A8A14F27DF00EA00D02C61 /* SharedUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,15 +152,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7627EA9227FA823400C0F7DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7627EA9627FA823400C0F7DA /* ModuleLinker.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7651D67827DFA27200FF41B3 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */,
-				7651D69527DFA29300FF41B3 /* Home.xcodeproj */,
 				7651D67F27DFA29300FF41B3 /* Login.xcodeproj */,
+				7627EA9127FA823400C0F7DA /* ModuleLinker.xcodeproj */,
 				7651D68A27DFA29300FF41B3 /* SharedUI.xcodeproj */,
 				7651D67927DFA29300FF41B3 /* Strings.xcodeproj */,
 				7651D6A227DFA29300FF41B3 /* TabBar.xcodeproj */,
+				7627EAA227FA830500C0F7DA /* Utilities.xcodeproj */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -188,15 +199,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7651D69627DFA29300FF41B3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7651D69F27DFA29300FF41B3 /* Home.framework */,
-				7651D6A127DFA29300FF41B3 /* HomeDemo.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		7651D6A327DFA29300FF41B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +210,8 @@
 		76A8A14927DF00C400D02C61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7627EA9927FA82EF00C0F7DA /* Utilities.framework */,
+				7627EA7F27FA81F100C0F7DA /* ModuleLinker.framework */,
 				76B32B2227E0C03700A5B851 /* Wallet.framework */,
 				7640014327DF0896000FB31A /* Login.framework */,
 				76A8A15427DF015100D02C61 /* TabBar.framework */,
@@ -216,14 +220,6 @@
 				76A8A14A27DF00C400D02C61 /* Home.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		76B32B2E27E0C04500A5B851 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				76B32B3227E0C04500A5B851 /* Wallet.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		76CF993327DEFEC800AC185E = {
@@ -248,18 +244,29 @@
 		76CF993F27DEFEC800AC185E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				76CF994D27DEFECE00AC185E /* Main.swift */,
-				76CF994E27DEFECF00AC185E /* MainViewModel.swift */,
-				76CF994F27DEFECF00AC185E /* Utilities.swift */,
 				76CF994027DEFEC800AC185E /* NEWMApp.h */,
+				76CF994D27DEFECE00AC185E /* MainView.swift */,
+				7627EA5027FA6F9300C0F7DA /* MainModule.swift */,
+				76CF994E27DEFECF00AC185E /* MainViewModel.swift */,
+				76D09F0127FACE8C00E2BAD3 /* TabEnums.swift */,
+				76CF994F27DEFECF00AC185E /* Utilities.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		76D09ED627FABE3F00E2BAD3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76D09EE327FABE3F00E2BAD3 /* Utilities.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		76EE085327DF9FA800BA1290 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				76EE085427DF9FB900BA1290 /* Assets.xcassets */,
+				76D09F0627FBDCF200E2BAD3 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -293,6 +300,9 @@
 			dependencies = (
 			);
 			name = Main;
+			packageProductDependencies = (
+				7627EA5E27FA737200C0F7DA /* Resolver */,
+			);
 			productName = NEWMApp;
 			productReference = 76CF993D27DEFEC800AC185E /* Main.framework */;
 			productType = "com.apple.product-type.framework";
@@ -320,16 +330,19 @@
 				Base,
 			);
 			mainGroup = 76CF993327DEFEC800AC185E;
+			packageReferences = (
+				7627EA5D27FA737200C0F7DA /* XCRemoteSwiftPackageReference "Resolver" */,
+			);
 			productRefGroup = 76CF993E27DEFEC800AC185E /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 7651D69627DFA29300FF41B3 /* Products */;
-					ProjectRef = 7651D69527DFA29300FF41B3 /* Home.xcodeproj */;
-				},
-				{
 					ProductGroup = 7651D68027DFA29300FF41B3 /* Products */;
 					ProjectRef = 7651D67F27DFA29300FF41B3 /* Login.xcodeproj */;
+				},
+				{
+					ProductGroup = 7627EA9227FA823400C0F7DA /* Products */;
+					ProjectRef = 7627EA9127FA823400C0F7DA /* ModuleLinker.xcodeproj */;
 				},
 				{
 					ProductGroup = 7651D68B27DFA29300FF41B3 /* Products */;
@@ -344,8 +357,8 @@
 					ProjectRef = 7651D6A227DFA29300FF41B3 /* TabBar.xcodeproj */;
 				},
 				{
-					ProductGroup = 76B32B2E27E0C04500A5B851 /* Products */;
-					ProjectRef = 76B32B2D27E0C04500A5B851 /* Wallet.xcodeproj */;
+					ProductGroup = 76D09ED627FABE3F00E2BAD3 /* Products */;
+					ProjectRef = 7627EAA227FA830500C0F7DA /* Utilities.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -356,6 +369,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		7627EA9627FA823400C0F7DA /* ModuleLinker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ModuleLinker.framework;
+			remoteRef = 7627EA9527FA823400C0F7DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7651D67E27DFA29300FF41B3 /* Strings.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -391,20 +411,6 @@
 			remoteRef = 7651D69327DFA29300FF41B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7651D69F27DFA29300FF41B3 /* Home.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Home.framework;
-			remoteRef = 7651D69E27DFA29300FF41B3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7651D6A127DFA29300FF41B3 /* HomeDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = HomeDemo.app;
-			remoteRef = 7651D6A027DFA29300FF41B3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		7651D6A727DFA29300FF41B3 /* TabBar.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -412,11 +418,11 @@
 			remoteRef = 7651D6A627DFA29300FF41B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		76B32B3227E0C04500A5B851 /* Wallet.framework */ = {
+		76D09EE327FABE3F00E2BAD3 /* Utilities.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Wallet.framework;
-			remoteRef = 76B32B3127E0C04500A5B851 /* PBXContainerItemProxy */;
+			path = Utilities.framework;
+			remoteRef = 76D09EE227FABE3F00E2BAD3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -427,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76EE085527DF9FB900BA1290 /* Assets.xcassets in Resources */,
+				76D09F0727FBDCF200E2BAD3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,8 +445,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				76CF995227DEFECF00AC185E /* Utilities.swift in Sources */,
+				7627EA5127FA6F9300C0F7DA /* MainModule.swift in Sources */,
 				76CF995027DEFECF00AC185E /* MainViewModel.swift in Sources */,
-				76CF995127DEFECF00AC185E /* Main.swift in Sources */,
+				76D09F0227FACE8C00E2BAD3 /* TabEnums.swift in Sources */,
+				76CF995127DEFECF00AC185E /* MainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +655,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7627EA5D27FA737200C0F7DA /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7627EA5E27FA737200C0F7DA /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7627EA5D27FA737200C0F7DA /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 76CF993427DEFEC800AC185E /* Project object */;
 }

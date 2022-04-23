@@ -7,171 +7,120 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7627EAAB27FA87DB00C0F7DA /* WalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627EAAA27FA87DB00C0F7DA /* WalletModule.swift */; };
-		7627EAB327FA88EF00C0F7DA /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 7627EAB227FA88EF00C0F7DA /* Resolver */; };
-		76EE080D27DF38C300BA1290 /* Wallet.h in Headers */ = {isa = PBXBuildFile; fileRef = 76EE080C27DF38C300BA1290 /* Wallet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		76EE081A27DF38D000BA1290 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EE081927DF38D000BA1290 /* WalletView.swift */; };
-		76EE081D27DF38E500BA1290 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76EE081C27DF38E500BA1290 /* SharedUI.framework */; };
-		76EE081E27DF38E500BA1290 /* SharedUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EE081C27DF38E500BA1290 /* SharedUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7627EA6F27FA7FA500C0F7DA /* ModuleLinker.h in Headers */ = {isa = PBXBuildFile; fileRef = 7627EA6E27FA7FA500C0F7DA /* ModuleLinker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7627EA7E27FA802F00C0F7DA /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627EA7D27FA802F00C0F7DA /* Home.swift */; };
+		7627EAE527FABBB700C0F7DA /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627EAE427FABBB700C0F7DA /* Wallet.swift */; };
+		7627EAE727FABBBF00C0F7DA /* SharedUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627EAE627FABBBF00C0F7DA /* SharedUI.swift */; };
+		76D09EFE27FAC4D700E2BAD3 /* ModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D09EFD27FAC4D700E2BAD3 /* ModuleProtocol.swift */; };
+		76D09F0027FAC76100E2BAD3 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D09EFF27FAC76100E2BAD3 /* Main.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		76EE082627DF38FA00BA1290 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EE082127DF38FA00BA1290 /* SharedUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 76CF995D27DEFEEA00AC185E;
-			remoteInfo = SharedUI;
-		};
-		76EE082827DF38FA00BA1290 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EE082127DF38FA00BA1290 /* SharedUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7654424627DF1ACD003346EE;
-			remoteInfo = SharedUIDemo;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		76EE081F27DF38E500BA1290 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				76EE081E27DF38E500BA1290 /* SharedUI.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		7627EAAA27FA87DB00C0F7DA /* WalletModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
-		76EE080927DF38C300BA1290 /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76EE080C27DF38C300BA1290 /* Wallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wallet.h; sourceTree = "<group>"; };
-		76EE081927DF38D000BA1290 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
-		76EE081C27DF38E500BA1290 /* SharedUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76EE082127DF38FA00BA1290 /* SharedUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SharedUI.xcodeproj; path = ../../SharedUI/SharedUI.xcodeproj; sourceTree = "<group>"; };
+		7627EA6B27FA7FA500C0F7DA /* ModuleLinker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModuleLinker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7627EA6E27FA7FA500C0F7DA /* ModuleLinker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModuleLinker.h; sourceTree = "<group>"; };
+		7627EA7D27FA802F00C0F7DA /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		7627EAE427FABBB700C0F7DA /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		7627EAE627FABBBF00C0F7DA /* SharedUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUI.swift; sourceTree = "<group>"; };
+		76D09EFD27FAC4D700E2BAD3 /* ModuleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleProtocol.swift; sourceTree = "<group>"; };
+		76D09EFF27FAC76100E2BAD3 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		76EE080627DF38C300BA1290 /* Frameworks */ = {
+		7627EA6827FA7FA400C0F7DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7627EAB327FA88EF00C0F7DA /* Resolver in Frameworks */,
-				76EE081D27DF38E500BA1290 /* SharedUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		76EE07FF27DF38C300BA1290 = {
+		7627EA6127FA7FA400C0F7DA = {
 			isa = PBXGroup;
 			children = (
-				76EE082027DF38F200BA1290 /* Dependencies */,
-				76EE080B27DF38C300BA1290 /* Wallet */,
-				76EE080A27DF38C300BA1290 /* Products */,
-				76EE081B27DF38E500BA1290 /* Frameworks */,
+				7627EA6D27FA7FA500C0F7DA /* ModuleLinker */,
+				7627EA6C27FA7FA500C0F7DA /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		76EE080A27DF38C300BA1290 /* Products */ = {
+		7627EA6C27FA7FA500C0F7DA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76EE080927DF38C300BA1290 /* Wallet.framework */,
+				7627EA6B27FA7FA500C0F7DA /* ModuleLinker.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		76EE080B27DF38C300BA1290 /* Wallet */ = {
+		7627EA6D27FA7FA500C0F7DA /* ModuleLinker */ = {
 			isa = PBXGroup;
 			children = (
-				76EE080C27DF38C300BA1290 /* Wallet.h */,
-				76EE081927DF38D000BA1290 /* WalletView.swift */,
-				7627EAAA27FA87DB00C0F7DA /* WalletModule.swift */,
+				7627EAE327FABBA900C0F7DA /* Protocols */,
+				7627EA6E27FA7FA500C0F7DA /* ModuleLinker.h */,
 			);
-			path = Wallet;
+			path = ModuleLinker;
 			sourceTree = "<group>";
 		};
-		76EE081B27DF38E500BA1290 /* Frameworks */ = {
+		7627EAE327FABBA900C0F7DA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				76EE081C27DF38E500BA1290 /* SharedUI.framework */,
+				7627EA7D27FA802F00C0F7DA /* Home.swift */,
+				76D09EFF27FAC76100E2BAD3 /* Main.swift */,
+				76D09EFD27FAC4D700E2BAD3 /* ModuleProtocol.swift */,
+				7627EAE627FABBBF00C0F7DA /* SharedUI.swift */,
+				7627EAE427FABBB700C0F7DA /* Wallet.swift */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		76EE082027DF38F200BA1290 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				76EE082127DF38FA00BA1290 /* SharedUI.xcodeproj */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		76EE082227DF38FA00BA1290 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				76EE082727DF38FA00BA1290 /* SharedUI.framework */,
-				76EE082927DF38FA00BA1290 /* SharedUIDemo.app */,
-			);
-			name = Products;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		76EE080427DF38C300BA1290 /* Headers */ = {
+		7627EA6627FA7FA400C0F7DA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76EE080D27DF38C300BA1290 /* Wallet.h in Headers */,
+				7627EA6F27FA7FA500C0F7DA /* ModuleLinker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		76EE080827DF38C300BA1290 /* Wallet */ = {
+		7627EA6A27FA7FA400C0F7DA /* ModuleLinker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 76EE081027DF38C300BA1290 /* Build configuration list for PBXNativeTarget "Wallet" */;
+			buildConfigurationList = 7627EA7227FA7FA500C0F7DA /* Build configuration list for PBXNativeTarget "ModuleLinker" */;
 			buildPhases = (
-				76EE080427DF38C300BA1290 /* Headers */,
-				76EE080527DF38C300BA1290 /* Sources */,
-				76EE080627DF38C300BA1290 /* Frameworks */,
-				76EE080727DF38C300BA1290 /* Resources */,
-				76EE081F27DF38E500BA1290 /* Embed Frameworks */,
+				7627EA6627FA7FA400C0F7DA /* Headers */,
+				7627EA6727FA7FA400C0F7DA /* Sources */,
+				7627EA6827FA7FA400C0F7DA /* Frameworks */,
+				7627EA6927FA7FA400C0F7DA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Wallet;
-			packageProductDependencies = (
-				7627EAB227FA88EF00C0F7DA /* Resolver */,
-			);
-			productName = Wallet;
-			productReference = 76EE080927DF38C300BA1290 /* Wallet.framework */;
+			name = ModuleLinker;
+			productName = ModuleLinker;
+			productReference = 7627EA6B27FA7FA500C0F7DA /* ModuleLinker.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		76EE080027DF38C300BA1290 /* Project object */ = {
+		7627EA6227FA7FA400C0F7DA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
-					76EE080827DF38C300BA1290 = {
+					7627EA6A27FA7FA400C0F7DA = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
-			buildConfigurationList = 76EE080327DF38C300BA1290 /* Build configuration list for PBXProject "Wallet" */;
+			buildConfigurationList = 7627EA6527FA7FA400C0F7DA /* Build configuration list for PBXProject "ModuleLinker" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -179,44 +128,18 @@
 				en,
 				Base,
 			);
-			mainGroup = 76EE07FF27DF38C300BA1290;
-			packageReferences = (
-				7627EAB127FA88EF00C0F7DA /* XCRemoteSwiftPackageReference "Resolver" */,
-			);
-			productRefGroup = 76EE080A27DF38C300BA1290 /* Products */;
+			mainGroup = 7627EA6127FA7FA400C0F7DA;
+			productRefGroup = 7627EA6C27FA7FA500C0F7DA /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 76EE082227DF38FA00BA1290 /* Products */;
-					ProjectRef = 76EE082127DF38FA00BA1290 /* SharedUI.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
-				76EE080827DF38C300BA1290 /* Wallet */,
+				7627EA6A27FA7FA400C0F7DA /* ModuleLinker */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		76EE082727DF38FA00BA1290 /* SharedUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SharedUI.framework;
-			remoteRef = 76EE082627DF38FA00BA1290 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76EE082927DF38FA00BA1290 /* SharedUIDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SharedUIDemo.app;
-			remoteRef = 76EE082827DF38FA00BA1290 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
-		76EE080727DF38C300BA1290 /* Resources */ = {
+		7627EA6927FA7FA400C0F7DA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -226,19 +149,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		76EE080527DF38C300BA1290 /* Sources */ = {
+		7627EA6727FA7FA400C0F7DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7627EAAB27FA87DB00C0F7DA /* WalletModule.swift in Sources */,
-				76EE081A27DF38D000BA1290 /* WalletView.swift in Sources */,
+				76D09F0027FAC76100E2BAD3 /* Main.swift in Sources */,
+				7627EAE527FABBB700C0F7DA /* Wallet.swift in Sources */,
+				76D09EFE27FAC4D700E2BAD3 /* ModuleProtocol.swift in Sources */,
+				7627EAE727FABBBF00C0F7DA /* SharedUI.swift in Sources */,
+				7627EA7E27FA802F00C0F7DA /* Home.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		76EE080E27DF38C300BA1290 /* Debug */ = {
+		7627EA7027FA7FA500C0F7DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -302,7 +228,7 @@
 			};
 			name = Debug;
 		};
-		76EE080F27DF38C300BA1290 /* Release */ = {
+		7627EA7127FA7FA500C0F7DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -360,9 +286,10 @@
 			};
 			name = Release;
 		};
-		76EE081127DF38C300BA1290 /* Debug */ = {
+		7627EA7327FA7FA500C0F7DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -379,18 +306,20 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.Wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.ModuleLinker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		76EE081227DF38C300BA1290 /* Release */ = {
+		7627EA7427FA7FA500C0F7DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -407,7 +336,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.Wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.ModuleLinker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -419,44 +348,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		76EE080327DF38C300BA1290 /* Build configuration list for PBXProject "Wallet" */ = {
+		7627EA6527FA7FA400C0F7DA /* Build configuration list for PBXProject "ModuleLinker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				76EE080E27DF38C300BA1290 /* Debug */,
-				76EE080F27DF38C300BA1290 /* Release */,
+				7627EA7027FA7FA500C0F7DA /* Debug */,
+				7627EA7127FA7FA500C0F7DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		76EE081027DF38C300BA1290 /* Build configuration list for PBXNativeTarget "Wallet" */ = {
+		7627EA7227FA7FA500C0F7DA /* Build configuration list for PBXNativeTarget "ModuleLinker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				76EE081127DF38C300BA1290 /* Debug */,
-				76EE081227DF38C300BA1290 /* Release */,
+				7627EA7327FA7FA500C0F7DA /* Debug */,
+				7627EA7427FA7FA500C0F7DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		7627EAB127FA88EF00C0F7DA /* XCRemoteSwiftPackageReference "Resolver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hmlongco/Resolver";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		7627EAB227FA88EF00C0F7DA /* Resolver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7627EAB127FA88EF00C0F7DA /* XCRemoteSwiftPackageReference "Resolver" */;
-			productName = Resolver;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 76EE080027DF38C300BA1290 /* Project object */;
+	rootObject = 7627EA6227FA7FA400C0F7DA /* Project object */;
 }

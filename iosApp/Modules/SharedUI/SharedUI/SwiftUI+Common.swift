@@ -35,3 +35,9 @@ extension Image {
 			.cornerRadius(size / 2.0)
 	}
 }
+
+public extension View {
+	var erased: AnyView {
+		AnyView(self)
+	}
+}

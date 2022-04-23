@@ -1,8 +1,9 @@
 import SwiftUI
 import Fonts
 import Colors
+import ModuleLinker
 
-public struct GradientTag: View {
+struct GradientTag: View {
 	let title: CustomStringConvertible
 	
 	public init(title: CustomStringConvertible) {

@@ -13,7 +13,18 @@
 		76CF999427DEFF0D00AC185E /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF999127DEFF0D00AC185E /* TabBarItem.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7627EAA027FA82FF00C0F7DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7627EA9C27FA82FF00C0F7DA /* Utilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF999F27DEFF2700AC185E;
+			remoteInfo = Utilities;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		7627EA9C27FA82FF00C0F7DA /* Utilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Utilities.xcodeproj; path = ../Utilities/Utilities.xcodeproj; sourceTree = "<group>"; };
 		76CF997F27DEFF0800AC185E /* TabBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TabBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF998227DEFF0800AC185E /* TabBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBar.h; sourceTree = "<group>"; };
 		76CF998F27DEFF0D00AC185E /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -32,9 +43,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7627EA9D27FA82FF00C0F7DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7627EAA127FA82FF00C0F7DA /* Utilities.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		76CF997527DEFF0800AC185E = {
 			isa = PBXGroup;
 			children = (
+				7627EA9C27FA82FF00C0F7DA /* Utilities.xcodeproj */,
 				76CF998127DEFF0800AC185E /* TabBar */,
 				76CF998027DEFF0800AC185E /* Products */,
 			);
@@ -116,12 +136,28 @@
 			mainGroup = 76CF997527DEFF0800AC185E;
 			productRefGroup = 76CF998027DEFF0800AC185E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7627EA9D27FA82FF00C0F7DA /* Products */;
+					ProjectRef = 7627EA9C27FA82FF00C0F7DA /* Utilities.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				76CF997E27DEFF0800AC185E /* TabBar */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7627EAA127FA82FF00C0F7DA /* Utilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Utilities.framework;
+			remoteRef = 7627EAA027FA82FF00C0F7DA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		76CF997D27DEFF0800AC185E /* Resources */ = {
