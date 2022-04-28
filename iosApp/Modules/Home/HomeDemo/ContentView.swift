@@ -1,9 +1,12 @@
 import SwiftUI
 import Home
+import ModuleLinker
+import Resolver
 
 struct ContentView: View {
+	@Injected var homeViewProvider: HomeViewProviding
     var body: some View {
-		HomeView()
+		homeViewProvider.homeView()
 			.preferredColorScheme(.dark)
     }
 }
