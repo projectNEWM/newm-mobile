@@ -21,3 +21,16 @@ public protocol DataView: View {
 public protocol CircularProviding {
 	func circular<D : RandomAccessCollection, I : Hashable, C: View>(@ViewBuilder content: () -> ForEach<D, I, C>) -> AnyView
 }
+
+
+#if DEBUG
+
+public enum TestImage {
+	case bowie
+}
+
+public protocol TestImageProvider {
+	func image(for testImage: TestImage) -> UIImage
+}
+
+#endif

@@ -5,15 +5,16 @@ import Resolver
 struct HomeView: View {
 	@InjectedObject private var viewModel: HomeViewModel
 	@Injected private var gradientProvider: HomeViewGradientProviding
-	@Injected private var idLinker: IDLinking
 	@Injected private var songPlayingViewProvider: SongPlayingViewProviding
-	
+	@Injected private var playlistViewProvider: PlaylistViewProviding
+	@Injected private var allPlaylistsViewProvider: PlaylistListViewProviding
+
 	public init() {}
 	
 	public var body: some View {
 		NavigationView {
 			ZStack {
-				links
+//				links
 				allViews
 			}
 			.navigationTitle(viewModel.title)
@@ -29,28 +30,43 @@ struct HomeView: View {
 		).frame(height: 1)
 	}
 	
-	private var links: some View {
-		ZStack {
-//			IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
-//			idLinker.idLink(selectedID: viewModel.selectedSong?.songID, linkedView: <#T##_.Type#>)
-//			idLinker.idLink(selectedID: viewModel.selectedPlaylist?.playlistID)
-		}
-	}
+//	private var links: some View {
+//		ZStack {
+//			switch viewModel.selection {
+//			case .song(let id):
+//				NavigationLink(tag: HomeViewModel., selection: $viewModel.selection, destination: { songPlayingViewProvider.songPlayingView(id: "Song1") }, label: {})
+//			case .playlist(let id):
+//				NavigationLink(tag: HomeViewModel.Selection.playlist(id: id), selection: $viewModel.selection, destination: { playlistViewProvider.playlistView(id: id) }, label: {})
+//			case .allPlaylists:
+//				NavigationLink(tag: HomeViewModel.Selection.allPlaylists, selection: $viewModel.selection, destination: { allPlaylistsViewProvider.playlistListView() }, label: {})
+//			default:
+//				EmptyView()
+//			}
+//		}
+//	}
 	
 	private var allViews: some View {
 		VStack {
 			gradientLine
 			ScrollView {
 				VStack {
-					SectionSelectorView(selectedIndex: $viewModel.selectedSectionIndex, sectionTitles: viewModel.sections)
-					HomeScrollingContentView<ArtistCell>(selectedDataModel: $viewModel.selectedArtist, dataModels: viewModel.artists, title: viewModel.artistSectionTitle, spacing: 8)
-					HomeScrollingContentView<SongCell>(selectedDataModel: $viewModel.selectedSong, dataModels: viewModel.songs, title: viewModel.songsSectionTitle, spacing: 8)
-					HomeScrollingContentView<PlaylistCell>(selectedDataModel: $viewModel.selectedPlaylist, dataModels: viewModel.playlists, title: viewModel.playlistsSectionTitle, spacing: 12)
+//					SectionSelectorView(selectedIndex: $viewModel.selectedSection, sectionTitles: viewModel.sectionTitles)
+//					HomeScrollingContentView<ArtistCell>(selectedDataModel: { viewModel.navigation.selectedArtistID = $0.artistID },
+//														 dataModels: viewModel.artists,
+//														 title: viewModel.artistSectionTitle,
+//														 spacing: 8)
+//					HomeScrollingContentView<SongCell>(selectedDataModel: { viewModel.navigation.selectedSongID = $0.songID },
+//													   dataModels: viewModel.songs,
+//													   title: viewModel.songsSectionTitle,
+//													   spacing: 8)
+//					HomeScrollingContentView<PlaylistCell>(selectedDataModel: { viewModel.navigation.selectedPlaylistID = $0.playlistID },
+//														   dataModels: viewModel.playlists,
+//														   title: viewModel.playlistsSectionTitle,
+//														   spacing: 12)
 				}
 			}
 		}
 		.frame(maxHeight: .infinity, alignment: .top)
-		.onAppear { viewModel.deselectAll() }
 	}
 }
 

@@ -8,7 +8,7 @@ public struct LoginView: View {
 		case password
 	}
 	
-	@ObservedObject var viewModel = LoginViewModel()
+	@InjectedObject var viewModel: LoginViewModel
 	@FocusState private var focusedField: Field?
 	
 	@Injected private var fontProvider: FontProviding
@@ -130,11 +130,6 @@ private extension Text {
 
 struct LoginView_Previews: PreviewProvider {
 	static var previews: some View {
-		Group {
-			ZStack {
-				LoginView()
-					.preferredColorScheme(.dark)
-			}
-		}
+		LoginView()
 	}
 }

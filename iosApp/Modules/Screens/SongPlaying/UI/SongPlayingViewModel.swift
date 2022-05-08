@@ -5,27 +5,15 @@ import AVFoundation
 import ModuleLinker
 import Resolver
 
-protocol SongInfoUseCase {
-	func execute() -> SongPlayingViewModel.Song
-}
-
-protocol MusicPlayerUseCase {
-	var playbackTime: AnyPublisher<Int, Never> { get }
-	
-	func play()
-	func pause()
-	func stop()
-}
-
 class SongPlayingViewModel: ObservableObject {
 	typealias Seconds = Int
 	
 	private var cancellables = Set<AnyCancellable>()
 	
-	private let songInfoUseCase: SongInfoUseCase
-	private let musicPlayerUseCase: MusicPlayerUseCase
+	private let songInfoUseCase: SongInfoUseCaseProtocol
+	private let musicPlayerUseCase: MusicPlayerUseCaseProtocol
 	
-	@Published var song: Song
+	@Published var song: SongInfo
 	@Published var lyricsOffsetPercentage: Float = 0
 	@Published var playbackTime: String = SongPlayingViewModel.playbackTimePlaceholder
 	@Published var playbackState: PlaybackState = .paused
@@ -33,7 +21,7 @@ class SongPlayingViewModel: ObservableObject {
 	
 	let supportArtistPrompt: String = .likeTheArtist
 	
-	init(songInfoUseCase: SongInfoUseCase, musicPlayerUseCase: MusicPlayerUseCase) {
+	init(songInfoUseCase: SongInfoUseCaseProtocol, musicPlayerUseCase: MusicPlayerUseCaseProtocol) {
 		self.songInfoUseCase = songInfoUseCase
 		self.musicPlayerUseCase = musicPlayerUseCase
 		
@@ -42,6 +30,11 @@ class SongPlayingViewModel: ObservableObject {
 		musicPlayerUseCase.playbackTime
 			.map(\.playbackTimeString)
 			.sink { [weak self] in self?.playbackTime = $0 }
+			.store(in: &cancellables)
+		
+		musicPlayerUseCase.playbackState
+			.map(SongPlayingViewModel.PlaybackState.init)
+			.sink { [weak self] in self?.playbackState = $0 }
 			.store(in: &cancellables)
 	}
 }
@@ -94,19 +87,6 @@ extension SongPlayingViewModel {
 	}
 }
 
-extension SongPlayingViewModel {
-	struct Song {
-		let songTitle: String
-		let artistName: String
-		let shareCount: String
-		let starCount: String
-		let songLength: Seconds
-		let lyrics: String
-		let backgroundImage: URL
-		let albumImage: URL
-	}
-}
-
 private extension SongPlayingViewModel {
 	static var playbackTimePlaceholder: String { "--:--" }
 }
@@ -115,6 +95,13 @@ extension SongPlayingViewModel {
 	enum PlaybackState {
 		case playing
 		case paused
+		
+		init(_ playbackState: ModuleLinker.PlaybackState) {
+			switch playbackState {
+			case .playing: self = .playing
+			case .paused: self = .paused
+			}
+		}
 	}
 }
 

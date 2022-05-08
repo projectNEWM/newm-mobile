@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 public protocol TipViewProviding {
-	func tipView(tipSelected: (TipAmount) -> ()) -> AnyView
+	func tipView(tipSelected: @escaping (TipAmount) -> ()) -> AnyView
 }
 
 public enum TipAmount: CaseIterable, CustomStringConvertible, Identifiable {

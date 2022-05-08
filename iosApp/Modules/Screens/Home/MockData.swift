@@ -1,7 +1,8 @@
 #if DEBUG
 import Foundation
 import SwiftUI
-import SharedUI
+import ModuleLinker
+import Resolver
 
 class MockData {
 	static func makeArtist(name: String) -> HomeViewModel.Artist {
@@ -20,11 +21,11 @@ class MockData {
 	}
 	
 	static var artistImage: UIImage {
-		.Bowie
+		Resolver.resolve(TestImageProvider.self).image(for: .bowie)
 	}
 	
 	static var roundArtistImage: some View {
-		CircleImage(artistImage, size: 60)
+		Resolver.resolve(CircleImageProviding.self).circleImage(artistImage, size: 60)
 	}
 	
 	static func makeSong(title: String, isNFT: Bool = false) -> HomeViewModel.Song {

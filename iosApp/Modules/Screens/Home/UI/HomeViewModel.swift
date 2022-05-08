@@ -4,6 +4,19 @@ import Resolver
 import ModuleLinker
 //TODO: Remove UIImage uses and replace with URLs
 import UIKit.UIImage
+import SwiftUI
+
+protocol GetArtistsUseCase {
+	func execute() async -> [HomeViewModel.Artist]
+}
+
+protocol GetSongsUseCase {
+	func execute() async -> [HomeViewModel.Song]
+}
+
+protocol GetPlaylistsUseCase {
+	func execute() async -> [HomeViewModel.Playlist]
+}
 
 public class HomeViewModel: ObservableObject {
 	enum Section: CaseIterable {
@@ -13,22 +26,35 @@ public class HomeViewModel: ObservableObject {
 		case alternative
 	}
 	
-	@Published var title: String = .newm
+	@Injected private var artistsUseCase: GetArtistsUseCase
+	@Injected private var songsUseCase: GetSongsUseCase
+	@Injected private var playlistsUseCase: GetPlaylistsUseCase
 	
-	@Published var artistSectionTitle: String = .newmArtists
-	@Injected var artists: [HomeViewModel.Artist]
-	@Published var selectedArtist: HomeViewModel.Artist? = nil
-	
-	@Published var songsSectionTitle: String = .newmSongs
-	@Published var songs: [HomeViewModel.Song] = Resolver.resolve()
-	@Published var selectedSong: HomeViewModel.Song? = nil
-	
-	@Published var playlistsSectionTitle: String = .curatedPlaylists
-	@Published var playlists: [HomeViewModel.Playlist] = Resolver.resolve()
-	@Published var selectedPlaylist: HomeViewModel.Playlist? = nil
+	let title: String = .newm
+	let artistSectionTitle: String = .newmArtists
+	let songsSectionTitle: String = .newmSongs
+	let playlistsSectionTitle: String = .curatedPlaylists
 
-	@Published var selectedSectionIndex: Int = 0
-	let sections = Section.allCases.map(\.description)
+	@Published var selectedSection: Section = .allCases.first!
+	
+	var artists: [HomeViewModel.Artist] = []
+	var songs: [HomeViewModel.Song] = []
+	var playlists: [HomeViewModel.Playlist] = []
+	
+	let sectionTitles = Section.allCases.map(\.description)
+	
+	init() {
+		Task.detached { [weak self] in
+			guard let self = self else { return }
+			await self.refresh()
+		}
+	}
+	
+	func refresh() async {
+		artists = await artistsUseCase.execute()
+		songs = await songsUseCase.execute()
+		playlists = await playlistsUseCase.execute()
+	}
 }
 
 extension HomeViewModel {
@@ -57,14 +83,6 @@ extension HomeViewModel {
 		let songCount: String
 		let playlistID: String
 		var id: ObjectIdentifier { playlistID.objectIdentifier }
-	}
-}
-
-extension HomeViewModel {
-	func deselectAll() {
-		selectedArtist = nil
-		selectedSong = nil
-		selectedPlaylist = nil
 	}
 }
 

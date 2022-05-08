@@ -3,12 +3,12 @@ import ModuleLinker
 import Resolver
 
 public struct SongPlayingView: DataView {
-	@Injected private var viewModel: SongPlayingViewModel
+	@ObservedObject private var viewModel: SongPlayingViewModel
 	@Injected private var circleImageProvider: CircleImageProviding
 	@Injected private var tipViewProvider: TipViewProviding
 	
 	public init(id: String) {
-		viewModel = Resolver.resolve(SongPlayingViewModel.self, args: id)
+		viewModel = Resolver.resolve(args: id)
 	}
 	
 	public var body: some View {
@@ -207,15 +207,15 @@ public struct SongPlayingView: DataView {
 	}
 	
 	private var tippingOverlay: some View {
-		tipViewProvider.tipView { tipAmount in
+		tipViewProvider.tipView { tip in
 			withAnimation {
-				viewModel.tipTapped(tipAmount)
+				viewModel.tipTapped(tip)
 			}
 		}
 	}
 }
 
-struct SongPlayingView_Previews: PreviewProvider {
+struct SongPlayingView_Previews: PreviewProvider, SharedPreviewProvider {
 	static var previews: some View {
 		SongPlayingView(id: "1")
 			.preferredColorScheme(.dark)

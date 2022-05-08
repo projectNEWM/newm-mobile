@@ -2,13 +2,9 @@ import SwiftUI
 import ModuleLinker
 import Resolver
 
-public struct PlaylistListView: DataView {
-	@ObservedObject var viewModel: PlaylistListViewModel
-	
-	public init(id: String) {
-		viewModel = PlaylistListViewModel(id: id)
-	}
-	
+public struct PlaylistListView: View {
+	@Injected private var viewModel: PlaylistListViewModel
+		
 	public var body: some View {
 		ScrollView(.vertical, showsIndicators: false) {
 			VStack {
@@ -24,8 +20,8 @@ public struct PlaylistListView: DataView {
 	}
 }
 
-struct PlaylistView_Previews: PreviewProvider {
+struct PlaylistListView_Previews: PreviewProvider {
 	static var previews: some View {
-		PlaylistListView(id: "1")
+		PlaylistListView()
 	}
 }

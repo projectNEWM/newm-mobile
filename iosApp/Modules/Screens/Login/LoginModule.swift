@@ -10,6 +10,10 @@ public final class LoginModule: ModuleProtocol {
 		Resolver.register {
 			self as LoginViewProviding
 		}
+		
+		Resolver.register {
+			LoginViewModel()
+		}
 	}
 }
 

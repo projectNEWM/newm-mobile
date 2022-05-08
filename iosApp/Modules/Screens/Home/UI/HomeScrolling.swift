@@ -9,7 +9,7 @@ protocol HomeScrollingCell: View where DataType: Identifiable {
 }
 
 struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
-	@Binding var selectedDataModel: Model.DataType?
+	let selectedDataModel: (Model.DataType) -> ()
 	let dataModels: [Model.DataType]
 	let title: String
 	let spacing: CGFloat
@@ -20,8 +20,8 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 			sectionHeader(title: title)
 			ScrollView(.horizontal, showsIndicators: false) {
 				HStack(alignment: .center, spacing: nil) {
-					ForEach(dataModels) { data in
-						Button(action: { selectedDataModel = data }) {
+					ForEach(Array(dataModels.enumerated()), id: \.offset) { (offset, data) in
+						Button(action: { selectedDataModel(data) }) {
 							Model(data: data)
 								.padding(.trailing, spacing)
 						}
@@ -46,9 +46,9 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 struct HomeScrollingContentView_Previews: PreviewProvider {
 	static var previews: some View {
 		VStack {
-			HomeScrollingContentView<ArtistCell>(selectedDataModel: .constant(nil), dataModels: Resolver.resolve(), title: "NEWM Artists", spacing: 8)
-			HomeScrollingContentView<SongCell>(selectedDataModel: .constant(nil), dataModels: Resolver.resolve(), title: "NEWM Songs", spacing: 8)
-			HomeScrollingContentView<PlaylistCell>(selectedDataModel: .constant(nil), dataModels: Resolver.resolve(), title: "Curated Playlists", spacing: 12)
+			HomeScrollingContentView<ArtistCell>(selectedDataModel: {_ in}, dataModels: Resolver.resolve(), title: "NEWM Artists", spacing: 8)
+			HomeScrollingContentView<SongCell>(selectedDataModel: {_ in}, dataModels: Resolver.resolve(), title: "NEWM Songs", spacing: 8)
+			HomeScrollingContentView<PlaylistCell>(selectedDataModel: {_ in}, dataModels: Resolver.resolve(), title: "Curated Playlists", spacing: 12)
 		}
 		.preferredColorScheme(.dark)
 	}

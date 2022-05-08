@@ -55,6 +55,19 @@ extension SharedUIModule: CircularProviding {
 #if DEBUG
 extension SharedUIModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
+		mockResolver.register {
+			self as TestImageProvider
+		}
 	}
 }
+
+extension SharedUIModule: TestImageProvider {
+	public func image(for testImage: TestImage) -> UIImage {
+		switch testImage {
+		case .bowie:
+			return .Bowie
+		}
+	}
+}
+
 #endif
