@@ -1,13 +1,19 @@
 package io.projectnewm.feature.now.playing
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +23,9 @@ import androidx.compose.ui.unit.sp
 @Preview
 @Composable
 fun NowPlayingScreen() {
+    val context = LocalContext.current
+    val isPlaying = rememberSaveable { (mutableStateOf(true)) }
+
     ArtistBackgroundImage()
     Column(
         modifier = Modifier
@@ -52,9 +61,21 @@ fun NowPlayingScreen() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(modifier = Modifier.wrapContentSize()) {
-            PreviousIcon()
+            PreviousIcon {
+                Player.previous()
+            }
             RepeatIcon()
-            PlayIcon()
+            if (isPlaying.value) {
+                PauseIcon {
+                    Player.pause()
+                    isPlaying.value = false
+                }
+            } else {
+                PlayIcon {
+                    Player.play(context)
+                    isPlaying.value = true
+                }
+            }
             ShuffleIcon()
             NextIcon()
         }
@@ -70,6 +91,11 @@ fun NowPlayingScreen() {
         Spacer(modifier = Modifier.height(24.dp))
 
         TipIcon()
+
+        LaunchedEffect(Unit) {
+            Player.play(context)
+            isPlaying.value = true
+        }
     }
 }
 
@@ -176,11 +202,12 @@ private fun AlbumArtImage() {
 }
 
 @Composable
-private fun PreviousIcon() {
+private fun PreviousIcon(onClick: () -> Unit) {
     Image(
         modifier = Modifier
             .wrapContentSize()
-            .offset(x = (-34).dp, y = (-52).dp),
+            .offset(x = (-34).dp, y = (-52).dp)
+            .clickable(onClick = onClick),
         painter = painterResource(R.drawable.now_playing_ic_previous),
         contentDescription = "Previous Song"
     )
@@ -198,11 +225,24 @@ private fun RepeatIcon() {
 }
 
 @Composable
-private fun PlayIcon() {
+private fun PlayIcon(onClick: () -> Unit) {
     Image(
-        modifier = Modifier.wrapContentSize(),
+        modifier = Modifier
+            .wrapContentSize()
+            .clickable(onClick = onClick),
         painter = painterResource(R.drawable.now_playing_ic_play),
         contentDescription = "Play"
+    )
+}
+
+@Composable
+private fun PauseIcon(onClick: () -> Unit) {
+    Image(
+        modifier = Modifier
+            .wrapContentSize()
+            .clickable(onClick = onClick),
+        painter = painterResource(R.drawable.now_playing_ic_pause),
+        contentDescription = "Pause",
     )
 }
 

@@ -17,6 +17,7 @@ object Versions {
     const val composeMaterialIcons = "1.2.0-alpha04"
     const val crashlyticsClasspath = "2.8.1"
     const val espresso = "3.4.0"
+    const val exoplayer = "2.17.1"
     const val firebase = "29.0.4"
     const val googleServices = "4.3.10"
     const val gradleVersionsPlugin = "0.41.0"
