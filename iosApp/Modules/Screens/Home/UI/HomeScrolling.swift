@@ -46,9 +46,9 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 struct HomeScrollingContentView_Previews: PreviewProvider {
 	static var previews: some View {
 		VStack {
-			HomeScrollingContentView<ArtistCell>(selectedDataModel: {_ in}, dataModels: Resolver.resolve(), title: "NEWM Artists", spacing: 8)
-			HomeScrollingContentView<SongCell>(selectedDataModel: {_ in}, dataModels: Resolver.resolve(), title: "NEWM Songs", spacing: 8)
-			HomeScrollingContentView<PlaylistCell>(selectedDataModel: {_ in}, dataModels: Resolver.resolve(), title: "Curated Playlists", spacing: 12)
+			HomeScrollingContentView<ArtistCell>(selectedDataModel: {_ in}, dataModels: MockData.artists.map(HomeViewModel.Artist.init), title: "NEWM Artists", spacing: 8)
+			HomeScrollingContentView<SongCell>(selectedDataModel: {_ in}, dataModels: MockData.songs.map(HomeViewModel.Song.init), title: "NEWM Songs", spacing: 8)
+			HomeScrollingContentView<PlaylistCell>(selectedDataModel: {_ in}, dataModels: MockData.playlists.map(HomeViewModel.Playlist.init), title: "Curated Playlists", spacing: 12)
 		}
 		.preferredColorScheme(.dark)
 	}

@@ -2,6 +2,8 @@ import Foundation
 import UIKit.UIImage
 import Resolver
 import ModuleLinker
+import shared
+import Utilities
 
 class PlaylistListViewModel: ObservableObject {
 	@Injected private var playlistListUseCase: PlaylistListUseCaseProtocol
@@ -15,7 +17,7 @@ class PlaylistListViewModel: ObservableObject {
 
 extension PlaylistListViewModel {
 	struct Playlist: Identifiable {
-		let image: UIImage
+		let image: URL?
 		let title: String
 		let creator: String
 		let genre: String
@@ -24,7 +26,7 @@ extension PlaylistListViewModel {
 		let playlistID: String
 		var id: ObjectIdentifier { playlistID.objectIdentifier }
 		
-		init(image: UIImage, title: String, creator: String, genre: String, starCount: String, playCount: String, playlistID: String) {
+		init(image: URL?, title: String, creator: String, genre: String, starCount: String, playCount: String, playlistID: String) {
 			self.image = image
 			self.title = title
 			self.creator = creator
@@ -34,15 +36,19 @@ extension PlaylistListViewModel {
 			self.playlistID = playlistID
 		}
 		
-		init(_ playlist: ModuleLinker.Playlist) {
+		init(_ playlist: shared.Playlist) {
+			let imageUrl = URL(string: playlist.image)
+			if imageUrl == nil {
+				Log("bad image in \(Self.self)")
+			}
 			self.init(
-				image: playlist.image,
+				image: imageUrl,
 				title: playlist.title,
-				creator: playlist.creator,
+				creator: playlist.creator.userName,
 				genre: playlist.genre,
-				starCount: playlist.starCount,
-				playCount: playlist.playCount,
-				playlistID: playlist.playlistID
+				starCount: "\(playlist.starCount) ✭",
+				playCount: "\(playlist.playCount)",
+				playlistID: playlist.playlistId
 			)
 		}
 	}

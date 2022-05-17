@@ -1,10 +1,10 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
+import SharedUI
 
 public struct SongPlayingView: DataView {
 	@ObservedObject private var viewModel: SongPlayingViewModel
-	@Injected private var circleImageProvider: CircleImageProviding
 	@Injected private var tipViewProvider: TipViewProviding
 	
 	public init(id: String) {
@@ -115,7 +115,7 @@ public struct SongPlayingView: DataView {
 				GeometryReader { geometry in
 					HStack {
 						Spacer()
-						circleImageProvider.circleImage(image, size: geometry.size.height)
+						image.circleImage(size: geometry.size.height)
 						Spacer()
 					}
 				}
@@ -215,7 +215,7 @@ public struct SongPlayingView: DataView {
 	}
 }
 
-struct SongPlayingView_Previews: PreviewProvider, SharedPreviewProvider {
+struct SongPlayingView_Previews: PreviewProvider {
 	static var previews: some View {
 		SongPlayingView(id: "1")
 			.preferredColorScheme(.dark)

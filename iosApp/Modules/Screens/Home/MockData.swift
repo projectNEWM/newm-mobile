@@ -3,13 +3,15 @@ import Foundation
 import SwiftUI
 import ModuleLinker
 import Resolver
+import shared
+import SharedUI
 
 class MockData {
-	static func makeArtist(name: String) -> HomeViewModel.Artist {
-		HomeViewModel.Artist(image: artistImage.jpegData(compressionQuality: 1.0)!, name: name, genre: "Rock", stars: "✭ 12k", artistID: name)
+	static func makeArtist(name: String) -> Artist {
+		Artist(image: artistImageUrl, name: name, genre: "Rock", stars: 12000, id: "1")
 	}
 	
-	static var artists: [HomeViewModel.Artist] {
+	static var artists: [Artist] {
 		[
 			makeArtist(name: "David Bow"),
 			makeArtist(name: "David Bowie2"),
@@ -21,18 +23,25 @@ class MockData {
 	}
 	
 	static var artistImage: UIImage {
-		Resolver.resolve(TestImageProvider.self).image(for: .bowie)
+		@Injected var imageProvider: TestImageProvider
+		return imageProvider.image(for: .bowie)
 	}
 	
+	static var artistImageUrl: String {
+		@Injected var imageProvider: TestImageProvider
+		return imageProvider.url(for: .bowie)
+	}
+
 	static var roundArtistImage: some View {
-		Resolver.resolve(CircleImageProviding.self).circleImage(artistImage, size: 60)
+		Image(uiImage: artistImage)
+			.circleImage(size: 60)
 	}
 	
-	static func makeSong(title: String, isNFT: Bool = false) -> HomeViewModel.Song {
-		HomeViewModel.Song(image: artistImage, title: title, artist: "Artist", isNFT: isNFT, songID: title)
+	static func makeSong(title: String, isNFT: Bool = false) -> Song {
+		Song(image: artistImageUrl, title: title, artist: makeArtist(name: "David Bowtie"), isNft: isNFT, songId: title)
 	}
 	
-	static var songs: [HomeViewModel.Song] {
+	static var songs: [Song] {
 		[
 			makeSong(title: "Song1"),
 			makeSong(title: "Song2"),
@@ -43,22 +52,40 @@ class MockData {
 		]
 	}
 	
-	static func makeHomePlaylist(id: String) -> HomeViewModel.Playlist {
-		HomeViewModel.Playlist(image: MockData.artistImage, title: "Music for Gaming", creator: "by NEWM", songCount: "♬ 32", playlistID: id)
+	static func makePlaylist(id: String) -> Playlist {
+		Playlist(image: MockData.artistImageUrl, title: "Music for Gaming", creator: User(userName: "NEWM User"), songCount: 32, playlistId: id, genre: "Rock", starCount: 13, playCount: 439)
 	}
 	
-	static var playlists: [HomeViewModel.Playlist] {
+	static var playlists: [Playlist] {
 		[
-			makeHomePlaylist(id: "1"),
-			makeHomePlaylist(id: "2"),
-			makeHomePlaylist(id: "3"),
-			makeHomePlaylist(id: "4"),
-			makeHomePlaylist(id: "5"),
-			makeHomePlaylist(id: "6"),
-			makeHomePlaylist(id: "7"),
-			makeHomePlaylist(id: "8"),
-			makeHomePlaylist(id: "9")
+			makePlaylist(id: "1"),
+			makePlaylist(id: "2"),
+			makePlaylist(id: "3"),
+			makePlaylist(id: "4"),
+			makePlaylist(id: "5"),
+			makePlaylist(id: "6"),
+			makePlaylist(id: "7"),
+			makePlaylist(id: "8"),
+			makePlaylist(id: "9"),
 		]
+	}
+}
+
+class MockGetArtistsUseCase: GetArtistsUseCase {
+	func execute() -> [Artist] {
+		MockData.artists
+	}
+}
+
+class MockGetSongsUseCase: GetSongsUseCase {
+	func execute() -> [Song] {
+		MockData.songs
+	}
+}
+
+class MockGetPlaylistsUseCase: GetPlaylistsUseCase {
+	func execute() -> [Playlist] {
+		MockData.playlists
 	}
 }
 #endif

@@ -1,19 +1,24 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
+import SharedUI
 
 struct PlaylistListViewCell: View {
 	let playlist: PlaylistListViewModel.Playlist
 	let imageSize: CGFloat = 80
 	
-	@Injected private var circleImageProvider: CircleImageProviding
 	@Injected private var colorProvider: ColorProviding
 	@Injected private var fontProvider: FontProviding
 	
 	var body: some View {
 		HStack {
-			circleImageProvider.circleImage(playlist.image, size: imageSize)
-				.padding(.trailing)
+			AsyncImage(url: playlist.image) { phase in
+				if case let .success(image) = phase {
+					image
+						.circleImage(size: imageSize)
+						.padding(.trailing)
+				}
+			}
 			VStack {
 				title
 				creator

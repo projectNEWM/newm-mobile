@@ -5,11 +5,7 @@ import SwiftUI
 
 public final class HomeModule: ModuleProtocol {
 	public static let shared = HomeModule()
-	
-	private init() {
-		registerAllServices()
-	}
-	
+		
 	public func registerAllServices() {
 		Resolver.register {
 			self as HomeViewProviding
@@ -31,15 +27,15 @@ extension HomeModule: HomeViewProviding {
 extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
-			MockData.artists
+			MockGetSongsUseCase() as GetSongsUseCase
 		}
 		
 		mockResolver.register {
-			MockData.songs
+			MockGetArtistsUseCase() as GetArtistsUseCase
 		}
 		
 		mockResolver.register {
-			MockData.playlists
+			MockGetPlaylistsUseCase() as GetPlaylistsUseCase
 		}
 	}
 }

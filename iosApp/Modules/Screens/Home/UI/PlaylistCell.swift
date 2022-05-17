@@ -1,11 +1,11 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
+import SharedUI
 
 struct PlaylistCell: View {
 	let data: HomeViewModel.Playlist
 	
-	@Injected private var circleImageProvider: CircleImageProviding
 	@Injected private var fontProvider: FontProviding
 	@Injected private var colorProvider: ColorProviding
 
@@ -23,8 +23,12 @@ struct PlaylistCell: View {
     }
 	
 	private var playlistImage: some View {
-		circleImageProvider.circleImage(data.image, size: 70)
-		 	.padding(.top, 5)
+		AsyncImage(url: data.image) { image in
+			image.circleImage(size: 70)
+				.padding(.top, 5)
+		} placeholder: {
+			//TODO: add placeholder
+		}
 	}
 	
 	private var title: some View {

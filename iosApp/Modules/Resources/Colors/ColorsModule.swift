@@ -5,10 +5,6 @@ import ModuleLinker
 public final class ColorsModule: ModuleProtocol {
 	public static let shared = ColorsModule()
 	
-	private init() {
-		registerAllServices()
-	}
-
 	public func registerAllServices() {
 		Resolver.register {
 			self as HomeViewGradientProviding

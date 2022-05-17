@@ -5,14 +5,19 @@ import ModuleLinker
 struct SongCell: View {
 	var data: HomeViewModel.Song
 	@Injected private var gradientTagProvider: GradientTagProviding
-	@Injected private var circleImageProvider: CircleImageProviding
 	@Injected private var fontProvider: FontProviding
 	@Injected private var colorProvider: ColorProviding
-		
+	
 	var body: some View {
 		VStack {
 			ZStack(alignment: .top) {
-				circleImageProvider.circleImage(data.image, size: 60)
+				AsyncImage(url: data.image) { phase in
+					if case let .success(image) = phase {
+						image
+							.circleImage(size: 60)
+							.padding(.top, -14)
+					}
+				}
 				if data.isNFT {
 					gradientTagProvider.gradientTag(title: "NFT")
 						.padding(.top, -14)
@@ -31,18 +36,17 @@ struct SongCell: View {
 }
 
 extension SongCell: HomeScrollingCell {
-//	init(data: HomeViewModel.Song) {
-//		self.data = data
-//	}
-	
 	typealias DataType = HomeViewModel.Song
 }
 
 struct SongCell_Previews: PreviewProvider {
 	static var previews: some View {
-		Group {
-			Resolver.resolve(SongCell.self, args: (title: "Song", isNFT: false))
-			Resolver.resolve(SongCell.self, args: (title: "Song", isNFT: true))
+		ScrollView(.horizontal) {
+			HStack {
+				ForEach(MockData.songs.map(HomeViewModel.Song.init), id: \.id) {
+					SongCell(data: $0)
+				}
+			}
 		}
 		.preferredColorScheme(.dark)
 	}

@@ -6,7 +6,6 @@ public struct ArtistCell: View {
 	let data: HomeViewModel.Artist
 	@Injected private var fonts: FontProviding
 	@Injected private var colors: ColorProviding
-	@Injected private var circleImageProvider: CircleImageProviding
 	
 	public var body: some View {
 		VStack {
@@ -37,8 +36,13 @@ public struct ArtistCell: View {
 	}
 	
 	private var artistImage: some View {
-		circleImageProvider.circleImage(UIImage(data: data.image) ?? UIImage.empty, size: 70)
-			.padding(.bottom, 10)
+		AsyncImage(url: data.image) { image in
+			if case let .success(image) = image {
+				image
+					.circleImage(size: 70)
+					.padding(.bottom, 10)
+			}
+		}
 	}
 	
 	private var artistName: some View {
