@@ -14,10 +14,45 @@
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		76B770F627C5F2520009A58E /* BottomNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */; };
 		76CF99B127DEFF6E00AC185E /* NEWMApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76CF994C27DEFEC800AC185E /* NEWMApp.framework */; };
-		76E3CA6F27A8DC8200C24DC2 /* Localizable222.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76E3CA6E27A8DC8200C24DC2 /* Localizable222.strings */; };
+		76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		76107BE227DF28090024B27B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF98E127DEFE1B00AC185E /* Colors.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7654425827DF1D0D003346EE;
+			remoteInfo = ColorsDemo;
+		};
+		76107BE527DF28090024B27B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF991B27DEFEA600AC185E /* Home.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 765441F427DF1715003346EE;
+			remoteInfo = HomeDemo;
+		};
+		76107BEA27DF28090024B27B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7654424627DF1ACD003346EE;
+			remoteInfo = SharedUIDemo;
+		};
+		76107C2627DF287F0024B27B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76107C2227DF287E0024B27B /* Tips.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76107C1827DF287E0024B27B;
+			remoteInfo = Tips;
+		};
+		76107C6727DF2A250024B27B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76107C5927DF2A240024B27B;
+			remoteInfo = SongPlaying;
+		};
 		7640012427DF03F2000FB31A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7640012027DF03F2000FB31A /* Login.xcodeproj */;
@@ -158,6 +193,27 @@
 			remoteGlobalIDString = 769FCB9927DEFB9B00F654DF;
 			remoteInfo = Strings;
 		};
+		76EE07B527DF347200BA1290 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76107C8727DF2D2C0024B27B;
+			remoteInfo = SongPlayingDemo;
+		};
+		76EE07D027DF34A100BA1290 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76EE07C227DF34A000BA1290;
+			remoteInfo = PlaylistList;
+		};
+		76EE081727DF38C300BA1290 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76EE081327DF38C300BA1290 /* Wallet.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76EE080927DF38C300BA1290;
+			remoteInfo = Wallet;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -166,20 +222,16 @@
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76107C2227DF287E0024B27B /* Tips.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tips.xcodeproj; path = Tips/Tips.xcodeproj; sourceTree = "<group>"; };
+		76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SongPlaying.xcodeproj; path = SongPlaying/SongPlaying.xcodeproj; sourceTree = "<group>"; };
 		7612F0F6278D6128002D05AA /* ArtistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistView.swift; sourceTree = "<group>"; };
-		762756F6278827AC0012BADB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		762756F8278832CC0012BADB /* TribeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeView.swift; sourceTree = "<group>"; };
 		7638B03027DF036000FB4815 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = Shared/shared.xcframework; sourceTree = SOURCE_ROOT; };
-		763EBB4427ACD68800E60021 /* Circular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circular.swift; sourceTree = "<group>"; };
-		763EBB4927B20D0600E60021 /* TipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
 		7640012027DF03F2000FB31A /* Login.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Login.xcodeproj; path = Login/Login.xcodeproj; sourceTree = "<group>"; };
-		765163CD2794F17200210E93 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7683128B27A38F480056BC6B /* iosAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		768FCAB027B7290600D0C0EB /* StarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsView.swift; sourceTree = "<group>"; };
 		768FCAB527B7292C00D0C0EB /* BottomNavigationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomNavigationUITests.swift; sourceTree = "<group>"; };
-		76AA99C2278EAA7500AE420B /* SongPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayingView.swift; sourceTree = "<group>"; };
-		76AA99C5278EACA000AE420B /* PlaylistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListView.swift; sourceTree = "<group>"; };
 		76B770EB27C5F2070009A58E /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C8C3E0279E85620061BAC8 /* ArtistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistListView.swift; sourceTree = "<group>"; };
 		76C8C3E3279E86390061BAC8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -193,12 +245,10 @@
 		76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SharedUI.xcodeproj; path = SharedUI/SharedUI.xcodeproj; sourceTree = "<group>"; };
 		76CF998927DEFF0800AC185E /* TabBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TabBar.xcodeproj; path = TabBar/TabBar.xcodeproj; sourceTree = "<group>"; };
 		76CF99A927DEFF2700AC185E /* Utilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Utilities.xcodeproj; path = Utilities/Utilities.xcodeproj; sourceTree = "<group>"; };
-		76D881B92794C78A001B73D5 /* PlaylistListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListViewCell.swift; sourceTree = "<group>"; };
-		76D881BE2794CA9D001B73D5 /* PlaylistListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListViewModel.swift; sourceTree = "<group>"; };
 		76D881C12794DCD7001B73D5 /* PlaylistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsView.swift; sourceTree = "<group>"; };
-		76E3CA6E27A8DC8200C24DC2 /* Localizable222.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable222.strings; sourceTree = "<group>"; };
-		76E3CA7127A8DD1200C24DC2 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
-		76E3CA7327AB32EE00C24DC2 /* SongPlayingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayingViewModel.swift; sourceTree = "<group>"; };
+		76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PlaylistList.xcodeproj; path = PlaylistList/PlaylistList.xcodeproj; sourceTree = "<group>"; };
+		76EE081327DF38C300BA1290 /* Wallet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Wallet.xcodeproj; path = Wallet/Wallet.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,7 +291,6 @@
 			children = (
 				76CF98B927DEFD7100AC185E /* Modules */,
 				7555FF7D242A565900829871 /* iosApp */,
-				7683128C27A38F480056BC6B /* iosAppTests */,
 				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				7555FFB0242A642200829871 /* Frameworks */,
@@ -265,17 +314,11 @@
 				76AA99C0278EA90C00AE420B /* Artist */,
 				76C8C3DF279E85500061BAC8 /* ArtistList */,
 				76C8C3E8279E86890061BAC8 /* Genres */,
-				765163CC2794F14B00210E93 /* MainView */,
 				76D881C02794DCB4001B73D5 /* PlaylistDetails */,
-				76AA99C4278EAC8600AE420B /* PlaylistList */,
 				76C8C3E2279E862B0061BAC8 /* Profile */,
 				76C8C3E5279E86550061BAC8 /* Search */,
-				76D881B62794C1B6001B73D5 /* Shared */,
-				76AA99C1278EAA4F00AE420B /* Song Playing */,
 				768FCAAF27B7290600D0C0EB /* Stars */,
-				763EBB4827B20CF800E60021 /* Tip */,
 				765163D22794F48200210E93 /* Tribe */,
-				76E3CA7027A8DD0300C24DC2 /* Wallet */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				763FEAB027C30B4500232093 /* Resources */,
 			);
@@ -289,19 +332,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		763EBB4827B20CF800E60021 /* Tip */ = {
+		76107C2327DF287E0024B27B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				763EBB4927B20D0600E60021 /* TipView.swift */,
+				76107C2727DF287F0024B27B /* Tips.framework */,
 			);
-			path = Tip;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76107C6427DF2A240024B27B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76107C6827DF2A250024B27B /* SongPlaying.framework */,
+				76EE07B627DF347200BA1290 /* SongPlayingDemo.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		763FEAB027C30B4500232093 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */,
-				76E3CA6E27A8DC8200C24DC2 /* Localizable222.strings */,
+				76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 			);
@@ -312,18 +364,9 @@
 			isa = PBXGroup;
 			children = (
 				7640012527DF03F2000FB31A /* Login.framework */,
-				765441B927DF0E86003346EE /* Demo.app */,
+				765441B927DF0E86003346EE /* LoginDemo.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		765163CC2794F14B00210E93 /* MainView */ = {
-			isa = PBXGroup;
-			children = (
-				762756F6278827AC0012BADB /* MainView.swift */,
-				765163CD2794F17200210E93 /* MainViewModel.swift */,
-			);
-			path = MainView;
 			sourceTree = "<group>";
 		};
 		765163CF2794F3D300210E93 /* App */ = {
@@ -340,13 +383,6 @@
 				762756F8278832CC0012BADB /* TribeView.swift */,
 			);
 			path = Tribe;
-			sourceTree = "<group>";
-		};
-		7683128C27A38F480056BC6B /* iosAppTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = iosAppTests;
 			sourceTree = "<group>";
 		};
 		768FCAAF27B7290600D0C0EB /* Stars */ = {
@@ -371,25 +407,6 @@
 				7612F0F6278D6128002D05AA /* ArtistView.swift */,
 			);
 			path = Artist;
-			sourceTree = "<group>";
-		};
-		76AA99C1278EAA4F00AE420B /* Song Playing */ = {
-			isa = PBXGroup;
-			children = (
-				76AA99C2278EAA7500AE420B /* SongPlayingView.swift */,
-				76E3CA7327AB32EE00C24DC2 /* SongPlayingViewModel.swift */,
-			);
-			path = "Song Playing";
-			sourceTree = "<group>";
-		};
-		76AA99C4278EAC8600AE420B /* PlaylistList */ = {
-			isa = PBXGroup;
-			children = (
-				76AA99C5278EACA000AE420B /* PlaylistListView.swift */,
-				76D881BE2794CA9D001B73D5 /* PlaylistListViewModel.swift */,
-				76D881B92794C78A001B73D5 /* PlaylistListViewCell.swift */,
-			);
-			path = PlaylistList;
 			sourceTree = "<group>";
 		};
 		76C8C3DF279E85500061BAC8 /* ArtistList */ = {
@@ -427,16 +444,20 @@
 		76CF98B927DEFD7100AC185E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				7638B03027DF036000FB4815 /* shared.xcframework */,
 				76CF98E127DEFE1B00AC185E /* Colors.xcodeproj */,
 				76CF98FD27DEFE7900AC185E /* Fonts.xcodeproj */,
 				76CF991B27DEFEA600AC185E /* Home.xcodeproj */,
 				7640012027DF03F2000FB31A /* Login.xcodeproj */,
 				76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */,
-				7638B03027DF036000FB4815 /* shared.xcframework */,
+				76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */,
 				76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */,
+				76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */,
 				76CF98BF27DEFD7100AC185E /* Strings.xcodeproj */,
 				76CF998927DEFF0800AC185E /* TabBar.xcodeproj */,
+				76107C2227DF287E0024B27B /* Tips.xcodeproj */,
 				76CF99A927DEFF2700AC185E /* Utilities.xcodeproj */,
+				76EE081327DF38C300BA1290 /* Wallet.xcodeproj */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -453,6 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				76CF98E627DEFE1B00AC185E /* Colors.framework */,
+				76107BE327DF28090024B27B /* ColorsDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				76CF992027DEFEA700AC185E /* Home.framework */,
+				76107BE627DF28090024B27B /* HomeDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -485,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				76CF996C27DEFEEA00AC185E /* SharedUI.framework */,
+				76107BEB27DF28090024B27B /* SharedUIDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -505,14 +529,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		76D881B62794C1B6001B73D5 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				763EBB4427ACD68800E60021 /* Circular.swift */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		76D881C02794DCB4001B73D5 /* PlaylistDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,12 +537,20 @@
 			path = PlaylistDetails;
 			sourceTree = "<group>";
 		};
-		76E3CA7027A8DD0300C24DC2 /* Wallet */ = {
+		76EE07CD27DF34A000BA1290 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76E3CA7127A8DD1200C24DC2 /* WalletView.swift */,
+				76EE07D127DF34A100BA1290 /* PlaylistList.framework */,
 			);
-			path = Wallet;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76EE081427DF38C300BA1290 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76EE081827DF38C300BA1290 /* Wallet.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -654,8 +678,16 @@
 					ProjectRef = 76CF994727DEFEC800AC185E /* NEWMApp.xcodeproj */;
 				},
 				{
+					ProductGroup = 76EE07CD27DF34A000BA1290 /* Products */;
+					ProjectRef = 76EE07CC27DF34A000BA1290 /* PlaylistList.xcodeproj */;
+				},
+				{
 					ProductGroup = 76CF996827DEFEEA00AC185E /* Products */;
 					ProjectRef = 76CF996727DEFEEA00AC185E /* SharedUI.xcodeproj */;
+				},
+				{
+					ProductGroup = 76107C6427DF2A240024B27B /* Products */;
+					ProjectRef = 76107C6327DF2A240024B27B /* SongPlaying.xcodeproj */;
 				},
 				{
 					ProductGroup = 76CF98C827DEFDA900AC185E /* Products */;
@@ -666,8 +698,16 @@
 					ProjectRef = 76CF998927DEFF0800AC185E /* TabBar.xcodeproj */;
 				},
 				{
+					ProductGroup = 76107C2327DF287E0024B27B /* Products */;
+					ProjectRef = 76107C2227DF287E0024B27B /* Tips.xcodeproj */;
+				},
+				{
 					ProductGroup = 76CF99AA27DEFF2700AC185E /* Products */;
 					ProjectRef = 76CF99A927DEFF2700AC185E /* Utilities.xcodeproj */;
+				},
+				{
+					ProductGroup = 76EE081427DF38C300BA1290 /* Products */;
+					ProjectRef = 76EE081327DF38C300BA1290 /* Wallet.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -680,6 +720,41 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		76107BE327DF28090024B27B /* ColorsDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ColorsDemo.app;
+			remoteRef = 76107BE227DF28090024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76107BE627DF28090024B27B /* HomeDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = HomeDemo.app;
+			remoteRef = 76107BE527DF28090024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76107BEB27DF28090024B27B /* SharedUIDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SharedUIDemo.app;
+			remoteRef = 76107BEA27DF28090024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76107C2727DF287F0024B27B /* Tips.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Tips.framework;
+			remoteRef = 76107C2627DF287F0024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76107C6827DF2A250024B27B /* SongPlaying.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SongPlaying.framework;
+			remoteRef = 76107C6727DF2A250024B27B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7640012527DF03F2000FB31A /* Login.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -687,10 +762,10 @@
 			remoteRef = 7640012427DF03F2000FB31A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		765441B927DF0E86003346EE /* Demo.app */ = {
+		765441B927DF0E86003346EE /* LoginDemo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = Demo.app;
+			path = LoginDemo.app;
 			remoteRef = 765441B827DF0E86003346EE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -750,6 +825,27 @@
 			remoteRef = 76CF99AD27DEFF2800AC185E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		76EE07B627DF347200BA1290 /* SongPlayingDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SongPlayingDemo.app;
+			remoteRef = 76EE07B527DF347200BA1290 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76EE07D127DF34A100BA1290 /* PlaylistList.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PlaylistList.framework;
+			remoteRef = 76EE07D027DF34A100BA1290 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76EE081827DF38C300BA1290 /* Wallet.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Wallet.framework;
+			remoteRef = 76EE081727DF38C300BA1290 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -760,7 +856,7 @@
 				76B43C6627D875E900F21076 /* Assets.xcassets in Resources */,
 				7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */,
 				76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */,
-				76E3CA6F27A8DC8200C24DC2 /* Localizable222.strings in Resources */,
+				76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
