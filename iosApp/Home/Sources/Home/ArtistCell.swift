@@ -1,6 +1,9 @@
 import SwiftUI
 import SharedUI
+<<<<<<< HEAD:iosApp/Modules/Home/Home/ArtistCell.swift
 import Colors
+=======
+>>>>>>> c2cecfb (Start modularizing):iosApp/Home/Sources/Home/ArtistCell.swift
 
 public struct ArtistCell: View {
 	let data: HomeViewModel.Artist

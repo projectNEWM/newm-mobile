@@ -1,12 +1,21 @@
 import SwiftUI
 import SharedUI
+<<<<<<< HEAD:iosApp/Modules/Home/Home/HomeView.swift
 import SongPlaying
 import PlaylistList
+=======
+>>>>>>> c2cecfb (Start modularizing):iosApp/Home/Sources/Home/HomeView.swift
 
 public struct HomeView: View {
 	@ObservedObject var viewModel = HomeViewModel()
 	
+<<<<<<< HEAD:iosApp/Modules/Home/Home/HomeView.swift
 	public init() {}
+=======
+	public init() {
+		
+	}
+>>>>>>> c2cecfb (Start modularizing):iosApp/Home/Sources/Home/HomeView.swift
 	
 	public var body: some View {
 		NavigationView {
@@ -43,8 +52,13 @@ public struct HomeView: View {
 	private var links: some View {
 		ZStack {
 //			IDLink<ArtistView>(selectedID: viewModel.selectedArtist?.artistID)
+<<<<<<< HEAD:iosApp/Modules/Home/Home/HomeView.swift
 			IDLink<SongPlayingView>(selectedID: viewModel.selectedSong?.songID)
 			IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
+=======
+//			IDLink<SongPlayingView>(selectedID: viewModel.selectedSong?.songID)
+//			IDLink<PlaylistListView>(selectedID: viewModel.selectedPlaylist?.playlistID)
+>>>>>>> c2cecfb (Start modularizing):iosApp/Home/Sources/Home/HomeView.swift
 		}
 	}
 	
