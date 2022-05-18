@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7654424927DF1ACD003346EE /* SharedUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654424827DF1ACD003346EE /* SharedUIDemoApp.swift */; };
+		7654424B27DF1ACD003346EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654424A27DF1ACD003346EE /* ContentView.swift */; };
+		7654424D27DF1ACE003346EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7654424C27DF1ACE003346EE /* Assets.xcassets */; };
+		7654425027DF1ACE003346EE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7654424F27DF1ACE003346EE /* Preview Assets.xcassets */; };
 		76A8A15E27DF018200D02C61 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15D27DF018200D02C61 /* Fonts.framework */; };
 		76A8A15F27DF018200D02C61 /* Fonts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A15D27DF018200D02C61 /* Fonts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A8A16227DF019A00D02C61 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8A16127DF019A00D02C61 /* Colors.framework */; };
@@ -17,6 +21,23 @@
 		76CF997327DEFEEF00AC185E /* SwiftUI+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF996D27DEFEEF00AC185E /* SwiftUI+Common.swift */; };
 		76CF997427DEFEEF00AC185E /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF997027DEFEEF00AC185E /* UIImage+Extensions.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7654423A27DF1AB7003346EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7654423627DF1AB7003346EE /* Fonts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF98F327DEFE7900AC185E;
+			remoteInfo = Fonts;
+		};
+		7654424027DF1AB7003346EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7654423C27DF1AB7003346EE /* Colors.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 76CF98D727DEFE1B00AC185E;
+			remoteInfo = Colors;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		76A8A16027DF018200D02C61 /* Embed Frameworks */ = {
@@ -34,6 +55,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7654423627DF1AB7003346EE /* Fonts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Fonts.xcodeproj; path = ../../Fonts/Fonts.xcodeproj; sourceTree = "<group>"; };
+		7654423C27DF1AB7003346EE /* Colors.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Colors.xcodeproj; path = ../../Colors/Colors.xcodeproj; sourceTree = "<group>"; };
+		7654424627DF1ACD003346EE /* SharedUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharedUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7654424827DF1ACD003346EE /* SharedUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUIDemoApp.swift; sourceTree = "<group>"; };
+		7654424A27DF1ACD003346EE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7654424C27DF1ACE003346EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7654424F27DF1ACE003346EE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		76A8A15D27DF018200D02C61 /* Fonts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Fonts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8A16127DF019A00D02C61 /* Colors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Colors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF995D27DEFEEA00AC185E /* SharedUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +73,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7654424327DF1ACD003346EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		76CF995A27DEFEEA00AC185E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -57,6 +92,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7654423527DF1AA7003346EE /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				7654423C27DF1AB7003346EE /* Colors.xcodeproj */,
+				7654423627DF1AB7003346EE /* Fonts.xcodeproj */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		7654423727DF1AB7003346EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7654423B27DF1AB7003346EE /* Fonts.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7654423D27DF1AB7003346EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7654424127DF1AB7003346EE /* Colors.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7654424727DF1ACD003346EE /* SharedUIDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7654424827DF1ACD003346EE /* SharedUIDemoApp.swift */,
+				7654424A27DF1ACD003346EE /* ContentView.swift */,
+				7654424C27DF1ACE003346EE /* Assets.xcassets */,
+				7654424E27DF1ACE003346EE /* Preview Content */,
+			);
+			path = SharedUIDemo;
+			sourceTree = "<group>";
+		};
+		7654424E27DF1ACE003346EE /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				7654424F27DF1ACE003346EE /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		76A8A15C27DF018200D02C61 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -69,7 +148,9 @@
 		76CF995327DEFEEA00AC185E = {
 			isa = PBXGroup;
 			children = (
+				7654423527DF1AA7003346EE /* Dependencies */,
 				76CF995F27DEFEEA00AC185E /* SharedUI */,
+				7654424727DF1ACD003346EE /* SharedUIDemo */,
 				76CF995E27DEFEEA00AC185E /* Products */,
 				76A8A15C27DF018200D02C61 /* Frameworks */,
 			);
@@ -79,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				76CF995D27DEFEEA00AC185E /* SharedUI.framework */,
+				7654424627DF1ACD003346EE /* SharedUIDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,6 +191,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		7654424527DF1ACD003346EE /* SharedUIDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7654425127DF1ACE003346EE /* Build configuration list for PBXNativeTarget "SharedUIDemo" */;
+			buildPhases = (
+				7654424227DF1ACD003346EE /* Sources */,
+				7654424327DF1ACD003346EE /* Frameworks */,
+				7654424427DF1ACD003346EE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SharedUIDemo;
+			productName = SharedUIDemo;
+			productReference = 7654424627DF1ACD003346EE /* SharedUIDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		76CF995C27DEFEEA00AC185E /* SharedUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76CF996427DEFEEA00AC185E /* Build configuration list for PBXNativeTarget "SharedUI" */;
@@ -135,8 +234,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					7654424527DF1ACD003346EE = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					76CF995C27DEFEEA00AC185E = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -153,14 +256,51 @@
 			mainGroup = 76CF995327DEFEEA00AC185E;
 			productRefGroup = 76CF995E27DEFEEA00AC185E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7654423D27DF1AB7003346EE /* Products */;
+					ProjectRef = 7654423C27DF1AB7003346EE /* Colors.xcodeproj */;
+				},
+				{
+					ProductGroup = 7654423727DF1AB7003346EE /* Products */;
+					ProjectRef = 7654423627DF1AB7003346EE /* Fonts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				76CF995C27DEFEEA00AC185E /* SharedUI */,
+				7654424527DF1ACD003346EE /* SharedUIDemo */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		7654423B27DF1AB7003346EE /* Fonts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Fonts.framework;
+			remoteRef = 7654423A27DF1AB7003346EE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7654424127DF1AB7003346EE /* Colors.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Colors.framework;
+			remoteRef = 7654424027DF1AB7003346EE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
+		7654424427DF1ACD003346EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7654425027DF1ACE003346EE /* Preview Assets.xcassets in Resources */,
+				7654424D27DF1ACE003346EE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		76CF995B27DEFEEA00AC185E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -171,6 +311,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7654424227DF1ACD003346EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7654424B27DF1ACD003346EE /* ContentView.swift in Sources */,
+				7654424927DF1ACD003346EE /* SharedUIDemoApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		76CF995927DEFEEA00AC185E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +334,62 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		7654425227DF1ACE003346EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SharedUIDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.SharedUIDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7654425327DF1ACE003346EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SharedUIDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.SharedUIDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		76CF996227DEFEEA00AC185E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -366,6 +571,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7654425127DF1ACE003346EE /* Build configuration list for PBXNativeTarget "SharedUIDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7654425227DF1ACE003346EE /* Debug */,
+				7654425327DF1ACE003346EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		76CF995727DEFEEA00AC185E /* Build configuration list for PBXProject "SharedUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -7,17 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76107BB627DF26270024B27B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7654425E27DF1D0E003346EE /* Assets.xcassets */; };
+		76107BDF27DF27540024B27B /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76107BDE27DF27540024B27B /* Color+Extensions.swift */; };
+		7654425B27DF1D0D003346EE /* ColorsDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654425A27DF1D0D003346EE /* ColorsDemoApp.swift */; };
+		7654425D27DF1D0D003346EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654425C27DF1D0D003346EE /* ContentView.swift */; };
+		7654426727DF1D17003346EE /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76CF98D727DEFE1B00AC185E /* Colors.framework */; };
+		7654426827DF1D17003346EE /* Colors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76CF98D727DEFE1B00AC185E /* Colors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76CF98DB27DEFE1B00AC185E /* Colors.h in Headers */ = {isa = PBXBuildFile; fileRef = 76CF98DA27DEFE1B00AC185E /* Colors.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		76CF98E827DEFE5B00AC185E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF98E727DEFE5B00AC185E /* Colors.swift */; };
+		76CF98E827DEFE5B00AC185E /* NEWMColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF98E727DEFE5B00AC185E /* NEWMColor.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7654426927DF1D17003346EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76CF98CE27DEFE1B00AC185E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76CF98D627DEFE1B00AC185E;
+			remoteInfo = Colors;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7654426B27DF1D17003346EE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7654426827DF1D17003346EE /* Colors.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		76107BDE27DF27540024B27B /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		7654425827DF1D0D003346EE /* ColorsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7654425A27DF1D0D003346EE /* ColorsDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsDemoApp.swift; sourceTree = "<group>"; };
+		7654425C27DF1D0D003346EE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7654425E27DF1D0E003346EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76CF98D727DEFE1B00AC185E /* Colors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Colors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CF98DA27DEFE1B00AC185E /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
-		76CF98E727DEFE5B00AC185E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		76CF98E727DEFE5B00AC185E /* NEWMColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7654425527DF1D0D003346EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7654426727DF1D17003346EE /* Colors.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		76CF98D427DEFE1B00AC185E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -28,12 +71,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76107BAD27DF24CD0024B27B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7654425E27DF1D0E003346EE /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		76107BB727DF26830024B27B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7654425927DF1D0D003346EE /* ColorsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7654425A27DF1D0D003346EE /* ColorsDemoApp.swift */,
+				7654425C27DF1D0D003346EE /* ContentView.swift */,
+				76107BB727DF26830024B27B /* Preview Content */,
+			);
+			path = ColorsDemo;
+			sourceTree = "<group>";
+		};
+		7654426627DF1D17003346EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		76CF98CD27DEFE1B00AC185E = {
 			isa = PBXGroup;
 			children = (
-				76CF98E727DEFE5B00AC185E /* Colors.swift */,
+				76107BAD27DF24CD0024B27B /* Resources */,
+				76CF98E727DEFE5B00AC185E /* NEWMColor.swift */,
+				76107BDE27DF27540024B27B /* Color+Extensions.swift */,
 				76CF98DA27DEFE1B00AC185E /* Colors.h */,
+				7654425927DF1D0D003346EE /* ColorsDemo */,
 				76CF98D827DEFE1B00AC185E /* Products */,
+				7654426627DF1D17003346EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				76CF98D727DEFE1B00AC185E /* Colors.framework */,
+				7654425827DF1D0D003346EE /* ColorsDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,6 +139,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		7654425727DF1D0D003346EE /* ColorsDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7654426527DF1D0E003346EE /* Build configuration list for PBXNativeTarget "ColorsDemo" */;
+			buildPhases = (
+				7654425427DF1D0D003346EE /* Sources */,
+				7654425527DF1D0D003346EE /* Frameworks */,
+				7654425627DF1D0D003346EE /* Resources */,
+				7654426B27DF1D17003346EE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7654426A27DF1D17003346EE /* PBXTargetDependency */,
+			);
+			name = ColorsDemo;
+			productName = ColorsDemo;
+			productReference = 7654425827DF1D0D003346EE /* ColorsDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		76CF98D627DEFE1B00AC185E /* Colors */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76CF98DE27DEFE1B00AC185E /* Build configuration list for PBXNativeTarget "Colors" */;
@@ -84,8 +183,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					7654425727DF1D0D003346EE = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					76CF98D627DEFE1B00AC185E = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -105,32 +208,113 @@
 			projectRoot = "";
 			targets = (
 				76CF98D627DEFE1B00AC185E /* Colors */,
+				7654425727DF1D0D003346EE /* ColorsDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		76CF98D527DEFE1B00AC185E /* Resources */ = {
+		7654425627DF1D0D003346EE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76CF98D527DEFE1B00AC185E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76107BB627DF26270024B27B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7654425427DF1D0D003346EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7654425D27DF1D0D003346EE /* ContentView.swift in Sources */,
+				7654425B27DF1D0D003346EE /* ColorsDemoApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		76CF98D327DEFE1B00AC185E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76CF98E827DEFE5B00AC185E /* Colors.swift in Sources */,
+				76CF98E827DEFE5B00AC185E /* NEWMColor.swift in Sources */,
+				76107BDF27DF27540024B27B /* Color+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7654426A27DF1D17003346EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76CF98D627DEFE1B00AC185E /* Colors */;
+			targetProxy = 7654426927DF1D17003346EE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		7654426327DF1D0E003346EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ColorsDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.ColorsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7654426427DF1D0E003346EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ColorsDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.projectnewm.ColorsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		76CF98DC27DEFE1B00AC185E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -312,6 +496,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7654426527DF1D0E003346EE /* Build configuration list for PBXNativeTarget "ColorsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7654426327DF1D0E003346EE /* Debug */,
+				7654426427DF1D0E003346EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		76CF98D127DEFE1B00AC185E /* Build configuration list for PBXProject "Colors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

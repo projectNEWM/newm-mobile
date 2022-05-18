@@ -22,7 +22,7 @@ class DummyData {
 	}
 	
 	static var artistImage: UIImage {
-		Bowie
+		UIImage(named: "bowie")!
 	}
 	
 	static var roundArtistImage: some View {
