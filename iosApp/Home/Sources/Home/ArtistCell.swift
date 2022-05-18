@@ -1,9 +1,6 @@
 import SwiftUI
 import SharedUI
-<<<<<<< HEAD:iosApp/Modules/Home/Home/ArtistCell.swift
 import Colors
-=======
->>>>>>> c2cecfb (Start modularizing):iosApp/Home/Sources/Home/ArtistCell.swift
 
 public struct ArtistCell: View {
 	let data: HomeViewModel.Artist
@@ -37,7 +34,7 @@ public struct ArtistCell: View {
 	}
 	
 	private var artistImage: some View {
-		CircleImage(UIImage(data: data.image) ?? UIImage.empty, size: 70)
+		CircleImage(image: UIImage(data: data.image) ?? UIImage.empty, size: 70)
 			.padding(.bottom, 10)
 	}
 	
