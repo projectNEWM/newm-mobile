@@ -3,7 +3,7 @@ import SwiftUI
 class ModuleClass {}
 
 extension Image {
-	init(_ tab: MainViewModel.Tab) {
+	init(_ tab: NEWMAppViewModel.Tab) {
 		switch tab {
 		case .home: self = Image("Home Icon", bundle: Bundle(for: ModuleClass.self))
 		case .stars: self = Image("Stars Icon", bundle: Bundle(for: ModuleClass.self))
@@ -15,7 +15,7 @@ extension Image {
 }
 
 extension Image {
-	init(_ tab: MainViewModel.MoreTab) {
+	init(_ tab: NEWMAppViewModel.MoreTab) {
 		switch tab {
 		case .playlists: self = Image(systemName: "Wallet Icon")
 		case .artists: self = Image(systemName: "Wallet Icon")

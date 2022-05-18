@@ -4,8 +4,8 @@ import Login
 import Home
 import Wallet
 
-public struct Main: View {
-	@State var viewModel = MainViewModel()
+public struct NEWMApp: View {
+	@State var viewModel = NEWMAppViewModel()
 	@AppStorage("loggedInUser") var loggedInUser: String?
 	
 	public init() { }
@@ -26,13 +26,13 @@ public struct Main: View {
 	}
 	
 	private var homeTabProvider: TabViewProvider {
-		TabViewProvider(image: Image(MainViewModel.Tab.home), tabName: MainViewModel.Tab.home.description) {
+		TabViewProvider(image: Image(NEWMAppViewModel.Tab.home), tabName: NEWMAppViewModel.Tab.home.description) {
 			HomeView().erased
 		}
 	}
 	
 	private var walletTabProvider: TabViewProvider {
-		TabViewProvider(image: Image(MainViewModel.Tab.wallet), tabName: MainViewModel.Tab.wallet.description) {
+		TabViewProvider(image: Image(NEWMAppViewModel.Tab.wallet), tabName: NEWMAppViewModel.Tab.wallet.description) {
 			WalletView().erased
 		}
 	}

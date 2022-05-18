@@ -1,5 +1,5 @@
 import SwiftUI
-import NEWMApp
+import Main
 
 @main
 struct iOSApp: App {
