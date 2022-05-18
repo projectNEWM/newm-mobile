@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		769FCBAB27DEFBAE00F654DF /* Strings.h in Headers */ = {isa = PBXBuildFile; fileRef = 769FCBAA27DEFBAE00F654DF /* Strings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		769FCBAE27DEFBC900F654DF /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769FCBAC27DEFBC900F654DF /* Strings.swift */; };
 		769FCBAF27DEFBC900F654DF /* LocalizableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769FCBAD27DEFBC900F654DF /* LocalizableWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		769FCB9A27DEFB9B00F654DF /* Strings.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Strings.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		769FCBAA27DEFBAE00F654DF /* Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Strings.h; sourceTree = "<group>"; };
+		769FCBAC27DEFBC900F654DF /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		769FCBAD27DEFBC900F654DF /* LocalizableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -32,6 +34,7 @@
 			isa = PBXGroup;
 			children = (
 				769FCBAD27DEFBC900F654DF /* LocalizableWrapper.swift */,
+				769FCBAC27DEFBC900F654DF /* Strings.swift */,
 				769FCBAA27DEFBAE00F654DF /* Strings.h */,
 				769FCB9B27DEFB9B00F654DF /* Products */,
 			);
@@ -125,6 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				769FCBAF27DEFBC900F654DF /* LocalizableWrapper.swift in Sources */,
+				769FCBAE27DEFBC900F654DF /* Strings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

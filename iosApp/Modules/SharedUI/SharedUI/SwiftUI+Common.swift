@@ -7,21 +7,16 @@ public protocol DataView: View {
 }
 
 public struct CircleImage: View {
-	let image: Image
+	let image: UIImage
 	let size: CGFloat
 	
-	public init(_ image: UIImage, size: CGFloat) {
-		self.image = Image(uiImage: image)
-		self.size = size
-	}
-	
-	public init(_ image: Image, size: CGFloat) {
+	public init(image: UIImage, size: CGFloat) {
 		self.image = image
 		self.size = size
 	}
-
+	
 	public var body: some View {
-		image
+		Image(uiImage: image)
 			.circleImage(size: size)
 	}
 }
