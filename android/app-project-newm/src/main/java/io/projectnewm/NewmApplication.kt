@@ -6,6 +6,7 @@ import com.airbnb.android.showkase.annotation.ShowkaseRootModule
 import io.projectnewm.di.cacheModule
 import io.projectnewm.di.networkModule
 import io.projectnewm.di.usecase.login
+import io.projectnewm.di.viewmodels.viewModule
 import io.projectnewm.screens.home.categories.MusicalCategoriesViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -28,9 +29,4 @@ class NewmApplication : Application(), ShowkaseRootModule {
             )
         }
     }
-}
-
-val viewModule = module {
-    // ViewModel for Detail View with id as parameter injection
-    viewModelOf(::MusicalCategoriesViewModel)
 }
