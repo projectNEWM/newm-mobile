@@ -7,19 +7,11 @@ import io.projectnewm.interactions.BottomBarInteractions
 import io.projectnewm.interactions.NewmAppInteractions
 import io.projectnewm.interactions.onBottomBar
 import io.projectnewm.interactions.onNewmApp
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
-@HiltAndroidTest
 class NewmAppComposableTest {
 
-    @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
 

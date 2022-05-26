@@ -3,7 +3,7 @@ object Versions {
     const val minSdk = 25
     const val targetSdk = 31
 
-    const val androidGradlePlugin = "7.1.2"
+    const val androidGradlePlugin = "7.2.1"
     const val androidxActivity = "1.4.0"
     const val androidxAppCompat = "1.4.1"
     const val androidxConstraintLayout = "2.1.3"
@@ -21,8 +21,6 @@ object Versions {
     const val firebase = "29.0.4"
     const val googleServices = "4.3.10"
     const val gradleVersionsPlugin = "0.41.0"
-    const val hilt = "2.40.5"
-    const val hiltNavigation = "1.0.0"
     const val jUnit = "4.13.2"
     const val kotlin = "1.6.10"
     const val ktor = "1.6.7"

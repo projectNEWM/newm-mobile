@@ -8,12 +8,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.AndroidEntryPoint
 import io.projectnewm.core.theme.NewmMobileTheme
 import io.projectnewm.screens.Screen
 import io.projectnewm.feature.login.screen.LoginScreen
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

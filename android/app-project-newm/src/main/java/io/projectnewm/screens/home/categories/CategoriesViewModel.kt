@@ -2,13 +2,10 @@ package io.projectnewm.screens.home.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MusicalCategoriesViewModel @Inject constructor() : ViewModel() {
+class MusicalCategoriesViewModel : ViewModel() {
     private val DEFAULT = Category(id = -1, "Empty")
     private val _selectedCategory = MutableStateFlow(DEFAULT)
     private val _state = MutableStateFlow(MusicCategoriesViewState())

@@ -1,6 +1,5 @@
 plugins {
     id(Plugins.androidApplication)
-    id(Plugins.hilt)
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
 }
@@ -47,9 +46,6 @@ android {
 
 dependencies {
 
-    kapt(Hilt.hiltCompiler)
-    kapt(Hilt.hiltAndroidCompiler)
-
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.featureExample))
     implementation(project(Modules.shared))
@@ -65,9 +61,7 @@ dependencies {
     implementation(Google.navigationFragmentKtx)
     implementation(Google.navigationUiKtx)
     implementation(Google.constraintLayout)
-    implementation(Hilt.hiltAndroid)
-    implementation(Hilt.hiltNavigation)
-    implementation(Hilt.hiltNavigationCompose)
+    implementation(Koin.android)
     implementation(Ktor.android)
 
     debugImplementation(Google.composeUiTooling)

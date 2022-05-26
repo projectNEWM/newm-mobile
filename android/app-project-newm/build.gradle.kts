@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.androidApplication)
     id(Plugins.crashlytics)
-    id(Plugins.hilt)
     id(Plugins.googleServices)
     id(Plugins.shot)
     kotlin(Plugins.android)
@@ -58,8 +57,6 @@ android {
 dependencies {
 
     kapt(Airbnb.showkaseProcessor)
-    kapt(Hilt.hiltCompiler)
-    kapt(Hilt.hiltAndroidCompiler)
 
     implementation(platform(Google.firebase))
     implementation(project(Modules.coreTheme))
@@ -85,22 +82,19 @@ dependencies {
     implementation(Google.navigationFragmentKtx)
     implementation(Google.navigationUiKtx)
     implementation(Google.splashScreen)
-    implementation(Hilt.hiltAndroid)
-    implementation(Hilt.hiltNavigation)
-    implementation(Hilt.hiltNavigationCompose)
+    implementation(Koin.android)
+    implementation(Koin.androidCompose)
     implementation(Kotlin.reflect)
     implementation(Ktor.android)
+
 
     debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)
 
     testImplementation(JUnit.jUnit)
 
-    kaptAndroidTest(Hilt.hiltAndroidCompiler)
-
     androidTestImplementation(Google.espressoTest)
     androidTestImplementation(Google.Test.composeUiTestJUnit)
-    androidTestImplementation(Google.Test.hiltAndroidTesting)
     androidTestImplementation(JUnit.androidxComposeJUnit)
     androidTestImplementation(JUnit.androidxJUnit)
 }

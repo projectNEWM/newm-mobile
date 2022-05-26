@@ -16,13 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import io.projectnewm.components.NewmRainbowDivider
 import io.projectnewm.screens.home.artists.ArtistList
 import io.projectnewm.screens.home.categories.CategoryTabs
 import io.projectnewm.screens.home.categories.MusicalCategoriesViewModel
 import io.projectnewm.screens.home.curatedplaylists.CuratedPlayLists
 import io.projectnewm.screens.home.songs.NewmSongList
+import org.koin.androidx.compose.koinViewModel
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 
@@ -30,8 +30,9 @@ internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 @Composable
 fun HomeScreen(
     onClickSong: () -> Unit,
-    viewModel: MusicalCategoriesViewModel = hiltViewModel()
+    viewModel: MusicalCategoriesViewModel = koinViewModel()
 ) {
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
