@@ -7,18 +7,26 @@ import shared
 import SharedUI
 
 class MockData {
-	static func makeArtist(name: String) -> Artist {
-		Artist(image: artistImageUrl, name: name, genre: "Rock", stars: 12000, id: "1")
+	static var moreOfWhatYouLikeCells: [HomeViewModel.MoreOfWhatYouLike] {
+		artists.map(HomeViewModel.MoreOfWhatYouLike.init)
+	}
+	
+	static var artistCells: [HomeViewModel.Artist] {
+		artists.map(HomeViewModel.Artist.init)
+	}
+	
+	static func makeArtist(name: String, id: String) -> Artist {
+		Artist(image: artistImageUrl, name: name, genre: "Rock", stars: 12000, id: id)
 	}
 	
 	static var artists: [Artist] {
 		[
-			makeArtist(name: "David Bow"),
-			makeArtist(name: "David Bowie2"),
-			makeArtist(name: "David Bowie3"),
-			makeArtist(name: "David Bowie4"),
-			makeArtist(name: "David Bowie5"),
-			makeArtist(name: "David Bowie6asdlkfjsdlkfj")
+			makeArtist(name: "David Bowie6asdlkfjsdlkfjBowie4Bow", id: "1"),
+			makeArtist(name: "David Bowie2", id: "2"),
+			makeArtist(name: "David Bowie3", id: "3"),
+			makeArtist(name: "David Bowie6asdlkfjsdlkfjBowie4", id: "4"),
+			makeArtist(name: "David Bowie5", id: "5"),
+			makeArtist(name: "David Bowie6asdlkfjsdlkfj", id: "6")
 		]
 	}
 	
@@ -38,7 +46,7 @@ class MockData {
 	}
 	
 	static func makeSong(title: String, isNFT: Bool = false) -> Song {
-		Song(image: artistImageUrl, title: title, artist: makeArtist(name: "David Bowtie"), isNft: isNFT, songId: title)
+		Song(image: artistImageUrl, title: title, artist: makeArtist(name: "David Bowtie", id: "1"), isNft: isNFT, songId: title)
 	}
 	
 	static var songs: [Song] {
@@ -80,12 +88,6 @@ class MockGetArtistsUseCase: GetArtistsUseCase {
 class MockGetSongsUseCase: GetSongsUseCase {
 	func execute() -> [Song] {
 		MockData.songs
-	}
-}
-
-class MockGetPlaylistsUseCase: GetPlaylistsUseCase {
-	func execute() -> [Playlist] {
-		MockData.playlists
 	}
 }
 #endif

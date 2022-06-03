@@ -7,10 +7,6 @@ public final class ColorsModule: ModuleProtocol {
 	
 	public func registerAllServices() {
 		Resolver.register {
-			self as HomeViewGradientProviding
-		}
-		
-		Resolver.register {
 			self as ColorProviding
 		}
 	}

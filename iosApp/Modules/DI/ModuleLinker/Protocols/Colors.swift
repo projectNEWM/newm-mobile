@@ -11,6 +11,7 @@ public enum NEWMColor: String, CaseIterable {
 	case newmYellow
 	case newmGreen
 	case newmOffPink
+	case grey100
 }
 
 public protocol ColorProviding {

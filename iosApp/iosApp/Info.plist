@@ -24,6 +24,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Inter-VariableFont.ttf</string>
 		<string>Raleway-VariableFont_wght.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 	</array>

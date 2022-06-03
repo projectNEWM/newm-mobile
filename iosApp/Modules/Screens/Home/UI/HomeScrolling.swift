@@ -1,6 +1,8 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
+import Fonts
+import Colors
 
 protocol HomeScrollingCell: View where DataType: Identifiable {
 	associatedtype DataType
@@ -13,7 +15,6 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 	let dataModels: [Model.DataType]
 	let title: String
 	let spacing: CGFloat
-	@Injected private var fontProvider: FontProviding
 	
 	var body: some View {
 		VStack {
@@ -36,17 +37,17 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 	private func sectionHeader(title: String) -> some View {
 		Text(title)
 			.frame(maxWidth: .infinity, alignment: .leading)
-			.foregroundColor(.white)
+			.foregroundColor(Color(.grey100))
 			.padding(.top)
 			.padding(.leading)
-			.font(fontProvider.newmFont(ofSize: 16))
+			.font(.inter(ofSize: 12))
 	}
 }
 
 struct HomeScrollingContentView_Previews: PreviewProvider {
 	static var previews: some View {
 		VStack {
-			HomeScrollingContentView<ArtistCell>(selectedDataModel: {_ in}, dataModels: MockData.artists.map(HomeViewModel.Artist.init), title: "NEWM Artists", spacing: 8)
+//			HomeScrollingContentView<ArtistCell>(selectedDataModel: {_ in}, dataModels: MockData.artists.map(HomeViewModel.Artist.init), title: "NEWM Artists", spacing: 8)
 			HomeScrollingContentView<SongCell>(selectedDataModel: {_ in}, dataModels: MockData.songs.map(HomeViewModel.Song.init), title: "NEWM Songs", spacing: 8)
 			HomeScrollingContentView<PlaylistCell>(selectedDataModel: {_ in}, dataModels: MockData.playlists.map(HomeViewModel.Playlist.init), title: "Curated Playlists", spacing: 12)
 		}

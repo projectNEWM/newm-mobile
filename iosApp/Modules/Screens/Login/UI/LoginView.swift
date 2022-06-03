@@ -1,6 +1,7 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
+import Fonts
 
 public struct LoginView: View {
 	enum Field: Hashable {
@@ -10,9 +11,7 @@ public struct LoginView: View {
 	
 	@InjectedObject var viewModel: LoginViewModel
 	@FocusState private var focusedField: Field?
-	
-	@Injected private var fontProvider: FontProviding
-	
+		
 	public init() {}
 	
 	public var body: some View {
@@ -51,7 +50,7 @@ public struct LoginView: View {
 	
 	var title: some View {
 		Text(viewModel.title)
-			.font(fontProvider.newmFontBold(ofSize: 30))
+			.font(.newmFontBold(ofSize: 30))
 			.foregroundColor(.white)
 			.lineLimit(2)
 			.padding()
@@ -93,7 +92,7 @@ public struct LoginView: View {
 				.cornerRadius(10)
 				.padding(.bottom)
 				.accessibilityIdentifier("enterNewmButton")
-				.font(fontProvider.newmFontBold(ofSize: 14))
+				.font(.newmFontBold(ofSize: 14))
 		}
 		.disabled(viewModel.fieldsAreValid == false)
 		.buttonStyle(.plain)
@@ -106,13 +105,12 @@ public struct LoginView: View {
 
 private extension View {
 	func formatField() -> some View {
-		@Injected var fontProvider: FontProviding
-		return self
+		self
 			.textFieldStyle(.roundedBorder)
 			.padding([.leading, .trailing])
 			.padding(.bottom, 5)
 			.colorInvert()
-			.font(fontProvider.newmFont(ofSize: 14))
+			.font(.newmFont(ofSize: 14))
 			.disableAutocorrection(true)
 			.textInputAutocapitalization(.never)
 	}
@@ -120,11 +118,10 @@ private extension View {
 
 private extension Text {
 	func formatLink() -> some View {
-		@Injected var fontProvider: FontProviding
-		return self
+		self
 			.underline()
 			.foregroundColor(.gray)
-			.font(fontProvider.roboto(ofSize: 12))
+			.font(.roboto(ofSize: 12))
 	}
 }
 

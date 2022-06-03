@@ -2,8 +2,6 @@ import Foundation
 import Combine
 import Resolver
 import ModuleLinker
-//TODO: Remove UIImage uses and replace with URLs
-import UIKit.UIImage
 import SwiftUI
 import shared
 import Utilities
@@ -16,32 +14,19 @@ enum HomeRoute {
 }
 
 public class HomeViewModel: ObservableObject {
-	enum Section: Int, CaseIterable {
-		case explore
-		case ambient
-		case hipHop
-		case alternative
-	}
-	
 	@Injected private var artistsUseCase: GetArtistsUseCase
 	@Injected private var songsUseCase: GetSongsUseCase
-	@Injected private var playlistsUseCase: GetPlaylistsUseCase
 	
-	let title: String = .newm
-	let artistSectionTitle: String = .newmArtists
-	let songsSectionTitle: String = .newmSongs
-	let playlistsSectionTitle: String = .curatedPlaylists
-
-	@Published var selectedSection: Int = 0
+	let moreOfWhatYouLikeTitle: String = .moreOfWhatYouLike
+	let artistSectionTitle: String = .moreOfWhatYouLike
+	let mostPopularThisWeek: String = .mostPopularThisWeek
 	
 	@Published var homeRoute: HomeRoute?
 
-	var artists: [HomeViewModel.Artist] = []
-	var songs: [HomeViewModel.Song] = []
-	var playlists: [HomeViewModel.Playlist] = []
-	
-	let sectionTitles = Section.allCases.map(\.description)
-	
+	@Published var moreOfWhatYouLikes: [HomeViewModel.MoreOfWhatYouLike] = []
+	@Published var artists: [HomeViewModel.Artist] = []
+	@Published var songs: [HomeViewModel.Song] = []
+		
 	init() {
 		refresh()
 	}
@@ -49,16 +34,15 @@ public class HomeViewModel: ObservableObject {
 	func refresh() {
 		artists = artistsUseCase.execute().map(HomeViewModel.Artist.init)
 		songs = songsUseCase.execute().map(HomeViewModel.Song.init)
-		playlists = playlistsUseCase.execute().map(HomeViewModel.Playlist.init)
+		moreOfWhatYouLikes = artistsUseCase.execute().map(HomeViewModel.MoreOfWhatYouLike.init)
 	}
 }
 
 extension HomeViewModel {
-	struct Artist: Identifiable {
+	struct MoreOfWhatYouLike: Identifiable {
 		let image: URL?
 		let name: String
 		let genre: String
-		let stars: String
 		let artistID: String
 		var id: ObjectIdentifier { artistID.objectIdentifier }
 		
@@ -71,8 +55,26 @@ extension HomeViewModel {
 			}
 			name = model.name
 			genre = model.genre
-			stars = "\(model.stars) ✭"
 			artistID = model.id
+		}
+	}
+	
+	struct Artist: Identifiable {
+		let image: URL?
+		let name: String
+		let numberOfSongs: String
+		let id: ObjectIdentifier
+		
+		init(_ model: shared.Artist) {
+			if let imageUrl = URL(string: model.image) {
+				self.image = imageUrl
+			} else {
+				Log("bad artist image URL")
+				image = nil
+			}
+			numberOfSongs = "5 songs"
+			name = model.name
+			id = model.id.objectIdentifier
 		}
 	}
 
@@ -117,17 +119,6 @@ extension HomeViewModel {
 			creator = "by \(model.creator)"
 			songCount = "\(model.songCount) plays"
 			playlistID = model.playlistId
-		}
-	}
-}
-
-extension HomeViewModel.Section: CustomStringConvertible {
-	var description: String {
-		switch self {
-		case .alternative: return .alternative
-		case .ambient: return .ambient
-		case .explore: return .explore
-		case .hipHop: return .hipHop
 		}
 	}
 }

@@ -8,7 +8,3 @@ public protocol GetArtistsUseCase {
 public protocol GetSongsUseCase {
 	func execute() -> [Song]
 }
-
-public protocol GetPlaylistsUseCase {
-	func execute() -> [Playlist]
-}

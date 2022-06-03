@@ -33,10 +33,6 @@ extension HomeModule {
 		mockResolver.register {
 			MockGetArtistsUseCase() as GetArtistsUseCase
 		}
-		
-		mockResolver.register {
-			MockGetPlaylistsUseCase() as GetPlaylistsUseCase
-		}
 	}
 }
 #endif

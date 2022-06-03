@@ -6,11 +6,7 @@ import SwiftUI
 public final class FontsModule: ModuleProtocol {
 	public static var shared = FontsModule()
 	
-	public func registerAllServices() {
-		Resolver.register {
-			self as FontProviding
-		}
-	}
+	public func registerAllServices() {}
 }
 
 #if DEBUG

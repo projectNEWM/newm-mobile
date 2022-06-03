@@ -2,13 +2,13 @@ import SwiftUI
 import ModuleLinker
 import Resolver
 import SharedUI
+import Fonts
 
 struct PlaylistListViewCell: View {
 	let playlist: PlaylistListViewModel.Playlist
 	let imageSize: CGFloat = 80
 	
 	@Injected private var colorProvider: ColorProviding
-	@Injected private var fontProvider: FontProviding
 	
 	var body: some View {
 		HStack {
@@ -36,7 +36,7 @@ struct PlaylistListViewCell: View {
 		HStack {
 			Text(playlist.title)
 				.foregroundColor(.white)
-				.font(fontProvider.robotoMedium(ofSize: 14))
+				.font(.robotoMedium(ofSize: 14))
 			Spacer()
 		}
 		.padding(.bottom, 1)
@@ -46,7 +46,7 @@ struct PlaylistListViewCell: View {
 		HStack {
 			Text(playlist.creator)
 				.foregroundColor(colorProvider.color(for: .newmPink))
-				.font(fontProvider.roboto(ofSize: 11))
+				.font(.roboto(ofSize: 11))
 			Spacer()
 		}
 		.padding(.bottom)
@@ -59,15 +59,14 @@ struct PlaylistListViewCell: View {
 			Text(playlist.playCount)
 			Spacer()
 		}
-		.font(fontProvider.roboto(ofSize: 10))
+		.font(.roboto(ofSize: 10))
 		.foregroundColor(.white.opacity(0.97))
 	}
 }
 
 struct PlaylistListViewCell_Previews: PreviewProvider {
 	static var previews: some View {
-		let playlist: PlaylistListViewModel.Playlist = Resolver.resolve(args: "1")
-		PlaylistListViewCell(playlist: playlist)
+		PlaylistListViewCell(playlist: PlaylistListViewModel.Playlist(MockPlaylistListUseCase().execute().first!))
 			.preferredColorScheme(.dark)
 	}
 }

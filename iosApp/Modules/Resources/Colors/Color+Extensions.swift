@@ -22,33 +22,41 @@ extension ColorsModule: ColorProviding {
 			return Color(.newmGreen)
 		case .newmOffPink:
 			return Color(.newmOffPink)
+		case .grey100:
+			return Color(.grey100)
 		}
 	}
 }
 
-extension Color {
-	public init(_ newmColor: NEWMColor) {
+public extension Color {
+	init(_ newmColor: NEWMColor) {
 		self = {
 			switch newmColor {
 			case .newmLightBlue:
-				return Color(NEWMColor.newmLightBlue.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmLightBlue.rawValue)
 			case .newmBlue:
-				return Color(NEWMColor.newmBlue.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmBlue.rawValue)
 			case .newmPurple:
-				return Color(NEWMColor.newmPurple.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmPurple.rawValue)
 			case .newmPink:
-				return Color(NEWMColor.newmPink.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmPink.rawValue)
 			case .newmRed:
-				return Color(NEWMColor.newmRed.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmRed.rawValue)
 			case .newmOrange:
-				return Color(NEWMColor.newmOrange.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmOrange.rawValue)
 			case .newmYellow:
-				return Color(NEWMColor.newmYellow.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmYellow.rawValue)
 			case .newmGreen:
-				return Color(NEWMColor.newmGreen.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmGreen.rawValue)
 			case .newmOffPink:
-				return Color(NEWMColor.newmOffPink.rawValue, bundle: Bundle(for: ColorsModule.self))
+				return Color(value: NEWMColor.newmOffPink.rawValue)
+			case .grey100:
+				return Color(value: NEWMColor.grey100.rawValue)
 			}
 		}()
+	}
+	
+	init(value: String) {
+		self = Color(value, bundle: Bundle(for: ColorsModule.self))
 	}
 }

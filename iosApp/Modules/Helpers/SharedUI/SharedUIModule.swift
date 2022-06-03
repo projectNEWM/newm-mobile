@@ -3,7 +3,7 @@ import Resolver
 import ModuleLinker
 import SwiftUI
 
-public struct SharedUIModule: ModuleProtocol {
+public final class SharedUIModule: ModuleProtocol {
 	public static let shared = SharedUIModule()
 	
 	public func registerAllServices() {

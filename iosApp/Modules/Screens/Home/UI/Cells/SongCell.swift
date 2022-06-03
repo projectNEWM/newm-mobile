@@ -1,11 +1,11 @@
 import SwiftUI
 import Resolver
 import ModuleLinker
+import Fonts
 
 struct SongCell: View {
 	var data: HomeViewModel.Song
 	@Injected private var gradientTagProvider: GradientTagProviding
-	@Injected private var fontProvider: FontProviding
 	@Injected private var colorProvider: ColorProviding
 	
 	var body: some View {

@@ -2,11 +2,11 @@ import SwiftUI
 import ModuleLinker
 import Resolver
 import SharedUI
+import Fonts
 
 struct PlaylistCell: View {
 	let data: HomeViewModel.Playlist
 	
-	@Injected private var fontProvider: FontProviding
 	@Injected private var colorProvider: ColorProviding
 
     var body: some View {
@@ -35,7 +35,7 @@ struct PlaylistCell: View {
 		Text(data.title)
 			.multilineTextAlignment(.center)
 			.foregroundColor(.white)
-			.font(fontProvider.robotoMedium(ofSize: 14))
+			.font(.robotoMedium(ofSize: 14))
 			.padding(.bottom, 2)
 			.lineLimit(2)
 			.minimumScaleFactor(0.5)
@@ -44,14 +44,14 @@ struct PlaylistCell: View {
 	private var creator: some View {
 		Text(data.creator)
 			.foregroundColor(colorProvider.color(for: .newmPink).opacity(0.97))
-			.font(fontProvider.roboto(ofSize: 11))
+			.font(.roboto(ofSize: 11))
 			.padding(.bottom, 2)
 	}
 	
 	private var songCount: some View {
 		Text(data.songCount)
 			.foregroundColor(.white)
-			.font(fontProvider.roboto(ofSize: 11))
+			.font(.roboto(ofSize: 11))
 			.padding(.bottom, 4)
 	}
 	
