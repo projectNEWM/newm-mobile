@@ -18,7 +18,7 @@ public class HomeViewModel: ObservableObject {
 	@Injected private var songsUseCase: GetSongsUseCase
 	
 	let moreOfWhatYouLikeTitle: String = .moreOfWhatYouLike
-	let artistSectionTitle: String = .moreOfWhatYouLike
+	let artistSectionTitle: String = .artists
 	let mostPopularThisWeek: String = .mostPopularThisWeek
 	
 	@Published var homeRoute: HomeRoute?

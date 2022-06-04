@@ -4,21 +4,20 @@ import SharedUI
 struct BigArtistCell: View {
 	let model: HomeViewModel.Artist
 	
-	let titleFont: Font
-	let subtitleFont: Font
-	let subtitleColor: Color
+	private let titleFont: Font = .inter(ofSize: 12).bold()
+	private let subtitleFont: Font = .inter(ofSize: 12)
+	private let subtitleColor: Color = Color(.grey100)
 	
 	private let imageSize: CGFloat = 50
 	
     var body: some View {
 		HStack {
-			image
+			image.fixedSize()
 			VStack(alignment: .leading) {
 				title
 				songs
 			}
 		}
-		.fixedSize()
     }
 	
 	private var image: some View {
@@ -30,20 +29,25 @@ struct BigArtistCell: View {
 				Image.placeholder?.circleImage(size: imageSize)
 			}
 		}
+		.fixedSize()
 	}
 	
 	private var title: some View {
 		Text(model.name)
+			.lineLimit(1)
+			.font(titleFont)
 	}
 	
 	private var songs: some View {
 		Text(model.numberOfSongs)
+			.font(subtitleFont)
+			.foregroundColor(subtitleColor)
 	}
 }
 
 struct ArtistCell_Previews: PreviewProvider {
     static var previews: some View {
-		BigArtistCell(model: MockData.artistCells.first!, titleFont: .inter(ofSize: 12).bold(), subtitleFont: .inter(ofSize: 12), subtitleColor: Color(.grey100))
+		BigArtistCell(model: MockData.artistCells.first!)
 			.preferredColorScheme(.dark)
     }
 }

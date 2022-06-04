@@ -7,9 +7,10 @@ import Colors
 
 struct MoreOfWhatYouLikeCell: View {
 	let model: HomeViewModel.MoreOfWhatYouLike
-	let titleFont: Font
-	let subtitleFont: Font
-	let subtitleColor: Color
+	
+	private let titleFont: Font = .inter(ofSize: 12).bold()
+	private let subtitleFont: Font = .inter(ofSize: 12)
+	private let subtitleColor: Color = Color(.grey100)
 	private let imageSize: CGFloat = 120
 	
 	public var body: some View {
@@ -28,12 +29,13 @@ struct MoreOfWhatYouLikeCell: View {
 				image
 					.resizable()
 					.frame(width: imageSize, height: imageSize)
+					.cornerRadius(10)
 			default:
 				Image(uiImage: .placeholder!)
 					.resizable()
 					.frame(width: imageSize, height: imageSize)
 			}
-		}
+		}.cornerRadius(10)
 	}
 	
 	private var artistName: some View {
@@ -60,7 +62,7 @@ struct MoreOfWhatYouLikeCell_Previews: PreviewProvider {
 		ScrollView(.horizontal) {
 			HStack {
 				ForEach(MockData.moreOfWhatYouLikeCells.reversed(), id: \.id) { model in
-					MoreOfWhatYouLikeCell(model: model, titleFont: .inter(ofSize: 12).bold(), subtitleFont: .inter(ofSize: 12), subtitleColor: Color(.grey100))
+					MoreOfWhatYouLikeCell(model: model)
 				}
 			}
 			.preferredColorScheme(.dark)

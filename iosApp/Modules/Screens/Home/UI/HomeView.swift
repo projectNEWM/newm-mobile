@@ -13,45 +13,13 @@ struct HomeView: View {
 	public init() {}
 	
 	public var body: some View {
-		NavigationView {
-			ZStack {
+//		NavigationView {
+//			ZStack {
 //				links
 				allViews
-			}
-			.navigationBarTitleDisplayMode(.inline)
-		}
-	}
-	
-	private var moreOfWhatYouLike: some View {
-		ScrollView(.horizontal) {
-			LazyHStack(alignment: .top) {
-				ForEach(viewModel.moreOfWhatYouLikes) { model in
-					MoreOfWhatYouLikeCell(
-						model: model,
-						titleFont: cellTitleFont,
-						subtitleFont: cellSubtitleFont,
-						subtitleColor: cellSubtitleColor
-					)
-					.cornerRadius(10)
-				}
-			}
-		}
-		.addSectionTitle(viewModel.moreOfWhatYouLikeTitle)
-	}
-	
-	private var artists: some View {
-		ScrollView(.horizontal) {
-			LazyHGrid(rows: [
-				GridItem(.fixed(80)),
-				GridItem(.fixed(80)),
-				GridItem(.fixed(80))
-			]) {
-				ForEach(viewModel.artists) { artist in
-					BigArtistCell(model: artist, titleFont: cellTitleFont, subtitleFont: cellSubtitleFont, subtitleColor: cellSubtitleColor)
-				}
-			}
-			.fixedSize()
-		}
+//			}
+//			.navigationBarTitleDisplayMode(.inline)
+//		}
 	}
 	
 //	private var links: some View {
@@ -81,10 +49,10 @@ struct HomeView: View {
 	
 	private var allViews: some View {
 		ScrollView {
-			moreOfWhatYouLike
-			artists
+			MoreOfWhatYouLikeSection(moreOfWhatYouLikes: viewModel.moreOfWhatYouLikes, title: viewModel.moreOfWhatYouLikeTitle)
+				.padding(.bottom)
+			ArtistsSection(artists: viewModel.artists, title: viewModel.artistSectionTitle)
 		}
-		
 		
 //		VStack {
 //			ScrollView {
@@ -108,16 +76,27 @@ struct HomeView: View {
 	}
 }
 
-private extension View {
-	func sectionTitleFont() -> some View {
+extension View {
+	private var sidePadding: CGFloat { 24 }
+	private func sectionTitleFont() -> some View {
 		font(.inter(ofSize: 12)).foregroundColor(Color(.grey100))
 	}
 	
-	func addSectionTitle(_ title: String) -> some View {
+	private func addSectionTitle(_ title: String) -> some View {
 		VStack(alignment: .leading) {
 			Text(title).sectionTitleFont()
+				.padding(.leading, sidePadding)
 			self
 		}
+	}
+	
+	func addHorizontalScrollView(title: String) -> some View {
+		ScrollView(.horizontal, showsIndicators: false) {
+			self
+			.padding([.leading, .trailing], sidePadding)
+			.fixedSize()
+		}
+		.addSectionTitle(title)
 	}
 }
 

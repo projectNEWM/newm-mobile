@@ -26,7 +26,13 @@ class MockData {
 			makeArtist(name: "David Bowie3", id: "3"),
 			makeArtist(name: "David Bowie6asdlkfjsdlkfjBowie4", id: "4"),
 			makeArtist(name: "David Bowie5", id: "5"),
-			makeArtist(name: "David Bowie6asdlkfjsdlkfj", id: "6")
+			makeArtist(name: "David Bowie6asdlkfjsdlkfj", id: "6"),
+			makeArtist(name: "David Bowie6asdlkfjsdlkfjBowie4Bow", id: "7"),
+			makeArtist(name: "David Bowie2", id: "8"),
+			makeArtist(name: "David Bowie3", id: "9"),
+			makeArtist(name: "David Bowie6asdlkfjsdlkfjBowie4", id: "10"),
+			makeArtist(name: "David Bowie5", id: "11"),
+			makeArtist(name: "David Bowie6asdlkfjsdlkfj", id: "12")
 		]
 	}
 	
