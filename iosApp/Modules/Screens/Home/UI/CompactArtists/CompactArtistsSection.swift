@@ -1,18 +1,18 @@
 import SwiftUI
 import Resolver
 
-struct ArtistsSection: View {
-	let artists: [HomeViewModel.Artist]
+struct CompactArtistsSection: View {
+	let artists: [HomeViewModel.CompactArtist]
 	let title: String
 	
 	var body: some View {
 		LazyHGrid(rows: [
-			GridItem(.fixed(50)),
-			GridItem(.fixed(50)),
-			GridItem(.fixed(50))
+			GridItem(.fixed(60)),
+			GridItem(.fixed(60)),
+			GridItem(.fixed(60))
 		], alignment: .top, spacing: 50) {
 			ForEach(artists) { artist in
-				BigArtistCell(model: artist)
+				CompactArtistCell(model: artist)
 					.frame(width: 180, alignment: .leading)
 					.fixedSize()
 			}
@@ -21,9 +21,9 @@ struct ArtistsSection: View {
 	}
 }
 
-struct ArtistsSection_Previews: PreviewProvider {
+struct CompactArtistsSection_Previews: PreviewProvider {
 	static var previews: some View {
-		ArtistsSection(artists: MockData.artistCells, title: "NEWM ARTISTS")
+		CompactArtistsSection(artists: MockData.artistCells, title: "NEWM ARTISTS")
 			.preferredColorScheme(.dark)
 	}
 }

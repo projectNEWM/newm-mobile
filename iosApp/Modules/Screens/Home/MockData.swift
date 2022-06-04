@@ -7,12 +7,16 @@ import shared
 import SharedUI
 
 class MockData {
-	static var moreOfWhatYouLikeCells: [HomeViewModel.MoreOfWhatYouLike] {
-		artists.map(HomeViewModel.MoreOfWhatYouLike.init)
+	static var moreOfWhatYouLikeCells: [HomeViewModel.BigArtist] {
+		artists.map(HomeViewModel.BigArtist.init)
 	}
 	
-	static var artistCells: [HomeViewModel.Artist] {
-		artists.map(HomeViewModel.Artist.init)
+	static var artistCells: [HomeViewModel.CompactArtist] {
+		artists.map(HomeViewModel.CompactArtist.init)
+	}
+	
+	static var mostPopularThisWeekCells: [HomeViewModel.BigArtist] {
+		artists.map(HomeViewModel.BigArtist.init)
 	}
 	
 	static func makeArtist(name: String, id: String) -> Artist {
@@ -91,9 +95,15 @@ class MockGetArtistsUseCase: GetArtistsUseCase {
 	}
 }
 
-class MockGetSongsUseCase: GetSongsUseCase {
-	func execute() -> [Song] {
-		MockData.songs
+class MockGetMostPopularThisWeekUseCase: GetMostPopularThisWeekUseCase {
+	func execute() -> [Artist] {
+		MockData.artists
+	}
+}
+
+class MockGetMoreOfWhatYouLikeUseCase: GetMoreOfWhatYouLikeUseCase {
+	func execute() -> [Artist] {
+		MockData.artists
 	}
 }
 #endif

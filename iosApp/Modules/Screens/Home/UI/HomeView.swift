@@ -49,9 +49,12 @@ struct HomeView: View {
 	
 	private var allViews: some View {
 		ScrollView {
-			MoreOfWhatYouLikeSection(moreOfWhatYouLikes: viewModel.moreOfWhatYouLikes, title: viewModel.moreOfWhatYouLikeTitle)
-				.padding(.bottom)
-			ArtistsSection(artists: viewModel.artists, title: viewModel.artistSectionTitle)
+			BigArtistSection(artists: viewModel.moreOfWhatYouLikes, title: viewModel.moreOfWhatYouLikeTitle)
+				.padding([.bottom, .top])
+			CompactArtistsSection(artists: viewModel.newmArtists, title: viewModel.artistSectionTitle)
+				.padding([.bottom, .top])
+			BigArtistSection(artists: viewModel.mostPopularThisWeek, title: viewModel.mostPopularThisWeekTitle)
+				.padding([.bottom, .top])
 		}
 		
 //		VStack {

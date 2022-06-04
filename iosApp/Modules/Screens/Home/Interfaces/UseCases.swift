@@ -5,6 +5,10 @@ public protocol GetArtistsUseCase {
 	func execute() -> [Artist]
 }
 
-public protocol GetSongsUseCase {
-	func execute() -> [Song]
+public protocol GetMostPopularThisWeekUseCase {
+	func execute() -> [Artist]
+}
+
+public protocol GetMoreOfWhatYouLikeUseCase {
+	func execute() -> [Artist]
 }

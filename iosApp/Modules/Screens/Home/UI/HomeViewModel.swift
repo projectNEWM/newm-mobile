@@ -15,31 +15,32 @@ enum HomeRoute {
 
 public class HomeViewModel: ObservableObject {
 	@Injected private var artistsUseCase: GetArtistsUseCase
-	@Injected private var songsUseCase: GetSongsUseCase
-	
+	@Injected private var mostPopularThisWeekUseCase: GetMostPopularThisWeekUseCase
+	@Injected private var moreOfWhatYouLikeUseCase: GetMoreOfWhatYouLikeUseCase
+
 	let moreOfWhatYouLikeTitle: String = .moreOfWhatYouLike
 	let artistSectionTitle: String = .artists
-	let mostPopularThisWeek: String = .mostPopularThisWeek
+	let mostPopularThisWeekTitle: String = .mostPopularThisWeek
 	
 	@Published var homeRoute: HomeRoute?
 
-	@Published var moreOfWhatYouLikes: [HomeViewModel.MoreOfWhatYouLike] = []
-	@Published var artists: [HomeViewModel.Artist] = []
-	@Published var songs: [HomeViewModel.Song] = []
+	@Published var moreOfWhatYouLikes: [HomeViewModel.BigArtist] = []
+	@Published var newmArtists: [HomeViewModel.CompactArtist] = []
+	@Published var mostPopularThisWeek: [HomeViewModel.BigArtist] = []
 		
 	init() {
 		refresh()
 	}
 	
 	func refresh() {
-		artists = artistsUseCase.execute().map(HomeViewModel.Artist.init)
-		songs = songsUseCase.execute().map(HomeViewModel.Song.init)
-		moreOfWhatYouLikes = artistsUseCase.execute().map(HomeViewModel.MoreOfWhatYouLike.init)
+		newmArtists = artistsUseCase.execute().map(HomeViewModel.CompactArtist.init)
+		mostPopularThisWeek = mostPopularThisWeekUseCase.execute().map(HomeViewModel.BigArtist.init)
+		moreOfWhatYouLikes = moreOfWhatYouLikeUseCase.execute().map(HomeViewModel.BigArtist.init)
 	}
 }
 
 extension HomeViewModel {
-	struct MoreOfWhatYouLike: Identifiable {
+	struct BigArtist: Identifiable {
 		let image: URL?
 		let name: String
 		let genre: String
@@ -59,7 +60,7 @@ extension HomeViewModel {
 		}
 	}
 	
-	struct Artist: Identifiable {
+	struct CompactArtist: Identifiable {
 		let image: URL?
 		let name: String
 		let numberOfSongs: String

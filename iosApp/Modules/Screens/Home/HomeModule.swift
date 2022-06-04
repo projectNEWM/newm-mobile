@@ -27,11 +27,15 @@ extension HomeModule: HomeViewProviding {
 extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
-			MockGetSongsUseCase() as GetSongsUseCase
+			MockGetMostPopularThisWeekUseCase() as GetMostPopularThisWeekUseCase
 		}
 		
 		mockResolver.register {
 			MockGetArtistsUseCase() as GetArtistsUseCase
+		}
+		
+		mockResolver.register {
+			MockGetMoreOfWhatYouLikeUseCase() as GetMoreOfWhatYouLikeUseCase
 		}
 	}
 }

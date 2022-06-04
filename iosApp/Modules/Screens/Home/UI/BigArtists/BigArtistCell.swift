@@ -5,13 +5,13 @@ import SharedUI
 import Fonts
 import Colors
 
-struct MoreOfWhatYouLikeCell: View {
-	let model: HomeViewModel.MoreOfWhatYouLike
+struct BigArtistCell: View {
+	let model: HomeViewModel.BigArtist
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
 	private let subtitleColor: Color = Color(.grey100)
-	private let imageSize: CGFloat = 120
+	private let imageSize: CGFloat = 130
 	
 	public var body: some View {
 		VStack(alignment: .leading) {
@@ -57,12 +57,12 @@ struct MoreOfWhatYouLikeCell: View {
 	}
 }
 
-struct MoreOfWhatYouLikeCell_Previews: PreviewProvider {
+struct BigArtistCell_Previews: PreviewProvider {
 	static var previews: some View {
 		ScrollView(.horizontal) {
 			HStack {
 				ForEach(MockData.moreOfWhatYouLikeCells.reversed(), id: \.id) { model in
-					MoreOfWhatYouLikeCell(model: model)
+					BigArtistCell(model: model)
 				}
 			}
 			.preferredColorScheme(.dark)
