@@ -3,6 +3,7 @@ import ModuleLinker
 import Resolver
 import SwiftUINavigation
 import Artist
+import SharedUI
 
 struct HomeView: View {
 	@InjectedObject private var viewModel: HomeViewModel
@@ -76,30 +77,6 @@ struct HomeView: View {
 //			}
 //		}
 //		.frame(maxHeight: .infinity, alignment: .top)
-	}
-}
-
-extension View {
-	private var sidePadding: CGFloat { 24 }
-	private func sectionTitleFont() -> some View {
-		font(.inter(ofSize: 12)).foregroundColor(Color(.grey100))
-	}
-	
-	private func addSectionTitle(_ title: String) -> some View {
-		VStack(alignment: .leading) {
-			Text(title).sectionTitleFont()
-				.padding(.leading, sidePadding)
-			self
-		}
-	}
-	
-	func addHorizontalScrollView(title: String) -> some View {
-		ScrollView(.horizontal, showsIndicators: false) {
-			self
-			.padding([.leading, .trailing], sidePadding)
-			.fixedSize()
-		}
-		.addSectionTitle(title)
 	}
 }
 

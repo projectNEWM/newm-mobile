@@ -5,6 +5,7 @@ import ModuleLinker
 import SwiftUI
 import shared
 import Utilities
+import SharedUI
 
 enum HomeRoute {
 	case artist(id: String)
@@ -24,61 +25,22 @@ public class HomeViewModel: ObservableObject {
 	
 	@Published var homeRoute: HomeRoute?
 
-	@Published var moreOfWhatYouLikes: [HomeViewModel.BigArtist] = []
-	@Published var newmArtists: [HomeViewModel.CompactArtist] = []
-	@Published var mostPopularThisWeek: [HomeViewModel.BigArtist] = []
+	@Published var moreOfWhatYouLikes: [BigArtistViewModel] = []
+	@Published var newmArtists: [CompactArtistViewModel] = []
+	@Published var mostPopularThisWeek: [BigArtistViewModel] = []
 		
 	init() {
 		refresh()
 	}
 	
 	func refresh() {
-		newmArtists = artistsUseCase.execute().map(HomeViewModel.CompactArtist.init)
-		mostPopularThisWeek = mostPopularThisWeekUseCase.execute().map(HomeViewModel.BigArtist.init)
-		moreOfWhatYouLikes = moreOfWhatYouLikeUseCase.execute().map(HomeViewModel.BigArtist.init)
+		newmArtists = artistsUseCase.execute().map(CompactArtistViewModel.init)
+		mostPopularThisWeek = mostPopularThisWeekUseCase.execute().map(BigArtistViewModel.init)
+		moreOfWhatYouLikes = moreOfWhatYouLikeUseCase.execute().map(BigArtistViewModel.init)
 	}
 }
 
-extension HomeViewModel {
-	struct BigArtist: Identifiable {
-		let image: URL?
-		let name: String
-		let genre: String
-		let artistID: String
-		var id: ObjectIdentifier { artistID.objectIdentifier }
-		
-		init(_ model: shared.Artist) {
-			if let imageUrl = URL(string: model.image) {
-				self.image = imageUrl
-			} else {
-				Log("bad artist image URL")
-				image = nil
-			}
-			name = model.name
-			genre = model.genre
-			artistID = model.id
-		}
-	}
-	
-	struct CompactArtist: Identifiable {
-		let image: URL?
-		let name: String
-		let numberOfSongs: String
-		let id: ObjectIdentifier
-		
-		init(_ model: shared.Artist) {
-			if let imageUrl = URL(string: model.image) {
-				self.image = imageUrl
-			} else {
-				Log("bad artist image URL")
-				image = nil
-			}
-			numberOfSongs = "5 songs"
-			name = model.name
-			id = model.id.objectIdentifier
-		}
-	}
-
+extension HomeViewModel {	
 	struct Song: Identifiable {
 		let image: URL?
 		let title: String

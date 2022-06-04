@@ -1,17 +1,20 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
-import SharedUI
 import Fonts
 import Colors
 
-struct BigArtistCell: View {
-	let model: HomeViewModel.BigArtist
+public struct BigArtistCell: View {
+	public let model: BigArtistViewModel
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
 	private let subtitleColor: Color = Color(.grey100)
 	private let imageSize: CGFloat = 130
+	
+	public init(model: BigArtistViewModel) {
+		self.model = model
+	}
 	
 	public var body: some View {
 		VStack(alignment: .leading) {
@@ -61,7 +64,7 @@ struct BigArtistCell_Previews: PreviewProvider {
 	static var previews: some View {
 		ScrollView(.horizontal) {
 			HStack {
-				ForEach(MockData.moreOfWhatYouLikeCells.reversed(), id: \.id) { model in
+				ForEach(MockData.bigArtistCells.reversed(), id: \.id) { model in
 					BigArtistCell(model: model)
 				}
 			}

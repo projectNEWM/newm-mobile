@@ -3,11 +3,12 @@ import ModuleLinker
 import Resolver
 import Fonts
 import Colors
+import SharedUI
 
 protocol HomeScrollingCell: View where DataType: Identifiable {
 	associatedtype DataType
 	
-	init(data: DataType)
+	init(model: DataType)
 }
 
 struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
@@ -23,7 +24,7 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 				HStack(alignment: .center, spacing: nil) {
 					ForEach(Array(dataModels.enumerated()), id: \.offset) { (offset, data) in
 						Button(action: { selectedDataModel(data) }) {
-							Model(data: data)
+							Model(model: data)
 								.padding(.trailing, spacing)
 						}
 					}
@@ -44,12 +45,19 @@ struct HomeScrollingContentView<Model: HomeScrollingCell>: View {
 	}
 }
 
+extension BigArtistCell: HomeScrollingCell {
+	typealias DataType = BigArtistViewModel
+}
+
+extension CompactArtistCell: HomeScrollingCell {
+	typealias DataType = CompactArtistViewModel
+}
+
 struct HomeScrollingContentView_Previews: PreviewProvider {
 	static var previews: some View {
 		VStack {
-//			HomeScrollingContentView<ArtistCell>(selectedDataModel: {_ in}, dataModels: MockData.artists.map(HomeViewModel.Artist.init), title: "NEWM Artists", spacing: 8)
-			HomeScrollingContentView<SongCell>(selectedDataModel: {_ in}, dataModels: MockData.songs.map(HomeViewModel.Song.init), title: "NEWM Songs", spacing: 8)
-			HomeScrollingContentView<PlaylistCell>(selectedDataModel: {_ in}, dataModels: MockData.playlists.map(HomeViewModel.Playlist.init), title: "Curated Playlists", spacing: 12)
+			HomeScrollingContentView<BigArtistCell>(selectedDataModel: {_ in}, dataModels: MockData.artists.map(BigArtistViewModel.init), title: "NEWM Artists", spacing: 8)
+			HomeScrollingContentView<CompactArtistCell>(selectedDataModel: {_ in}, dataModels: MockData.artists.map(CompactArtistViewModel.init), title: "Curated Playlists", spacing: 12)
 		}
 		.preferredColorScheme(.dark)
 	}

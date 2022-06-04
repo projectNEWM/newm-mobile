@@ -1,11 +1,16 @@
 import SwiftUI
 import Resolver
 
-struct CompactArtistsSection: View {
-	let artists: [HomeViewModel.CompactArtist]
-	let title: String
+public struct CompactArtistsSection: View {
+	private let artists: [CompactArtistViewModel]
+	private let title: String
 	
-	var body: some View {
+	public init(artists: [CompactArtistViewModel], title: String) {
+		self.artists = artists
+		self.title = title
+	}
+	
+	public var body: some View {
 		LazyHGrid(rows: [
 			GridItem(.fixed(60)),
 			GridItem(.fixed(60)),
@@ -23,7 +28,7 @@ struct CompactArtistsSection: View {
 
 struct CompactArtistsSection_Previews: PreviewProvider {
 	static var previews: some View {
-		CompactArtistsSection(artists: MockData.artistCells, title: "NEWM ARTISTS")
+		CompactArtistsSection(artists: MockData.compactArtistCells, title: "NEWM ARTISTS")
 			.preferredColorScheme(.dark)
 	}
 }

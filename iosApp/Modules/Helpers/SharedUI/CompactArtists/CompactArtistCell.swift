@@ -1,8 +1,7 @@
 import SwiftUI
-import SharedUI
 
-struct CompactArtistCell: View {
-	let model: HomeViewModel.CompactArtist
+public struct CompactArtistCell: View {
+	public let model: CompactArtistViewModel
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
@@ -10,7 +9,11 @@ struct CompactArtistCell: View {
 	
 	private let imageSize: CGFloat = 60
 	
-    var body: some View {
+	public init(model: CompactArtistViewModel) {
+		self.model = model
+	}
+	
+	public var body: some View {
 		HStack {
 			image.fixedSize()
 			VStack(alignment: .leading) {
@@ -45,9 +48,9 @@ struct CompactArtistCell: View {
 	}
 }
 
-struct ArtistCell_Previews: PreviewProvider {
+struct CompactArtistCell_Previews: PreviewProvider {
     static var previews: some View {
-		CompactArtistCell(model: MockData.artistCells.first!)
+		CompactArtistCell(model: MockData.compactArtistCells.first!)
 			.preferredColorScheme(.dark)
     }
 }
