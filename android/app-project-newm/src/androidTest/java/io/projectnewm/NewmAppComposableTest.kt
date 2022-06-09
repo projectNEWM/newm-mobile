@@ -8,10 +8,12 @@ import io.projectnewm.interactions.NewmAppInteractions
 import io.projectnewm.interactions.onBottomBar
 import io.projectnewm.interactions.onNewmApp
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class NewmAppComposableTest {
 
+    @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
 
