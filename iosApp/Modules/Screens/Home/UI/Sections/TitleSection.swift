@@ -14,7 +14,7 @@ struct TitleSection: View {
 			title
 			Spacer()
 			profilePic
-		}.padding()
+		}.padding([.leading, .trailing], sidePadding)
     }
 	
 	private var title: some View {

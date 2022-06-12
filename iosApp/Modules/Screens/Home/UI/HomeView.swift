@@ -54,9 +54,17 @@ struct HomeView: View {
 	
 	private func allViews(uiModel: HomeViewUIModel) -> some View {
 		ScrollView {
-			TitleSection(model: uiModel.titleSectionModel)
-			ThisWeekSection(model: uiModel.thisWeekSection)
+			titleSection(uiModel.titleSectionModel)
+			VStack(spacing: 36) {
+				ThisWeekSection(uiModel.thisWeekSection)
+				
+			}
 		}
+	}
+	
+	private func titleSection(_ model: HomeViewUIModel.TitleSectionModel) -> some View {
+		TitleSection(model: model)
+			.padding(.bottom, 41)
 	}
 }
 

@@ -13,7 +13,7 @@ public extension Image {
 }
 
 public extension View {
-	private var sidePadding: CGFloat { 24 }
+	var sidePadding: CGFloat { 24 }
 	private func sectionTitleFont() -> some View {
 		font(.inter(ofSize: 12)).foregroundColor(Color(.grey100))
 	}

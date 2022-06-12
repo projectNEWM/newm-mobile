@@ -11,7 +11,7 @@ struct ThisWeekCell: View {
 		self.model = model
 	}
 	
-    var body: some View {
+	var body: some View {
 		VStack(alignment: .leading) {
 			icon
 			amount
@@ -20,7 +20,7 @@ struct ThisWeekCell: View {
 		.padding()
 		.background(Color(.grey600))
 		.cornerRadius(8)
-    }
+	}
 	
 	private var icon: some View {
 		model.iconImage.image
@@ -30,10 +30,10 @@ struct ThisWeekCell: View {
 	
 	private var amount: some View {
 		Text(model.amountText)
-			.font(.raleway(ofSize: 20))
+			.font(.thisWeekCellAmountFont)
 			.padding(.bottom, 0)
 	}
-	
+		
 	private var label: some View {
 		Text(model.labelText)
 			.font(.inter(ofSize: 12))
@@ -42,8 +42,8 @@ struct ThisWeekCell: View {
 }
 
 struct ThisWeekCell_Previews: PreviewProvider {
-    static var previews: some View {
-		ThisWeekCell(ThisWeekCellModel(iconImage: .heart, amountText: "+12", labelText: "Followers this week"))
+	static var previews: some View {
+		ThisWeekCell(ThisWeekCellModel(iconImage: .heart, amountText: "+56", labelText: "Followers this week"))
 			.preferredColorScheme(.dark)
-    }
+	}
 }

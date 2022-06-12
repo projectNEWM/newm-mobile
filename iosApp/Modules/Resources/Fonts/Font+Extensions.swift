@@ -11,7 +11,6 @@ public extension Font {
 		.custom("RalewayRoman-Regular", size: size)
 	}
 	
-	
 	static func ralewayExtraBold(ofSize size: CGFloat) -> Font {
 		.custom("RalewayRoman-ExtraBold", size: size)
 	}
@@ -26,6 +25,23 @@ public extension Font {
 	
 	static func inter(ofSize size: CGFloat) -> Font {
 		.custom("Inter", size: size)
+	}
+	
+	static var thisWeekCellAmountFont: Font {
+		var fontDescriptor = UIFont(name: "RalewayRoman-Medium", size: 20)!.fontDescriptor
+		var fontFeatures = [
+			[
+				UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
+				UIFontDescriptor.FeatureKey.typeIdentifier: kProportionalNumbersSelector,
+			],
+			[
+				UIFontDescriptor.FeatureKey.featureIdentifier: kNumberCaseType,
+				UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseNumbersSelector,
+			],
+		]
+		
+		fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.featureSettings: fontFeatures])
+		return Font(UIFont(descriptor: fontDescriptor, size: 20))
 	}
 }
 
