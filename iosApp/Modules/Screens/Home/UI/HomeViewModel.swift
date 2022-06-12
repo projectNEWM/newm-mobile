@@ -16,7 +16,6 @@ enum ViewState<Data> {
 public class HomeViewModel: ObservableObject {	
 	let thisWeekTitle: String = .thisWeek
 	let discoverTitle: String = .discover
-	let recentlyPlayedTitle: String = .recentlyPlayed
 	let justReleasedTitle: String = .justReleased
 	let moreOfWhatYouLikeTitle: String = .moreOfWhatYouLike
 	let newmArtistsTitle: String = .newmArtists
@@ -25,7 +24,7 @@ public class HomeViewModel: ObservableObject {
 
 	@Published var route: HomeRoute?
 	
-	@Injected private var getThisWeekSectionUseCase: GetHomeViewUseCase
+	@Injected private var getHomeViewUseCase: GetHomeViewUseCase
 
 	@Published var state: ViewState<HomeViewUIModel> = .loading
 	
@@ -34,7 +33,7 @@ public class HomeViewModel: ObservableObject {
 	}
 	
 	func refresh() {		
-		state = .loaded(getThisWeekSectionUseCase.execute())
+		state = .loaded(getHomeViewUseCase.execute())
 	}
 }
 

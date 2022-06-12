@@ -57,7 +57,7 @@ struct HomeView: View {
 			titleSection(uiModel.titleSectionModel)
 			VStack(spacing: 36) {
 				ThisWeekSection(uiModel.thisWeekSection)
-				
+				RecentlyPlayedArtistsSection(uiModel.recentlyPlayedSection)
 			}
 		}
 	}

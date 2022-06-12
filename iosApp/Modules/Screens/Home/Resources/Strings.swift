@@ -4,7 +4,6 @@ import ModuleLinker
 extension String {
 	@Localizable(HomeModule.self) static var thisWeek = "THIS_WEEK"
 	@Localizable(HomeModule.self) static var discover = "DISCOVER"
-	@Localizable(HomeModule.self) static var recentlyPlayed = "RECENTLY_PLAYED"
 	@Localizable(HomeModule.self) static var justReleased = "JUST_RELEASED"
 	@Localizable(HomeModule.self) static var moreOfWhatYouLike = "MORE_OF_WHAT_YOU_LIKE"
 	@Localizable(HomeModule.self) static var newmArtists = "NEWM_ARTISTS"

@@ -1,4 +1,5 @@
 import Foundation
+import SharedUI
 
 struct HomeViewUIModel {
 	struct ThisWeekSectionModel {
@@ -15,6 +16,7 @@ struct HomeViewUIModel {
 
 	let titleSectionModel: TitleSectionModel
 	let thisWeekSection: ThisWeekSectionModel
+	let recentlyPlayedSection: RecentlyPlayedArtistsSectionModel
 	let title: String
 }
 
