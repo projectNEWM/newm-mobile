@@ -7,20 +7,24 @@ import SharedUI
 
 struct HomeView: View {
 	@InjectedObject private var viewModel: HomeViewModel
-	private let cellTitleFont: Font = .inter(ofSize: 12).bold()
-	private let cellSubtitleFont: Font = .inter(ofSize: 12)
-	private let cellSubtitleColor: Color = Color(.grey100)
-
+	
 	public init() {}
 	
 	public var body: some View {
-//		NavigationView {
-//			ZStack {
+		NavigationView {
+			ZStack {
 //				links
-				allViews
-//			}
-//			.navigationBarTitleDisplayMode(.inline)
-//		}
+				switch viewModel.state {
+				case .loading:
+					ProgressView().erased
+				case .loaded(let uiModel):
+					allViews(uiModel: uiModel)
+				case .error:
+					Text("Error").erased
+				}
+			}
+			.navigationBarTitleDisplayMode(.inline)
+		}
 	}
 	
 //	private var links: some View {
@@ -48,35 +52,11 @@ struct HomeView: View {
 //		}
 //	}
 	
-	private var allViews: some View {
+	private func allViews(uiModel: HomeViewUIModel) -> some View {
 		ScrollView {
-			BigArtistSection(artists: viewModel.moreOfWhatYouLikes, title: viewModel.moreOfWhatYouLikeTitle)
-				.padding([.bottom, .top])
-			CompactArtistsSection(artists: viewModel.newmArtists, title: viewModel.artistSectionTitle)
-				.padding([.bottom, .top])
-			BigArtistSection(artists: viewModel.mostPopularThisWeek, title: viewModel.mostPopularThisWeekTitle)
-				.padding([.bottom, .top])
+			TitleSection(model: uiModel.titleSectionModel)
+			ThisWeekSection(model: uiModel.thisWeekSection)
 		}
-		
-//		VStack {
-//			ScrollView {
-//				VStack {
-//					HomeScrollingContentView<ArtistCell>(selectedDataModel: { viewModel.homeRoute = .artist(id: $0.artistID) },
-//														 dataModels: viewModel.artists,
-//														 title: viewModel.artistSectionTitle,
-//														 spacing: 8)
-////					HomeScrollingContentView<SongCell>(selectedDataModel: { viewModel.homeRoute = .songPlaying(id: $0.songID) },
-////													   dataModels: viewModel.songs,
-////													   title: viewModel.songsSectionTitle,
-////													   spacing: 8)
-////					HomeScrollingContentView<PlaylistCell>(selectedDataModel: { viewModel.homeRoute = .playlist(id: $0.playlistID) },
-////														   dataModels: viewModel.playlists,
-////														   title: viewModel.playlistsSectionTitle,
-////														   spacing: 12)
-//				}
-//			}
-//		}
-//		.frame(maxHeight: .infinity, alignment: .top)
 	}
 }
 

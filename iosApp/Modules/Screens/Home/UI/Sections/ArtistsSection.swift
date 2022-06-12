@@ -1,11 +1,12 @@
 import SwiftUI
 import Resolver
+import SharedUI
 
-public struct CompactArtistsSection: View {
-	private let artists: [CompactArtistViewModel]
+public struct ArtistsSection: View {
+	private let artists: [CompactCellViewModel]
 	private let title: String
 	
-	public init(artists: [CompactArtistViewModel], title: String) {
+	public init(artists: [CompactCellViewModel], title: String) {
 		self.artists = artists
 		self.title = title
 	}
@@ -17,7 +18,7 @@ public struct CompactArtistsSection: View {
 			GridItem(.fixed(60))
 		], alignment: .top, spacing: 50) {
 			ForEach(artists) { artist in
-				CompactArtistCell(model: artist)
+				CompactCell(model: artist, roundImage: true)
 					.frame(width: 180, alignment: .leading)
 					.fixedSize()
 			}
@@ -28,7 +29,7 @@ public struct CompactArtistsSection: View {
 
 struct CompactArtistsSection_Previews: PreviewProvider {
 	static var previews: some View {
-		CompactArtistsSection(artists: MockData.compactArtistCells, title: "NEWM ARTISTS")
+		ArtistsSection(artists: SharedUI.MockData.compactArtistCells, title: "NEWM ARTISTS")
 			.preferredColorScheme(.dark)
 	}
 }

@@ -7,19 +7,19 @@ import UIKit
 import SwiftUI
 
 public class MockData {
-	public static var bigArtistCells: [BigArtistViewModel] {
-		artists.map(BigArtistViewModel.init)
+	public static var bigArtistCells: [BigCellViewModel] {
+		models.map(BigCellViewModel.init)
 	}
 	
-	public static var compactArtistCells: [CompactArtistViewModel] {
-		artists.map(CompactArtistViewModel.init)
+	public static var compactArtistCells: [CompactCellViewModel] {
+		models.map(CompactCellViewModel.init)
 	}
 
 	static func makeArtist(name: String, id: String) -> Artist {
 		Artist(image: artistImageUrl, name: name, genre: "Rock", stars: 12000, id: id)
 	}
 	
-	public static var artists: [Artist] {
+	public static var models: [Artist] {
 		[
 			makeArtist(name: "David Bowie6asdlkfjsdlkfjBowie4Bow", id: "1"),
 			makeArtist(name: "David Bowie2", id: "2"),

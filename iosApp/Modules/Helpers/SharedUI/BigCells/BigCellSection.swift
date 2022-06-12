@@ -1,21 +1,21 @@
 import SwiftUI
 
-public struct BigArtistSection: View {
+public struct BigCellSection: View {
 	private let cellTitleFont: Font = .inter(ofSize: 12).bold()
 	private let cellSubtitleFont: Font = .inter(ofSize: 12)
 	private let cellSubtitleColor: Color = Color(.grey100)
 	
-	public let artists: [BigArtistViewModel]
+	public let cells: [BigCellViewModel]
 	public let title: String
 	
-	public init(artists: [BigArtistViewModel], title: String) {
-		self.artists = artists
+	public init(cells: [BigCellViewModel], title: String) {
+		self.cells = cells
 		self.title = title
 	}
 
     public var body: some View {
 		LazyHStack(alignment: .top, spacing: 12) {
-			ForEach(artists) { model in
+			ForEach(cells) { model in
 				BigArtistCell(model: model)
 			}
 		}
@@ -23,9 +23,9 @@ public struct BigArtistSection: View {
     }
 }
 
-struct BigArtistSection_Previews: PreviewProvider {
+struct BigCellSection_Previews: PreviewProvider {
     static var previews: some View {
-		BigArtistSection(artists: MockData.bigArtistCells, title: "MORE OF WHAT YOU LIKE")
+		BigCellSection(cells: MockData.bigArtistCells, title: "MORE OF WHAT YOU LIKE")
 			.preferredColorScheme(.dark)
     }
 }

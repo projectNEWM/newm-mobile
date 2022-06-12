@@ -24,6 +24,10 @@ extension ColorsModule: ColorProviding {
 			return Color(.newmOffPink)
 		case .grey100:
 			return Color(.grey100)
+		case .grey600:
+			return Color(.grey600)
+		case .newmPurple2:
+			return Color(.newmPurple2)
 		}
 	}
 }
@@ -52,6 +56,10 @@ public extension Color {
 				return Color(value: NEWMColor.newmOffPink.rawValue)
 			case .grey100:
 				return Color(value: NEWMColor.grey100.rawValue)
+			case .grey600:
+				return Color(value: NEWMColor.grey600.rawValue)
+			case .newmPurple2:
+				return Color(value: NEWMColor.newmPurple2.rawValue)
 			}
 		}()
 	}

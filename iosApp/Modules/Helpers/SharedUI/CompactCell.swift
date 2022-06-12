@@ -1,7 +1,8 @@
 import SwiftUI
 
-public struct CompactArtistCell: View {
-	public let model: CompactArtistViewModel
+public struct CompactCell: View {
+	private let model: CompactCellViewModel
+	private let roundImage: Bool
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
@@ -9,8 +10,9 @@ public struct CompactArtistCell: View {
 	
 	private let imageSize: CGFloat = 60
 	
-	public init(model: CompactArtistViewModel) {
+	public init(model: CompactCellViewModel, roundImage: Bool) {
 		self.model = model
+		self.roundImage = roundImage
 	}
 	
 	public var body: some View {
@@ -27,9 +29,13 @@ public struct CompactArtistCell: View {
 		AsyncImage(url: model.image) { phase in
 			switch phase {
 			case .success(let image):
-				image.circleImage(size: imageSize)
+				if roundImage {
+					image.circleImage(size: imageSize)
+				} else {
+					image.frame(width: imageSize, height: imageSize)
+				}
 			default:
-				Image.placeholder?.circleImage(size: imageSize)
+				Image.placeholder.circleImage(size: imageSize)
 			}
 		}
 		.fixedSize()
@@ -42,15 +48,18 @@ public struct CompactArtistCell: View {
 	}
 	
 	private var songs: some View {
-		Text(model.numberOfSongs)
+		Text(model.subtitle)
 			.font(subtitleFont)
 			.foregroundColor(subtitleColor)
 	}
 }
 
-struct CompactArtistCell_Previews: PreviewProvider {
+struct CompactCell_Previews: PreviewProvider {
     static var previews: some View {
-		CompactArtistCell(model: MockData.compactArtistCells.first!)
-			.preferredColorScheme(.dark)
+		Group {
+			CompactCell(model: MockData.compactArtistCells.first!, roundImage: false)
+			CompactCell(model: MockData.compactArtistCells.first!, roundImage: true)
+		}
+		.preferredColorScheme(.dark)
     }
 }

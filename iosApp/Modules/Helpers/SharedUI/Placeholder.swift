@@ -8,7 +8,7 @@ public extension UIImage {
 }
 
 public extension Image {
-	static var placeholder: Image? {
-		UIImage.placeholder.flatMap(Image.init)
+	static var placeholder: Image {
+		UIImage.placeholder.flatMap(Image.init)!
 	}
 }

@@ -5,14 +5,14 @@ import Fonts
 import Colors
 
 public struct BigArtistCell: View {
-	public let model: BigArtistViewModel
+	private let model: BigCellViewModel
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
 	private let subtitleColor: Color = Color(.grey100)
 	private let imageSize: CGFloat = 130
 	
-	public init(model: BigArtistViewModel) {
+	public init(model: BigCellViewModel) {
 		self.model = model
 	}
 	

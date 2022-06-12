@@ -3,12 +3,17 @@ import SwiftUI
 import ModuleLinker
 
 public extension Font {
-	static func newmFontBold(ofSize size: CGFloat) -> Font {
+	static func ralewayBlack(ofSize size: CGFloat) -> Font {
 		.custom("RalewayRoman-Black", size: size)
 	}
 	
-	static func newmFont(ofSize size: CGFloat) -> Font {
+	static func raleway(ofSize size: CGFloat) -> Font {
 		.custom("RalewayRoman-Regular", size: size)
+	}
+	
+	
+	static func ralewayExtraBold(ofSize size: CGFloat) -> Font {
+		.custom("RalewayRoman-ExtraBold", size: size)
 	}
 	
 	static func roboto(ofSize size: CGFloat) -> Font {

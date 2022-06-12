@@ -50,7 +50,7 @@ public struct LoginView: View {
 	
 	var title: some View {
 		Text(viewModel.title)
-			.font(.newmFontBold(ofSize: 30))
+			.font(.ralewayBlack(ofSize: 30))
 			.foregroundColor(.white)
 			.lineLimit(2)
 			.padding()
@@ -92,7 +92,7 @@ public struct LoginView: View {
 				.cornerRadius(10)
 				.padding(.bottom)
 				.accessibilityIdentifier("enterNewmButton")
-				.font(.newmFontBold(ofSize: 14))
+				.font(.ralewayBlack(ofSize: 14))
 		}
 		.disabled(viewModel.fieldsAreValid == false)
 		.buttonStyle(.plain)
@@ -110,7 +110,7 @@ private extension View {
 			.padding([.leading, .trailing])
 			.padding(.bottom, 5)
 			.colorInvert()
-			.font(.newmFont(ofSize: 14))
+			.font(.raleway(ofSize: 14))
 			.disableAutocorrection(true)
 			.textInputAutocapitalization(.never)
 	}
