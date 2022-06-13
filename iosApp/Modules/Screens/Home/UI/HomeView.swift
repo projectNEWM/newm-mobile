@@ -57,7 +57,11 @@ struct HomeView: View {
 			titleSection(uiModel.titleSectionModel)
 			VStack(spacing: 36) {
 				ThisWeekSection(uiModel.thisWeekSection)
-				RecentlyPlayedArtistsSection(uiModel.recentlyPlayedSection)
+				BigCellSection(uiModel.recentlyPlayedSection)
+				BigCellSection(uiModel.justReleasedSection)
+				BigCellSection(uiModel.moreOfWhatYouLikeSection)
+				ArtistsSection(uiModel.newmArtistsSection)
+				BigCellSection(uiModel.mostPopularThisWeek)
 			}
 		}
 	}
@@ -71,7 +75,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
 	static var previews: some View {
 		//is this doing anything?
-//		Resolver.main = .mock
+//		Resolver.root = .mock
 		return HomeView()
 			.preferredColorScheme(.dark)
 	}

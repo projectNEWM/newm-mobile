@@ -8,8 +8,8 @@ struct LibraryView: View {
 	
 	var body: some View {
 		Text(viewModel.title)
-		BigCellSection(cells: viewModel.recentlyPlayedArtists, title: viewModel.recentlyPlayedSectionTitle)
+//		BigCellSection(cells: viewModel.recentlyPlayedArtists, title: viewModel.recentlyPlayedSectionTitle)
 //		CompactCellSection(cells: viewModel.yourPlaylists, title: viewModel.yourPlaylistsSectionTitle)
-		BigCellSection(cells: viewModel.likedSongs, title: viewModel.likedSongsSectionTitle)
+//		BigCellSection(cells: viewModel.likedSongs, title: viewModel.likedSongsSectionTitle)
 	}
 }
