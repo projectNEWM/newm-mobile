@@ -5,10 +5,10 @@ import com.airbnb.android.showkase.annotation.ShowkaseRoot
 import com.airbnb.android.showkase.annotation.ShowkaseRootModule
 import io.projectnewm.di.cacheModule
 import io.projectnewm.di.networkModule
-import io.projectnewm.di.usecase.loginModule
 import io.projectnewm.di.viewmodels.viewModule
+import io.projectnewm.shared.commonModule
+import io.projectnewm.shared.initKoin
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 
 @ShowkaseRoot
 class NewmApplication : Application(), ShowkaseRootModule {
@@ -16,12 +16,12 @@ class NewmApplication : Application(), ShowkaseRootModule {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin {
+        initKoin {
             androidContext(this@NewmApplication)
             modules(
+                commonModule,
                 networkModule,
                 cacheModule,
-                loginModule,
                 viewModule
             )
         }
