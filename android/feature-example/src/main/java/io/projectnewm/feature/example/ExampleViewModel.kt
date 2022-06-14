@@ -4,13 +4,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.projectnewm.shared.example.ExampleUseCase
 import io.projectnewm.shared.example.ExampleViewState
-import javax.inject.Inject
 
-@HiltViewModel
-class ExampleViewModel @Inject constructor(
+class ExampleViewModel constructor(
     private val exampleUseCase: ExampleUseCase
 ) : ViewModel() {
 

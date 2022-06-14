@@ -7,7 +7,6 @@ buildscript {
         classpath(Build.gradle)
         classpath(Google.crashlyticsClasspath)
         classpath(Google.googleServices)
-        classpath(Hilt.hiltPlugin)
         classpath(Kotlin.kotlinGradle)
         classpath(Kotlin.serialization)
         classpath(Plugins.benManesVersionsClasspath)
