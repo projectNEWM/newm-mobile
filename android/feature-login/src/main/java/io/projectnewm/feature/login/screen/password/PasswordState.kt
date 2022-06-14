@@ -1,7 +1,7 @@
 package io.projectnewm.feature.login.screen.password
 
 import io.projectnewm.feature.login.screen.TextFieldState
-import io.projectnewm.shared.login.LoginFieldValidator
+import io.projectnewm.shared.login.util.LoginFieldValidator
 
 class PasswordState : TextFieldState(validator = ::isPasswordValid, errorFor = ::passwordValidationError)
 

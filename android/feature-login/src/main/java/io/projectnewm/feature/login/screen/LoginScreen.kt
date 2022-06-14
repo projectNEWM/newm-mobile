@@ -14,7 +14,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -36,28 +35,13 @@ internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 
 @Composable
 fun LoginScreen(
-    onSignInSubmitted: (email: String, password: String) -> Unit,
-    scrollState: ScrollState = rememberScrollState()
+    onSignInSubmitted: () -> Unit,
+    onSignupClick: () -> Unit,
+    loginViewModel: LoginViewModel = org.koin.androidx.compose.get()
 ) {
-    LoginPageBackgroundImage(backgroundImage = R.drawable.bg_login)
-
     val context = LocalContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 30.dp)
-            .verticalScroll(scrollState)
-            .testTag(TAG_LOGIN_SCREEN),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        LoginPageMainImage(R.drawable.ic_newm_logo)
+    PreLoginArtistBackgroundContentTemplate {
         LoginPageMainTextImage(textImage = R.drawable.ic_login_enter_newmiverse)
-
-        Spacer(modifier = Modifier.height(50.dp))
 
         val focusRequester = remember { FocusRequester() }
         val emailState = remember { EmailState() }
@@ -71,7 +55,9 @@ fun LoginScreen(
             passwordState = passwordState,
             onImeAction = {
                 if (emailState.isValid && passwordState.isValid) {
-                    onSignInSubmitted(emailState.text, passwordState.text)
+                    loginViewModel.loginUserWith(emailState.text, passwordState.text)
+                } else  {
+                    loginViewModel.loginUserWith(emailState.text, passwordState.text)
                 }
             },
             modifier = Modifier.focusRequester(focusRequester),
@@ -86,7 +72,7 @@ fun LoginScreen(
         Box(Modifier.clickable {
             if (emailState.isValid && passwordState.isValid) {
                 context.shortToast("Welcome ${emailState.text}")
-                onSignInSubmitted(emailState.text, passwordState.text)
+                onSignInSubmitted()
             } else if (emailState.isValid.not() && passwordState.isValid.not()) {
                 context.shortToast("Please Enter a Valid Email and Password")
             } else if (emailState.isValid.not()) {
@@ -116,8 +102,7 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(4.dp))
                 .border(BorderStroke(1.dp, SongRingBrush()))
                 .clickable {
-                    emailState.text = "guest@projectnewm.io"
-                    onSignInSubmitted(emailState.text, passwordState.text)
+                    onSignInSubmitted()
                     context.shortToast("Welcome Guest")
                 },
             contentAlignment = Alignment.Center
@@ -132,7 +117,7 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        CreateAccount()
+        CreateAccount(onSignupClick)
     }
 }
 
@@ -149,20 +134,19 @@ fun ForgotPassword() {
 }
 
 @Composable
-fun CreateAccount() {
-    ToBeImplemented("Create Account Coming Soon!") {
-        Text(
-            text = "Or Create Your Free Account",
-            style = TextStyle(textDecoration = TextDecoration.Underline),
-            textAlign = TextAlign.End,
-            color = MaterialTheme.colors.onSurface
-        )
-    }
+fun CreateAccount(onSignupClick: () -> Unit) {
+    Text(
+        text = "Or Create Your Free Account",
+        style = TextStyle(textDecoration = TextDecoration.Underline),
+        textAlign = TextAlign.End,
+        color = MaterialTheme.colors.onSurface,
+        modifier = Modifier.clickable { onSignupClick() }
+    )
 }
 
 
 @Composable
-private fun LoginPageMainImage(@DrawableRes mainImage: Int) {
+fun LoginPageMainImage(@DrawableRes mainImage: Int) {
     Image(
         modifier = Modifier
             .width(150.dp)
@@ -187,7 +171,7 @@ private fun LoginPageMainTextImage(@DrawableRes textImage: Int) {
 }
 
 @Composable
-private fun LoginPageBackgroundImage(@DrawableRes backgroundImage: Int) {
+internal fun LoginPageBackgroundImage(@DrawableRes backgroundImage: Int) {
     Image(
         modifier = Modifier
             .fillMaxHeight()
