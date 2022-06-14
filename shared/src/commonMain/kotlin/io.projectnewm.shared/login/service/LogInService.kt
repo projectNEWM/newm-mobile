@@ -1,12 +1,15 @@
 package io.projectnewm.shared.login.service
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.projectnewm.shared.HttpRoutes
 import io.projectnewm.shared.login.models.LogInUser
+import io.projectnewm.shared.login.models.LoginResponse
+import io.projectnewm.shared.login.models.LoginStatus
 import io.projectnewm.shared.login.models.NewUser
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -15,7 +18,7 @@ import kotlinx.serialization.Serializable
 interface LogInService {
     suspend fun requestEmailConfirmationCode(email: String): String
     suspend fun register(user: NewUser): String
-    suspend fun logIn(user: LogInUser): LoginResponse?
+    suspend fun logIn(user: LogInUser): LoginStatus
 }
 
 //TODO: Handle Error Cases
@@ -31,7 +34,6 @@ internal class LogInServiceImpl(
                     path(HttpRoutes.REQUEST_VERIFICATION_CODE_PATH)
                     parameters.append("email", email)
                 }
-//                url("${HttpRoutes.REQUEST_CODE}?email=$email")
             }
         } catch (e: RedirectResponseException) {
             // 3XX - responses
@@ -68,31 +70,48 @@ internal class LogInServiceImpl(
         return ""
     }
 
-    override suspend fun logIn(user: LogInUser): LoginResponse {
-        return httpClient.post {
-            url {
-                protocol = HttpRoutes.PROTOCOL
-                host = HttpRoutes.HOST
-                path(HttpRoutes.LOGIN_PATH)
-                headers {
-                    append(HttpHeaders.Accept, "application/json")
-                    append(HttpHeaders.ContentType, "application/json")
+    override suspend fun logIn(user: LogInUser): LoginStatus {
+        return try {
+            val response: HttpResponse = httpClient.post {
+                url {
+                    protocol = HttpRoutes.PROTOCOL
+                    host = HttpRoutes.HOST
+                    path(HttpRoutes.LOGIN_PATH)
+                    headers {
+                        append(HttpHeaders.Accept, "application/json")
+                        append(HttpHeaders.ContentType, "application/json")
+                    }
+                    body = user
                 }
-                body = user
             }
+            val data: LoginResponse = response.receive()
+            LoginStatus.Success(data)
+        } catch (e: RedirectResponseException) {
+            // 3XX - responses
+            println("cje466 Error (3XX) : ${e.response.status.description}")
+            LoginStatus.UnknownError
+        } catch (e: ClientRequestException) {
+            // 4XX - responses
+            return when (e.response.status.value) {
+                404 -> {
+                    //404 NOT FOUND If no registered user with 'email' is found
+                    LoginStatus.UserNotFound
+                }
+                401 -> {
+                    //401 UNAUTHORIZED if 'password' is invalid.
+                    LoginStatus.WrongPassword
+                }
+                else -> {
+                    LoginStatus.UnknownError
+                }
+            }
+        } catch (e: ServerResponseException) {
+            // 5XX - responses
+            println("cje466 Error (5XX) : ${e.response.status.description}")
+            LoginStatus.UnknownError
+        } catch (e: Exception) {
+            println("cje466 Error : ${e.message}")
+            LoginStatus.UnknownError
         }
     }
-}
-
-
-@Serializable
-data class LoginResponse(
-    @SerialName("accessToken")
-    val accessToken: String,
-    @SerialName("refreshToken")
-    val refreshToken: String
-)
-
-fun LoginResponse.isValid(): Boolean {
-    return accessToken.isBlank() && refreshToken.isBlank()
 }

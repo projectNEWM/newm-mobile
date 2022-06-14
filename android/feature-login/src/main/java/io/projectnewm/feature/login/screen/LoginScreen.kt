@@ -35,14 +35,24 @@ internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 
 @Composable
 fun LoginScreen(
-    onSignInSubmitted: () -> Unit,
+    onUserLoggedIn: () -> Unit,
     onSignupClick: () -> Unit,
-    loginViewModel: LoginViewModel = org.koin.androidx.compose.get()
+    viewModel: LoginViewModel = org.koin.androidx.compose.get()
 ) {
     val context = LocalContext.current
     PreLoginArtistBackgroundContentTemplate {
         LoginPageMainTextImage(textImage = R.drawable.ic_login_enter_newmiverse)
 
+        val state = viewModel.state.collectAsState()
+        LaunchedEffect(state.value.isUserLoggedIn, state.value.errorMessage) {
+            if (state.value.isUserLoggedIn) {
+                context.shortToast("Enjoy!")
+                onUserLoggedIn()
+            }
+            if(!state.value.errorMessage.isNullOrBlank()) {
+                context.shortToast(state.value.errorMessage.orEmpty())
+            }
+        }
         val focusRequester = remember { FocusRequester() }
         val emailState = remember { EmailState() }
         Email(emailState = emailState, onImeAction = { focusRequester.requestFocus() })
@@ -54,11 +64,7 @@ fun LoginScreen(
             label = stringResource(id = R.string.password),
             passwordState = passwordState,
             onImeAction = {
-                if (emailState.isValid && passwordState.isValid) {
-                    loginViewModel.loginUserWith(emailState.text, passwordState.text)
-                } else  {
-                    loginViewModel.loginUserWith(emailState.text, passwordState.text)
-                }
+                viewModel.attemptToLogin(email = emailState.text, passwordState.text)
             },
             modifier = Modifier.focusRequester(focusRequester),
         )
@@ -70,18 +76,10 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Box(Modifier.clickable {
-            if (emailState.isValid && passwordState.isValid) {
-                context.shortToast("Welcome ${emailState.text}")
-                onSignInSubmitted()
-            } else if (emailState.isValid.not() && passwordState.isValid.not()) {
-                context.shortToast("Please Enter a Valid Email and Password")
-            } else if (emailState.isValid.not()) {
-                context.shortToast("Please enter a valid Email")
-            } else if (passwordState.isValid.not()) {
-                context.shortToast("Please enter a valid Password")
-            }
-        }
-        ) {
+            viewModel.attemptToLogin(
+                email = emailState.text, password = passwordState.text
+            )
+        }) {
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -102,7 +100,7 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(4.dp))
                 .border(BorderStroke(1.dp, SongRingBrush()))
                 .clickable {
-                    onSignInSubmitted()
+                    onUserLoggedIn()
                     context.shortToast("Welcome Guest")
                 },
             contentAlignment = Alignment.Center
