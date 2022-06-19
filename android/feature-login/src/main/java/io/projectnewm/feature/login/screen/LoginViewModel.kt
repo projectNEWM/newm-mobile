@@ -2,8 +2,8 @@ package io.projectnewm.feature.login.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.projectnewm.shared.login.service.LoginStatus
-import io.projectnewm.shared.login.service.isValid
+import io.projectnewm.shared.login.models.LoginStatus
+import io.projectnewm.shared.login.models.isValid
 import io.projectnewm.shared.login.usecases.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +20,10 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
         if (email.isNotBlank() && password.isNotBlank()) {
             viewModelScope.launch {
                 println("cje466: LoginViewModel: attemptToLogin: with : $email : $password")
+                _state.value = _state.value.copy(
+                    wrongPassword = false,
+                    errorMessage = ""
+                )
 
                 when (val status: LoginStatus = useCase.logIn(email, password)) {
                     is LoginStatus.Success -> {

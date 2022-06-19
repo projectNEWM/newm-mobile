@@ -30,6 +30,7 @@ import io.projectnewm.feature.login.screen.password.PasswordState
 
 @Composable
 fun SignUpScreen(
+    onUserLoggedIn: () -> Unit,
     onVerification: () -> Unit,
     viewModel: SignupViewModel) {
 
@@ -37,9 +38,12 @@ fun SignUpScreen(
 
         val userState = viewModel.state.collectAsState()
 
-        LaunchedEffect(key1 = userState.value.verificationRequested ) {
+        LaunchedEffect(key1 = userState.value.verificationRequested, key2 =  userState.value.verificationRequested) {
             if(userState.value.verificationRequested) {
                 onVerification()
+            }
+            if(userState.value.isUserRegistered) {
+                onUserLoggedIn()
             }
         }
 

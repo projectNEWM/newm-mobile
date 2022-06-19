@@ -2,6 +2,7 @@ package io.projectnewm.feature.login.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.projectnewm.shared.login.models.RegisterStatus
 import io.projectnewm.shared.login.usecases.SignupUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -9,10 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
-
-    init {
-        println("cje466 Initializing SignupViewModel")
-    }
 
     private val _state = MutableStateFlow(SignupUserState())
     val state: StateFlow<SignupUserState>
@@ -60,19 +57,46 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
     }
 
     fun verifyAccount() {
-//        if (!_state.value.email.isNullOrBlank() && !_state.value.password.isNullOrBlank() && !_state.value.passwordConfirmation.isNullOrBlank())
-            println("cje466: email: ${_state.value.email.orEmpty()}")
-            println("cje466: password: ${_state.value.password.orEmpty()}")
-            println("cje466: passwordConfirmation: ${_state.value.passwordConfirmation.orEmpty()}")
-            println("cje466: emailVerificationCode: ${_state.value.emailVerificationCode.orEmpty()}")
-            viewModelScope.launch {
-                useCase.registerUser(
-                    email = _state.value.email.orEmpty(),
-                    password = _state.value.password.orEmpty(),
-                    passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
-                    verificationCode = _state.value.emailVerificationCode.orEmpty()
-                )
+        println("cje466: email: ${_state.value.email.orEmpty()}")
+        println("cje466: password: ${_state.value.password.orEmpty()}")
+        println("cje466: passwordConfirmation: ${_state.value.passwordConfirmation.orEmpty()}")
+        println("cje466: emailVerificationCode: ${_state.value.emailVerificationCode.orEmpty()}")
+        viewModelScope.launch {
+            _state.value = _state.value.copy(
+                errorMessage = null
+            )
+
+            val status = useCase.registerUser(
+                email = _state.value.email.orEmpty(),
+                password = _state.value.password.orEmpty(),
+                passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
+                verificationCode = _state.value.emailVerificationCode.orEmpty()
+            )
+
+            when (status) {
+                is RegisterStatus.Success -> {
+                    _state.value = _state.value.copy(
+                        isUserRegistered = true,
+                        errorMessage = null
+                    )
+                }
+                is RegisterStatus.UserAlreadyExists -> {
+                    _state.value = _state.value.copy(
+                        errorMessage = "User associated with that Email Already Exists"
+                    )
+                }
+                is RegisterStatus.UnknownError -> {
+                    _state.value = _state.value.copy(
+                        errorMessage = "Unknown Error"
+                    )
+                }
+                is RegisterStatus.TwoFactorAuthenticationFailed -> {
+                    _state.value = _state.value.copy(
+                        errorMessage = "Wrong Verification Code"
+                    )
+                }
             }
+        }
     }
 
     data class SignupUserState(
@@ -80,6 +104,8 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
         val password: String? = null,
         val passwordConfirmation: String? = null,
         val emailVerificationCode: String? = null,
-        val verificationRequested: Boolean = false
+        val verificationRequested: Boolean = false,
+        val isUserRegistered: Boolean = false,
+        val errorMessage: String? = null
     )
 }

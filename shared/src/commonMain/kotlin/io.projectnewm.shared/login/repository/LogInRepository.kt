@@ -1,10 +1,10 @@
 package io.projectnewm.shared.login.repository
 
 import io.projectnewm.shared.login.models.LogInUser
+import io.projectnewm.shared.login.models.LoginStatus
 import io.projectnewm.shared.login.models.NewUser
+import io.projectnewm.shared.login.models.RegisterStatus
 import io.projectnewm.shared.login.service.LogInService
-import io.projectnewm.shared.login.service.LoginStatus
-import io.projectnewm.shared.login.service.isValid
 
 //TODO: Handle Error Cases
 internal class LogInRepository(
@@ -14,7 +14,7 @@ internal class LogInRepository(
         return service.requestEmailConfirmationCode(email)
     }
 
-    suspend fun registerUser(user: NewUser): String {
+    suspend fun registerUser(user: NewUser): RegisterStatus {
         return service.register(user)
     }
 
@@ -30,7 +30,7 @@ internal class LogInRepository(
         newPassword: String,
         confirmPassword: String,
         authCode: String
-    ): String {
+    ): RegisterStatus {
         return service.register(
             NewUser(
                 firstName,

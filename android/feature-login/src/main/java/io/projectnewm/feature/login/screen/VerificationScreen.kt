@@ -13,21 +13,36 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.projectnewm.core.ui.utils.HotPinkBrush
+import io.projectnewm.core.ui.utils.shortToast
 
 @Composable
 fun VerificationScreen(
     viewModel: SignupViewModel,
     onVerificationComplete: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     PreLoginArtistBackgroundContentTemplate {
         Text(text = "Check your email!")
         Spacer(modifier = Modifier.height(16.dp))
 
         var text by remember { mutableStateOf("") }
+
+        val state = viewModel.state.collectAsState()
+
+        LaunchedEffect(key1 = state.value.isUserRegistered, key2 = state.value.errorMessage) {
+            if (state.value.isUserRegistered) {
+                onVerificationComplete()
+            }
+            if (!state.value.errorMessage.isNullOrBlank()) {
+                context.shortToast(state.value.errorMessage.orEmpty())
+            }
+        }
 
         TextField(
             value = text,
@@ -51,7 +66,6 @@ fun VerificationScreen(
                 .background(brush = HotPinkBrush())
                 .clickable {
                     viewModel.verifyAccount()
-//                    onVerificationComplete()
                 },
             contentAlignment = Alignment.Center
         ) {

@@ -7,17 +7,14 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.projectnewm.shared.HttpRoutes
-import io.projectnewm.shared.login.models.LogInUser
-import io.projectnewm.shared.login.models.LoginResponse
-import io.projectnewm.shared.login.models.LoginStatus
-import io.projectnewm.shared.login.models.NewUser
+import io.projectnewm.shared.login.models.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 
 interface LogInService {
     suspend fun requestEmailConfirmationCode(email: String): String
-    suspend fun register(user: NewUser): String
+    suspend fun register(user: NewUser): RegisterStatus
     suspend fun logIn(user: LogInUser): LoginStatus
 }
 
@@ -53,21 +50,32 @@ internal class LogInServiceImpl(
         }
     }
 
-    override suspend fun register(user: NewUser): String {
-        val httpResponse = httpClient.put<HttpResponse> {
-            url {
-                protocol = HttpRoutes.PROTOCOL
-                host = HttpRoutes.HOST
-                path(HttpRoutes.REGISTER_USER_PATH)
-                headers {
-                    append(HttpHeaders.ContentType, "application/json")
+    override suspend fun register(user: NewUser): RegisterStatus {
+        return try {
+            val httpResponse: HttpResponse = httpClient.put<HttpResponse> {
+                url {
+                    protocol = HttpRoutes.PROTOCOL
+                    host = HttpRoutes.HOST
+                    path(HttpRoutes.REGISTER_USER_PATH)
+                    headers {
+                        append(HttpHeaders.ContentType, "application/json")
+                    }
+                    body = user
                 }
-                body = user
+            }
+            println("cje466: register user: $user httpResponse $httpResponse")
+            if (httpResponse.status.value == 204) {
+                RegisterStatus.Success
+            } else {
+                RegisterStatus.UnknownError
+            }
+        } catch (e: ClientRequestException) {
+            when (e.response.status.value) {
+                409 -> { RegisterStatus.UserAlreadyExists }
+                403 -> { RegisterStatus.TwoFactorAuthenticationFailed }
+                else -> { RegisterStatus.UnknownError }
             }
         }
-        println("cje466: register user: $user httpResponse ${httpResponse}")
-
-        return ""
     }
 
     override suspend fun logIn(user: LogInUser): LoginStatus {

@@ -43,6 +43,13 @@ fun WelcomeToNewm(signupViewModel: SignupViewModel = org.koin.androidx.compose.g
         }
         composable(Screen.Signup.route) {
             SignUpScreen(
+                onUserLoggedIn = {
+                    navController.navigate(Screen.HomeRoot.route) {
+                        popUpTo(Screen.LoginScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
                 onVerification = {
                     navController.navigate(Screen.VerificationCode.route)
                 },

@@ -1,7 +1,7 @@
 package io.projectnewm.shared.login.usecases
 
+import io.projectnewm.shared.login.models.LoginStatus
 import io.projectnewm.shared.login.repository.LogInRepository
-import io.projectnewm.shared.login.service.LoginStatus
 
 interface LoginUseCase {
     suspend fun logIn(email: String, password: String): LoginStatus

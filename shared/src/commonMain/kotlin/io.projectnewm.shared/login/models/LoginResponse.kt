@@ -21,3 +21,10 @@ sealed class LoginStatus {
 fun LoginResponse.isValid(): Boolean {
     return accessToken.isNotBlank() && refreshToken.isNotBlank()
 }
+
+sealed class RegisterStatus {
+    object Success : RegisterStatus()
+    object UserAlreadyExists : RegisterStatus()
+    object TwoFactorAuthenticationFailed : RegisterStatus()
+    object UnknownError : RegisterStatus()
+}
