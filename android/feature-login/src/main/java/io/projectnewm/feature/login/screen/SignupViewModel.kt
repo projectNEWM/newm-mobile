@@ -48,19 +48,12 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
                     _state.value = _state.value.copy(
                         verificationRequested = true
                     )
-                    println("cje466: response: $response")
-                } else {
-                    println("cje466: Fields are not correct, please enter email and passwords")
                 }
             }
         }
     }
 
     fun verifyAccount() {
-        println("cje466: email: ${_state.value.email.orEmpty()}")
-        println("cje466: password: ${_state.value.password.orEmpty()}")
-        println("cje466: passwordConfirmation: ${_state.value.passwordConfirmation.orEmpty()}")
-        println("cje466: emailVerificationCode: ${_state.value.emailVerificationCode.orEmpty()}")
         viewModelScope.launch {
             _state.value = _state.value.copy(
                 errorMessage = null

@@ -8,8 +8,6 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.projectnewm.shared.HttpRoutes
 import io.projectnewm.shared.login.models.*
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 
 interface LogInService {
@@ -34,18 +32,18 @@ internal class LogInServiceImpl(
             }
         } catch (e: RedirectResponseException) {
             // 3XX - responses
-            println("cje466 Error (3XX) : ${e.response.status.description}")
+            println("LogInService Error (3XX) : ${e.response.status.description}")
             ""
         } catch (e: ClientRequestException) {
             // 4XX - responses
-            println("cje466 Error (4XX) : ${e.response.status.description}")
+            println("LogInService Error (4XX) : ${e.response.status.description}")
             ""
         } catch (e: ServerResponseException) {
             // 5XX - responses
-            println("cje466 Error (5XX) : ${e.response.status.description}")
+            println("LogInService Error (5XX) : ${e.response.status.description}")
             ""
         } catch (e: Exception) {
-            println("cje466 Error : ${e.message}")
+            println("LogInService Error : ${e.message}")
             ""
         }
     }
@@ -63,7 +61,7 @@ internal class LogInServiceImpl(
                     body = user
                 }
             }
-            println("cje466: register user: $user httpResponse $httpResponse")
+            println("LogInService: register user: $user httpResponse $httpResponse")
             if (httpResponse.status.value == 204) {
                 RegisterStatus.Success
             } else {
@@ -96,7 +94,7 @@ internal class LogInServiceImpl(
             LoginStatus.Success(data)
         } catch (e: RedirectResponseException) {
             // 3XX - responses
-            println("cje466 Error (3XX) : ${e.response.status.description}")
+            println("LogInService Error (3XX) : ${e.response.status.description}")
             LoginStatus.UnknownError
         } catch (e: ClientRequestException) {
             // 4XX - responses
@@ -115,10 +113,10 @@ internal class LogInServiceImpl(
             }
         } catch (e: ServerResponseException) {
             // 5XX - responses
-            println("cje466 Error (5XX) : ${e.response.status.description}")
+            println("LogInService Error (5XX) : ${e.response.status.description}")
             LoginStatus.UnknownError
         } catch (e: Exception) {
-            println("cje466 Error : ${e.message}")
+            println("LogInService Error : ${e.message}")
             LoginStatus.UnknownError
         }
     }

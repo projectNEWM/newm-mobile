@@ -19,7 +19,6 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
     fun attemptToLogin(email: String, password: String) {
         if (email.isNotBlank() && password.isNotBlank()) {
             viewModelScope.launch {
-                println("cje466: LoginViewModel: attemptToLogin: with : $email : $password")
                 _state.value = _state.value.copy(
                     wrongPassword = false,
                     errorMessage = ""
