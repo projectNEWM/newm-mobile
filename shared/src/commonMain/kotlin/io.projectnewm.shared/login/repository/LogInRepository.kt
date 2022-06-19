@@ -1,18 +1,21 @@
-package io.projectnewm.shared.login
+package io.projectnewm.shared.login.repository
+
+import io.projectnewm.shared.login.models.*
+import io.projectnewm.shared.login.service.LogInService
 
 //TODO: Handle Error Cases
 internal class LogInRepository(
     private val service: LogInService
 ) {
-    suspend fun requestEmailConfirmationCode(email: String): String {
+    suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
         return service.requestEmailConfirmationCode(email)
     }
 
-    suspend fun registerUser(user: NewUser): String {
+    suspend fun registerUser(user: NewUser): RegisterStatus {
         return service.register(user)
     }
 
-    suspend fun logIn(email: String, password: String): String {
+    suspend fun logIn(email: String, password: String): LoginStatus {
         return service.logIn(LogInUser(email = email, password = password))
     }
 
@@ -24,7 +27,7 @@ internal class LogInRepository(
         newPassword: String,
         confirmPassword: String,
         authCode: String
-    ): String {
+    ): RegisterStatus {
         return service.register(
             NewUser(
                 firstName,

@@ -28,6 +28,7 @@ kotlin {
                 implementation(Ktor.core)
                 implementation(Ktor.clientSerialization)
                 implementation(SqlDelight.runtime)
+                implementation(Koin.core )
             }
         }
         val commonTest by getting {
@@ -43,6 +44,7 @@ kotlin {
                 implementation(SqlDelight.androidDriver)
                 implementation(Ktor.logback)
                 implementation(Ktor.logging)
+                implementation("io.ktor:ktor-client-auth:${Versions.ktor}")
             }
         }
         val androidTest by getting {

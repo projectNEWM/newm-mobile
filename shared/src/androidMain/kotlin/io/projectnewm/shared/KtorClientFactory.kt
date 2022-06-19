@@ -11,12 +11,15 @@ actual class KtorClientFactory {
         return HttpClient(Android) {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(
-                    kotlinx.serialization.json.Json {
+                    json = kotlinx.serialization.json.Json {
                         ignoreUnknownKeys = true // if the server sends extra fields, ignore them
                     }
                 )
             }
-            install(Logging)
+            install(Logging) {
+                logger = Logger.ANDROID
+                level = LogLevel.ALL
+            }
         }
     }
 }

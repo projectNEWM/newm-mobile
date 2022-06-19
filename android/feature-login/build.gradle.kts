@@ -45,6 +45,9 @@ dependencies {
     implementation(Google.navigationCompose)
     implementation(Google.materialIconsExtended)
 
+    implementation(Koin.android)
+    implementation(Koin.androidCompose)
+
     debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)
 
