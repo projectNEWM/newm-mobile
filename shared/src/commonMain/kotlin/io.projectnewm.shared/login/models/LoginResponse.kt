@@ -28,3 +28,8 @@ sealed class RegisterStatus {
     object TwoFactorAuthenticationFailed : RegisterStatus()
     object UnknownError : RegisterStatus()
 }
+
+sealed class RequestEmailStatus {
+    object Success : RequestEmailStatus()
+    object Failure : RequestEmailStatus()
+}

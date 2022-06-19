@@ -1,16 +1,13 @@
 package io.projectnewm.shared.login.repository
 
-import io.projectnewm.shared.login.models.LogInUser
-import io.projectnewm.shared.login.models.LoginStatus
-import io.projectnewm.shared.login.models.NewUser
-import io.projectnewm.shared.login.models.RegisterStatus
+import io.projectnewm.shared.login.models.*
 import io.projectnewm.shared.login.service.LogInService
 
 //TODO: Handle Error Cases
 internal class LogInRepository(
     private val service: LogInService
 ) {
-    suspend fun requestEmailConfirmationCode(email: String): String {
+    suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
         return service.requestEmailConfirmationCode(email)
     }
 

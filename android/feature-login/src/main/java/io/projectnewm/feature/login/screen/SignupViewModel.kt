@@ -3,6 +3,7 @@ package io.projectnewm.feature.login.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.projectnewm.shared.login.models.RegisterStatus
+import io.projectnewm.shared.login.models.RequestEmailStatus
 import io.projectnewm.shared.login.usecases.SignupUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,10 +45,17 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
         viewModelScope.launch {
             _state.value.let {
                 if (it.email?.isEmpty() == false && it.password == it.passwordConfirmation) {
-                    val response = useCase.requestEmailConfirmationCode(it.email)
-                    _state.value = _state.value.copy(
-                        verificationRequested = true
-                    )
+                    when (useCase.requestEmailConfirmationCode(it.email)) {
+                        is RequestEmailStatus.Success -> {
+                            _state.value = _state.value.copy(
+                                verificationRequested = true
+                            )
+                        }
+                        else -> {
+                            print("Unable to request code")
+                        }
+                    }
+
                 }
             }
         }
