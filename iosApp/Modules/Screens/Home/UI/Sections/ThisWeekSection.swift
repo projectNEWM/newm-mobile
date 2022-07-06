@@ -7,7 +7,7 @@ struct ThisWeekSection: View {
 		cellModels = [
 			ThisWeekCellModel(iconImage: .heart, amountText: "+\(model.newFollowers)", labelText: .followersThisWeek),
 			ThisWeekCellModel(iconImage: .royalties, amountText: "$\(model.royalties)", labelText: .royaltiesThisWeek),
-			ThisWeekCellModel(iconImage: .earnings, amountText: "+\(model.earnings)", labelText: .earnings)
+			ThisWeekCellModel(iconImage: .earnings, amountText: "+\(model.earnings)", labelText: .earningsThisWeek)
 		]
 	}
 	
