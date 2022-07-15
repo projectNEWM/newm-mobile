@@ -7,6 +7,7 @@ import SharedUI
 
 struct HomeView: View {
 	@InjectedObject private var viewModel: HomeViewModel
+	@State private var shouldShowGreeting: Bool = true
 	
 	public init() {}
 	
@@ -24,6 +25,13 @@ struct HomeView: View {
 				}
 			}
 			.navigationBarTitleDisplayMode(.inline)
+		}
+		.onAppear {
+			withAnimation {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+					shouldShowGreeting = false
+				}
+			}
 		}
 	}
 	
@@ -54,7 +62,7 @@ struct HomeView: View {
 	
 	private func allViews(uiModel: HomeViewUIModel) -> some View {
 		ScrollView {
-			titleSection(uiModel.titleSectionModel)
+			titleSection(shouldShowGreeting ? uiModel.greetingSectionModel : uiModel.titleSectionModel)
 			VStack(spacing: 36) {
 				ThisWeekSection(uiModel.thisWeekSection)
 				BigCellSection(uiModel.recentlyPlayedSection)
