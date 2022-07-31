@@ -18,20 +18,13 @@ struct HomeView: View {
 				switch viewModel.state {
 				case .loading:
 					ProgressView().erased
-				case .loaded(let uiModel):
-					allViews(uiModel: uiModel)
+				case .loaded(let (actionHandler, uiModel)):
+					allViews(uiModel: uiModel, actionHandler: actionHandler).erased
 				case .error:
 					Text("Error").erased
 				}
 			}
 			.navigationBarTitleDisplayMode(.inline)
-		}
-		.onAppear {
-			withAnimation {
-				DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-					shouldShowGreeting = false
-				}
-			}
 		}
 	}
 	
@@ -60,9 +53,11 @@ struct HomeView: View {
 //		}
 //	}
 	
-	private func allViews(uiModel: HomeViewUIModel) -> some View {
+	private func allViews(uiModel: HomeViewUIModel, actionHandler: HomeViewActionHandler) -> some View {
 		ScrollView {
-			titleSection(shouldShowGreeting ? uiModel.greetingSectionModel : uiModel.titleSectionModel)
+			titleSection(shouldShowGreeting ? uiModel.greeting : uiModel.title)
+			//TODO: THIS ANIMATION ISN'T WORKING
+				.transition(.opacity.animation(.easeInOut(duration: 1.0)))
 			VStack(spacing: 36) {
 				ThisWeekSection(uiModel.thisWeekSection)
 				BigCellSection(uiModel.recentlyPlayedSection)
@@ -72,9 +67,17 @@ struct HomeView: View {
 				BigCellSection(uiModel.mostPopularThisWeek)
 			}
 		}
+		.onAppear {
+			//TODO: THIS ANIMATION ISN'T WORKING
+			withAnimation {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+					shouldShowGreeting = false
+				}
+			}
+		}
 	}
 	
-	private func titleSection(_ model: HomeViewUIModel.TitleSectionModel) -> some View {
+	private func titleSection(_ model: HomeViewTitleSectionModel) -> some View {
 		TitleSection(model: model)
 			.padding(.bottom, 41)
 	}

@@ -3,7 +3,7 @@ import SwiftUI
 struct ThisWeekSection: View {
 	private let cellModels: [ThisWeekCellModel]
 	
-	init(_ model: HomeViewUIModel.ThisWeekSectionModel) {
+	init(_ model: ThisWeekSectionModel) {
 		cellModels = [
 			ThisWeekCellModel(iconImage: .heart, amountText: "+\(model.newFollowers)", labelText: .followersThisWeek),
 			ThisWeekCellModel(iconImage: .royalties, amountText: "$\(model.royalties)", labelText: .royaltiesThisWeek),
@@ -23,7 +23,7 @@ struct ThisWeekSection: View {
 
 struct ThisWeekSection_Previews: PreviewProvider {
 	static var previews: some View {
-		ThisWeekSection(MockHomeViewUseCase().execute().thisWeekSection)
+		ThisWeekSection(MockHomeViewUIModelProvider.mockUIModel.thisWeekSection)
 			.preferredColorScheme(.dark)
 	}
 }

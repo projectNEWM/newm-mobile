@@ -20,6 +20,17 @@ public final class LoginModule: ModuleProtocol {
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
+		mockResolver.register {
+			MockLogInLogOutUseCase.shared as LoggedInUserUseCaseProtocol
+		}
+		
+		mockResolver.register {
+			MockLogInLogOutUseCase.shared as LogInUseCaseProtocol
+		}
+		
+		mockResolver.register {
+			MockLogInLogOutUseCase.shared as LogOutUseCaseProtocol
+		}
 	}
 }
 #endif

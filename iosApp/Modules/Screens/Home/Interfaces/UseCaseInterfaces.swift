@@ -2,28 +2,42 @@ import Foundation
 import SharedUI
 
 struct HomeViewUIModel {
-	struct ThisWeekSectionModel {
-		let newFollowers: Int
-		let royalties: Float
-		let earnings: Float
-	}
-	
-	struct TitleSectionModel {
-		let isGreeting: Bool
-		let title: String
-		let profilePicURL: URL
-	}
-
-	let titleSectionModel: TitleSectionModel
-	let greetingSectionModel: TitleSectionModel
+	let greeting: HomeViewTitleSectionModel
+	let title: HomeViewTitleSectionModel
 	let thisWeekSection: ThisWeekSectionModel
 	let recentlyPlayedSection: CellsSectionModel<BigCellViewModel>
 	let justReleasedSection: CellsSectionModel<BigCellViewModel>
 	let moreOfWhatYouLikeSection: CellsSectionModel<BigCellViewModel>
 	let newmArtistsSection: CellsSectionModel<CompactCellViewModel>
 	let mostPopularThisWeek: CellsSectionModel<BigCellViewModel>
+	let thisWeekTitle: String
+	let discoverTitle: String
+	let justReleasedTitle: String
+	let moreOfWhatYouLikeTitle: String
+	let newmArtistsTitle: String
+	let mostPopularThisWeekTitle: String
 }
 
-protocol GetHomeViewUseCase {
-	func execute() -> HomeViewUIModel
+struct ThisWeekSectionModel {
+	let newFollowers: Int
+	let royalties: Float
+	let earnings: Float
+}
+
+struct HomeViewTitleSectionModel {
+	let isGreeting: Bool
+	let title: String
+	let profilePicURL: URL
+}
+
+protocol HomeViewActionHandler {
+	func recentlyPlayedTapped()
+}
+
+protocol HomeViewUIModelProvider {
+	func getModel() async throws -> HomeViewUIModel
+}
+
+protocol HomeViewActionHandlerProvider {
+	func getActionHandler() -> HomeViewActionHandler
 }

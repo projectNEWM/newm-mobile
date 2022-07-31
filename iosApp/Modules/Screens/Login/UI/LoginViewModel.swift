@@ -2,6 +2,9 @@ import Foundation
 import Combine
 import shared
 import ModuleLinker
+import Resolver
+import SharedUI
+import Utilities
 
 class LoginViewModel: ObservableObject {
 	@Localizable(LoginModule.self) var title = .title
@@ -13,39 +16,30 @@ class LoginViewModel: ObservableObject {
 	
 	@Published var email: String = ""
 	@Published var password: String = ""
+	@Published var state: ViewState<Void> = .loaded(())
+	
+	var fieldsAreValid: Bool { loginFieldValidator.validate(email: email, password: password) }
 	
 	private let loginFieldValidator = LoginFieldValidator()
-	
-	var fieldsAreValid: Bool {
-		loginFieldValidator.validate(email: email, password: password)
-	}
-		
-	let logInUseCase = LoggedInUserUseCase()
-	
+	@Injected private var logInUseCase: LogInUseCaseProtocol
+
 	func enterNewmTapped() {
-		logInUseCase.logIn()
+		state = .loading
+		Task { @MainActor in
+			do {
+				try await logInUseCase.logIn(email: email, password: email)
+				state = .loaded(())
+			} catch {
+				state = .error(error)
+			}
+		}
 	}
 	
 	func createAccountTapped() {
-		
+		//TODO:
 	}
 	
 	func forgotPasswordTapped() {
-		
-	}
-}
-
-import SwiftUI
-public class LoggedInUserUseCase: ObservableObject {
-	@AppStorage("loggedInUser") var loggedInUser: String?
-
-	init() {}
-
-	public func logIn() {
-		loggedInUser = "mulrich@projectnewm.io"
-	}
-
-	public func logOut() {
-		loggedInUser = nil
+		//TODO:
 	}
 }

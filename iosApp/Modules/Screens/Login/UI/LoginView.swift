@@ -11,10 +11,29 @@ public struct LoginView: View {
 	
 	@InjectedObject var viewModel: LoginViewModel
 	@FocusState private var focusedField: Field?
-		
+	
 	public init() {}
 	
 	public var body: some View {
+		switch viewModel.state {
+		case .loaded:
+			return loadedView.erased
+		case .loading:
+			return loadingView.erased
+		case .error(let error):
+			return errorView(error: error).erased
+		}
+	}
+	
+	private var loadingView: some View {
+		ProgressView()
+	}
+	
+	private func errorView(error: Error) -> some View {
+		Text(error.localizedDescription)
+	}
+	
+	private var loadedView: some View {
 		VStack {
 			VStack {
 				newmLogo
@@ -33,7 +52,7 @@ public struct LoginView: View {
 		.background(background)
 	}
 	
-	var background: some View {
+	private var background: some View {
 		Image.loginBackground
 			.resizable(capInsets: EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0), resizingMode: .stretch)
 			.ignoresSafeArea()
@@ -42,13 +61,13 @@ public struct LoginView: View {
 			.background(Color.black.opacity(1.0))
 	}
 	
-	var newmLogo: some View {
+	private var newmLogo: some View {
 		Image.newmLogo
 			.resizable()
 			.frame(width: 100, height: 100, alignment: .center)
 	}
 	
-	var title: some View {
+	private var title: some View {
 		Text(viewModel.title)
 			.font(.ralewayBlack(ofSize: 30))
 			.foregroundColor(.white)
@@ -58,7 +77,7 @@ public struct LoginView: View {
 			.fixedSize(horizontal: false, vertical: true)
 	}
 	
-	var emailField: some View {
+	private var emailField: some View {
 		TextField(viewModel.emailPlaceholder, text: $viewModel.email)
 			.formatField()
 			.keyboardType(.emailAddress)
@@ -68,7 +87,7 @@ public struct LoginView: View {
 			}
 	}
 	
-	var passwordField: some View {
+	private var passwordField: some View {
 		SecureField(viewModel.passwordPlaceholder, text: $viewModel.password)
 			.formatField()
 			.focused($focusedField, equals: .password)
@@ -77,12 +96,12 @@ public struct LoginView: View {
 			}
 	}
 	
-	var forgotPassword: some View {
+	private var forgotPassword: some View {
 		Button(action: viewModel.forgotPasswordTapped, label: Text(viewModel.forgotPassword).formatLink)
 			.padding(.bottom, 50)
 	}
 	
-	var enterNewmButton: some View {
+	private var enterNewmButton: some View {
 		Button(action: viewModel.enterNewmTapped) {
 			Text(viewModel.enterNewm)
 				.padding()
@@ -98,7 +117,7 @@ public struct LoginView: View {
 		.buttonStyle(.plain)
 	}
 	
-	var createFreeAccount: some View {
+	private var createFreeAccount: some View {
 		Button(action: viewModel.createAccountTapped, label: Text(viewModel.createAccount).formatLink)
 	}
 }

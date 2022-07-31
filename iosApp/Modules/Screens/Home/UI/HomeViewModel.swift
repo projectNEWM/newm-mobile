@@ -7,33 +7,30 @@ import shared
 import Utilities
 import SharedUI
 
-enum ViewState<Data> {
-	case loading
-	case loaded(Data)
-	case error
-}
-
-public class HomeViewModel: ObservableObject {	
-	let thisWeekTitle: String = .thisWeek
-	let discoverTitle: String = .discover
-	let justReleasedTitle: String = .justReleased
-	let moreOfWhatYouLikeTitle: String = .moreOfWhatYouLike
-	let newmArtistsTitle: String = .newmArtists
-	let mostPopularThisWeekTitle: String = .mostPopularThisWeek
-	let homeTitle: String = .home
-
+public class HomeViewModel: ObservableObject {
 	@Published var route: HomeRoute?
-	
-	@Injected private var getHomeViewUseCase: GetHomeViewUseCase
+	@MainActor @Published var state: ViewState<(HomeViewActionHandler, HomeViewUIModel)> = .loading
+//	var actionHandler: HomeViewActionHandler?
 
-	@Published var state: ViewState<HomeViewUIModel> = .loading
+	@Injected private var uiModelProvider: HomeViewUIModelProvider
+	@Injected private var actionHandlerProvider: HomeViewActionHandlerProvider
 	
 	init() {
 		refresh()
 	}
 	
-	func refresh() {		
-		state = .loaded(getHomeViewUseCase.execute())
+	func refresh() {
+		//TODO: SHOULD THIS BE MAIN ACTOR...? COMPLAINS IF NOT
+		Task { @MainActor in
+			do {
+				state = .loading
+				let uiModel = try await uiModelProvider.getModel()
+				let actionHandler = actionHandlerProvider.getActionHandler()
+				state = .loaded((actionHandler, uiModel))
+			} catch {
+				state = .error(error)
+			}
+		}
 	}
 }
 

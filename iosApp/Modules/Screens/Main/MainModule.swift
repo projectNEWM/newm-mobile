@@ -13,7 +13,6 @@ public final class MainModule: ModuleProtocol {
 	public func registerAllServices() {
 		//TODO: should this be a separate resolver?
 		// Internal
-		Resolver.register { MainViewModel() as MainViewModelProtocol }
 		Resolver.register { [unowned self] in
 			[
 				TabViewProvider(image: Image(MainViewModelTab.home), tabName: MainViewModelTab.home.description) {
