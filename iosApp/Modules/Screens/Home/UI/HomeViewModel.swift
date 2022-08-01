@@ -7,14 +7,11 @@ import Utilities
 import SharedUI
 import Artist
 
-public class HomeViewModel: ObservableObject {
+class HomeViewModel: ObservableObject {
 	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
 	@Published var route: HomeRoute?
 	
 	@Injected private var uiModelProvider: HomeViewUIModelProvider
-	@Injected private var songPlayingViewProvider: SongPlayingViewProviding
-	@Injected private var artistViewProvider: ArtistViewProviding
-	@Injected private var playlistViewProvider: PlaylistViewProviding
 
 	init() {
 		refresh()
