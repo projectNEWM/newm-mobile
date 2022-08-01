@@ -14,7 +14,6 @@ class MainViewModel: ObservableObject {
 	
 	init() {
 		loggedInUserUseCase.loggedInUser
-			.print()
 			.map { $0 == nil }
 			.receive(on: DispatchQueue.main)
 			.assign(to: \.shouldShowLogin, on: self)
