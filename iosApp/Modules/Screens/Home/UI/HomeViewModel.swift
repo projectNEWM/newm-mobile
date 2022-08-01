@@ -2,19 +2,20 @@ import Foundation
 import Combine
 import Resolver
 import ModuleLinker
-import SwiftUI
 import shared
 import Utilities
 import SharedUI
+import Artist
 
 public class HomeViewModel: ObservableObject {
-	@Published var route: HomeRoute?
-	@MainActor @Published var state: ViewState<(HomeViewActionHandler, HomeViewUIModel)> = .loading
-//	var actionHandler: HomeViewActionHandler?
-
-	@Injected private var uiModelProvider: HomeViewUIModelProvider
-	@Injected private var actionHandlerProvider: HomeViewActionHandlerProvider
+	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
+	@Published var homeRoute: HomeRoute?
 	
+	@Injected private var uiModelProvider: HomeViewUIModelProvider
+	@Injected private var songPlayingViewProvider: SongPlayingViewProviding
+	@Injected private var artistViewProvider: ArtistViewProviding
+	@Injected private var playlistViewProvider: PlaylistViewProviding
+
 	init() {
 		refresh()
 	}
@@ -25,12 +26,18 @@ public class HomeViewModel: ObservableObject {
 			do {
 				state = .loading
 				let uiModel = try await uiModelProvider.getModel()
-				let actionHandler = actionHandlerProvider.getActionHandler()
-				state = .loaded((actionHandler, uiModel))
+				state = .loaded(uiModel)
 			} catch {
 				state = .error(error)
 			}
 		}
+	}
+}
+
+extension HomeViewModel: HomeViewActionHandler {
+	func artistTapped(id: String) {
+		print(#function + " " + id)
+		homeRoute = .artist(id: id)
 	}
 }
 

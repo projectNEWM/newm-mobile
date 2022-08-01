@@ -6,7 +6,8 @@ public struct CompactCellViewModel: Identifiable {
 	public let image: URL?
 	public let name: String
 	public let subtitle: String
-	public let id: ObjectIdentifier
+	public let modelID: String
+	public var id: ObjectIdentifier { modelID.objectIdentifier }
 }
 
 public extension CompactCellViewModel {
@@ -19,7 +20,7 @@ public extension CompactCellViewModel {
 		}
 		subtitle = "5 songs"
 		name = artist.name
-		id = artist.id.objectIdentifier
+		modelID = artist.id
 	}
 	
 	init(playlist: Playlist) {
@@ -31,6 +32,6 @@ public extension CompactCellViewModel {
 		}
 		subtitle = "5 songs"
 		name = playlist.title
-		id = playlist.playlistId.objectIdentifier
+		modelID = playlist.playlistId
 	}
 }

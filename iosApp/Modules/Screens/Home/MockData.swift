@@ -30,16 +30,4 @@ class MockHomeViewUIModelProvider: HomeViewUIModelProvider {
 		)
 	}
 }
-
-class MockHomeViewActionHandlerProvider: HomeViewActionHandlerProvider {
-	func getActionHandler() -> HomeViewActionHandler {
-		return MockHomeViewActionHandler()
-	}
-}
-
-class MockHomeViewActionHandler: HomeViewActionHandler {
-	func recentlyPlayedTapped() {
-		
-	}
-}
 #endif

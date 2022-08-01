@@ -30,14 +30,6 @@ struct HomeViewTitleSectionModel {
 	let profilePicURL: URL
 }
 
-protocol HomeViewActionHandler {
-	func recentlyPlayedTapped()
-}
-
 protocol HomeViewUIModelProvider {
 	func getModel() async throws -> HomeViewUIModel
-}
-
-protocol HomeViewActionHandlerProvider {
-	func getActionHandler() -> HomeViewActionHandler
 }

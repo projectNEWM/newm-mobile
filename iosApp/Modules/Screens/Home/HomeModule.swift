@@ -29,10 +29,6 @@ extension HomeModule {
 		mockResolver.register {
 			MockHomeViewUIModelProvider() as HomeViewUIModelProvider
 		}
-		
-		mockResolver.register {
-			MockHomeViewActionHandlerProvider() as HomeViewActionHandlerProvider
-		}
 	}
 }
 #endif

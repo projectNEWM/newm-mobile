@@ -4,9 +4,11 @@ import SharedUI
 
 public struct ArtistsSection: View {
 	private let model: CellsSectionModel<CompactCellViewModel>
+	private let actionHandler: (String) -> ()
 	
-	public init(_ model: CellsSectionModel<CompactCellViewModel>) {
+	public init(_ model: CellsSectionModel<CompactCellViewModel>, actionHandler: @escaping (String) -> ()) {
 		self.model = model
+		self.actionHandler = actionHandler
 	}
 	
 	public var body: some View {
@@ -19,6 +21,7 @@ public struct ArtistsSection: View {
 				CompactCell(model: cellModel, roundImage: true)
 					.frame(width: 180, alignment: .leading)
 					.fixedSize()
+					.onTapGesture { actionHandler(cellModel.modelID) }
 			}
 		}
 		.addHorizontalScrollView(title: model.title)
@@ -27,7 +30,7 @@ public struct ArtistsSection: View {
 
 struct CompactArtistsSection_Previews: PreviewProvider {
 	static var previews: some View {
-		ArtistsSection(CellsSectionModel(cells: SharedUI.MockData.compactArtistCells, title: "NEWM ARTISTS"))
+		ArtistsSection(CellsSectionModel(cells: SharedUI.MockData.compactArtistCells, title: "NEWM ARTISTS"), actionHandler: {_ in})
 			.preferredColorScheme(.dark)
 	}
 }
