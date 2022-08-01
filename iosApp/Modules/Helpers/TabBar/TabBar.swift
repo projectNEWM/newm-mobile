@@ -13,7 +13,7 @@ public struct TabBar: View {
 				tabProvider.viewProvider()
 					.tabBarItem(
 						image: tabProvider.image,
-						tabName: tabProvider.tabName
+						tabName: ""
 					)
 					.tag(tabProvider.tabName)
 			}

@@ -9,7 +9,7 @@ import Artist
 
 public class HomeViewModel: ObservableObject {
 	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
-	@Published var homeRoute: HomeRoute?
+	@Published var route: HomeRoute?
 	
 	@Injected private var uiModelProvider: HomeViewUIModelProvider
 	@Injected private var songPlayingViewProvider: SongPlayingViewProviding
@@ -37,7 +37,7 @@ public class HomeViewModel: ObservableObject {
 extension HomeViewModel: HomeViewActionHandler {
 	func artistTapped(id: String) {
 		print(#function + " " + id)
-		homeRoute = .artist(id: id)
+		route = .artist(id: id)
 	}
 }
 

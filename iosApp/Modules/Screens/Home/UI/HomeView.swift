@@ -16,7 +16,7 @@ struct HomeView: View {
 			case .loading:
 				ProgressView()
 			case .loaded(let uiModel):
-				LoadedView(actionHandler: viewModel, uiModel: uiModel, route: $viewModel.homeRoute)
+				LoadedView(actionHandler: viewModel, uiModel: uiModel, route: $viewModel.route)
 			case .error:
 				Text("Error")
 			}
