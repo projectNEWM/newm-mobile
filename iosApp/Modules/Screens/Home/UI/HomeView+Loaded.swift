@@ -4,7 +4,7 @@ import SharedUI
 
 extension HomeView {
 	struct LoadedView: View {
-		@State private var shouldShowGreeting: Bool = false
+		@State private var shouldShowGreeting: Bool = true
 		@Binding private var route: HomeRoute?
 		private let actionHandler: HomeViewActionHandler
 		private let uiModel: HomeViewUIModel
@@ -31,7 +31,6 @@ extension HomeView {
 				}
 				.onAppear {
 					//TODO: THIS ANIMATION ISN'T WORKING
-					shouldShowGreeting = true
 					withAnimation {
 						DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 							shouldShowGreeting = false
