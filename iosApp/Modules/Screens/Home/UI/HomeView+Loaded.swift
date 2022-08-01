@@ -6,10 +6,10 @@ extension HomeView {
 	struct LoadedView: View {
 		@State private var shouldShowGreeting: Bool = true
 		@Binding private var route: HomeRoute?
-		private let actionHandler: HomeViewActionHandler
+		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
 		
-		init(actionHandler: HomeViewActionHandler, uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
+		init(actionHandler: HomeViewActionHandling, uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.actionHandler = actionHandler
 			self.uiModel = uiModel
 			self._route = route

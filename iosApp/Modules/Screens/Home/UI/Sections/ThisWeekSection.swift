@@ -23,7 +23,7 @@ struct ThisWeekSection: View {
 
 struct ThisWeekSection_Previews: PreviewProvider {
 	static var previews: some View {
-		ThisWeekSection(MockHomeViewUIModelProvider.mockUIModel.thisWeekSection)
+		ThisWeekSection(MockHomeViewUIModelProviding.mockUIModel.thisWeekSection)
 			.preferredColorScheme(.dark)
 	}
 }

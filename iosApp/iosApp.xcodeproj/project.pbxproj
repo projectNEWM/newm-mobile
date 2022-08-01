@@ -214,7 +214,7 @@
 		76ADDBC32886A466008AA39A /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDBC12886A3D5008AA39A /* ViewState.swift */; };
 		76ADDCC528920D24008AA39A /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCC428920D24008AA39A /* UserDefault.swift */; };
 		76ADDCD8289725CA008AA39A /* UserDefaultTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCCA2897257B008AA39A /* UserDefaultTest.swift */; };
-		76ADDCDA28974668008AA39A /* HomeViewActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCD928974668008AA39A /* HomeViewActionHandler.swift */; };
+		76ADDCDA28974668008AA39A /* HomeViewActionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCD928974668008AA39A /* HomeViewActionHandling.swift */; };
 		76ADDCDC289748C1008AA39A /* HomeView+Loaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCDB289748C1008AA39A /* HomeView+Loaded.swift */; };
 		76ADDCDE2897491E008AA39A /* HomeView+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */; };
 		76ADDCE728980F61008AA39A /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */; };
@@ -1096,7 +1096,7 @@
 		76ADDCC428920D24008AA39A /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		76ADDCCA2897257B008AA39A /* UserDefaultTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultTest.swift; sourceTree = "<group>"; };
 		76ADDCCF289725BB008AA39A /* UtilitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		76ADDCD928974668008AA39A /* HomeViewActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewActionHandler.swift; sourceTree = "<group>"; };
+		76ADDCD928974668008AA39A /* HomeViewActionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewActionHandling.swift; sourceTree = "<group>"; };
 		76ADDCDB289748C1008AA39A /* HomeView+Loaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView+Loaded.swift"; sourceTree = "<group>"; };
 		76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView+Navigation.swift"; sourceTree = "<group>"; };
 		76ADDCE428980F61008AA39A /* HomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1988,7 +1988,7 @@
 			children = (
 				76D01D6A28164A9E00305605 /* HomeView.swift */,
 				76ADDCDB289748C1008AA39A /* HomeView+Loaded.swift */,
-				76ADDCD928974668008AA39A /* HomeViewActionHandler.swift */,
+				76ADDCD928974668008AA39A /* HomeViewActionHandling.swift */,
 				76D01D6B28164A9E00305605 /* HomeViewModel.swift */,
 				760300462838141800BBF78C /* Cells */,
 				766E8FF62856483400F18779 /* Sections */,
@@ -3220,7 +3220,7 @@
 				76562502284BE1CE004B6E4B /* HomeViewModel.swift in Sources */,
 				766E8FF32856418A00F18779 /* UseCaseInterfaces.swift in Sources */,
 				766E8FF52856459B00F18779 /* ThisWeekCellModel.swift in Sources */,
-				76ADDCDA28974668008AA39A /* HomeViewActionHandler.swift in Sources */,
+				76ADDCDA28974668008AA39A /* HomeViewActionHandling.swift in Sources */,
 				766E8FF12856371B00F18779 /* Media.swift in Sources */,
 				760C2C542816544A0030ACF4 /* HomeView.swift in Sources */,
 				76314D40284C0D65002C68DD /* ArtistsSection.swift in Sources */,

@@ -6,7 +6,7 @@ import Resolver
 import shared
 import SharedUI
 
-class MockHomeViewUIModelProvider: HomeViewUIModelProvider {
+class MockHomeViewUIModelProviding: HomeViewUIModelProviding {
 	func getModel() async throws -> HomeViewUIModel {
 		Self.mockUIModel
 	}

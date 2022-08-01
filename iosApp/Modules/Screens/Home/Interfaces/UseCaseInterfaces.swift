@@ -30,6 +30,6 @@ struct HomeViewTitleSectionModel {
 	let profilePicURL: URL
 }
 
-protocol HomeViewUIModelProvider {
+protocol HomeViewUIModelProviding {
 	func getModel() async throws -> HomeViewUIModel
 }

@@ -27,7 +27,7 @@ extension HomeModule: HomeViewProviding {
 extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
-			MockHomeViewUIModelProvider() as HomeViewUIModelProvider
+			MockHomeViewUIModelProviding() as HomeViewUIModelProviding
 		}
 	}
 }

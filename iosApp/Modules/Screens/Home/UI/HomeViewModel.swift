@@ -11,7 +11,7 @@ class HomeViewModel: ObservableObject {
 	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
 	@Published var route: HomeRoute?
 	
-	@Injected private var uiModelProvider: HomeViewUIModelProvider
+	@Injected private var uiModelProvider: HomeViewUIModelProviding
 
 	init() {
 		refresh()
@@ -31,7 +31,7 @@ class HomeViewModel: ObservableObject {
 	}
 }
 
-extension HomeViewModel: HomeViewActionHandler {
+extension HomeViewModel: HomeViewActionHandling {
 	func artistTapped(id: String) {
 		print(#function + " " + id)
 		route = .artist(id: id)
