@@ -1886,6 +1886,15 @@
 			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
+		76ADDCDF28980BC5008AA39A /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				7656253F284BFBD1004B6E4B /* HomeRoutes.swift */,
+				76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		76B990BC2835204A00F818E4 /* Inter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1928,8 +1937,8 @@
 		76D01D4028164A8400305605 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				76ADDCDF28980BC5008AA39A /* Navigation */,
 				76D01D5E28164A9E00305605 /* HomeModule.swift */,
-				7656253F284BFBD1004B6E4B /* HomeRoutes.swift */,
 				76764AE1281A19720095BEF9 /* MockData.swift */,
 				76D0E0502829511D00DB3DEB /* Interfaces */,
 				76D01D7328164ABD00305605 /* Resources */,
@@ -1942,7 +1951,6 @@
 			isa = PBXGroup;
 			children = (
 				76D01D6A28164A9E00305605 /* HomeView.swift */,
-				76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */,
 				76ADDCDB289748C1008AA39A /* HomeView+Loaded.swift */,
 				76ADDCD928974668008AA39A /* HomeViewActionHandler.swift */,
 				76D01D6B28164A9E00305605 /* HomeViewModel.swift */,

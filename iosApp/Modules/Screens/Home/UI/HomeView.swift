@@ -1,7 +1,6 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
-import SwiftUINavigation
 import Artist
 import SharedUI
 

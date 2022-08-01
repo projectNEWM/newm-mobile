@@ -22,7 +22,7 @@ extension HomeView {
 					titleSection
 					VStack(spacing: 36) {
 						ThisWeekSection(uiModel.thisWeekSection)
-						BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.artistTapped)
+						BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
 						BigCellSection(uiModel.justReleasedSection, actionHandler: actionHandler.artistTapped)
 						BigCellSection(uiModel.moreOfWhatYouLikeSection, actionHandler: actionHandler.artistTapped)
 						ArtistsSection(uiModel.newmArtistsSection, actionHandler: actionHandler.artistTapped)

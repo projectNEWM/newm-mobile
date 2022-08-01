@@ -39,6 +39,11 @@ extension HomeViewModel: HomeViewActionHandler {
 		print(#function + " " + id)
 		route = .artist(id: id)
 	}
+	
+	func songTapped(id: String) {
+		print(#function + " " + id)
+		route = .songPlaying(id: id)
+	}
 }
 
 extension ThisWeekCellModel: Identifiable {
