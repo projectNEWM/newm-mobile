@@ -10,14 +10,14 @@ class MainViewModel: ObservableObject {
 	@Published var selectedTab: MainViewModelTab = .home
 	@Published var shouldShowLogin: Bool = false
 
-	private lazy var loggedInUserUseCase: LoggedInUserUseCaseProtocol = {
-		@Injected var loggedInUserUseCase: LoggedInUserUseCaseProtocol
+	@Injected private var loggedInUserUseCase: LoggedInUserUseCaseProtocol
+	
+	init() {
 		loggedInUserUseCase.loggedInUser
 			.print()
 			.map { $0 == nil }
 			.receive(on: DispatchQueue.main)
 			.assign(to: \.shouldShowLogin, on: self)
 			.store(in: &cancellables)
-		return loggedInUserUseCase
-	}()
+	}
 }
