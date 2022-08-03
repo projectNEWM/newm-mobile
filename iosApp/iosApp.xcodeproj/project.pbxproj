@@ -155,8 +155,6 @@
 		766E8FAD28562EBF00F18779 /* Colors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766E8FB028562ECE00F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FB328562ED200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
-		766E8FB628562EF300F18779 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627328D28295909009D3C8A /* shared.xcframework */; };
-		766E8FB728562EF300F18779 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627328D28295909009D3C8A /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766E8FB828562F2900F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FB928562F2900F18779 /* Fonts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766E8FBC28562F2D00F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
@@ -949,7 +947,6 @@
 			files = (
 				7603002E28367FDB00BBF78C /* SharedUI.framework in Embed Frameworks */,
 				760300372836FAE200BBF78C /* Fonts.framework in Embed Frameworks */,
-				766E8FB728562EF300F18779 /* shared.xcframework in Embed Frameworks */,
 				760300432837FD0800BBF78C /* Colors.framework in Embed Frameworks */,
 				76D01DBD28164B6600305605 /* ModuleLinker.framework in Embed Frameworks */,
 				7670043428279F4D00ED72D8 /* Artist.framework in Embed Frameworks */,
@@ -1342,7 +1339,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				760300422837FD0800BBF78C /* Colors.framework in Frameworks */,
-				766E8FB628562EF300F18779 /* shared.xcframework in Frameworks */,
 				76DC3A4A281A0EA9004D5021 /* Resolver in Frameworks */,
 				7603002D28367FDB00BBF78C /* SharedUI.framework in Frameworks */,
 				7670043028275B7C00ED72D8 /* CasePaths in Frameworks */,
