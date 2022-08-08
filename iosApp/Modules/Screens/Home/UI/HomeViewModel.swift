@@ -8,25 +8,25 @@ import SharedUI
 import Artist
 
 class HomeViewModel: ObservableObject {
-	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
+	@MainActor @Published var state: ViewState<(HomeViewUIModel, HomeViewActionHandling)> = .loading
 	@Published var route: HomeRoute?
 	
 	@Injected private var uiModelProvider: HomeViewUIModelProviding
 
 	init() {
-		refresh()
+		Task {
+			await refresh()
+		}
 	}
 	
-	func refresh() {
-		//TODO: SHOULD THIS BE MAIN ACTOR...? COMPLAINS IF NOT
-		Task { @MainActor in
-			do {
-				state = .loading
-				let uiModel = try await uiModelProvider.getModel()
-				state = .loaded(uiModel)
-			} catch {
-				state = .error(error)
-			}
+	@MainActor
+	func refresh() async {
+		do {
+			state = .loading
+			let uiModel = try await uiModelProvider.getModel()
+			state = .loaded((uiModel, self))
+		} catch {
+			state = .error(error)
 		}
 	}
 }
