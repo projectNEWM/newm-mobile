@@ -14,6 +14,10 @@ public final class LoginModule: ModuleProtocol {
 		Resolver.register {
 			LoginViewModel()
 		}
+		
+		Resolver.register {
+			self as CreateAccountViewProviding
+		}
 	}
 }
 
@@ -34,9 +38,3 @@ extension LoginModule {
 	}
 }
 #endif
-
-extension LoginModule: LoginViewProviding {
-	public func loginView() -> AnyView {
-		LoginView().erased
-	}
-}

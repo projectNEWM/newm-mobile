@@ -3,7 +3,7 @@ import ModuleLinker
 import Resolver
 import Fonts
 
-public struct LoginView: View {
+struct LoginView: View {
 	enum Field: Hashable {
 		case email
 		case password
@@ -12,9 +12,7 @@ public struct LoginView: View {
 	@InjectedObject var viewModel: LoginViewModel
 	@FocusState private var focusedField: Field?
 	
-	public init() {}
-	
-	public var body: some View {
+	var body: some View {
 		switch viewModel.state {
 		case .loaded:
 			return loadedView.erased
@@ -24,7 +22,9 @@ public struct LoginView: View {
 			return errorView(error: error).erased
 		}
 	}
-	
+}
+
+extension LoginView {
 	private var loadingView: some View {
 		ProgressView()
 	}
@@ -34,22 +34,25 @@ public struct LoginView: View {
 	}
 	
 	private var loadedView: some View {
-		VStack {
+		NavigationView {
 			VStack {
-				newmLogo
-				title
+				VStack {
+					newmLogo
+					title
+				}
+				Spacer()
+				VStack {
+					emailField
+					passwordField
+					forgotPassword
+					enterNewmButton
+					createFreeAccount
+				}
 			}
-			Spacer()
-			VStack {
-				emailField
-				passwordField
-				forgotPassword
-				enterNewmButton
-				createFreeAccount
-			}
+			.padding(20)
+			.background(background)
+			.links(Links(route: $viewModel.route))
 		}
-		.padding(20)
-		.background(background)
 	}
 	
 	private var background: some View {

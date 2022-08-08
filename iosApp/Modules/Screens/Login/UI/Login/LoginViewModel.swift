@@ -17,6 +17,7 @@ class LoginViewModel: ObservableObject {
 	@Published var email: String = ""
 	@Published var password: String = ""
 	@Published var state: ViewState<Void> = .loaded(())
+	@Published var route: LoginRoute?
 	
 	var fieldsAreValid: Bool { loginFieldValidator.validate(email: email, password: password) }
 	
@@ -36,7 +37,7 @@ class LoginViewModel: ObservableObject {
 	}
 	
 	func createAccountTapped() {
-		//TODO:
+		route = .createAccount
 	}
 	
 	func forgotPasswordTapped() {

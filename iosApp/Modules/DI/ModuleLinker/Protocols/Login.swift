@@ -17,3 +17,7 @@ public protocol LogInUseCaseProtocol {
 public protocol LogOutUseCaseProtocol {
 	func logOut() async throws
 }
+
+public protocol CreateAccountViewProviding {
+	func createAccountView() -> AnyView
+}

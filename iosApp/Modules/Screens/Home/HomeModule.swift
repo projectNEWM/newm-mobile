@@ -17,12 +17,6 @@ public final class HomeModule: ModuleProtocol {
 	}
 }
 
-extension HomeModule: HomeViewProviding {
-	public func homeView() -> AnyView {
-		HomeView().erased
-	}
-}
-
 #if DEBUG
 extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
