@@ -1,6 +1,5 @@
 plugins {
     id(Plugins.androidLibrary)
-    id(Plugins.hilt)
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
 }
@@ -36,8 +35,6 @@ android {
 }
 
 dependencies {
-    kapt(Hilt.hiltCompiler)
-    kapt(Hilt.hiltAndroidCompiler)
     kapt(Airbnb.showkaseProcessor)
 
     implementation(project(Modules.coreTheme))
@@ -55,9 +52,6 @@ dependencies {
     implementation(Google.exoplayerUi)
     implementation(Google.material)
     implementation(Google.navigationCompose)
-    implementation(Hilt.hiltAndroid)
-    implementation(Hilt.hiltNavigation)
-    implementation(Hilt.hiltNavigationCompose)
 
     debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)

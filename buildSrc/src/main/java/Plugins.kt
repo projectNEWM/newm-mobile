@@ -4,7 +4,6 @@ object Plugins {
     const val androidLibrary = "com.android.library"
     const val crashlytics = "com.google.firebase.crashlytics"
     const val googleServices = "com.google.gms.google-services"
-    const val hilt = "dagger.hilt.android.plugin"
     const val kapt = "kapt"
     const val multiplatform = "multiplatform"
     const val serialization = "plugin.serialization"

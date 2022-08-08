@@ -1,4 +1,4 @@
-package io.projectnewm.shared.login
+package io.projectnewm.shared.login.util
 
 object LoginFieldValidator {
 

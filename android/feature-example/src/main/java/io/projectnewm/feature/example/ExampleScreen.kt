@@ -13,12 +13,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun ExampleScreen(
-    viewModel: ExampleViewModel = hiltViewModel()
+    viewModel: ExampleViewModel = koinViewModel()
 ) {
     val viewState = viewModel.viewState.value
 

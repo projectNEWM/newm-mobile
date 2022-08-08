@@ -27,6 +27,5 @@ object Google {
 
     object Test {
         const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
-        const val hiltAndroidTesting = "com.google.dagger:hilt-android-testing:${Versions.hilt}"
     }
 }
