@@ -16,5 +16,7 @@ sealed class Screen(val route: String) {
 
     //Single Screens
     object LoginScreen : Screen("login")
+    object Signup : Screen("signup")
+    object VerificationCode : Screen("verification")
     object NowPlayingScreen : Screen("now-playing")
 }
