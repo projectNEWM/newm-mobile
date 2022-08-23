@@ -106,7 +106,7 @@ Don't forget to give the project a star! ⭐️
 
 ## ❤️ Join The Fam
 
-- [Official Telegram](https://t.me/NEWMofficial)
+- [Telegram](https://t.me/NEWMofficial)
 - [Discord](https://discord.gg/z4sYqxqgvQ)
 - [Twitter](https://twitter.com/projectNEWM)
 - [Facebook](https://www.facebook.com/projectNEWM)
