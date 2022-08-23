@@ -2,6 +2,7 @@ import Foundation
 import ModuleLinker
 import Resolver
 import SwiftUI
+import shared
 
 public final class LoginModule: ModuleProtocol {
 	public static var shared = LoginModule()
@@ -17,6 +18,10 @@ public final class LoginModule: ModuleProtocol {
 		
 		Resolver.register {
 			self as CreateAccountViewProviding
+		}
+		
+		Resolver.register {
+			LoginFieldValidator()
 		}
 	}
 }

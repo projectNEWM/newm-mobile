@@ -21,7 +21,7 @@ class LoginViewModel: ObservableObject {
 	
 	var fieldsAreValid: Bool { loginFieldValidator.validate(email: email, password: password) }
 	
-	private let loginFieldValidator = LoginFieldValidator()
+	@Injected private var loginFieldValidator: LoginFieldValidator
 	@Injected private var logInUseCase: LogInUseCaseProtocol
 
 	func enterNewmTapped() {
