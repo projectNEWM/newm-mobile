@@ -46,7 +46,7 @@
 
 ## 📔 About The Project
 
-<p> The iOS and Android apps for projectNEWM. Check out our <a href="https://projectnewm.io/"><strong>website</strong></a> for more info<p>
+<p> The iOS and Android apps for projectNEWM. Check out our <a href="https://projectnewm.io/"><strong>website</strong></a> for more info.<p>
 
 ### Built With
 
