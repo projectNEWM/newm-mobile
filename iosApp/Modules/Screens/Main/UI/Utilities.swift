@@ -6,6 +6,7 @@ extension Image {
 	init(_ tab: MainViewModelTab) {
 		switch tab {
 		case .home: self = Image("Home Icon", bundle: Bundle(for: ModuleClass.self))
+        case .library: self = Image("Library Icon", bundle: Bundle(for: ModuleClass.self))
 		case .stars: self = Image("Stars Icon", bundle: Bundle(for: ModuleClass.self))
 		case .tribe: self = Image("Community Icon", bundle: Bundle(for: ModuleClass.self))
 		case .wallet: self = Image("Wallet Icon", bundle: Bundle(for: ModuleClass.self))
