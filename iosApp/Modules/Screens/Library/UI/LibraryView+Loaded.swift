@@ -22,7 +22,7 @@ extension LibraryView {
                     BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
                     PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.songTapped)
                     BigCellSection(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
-                }
+                } 
             }
         }
         
