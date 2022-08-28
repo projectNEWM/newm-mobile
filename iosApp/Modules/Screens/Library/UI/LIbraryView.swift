@@ -4,12 +4,30 @@ import Resolver
 import SharedUI
 
 struct LibraryView: View {
-	@InjectedObject private var viewModel: LibraryViewModel
-	
-	var body: some View {
-		Text(viewModel.title)
-//		BigCellSection(cells: viewModel.recentlyPlayedArtists, title: viewModel.recentlyPlayedSectionTitle)
-//		CompactCellSection(cells: viewModel.yourPlaylists, title: viewModel.yourPlaylistsSectionTitle)
-//		BigCellSection(cells: viewModel.likedSongs, title: viewModel.likedSongsSectionTitle)
-	}
+    @StateObject private var viewModel = LibraryViewModel()
+
+    public init() {}
+    
+    public var body: some View {
+        NavigationView {
+            switch viewModel.state {
+            case .loading:
+                ProgressView()
+            case .loaded(let (uiModel, actionHandler)):
+                LoadedView(actionHandler: actionHandler, uiModel: uiModel, route: $viewModel.route)
+            case .error:
+                Text("Error")
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+    }
 }
+
+//struct LibraryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        //is this doing anything?
+//        Resolver.root = .mock
+//        return LibraryView()
+//            .preferredColorScheme(.dark)
+//    }
+//}

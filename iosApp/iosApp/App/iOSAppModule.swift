@@ -13,6 +13,7 @@ import SongPlaying
 import PlaylistList
 import Tips
 import Artist
+import Library
 
 struct iOSAppModule: ModuleProtocol {
 	static var shared = iOSAppModule()
@@ -21,6 +22,7 @@ struct iOSAppModule: ModuleProtocol {
 		[
 			WalletModule.shared,
 			HomeModule.shared,
+            LibraryModule.shared,
 			SharedUIModule.shared,
 			MainModule.shared,
 			ColorsModule.shared,

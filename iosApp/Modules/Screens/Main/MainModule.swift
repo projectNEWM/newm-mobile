@@ -8,6 +8,7 @@ public final class MainModule: ModuleProtocol {
 	public static let shared = MainModule()
 	
 	@LazyInjected var homeViewProvider: HomeViewProviding
+    @LazyInjected var libraryViewProvider: LibraryViewProviding
 	@LazyInjected var walletViewProvider: WalletViewProviding
 
 	public func registerAllServices() {
@@ -18,6 +19,9 @@ public final class MainModule: ModuleProtocol {
 				TabViewProvider(image: Image(MainViewModelTab.home), tabName: MainViewModelTab.home.description) {
 					self.homeViewProvider.homeView()
 				},
+                TabViewProvider(image: Image(MainViewModelTab.library), tabName: MainViewModelTab.library.description) {
+                    self.libraryViewProvider.libraryView()
+                },
 				TabViewProvider(image: Image(MainViewModelTab.wallet), tabName: MainViewModelTab.wallet.description) {
 					self.walletViewProvider.walletView()
 				}

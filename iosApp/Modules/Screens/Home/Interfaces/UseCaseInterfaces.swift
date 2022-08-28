@@ -2,8 +2,8 @@ import Foundation
 import SharedUI
 
 struct HomeViewUIModel {
-	let greeting: HomeViewTitleSectionModel
-	let title: HomeViewTitleSectionModel
+	let greeting: TitleSectionModel
+	let title: TitleSectionModel
 	let thisWeekSection: ThisWeekSectionModel
 	let recentlyPlayedSection: CellsSectionModel<BigCellViewModel>
 	let justReleasedSection: CellsSectionModel<BigCellViewModel>
@@ -22,12 +22,6 @@ struct ThisWeekSectionModel {
 	let newFollowers: Int
 	let royalties: Float
 	let earnings: Float
-}
-
-struct HomeViewTitleSectionModel {
-	let isGreeting: Bool
-	let title: String
-	let profilePicURL: URL
 }
 
 protocol HomeViewUIModelProviding {
