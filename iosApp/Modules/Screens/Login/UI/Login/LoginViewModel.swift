@@ -7,6 +7,7 @@ import SharedUI
 import Utilities
 
 class LoginViewModel: ObservableObject {
+	//TODO: move localizable to strings file
 	@Localizable(LoginModule.self) var title = .title
 	@Localizable(LoginModule.self) var emailPlaceholder = .emailPlaceholder
 	@Localizable(LoginModule.self) var passwordPlaceholder = .passwordPlaceholder
