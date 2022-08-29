@@ -3,10 +3,10 @@ package io.projectnewm.shared.login.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LogInUser(val email: String = "", val password: String = "")
+internal data class LogInUser(val email: String = "", val password: String = "")
 
 @Serializable
-data class NewUser(
+internal data class NewUser(
     val firstName: String? = null,
     val lastName: String? = null,
     val pictureUrl: String? = null,

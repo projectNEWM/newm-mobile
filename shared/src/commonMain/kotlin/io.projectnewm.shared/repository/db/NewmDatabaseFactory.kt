@@ -16,7 +16,7 @@ expect class SqlDelightDriverFactory {
     fun createDriver(): SqlDriver
 }
 
-fun ExampleEntity.toExampleDomainModel(): ExampleDomainModel {
+internal fun ExampleEntity.toExampleDomainModel(): ExampleDomainModel {
     return ExampleDomainModel(
         id.toInt(),
         title
@@ -24,6 +24,6 @@ fun ExampleEntity.toExampleDomainModel(): ExampleDomainModel {
 }
 
 
-fun List<ExampleEntity>.toExampleDomainModelList(): List<ExampleDomainModel> {
+internal fun List<ExampleEntity>.toExampleDomainModelList(): List<ExampleDomainModel> {
     return map { it.toExampleDomainModel() }
 }

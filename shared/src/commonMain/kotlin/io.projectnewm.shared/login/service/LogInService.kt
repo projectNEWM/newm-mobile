@@ -10,7 +10,7 @@ import io.projectnewm.shared.HttpRoutes
 import io.projectnewm.shared.login.models.*
 
 
-interface LogInService {
+internal interface LogInService {
     suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus
     suspend fun register(user: NewUser): RegisterStatus
     suspend fun logIn(user: LogInUser): LoginStatus
