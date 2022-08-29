@@ -23,6 +23,7 @@ public struct PlaylistsSection: View {
             ForEach(model.cells) { cellModel in
                 CompactCell(model: cellModel, roundImage: true)
                     .frame(width: 180, alignment: .leading)
+					.fixedSize()
                     .onTapGesture { actionHandler(cellModel.modelID) }
             }
         }

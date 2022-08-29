@@ -5,7 +5,6 @@ import ModuleLinker
 import shared
 import Utilities
 import SharedUI
-import Artist
 
 class LibraryViewModel: ObservableObject {
     @MainActor @Published var state: ViewState<(LibraryViewUIModel, LibraryViewActionHandling)> = .loading
@@ -42,6 +41,11 @@ extension LibraryViewModel: LibraryViewActionHandling {
         print(#function + " " + id)
         route = .songPlaying(id: id)
     }
+	
+	func playlistTapped(id: String) {
+		print(#function + " " + id)
+		route = .playlist(id: id)
+	}
 }
 
 //

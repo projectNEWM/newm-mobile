@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct CompactCell: View {
 	private let model: CompactCellViewModel
+	//TODO: image doesnt size properly when set false
 	private let roundImage: Bool
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
