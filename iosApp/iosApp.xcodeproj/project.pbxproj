@@ -293,14 +293,14 @@
 		76DE1C98284C010300B8CA7A /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD0528164CA1007573B4 /* Utilities.framework */; platformFilter = ios; };
 		76DE1C99284C010300B8CA7A /* Utilities.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD0528164CA1007573B4 /* Utilities.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */; };
-		9AC16A7128B03869002CAD3A /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC16A7028B03869002CAD3A /* shared.xcframework */; };
-		9AC16A7228B03869002CAD3A /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC16A7028B03869002CAD3A /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9AC16A7428B08621002CAD3A /* LibraryView+Loaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC16A7328B08621002CAD3A /* LibraryView+Loaded.swift */; };
 		9AC4CBC328B42FE10046D496 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4CBBF28B41A900046D496 /* MockData.swift */; };
 		9AC4CBCB28B6C2660046D496 /* TitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF928566C7700F18779 /* TitleSection.swift */; };
 		9AC4CBCC28B6C5F90046D496 /* LibraryModule+ViewProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4CBCA28B6C1240046D496 /* LibraryModule+ViewProviding.swift */; };
 		9AC4CBCE28B847230046D496 /* LibraryViewActionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4CBCD28B847230046D496 /* LibraryViewActionHandling.swift */; };
 		9AC4CBD128B94C700046D496 /* PlaylistsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4CBD028B94C700046D496 /* PlaylistsSection.swift */; };
+		9AC4CC6F28BD76DA0046D496 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC4CC6A28BD76340046D496 /* shared.xcframework */; };
+		9AC4CC7028BD76DA0046D496 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC4CC6A28BD76340046D496 /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -928,7 +928,7 @@
 				7627EAC527FA893D00C0F7DA /* PlaylistList.framework in Embed Frameworks */,
 				7618FD6528164D99007573B4 /* Artist.framework in Embed Frameworks */,
 				7627EAB627FA892A00C0F7DA /* Home.framework in Embed Frameworks */,
-				9AC16A7228B03869002CAD3A /* shared.xcframework in Embed Frameworks */,
+				9AC4CC7028BD76DA0046D496 /* shared.xcframework in Embed Frameworks */,
 				7618FCD428164C5C007573B4 /* SharedUI.framework in Embed Frameworks */,
 				7618FDB828164DCD007573B4 /* Wallet.framework in Embed Frameworks */,
 				7618FD9828164DBB007573B4 /* SongPlaying.framework in Embed Frameworks */,
@@ -1180,7 +1180,6 @@
 		76DC3A2E281A0DD5004D5021 /* LoginModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModule.swift; sourceTree = "<group>"; };
 		76DC3A4C281A0F1D004D5021 /* ModuleLinkerModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleLinkerModule.swift; sourceTree = "<group>"; };
 		76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		9AC16A6C28B033FC002CAD3A /* XCFrameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = XCFrameworks; sourceTree = "<group>"; };
 		9AC16A6D28B03843002CAD3A /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = Modules/XCFrameworks/debug/shared.xcframework; sourceTree = "<group>"; };
 		9AC16A7028B03869002CAD3A /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = Modules/XCFrameworks/release/shared.xcframework; sourceTree = "<group>"; };
 		9AC16A7328B08621002CAD3A /* LibraryView+Loaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryView+Loaded.swift"; sourceTree = "<group>"; };
@@ -1188,6 +1187,8 @@
 		9AC4CBCA28B6C1240046D496 /* LibraryModule+ViewProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LibraryModule+ViewProviding.swift"; sourceTree = "<group>"; };
 		9AC4CBCD28B847230046D496 /* LibraryViewActionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewActionHandling.swift; sourceTree = "<group>"; };
 		9AC4CBD028B94C700046D496 /* PlaylistsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsSection.swift; sourceTree = "<group>"; };
+		9AC4CC6A28BD76340046D496 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = shared.xcframework; sourceTree = "<group>"; };
+		9AC4CC6C28BD76340046D496 /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = shared.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1209,7 +1210,7 @@
 				760C2C48281653B50030ACF4 /* Resolver in Frameworks */,
 				76D01D7F28164AE700305605 /* Main.framework in Frameworks */,
 				7618FCD328164C5C007573B4 /* SharedUI.framework in Frameworks */,
-				9AC16A7128B03869002CAD3A /* shared.xcframework in Frameworks */,
+				9AC4CC6F28BD76DA0046D496 /* shared.xcframework in Frameworks */,
 				7656251A284BEF30004B6E4B /* Library.framework in Frameworks */,
 				7618FD1D28164CBD007573B4 /* Colors.framework in Frameworks */,
 				7618FD0B28164CA1007573B4 /* Utilities.framework in Frameworks */,
@@ -2037,7 +2038,7 @@
 		76CF98B927DEFD7100AC185E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				9AC16A6C28B033FC002CAD3A /* XCFrameworks */,
+				9AC4CC6828BD76340046D496 /* XCFrameworks */,
 				7627EA6027FA7F3800C0F7DA /* DI */,
 				7627EA3827FA685E00C0F7DA /* Helpers */,
 				7627EA2727FA65AC00C0F7DA /* Resources */,
@@ -2157,6 +2158,32 @@
 				9AC4CBD028B94C700046D496 /* PlaylistsSection.swift */,
 			);
 			path = Sections;
+			sourceTree = "<group>";
+		};
+		9AC4CC6828BD76340046D496 /* XCFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9AC4CC6928BD76340046D496 /* release */,
+				9AC4CC6B28BD76340046D496 /* debug */,
+			);
+			name = XCFrameworks;
+			path = ../../shared/build/XCFrameworks;
+			sourceTree = "<group>";
+		};
+		9AC4CC6928BD76340046D496 /* release */ = {
+			isa = PBXGroup;
+			children = (
+				9AC4CC6A28BD76340046D496 /* shared.xcframework */,
+			);
+			path = release;
+			sourceTree = "<group>";
+		};
+		9AC4CC6B28BD76340046D496 /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				9AC4CC6C28BD76340046D496 /* shared.xcframework */,
+			);
+			path = debug;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
