@@ -67,7 +67,7 @@ public class MockData {
 	}
 	
 	static func makePlaylist(id: String) -> Playlist {
-		Playlist(image: MockData.artistImageUrl, title: "Music for Gaming", creator: User(userName: "NEWM User", id: "1"), songCount: 32, playlistId: id, genre: "Rock", starCount: 13, playCount: 439)
+		Playlist(image: MockData.artistImageUrl, title: "Music for Gaming", creator: User(userName: "NEWM User"), songCount: 32, playlistId: id, genre: "Rock", starCount: 13, playCount: 439)
 	}
 	
 	public static var playlists: [Playlist] {
