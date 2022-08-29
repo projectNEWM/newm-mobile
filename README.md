@@ -46,7 +46,7 @@
 
 ## 📔 About The Project
 
-<p> The iOS and Android apps for projectNEWM. Check out our <a href="https://projectnewm.io/"><strong>website</strong></a> for more info<p>
+<p> The iOS and Android apps for projectNEWM. Check out our <a href="https://projectnewm.io/"><strong>website</strong></a> for more info.<p>
 
 ### Built With
 
@@ -106,8 +106,8 @@ Don't forget to give the project a star! ⭐️
 
 ## ❤️ Join The Fam
 
-- [Official Telegram](https://t.me/projectNEWMofficial)
-- Discord (Coming Soon)
+- [Telegram](https://t.me/NEWMofficial)
+- [Discord](https://discord.gg/z4sYqxqgvQ)
 - [Twitter](https://twitter.com/projectNEWM)
 - [Facebook](https://www.facebook.com/projectNEWM)
 - [Instagram](https://www.instagram.com/projectnewm.io/)
