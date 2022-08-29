@@ -4,7 +4,6 @@ import SharedUI
 
 extension LibraryView {
     struct LoadedView: View {
-        @State private var shouldShowGreeting: Bool = true
         @Binding private var route: LibraryRoute?
         private let actionHandler: LibraryViewActionHandling
         private let uiModel: LibraryViewUIModel
@@ -20,7 +19,7 @@ extension LibraryView {
                 titleSection
                 VStack(spacing: 36) {
                     BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
-                    PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.songTapped)
+                    PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.playlistTapped)
                     BigCellSection(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
                 } 
             }
@@ -35,7 +34,7 @@ extension LibraryView {
     }
 }
 
-struct LibraryView_Previews: PreviewProvider {
+struct LibraryView_Preview: PreviewProvider {
     static var previews: some View {
         //is this doing anything?
 //        Resolver.root = .mock
