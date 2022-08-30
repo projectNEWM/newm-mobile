@@ -16,43 +16,43 @@ import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
 
 
-@Composable
-fun ExampleScreen(
-    viewModel: ExampleViewModel = koinViewModel()
-) {
-    val viewState = viewModel.viewState.value
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.Black)
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Example Screen",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(CenterHorizontally),
-            fontSize = 25.sp
-        )
-
-        if (viewState.titles.isNotEmpty()) {
-            Text(
-                "Titles: ${viewState.titles}",
-                color = Color.White,
-                modifier = Modifier.align(CenterHorizontally),
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
-            )
-        }
-        if (viewState.isLoading) {
-            Text(
-                "Loading... ",
-                color = Color.White,
-                modifier = Modifier.align(CenterHorizontally),
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp
-            )
-        }
-    }
-}
+//@Composable
+//fun ExampleScreen(
+//    viewModel: ExampleViewModel = koinViewModel()
+//) {
+//    val viewState = viewModel.viewState.value
+//
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .background(color = Color.Black)
+//            .wrapContentSize(Alignment.Center)
+//    ) {
+//        Text(
+//            text = "Example Screen",
+//            fontWeight = FontWeight.Bold,
+//            color = Color.White,
+//            modifier = Modifier.align(CenterHorizontally),
+//            fontSize = 25.sp
+//        )
+//
+//        if (viewState.titles.isNotEmpty()) {
+//            Text(
+//                "Titles: ${viewState.titles}",
+//                color = Color.White,
+//                modifier = Modifier.align(CenterHorizontally),
+//                textAlign = TextAlign.Center,
+//                fontSize = 16.sp
+//            )
+//        }
+//        if (viewState.isLoading) {
+//            Text(
+//                "Loading... ",
+//                color = Color.White,
+//                modifier = Modifier.align(CenterHorizontally),
+//                textAlign = TextAlign.Center,
+//                fontSize = 16.sp
+//            )
+//        }
+//    }
+//}

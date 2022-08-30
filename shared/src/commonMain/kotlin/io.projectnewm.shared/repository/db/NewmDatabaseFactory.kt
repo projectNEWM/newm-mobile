@@ -4,7 +4,7 @@ import com.squareup.sqldelight.db.SqlDriver
 import io.projectnewm.shared.example.ExampleDomainModel
 import ioprojectnewmsharedrepositorydb.ExampleEntity
 
-internal class NewmDatabaseFactory(
+class NewmDatabaseFactory(
     private val driverFactory: SqlDelightDriverFactory
 ) {
     fun createDatabase(): NewmDb {
