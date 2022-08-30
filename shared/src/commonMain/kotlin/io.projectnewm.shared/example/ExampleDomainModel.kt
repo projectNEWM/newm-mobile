@@ -1,6 +1,6 @@
 package io.projectnewm.shared.example
 
-data class ExampleDomainModel(
+internal data class ExampleDomainModel(
     val id: Int,
     val title: String
 )

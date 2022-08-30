@@ -3,11 +3,11 @@ package io.projectnewm.shared.example
 import io.ktor.client.*
 import io.ktor.client.request.*
 
-interface ExampleService {
+internal interface ExampleService {
     suspend fun get(): List<ExampleDomainModel>
 }
 
-class ExampleServiceImpl(
+internal class ExampleServiceImpl(
     private val httpClient: HttpClient,
     private val baseUrl: String = BASE_URL,
 ) : ExampleService {

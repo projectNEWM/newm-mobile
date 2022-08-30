@@ -6,7 +6,7 @@ import io.projectnewm.shared.util.asCommonFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 
-class ExampleUseCase constructor(private val exampleRepository: ExampleRepository) {
+internal class ExampleUseCase constructor(private val exampleRepository: ExampleRepository) {
 
     fun execute(): CommonFlow<DataState<List<ExampleDomainModel>>> =
         // Note: This is a cold flow so it won't execute this block until you collect.

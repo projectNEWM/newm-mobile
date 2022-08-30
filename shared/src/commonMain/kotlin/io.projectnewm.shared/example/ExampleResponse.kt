@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ExampleResponse(
+internal data class ExampleResponse(
 
     @SerialName("id")
     val id: Int,
@@ -12,7 +12,7 @@ data class ExampleResponse(
     val title: String
 )
 
-fun List<ExampleResponse>.toExampleDomainModelList(): List<ExampleDomainModel> {
+internal fun List<ExampleResponse>.toExampleDomainModelList(): List<ExampleDomainModel> {
     return map {
         ExampleDomainModel(
             id = it.id,
