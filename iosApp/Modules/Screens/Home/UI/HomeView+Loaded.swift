@@ -23,7 +23,7 @@ extension HomeView {
 					BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
 					BigCellSection(uiModel.justReleasedSection, actionHandler: actionHandler.artistTapped)
 					BigCellSection(uiModel.moreOfWhatYouLikeSection, actionHandler: actionHandler.artistTapped)
-                    ArtistsSection(uiModel.newmArtistsSection, actionHandler: actionHandler.artistTapped)
+					ArtistsSection(uiModel.newmArtistsSection, actionHandler: actionHandler.artistTapped)
 					BigCellSection(uiModel.mostPopularThisWeek, actionHandler: actionHandler.artistTapped)
 				}
 			}
