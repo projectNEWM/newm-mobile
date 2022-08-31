@@ -7,9 +7,3 @@ extension LoginModule: LoginViewProviding {
 		LoginView().erased
 	}
 }
-
-extension LoginModule: CreateAccountViewProviding {
-	public func createAccountView() -> AnyView {
-		CreateAccountView().erased
-	}
-}

@@ -2,7 +2,7 @@ package io.projectnewm.feature.login.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.projectnewm.shared.login.models.RegisterStatus
+import io.projectnewm.shared.login.models.RegisterError
 import io.projectnewm.shared.login.models.RequestEmailStatus
 import io.projectnewm.shared.login.usecases.SignupUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,14 +46,14 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
             _state.value.let {
                 if (it.email?.isEmpty() == false && it.password == it.passwordConfirmation) {
                     when (useCase.requestEmailConfirmationCode(it.email)) {
-                        is RequestEmailStatus.Success -> {
-                            _state.value = _state.value.copy(
-                                verificationRequested = true
-                            )
-                        }
-                        else -> {
-                            print("Unable to request code")
-                        }
+//                        is RequestEmailStatus.Success -> {
+//                            _state.value = _state.value.copy(
+//                                verificationRequested = true
+//                            )
+//                        }
+//                        else -> {
+//                            print("Unable to request code")
+//                        }
                     }
 
                 }
@@ -67,34 +67,34 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
                 errorMessage = null
             )
 
-            val status = useCase.registerUser(
-                email = _state.value.email.orEmpty(),
-                password = _state.value.password.orEmpty(),
-                passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
-                verificationCode = _state.value.emailVerificationCode.orEmpty()
-            )
-
-            when (status) {
-                is RegisterStatus.Success -> {
-                    _state.value = _state.value.copy(
-                        isUserRegistered = true,
-                        errorMessage = null
-                    )
-                }
-                is RegisterStatus.UserAlreadyExists -> {
-                    _state.value = _state.value.copy(
-                        errorMessage = "User associated with that Email Already Exists"
-                    )
-                }
-                is RegisterStatus.UnknownError -> {
-                    _state.value = _state.value.copy(
-                        errorMessage = "Unknown Error"
-                    )
-                }
-                is RegisterStatus.TwoFactorAuthenticationFailed -> {
-                    _state.value = _state.value.copy(
-                        errorMessage = "Wrong Verification Code"
-                    )
+            try {
+                useCase.registerUser(
+                    email = _state.value.email.orEmpty(),
+                    password = _state.value.password.orEmpty(),
+                    passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
+                    verificationCode = _state.value.emailVerificationCode.orEmpty()
+                )
+                _state.value = _state.value.copy(
+                    isUserRegistered = true,
+                    errorMessage = null
+                )
+            } catch (e: RegisterError) {
+                when (e) {
+                    is RegisterError.UserAlreadyExists -> {
+                        _state.value = _state.value.copy(
+                            errorMessage = "User associated with that Email Already Exists"
+                        )
+                    }
+                    is RegisterError.UnknownError -> {
+                        _state.value = _state.value.copy(
+                            errorMessage = "Unknown Error"
+                        )
+                    }
+                    is RegisterError.TwoFactorAuthenticationFailed -> {
+                        _state.value = _state.value.copy(
+                            errorMessage = "Wrong Verification Code"
+                        )
+                    }
                 }
             }
         }

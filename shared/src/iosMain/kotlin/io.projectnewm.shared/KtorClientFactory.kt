@@ -10,7 +10,7 @@ actual class KtorClientFactory {
         return HttpClient(Ios) {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(
-                    kotlinx.serialization.json.Json {
+                    json = kotlinx.serialization.json.Json {
                         ignoreUnknownKeys = true // if the server sends extra fields, ignore them
                     }
                 )

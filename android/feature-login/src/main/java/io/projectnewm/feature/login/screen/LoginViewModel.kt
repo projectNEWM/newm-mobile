@@ -2,8 +2,7 @@ package io.projectnewm.feature.login.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.projectnewm.shared.login.models.LoginStatus
-import io.projectnewm.shared.login.models.isValid
+import io.projectnewm.shared.login.models.LoginError
 import io.projectnewm.shared.login.usecases.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +16,7 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
         get() = _state.asStateFlow()
 
     fun attemptToLogin(email: String, password: String) {
+        //TODO: use field validator
         if (email.isNotBlank() && password.isNotBlank()) {
             viewModelScope.launch {
                 _state.value = _state.value.copy(
@@ -24,24 +24,26 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
                     errorMessage = ""
                 )
 
-                when (val status: LoginStatus = useCase.logIn(email, password)) {
-                    is LoginStatus.Success -> {
-                        _state.value = _state.value.copy(
-                            isUserLoggedIn = status.data.isValid(),
-                            errorMessage = null
-                        )
-                    }
-                    is LoginStatus.WrongPassword -> {
-                        _state.value = _state.value.copy(
-                            wrongPassword = true,
-                            errorMessage = "invalid Password"
-                        )
-                    }
-                    is LoginStatus.UserNotFound -> {
-                        _state.value = _state.value.copy(
-                            emailNotFound = true,
-                            errorMessage = "An account for: $email Doesn't exist! Please sign up first!"
-                        )
+                try {
+                    useCase.logIn(email, password)
+                    _state.value = _state.value.copy(
+                        isUserLoggedIn = true,
+                        errorMessage = null
+                    )
+                } catch (e: LoginError) {
+                    when (e) {
+                        is LoginError.WrongPassword -> {
+                            _state.value = _state.value.copy(
+                                wrongPassword = true,
+                                errorMessage = "invalid Password"
+                            )
+                        }
+                        is LoginError.UserNotFound -> {
+                            _state.value = _state.value.copy(
+                                emailNotFound = true,
+                                errorMessage = "An account for: $email Doesn't exist! Please sign up first!"
+                            )
+                        }
                     }
                 }
             }

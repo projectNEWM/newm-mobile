@@ -4,7 +4,7 @@ import android.app.Application
 import com.airbnb.android.showkase.annotation.ShowkaseRoot
 import com.airbnb.android.showkase.annotation.ShowkaseRootModule
 //import io.projectnewm.di.cacheModule
-import io.projectnewm.di.networkModule
+//import io.projectnewm.di.networkModule
 import io.projectnewm.di.viewmodels.viewModule
 //import io.projectnewm.shared.commonModule
 import io.projectnewm.shared.initKoin
@@ -20,7 +20,7 @@ class NewmApplication : Application(), ShowkaseRootModule {
             androidContext(this@NewmApplication)
             modules(
 //                commonModule,
-                networkModule,
+//                networkModule,
 //                cacheModule,
                 viewModule
             )

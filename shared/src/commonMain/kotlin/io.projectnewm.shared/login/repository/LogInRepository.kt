@@ -2,23 +2,30 @@ package io.projectnewm.shared.login.repository
 
 import io.projectnewm.shared.login.models.*
 import io.projectnewm.shared.login.service.LogInService
+//import io.projectnewm.shared.users.UserDAO
+import kotlin.coroutines.cancellation.CancellationException
 
 //TODO: Handle Error Cases
 internal class LogInRepository(
-    private val service: LogInService
+    private val service: LogInService,
+//    private val dao: UserDAO
 ) {
-    suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
-        return service.requestEmailConfirmationCode(email)
+    @Throws(RequestEmailError::class, CancellationException::class)
+    suspend fun requestEmailConfirmationCode(email: String) {
+        service.requestEmailConfirmationCode(email)
     }
 
-    suspend fun registerUser(user: NewUser): RegisterStatus {
-        return service.register(user)
+    @Throws(RegisterError::class, CancellationException::class)
+    suspend fun registerUser(user: NewUser) {
+        service.register(user)
     }
 
-    suspend fun logIn(email: String, password: String): LoginStatus {
-        return service.logIn(LogInUser(email = email, password = password))
+    @Throws(LoginError::class, CancellationException::class)
+    suspend fun logIn(email: String, password: String) {
+        service.logIn(LogInUser(email = email, password = password))
     }
 
+    @Throws(RegisterError::class, CancellationException::class)
     suspend fun registerUser(
         firstName: String,
         lastName: String,
@@ -27,8 +34,8 @@ internal class LogInRepository(
         newPassword: String,
         confirmPassword: String,
         authCode: String
-    ): RegisterStatus {
-        return service.register(
+    ) {
+        service.register(
             NewUser(
                 firstName,
                 lastName,
@@ -40,4 +47,8 @@ internal class LogInRepository(
             )
         )
     }
+
+//    val currentUser =  {
+//        UserDAO.get()
+//    }
 }

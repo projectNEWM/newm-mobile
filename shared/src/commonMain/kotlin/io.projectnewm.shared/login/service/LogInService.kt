@@ -8,12 +8,17 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.projectnewm.shared.HttpRoutes
 import io.projectnewm.shared.login.models.*
+import kotlin.coroutines.cancellation.CancellationException
 
 
 internal interface LogInService {
     suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus
-    suspend fun register(user: NewUser): RegisterStatus
-    suspend fun logIn(user: LogInUser): LoginStatus
+
+    @Throws(RegisterError::class, CancellationException::class)
+    suspend fun register(user: NewUser)
+
+    @Throws(LoginError::class, CancellationException::class)
+    suspend fun logIn(user: LogInUser)
 }
 
 //TODO: Handle Error Cases
@@ -53,8 +58,9 @@ internal class LogInServiceImpl(
         }
     }
 
-    override suspend fun register(user: NewUser): RegisterStatus {
-        return try {
+    @Throws(RegisterError::class, CancellationException::class)
+    override suspend fun register(user: NewUser) {
+        try {
             val response: HttpResponse = httpClient.put<HttpResponse> {
                 url {
                     protocol = HttpRoutes.PROTOCOL
@@ -67,27 +73,28 @@ internal class LogInServiceImpl(
                 }
             }
             println("LogInService: register user: $user httpResponse $response")
-            if (response.status.value == 204) {
-                RegisterStatus.Success
+            if (response.status.value != 204) {
+                throw RegisterError.UnknownError
             } else {
-                RegisterStatus.UnknownError
+                return
             }
         } catch (e: ClientRequestException) {
             when (e.response.status.value) {
                 409 -> {
-                    RegisterStatus.UserAlreadyExists
+                    throw RegisterError.UserAlreadyExists
                 }
                 403 -> {
-                    RegisterStatus.TwoFactorAuthenticationFailed
+                    throw RegisterError.TwoFactorAuthenticationFailed
                 }
                 else -> {
-                    RegisterStatus.UnknownError
+                    throw RegisterError.UnknownError
                 }
             }
         }
     }
 
-    override suspend fun logIn(user: LogInUser): LoginStatus {
+    @Throws(LoginError::class, CancellationException::class)
+    override suspend fun logIn(user: LogInUser) {
         return try {
             val response: HttpResponse = httpClient.post {
                 url {
@@ -101,34 +108,34 @@ internal class LogInServiceImpl(
                     body = user
                 }
             }
+            //TODO: PERSIST THESE TOKENS
             val data: LoginResponse = response.receive()
-            LoginStatus.Success(data)
         } catch (e: RedirectResponseException) {
             // 3XX - responses
             println("LogInService Error (3XX) : ${e.response.status.description}")
-            LoginStatus.UnknownError
+            throw LoginError.UnknownError
         } catch (e: ClientRequestException) {
             // 4XX - responses
             return when (e.response.status.value) {
                 404 -> {
                     //404 NOT FOUND If no registered user with 'email' is found
-                    LoginStatus.UserNotFound
+                    throw LoginError.UserNotFound
                 }
                 401 -> {
                     //401 UNAUTHORIZED if 'password' is invalid.
-                    LoginStatus.WrongPassword
+                    throw LoginError.WrongPassword
                 }
                 else -> {
-                    LoginStatus.UnknownError
+                    throw LoginError.UnknownError
                 }
             }
         } catch (e: ServerResponseException) {
             // 5XX - responses
             println("LogInService Error (5XX) : ${e.response.status.description}")
-            LoginStatus.UnknownError
+            throw LoginError.UnknownError
         } catch (e: Exception) {
             println("LogInService Error : ${e.message}")
-            LoginStatus.UnknownError
+            throw LoginError.UnknownError
         }
     }
 }

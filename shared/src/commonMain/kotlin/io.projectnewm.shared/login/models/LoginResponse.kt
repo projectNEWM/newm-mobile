@@ -4,29 +4,31 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponse(
+internal data class LoginResponse(
     @SerialName("accessToken")
     val accessToken: String,
     @SerialName("refreshToken")
     val refreshToken: String
 )
 
-sealed class LoginStatus {
-    data class Success(val data: LoginResponse) : LoginStatus()
-    object WrongPassword : LoginStatus()
-    object UserNotFound : LoginStatus()
-    object UnknownError : LoginStatus()
+sealed class LoginError: Throwable() {
+    object WrongPassword : LoginError()
+    object UserNotFound : LoginError()
+    object UnknownError : LoginError()
 }
 
-fun LoginResponse.isValid(): Boolean {
+internal fun LoginResponse.isValid(): Boolean {
     return accessToken.isNotBlank() && refreshToken.isNotBlank()
 }
 
-sealed class RegisterStatus {
-    object Success : RegisterStatus()
-    object UserAlreadyExists : RegisterStatus()
-    object TwoFactorAuthenticationFailed : RegisterStatus()
-    object UnknownError : RegisterStatus()
+sealed class RegisterError: Throwable() {
+    object UserAlreadyExists : RegisterError()
+    object TwoFactorAuthenticationFailed : RegisterError()
+    object UnknownError : RegisterError()
+}
+
+sealed class RequestEmailError: Throwable() {
+    object Unknown : RequestEmailError()
 }
 
 sealed class RequestEmailStatus {
