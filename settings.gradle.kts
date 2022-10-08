@@ -14,12 +14,10 @@ pluginManagement {
 }
 
 rootProject.name = "newm-mobile"
-include(":android:app-demo")
 include(":android:app-project-newm")
 include(":android:core-theme")
 include(":android:core-ui-utils")
 include(":android:core-resources")
-include(":android:feature-example")
 include(":android:feature-now-playing")
 include(":android:feature-login")
 include(":shared")
