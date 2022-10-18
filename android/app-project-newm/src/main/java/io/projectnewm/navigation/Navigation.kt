@@ -23,7 +23,7 @@ fun Navigation(
     ) {
         addHomeTree(navController)
         addTribeTree(navController)
-        addStarsTree(navController)
+        addStarsTree()
         addWalletTree(navController)
     }
 }
@@ -56,13 +56,13 @@ private fun NavGraphBuilder.addTribeTree(navController: NavHostController) {
     }
 }
 
-private fun NavGraphBuilder.addStarsTree(navController: NavHostController) {
+private fun NavGraphBuilder.addStarsTree() {
     navigation(
         route = Screen.StarsRoot.route,
         startDestination = Screen.StarsLanding.route
     ) {
         composable(Screen.StarsLanding.route) {
-            StarsScreen(navController = navController)
+            StarsScreen()
         }
     }
 }

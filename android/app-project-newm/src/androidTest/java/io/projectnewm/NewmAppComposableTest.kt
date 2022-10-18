@@ -1,5 +1,6 @@
 package io.projectnewm
 
+import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
@@ -19,7 +20,7 @@ class NewmAppComposableTest {
 
     @Before
     fun setup() {
-        composeTestRule.setContent {
+        composeTestRule.activity.setContent {
             NewmApp()
         }
     }
