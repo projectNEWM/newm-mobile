@@ -3,7 +3,7 @@ package io.projectnewm.shared.repository.db
 import io.projectnewm.shared.example.ExampleDomainModel
 import ioprojectnewmsharedrepositorydb.NewmDbQueries
 
-interface ExampleDao {
+internal interface ExampleDao {
     fun insert(exampleDomainModel: ExampleDomainModel)
 
     fun insert(exampleDomainModelList: List<ExampleDomainModel>)
@@ -13,7 +13,7 @@ interface ExampleDao {
     fun getAll(): List<ExampleDomainModel>
 }
 
-class ExampleDaoImpl(
+internal class ExampleDaoImpl(
     db: NewmDb
 ) : ExampleDao {
     private var queries: NewmDbQueries = db.newmDbQueries

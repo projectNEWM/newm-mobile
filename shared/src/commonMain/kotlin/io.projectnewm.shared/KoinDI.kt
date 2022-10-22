@@ -20,7 +20,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 //https://johnoreilly.dev/posts/kotlinmultiplatform-koin/
 fun initKoin() = initKoin {}
 
-val commonModule = module {
+internal val commonModule = module {
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single { LogInRepository(get()) }

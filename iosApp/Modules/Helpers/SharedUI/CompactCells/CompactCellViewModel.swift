@@ -18,6 +18,7 @@ public extension CompactCellViewModel {
 			Log("bad artist image URL")
 			image = nil
 		}
+		//TODO: DONT HARD CODE
 		subtitle = "5 songs"
 		name = artist.name
 		modelID = artist.id

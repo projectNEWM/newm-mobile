@@ -3,7 +3,7 @@ package io.projectnewm.shared.example
 import io.projectnewm.shared.repository.db.ExampleDao
 import io.projectnewm.shared.util.Logger
 
-class ExampleRepository(
+internal class ExampleRepository(
     private val exampleService: ExampleService,
     private val exampleDao: ExampleDao
 ) {

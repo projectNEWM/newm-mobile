@@ -2,7 +2,7 @@ package io.projectnewm.shared
 
 import io.ktor.http.*
 
-object HttpRoutes {
+internal object HttpRoutes {
     val PROTOCOL = URLProtocol.HTTPS
     const val HOST = "staging-newm-server.herokuapp.com"
     const val LOGIN_PATH = "v1/auth/login"

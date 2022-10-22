@@ -7,6 +7,7 @@ import SharedUI
 import Utilities
 
 class LoginViewModel: ObservableObject {
+	//TODO: move localizable to strings file
 	@Localizable(LoginModule.self) var title = .title
 	@Localizable(LoginModule.self) var emailPlaceholder = .emailPlaceholder
 	@Localizable(LoginModule.self) var passwordPlaceholder = .passwordPlaceholder
@@ -21,7 +22,7 @@ class LoginViewModel: ObservableObject {
 	
 	var fieldsAreValid: Bool { loginFieldValidator.validate(email: email, password: password) }
 	
-	private let loginFieldValidator = LoginFieldValidator()
+	@Injected private var loginFieldValidator: LoginFieldValidator
 	@Injected private var logInUseCase: LogInUseCaseProtocol
 
 	func enterNewmTapped() {

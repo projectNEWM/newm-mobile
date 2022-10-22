@@ -1,5 +1,5 @@
-package io.projectnewm.di
-
+package io.projectnewm.demo.di
+//
 //import io.projectnewm.shared.repository.db.*
 //import org.koin.dsl.module
 //

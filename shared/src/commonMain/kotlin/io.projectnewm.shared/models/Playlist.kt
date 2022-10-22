@@ -1,6 +1,6 @@
 package io.projectnewm.shared.models
 
-public data class Playlist (
+data class Playlist (
     val image: String,
     val title: String,
     val creator: User,
