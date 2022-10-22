@@ -1,5 +1,6 @@
 package io.projectnewm
 
+import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.karumi.shot.ScreenshotTest
 import io.projectnewm.feature.login.screen.LoginScreen
@@ -14,7 +15,7 @@ class LoginScreenTest : ScreenshotTest {
 
     @Before
     fun setup() {
-        composeTestRule.setContent {
+        composeTestRule.activity.setContent {
             LoginScreen(onUserLoggedIn = {}, onSignupClick = {})
         }
     }

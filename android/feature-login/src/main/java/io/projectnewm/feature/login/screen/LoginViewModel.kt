@@ -43,6 +43,9 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
                             errorMessage = "An account for: $email Doesn't exist! Please sign up first!"
                         )
                     }
+                    else -> {
+                        // no-op
+                    }
                 }
             }
         }

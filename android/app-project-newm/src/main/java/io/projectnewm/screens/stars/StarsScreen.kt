@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 internal const val TAG_STARS_SCREEN = "TAG_STARS_SCREEN"
 
 @Composable
-fun StarsScreen(navController: NavController) {
+fun StarsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

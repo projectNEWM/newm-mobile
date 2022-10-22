@@ -2,6 +2,7 @@ import Foundation
 
 enum MainViewModelTab: CaseIterable {
 	case home
+    case library
 	case tribe
 	case stars
 	case wallet
@@ -21,6 +22,7 @@ extension MainViewModelTab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
 		case .home: return "Home"
+        case .library: return "Library"
 		case .tribe: return "Tribe"
 		case .stars: return "Stars"
 		case .wallet: return "Wallet"
