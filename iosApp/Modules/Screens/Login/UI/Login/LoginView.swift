@@ -51,7 +51,7 @@ extension LoginView {
 			}
 			.padding(20)
 			.background(background)
-			.links(Links(route: $viewModel.route))
+//			.links(Links(route: $viewModel.route))
 		}
 	}
 	
