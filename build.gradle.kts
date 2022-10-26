@@ -15,6 +15,27 @@ buildscript {
     }
 }
 
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    afterEvaluate {
+        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
+            .let { kmpExt ->
+                kmpExt?.sourceSets?.removeAll {
+                    setOf(
+                        "androidAndroidTestRelease",
+                        "androidTestFixtures",
+                        "androidTestFixturesDebug",
+                        "androidTestFixturesRelease",
+                    ).contains(it.name)
+                }
+            }
+    }
+}
+
 /**
  * Run with `./gradlew dependencyUpdates` and the report will be in:
  *      /build/dependencyUpdates/versionsReport.html
