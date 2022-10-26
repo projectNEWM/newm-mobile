@@ -7,6 +7,7 @@ object Plugins {
     const val kapt = "kapt"
     const val multiplatform = "multiplatform"
     const val serialization = "plugin.serialization"
+    const val kotlinxSerialization = "kotlinx-serialization"
     const val sqlDelight = "com.squareup.sqldelight"
 
     const val benManesVersionsPlugin = "com.github.ben-manes.versions"

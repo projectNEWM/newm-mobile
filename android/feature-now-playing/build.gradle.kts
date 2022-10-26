@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.compileSdk
+    compileSdk = Versions.androidCompileSdk
 
     defaultConfig {
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
         resourcePrefix = "now_playing"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

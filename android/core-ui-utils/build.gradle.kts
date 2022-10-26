@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.compileSdk
+    compileSdk = Versions.androidCompileSdk
 
     defaultConfig {
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
         resourcePrefix = "core_ui_utils"
     }
 
