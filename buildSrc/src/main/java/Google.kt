@@ -21,7 +21,6 @@ object Google {
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycle}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.androidxNavigation}"
-    const val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.androidxNavigation}"
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.androidxSplashScreen}"
 

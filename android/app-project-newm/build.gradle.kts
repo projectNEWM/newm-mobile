@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk = Versions.compileSdk
+    compileSdk = Versions.androidCompileSdk
 
     defaultConfig {
         applicationId = "io.projectnewm"
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "io.projectnewm.NewmAndroidJUnitRunner"
@@ -79,13 +79,12 @@ dependencies {
     implementation(Google.lifecycle)
     implementation(Google.material)
     implementation(Google.navigationCompose)
-    implementation(Google.navigationFragmentKtx)
     implementation(Google.navigationUiKtx)
     implementation(Google.splashScreen)
     implementation(Koin.android)
     implementation(Koin.androidCompose)
     implementation(Kotlin.reflect)
-    implementation(Ktor.android)
+    implementation(Ktor.clientAndroid)
 
 
     debugImplementation(Google.composeUiTooling)

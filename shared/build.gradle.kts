@@ -2,9 +2,24 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     kotlin(Plugins.multiplatform)
-    kotlin(Plugins.serialization)
+    id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
+}
+
+android {
+    compileSdk = Versions.androidCompileSdk
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    namespace = "io.newm.common"
 }
 
 kotlin {
@@ -25,30 +40,40 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Ktor.core)
-                implementation(Ktor.clientSerialization)
-                implementation(SqlDelight.runtime)
-                implementation(Koin.core )
+                with(Ktor) {
+                    implementation(clientCore)
+                    implementation(clientJson)
+                    implementation(clientLogging)
+                    implementation(contentNegotiation)
+                    implementation(json)
+                }
+                with(SqlDelight) {
+                    implementation(runtime)
+                }
+                with(Koin) {
+                    api(core)
+                }
+                with(Kotlin ) {
+                    implementation(coroutinesCore)
+                    implementation(serializationCore)
+                }
             }
         }
         val commonTest by getting {
             dependencies {
+                implementation(Koin.test)
+                implementation(Kotlin.coroutinesTest)
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidAndroidTestRelease by getting
         val androidMain by getting {
             dependencies {
-                implementation(Ktor.android)
+                implementation(Ktor.clientAndroid)
                 implementation(SqlDelight.androidDriver)
-                implementation(Ktor.logback)
-                implementation(Ktor.logging)
-                implementation("io.ktor:ktor-client-auth:${Versions.ktor}")
             }
         }
         val androidTest by getting {
-            dependsOn(androidAndroidTestRelease)
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
@@ -80,18 +105,15 @@ kotlin {
     }
 }
 
-android {
-    compileSdk = 31
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 23
-        targetSdk = 31
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 sqldelight {
-    database("NewmDb") {
-        packageName = "io.projectnewm.shared.repository.db"
+    database("NewmDatabase") {
+        packageName = "io.newm.common.db"
         sourceFolders = listOf("sqldelight")
     }
 }
