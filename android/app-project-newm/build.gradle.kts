@@ -86,6 +86,9 @@ dependencies {
     implementation(Kotlin.reflect)
     implementation(Ktor.clientAndroid)
 
+    debugImplementation(Facebook.flipper)
+    debugImplementation(Facebook.soloader)
+    releaseImplementation(Facebook.flipperNoop)
 
     debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)

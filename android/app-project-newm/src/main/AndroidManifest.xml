@@ -13,6 +13,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.ProjectNewm.SplashScreen">
+
         <activity
                 android:name=".LaunchNewmActivity"
                 android:exported="true"
@@ -33,5 +34,9 @@
                 android:name=".LoginActivity"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait" />
+
+        <activity
+                android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
+                android:exported="true" />
     </application>
 </manifest>
