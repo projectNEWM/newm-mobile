@@ -69,7 +69,10 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Ktor.clientAndroid)
+                with(Ktor) {
+                    implementation(clientOkhttp)
+                    implementation(clientAndroid)
+                }
                 implementation(SqlDelight.androidDriver)
             }
         }
@@ -89,7 +92,10 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
-                implementation(Ktor.ios)
+                with(Ktor) {
+                    implementation(ios)
+                    implementation(iosDarwin)
+                }
                 implementation(SqlDelight.nativeDriver)
             }
         }

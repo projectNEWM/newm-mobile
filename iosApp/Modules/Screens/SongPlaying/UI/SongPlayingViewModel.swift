@@ -113,7 +113,6 @@ private extension Int {
 		Int.formatter.zeroFormattingBehavior = .pad
 		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
 			//TODO:MU: Uncomment when KMM module added back
-			LoggerKt.printLogD(className: String(describing: Self.self), message: "badPlaybackTimeFormat")
 			return SongPlayingViewModel.playbackTimePlaceholder
 		}
 		
