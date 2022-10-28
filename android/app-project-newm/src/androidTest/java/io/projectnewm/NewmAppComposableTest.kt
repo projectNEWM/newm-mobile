@@ -15,7 +15,7 @@ import org.junit.Test
 class NewmAppComposableTest {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val composeTestRule = createAndroidComposeRule<LoginActivity>()
 
 
     @Before
