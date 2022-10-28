@@ -11,7 +11,7 @@ import org.junit.Test
 class LoginScreenTest : ScreenshotTest {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val composeTestRule = createAndroidComposeRule<LoginActivity>()
 
     @Before
     fun setup() {

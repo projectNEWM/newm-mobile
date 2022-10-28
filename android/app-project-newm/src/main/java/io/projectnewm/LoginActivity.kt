@@ -1,5 +1,6 @@
 package io.projectnewm
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,61 +13,45 @@ import io.projectnewm.core.theme.NewmMobileTheme
 import io.projectnewm.feature.login.screen.*
 import io.projectnewm.screens.Screen
 
-class MainActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
             NewmMobileTheme {
-                WelcomeToNewm()
+                WelcomeToNewm(::launchHomeActivity)
             }
         }
+    }
+
+    private fun launchHomeActivity() {
+        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
     }
 }
 
 @Composable
-fun WelcomeToNewm(signupViewModel: SignupViewModel = org.koin.androidx.compose.get()) {
+fun WelcomeToNewm(
+    onStartHomeActivity: () -> Unit,
+    signupViewModel: SignupViewModel = org.koin.androidx.compose.get()
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.LoginScreen.route) {
         composable(Screen.LoginScreen.route) {
-            LoginScreen(onUserLoggedIn = { ->
-                navController.navigate(Screen.HomeRoot.route) {
-                    popUpTo(Screen.LoginScreen.route) {
-                        inclusive = true
-                    }
-                }
-            }, onSignupClick = {
+            LoginScreen(onUserLoggedIn = onStartHomeActivity, onSignupClick = {
                 navController.navigate(Screen.Signup.route)
             })
         }
         composable(Screen.Signup.route) {
             SignUpScreen(
-                onUserLoggedIn = {
-                    navController.navigate(Screen.HomeRoot.route) {
-                        popUpTo(Screen.LoginScreen.route) {
-                            inclusive = true
-                        }
-                    }
-                },
-                onVerification = {
+                onUserLoggedIn = onStartHomeActivity, onVerification = {
                     navController.navigate(Screen.VerificationCode.route)
-                },
-                signupViewModel
+                }, signupViewModel
             )
         }
         composable(Screen.VerificationCode.route) {
-            VerificationScreen(signupViewModel) {
-                navController.navigate(Screen.HomeRoot.route) {
-                    popUpTo(Screen.LoginScreen.route) {
-                        inclusive = true
-                    }
-                }
-            }
-        }
-        composable(Screen.HomeRoot.route) {
-            NewmApp()
+            VerificationScreen(signupViewModel, onVerificationComplete = onStartHomeActivity)
         }
     }
 }
