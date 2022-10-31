@@ -9,33 +9,35 @@ class SongPlayingViewModel: ObservableObject {
 	typealias Seconds = Int
 	
 	private var cancellables = Set<AnyCancellable>()
+		
+	@Injected private var audioPlayer: AudioPlayer
 	
-	private let songInfoUseCase: SongInfoUseCaseProtocol
-	private let musicPlayerUseCase: MusicPlayerUseCaseProtocol
-	
-	@Published var song: SongInfo
+	@Published var song: SongInfo = MockData.songInfo()
 	@Published var lyricsOffsetPercentage: Float = 0
-	@Published var playbackTime: String = SongPlayingViewModel.playbackTimePlaceholder
+	@Published var currentTime: String = 0.playbackTimeString
+	@Published var totalTime: String = 0.playbackTimeString
 	@Published var playbackState: PlaybackState = .paused
 	@Published var showTipping: Bool = false
+	@Published var error: Error?
+	@Published var title: String = .nowPlayingTitle
+	var percentPlayed: CGFloat = 0
 	
 	let supportArtistPrompt: String = .likeTheArtist
 	
-	init(songInfoUseCase: SongInfoUseCaseProtocol, musicPlayerUseCase: MusicPlayerUseCaseProtocol) {
-		self.songInfoUseCase = songInfoUseCase
-		self.musicPlayerUseCase = musicPlayerUseCase
+	init() {
+		Task { @MainActor in
+			for await currentTimeInt in audioPlayer.currentTime.values {
+				currentTime = currentTimeInt.playbackTimeString
+				percentPlayed = CGFloat(currentTimeInt) / CGFloat(audioPlayer.totalTime)
+				totalTime = audioPlayer.totalTime.playbackTimeString
+			}
+		}
 		
-		song = songInfoUseCase.execute()
-		
-		musicPlayerUseCase.playbackTime
-			.map(\.playbackTimeString)
-			.sink { [weak self] in self?.playbackTime = $0 }
-			.store(in: &cancellables)
-		
-		musicPlayerUseCase.playbackState
-			.map(SongPlayingViewModel.PlaybackState.init)
-			.sink { [weak self] in self?.playbackState = $0 }
-			.store(in: &cancellables)
+		Task { @MainActor in
+			for await playbackState in audioPlayer.playbackState.values {
+				self.playbackState = playbackState
+			}
+		}
 	}
 }
 
@@ -61,13 +63,18 @@ extension SongPlayingViewModel {
 	}
 	
 	func playTapped() {
-		playbackState = .playing
-		musicPlayerUseCase.play()
+		//TODO: move to KMM
+		Task { @MainActor in
+			do {
+				try await audioPlayer.play(songId: "")
+			} catch {
+				self.error = error
+			}
+		}
 	}
 	
 	func pauseTapped() {
-		playbackState = .paused
-		musicPlayerUseCase.pause()
+		Task { await audioPlayer.pause() }
 	}
 	
 	func airplayTapped() {
@@ -91,21 +98,7 @@ private extension SongPlayingViewModel {
 	static var playbackTimePlaceholder: String { "--:--" }
 }
 
-extension SongPlayingViewModel {
-	enum PlaybackState {
-		case playing
-		case paused
-		
-		init(_ playbackState: ModuleLinker.PlaybackState) {
-			switch playbackState {
-			case .playing: self = .playing
-			case .paused: self = .paused
-			}
-		}
-	}
-}
-
-private extension Int {
+extension Int {
 	private static let formatter = DateComponentsFormatter()
 
 	var playbackTimeString: String {
