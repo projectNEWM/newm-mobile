@@ -1,6 +1,7 @@
 package io.projectnewm.shared
 
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import io.ktor.client.*
 import io.ktor.client.engine.darwin.*
 import io.newm.common.db.NewmDatabase
 import io.projectnewm.shared.db.NewmDatabaseWrapper
@@ -11,5 +12,13 @@ actual fun platformModule() = module {
         val driver = NativeSqliteDriver(NewmDatabase.Schema, "newm.db")
         NewmDatabaseWrapper(NewmDatabase(driver))
     }
-    single { Darwin.create() }
+    single {
+        HttpClient(Darwin) {
+            engine {
+                configureRequest {
+                    setAllowsCellularAccess(true)
+                }
+            }
+        }
+    }
 }
