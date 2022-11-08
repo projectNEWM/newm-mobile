@@ -1,9 +1,10 @@
 import SwiftUI
+import Colors
 
 public struct BigCellSection: View {
 	private let cellTitleFont: Font = .inter(ofSize: 12).bold()
 	private let cellSubtitleFont: Font = .inter(ofSize: 12)
-	private let cellSubtitleColor: Color = Color(.grey100)
+	private let cellSubtitleColor = NEWMColor.grey100.swiftUIColor
 	
 	private let model: CellsSectionModel<BigCellViewModel>
 	

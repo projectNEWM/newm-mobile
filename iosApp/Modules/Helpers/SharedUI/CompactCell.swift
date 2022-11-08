@@ -1,4 +1,5 @@
 import SwiftUI
+import Colors
 
 public struct CompactCell: View {
 	private let model: CompactCellViewModel
@@ -7,7 +8,7 @@ public struct CompactCell: View {
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
-	private let subtitleColor: Color = Color(.grey100)
+	private let subtitleColor: Color = NEWMColor.grey100.swiftUIColor
 	
 	private let imageSize: CGFloat = 60
 	

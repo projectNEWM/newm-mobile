@@ -2,48 +2,126 @@ import SwiftUI
 import ModuleLinker
 import Resolver
 import SharedUI
+import Fonts
 
-public struct SongPlayingView: DataView {
+public struct SongPlayingView: View {
 	@ObservedObject private var viewModel: SongPlayingViewModel
 	@Injected private var tipViewProvider: TipViewProviding
 	
 	public init(id: String) {
 		viewModel = Resolver.resolve(args: id)
-		viewModel.playTapped()
+		viewModel.playPauseTapped()
 	}
 	
 	public var body: some View {
-		GeometryReader { geometry in
-			VStack {
-				PlaybackCounter(
-					currentTime: viewModel.currentTime,
-					totalTime: viewModel.totalTime,
-					percentComplete: viewModel.percentPlayed,
-					artistImageUrl: viewModel.song.artist.image,
-					size: geometry.size.width
-				)
+		VStack {
+			titleView
+			Spacer()
+			playbackCounter
+			controlStrip
+			tipButton.frame(width: 40, height: 40).padding(.top, 30)
+		}
+		.padding()
+		.overlay {
+			if viewModel.showTipping {
+				tippingOverlay
 			}
 		}
-//		.background(backgroundImage)
-//		.overlay {
-//			if viewModel.showTipping {
-//				tippingOverlay
-//			}
-//		}
 		.navigationTitle(viewModel.title)
+		.backButton()
 	}
 	
-	private var topView: some View {
+	private var playbackCounter: some View {
+		PlaybackCounter(
+			currentTime: viewModel.currentTime,
+			totalTime: viewModel.totalTime,
+			percentComplete: viewModel.percentPlayed,
+			artistImageUrl: viewModel.song.artist.image
+		).aspectRatio(6/5, contentMode: .fit)
+	}
+	
+	private var titleView: some View {
 		HStack {
-//			Image(Icon.heart)
+			favoriteButon
+			Spacer()
 			VStack {
-				Text(viewModel.song.songTitle)
+				Text(viewModel.song.songTitle).font(.newmTitle1)
 				Text(viewModel.song.artist.name)
 			}
-//			Image(PlayerIcons)
+			Spacer()
+			shareButton
 		}
 	}
 	
+	private var controlStrip: some View {
+		HStack(alignment: .top) {
+			shuffleButton
+			Spacer()
+			prevButton.padding(.top, 50)
+			Spacer()
+			playButton.padding(.top, 50)
+			Spacer()
+			nextButton.padding(.top, 50)
+			Spacer()
+			repeatButton
+		}
+	}
+	
+	private var shuffleButton: some View {
+		Button(action: { viewModel.shuffleTapped() }) {
+			Asset.PlayerIcons.shuffle.swiftUIImage
+		}
+	}
+	
+	private var prevButton: some View {
+		Button(action: { viewModel.prevTapped() }) {
+			Asset.PlayerIcons.previous.swiftUIImage
+		}
+	}
+	
+	private var playButton: some View {
+		Button(action: { viewModel.playPauseTapped() }) {
+			switch viewModel.playbackState {
+			case .playing:
+				Asset.PlayerIcons.pause.swiftUIImage
+			default:
+				Asset.PlayerIcons.play.swiftUIImage
+			}
+		}
+	}
+	
+	private var nextButton: some View {
+		Button(action: { viewModel.nextTapped() }) {
+			Asset.PlayerIcons.next.swiftUIImage
+		}
+	}
+	
+	private var repeatButton: some View {
+		Button(action: { viewModel.repeatTapped() }) {
+			Asset.PlayerIcons.repeat.swiftUIImage
+		}
+	}
+	
+	private var favoriteButon: some View {
+		Button(action: { viewModel.favoriteTapped() }) {
+			Asset.PlayerIcons.heart.swiftUIImage
+		}
+	}
+	
+	private var shareButton: some View {
+		Button(action: { }) {
+			Asset.PlayerIcons.share.swiftUIImage
+		}
+	}
+	
+	private var tipButton: some View {
+		Button {
+			viewModel.showTipping = true
+		} label: {
+			Asset.PlayerIcons.heartAdd.swiftUIImage.resizable()
+		}
+	}
+		
 //	private var supportArtistPrompt: some View {
 //		Text(viewModel.supportArtistPrompt)
 //			.font(.caption3)
@@ -218,18 +296,44 @@ public struct SongPlayingView: DataView {
 //		.frame(minHeight: 100)
 //	}
 //
-//	private var tippingOverlay: some View {
-//		tipViewProvider.tipView { tip in
-//			withAnimation {
-//				viewModel.tipTapped(tip)
-//			}
-//		}
-//	}
+	private var tippingOverlay: some View {
+		tipViewProvider.tipView { tip in
+			withAnimation {
+				viewModel.tipTapped(tip)
+			}
+		}
+	}
 }
 
 struct SongPlayingView_Previews: PreviewProvider {
 	static var previews: some View {
 		SongPlayingView(id: "1")
 			.preferredColorScheme(.dark)
+	}
+}
+
+struct BackButton: ViewModifier {
+	@Environment(\.presentationMode) @Binding var presentationMode: PresentationMode
+	
+	func body(content: Content) -> some View {
+		content
+			.navigationBarBackButtonHidden(true)
+			.navigationBarItems(leading: btnBack)
+	}
+	
+	var btnBack: some View {
+		Button(action: { presentationMode.dismiss() }) {
+			HStack {
+				Asset.backArrow.swiftUIImage
+					.aspectRatio(contentMode: .fit)
+					.foregroundColor(.white)
+			}
+		}
+	}
+}
+
+extension View {
+	func backButton() -> some View {
+		modifier(BackButton())
 	}
 }

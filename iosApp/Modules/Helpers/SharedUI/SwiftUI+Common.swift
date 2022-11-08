@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import ModuleLinker
+import Colors
 
 public extension Image {
 	func circleImage(size: CGFloat) -> some View {
@@ -15,7 +16,7 @@ public extension Image {
 public extension View {
 	var sidePadding: CGFloat { 24 }
 	private func sectionTitleFont() -> some View {
-		font(.inter(ofSize: 12)).foregroundColor(Color(.grey100))
+		font(.inter(ofSize: 12)).foregroundColor(NEWMColor.grey100.swiftUIColor)
 	}
 	
 	private func addSectionTitle(_ title: String) -> some View {

@@ -15,7 +15,7 @@ public class MockData {
 		models.map(CompactCellViewModel.init)
 	}
 
-	static func makeArtist(name: String, id: String) -> Artist {
+	public static func makeArtist(name: String, id: String) -> Artist {
 		Artist(image: artistImageUrl, name: name, genre: "Rock", stars: 12000, id: id)
 	}
 	

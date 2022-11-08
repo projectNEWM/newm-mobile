@@ -9,7 +9,7 @@ public struct BigArtistCell: View {
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
-	private let subtitleColor: Color = Color(.grey100)
+	private let subtitleColor = NEWMColor.grey100.swiftUIColor
 	private let imageSize: CGFloat = 130
 	
 	public init(model: BigCellViewModel) {

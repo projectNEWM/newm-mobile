@@ -5,40 +5,29 @@ import AVFoundation
 import ModuleLinker
 import Resolver
 
+@MainActor
 class SongPlayingViewModel: ObservableObject {
 	typealias Seconds = Int
 	
 	private var cancellables = Set<AnyCancellable>()
-		
-	@Injected private var audioPlayer: AudioPlayer
+	
+	@Published private var audioPlayer = Resolver.resolve((any AudioPlayer).self)
 	
 	@Published var song: SongInfo = MockData.songInfo()
 	@Published var lyricsOffsetPercentage: Float = 0
-	@Published var currentTime: String = 0.playbackTimeString
-	@Published var totalTime: String = 0.playbackTimeString
-	@Published var playbackState: PlaybackState = .paused
 	@Published var showTipping: Bool = false
 	@Published var error: Error?
 	@Published var title: String = .nowPlayingTitle
-	var percentPlayed: CGFloat = 0
+	
+	var currentTime: String { audioPlayer.currentTime.playbackTimeString }
+	var totalTime: String { audioPlayer.totalTime.playbackTimeString }
+	var playbackState: PlaybackState { audioPlayer.playbackState }
+	var percentPlayed: CGFloat { CGFloat(audioPlayer.currentTime) / CGFloat(audioPlayer.totalTime) }
 	
 	let supportArtistPrompt: String = .likeTheArtist
 	
-	init() {
-		Task { @MainActor in
-			for await currentTimeInt in audioPlayer.currentTime.values {
-				currentTime = currentTimeInt.playbackTimeString
-				percentPlayed = CGFloat(currentTimeInt) / CGFloat(audioPlayer.totalTime)
-				totalTime = audioPlayer.totalTime.playbackTimeString
-			}
-		}
-		
-		Task { @MainActor in
-			for await playbackState in audioPlayer.playbackState.values {
-				self.playbackState = playbackState
-			}
-		}
-	}
+	nonisolated
+	init() {}
 }
 
 extension SongPlayingViewModel {
@@ -46,11 +35,11 @@ extension SongPlayingViewModel {
 		showTipping = true
 	}
 	
-	func previousSongTapped() {
+	func prevTapped() {
 		
 	}
 	
-	func nextSongTapped() {
+	func nextTapped() {
 		
 	}
 	
@@ -62,31 +51,20 @@ extension SongPlayingViewModel {
 		
 	}
 	
-	func playTapped() {
-		//TODO: move to KMM
-		Task { @MainActor in
-			do {
-				try await audioPlayer.play(songId: "")
-			} catch {
-				self.error = error
-			}
+	func favoriteTapped() {
+		
+	}
+	
+	func playPauseTapped() {
+		switch playbackState {
+		case .playing:
+			audioPlayer.playbackState = .paused
+		case .stopped:
+			audioPlayer.setSongId("")
+			audioPlayer.playbackState = .playing
+		case .paused:
+			audioPlayer.playbackState = .playing
 		}
-	}
-	
-	func pauseTapped() {
-		Task { await audioPlayer.pause() }
-	}
-	
-	func airplayTapped() {
-		
-	}
-	
-	func shareTapped() {
-		
-	}
-	
-	func starTapped() {
-		
 	}
 	
 	func tipTapped(_ amount: TipAmount) {
@@ -95,12 +73,12 @@ extension SongPlayingViewModel {
 }
 
 private extension SongPlayingViewModel {
-	static var playbackTimePlaceholder: String { "--:--" }
+	nonisolated static var playbackTimePlaceholder: String { "--:--" }
 }
 
 extension Int {
 	private static let formatter = DateComponentsFormatter()
-
+	
 	var playbackTimeString: String {
 		Int.formatter.allowedUnits = self > 3600 ? [.hour, .minute, .second] : [.minute, .second]
 		Int.formatter.zeroFormattingBehavior = .pad

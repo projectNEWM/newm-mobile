@@ -30,7 +30,7 @@
        params:
          forceProvidesNamespaces: true
          publicAccess: true
-       output: XCAssets+Generated.swift
+       output: Resources/Icon+Generated.swift
 
 
 ## Generate constants for your storyboards and XIBs.

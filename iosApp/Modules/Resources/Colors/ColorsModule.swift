@@ -6,9 +6,6 @@ public final class ColorsModule: ModuleProtocol {
 	public static let shared = ColorsModule()
 	
 	public func registerAllServices() {
-		Resolver.register {
-			self as ColorProviding
-		}
 	}
 }
 
