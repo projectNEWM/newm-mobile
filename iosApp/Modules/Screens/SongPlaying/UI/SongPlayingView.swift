@@ -80,9 +80,9 @@ public struct SongPlayingView: View {
 			audioPlayer.shuffle.toggle()
 		} label: {
 			if audioPlayer.shuffle {
-				Asset.PlayerIcons.shuffleSelected.swiftUIImage
+				Asset.Media.PlayerIcons.shuffleSelected.swiftUIImage
 			} else {
-				Asset.PlayerIcons.shuffle.swiftUIImage
+				Asset.Media.PlayerIcons.shuffle.swiftUIImage
 			}
 		}
 	}
@@ -91,7 +91,7 @@ public struct SongPlayingView: View {
 		Button {
 			audioPlayer.prev()
 		} label: {
-			Asset.PlayerIcons.previous.swiftUIImage
+			Asset.Media.PlayerIcons.previous.swiftUIImage
 		}
 	}
 	
@@ -100,8 +100,8 @@ public struct SongPlayingView: View {
 			audioPlayer.isPlaying.toggle()
 		} label: {
 			audioPlayer.isPlaying ?
-			Asset.PlayerIcons.pause.swiftUIImage :
-			Asset.PlayerIcons.play.swiftUIImage
+			Asset.Media.PlayerIcons.pause.swiftUIImage :
+			Asset.Media.PlayerIcons.play.swiftUIImage
 		}
 	}
 	
@@ -109,7 +109,7 @@ public struct SongPlayingView: View {
 		Button {
 			audioPlayer.next()
 		} label: {
-			Asset.PlayerIcons.next.swiftUIImage
+			Asset.Media.PlayerIcons.next.swiftUIImage
 		}
 	}
 	
@@ -118,7 +118,7 @@ public struct SongPlayingView: View {
 			audioPlayer.cycleRepeatMode()
 		} label: {
 			//TODO: add different repeat image states
-			Asset.PlayerIcons.repeat.swiftUIImage
+			Asset.Media.PlayerIcons.repeat.swiftUIImage
 		}
 	}
 	
@@ -127,9 +127,9 @@ public struct SongPlayingView: View {
 			song.favorited.toggle()
 		} label: {
 			if song.favorited {
-				Asset.PlayerIcons.heartSelected.swiftUIImage
+				Asset.Media.PlayerIcons.heartSelected.swiftUIImage
 			} else {
-				Asset.PlayerIcons.heart.swiftUIImage
+				Asset.Media.PlayerIcons.heart.swiftUIImage
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public struct SongPlayingView: View {
 		Button {
 			//TODO:
 		} label: {
-			Asset.PlayerIcons.share.swiftUIImage
+			Asset.Media.PlayerIcons.share.swiftUIImage
 		}
 	}
 	
@@ -146,7 +146,7 @@ public struct SongPlayingView: View {
 		Button {
 			showTipping = true
 		} label: {
-			Asset.PlayerIcons.heartAdd.swiftUIImage.resizable()
+			Asset.Media.PlayerIcons.heartAdd.swiftUIImage.resizable()
 		}
 	}
 	
@@ -180,7 +180,7 @@ struct BackButton: ViewModifier {
 	var btnBack: some View {
 		Button(action: { presentationMode.dismiss() }) {
 			HStack {
-				Asset.backArrow.swiftUIImage
+				Asset.Media.backArrow.swiftUIImage
 					.aspectRatio(contentMode: .fit)
 					.foregroundColor(.white)
 			}

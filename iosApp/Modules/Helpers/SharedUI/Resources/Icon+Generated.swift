@@ -22,28 +22,42 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
-  public enum PlayerIcons {
-    public static let heartAdd = ImageAsset(name: "heart-add")
-    public static let heartAddHighlighted = ImageAsset(name: "heart-add_highlighted")
-    public static let heart = ImageAsset(name: "heart")
-    public static let heartHighlighted = ImageAsset(name: "heart_highlighted")
-    public static let heartSelected = ImageAsset(name: "heart_selected")
-    public static let next = ImageAsset(name: "next")
-    public static let nextHighlighted = ImageAsset(name: "next_highlighted")
-    public static let pause = ImageAsset(name: "pause")
-    public static let pauseSelected = ImageAsset(name: "pause_selected")
-    public static let play = ImageAsset(name: "play")
-    public static let playHighlighted = ImageAsset(name: "play_highlighted")
-    public static let previous = ImageAsset(name: "previous")
-    public static let previousHighlighted = ImageAsset(name: "previous_highlighted")
-    public static let `repeat` = ImageAsset(name: "repeat")
-    public static let shareHighlighted = ImageAsset(name: "share-highlighted")
-    public static let share = ImageAsset(name: "share")
-    public static let shuffle = ImageAsset(name: "shuffle")
-    public static let shuffleSelected = ImageAsset(name: "shuffle_selected")
+  public enum Media {
+    public enum PlayerIcons {
+      public static let heartAdd = ImageAsset(name: "heart-add")
+      public static let heartAddHighlighted = ImageAsset(name: "heart-add_highlighted")
+      public static let heart = ImageAsset(name: "heart")
+      public static let heartHighlighted = ImageAsset(name: "heart_highlighted")
+      public static let heartSelected = ImageAsset(name: "heart_selected")
+      public static let next = ImageAsset(name: "next")
+      public static let nextHighlighted = ImageAsset(name: "next_highlighted")
+      public static let pause = ImageAsset(name: "pause")
+      public static let pauseSelected = ImageAsset(name: "pause_selected")
+      public static let play = ImageAsset(name: "play")
+      public static let playHighlighted = ImageAsset(name: "play_highlighted")
+      public static let previous = ImageAsset(name: "previous")
+      public static let previousHighlighted = ImageAsset(name: "previous_highlighted")
+      public static let `repeat` = ImageAsset(name: "repeat")
+      public static let shareHighlighted = ImageAsset(name: "share-highlighted")
+      public static let share = ImageAsset(name: "share")
+      public static let shuffle = ImageAsset(name: "shuffle")
+      public static let shuffleSelected = ImageAsset(name: "shuffle_selected")
+    }
+    public static let backArrow = ImageAsset(name: "back-arrow")
+    public static let placeholder = ImageAsset(name: "placeholder")
   }
-  public static let backArrow = ImageAsset(name: "back-arrow")
-  public static let placeholder = ImageAsset(name: "placeholder")
+  public enum MockAssets {
+    public static let artist0 = ImageAsset(name: "artist0")
+    public static let artist1 = ImageAsset(name: "artist1")
+    public static let artist2 = ImageAsset(name: "artist2")
+    public static let artist3 = ImageAsset(name: "artist3")
+    public static let artist4 = ImageAsset(name: "artist4")
+    public static let artist5 = ImageAsset(name: "artist5")
+    public static let artist6 = ImageAsset(name: "artist6")
+    public static let artist7 = ImageAsset(name: "artist7")
+    public static let artist8 = ImageAsset(name: "artist8")
+    public static let artist9 = ImageAsset(name: "artist9")
+  }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

@@ -19,7 +19,7 @@ public struct CompactCell: View {
 	
 	public var body: some View {
 		HStack {
-			image.fixedSize()
+			image
 			VStack(alignment: .leading) {
 				title
 				songs
@@ -28,19 +28,20 @@ public struct CompactCell: View {
     }
 	
 	private var image: some View {
-		AsyncImage(url: model.image) { phase in
-			switch phase {
-			case .success(let image):
+		//TODO: Remove dummy
+		let image = Image.randomDummy
+//		AsyncImage(url: model.image) { phase in
+//			switch phase {
+//			case .success(let image):
 				if roundImage {
-					image.circleImage(size: imageSize)
+					return image.circleImage(size: imageSize).erased
 				} else {
-					image.frame(width: imageSize, height: imageSize)
+					return image.resizable().frame(width: imageSize, height: imageSize).erased
 				}
-			default:
-				Image.placeholder.circleImage(size: imageSize)
-			}
-		}
-		.fixedSize()
+//			default:
+//				Image.placeholder.circleImage(size: imageSize)
+//			}
+//		}
 	}
 	
 	private var title: some View {

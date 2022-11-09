@@ -26,19 +26,29 @@ public struct BigArtistCell: View {
 	}
 	
 	private var artistImage: some View {
-		AsyncImage(url: model.image) { phase in
-			switch phase {
-			case .success(let image):
-				image
-					.resizable()
-					.frame(width: imageSize, height: imageSize)
-					.cornerRadius(10)
-			default:
-				Image(uiImage: .placeholder!)
-					.resizable()
-					.frame(width: imageSize, height: imageSize)
-			}
-		}.cornerRadius(10)
+		//TODO: FIX THIS
+		Image.randomDummy
+//		AsyncImage(url: model.image) { phase in
+//			switch phase {
+//			case .success(let image):
+//				image
+//					.resizable()
+//					.frame(width: imageSize, height: imageSize)
+//					.cornerRadius(10)
+//			case .empty:
+//				Image(uiImage: .placeholder!)
+//					.resizable()
+//					.frame(width: imageSize, height: imageSize)
+//			case .failure(let error):
+//				Text(error.localizedDescription)
+//			@unknown default:
+//				fatalError()
+//			}
+//		}
+		.resizable()
+		.frame(width: imageSize, height: imageSize)
+		.cornerRadius(10)
+
 	}
 	
 	private var artistName: some View {

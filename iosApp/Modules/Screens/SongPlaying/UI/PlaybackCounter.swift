@@ -8,6 +8,9 @@ struct PlaybackCounter: View {
 	let totalTime: String
 	let percentComplete: CGFloat
 	let artistImageUrl: String
+	
+	//TODO: fix this
+	@State var image: Image = Image.randomDummy
 
 	private let timePadding: CGFloat = 30
 	
@@ -18,7 +21,8 @@ struct PlaybackCounter: View {
 			HStack(alignment: .center) {
 				currentTimeText.padding(.trailing, -15)
 				ZStack {
-					artistImage(size: size)
+//					artistImage(size: size)
+					image.circleImage(size: geometry.size.width)
 						.scaleEffect(x: padding, y: padding, anchor: UnitPoint(x: 0.5, y: 0.5))
 					track(filled: false, size: size)
 					track(filled: true, size: size)
@@ -112,7 +116,7 @@ struct PlaybackCounter_Previews: PreviewProvider {
 			PlaybackCounter(currentTime: viewModel.currentTime.playbackTimeString,
 							totalTime: viewModel.totalTime.playbackTimeString,
 							percentComplete: CGFloat(viewModel.currentTime) / CGFloat(viewModel.totalTime),
-							artistImageUrl: SharedUI.MockData.artistImageUrl)
+							artistImageUrl: "")
 			.padding(40)
 		}
 	}

@@ -1,5 +1,4 @@
 import SwiftUI
-import SharedUI
 import Colors
 
 public struct TitleSectionModel {

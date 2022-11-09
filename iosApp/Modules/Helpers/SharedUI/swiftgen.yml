@@ -25,6 +25,7 @@
  xcassets:
    inputs:
      - Resources/Media.xcassets
+     - Resources/MockAssets.xcassets
    outputs:
      - templateName: swift5
        params:
