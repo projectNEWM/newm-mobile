@@ -5,26 +5,21 @@ import Combine
 //TODO: move to KMM
 class AudioPlayerImpl: AudioPlayer, ObservableObject {
 	static let shared = AudioPlayerImpl()
-
-	@Published var playbackState: PlaybackState = .stopped {
+	
+	@Published var isPlaying: Bool = false {
 		didSet {
-			switch playbackState {
-			case .playing:
+			if isPlaying {
 				audioPlayer.play()
-			case .paused:
+			} else {
 				audioPlayer.pause()
-			case .stopped:
-				audioPlayer.pause()
-				audioPlayer.seek(to: .zero)
 			}
 		}
 	}
-	
 	@Published var repeatMode: RepeatMode? = nil
 	@Published var shuffle: Bool = false
 	
 	@Published var currentTime: Int = 0
-	@Published var totalTime: Int = 0
+	@Published var totalTime: Int = 30
 		
 	private var audioPlayer = AVPlayer(url: AudioPlayerImpl.songURL)
 	//TODO: remove this
@@ -35,11 +30,30 @@ class AudioPlayerImpl: AudioPlayer, ObservableObject {
 	func setSongId(_ songId: String) {
 		audioPlayer.pause()
 		audioPlayer = AVPlayer(url: AudioPlayerImpl.songURL)
-		audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.global(qos: .utility)) { [weak self] time in
+		audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
 			self?.currentTime = Int(CMTimeGetSeconds(time))
 			self?.totalTime = self?.audioPlayer.currentItem?.duration.isIndefinite == true ? 0 : Int(self?.audioPlayer.currentItem?.duration.seconds ?? 0)
 			
 			print("\(self!.currentTime)\t\(self!.totalTime)")
+		}
+	}
+	
+	func prev() {
+		audioPlayer.seek(to: .zero)
+	}
+	
+	func next() {
+		//TODO:
+	}
+	
+	func cycleRepeatMode() {
+		switch repeatMode {
+		case .none:
+			repeatMode = .one
+		case .one:
+			repeatMode = .all
+		case .all:
+			repeatMode = .none
 		}
 	}
 }

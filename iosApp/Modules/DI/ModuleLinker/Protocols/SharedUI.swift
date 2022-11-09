@@ -22,6 +22,7 @@ public protocol CircularProviding {
 
 public enum TestImage {
 	case bowie
+	case rick
 }
 
 public protocol TestImageProvider {

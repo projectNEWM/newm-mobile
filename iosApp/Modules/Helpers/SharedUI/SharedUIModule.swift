@@ -26,7 +26,7 @@ extension SharedUIModule: IDLinking {
 		IDLink<LinkedView>(selectedID: selectedID).erased
 	}
 }
-	
+
 extension SharedUIModule: GradientTagProviding {
 	public func gradientTag(title: String) -> AnyView {
 		GradientTag(title: title).erased
@@ -53,7 +53,7 @@ extension SharedUIModule: TestImageProvider {
 		guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("TempImage.png") else {
 			fatalError()
 		}
-
+		
 		let pngData = image(for: testImage).pngData()
 		do { try pngData?.write(to: imageURL) } catch { }
 		return imageURL.absoluteString
@@ -63,6 +63,8 @@ extension SharedUIModule: TestImageProvider {
 		switch testImage {
 		case .bowie:
 			return .Bowie
+		case .rick:
+			return .Rick
 		}
 	}
 }

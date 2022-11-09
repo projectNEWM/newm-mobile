@@ -43,7 +43,7 @@ public class MockData {
 	
 	public static var artistImageUrl: String {
 		@Injected var imageProvider: TestImageProvider
-		return imageProvider.url(for: .bowie)
+		return imageProvider.url(for: .rick)
 	}
 
 	public static var roundArtistImage: some View {
