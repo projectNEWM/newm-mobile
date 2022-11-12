@@ -14,6 +14,7 @@ import PlaylistList
 import Tips
 import Artist
 import Library
+import AudioPlayer
 
 struct iOSAppModule: ModuleProtocol {
 	static var shared = iOSAppModule()
@@ -32,6 +33,7 @@ struct iOSAppModule: ModuleProtocol {
 			PlaylistModule.shared,
 			TipsModule.shared,
 			ArtistModule.shared,
+			AudioPlayerModule.shared
 		]
 	}()
 	

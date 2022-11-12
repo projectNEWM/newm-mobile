@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 import SharedUI
 import shared
+import ModuleLinker
+import Resolver
 
 extension HomeView {
 	struct LoadedView: View {
@@ -9,6 +11,8 @@ extension HomeView {
 		@Binding private var route: HomeRoute?
 		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
+		
+		@Injected private var audioPlayer: any AudioPlayer
 		
 		private let hStackSpacing: CGFloat = 12
 		
@@ -48,7 +52,21 @@ extension HomeView {
 					ForEach(uiModel.recentlyPlayedSection, id: \.songId) { song in
 						BigArtistCell(model: BigCellViewModel(song: song)).tag(song.songId)
 							.onTapGesture {
-								route = .songPlaying(song: song)
+								audioPlayer.setSongId(song.songId)
+								audioPlayer.playbackInfo.isPlaying = true
+							}
+					}
+				}
+			}
+		}
+		
+		private var justReleasedSection: some View {
+			HorizontalScroller(title: .justReleased) {
+				LazyHStack(spacing: hStackSpacing) {
+					ForEach(uiModel.justReleasedSection, id: \.id) { artist in
+						BigArtistCell(model: BigCellViewModel(artist: artist)).tag(artist.id)
+							.onTapGesture {
+								route = .artist(id: artist.id)
 							}
 					}
 				}

@@ -7,7 +7,7 @@ struct HomeViewUIModel {
 	let title: TitleSectionModel
 	let thisWeekSection: ThisWeekSectionModel
 	let recentlyPlayedSection: [Song]
-	let justReleasedSection: CellsSectionModel<BigCellViewModel>
+	let justReleasedSection: [Artist]
 	let moreOfWhatYouLikeSection: CellsSectionModel<BigCellViewModel>
 	let newmArtistsSection: CellsSectionModel<CompactCellViewModel>
 	let mostPopularThisWeek: CellsSectionModel<BigCellViewModel>

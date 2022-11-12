@@ -4,6 +4,7 @@ import Resolver
 import SharedUI
 import Fonts
 import shared
+import AudioPlayer
 
 public struct SongPlayingView: View {
 	typealias Seconds = Int
@@ -95,7 +96,7 @@ public struct SongPlayingView: View {
 	private var playButton: some View {
 		Button {
 			if audioPlayerIsAttachedToOurSong == false {
-				audioPlayer.setSongId(song.songId, statedDuration: Int(song.duration))
+				audioPlayer.setSongId(song.songId)
 				audioPlayer.playbackInfo.isPlaying = true
 			} else {
 				audioPlayer.playbackInfo.isPlaying.toggle()
