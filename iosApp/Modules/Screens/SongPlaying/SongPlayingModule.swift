@@ -34,8 +34,8 @@ public final class SongPlayingModule: ModuleProtocol {
 }
 
 extension SongPlayingModule: SongPlayingViewProviding {
-	public func songPlayingView(id: String) -> AnyView {
-		SongPlayingView(song: MockData.songInfo()).erased
+	public func songPlayingView(song: Song) -> AnyView {
+		SongPlayingView(song: song).erased
 	}
 }
 

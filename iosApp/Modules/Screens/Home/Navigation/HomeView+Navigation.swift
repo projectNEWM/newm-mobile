@@ -16,8 +16,8 @@ extension HomeView {
 			ZStack {
 				NavigationLink(unwrapping: $route,
 							   case: /HomeRoute.songPlaying,
-							   destination: { $songId in
-					songPlayingViewProvider.songPlayingView(id: songId)
+							   destination: { $song in
+					songPlayingViewProvider.songPlayingView(song: song)
 				}, onNavigate: clearLinks, label: {})
 				
 				NavigationLink(unwrapping: $route,

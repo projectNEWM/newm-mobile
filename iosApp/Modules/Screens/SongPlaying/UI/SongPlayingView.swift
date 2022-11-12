@@ -12,7 +12,7 @@ public struct SongPlayingView: View {
 	//TODO: can't declare protocol for this.
 	@ObservedObject private var audioPlayer = AudioPlayerImpl.shared
 	
-	@State var song: SongInfo
+	@State var song: Song
 	
 	@State var lyricsOffsetPercentage: Float = 0
 	@State var showTipping: Bool = false
@@ -34,16 +34,13 @@ public struct SongPlayingView: View {
 		}
 		.navigationTitle(String.nowPlayingTitle)
 		.backButton()
-		.task {
-			audioPlayer.setSongId(SharedUI.MockData.songs.first!.songId)
-		}
 	}
 	
 	private var playbackCounter: some View {
 		PlaybackCounter(
-			currentTime: audioPlayer.currentTime.playbackTimeString,
-			totalTime: audioPlayer.totalTime.playbackTimeString,
-			percentComplete: audioPlayer.percentPlayed,
+			currentTime: (audioPlayerIsAttachedToOurSong ? audioPlayer.songInfo?.currentTime.playbackTimeString : nil) ?? 0.playbackTimeString,
+			totalTime: (audioPlayer.songInfo?.totalTime ?? (audioPlayerIsAttachedToOurSong ? Int(song.duration) : 0)).playbackTimeString,
+			percentComplete: audioPlayerIsAttachedToOurSong ? audioPlayer.percentPlayed : 0,
 			artistImageUrl: song.artist.image
 		).aspectRatio(1, contentMode: .fit)
 	}
@@ -52,10 +49,10 @@ public struct SongPlayingView: View {
 		HStack {
 			favoriteButton
 			Spacer()
-			VStack {
-				Text(song.songTitle).font(.newmTitle1)
+			VStack(alignment: .center) {
+				Text(song.title).font(.newmTitle1).padding(.bottom, 4)
 				Text(song.artist.name)
-			}
+			}.multilineTextAlignment(.center)
 			Spacer()
 			shareButton
 		}
@@ -77,9 +74,9 @@ public struct SongPlayingView: View {
 	
 	private var shuffleButton: some View {
 		Button {
-			audioPlayer.shuffle.toggle()
+			audioPlayer.playbackInfo?.shuffle.toggle()
 		} label: {
-			if audioPlayer.shuffle {
+			if audioPlayer.playbackInfo?.shuffle == true {
 				Asset.Media.PlayerIcons.shuffleSelected.swiftUIImage
 			} else {
 				Asset.Media.PlayerIcons.shuffle.swiftUIImage
@@ -97,11 +94,18 @@ public struct SongPlayingView: View {
 	
 	private var playButton: some View {
 		Button {
+			if audioPlayerIsAttachedToOurSong == false {
+				audioPlayer.setSongId(song.songId, statedDuration: Int(song.duration))
+			}
 			audioPlayer.isPlaying.toggle()
 		} label: {
-			audioPlayer.isPlaying ?
-			Asset.Media.PlayerIcons.pause.swiftUIImage :
-			Asset.Media.PlayerIcons.play.swiftUIImage
+			if audioPlayerIsAttachedToOurSong {
+				audioPlayer.isPlaying ?
+				Asset.Media.PlayerIcons.pause.swiftUIImage :
+				Asset.Media.PlayerIcons.play.swiftUIImage
+			} else {
+				Asset.Media.PlayerIcons.play.swiftUIImage
+			}
 		}
 	}
 	
@@ -157,16 +161,18 @@ public struct SongPlayingView: View {
 			}
 		}
 	}
+	
+	private var audioPlayerIsAttachedToOurSong: Bool {
+		audioPlayer.songInfo?.songID == song.songId
+	}
 }
 
 struct SongPlayingView_Previews: PreviewProvider {
 	static var previews: some View {
-		SongPlayingView(song: MockData.songInfo())
+		SongPlayingView(song: MockData.songs.first!)
 			.preferredColorScheme(.dark)
 	}
 }
-
-
 
 struct BackButton: ViewModifier {
 	@Environment(\.presentationMode) @Binding var presentationMode: PresentationMode

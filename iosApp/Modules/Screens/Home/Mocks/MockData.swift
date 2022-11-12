@@ -16,7 +16,7 @@ class MockHomeViewUIModelProviding: HomeViewUIModelProviding {
 			greeting: TitleSectionModel(isGreeting: true, title: "HEY MIAH", profilePic: URL(string: "")),
 			title: TitleSectionModel(isGreeting: false, title: "HOME", profilePic: URL(string: "")),
 			thisWeekSection: ThisWeekSectionModel(newFollowers: 12, royalties: 51.56, earnings: 2.15),
-			recentlyPlayedSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "RECENTLY PLAYED"),
+			recentlyPlayedSection: MockData.songs,
 			justReleasedSection: CellsSectionModel(cells: MockData.bigArtistCells, title: "JUST RELEASED"),
 			moreOfWhatYouLikeSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "MORE OF WHAT YOU LIKE"),
 			newmArtistsSection: CellsSectionModel<CompactCellViewModel>(cells: MockData.compactArtistCells, title: "NEWM ARTISTS"),

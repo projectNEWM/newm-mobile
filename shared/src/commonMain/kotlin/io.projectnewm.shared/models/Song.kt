@@ -6,4 +6,7 @@ data class Song (
     val artist: Artist,
     val isNft: Boolean,
     val songId: String,
+    var favorited: Boolean,
+    var duration: Int,
+    var genre: Genre,
 )

@@ -18,9 +18,9 @@ extension LibraryView {
             ScrollView {
                 titleSection
                 VStack(spacing: 36) {
-                    BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
-                    PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.playlistTapped)
-                    BigCellSection(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
+//                    HorizontalScroller(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
+//                    PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.playlistTapped)
+//					HorizontalScroller(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
                 } 
             }
         }

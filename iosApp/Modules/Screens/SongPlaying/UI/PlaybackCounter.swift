@@ -115,7 +115,7 @@ struct PlaybackCounter_Previews: PreviewProvider {
 		var body: some View {
 			PlaybackCounter(currentTime: viewModel.currentTime.playbackTimeString,
 							totalTime: viewModel.totalTime.playbackTimeString,
-							percentComplete: CGFloat(viewModel.currentTime) / CGFloat(viewModel.totalTime),
+							percentComplete: CGFloat(viewModel.currentTime) / CGFloat(viewModel.totalTime == 0 ? 1 : viewModel.totalTime),
 							artistImageUrl: "")
 			.padding(40)
 		}

@@ -6,70 +6,63 @@ import ModuleLinker
 import UIKit
 import SwiftUI
 
-enum Genre: CaseIterable {
-	case rock
-	case classical
-	case opera
-	case country
-	case beeboxin
-	case scat
-	
-	var title: String {
-		switch self {
-		case .beeboxin: return "Beeboxin"
-		case .classical: return "Classical"
-		case .country: return "Country"
-		case .rock: return "Rock"
-		case .scat: return "Scat"
-		case .opera: return "Opera"
-		}
-	}
-}
-
 public class MockData {
+	static var songCache = NSCache<NSString, Song>()
 	public static var bigArtistCells: [BigCellViewModel] {
-		models.map(BigCellViewModel.init)
+		artists.map(BigCellViewModel.init)
 	}
 	
 	public static var compactArtistCells: [CompactCellViewModel] {
-		models.map(CompactCellViewModel.init)
+		artists.map(CompactCellViewModel.init)
 	}
 
-	public static func makeArtist(name: String, id: String) -> Artist {
-		Artist(image: "", name: name, genre: Genre.allCases.randomElement()!.title, stars: 12000, id: id)
+	public static func makeArtist(name: String) -> Artist {
+		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.allCases.randomElement()!.title, stars: 12000, id: name)
 	}
 	
-	public static var models: [Artist] {
+	public static var artists: [Artist] {
 		[
-			makeArtist(name: "Joey Fidelity", id: "1"),
-			makeArtist(name: "Peaches n Cremed", id: "2"),
-			makeArtist(name: "Judish Minister", id: "3"),
-			makeArtist(name: "Death Blow", id: "4"),
-			makeArtist(name: "Dirty Mafia", id: "5"),
-			makeArtist(name: "Into a Downed Dream", id: "6"),
-			makeArtist(name: "Jesse Simpsenson", id: "7"),
-			makeArtist(name: "Ren Stimp", id: "8"),
-			makeArtist(name: "The Two Brothers", id: "9"),
-			makeArtist(name: "The Third Brother", id: "10"),
-			makeArtist(name: "Sister Twins", id: "11"),
-			makeArtist(name: "Rassle Davidoff", id: "12")
+			makeArtist(name: "Joey Fidelity"),
+			makeArtist(name: "Peaches n Cremed"),
+			makeArtist(name: "Judish Minister"),
+			makeArtist(name: "Death Blow"),
+			makeArtist(name: "Dirty Mafia"),
+			makeArtist(name: "Into a Downed Dream"),
+			makeArtist(name: "Jesse Simpsenson"),
+			makeArtist(name: "Ren Stimp"),
+			makeArtist(name: "The Two Brothers"),
+			makeArtist(name: "The Third Brother"),
+			makeArtist(name: "Sister Twins"),
+			makeArtist(name: "Rassle Davidoff"),
 		]
 	}
-	
-	public static var artistImage: UIImage {
-		Asset.MockAssets.allArtists.first!.image
-	}
-	
-	public static var roundArtistImage: some View {
-		Image(uiImage: artistImage)
+
+	public static func roundArtistImage(uiImage: UIImage) -> some View {
+		Image(uiImage: uiImage)
 			.circleImage(size: 60)
 	}
 	
-	static func makeSong(title: String, isNFT: Bool = false) -> Song {
-		Song(image: "", title: title, artist: makeArtist(name: "David Bowtie", id: "1"), isNft: isNFT, songId: title)
+	static func makeSong(title: String, isNFT: Bool = false) -> shared.Song {
+		let artist = artists.randomElement()!
+		let song = Song(
+				image: artist.image,
+				title: title,
+				artist: artist,
+				isNft: isNFT,
+				songId: title,
+				favorited: false,
+				duration: 124,
+				genre: Genre.allCases.randomElement()!
+		)
+		songCache.setObject(song, forKey: NSString(string: song.songId))
+		return song
+	}
+
+	public static func song(withID id: String) -> Song {
+		songCache.object(forKey: NSString(string: id)) ?? makeSong(title: id)
 	}
 	
-	public static var songs: [Song] {
+	public static var songs: [shared.Song] {
 		[
 			makeSong(title: "My Heart Hurts So Bad"),
 			makeSong(title: "In My Mind My Thoughts Are"),
@@ -96,6 +89,16 @@ public class MockData {
 			makePlaylist(id: "8"),
 			makePlaylist(id: "9"),
 		]
+	}
+
+	static public func url(for testImage: ImageAsset) -> String {
+		guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {
+			fatalError()
+		}
+
+		let pngData = testImage.image.pngData()
+		do { try pngData?.write(to: imageURL) } catch { }
+		return imageURL.absoluteString
 	}
 }
 

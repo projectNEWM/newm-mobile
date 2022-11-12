@@ -19,19 +19,30 @@ public extension View {
 		font(.inter(ofSize: 12)).foregroundColor(NEWMColor.grey100.swiftUIColor)
 	}
 	
-	private func addSectionTitle(_ title: String) -> some View {
+	func addSectionTitle(_ title: String) -> some View {
 		VStack(alignment: .leading) {
 			Text(title).sectionTitleFont()
 				.padding(.leading, sidePadding)
 			self
 		}
 	}
+}
+
+public struct HorizontalScroller: View {
+	public let title: String
+	public let content: () -> any View
 	
-	func addHorizontalScrollView(title: String) -> some View {
+	public init(title: String, @ViewBuilder content: @escaping () -> (some View)) {
+		self.title = title
+		self.content = content
+	}
+	
+	public var body: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
-			self
-			.padding([.leading, .trailing], sidePadding)
-			.fixedSize()
+			content()
+				.padding([.leading, .trailing], sidePadding)
+				.fixedSize()
+				.erased
 		}
 		.addSectionTitle(title)
 	}

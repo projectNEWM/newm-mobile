@@ -2,12 +2,23 @@ import Foundation
 import AVFoundation.AVPlayer
 import Combine
 
+class SongIDConverter {
+	func callAsFunction(_ id: String) -> URL {
+		//TODO: REMOVE
+		Bundle(for: SongPlayingModule.self).url(forResource: "getSchwifty", withExtension: "mp3")!
+	}
+}
+
 //TODO: move to KMM
 class AudioPlayerImpl: AudioPlayer, ObservableObject {
+	
 	static let shared = AudioPlayerImpl()
+	
+	private let songIDToURL = SongIDConverter()
 	
 	@Published var isPlaying: Bool = false {
 		didSet {
+			guard let audioPlayer else { fatalError("audio player not set up yet") }
 			if isPlaying {
 				audioPlayer.play()
 			} else {
@@ -15,45 +26,39 @@ class AudioPlayerImpl: AudioPlayer, ObservableObject {
 			}
 		}
 	}
-	@Published var repeatMode: RepeatMode? = nil
-	@Published var shuffle: Bool = false
 	
-	@Published var currentTime: Int = 0
-	@Published var totalTime: Int = 30
-		
-	private var audioPlayer = AVPlayer(url: AudioPlayerImpl.songURL)
-	//TODO: remove this
-	static private let songURL = Bundle(for: SongPlayingModule.self).url(forResource: "getSchwifty", withExtension: "mp3")!
+	@Published var songInfo: SongInfo?
+	@Published var playbackInfo: PlaybackInfo?
+
+	private var audioPlayer: AVPlayer?
 	
 	private init() {}
 	
-	func setSongId(_ songId: String) {
-		audioPlayer.pause()
-		audioPlayer = AVPlayer(url: AudioPlayerImpl.songURL)
+	private func reset() {
+		
+	}
+	
+	/// statedDuration is the value to show before the actual song file loads.  Once the song loads, we'll use that for duration.
+	func setSongId(_ songId: String, statedDuration: Int) {
+		audioPlayer?.pause()
+		let audioPlayer = AVPlayer(url: songIDToURL(songId))
 		audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
-			self?.currentTime = Int(CMTimeGetSeconds(time))
-			self?.totalTime = self?.audioPlayer.currentItem?.duration.isIndefinite == true ? 0 : Int(self?.audioPlayer.currentItem?.duration.seconds ?? 0)
-			
-			print("\(self!.currentTime)\t\(self!.totalTime)")
+			guard let self = self else { return }
+			let songInfo = SongInfo(currentTime: Int(CMTimeGetSeconds(time)),
+									 totalTime: audioPlayer.currentItem?.duration.isIndefinite == true ? statedDuration : Int(audioPlayer.currentItem?.duration.seconds ?? 0),
+									 songID: songId)
+			self.songInfo = songInfo
 		}
+		self.audioPlayer = audioPlayer
 	}
 	
 	func prev() {
+		guard let audioPlayer else { fatalError("audio player not set up yet") }
 		audioPlayer.seek(to: .zero)
 	}
 	
 	func next() {
+		guard let audioPlayer else { fatalError("audio player not set up yet") }
 		//TODO:
-	}
-	
-	func cycleRepeatMode() {
-		switch repeatMode {
-		case .none:
-			repeatMode = .one
-		case .one:
-			repeatMode = .all
-		case .all:
-			repeatMode = .none
-		}
 	}
 }

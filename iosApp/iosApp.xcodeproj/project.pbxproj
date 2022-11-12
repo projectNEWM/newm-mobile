@@ -269,8 +269,6 @@
 		76D01DC128164B6E00305605 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; };
 		76D01DC228164B6E00305605 /* ModuleLinker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76D09EFC27FAC4B800E2BAD3 /* iOSAppModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D09EFB27FAC4B700E2BAD3 /* iOSAppModule.swift */; };
-		76D7D938285681C7009D53CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76D7D937285681C7009D53CF /* Localizable.strings */; };
-		76D7D93A285681DA009D53CF /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D7D939285681DA009D53CF /* Strings.swift */; };
 		76D7D93C28568539009D53CF /* CellsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D7D93B28568539009D53CF /* CellsSectionModel.swift */; };
 		76DC3A1928167276004D5021 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCDC28164C6B007573B4 /* UIImage+Extensions.swift */; };
 		76DC3A22281698DD004D5021 /* TabBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCEE28164C86007573B4 /* TabBar.framework */; platformFilter = ios; };
@@ -1200,8 +1198,6 @@
 		76D01D9728164B0400305605 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		76D01D9E28164B2100305605 /* ModuleLinker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModuleLinker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D09EFB27FAC4B700E2BAD3 /* iOSAppModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAppModule.swift; sourceTree = "<group>"; };
-		76D7D937285681C7009D53CF /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		76D7D939285681DA009D53CF /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		76D7D93B28568539009D53CF /* CellsSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsSectionModel.swift; sourceTree = "<group>"; };
 		76DC3A2828169995004D5021 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		76DC3A2E281A0DD5004D5021 /* LoginModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModule.swift; sourceTree = "<group>"; };
@@ -2196,8 +2192,6 @@
 			children = (
 				7615B3282909A394008FC5A6 /* Icon+Generated.swift */,
 				7603002B28367E8F00BBF78C /* Media.xcassets */,
-				76D7D937285681C7009D53CF /* Localizable.strings */,
-				76D7D939285681DA009D53CF /* Strings.swift */,
 				767CD107291B95CE00E7816D /* MockAssets.xcassets */,
 			);
 			path = Resources;
@@ -3015,7 +3009,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7603002C28367E8F00BBF78C /* Media.xcassets in Resources */,
-				76D7D938285681C7009D53CF /* Localizable.strings in Resources */,
 				767CD108291B95CE00E7816D /* MockAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3203,6 +3196,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:assembleXCFramework\n";
+			showEnvVarsInLog = 0;
 		};
 		7615B3242908AA0F008FC5A6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3259,7 +3253,6 @@
 			files = (
 				7656250A284BE7E6004B6E4B /* BigCellViewModel.swift in Sources */,
 				76562503284BE1D3004B6E4B /* CompactCell.swift in Sources */,
-				76D7D93A285681DA009D53CF /* Strings.swift in Sources */,
 				76562505284BE1D3004B6E4B /* BigCellSection.swift in Sources */,
 				7618FCE528164C6B007573B4 /* DummyImages.swift in Sources */,
 				7656250C284BE8C9004B6E4B /* MockData.swift in Sources */,

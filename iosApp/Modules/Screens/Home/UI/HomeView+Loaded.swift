@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import SharedUI
+import shared
 
 extension HomeView {
 	struct LoadedView: View {
@@ -8,6 +9,8 @@ extension HomeView {
 		@Binding private var route: HomeRoute?
 		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
+		
+		private let hStackSpacing: CGFloat = 12
 		
 		init(actionHandler: HomeViewActionHandling, uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.actionHandler = actionHandler
@@ -20,11 +23,12 @@ extension HomeView {
 				titleSection
 				VStack(spacing: 36) {
 					ThisWeekSection(uiModel.thisWeekSection)
-					BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
-					BigCellSection(uiModel.justReleasedSection, actionHandler: actionHandler.artistTapped)
-					BigCellSection(uiModel.moreOfWhatYouLikeSection, actionHandler: actionHandler.artistTapped)
-					ArtistsSection(uiModel.newmArtistsSection, actionHandler: actionHandler.artistTapped)
-					BigCellSection(uiModel.mostPopularThisWeek, actionHandler: actionHandler.artistTapped)
+					recentlyPlayingSection
+//					BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
+//					BigCellSection(uiModel.justReleasedSection, actionHandler: actionHandler.artistTapped)
+//					BigCellSection(uiModel.moreOfWhatYouLikeSection, actionHandler: actionHandler.artistTapped)
+//					ArtistsSection(uiModel.newmArtistsSection, actionHandler: actionHandler.artistTapped)
+//					BigCellSection(uiModel.mostPopularThisWeek, actionHandler: actionHandler.artistTapped)
 				}
 			}
 			.onAppear {
@@ -37,6 +41,19 @@ extension HomeView {
 			}
 			.links(Links(route: $route))
 		}
+
+		private var recentlyPlayingSection: some View {
+			HorizontalScroller(title: .recentlyPlayed) {
+				LazyHStack(spacing: hStackSpacing) {
+					ForEach(uiModel.recentlyPlayedSection, id: \.songId) { song in
+						BigArtistCell(model: BigCellViewModel(song: song)).tag(song.songId)
+							.onTapGesture {
+								route = .songPlaying(song: song)
+							}
+					}
+				}
+			}
+		}
 		
 		private var titleSection: some View {
 			TitleSection(model: shouldShowGreeting ? uiModel.greeting : uiModel.title)
@@ -45,4 +62,8 @@ extension HomeView {
 				.transition(.opacity.animation(.easeInOut(duration: 1.0)))
 		}
 	}
+}
+
+extension Song: Identifiable {
+	public var id: ObjectIdentifier { songId.objectIdentifier }
 }
