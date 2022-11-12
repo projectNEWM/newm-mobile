@@ -11,15 +11,15 @@ class SongIDConverter {
 
 //TODO: move to KMM
 class AudioPlayerImpl: AudioPlayer, ObservableObject {
-	
 	static let shared = AudioPlayerImpl()
 	
 	private let songIDToURL = SongIDConverter()
 	
-	@Published var isPlaying: Bool = false {
+	@Published var songInfo: SongInfo?
+	@Published var playbackInfo: PlaybackInfo = PlaybackInfo() {
 		didSet {
-			guard let audioPlayer else { fatalError("audio player not set up yet") }
-			if isPlaying {
+			guard let audioPlayer else { return }
+			if playbackInfo.isPlaying {
 				audioPlayer.play()
 			} else {
 				audioPlayer.pause()
@@ -27,26 +27,18 @@ class AudioPlayerImpl: AudioPlayer, ObservableObject {
 		}
 	}
 	
-	@Published var songInfo: SongInfo?
-	@Published var playbackInfo: PlaybackInfo?
-
 	private var audioPlayer: AVPlayer?
 	
 	private init() {}
 	
-	private func reset() {
-		
-	}
-	
 	/// statedDuration is the value to show before the actual song file loads.  Once the song loads, we'll use that for duration.
 	func setSongId(_ songId: String, statedDuration: Int) {
-		audioPlayer?.pause()
 		let audioPlayer = AVPlayer(url: songIDToURL(songId))
 		audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
 			guard let self = self else { return }
 			let songInfo = SongInfo(currentTime: Int(CMTimeGetSeconds(time)),
-									 totalTime: audioPlayer.currentItem?.duration.isIndefinite == true ? statedDuration : Int(audioPlayer.currentItem?.duration.seconds ?? 0),
-									 songID: songId)
+									totalTime: self.audioPlayer?.currentItem?.duration.isIndefinite == true ? statedDuration : Int(self.audioPlayer?.currentItem?.duration.seconds ?? 0),
+									songID: songId)
 			self.songInfo = songInfo
 		}
 		self.audioPlayer = audioPlayer

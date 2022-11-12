@@ -34,7 +34,7 @@ public struct PlaybackInfo {
 
 public protocol AudioPlayer: ObservableObject {
 	var songInfo: SongInfo? { set get }
-	var playbackInfo: PlaybackInfo? { set get }
+	var playbackInfo: PlaybackInfo { set get }
 
 	func prev()
 	func next()
@@ -49,7 +49,6 @@ public extension AudioPlayer {
 	}
 	
 	func cycleRepeatMode() {
-		guard var playbackInfo else { fatalError("audio player not set up") }
 		switch playbackInfo.repeatMode {
 		case .none:
 			playbackInfo.repeatMode = .one

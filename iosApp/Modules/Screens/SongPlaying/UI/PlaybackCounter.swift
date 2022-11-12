@@ -9,9 +9,6 @@ struct PlaybackCounter: View {
 	let percentComplete: CGFloat
 	let artistImageUrl: String
 	
-	//TODO: fix this
-	@State var image: Image = Image.randomDummy
-
 	private let timePadding: CGFloat = 30
 	
 	var body: some View {
@@ -21,8 +18,7 @@ struct PlaybackCounter: View {
 			HStack(alignment: .center) {
 				currentTimeText.padding(.trailing, -15)
 				ZStack {
-//					artistImage(size: size)
-					image.circleImage(size: geometry.size.width)
+					artistImage(size: size)
 						.scaleEffect(x: padding, y: padding, anchor: UnitPoint(x: 0.5, y: 0.5))
 					track(filled: false, size: size)
 					track(filled: true, size: size)
@@ -74,6 +70,7 @@ struct PlaybackCounter: View {
 		Text(time)
 			.font(.caption2)
 			.monospacedDigit()
+			.lineLimit(1)
 	}
 	
 	private func artistImage(size: CGFloat) -> some View {
@@ -83,11 +80,11 @@ struct PlaybackCounter: View {
 				Image.placeholder.circleImage(size: size)
 			case .failure(let error):
 				//TODO: log error
-				Image.placeholder.circleImage(size: size)
+				Text(error.localizedDescription)
 			case .success(let image):
 				image.circleImage(size: size)
 			@unknown default:
-				Image.placeholder.circleImage(size: size)
+				Text("Unknown Error")
 			}
 		}
 	}
@@ -116,7 +113,7 @@ struct PlaybackCounter_Previews: PreviewProvider {
 			PlaybackCounter(currentTime: viewModel.currentTime.playbackTimeString,
 							totalTime: viewModel.totalTime.playbackTimeString,
 							percentComplete: CGFloat(viewModel.currentTime) / CGFloat(viewModel.totalTime == 0 ? 1 : viewModel.totalTime),
-							artistImageUrl: "")
+							artistImageUrl: MockData.artists.first!.image)
 			.padding(40)
 		}
 	}

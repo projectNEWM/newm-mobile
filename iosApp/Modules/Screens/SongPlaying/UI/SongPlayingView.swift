@@ -74,9 +74,9 @@ public struct SongPlayingView: View {
 	
 	private var shuffleButton: some View {
 		Button {
-			audioPlayer.playbackInfo?.shuffle.toggle()
+			audioPlayer.playbackInfo.shuffle.toggle()
 		} label: {
-			if audioPlayer.playbackInfo?.shuffle == true {
+			if audioPlayer.playbackInfo.shuffle == true {
 				Asset.Media.PlayerIcons.shuffleSelected.swiftUIImage
 			} else {
 				Asset.Media.PlayerIcons.shuffle.swiftUIImage
@@ -96,11 +96,13 @@ public struct SongPlayingView: View {
 		Button {
 			if audioPlayerIsAttachedToOurSong == false {
 				audioPlayer.setSongId(song.songId, statedDuration: Int(song.duration))
+				audioPlayer.playbackInfo.isPlaying = true
+			} else {
+				audioPlayer.playbackInfo.isPlaying.toggle()
 			}
-			audioPlayer.isPlaying.toggle()
 		} label: {
 			if audioPlayerIsAttachedToOurSong {
-				audioPlayer.isPlaying ?
+				audioPlayer.playbackInfo.isPlaying ?
 				Asset.Media.PlayerIcons.pause.swiftUIImage :
 				Asset.Media.PlayerIcons.play.swiftUIImage
 			} else {
