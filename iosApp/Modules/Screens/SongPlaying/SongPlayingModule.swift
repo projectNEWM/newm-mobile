@@ -11,12 +11,22 @@ public final class SongPlayingModule: ModuleProtocol {
 		Resolver.register {
 			self as SongPlayingViewProviding
 		}
+		
+		Resolver.register {
+			self as MinimizedNowPlayingViewProviding
+		}
 	}
 }
 
 extension SongPlayingModule: SongPlayingViewProviding {
-	public func songPlayingView(song: Song) -> AnyView {
-		SongPlayingView(song: song).erased
+	public func songPlayingView() -> AnyView {
+		SongPlayingView().erased
+	}
+}
+
+extension SongPlayingModule: MinimizedNowPlayingViewProviding {
+	public func minimizedNowPlayingView() -> AnyView {
+		MinimizedPlayerView().erased
 	}
 }
 

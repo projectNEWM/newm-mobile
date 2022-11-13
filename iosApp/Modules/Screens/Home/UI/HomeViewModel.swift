@@ -39,7 +39,7 @@ extension HomeViewModel: HomeViewActionHandling {
 	
 	func songTapped(id: String) {
 		print(#function + " " + id)
-		route = .songPlaying(song: MockData.song(withID: id))
+		route = .songPlaying
 	}
 }
 

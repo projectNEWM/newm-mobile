@@ -1,23 +1,18 @@
 import Foundation
 import SwiftUI
+import shared
 
 public protocol AudioPlayer: ObservableObject {
-	var songInfo: SongInfo? { set get }
+	var song: Song? { set get }
 	var playbackInfo: PlaybackInfo { set get }
 
 	func prev()
 	func next()
 	
 	func cycleRepeatMode()
-	func setSongId(_ songId: String)
 }
 
 public extension AudioPlayer {
-	var percentPlayed: CGFloat {
-		guard let songInfo, songInfo.totalTime > 0 else { return 0 }
-		return CGFloat(songInfo.currentTime) / CGFloat(songInfo.totalTime)
-	}
-	
 	func cycleRepeatMode() {
 		switch playbackInfo.repeatMode {
 		case .none:
@@ -27,7 +22,6 @@ public extension AudioPlayer {
 		case .all:
 			playbackInfo.repeatMode = .none
 		}
-		self.playbackInfo = playbackInfo
 	}
 }
 
@@ -50,26 +44,35 @@ public extension Optional<RepeatMode> {
 	}
 }
 
-public struct SongInfo {
-	public let currentTime: Int
-	public let totalTime: Int
-	public let songID: String
-	
-	public init(currentTime: Int, totalTime: Int, songID: String) {
-		self.currentTime = currentTime
-		self.totalTime = totalTime
-		self.songID = songID
-	}
-}
-
 public struct PlaybackInfo {
 	public var isPlaying: Bool
 	public var repeatMode: RepeatMode?
 	public var shuffle: Bool
+	public var currentTime: Int
+	public var totalTime: Int
 	
-	public init(isPlaying: Bool = false, repeatMode: RepeatMode? = nil, shuffle: Bool = false) {
+	public init(isPlaying: Bool = false, repeatMode: RepeatMode? = nil, shuffle: Bool = false, currentTime: Int = 0, totalTime: Int = 30) {
 		self.isPlaying = isPlaying
 		self.repeatMode = repeatMode
 		self.shuffle = shuffle
+		self.currentTime = currentTime
+		self.totalTime = totalTime
+	}
+	
+	public var percentPlayed: CGFloat {
+		guard totalTime > 0 else { return 0 }
+		return CGFloat(currentTime) / CGFloat(totalTime)
+	}
+	
+	mutating
+	public func cycleRepeatMode() {
+		switch repeatMode {
+		case .none:
+			repeatMode = .one
+		case .one:
+			repeatMode = .all
+		case .all:
+			repeatMode = .none
+		}
 	}
 }

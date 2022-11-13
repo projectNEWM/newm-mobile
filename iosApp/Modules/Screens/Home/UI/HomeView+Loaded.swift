@@ -52,7 +52,7 @@ extension HomeView {
 					ForEach(uiModel.recentlyPlayedSection, id: \.songId) { song in
 						BigArtistCell(model: BigCellViewModel(song: song)).tag(song.songId)
 							.onTapGesture {
-								audioPlayer.setSongId(song.songId)
+								audioPlayer.song = song
 								audioPlayer.playbackInfo.isPlaying = true
 							}
 					}

@@ -2,6 +2,7 @@ import Foundation
 import AVFoundation.AVPlayer
 import Combine
 import ModuleLinker
+import shared
 
 class SongIDConverter {
 	func callAsFunction(_ id: String) -> URL {
@@ -16,7 +17,23 @@ public class AudioPlayerImpl: AudioPlayer, ObservableObject {
 	
 	private let songIDToURL = SongIDConverter()
 	
-	@Published public var songInfo: SongInfo?
+	@Published public var song: Song? {
+		didSet {
+			guard let song else {
+				audioPlayer?.pause()
+				audioPlayer = nil
+				return
+			}
+			guard song != oldValue else { return }
+			let audioPlayer = AVPlayer(url: songIDToURL(song.songId))
+			audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
+				guard let self = self else { return }
+				self.playbackInfo.currentTime = Int(CMTimeGetSeconds(time))
+				self.playbackInfo.totalTime = self.audioPlayer?.currentItem?.duration.isIndefinite == true ? 30 : Int(self.audioPlayer?.currentItem?.duration.seconds ?? 30)
+			}
+			self.audioPlayer = audioPlayer
+		}
+	}
 	@Published public var playbackInfo: PlaybackInfo = PlaybackInfo() {
 		didSet {
 			guard let audioPlayer else { return }
@@ -29,22 +46,7 @@ public class AudioPlayerImpl: AudioPlayer, ObservableObject {
 	}
 	
 	private var audioPlayer: AVPlayer?
-	
-	private init() {}
-	
-	/// statedDuration is the value to show before the actual song file loads.  Once the song loads, we'll use that for duration.
-	public func setSongId(_ songId: String) {
-		let audioPlayer = AVPlayer(url: songIDToURL(songId))
-		audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
-			guard let self = self else { return }
-			let songInfo = SongInfo(currentTime: Int(CMTimeGetSeconds(time)),
-									totalTime: self.audioPlayer?.currentItem?.duration.isIndefinite == true ? 30 : Int(self.audioPlayer?.currentItem?.duration.seconds ?? 30),
-									songID: songId)
-			self.songInfo = songInfo
-		}
-		self.audioPlayer = audioPlayer
-	}
-	
+		
 	public func prev() {
 		guard let audioPlayer else { fatalError("audio player not set up yet") }
 		audioPlayer.seek(to: .zero)

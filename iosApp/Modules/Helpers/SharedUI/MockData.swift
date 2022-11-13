@@ -8,6 +8,7 @@ import SwiftUI
 
 public class MockData {
 	static var songCache = NSCache<NSString, Song>()
+	
 	public static var bigArtistCells: [BigCellViewModel] {
 		artists.map(BigCellViewModel.init)
 	}

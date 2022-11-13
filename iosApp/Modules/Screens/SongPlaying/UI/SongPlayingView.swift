@@ -13,7 +13,7 @@ public struct SongPlayingView: View {
 	//TODO: can't declare protocol for this.
 	@ObservedObject private var audioPlayer = AudioPlayerImpl.shared
 	
-	@State var song: Song
+	var song: Song! { audioPlayer.song }
 	
 	@State var lyricsOffsetPercentage: Float = 0
 	@State var showTipping: Bool = false
@@ -39,9 +39,9 @@ public struct SongPlayingView: View {
 	
 	private var playbackCounter: some View {
 		PlaybackCounter(
-			currentTime: (audioPlayerIsAttachedToOurSong ? audioPlayer.songInfo?.currentTime.playbackTimeString : nil) ?? 0.playbackTimeString,
-			totalTime: (audioPlayer.songInfo?.totalTime ?? (audioPlayerIsAttachedToOurSong ? Int(song.duration) : 0)).playbackTimeString,
-			percentComplete: audioPlayerIsAttachedToOurSong ? audioPlayer.percentPlayed : 0,
+			currentTime: audioPlayer.playbackInfo.currentTime.playbackTimeString,
+			totalTime: audioPlayer.playbackInfo.totalTime.playbackTimeString,
+			percentComplete: audioPlayer.playbackInfo.percentPlayed,
 			artistImageUrl: song.artist.image
 		).aspectRatio(1, contentMode: .fit)
 	}
@@ -65,7 +65,7 @@ public struct SongPlayingView: View {
 			Spacer()
 			prevButton.padding(.top, 50)
 			Spacer()
-			playButton.padding(.top, 50)
+			PlayButton().frame(width: 80, height: 80).padding(.top, 50)
 			Spacer()
 			nextButton.padding(.top, 50)
 			Spacer()
@@ -92,26 +92,7 @@ public struct SongPlayingView: View {
 			Asset.Media.PlayerIcons.previous.swiftUIImage
 		}
 	}
-	
-	private var playButton: some View {
-		Button {
-			if audioPlayerIsAttachedToOurSong == false {
-				audioPlayer.setSongId(song.songId)
-				audioPlayer.playbackInfo.isPlaying = true
-			} else {
-				audioPlayer.playbackInfo.isPlaying.toggle()
-			}
-		} label: {
-			if audioPlayerIsAttachedToOurSong {
-				audioPlayer.playbackInfo.isPlaying ?
-				Asset.Media.PlayerIcons.pause.swiftUIImage :
-				Asset.Media.PlayerIcons.play.swiftUIImage
-			} else {
-				Asset.Media.PlayerIcons.play.swiftUIImage
-			}
-		}
-	}
-	
+		
 	private var nextButton: some View {
 		Button {
 			audioPlayer.next()
@@ -164,15 +145,11 @@ public struct SongPlayingView: View {
 			}
 		}
 	}
-	
-	private var audioPlayerIsAttachedToOurSong: Bool {
-		audioPlayer.songInfo?.songID == song.songId
-	}
 }
 
 struct SongPlayingView_Previews: PreviewProvider {
 	static var previews: some View {
-		SongPlayingView(song: MockData.songs.first!)
+		SongPlayingView()
 			.preferredColorScheme(.dark)
 	}
 }
