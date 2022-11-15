@@ -26,6 +26,10 @@ public class AudioPlayerImpl: AudioPlayer, ObservableObject {
 			}
 			guard song != oldValue else { return }
 			let audioPlayer = AVPlayer(url: songIDToURL(song.songId))
+			NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: audioPlayer.currentItem, queue: nil) { [weak audioPlayer, weak self] _ in
+				audioPlayer?.seek(to: .zero)
+				self?.playbackInfo.isPlaying = false
+			}
 			audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
 				guard let self = self else { return }
 				self.playbackInfo.currentTime = Int(CMTimeGetSeconds(time))
@@ -46,6 +50,9 @@ public class AudioPlayerImpl: AudioPlayer, ObservableObject {
 	}
 	
 	private var audioPlayer: AVPlayer?
+	
+	private init() {
+	}
 		
 	public func prev() {
 		guard let audioPlayer else { fatalError("audio player not set up yet") }

@@ -9,7 +9,7 @@ import SwiftUI
 import Colors
 import Fonts
 import Login
-import SongPlaying
+import NowPlaying
 import PlaylistList
 import Tips
 import Artist
@@ -29,7 +29,7 @@ struct iOSAppModule: ModuleProtocol {
 			ColorsModule.shared,
 			FontsModule.shared,
 			LoginModule.shared,
-			SongPlayingModule.shared,
+			NowPlayingModule.shared,
 			PlaylistModule.shared,
 			TipsModule.shared,
 			ArtistModule.shared,

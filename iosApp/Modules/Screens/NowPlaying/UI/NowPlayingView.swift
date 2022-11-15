@@ -6,7 +6,7 @@ import Fonts
 import shared
 import AudioPlayer
 
-public struct SongPlayingView: View {
+public struct NowPlayingView: View {
 	typealias Seconds = Int
 	
 	@Injected private var tipViewProvider: TipViewProviding
@@ -18,7 +18,7 @@ public struct SongPlayingView: View {
 	@State var lyricsOffsetPercentage: Float = 0
 	@State var showTipping: Bool = false
 	@State var error: Error?
-		
+	
 	public var body: some View {
 		VStack {
 			titleView
@@ -36,7 +36,10 @@ public struct SongPlayingView: View {
 		.navigationTitle(String.nowPlayingTitle)
 		.backButton()
 	}
-	
+}
+
+//MARK: Subviews
+extension NowPlayingView {
 	private var playbackCounter: some View {
 		PlaybackCounter(
 			currentTime: audioPlayer.playbackInfo.currentTime.playbackTimeString,
@@ -92,7 +95,7 @@ public struct SongPlayingView: View {
 			Asset.Media.PlayerIcons.previous.swiftUIImage
 		}
 	}
-		
+	
 	private var nextButton: some View {
 		Button {
 			audioPlayer.next()
@@ -147,54 +150,28 @@ public struct SongPlayingView: View {
 	}
 }
 
-struct SongPlayingView_Previews: PreviewProvider {
+struct NowPlayingView_Previews: PreviewProvider {
 	static var previews: some View {
-		SongPlayingView()
+		NowPlayingView()
 			.preferredColorScheme(.dark)
 	}
 }
 
-struct BackButton: ViewModifier {
-	@Environment(\.presentationMode) @Binding var presentationMode: PresentationMode
-	
-	func body(content: Content) -> some View {
-		content
-			.navigationBarBackButtonHidden(true)
-			.navigationBarItems(leading: btnBack)
-	}
-	
-	var btnBack: some View {
-		Button(action: { presentationMode.dismiss() }) {
-			HStack {
-				Asset.Media.backArrow.swiftUIImage
-					.aspectRatio(contentMode: .fit)
-					.foregroundColor(.white)
-			}
-		}
-	}
-}
-
-extension View {
-	func backButton() -> some View {
-		modifier(BackButton())
-	}
-}
-
-private extension SongPlayingView {
+private extension NowPlayingView {
 	nonisolated static var playbackTimePlaceholder: String { "--:--" }
 }
 
 extension Int {
 	private static let formatter = DateComponentsFormatter()
-
+	
 	var playbackTimeString: String {
 		Int.formatter.allowedUnits = self > 3600 ? [.hour, .minute, .second] : [.minute, .second]
 		Int.formatter.zeroFormattingBehavior = .pad
 		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
 			//TODO:MU: Uncomment when KMM module added back
-			return SongPlayingView.playbackTimePlaceholder
+			return NowPlayingView.playbackTimePlaceholder
 		}
-
+		
 		return playbackTime
 	}
 }

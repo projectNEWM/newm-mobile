@@ -9,8 +9,8 @@ public struct MainView: View {
 	
 	@Injected private var tabProviders: [TabViewProvider]
 	@Injected private var loginViewProvider: LoginViewProviding
-	@Injected private var playerViewProvider: MinimizedNowPlayingViewProviding
-	@Injected private var songPlayingViewProvider: SongPlayingViewProviding
+	@Injected private var miniPlayerViewProvider: MinimizedNowPlayingViewProviding
+	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
 	@ObservedObject private var audioPlayer: AudioPlayerImpl = AudioPlayerImpl.shared
 	
 	@State var route: MainViewRoute?
@@ -24,23 +24,23 @@ public struct MainView: View {
 				loginViewProvider.loginView()
 			}
 			.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
-				switch route {
-				case .nowPlaying: nowPlayingView
-				default: EmptyView()
+				sheetView
+			}
+			.overlay {
+				GeometryReader { geometry in
+					miniPlayerView.offset(x: 0, y: -(geometry.safeAreaInsets.bottom + 5))
 				}
 			}
-			.overlay(playerView)
 	}
 	
 	@ViewBuilder
-	private var playerView: some View {
+	private var miniPlayerView: some View {
 		if audioPlayer.song == nil {
 			EmptyView()
 		} else {
 			VStack {
 				Spacer()
-				playerViewProvider.minimizedNowPlayingView()
-					.padding(.bottom, 44)
+				miniPlayerViewProvider.minimizedNowPlayingView()
 					.onTapGesture {
 						route = .nowPlaying
 					}
@@ -52,16 +52,28 @@ public struct MainView: View {
 	private var nowPlayingView: some View {
 		switch route {
 		case .nowPlaying:
-			songPlayingViewProvider.songPlayingView()
+			nowPlayingViewProvider.nowPlayingView()
 		default:
 			EmptyView()
 		}
 	}
+	
+	@ViewBuilder
+	private var sheetView: some View {
+		switch route {
+		case .nowPlaying: nowPlayingView
+		default: EmptyView()
+		}
+	}
 }
 
+import SharedUI
 struct MainView_Previews: PreviewProvider {
+	@ObservedObject static private var audioPlayer: AudioPlayerImpl = AudioPlayerImpl.shared
+
 	static var previews: some View {
-		MainView()
+		audioPlayer.song = MockData.songs.first!
+		return MainView()
 	}
 }
 

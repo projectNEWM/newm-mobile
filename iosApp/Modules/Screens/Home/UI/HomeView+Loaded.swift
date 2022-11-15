@@ -28,6 +28,7 @@ extension HomeView {
 				VStack(spacing: 36) {
 					ThisWeekSection(uiModel.thisWeekSection)
 					recentlyPlayingSection
+					justReleasedSection
 //					BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
 //					BigCellSection(uiModel.justReleasedSection, actionHandler: actionHandler.artistTapped)
 //					BigCellSection(uiModel.moreOfWhatYouLikeSection, actionHandler: actionHandler.artistTapped)
@@ -84,4 +85,14 @@ extension HomeView {
 
 extension Song: Identifiable {
 	public var id: ObjectIdentifier { songId.objectIdentifier }
+}
+
+struct HomeViewLoaded_Previews: PreviewProvider {
+	static var previews: some View {
+		let vm = HomeViewModel()
+		return HomeView.LoadedView(actionHandler: vm,
+								   uiModel: MockHomeViewUIModelProvider.mockUIModel,
+								   route: .constant(nil))
+			.preferredColorScheme(.dark)
+	}
 }

@@ -3,8 +3,8 @@ import SwiftUI
 import shared
 
 //TODO: rename this to NowPlayingViewProviding and use AudioPlayer for its data source (for Song)
-public protocol SongPlayingViewProviding {
-	func songPlayingView() -> AnyView
+public protocol NowPlayingViewProviding {
+	func nowPlayingView() -> AnyView
 }
 
 public protocol MinimizedNowPlayingViewProviding {

@@ -4,12 +4,12 @@ import Resolver
 import SwiftUI
 import shared
 
-public final class SongPlayingModule: ModuleProtocol {
-	public static var shared = SongPlayingModule()
+public final class NowPlayingModule: ModuleProtocol {
+	public static var shared = NowPlayingModule()
 	
 	public func registerAllServices() {
 		Resolver.register {
-			self as SongPlayingViewProviding
+			self as NowPlayingViewProviding
 		}
 		
 		Resolver.register {
@@ -18,20 +18,20 @@ public final class SongPlayingModule: ModuleProtocol {
 	}
 }
 
-extension SongPlayingModule: SongPlayingViewProviding {
-	public func songPlayingView() -> AnyView {
-		SongPlayingView().erased
+extension NowPlayingModule: NowPlayingViewProviding {
+	public func nowPlayingView() -> AnyView {
+		NowPlayingView().erased
 	}
 }
 
-extension SongPlayingModule: MinimizedNowPlayingViewProviding {
+extension NowPlayingModule: MinimizedNowPlayingViewProviding {
 	public func minimizedNowPlayingView() -> AnyView {
 		MinimizedPlayerView().erased
 	}
 }
 
 #if DEBUG
-extension SongPlayingModule {
+extension NowPlayingModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 	}
 }

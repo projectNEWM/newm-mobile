@@ -8,23 +8,22 @@ import Colors
 
 struct MinimizedPlayerView: View {
 	@ObservedObject private var audioPlayer = AudioPlayerImpl.shared
-		
+	
 	private let iconSize: CGFloat = 32
 	
-    var body: some View {
-		VStack(alignment: .leading) {
-			progress
-			HStack {
-				image
+	var body: some View {
+		VStack(alignment: .leading, spacing: 0) {
+			progress.frame(height: 1)
+			HStack(alignment: .center) {
+				image.fixedSize()
 				songInfo
 				Spacer()
-				PlayButton()
+				PlayButton().frame(width: iconSize, height: iconSize)
 			}
-			.frame(height: 40)
-			.padding(12)
+			.padding()
 		}
-		.frame(height: 40)
-    }
+		.background(.black)
+	}
 	
 	@ViewBuilder
 	private var progress: some View {
@@ -68,11 +67,13 @@ struct MinimizedPlayerView: View {
 
 struct MinimizedPlayerView_Previews: PreviewProvider {
 	@Injected static private var audioPlayer: any AudioPlayer
-
-    static var previews: some View {
+	
+	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!
-		audioPlayer.playbackInfo.isPlaying = true
-		return MinimizedPlayerView()
-			.preferredColorScheme(.dark)
-    }
+		return ZStack {
+			Color.white.erased
+			MinimizedPlayerView()
+				.preferredColorScheme(.dark)
+		}
+	}
 }

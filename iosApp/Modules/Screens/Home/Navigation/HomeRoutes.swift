@@ -3,7 +3,7 @@ import shared
 
 enum HomeRoute {
 	case artist(id: String)
-	case songPlaying
+	case nowPlaying
 	case playlist(id: String)
 	case allPlaylists
 }

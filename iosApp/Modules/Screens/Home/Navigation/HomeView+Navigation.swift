@@ -8,16 +8,16 @@ import SwiftUINavigation
 extension HomeView {
 	struct Links: View {
 		@Binding var route: HomeRoute?
-		@Injected private var songPlayingViewProvider: SongPlayingViewProviding
+		@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
 		@Injected private var artistViewProvider: ArtistViewProviding
 		@Injected private var playlistViewProvider: PlaylistViewProviding
 		
 		var body: some View {
 			ZStack {
 				NavigationLink(unwrapping: $route,
-							   case: /HomeRoute.songPlaying,
+							   case: /HomeRoute.nowPlaying,
 							   destination: { _ in
-					songPlayingViewProvider.songPlayingView()
+					nowPlayingViewProvider.nowPlayingView()
 				}, onNavigate: clearLinks, label: {})
 				
 				NavigationLink(unwrapping: $route,

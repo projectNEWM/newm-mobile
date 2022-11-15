@@ -67,7 +67,18 @@ public class MockData {
 		makeSong(title: "Alleys Are Scary", isNFT: true),
 		makeSong(title: "Tip-top Shop Pop"),
 		makeSong(title: "Lollitards"),
-		makeSong(title: "Karaoke With Me (Carrie, Fine With You?)")
+		makeSong(title: "Karaoke With Me (Carrie, Fine With You?)"),
+		makeSong(title: "Everytime I See Me"),
+		makeSong(title: "When It's Nighttime"),
+		makeSong(title: "For The First Time, For The Last Time"),
+		makeSong(title: "Bloodfart"),
+		makeSong(title: "Futures of My Past Are Now My Present"),
+		makeSong(title: "Into the Realm Of Possibilities"),
+		makeSong(title: "Finite Resources"),
+		makeSong(title: "Infinite Fidelity"),
+		makeSong(title: "Jam Baby Jam"),
+		makeSong(title: "Jerry for Your Atrics"),
+
 	]
 	
 	static func makePlaylist(id: String) -> Playlist {

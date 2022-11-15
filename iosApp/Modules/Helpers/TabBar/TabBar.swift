@@ -34,6 +34,6 @@ struct ContentView_Previews: PreviewProvider {
 				tabName: "Second",
 				viewProvider: { return AnyView(Text("Second Tab")) }
 			),
-		])
+		]).preferredColorScheme(.dark)
 	}
 }
