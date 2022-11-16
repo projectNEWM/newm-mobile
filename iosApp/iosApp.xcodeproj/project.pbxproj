@@ -14,7 +14,6 @@
 		760300352836995100BBF78C /* Inter-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B990BD2835204A00F818E4 /* Inter-VariableFont.ttf */; };
 		760300362836FAE200BBF78C /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		7603003A2836FCB800BBF78C /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
-		7603003E2836FE2000BBF78C /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		760300422837FD0800BBF78C /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		760C2C4E281653C00030ACF4 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760C2C4D281653C00030ACF4 /* Resolver */; };
 		760C2C542816544A0030ACF4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D01D6A28164A9E00305605 /* HomeView.swift */; };
@@ -120,7 +119,6 @@
 		76562508284BE769004B6E4B /* CompactCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76562507284BE769004B6E4B /* CompactCellViewModel.swift */; };
 		7656250A284BE7E6004B6E4B /* BigCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76562509284BE7E6004B6E4B /* BigCellViewModel.swift */; };
 		7656250C284BE8C9004B6E4B /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656250B284BE8C9004B6E4B /* MockData.swift */; };
-		7656251A284BEF30004B6E4B /* Library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76562514284BEF30004B6E4B /* Library.framework */; };
 		7656251B284BEF30004B6E4B /* Library.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76562514284BEF30004B6E4B /* Library.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7656251F284BEF68004B6E4B /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		76562525284BEF6C004B6E4B /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76562524284BEF6C004B6E4B /* Resolver */; };
@@ -130,8 +128,6 @@
 		766E8FA228562CF200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FAC28562EBF00F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
-		766E8FB028562ECE00F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
-		766E8FB328562ED200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FB828562F2900F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FBC28562F2D00F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FC028562FA000F18779 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
@@ -214,7 +210,6 @@
 		76C76138291F445B0054D2F3 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		76C76139291F445B0054D2F3 /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76C7613D291F447C0054D2F3 /* AudioPlayerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7669071229088D2A00D9F989 /* AudioPlayerImpl.swift */; };
-		76C7613F291F449E0054D2F3 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		76C76142291F4D340054D2F3 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		76C76147291F4D8D0054D2F3 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C76146291F4D8D0054D2F3 /* AudioPlayer.swift */; };
 		76C7614A291F55F20054D2F3 /* getSchwifty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76C76149291F55F20054D2F3 /* getSchwifty.mp3 */; };
@@ -1034,14 +1029,12 @@
 				76C76138291F445B0054D2F3 /* AudioPlayer.framework in Frameworks */,
 				769994A828A1409F0074C772 /* SwiftUINavigation in Frameworks */,
 				767C42A328BECC0800EDE63E /* shared.xcframework in Frameworks */,
-				76C7613F291F449E0054D2F3 /* AudioPlayer.framework in Frameworks */,
 				7618FD7728164DA2007573B4 /* Login.framework in Frameworks */,
 				7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */,
 				7618FCF428164C86007573B4 /* TabBar.framework in Frameworks */,
 				76562530284BF6E7004B6E4B /* Library.framework in Frameworks */,
 				76D01D7F28164AE700305605 /* Main.framework in Frameworks */,
 				7618FCD328164C5C007573B4 /* SharedUI.framework in Frameworks */,
-				7656251A284BEF30004B6E4B /* Library.framework in Frameworks */,
 				7618FD1D28164CBD007573B4 /* Colors.framework in Frameworks */,
 				7618FD0B28164CA1007573B4 /* Utilities.framework in Frameworks */,
 				76F823C528BEC2B3003A524C /* Resolver in Frameworks */,
@@ -1130,7 +1123,6 @@
 				766E8FDC28562FCF00F18779 /* Fonts.framework in Frameworks */,
 				766E8FDF28562FD600F18779 /* Colors.framework in Frameworks */,
 				766E8FE328562FDC00F18779 /* SharedUI.framework in Frameworks */,
-				7603003E2836FE2000BBF78C /* Fonts.framework in Frameworks */,
 				7618FDF828164E61007573B4 /* ModuleLinker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1249,10 +1241,8 @@
 				7670043328279F4D00ED72D8 /* Artist.framework in Frameworks */,
 				760300362836FAE200BBF78C /* Fonts.framework in Frameworks */,
 				7632CEC2291B331400B7BE75 /* CasePaths in Frameworks */,
-				766E8FB028562ECE00F18779 /* Fonts.framework in Frameworks */,
 				76D01DBC28164B6600305605 /* ModuleLinker.framework in Frameworks */,
 				7670042B28275B5700ED72D8 /* SwiftUINavigation in Frameworks */,
-				766E8FB328562ED200F18779 /* Colors.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2732,7 +2722,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = NEWM;
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {

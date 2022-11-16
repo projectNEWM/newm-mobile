@@ -7,7 +7,7 @@ import shared
 import Colors
 
 struct MinimizedPlayerView: View {
-	@ObservedObject private var audioPlayer = AudioPlayerImpl.shared
+	@InjectedObject private var audioPlayer: AnyAudioPlayer
 	
 	private let iconSize: CGFloat = 32
 	

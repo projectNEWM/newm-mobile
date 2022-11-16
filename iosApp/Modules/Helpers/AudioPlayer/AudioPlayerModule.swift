@@ -8,7 +8,7 @@ public final class AudioPlayerModule: ModuleProtocol {
 	public func registerAllServices() {
 		Resolver.register {
 			AnyAudioPlayer(audioPlayer: AudioPlayerImpl.shared) as AnyAudioPlayer
-		}
+		}.scope(.application)
 	}
 	
 	public func registerAllMockedServices(mockResolver: Resolver) {

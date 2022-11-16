@@ -9,13 +9,11 @@ final enum class Genre {
 
     //TODO: Add localization
     val title : String
-        get() = {
-            when (this) {
-                FOLK -> "Folk"
-                CLASSICAL -> "Classical"
-                COUNTRY -> "Country"
-                RAP -> "Rap"
-                ROCK -> "Rock"
-            }
-        }.toString()
+        get() = when (this) {
+            FOLK -> "Folk"
+            CLASSICAL -> "Classical"
+            COUNTRY -> "Country"
+            RAP -> "Rap"
+            ROCK -> "Rock"
+        }
 }
