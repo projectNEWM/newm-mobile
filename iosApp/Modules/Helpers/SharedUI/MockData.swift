@@ -18,7 +18,7 @@ public class MockData {
 	}
 	
 	public static func makeArtist(name: String) -> Artist {
-		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.allCases.randomElement()!.title, stars: 12000, id: name)
+		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.companion.allCases.randomElement()!.title, stars: 12000, id: name)
 	}
 	
 	public static var artists: [Artist] = [
@@ -51,7 +51,7 @@ public class MockData {
 			songId: title,
 			favorited: false,
 			duration: 124,
-			genre: Genre.allCases.randomElement()!
+			genre: Genre.companion.allCases.randomElement()!
 		)
 		songCache.setObject(song, forKey: NSString(string: song.songId))
 		return song

@@ -1,8 +1,8 @@
 import Foundation
 import SwiftUI
 import shared
-import Combine
 
+/// This class is needed because you can't use an "any AudioPlayer" as an ObservableObject
 public class AnyAudioPlayer: AudioPlayer {
 	public var song: Song? {
 		get {

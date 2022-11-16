@@ -35,26 +35,3 @@ public extension BigCellViewModel {
 		genre = song.genre.title
 	}
 }
-
-extension Genre: CaseIterable {
-	public static var allCases: [Genre] {
-		[
-			.folk,
-			.classical,
-			.country,
-			.rap,
-			.rock
-		]
-	}
-	
-	var title: String {
-		switch self {
-		case .folk: return "Folk"
-		case .classical: return "Classical"
-		case .country: return "Country"
-		case .rap: return "Rap"
-		case .rock: return "Rock"
-		default: return "Genre"
-		}
-	}
-}
