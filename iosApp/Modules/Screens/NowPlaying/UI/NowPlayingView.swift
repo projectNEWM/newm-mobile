@@ -10,8 +10,7 @@ public struct NowPlayingView: View {
 	typealias Seconds = Int
 	
 	@Injected private var tipViewProvider: TipViewProviding
-	//TODO: can't declare protocol for this.
-	@ObservedObject private var audioPlayer = AudioPlayerImpl.shared
+	@InjectedObject private var audioPlayer: AnyAudioPlayer
 	
 	var song: Song! { audioPlayer.song }
 	

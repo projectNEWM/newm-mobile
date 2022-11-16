@@ -7,7 +7,7 @@ public final class AudioPlayerModule: ModuleProtocol {
 	
 	public func registerAllServices() {
 		Resolver.register {
-			AudioPlayerImpl.shared as any AudioPlayer
+			AnyAudioPlayer(audioPlayer: AudioPlayerImpl.shared) as AnyAudioPlayer
 		}
 	}
 	

@@ -2,11 +2,11 @@ import SwiftUI
 import Resolver
 import SharedUI
 
-public struct ArtistsSection: View {
-	private let model: CellsSectionModel<CompactCellViewModel>
+public struct HorizontalScrollingGridView: View {
+	private let model: CellsSectionModel<CompactCellModel>
 	private let actionHandler: (String) -> ()
 	
-	public init(_ model: CellsSectionModel<CompactCellViewModel>, actionHandler: @escaping (String) -> ()) {
+	public init(_ model: CellsSectionModel<CompactCellModel>, actionHandler: @escaping (String) -> ()) {
 		self.model = model
 		self.actionHandler = actionHandler
 	}
@@ -29,9 +29,9 @@ public struct ArtistsSection: View {
 	}
 }
 
-struct CompactArtistsSection_Previews: PreviewProvider {
+struct HorizontalScrollingGridView_Previews: PreviewProvider {
 	static var previews: some View {
-		ArtistsSection(CellsSectionModel(cells: SharedUI.MockData.compactArtistCells, title: "NEWM ARTISTS"), actionHandler: {_ in})
+		HorizontalScrollingGridView(CellsSectionModel(cells: SharedUI.MockData.compactArtistCells, title: "NEWM ARTISTS"), actionHandler: {_ in})
 			.preferredColorScheme(.dark)
 	}
 }

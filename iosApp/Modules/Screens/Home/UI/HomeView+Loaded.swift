@@ -12,7 +12,7 @@ extension HomeView {
 		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
 		
-		@Injected private var audioPlayer: any AudioPlayer
+		@Injected private var audioPlayer: AnyAudioPlayer
 		
 		private let hStackSpacing: CGFloat = 12
 		
@@ -29,11 +29,9 @@ extension HomeView {
 					ThisWeekSection(uiModel.thisWeekSection)
 					recentlyPlayingSection
 					justReleasedSection
-//					BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
-//					BigCellSection(uiModel.justReleasedSection, actionHandler: actionHandler.artistTapped)
-//					BigCellSection(uiModel.moreOfWhatYouLikeSection, actionHandler: actionHandler.artistTapped)
-//					ArtistsSection(uiModel.newmArtistsSection, actionHandler: actionHandler.artistTapped)
-//					BigCellSection(uiModel.mostPopularThisWeek, actionHandler: actionHandler.artistTapped)
+					moreOfWhatYouLikeSection
+					newmArtistsSection
+					mostPopularThisWeekSection
 				}
 			}
 			.onAppear {
@@ -46,9 +44,38 @@ extension HomeView {
 			}
 			.links(Links(route: $route))
 		}
-
+		
+		private func horizontalSection<Model: Identifiable>(title: String, models: [Model], @ViewBuilder content: @escaping (Model) -> some View) -> some View {
+			HorizontalScroller(title: title) {
+				LazyHStack(spacing: hStackSpacing) {
+					ForEach(models, id: \.id) { model in
+						content(model)
+					}
+				}
+			}
+		}
+		
+		private func horizontalBigArtistSection(title: String, artists: [Artist]) -> some View {
+			horizontalSection(title: title, models: artists) { artist in
+				BigArtistCell(model: BigCellViewModel(artist: artist)).tag(artist.id)
+					.onTapGesture {
+						route = .artist(id: artist.id)
+					}
+			}
+		}
+		
+		private var newmArtistsSection: some View {
+			HorizontalScrollingGridView(uiModel.newmArtistsSection) { artistId in
+				route = .artist(id: artistId)
+			}
+		}
+		
+		private var mostPopularThisWeekSection: some View {
+			horizontalBigArtistSection(title: uiModel.mostPopularThisWeekTitle, artists: uiModel.mostPopularThisWeek)
+		}
+		
 		private var recentlyPlayingSection: some View {
-			HorizontalScroller(title: .recentlyPlayed) {
+			HorizontalScroller(title: uiModel.recentlyPlayedTitle) {
 				LazyHStack(spacing: hStackSpacing) {
 					ForEach(uiModel.recentlyPlayedSection, id: \.songId) { song in
 						BigArtistCell(model: BigCellViewModel(song: song)).tag(song.songId)
@@ -61,17 +88,12 @@ extension HomeView {
 			}
 		}
 		
+		private var moreOfWhatYouLikeSection: some View {
+			horizontalBigArtistSection(title: uiModel.moreOfWhatYouLikeTitle, artists: uiModel.moreOfWhatYouLikeSection)
+		}
+		
 		private var justReleasedSection: some View {
-			HorizontalScroller(title: .justReleased) {
-				LazyHStack(spacing: hStackSpacing) {
-					ForEach(uiModel.justReleasedSection, id: \.id) { artist in
-						BigArtistCell(model: BigCellViewModel(artist: artist)).tag(artist.id)
-							.onTapGesture {
-								route = .artist(id: artist.id)
-							}
-					}
-				}
-			}
+			horizontalBigArtistSection(title: uiModel.justReleasedTitle, artists: uiModel.justReleasedSection)
 		}
 		
 		private var titleSection: some View {
@@ -93,6 +115,10 @@ struct HomeViewLoaded_Previews: PreviewProvider {
 		return HomeView.LoadedView(actionHandler: vm,
 								   uiModel: MockHomeViewUIModelProvider.mockUIModel,
 								   route: .constant(nil))
-			.preferredColorScheme(.dark)
+		.preferredColorScheme(.dark)
 	}
+}
+
+extension Artist: Identifiable {
+	
 }

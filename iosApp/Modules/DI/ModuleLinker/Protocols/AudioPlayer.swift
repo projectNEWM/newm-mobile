@@ -1,6 +1,41 @@
 import Foundation
 import SwiftUI
 import shared
+import Combine
+
+public class AnyAudioPlayer: AudioPlayer {
+	public var song: Song? {
+		get {
+			audioPlayer.song
+		}
+		set {
+			audioPlayer.song = newValue
+		}
+	}
+	
+	public var playbackInfo: PlaybackInfo {
+		get {
+			audioPlayer.playbackInfo
+		}
+		set {
+			audioPlayer.playbackInfo = newValue
+		}
+	}
+	
+	public func prev() {
+		audioPlayer.prev()
+	}
+	
+	public func next() {
+		audioPlayer.next()
+	}
+	
+	@Published private var audioPlayer: any AudioPlayer
+	
+	public init(audioPlayer: any AudioPlayer) {
+		self.audioPlayer = audioPlayer
+	}
+}
 
 public protocol AudioPlayer: ObservableObject {
 	var song: Song? { set get }

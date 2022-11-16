@@ -2,7 +2,7 @@ import Foundation
 import shared
 import Utilities
 
-public struct CompactCellViewModel: Identifiable {
+public struct CompactCellModel: Identifiable {
 	public let image: URL?
 	public let name: String
 	public let subtitle: String
@@ -10,7 +10,7 @@ public struct CompactCellViewModel: Identifiable {
 	public var id: ObjectIdentifier { modelID.objectIdentifier }
 }
 
-public extension CompactCellViewModel {
+public extension CompactCellModel {
 	init(artist: Artist) {
 		if let imageUrl = URL(string: artist.image) {
 			self.image = imageUrl

@@ -1,8 +1,9 @@
 import SwiftUI
-import TabBar
 import Resolver
 import ModuleLinker
+import TabBar
 import AudioPlayer
+import SharedUI
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
@@ -18,19 +19,20 @@ public struct MainView: View {
 	public init() {}
 	
 	public var body: some View {
-		TabBar(tabProviders: tabProviders)
-			.preferredColorScheme(.dark)
-			.fullScreenCover(isPresented: $viewModel.shouldShowLogin) { } content: {
-				loginViewProvider.loginView()
-			}
-			.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
-				sheetView
-			}
-			.overlay {
-				GeometryReader { geometry in
-					miniPlayerView.offset(x: 0, y: -(geometry.safeAreaInsets.bottom + 5))
+		GeometryReader { geometry in
+			TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
+				.preferredColorScheme(.dark)
+				.fullScreenCover(isPresented: $viewModel.shouldShowLogin) { } content: {
+					loginViewProvider.loginView()
 				}
-			}
+				.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
+					sheetView
+				}
+				.overlay {
+					miniPlayerView
+						.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
+				}
+		}
 	}
 	
 	@ViewBuilder
@@ -46,6 +48,10 @@ public struct MainView: View {
 					}
 			}
 		}
+	}
+	
+	private var miniPlayerHeight: CGFloat {
+		audioPlayer.song == nil ? 0 : 60
 	}
 	
 	@ViewBuilder
@@ -67,10 +73,9 @@ public struct MainView: View {
 	}
 }
 
-import SharedUI
 struct MainView_Previews: PreviewProvider {
 	@ObservedObject static private var audioPlayer: AudioPlayerImpl = AudioPlayerImpl.shared
-
+	
 	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!
 		return MainView()

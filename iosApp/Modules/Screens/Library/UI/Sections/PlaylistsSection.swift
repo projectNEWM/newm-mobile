@@ -3,10 +3,10 @@ import Resolver
 import SharedUI
 
 public struct PlaylistsSection: View {
-	private let model: CellsSectionModel<CompactCellViewModel>
+	private let model: CellsSectionModel<CompactCellModel>
 	private let actionHandler: (String) -> ()
 	
-	public init(_ model: CellsSectionModel<CompactCellViewModel>, actionHandler: @escaping (String) -> ()) {
+	public init(_ model: CellsSectionModel<CompactCellModel>, actionHandler: @escaping (String) -> ()) {
 		self.model = model
 		self.actionHandler = actionHandler
 	}

@@ -13,8 +13,8 @@ public class MockData {
 		artists.map(BigCellViewModel.init)
 	}
 	
-	public static var compactArtistCells: [CompactCellViewModel] {
-		artists.map(CompactCellViewModel.init)
+	public static var compactArtistCells: [CompactCellModel] {
+		artists.map(CompactCellModel.init)
 	}
 	
 	public static func makeArtist(name: String) -> Artist {

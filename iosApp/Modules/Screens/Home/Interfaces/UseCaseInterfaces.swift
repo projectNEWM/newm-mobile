@@ -8,15 +8,16 @@ struct HomeViewUIModel {
 	let thisWeekSection: ThisWeekSectionModel
 	let recentlyPlayedSection: [Song]
 	let justReleasedSection: [Artist]
-	let moreOfWhatYouLikeSection: CellsSectionModel<BigCellViewModel>
-	let newmArtistsSection: CellsSectionModel<CompactCellViewModel>
-	let mostPopularThisWeek: CellsSectionModel<BigCellViewModel>
+	let moreOfWhatYouLikeSection: [Artist]
+	let newmArtistsSection: CellsSectionModel<CompactCellModel>
+	let mostPopularThisWeek: [Artist]
 	let thisWeekTitle: String
 	let discoverTitle: String
 	let justReleasedTitle: String
 	let moreOfWhatYouLikeTitle: String
 	let newmArtistsTitle: String
 	let mostPopularThisWeekTitle: String
+	let recentlyPlayedTitle: String
 }
 
 struct ThisWeekSectionModel {

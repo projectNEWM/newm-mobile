@@ -66,7 +66,7 @@ struct MinimizedPlayerView: View {
 }
 
 struct MinimizedPlayerView_Previews: PreviewProvider {
-	@Injected static private var audioPlayer: any AudioPlayer
+	@Injected static private var audioPlayer: AnyAudioPlayer
 	
 	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!

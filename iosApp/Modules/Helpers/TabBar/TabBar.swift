@@ -2,9 +2,11 @@ import SwiftUI
 
 public struct TabBar: View {
 	let tabProviders: [TabViewProvider]
+	let bottomPadding: CGFloat
 	
-	public init(tabProviders: [TabViewProvider]) {
+	public init(tabProviders: [TabViewProvider], bottomPadding: CGFloat) {
 		self.tabProviders = tabProviders
+		self.bottomPadding = bottomPadding
 	}
 	
 	public var body: some View {
@@ -16,6 +18,7 @@ public struct TabBar: View {
 						tabName: ""
 					)
 					.tag(tabProvider.tabName)
+					.padding(.bottom, bottomPadding)
 			}
 		}
 	}
@@ -34,6 +37,6 @@ struct ContentView_Previews: PreviewProvider {
 				tabName: "Second",
 				viewProvider: { return AnyView(Text("Second Tab")) }
 			),
-		]).preferredColorScheme(.dark)
+		], bottomPadding: 50).preferredColorScheme(.dark)
 	}
 }

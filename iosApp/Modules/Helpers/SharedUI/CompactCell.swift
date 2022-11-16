@@ -2,7 +2,7 @@ import SwiftUI
 import Colors
 
 public struct CompactCell: View {
-	private let model: CompactCellViewModel
+	private let model: CompactCellModel
 	//TODO: image doesnt size properly when set false
 	private let roundImage: Bool
 	
@@ -12,7 +12,7 @@ public struct CompactCell: View {
 	
 	private let imageSize: CGFloat = 60
 	
-	public init(model: CompactCellViewModel, roundImage: Bool) {
+	public init(model: CompactCellModel, roundImage: Bool) {
 		self.model = model
 		self.roundImage = roundImage
 	}
