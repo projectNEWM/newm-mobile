@@ -6,7 +6,7 @@ import AudioPlayer
 @main
 struct iOSApp: App {
 	let mainViewProvider: MainViewProviding
-	@ObservedObject var audioPlayer = AudioPlayerImpl.shared
+	@InjectedObject var audioPlayer: AnyAudioPlayer
 	
 	init() {
 #if DEBUG

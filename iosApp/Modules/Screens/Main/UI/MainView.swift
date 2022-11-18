@@ -12,7 +12,7 @@ public struct MainView: View {
 	@Injected private var loginViewProvider: LoginViewProviding
 	@Injected private var miniPlayerViewProvider: MinimizedNowPlayingViewProviding
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
-	@ObservedObject private var audioPlayer: AudioPlayerImpl = AudioPlayerImpl.shared
+	@InjectedObject private var audioPlayer: AnyAudioPlayer
 	
 	@State var route: MainViewRoute?
 	
@@ -74,7 +74,7 @@ public struct MainView: View {
 }
 
 struct MainView_Previews: PreviewProvider {
-	@ObservedObject static private var audioPlayer: AudioPlayerImpl = AudioPlayerImpl.shared
+	@InjectedObject static private var audioPlayer: AnyAudioPlayer
 	
 	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!

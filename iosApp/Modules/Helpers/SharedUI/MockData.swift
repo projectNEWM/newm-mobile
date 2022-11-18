@@ -9,13 +9,8 @@ import SwiftUI
 public class MockData {
 	static var songCache = NSCache<NSString, Song>()
 	
-	public static var bigArtistCells: [BigCellViewModel] {
-		artists.map(BigCellViewModel.init)
-	}
-	
-	public static var compactArtistCells: [CompactCellModel] {
-		artists.map(CompactCellModel.init)
-	}
+	public static var bigArtistCells: [BigCellViewModel] = artists.map(BigCellViewModel.init)
+	public static var compactArtistCells: [CompactCellModel] = artists.map(CompactCellModel.init)
 	
 	public static func makeArtist(name: String) -> Artist {
 		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.companion.allCases.randomElement()!.title, stars: 12000, id: name)

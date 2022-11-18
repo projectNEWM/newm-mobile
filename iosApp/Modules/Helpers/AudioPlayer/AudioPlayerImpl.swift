@@ -7,13 +7,13 @@ import shared
 class SongIDConverter {
 	func callAsFunction(_ id: String) -> URL {
 		//TODO: REMOVE
-		Bundle(for: AudioPlayerImpl.self).url(forResource: "getSchwifty", withExtension: "mp3")!
+		Bundle(for: AudioPlayerModule.self).url(forResource: "getSchwifty", withExtension: "mp3")!
 	}
 }
 
 //TODO: move to KMM
 public class AudioPlayerImpl: AudioPlayer, ObservableObject {
-	public static let shared = AudioPlayerImpl()
+	static let shared = AudioPlayerImpl()
 	
 	private let songIDToURL = SongIDConverter()
 	

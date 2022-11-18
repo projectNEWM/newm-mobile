@@ -1,9 +1,10 @@
 import SwiftUI
 import SharedUI
+import Resolver
+import ModuleLinker
 
-//TODO: can't observe protocols so can't use InjectedObject with this.
 public struct PlayButton: View {
-	@ObservedObject private var audioPlayer = AudioPlayerImpl.shared
+	@InjectedObject private var audioPlayer: AnyAudioPlayer
 	
 	public init() {}
 	
