@@ -28,20 +28,18 @@ public struct CompactCell: View {
     }
 	
 	private var image: some View {
-		//TODO: Remove dummy
-		let image = Image.randomDummy
-//		AsyncImage(url: model.image) { phase in
-//			switch phase {
-//			case .success(let image):
+		AsyncImage(url: model.image) { phase in
+			switch phase {
+			case .success(let image):
 				if roundImage {
 					return image.circleImage(size: imageSize).erased
 				} else {
 					return image.resizable().frame(width: imageSize, height: imageSize).erased
 				}
-//			default:
-//				Image.placeholder.circleImage(size: imageSize)
-//			}
-//		}
+			default:
+				Image.placeholder.circleImage(size: imageSize)
+			}
+		}
 	}
 	
 	private var title: some View {
