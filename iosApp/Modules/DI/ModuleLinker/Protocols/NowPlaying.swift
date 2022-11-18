@@ -5,6 +5,6 @@ public protocol NowPlayingViewProviding {
 	func nowPlayingView() -> AnyView
 }
 
-public protocol MinimizedNowPlayingViewProviding {
-	func minimizedNowPlayingView() -> AnyView
+public protocol MiniNowPlayingViewProviding {
+	func miniNowPlayingView() -> AnyView
 }

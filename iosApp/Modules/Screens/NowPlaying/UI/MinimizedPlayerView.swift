@@ -6,7 +6,7 @@ import ModuleLinker
 import shared
 import Colors
 
-struct MinimizedPlayerView: View {
+struct MiniPlayerView: View {
 	@InjectedObject private var audioPlayer: AnyAudioPlayer
 	
 	private let iconSize: CGFloat = 32
@@ -65,14 +65,14 @@ struct MinimizedPlayerView: View {
 	}
 }
 
-struct MinimizedPlayerView_Previews: PreviewProvider {
+struct MiniPlayerView_Previews: PreviewProvider {
 	@Injected static private var audioPlayer: AnyAudioPlayer
 	
 	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!
 		return ZStack {
 			Color.white.erased
-			MinimizedPlayerView()
+			MiniPlayerView()
 				.preferredColorScheme(.dark)
 		}
 	}

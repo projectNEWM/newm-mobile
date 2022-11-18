@@ -13,7 +13,7 @@ public final class NowPlayingModule: ModuleProtocol {
 		}
 		
 		Resolver.register {
-			self as MinimizedNowPlayingViewProviding
+			self as MiniNowPlayingViewProviding
 		}
 	}
 }
@@ -24,9 +24,9 @@ extension NowPlayingModule: NowPlayingViewProviding {
 	}
 }
 
-extension NowPlayingModule: MinimizedNowPlayingViewProviding {
-	public func minimizedNowPlayingView() -> AnyView {
-		MinimizedPlayerView().erased
+extension NowPlayingModule: MiniNowPlayingViewProviding {
+	public func miniNowPlayingView() -> AnyView {
+		MiniPlayerView().erased
 	}
 }
 

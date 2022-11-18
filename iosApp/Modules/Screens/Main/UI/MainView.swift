@@ -10,7 +10,7 @@ public struct MainView: View {
 	
 	@Injected private var tabProviders: [TabViewProvider]
 	@Injected private var loginViewProvider: LoginViewProviding
-	@Injected private var miniPlayerViewProvider: MinimizedNowPlayingViewProviding
+	@Injected private var miniPlayerViewProvider: MiniNowPlayingViewProviding
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
 	@InjectedObject private var audioPlayer: AnyAudioPlayer
 	
@@ -42,7 +42,7 @@ public struct MainView: View {
 		} else {
 			VStack {
 				Spacer()
-				miniPlayerViewProvider.minimizedNowPlayingView()
+				miniPlayerViewProvider.miniNowPlayingView()
 					.onTapGesture {
 						route = .nowPlaying
 					}
