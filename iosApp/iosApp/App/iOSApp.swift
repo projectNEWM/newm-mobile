@@ -1,12 +1,10 @@
 import SwiftUI
 import Resolver
 import ModuleLinker
-import AudioPlayer
 
 @main
 struct iOSApp: App {
 	let mainViewProvider: MainViewProviding
-	@InjectedObject var audioPlayer: AnyAudioPlayer
 	
 	init() {
 #if DEBUG

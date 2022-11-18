@@ -27,14 +27,15 @@ public struct CompactCell: View {
 		}
     }
 	
+	@ViewBuilder
 	private var image: some View {
 		AsyncImage(url: model.image) { phase in
 			switch phase {
 			case .success(let image):
 				if roundImage {
-					return image.circleImage(size: imageSize).erased
+					image.circleImage(size: imageSize).erased
 				} else {
-					return image.resizable().frame(width: imageSize, height: imageSize).erased
+					image.resizable().frame(width: imageSize, height: imageSize).erased
 				}
 			default:
 				Image.placeholder.circleImage(size: imageSize)
