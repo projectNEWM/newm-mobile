@@ -55,19 +55,9 @@ public struct MainView: View {
 	}
 	
 	@ViewBuilder
-	private var nowPlayingView: some View {
-		switch route {
-		case .nowPlaying:
-			nowPlayingViewProvider.nowPlayingView()
-		default:
-			EmptyView()
-		}
-	}
-	
-	@ViewBuilder
 	private var sheetView: some View {
 		switch route {
-		case .nowPlaying: nowPlayingView
+		case .nowPlaying: nowPlayingViewProvider.nowPlayingView()
 		default: EmptyView()
 		}
 	}
