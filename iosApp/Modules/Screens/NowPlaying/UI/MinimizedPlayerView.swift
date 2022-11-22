@@ -7,7 +7,7 @@ import shared
 import Colors
 
 struct MiniPlayerView: View {
-	@InjectedObject private var audioPlayer: AnyAudioPlayer
+	@InjectedObject private var audioPlayer: AudioPlayerImpl
 	
 	private let iconSize: CGFloat = 32
 	
@@ -66,7 +66,7 @@ struct MiniPlayerView: View {
 }
 
 struct MiniPlayerView_Previews: PreviewProvider {
-	@Injected static private var audioPlayer: AnyAudioPlayer
+	@Injected static private var audioPlayer: AudioPlayerImpl
 	
 	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!

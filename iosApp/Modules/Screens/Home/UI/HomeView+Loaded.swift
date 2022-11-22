@@ -4,6 +4,7 @@ import SharedUI
 import shared
 import ModuleLinker
 import Resolver
+import AudioPlayer
 
 extension HomeView {
 	struct LoadedView: View {
@@ -12,7 +13,7 @@ extension HomeView {
 		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
 		
-		@Injected private var audioPlayer: AnyAudioPlayer
+		@Injected private var audioPlayer: AudioPlayerImpl
 		
 		private let hStackSpacing: CGFloat = 12
 		

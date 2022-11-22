@@ -10,7 +10,7 @@ public struct NowPlayingView: View {
 	typealias Seconds = Int
 	
 	@Injected private var tipViewProvider: TipViewProviding
-	@InjectedObject private var audioPlayer: AnyAudioPlayer
+	@InjectedObject private var audioPlayer: AudioPlayerImpl
 	
 	var song: Song! { audioPlayer.song }
 	

@@ -4,7 +4,7 @@ import Resolver
 import ModuleLinker
 
 public struct PlayButton: View {
-	@InjectedObject private var audioPlayer: AnyAudioPlayer
+	@InjectedObject private var audioPlayer: AudioPlayerImpl
 	
 	public init() {}
 	
