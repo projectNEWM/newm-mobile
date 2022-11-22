@@ -1,13 +1,12 @@
 import Foundation
 import ModuleLinker
-import Utilities
 import Combine
 import UIKit
 
 class MockLogInLogOutUseCase: LogInUseCaseProtocol, LogOutUseCaseProtocol, LoggedInUserUseCaseProtocol {
 	private static let authCredsKey = "authCreds"
 
-	@UserDefault(authCredsKey, defaultValue: nil) private var authCreds: AuthCredentials?
+	/*@UserDefault(authCredsKey, defaultValue: nil)*/ private var authCreds: AuthCredentials?
 	
 	public var loggedInUser: AnyPublisher<String?, Never> { _loggedInUser.eraseToAnyPublisher() }
 	private lazy var _loggedInUser = CurrentValueSubject<String?, Never>(authCreds?.user)

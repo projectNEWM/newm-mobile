@@ -4,6 +4,7 @@ import SharedUI
 import shared
 import ModuleLinker
 import Resolver
+import AudioPlayer
 
 extension HomeView {
 	struct LoadedView: View {
@@ -12,9 +13,7 @@ extension HomeView {
 		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
 		
-		@Injected private var audioPlayer: AnyAudioPlayer
-		
-		private let hStackSpacing: CGFloat = 12
+		@Injected private var audioPlayer: AudioPlayerImpl
 		
 		init(actionHandler: HomeViewActionHandling, uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.actionHandler = actionHandler
@@ -45,19 +44,9 @@ extension HomeView {
 			.links(Links(route: $route))
 		}
 		
-		private func horizontalSection<Model: Identifiable>(title: String, models: [Model], @ViewBuilder content: @escaping (Model) -> some View) -> some View {
-			HorizontalScroller(title: title) {
-				LazyHStack(spacing: hStackSpacing) {
-					ForEach(models, id: \.id) { model in
-						content(model)
-					}
-				}
-			}
-		}
-		
 		private func horizontalBigArtistSection(title: String, artists: [Artist]) -> some View {
-			horizontalSection(title: title, models: artists) { artist in
-				BigArtistCell(model: BigCellViewModel(artist: artist)).tag(artist.id)
+			HorizontalStackSection(title: title, models: artists) { artist in
+				BigArtistCell(model: BigCellViewModel(artist: artist))
 					.onTapGesture {
 						route = .artist(id: artist.id)
 					}
@@ -74,17 +63,14 @@ extension HomeView {
 			horizontalBigArtistSection(title: uiModel.mostPopularThisWeekTitle, artists: uiModel.mostPopularThisWeek)
 		}
 		
+		@ViewBuilder
 		private var recentlyPlayingSection: some View {
-			HorizontalScroller(title: uiModel.recentlyPlayedTitle) {
-				LazyHStack(spacing: hStackSpacing) {
-					ForEach(uiModel.recentlyPlayedSection, id: \.songId) { song in
-						BigArtistCell(model: BigCellViewModel(song: song)).tag(song.songId)
-							.onTapGesture {
-								audioPlayer.song = song
-								audioPlayer.playbackInfo.isPlaying = true
-							}
+			HorizontalStackSection(title: uiModel.recentlyPlayedTitle, models: uiModel.recentlyPlayedSection) { song in
+				BigArtistCell(model: BigCellViewModel(song: song))
+					.onTapGesture {
+						audioPlayer.song = song
+						audioPlayer.playbackInfo.isPlaying = true
 					}
-				}
 			}
 		}
 		
@@ -105,9 +91,8 @@ extension HomeView {
 	}
 }
 
-extension Song: Identifiable {
-	public var id: ObjectIdentifier { songId.objectIdentifier }
-}
+extension Song: Identifiable {}
+extension Artist: Identifiable {}
 
 struct HomeViewLoaded_Previews: PreviewProvider {
 	static var previews: some View {
@@ -117,8 +102,4 @@ struct HomeViewLoaded_Previews: PreviewProvider {
 								   route: .constant(nil))
 		.preferredColorScheme(.dark)
 	}
-}
-
-extension Artist: Identifiable {
-	
 }

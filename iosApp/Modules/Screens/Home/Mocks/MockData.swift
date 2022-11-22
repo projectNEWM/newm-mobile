@@ -19,7 +19,7 @@ class MockHomeViewUIModelProvider: HomeViewUIModelProviding {
 			recentlyPlayedSection: MockData.songs,
 			justReleasedSection: MockData.artists,
 			moreOfWhatYouLikeSection: MockData.artists.shuffled(),
-			newmArtistsSection: CellsSectionModel<CompactCellModel>(cells: MockData.compactArtistCells, title: "NEWM ARTISTS"),
+			newmArtistsSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "NEWM ARTISTS"),
 			mostPopularThisWeek: MockData.artists.shuffled(),
 			thisWeekTitle: "THIS WEEK",
 			discoverTitle: "DISCOVER",

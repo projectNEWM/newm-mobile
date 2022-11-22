@@ -12,7 +12,7 @@ public struct MainView: View {
 	@Injected private var loginViewProvider: LoginViewProviding
 	@Injected private var miniPlayerViewProvider: MiniNowPlayingViewProviding
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
-	@InjectedObject private var audioPlayer: AnyAudioPlayer
+	@InjectedObject private var audioPlayer: AudioPlayerImpl
 	
 	@State var route: MainViewRoute?
 	
@@ -64,7 +64,7 @@ public struct MainView: View {
 }
 
 struct MainView_Previews: PreviewProvider {
-	@InjectedObject static private var audioPlayer: AnyAudioPlayer
+	@InjectedObject static private var audioPlayer: AudioPlayerImpl
 	
 	static var previews: some View {
 		audioPlayer.song = MockData.songs.first!
@@ -73,5 +73,5 @@ struct MainView_Previews: PreviewProvider {
 }
 
 extension MainViewRoute: Identifiable {
-	var id: ObjectIdentifier { "\(self)".objectIdentifier }
+	var id: Self { self }
 }

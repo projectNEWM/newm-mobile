@@ -12,7 +12,7 @@ class SongIDConverter {
 }
 
 //TODO: move to KMM
-public class AudioPlayerImpl: AudioPlayer, ObservableObject {
+public class AudioPlayerImpl: AudioPlayer {
 	static let shared = AudioPlayerImpl()
 	
 	private let songIDToURL = SongIDConverter()
@@ -25,7 +25,7 @@ public class AudioPlayerImpl: AudioPlayer, ObservableObject {
 				return
 			}
 			guard song != oldValue else { return }
-			let audioPlayer = AVPlayer(url: songIDToURL(song.songId))
+			let audioPlayer = AVPlayer(url: songIDToURL(song.id))
 			NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: audioPlayer.currentItem, queue: nil) { [weak audioPlayer, weak self] _ in
 				audioPlayer?.seek(to: .zero)
 				self?.playbackInfo.isPlaying = false

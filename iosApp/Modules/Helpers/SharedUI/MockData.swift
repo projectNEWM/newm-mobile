@@ -10,7 +10,6 @@ public class MockData {
 	static var songCache = NSCache<NSString, Song>()
 	
 	public static var bigArtistCells: [BigCellViewModel] = artists.map(BigCellViewModel.init)
-	public static var compactArtistCells: [CompactCellModel] = artists.map(CompactCellModel.init)
 	
 	public static func makeArtist(name: String) -> Artist {
 		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.companion.allCases.randomElement()!.title, stars: 12000, id: name)
@@ -36,30 +35,30 @@ public class MockData {
 			.circleImage(size: 60)
 	}
 	
-	static func makeSong(title: String, isNFT: Bool = false) -> shared.Song {
+	static func makeSong(title: String, isNFT: Bool = false) -> Song {
 		let artist = artists.randomElement()!
 		let song = Song(
 			image: artist.image,
 			title: title,
 			artist: artist,
 			isNft: isNFT,
-			songId: title,
+			id: title,
 			favorited: false,
 			duration: 124,
 			genre: Genre.companion.allCases.randomElement()!
 		)
-		songCache.setObject(song, forKey: NSString(string: song.songId))
+//		songCache.setObject(song, forKey: NSString(string: song.songId))
 		return song
 	}
+//
+//	public static func song(withID id: String) -> Song {
+//		songCache.object(forKey: NSString(string: id)) ?? makeSong(title: id)
+//	}
 	
-	public static func song(withID id: String) -> Song {
-		songCache.object(forKey: NSString(string: id)) ?? makeSong(title: id)
-	}
-	
-	public static var songs: [shared.Song] = [
+	public static var songs: [Song] = [
 		makeSong(title: "My Heart Hurts So Bad"),
 		makeSong(title: "In My Mind My Thoughts Are"),
-		makeSong(title: "Alleys Are Scary", isNFT: true),
+		makeSong(title: "Alleys Are Scary"),
 		makeSong(title: "Tip-top Shop Pop"),
 		makeSong(title: "Lollitards"),
 		makeSong(title: "Karaoke With Me (Carrie, Fine With You?)"),
@@ -72,8 +71,7 @@ public class MockData {
 		makeSong(title: "Finite Resources"),
 		makeSong(title: "Infinite Fidelity"),
 		makeSong(title: "Jam Baby Jam"),
-		makeSong(title: "Jerry for Your Atrics"),
-
+		makeSong(title: "Jerry for Your Atrics")
 	]
 	
 	static func makePlaylist(id: String) -> Playlist {

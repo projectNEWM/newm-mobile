@@ -28,11 +28,11 @@ public extension View {
 	}
 }
 
-public struct HorizontalScroller: View {
+public struct HorizontalScroller<Content>: View where Content: View {
 	public let title: String
-	public let content: () -> any View
+	@ViewBuilder public let content: () -> Content
 	
-	public init(title: String, @ViewBuilder content: @escaping () -> (some View)) {
+	public init(title: String, @ViewBuilder content: @escaping () -> Content) {
 		self.title = title
 		self.content = content
 	}
@@ -46,4 +46,17 @@ public struct HorizontalScroller: View {
 		}
 		.addSectionTitle(title)
 	}
+}
+
+public extension View {
+	func links<LinksView: View>(_ links: LinksView) -> some View {
+		ZStack {
+			links
+			self
+		}
+	}
+}
+
+public extension Identifiable where Self: Hashable {
+	var id: Self { self }
 }

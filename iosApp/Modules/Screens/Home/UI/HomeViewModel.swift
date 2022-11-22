@@ -3,7 +3,6 @@ import Combine
 import Resolver
 import ModuleLinker
 import shared
-import Utilities
 import SharedUI
 import Artist
 
@@ -44,5 +43,5 @@ extension HomeViewModel: HomeViewActionHandling {
 }
 
 extension ThisWeekCellModel: Identifiable {
-	var id: ObjectIdentifier { labelText.objectIdentifier }
+	var id: String { labelText }
 }
