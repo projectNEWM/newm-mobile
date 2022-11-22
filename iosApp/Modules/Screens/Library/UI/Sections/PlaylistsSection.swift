@@ -3,10 +3,10 @@ import Resolver
 import SharedUI
 
 public struct PlaylistsSection: View {
-	private let model: CellsSectionModel<CompactCellModel>
+	private let model: CellsSectionModel<BigCellViewModel>
 	private let actionHandler: (String) -> ()
 	
-	public init(_ model: CellsSectionModel<CompactCellModel>, actionHandler: @escaping (String) -> ()) {
+	public init(_ model: CellsSectionModel<BigCellViewModel>, actionHandler: @escaping (String) -> ()) {
 		self.model = model
 		self.actionHandler = actionHandler
 	}
@@ -23,7 +23,7 @@ public struct PlaylistsSection: View {
 					CompactCell(model: cellModel, roundImage: true)
 						.frame(width: 180, alignment: .leading)
 						.fixedSize()
-						.onTapGesture { actionHandler(cellModel.modelID) }
+						.onTapGesture { actionHandler(cellModel.id) }
 				}
 			}
 		}

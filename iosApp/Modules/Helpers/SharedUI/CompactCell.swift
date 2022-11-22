@@ -2,7 +2,7 @@ import SwiftUI
 import Colors
 
 public struct CompactCell: View {
-	private let model: CompactCellModel
+	private let model: BigCellViewModel
 	//TODO: image doesnt size properly when set false
 	private let roundImage: Bool
 	
@@ -12,7 +12,7 @@ public struct CompactCell: View {
 	
 	private let imageSize: CGFloat = 60
 	
-	public init(model: CompactCellModel, roundImage: Bool) {
+	public init(model: BigCellViewModel, roundImage: Bool) {
 		self.model = model
 		self.roundImage = roundImage
 	}
@@ -50,7 +50,7 @@ public struct CompactCell: View {
 	}
 	
 	private var songs: some View {
-		Text(model.subtitle)
+		Text(model.genre)
 			.font(subtitleFont)
 			.foregroundColor(subtitleColor)
 	}
@@ -59,8 +59,8 @@ public struct CompactCell: View {
 struct CompactCell_Previews: PreviewProvider {
     static var previews: some View {
 		Group {
-			CompactCell(model: MockData.compactArtistCells.first!, roundImage: false)
-			CompactCell(model: MockData.compactArtistCells.first!, roundImage: true)
+			CompactCell(model: MockData.bigArtistCells.first!, roundImage: false)
+			CompactCell(model: MockData.bigArtistCells.first!, roundImage: true)
 		}
 		.preferredColorScheme(.dark)
     }

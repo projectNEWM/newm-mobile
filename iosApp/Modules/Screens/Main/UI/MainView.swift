@@ -73,5 +73,5 @@ struct MainView_Previews: PreviewProvider {
 }
 
 extension MainViewRoute: Identifiable {
-	var id: ObjectIdentifier { "\(self)".objectIdentifier }
+	var id: Self { self }
 }

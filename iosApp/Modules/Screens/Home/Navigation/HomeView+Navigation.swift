@@ -5,7 +5,7 @@ import ModuleLinker
 import Artist
 import SwiftUINavigation
 
-extension HomeView {
+extension HomeView.LoadedView {
 	struct Links: View {
 		@Binding var route: HomeRoute?
 		@Injected private var nowPlayingViewProvider: NowPlayingViewProviding

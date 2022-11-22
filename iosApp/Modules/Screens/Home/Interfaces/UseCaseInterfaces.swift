@@ -9,7 +9,7 @@ struct HomeViewUIModel {
 	let recentlyPlayedSection: [Song]
 	let justReleasedSection: [Artist]
 	let moreOfWhatYouLikeSection: [Artist]
-	let newmArtistsSection: CellsSectionModel<CompactCellModel>
+	let newmArtistsSection: CellsSectionModel<BigCellViewModel>
 	let mostPopularThisWeek: [Artist]
 	let thisWeekTitle: String
 	let discoverTitle: String

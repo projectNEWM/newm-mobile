@@ -3,7 +3,6 @@ import UIKit.UIImage
 import Resolver
 import ModuleLinker
 import shared
-import Utilities
 
 class PlaylistListViewModel: ObservableObject {
 	@Injected private var playlistListUseCase: PlaylistListUseCaseProtocol
@@ -24,7 +23,7 @@ extension PlaylistListViewModel {
 		let starCount: String
 		let playCount: String
 		let playlistID: String
-		var id: ObjectIdentifier { playlistID.objectIdentifier }
+		var id: String { playlistID }
 		
 		init(image: URL?, title: String, creator: String, genre: String, starCount: String, playCount: String, playlistID: String) {
 			self.image = image
@@ -38,9 +37,6 @@ extension PlaylistListViewModel {
 		
 		init(_ playlist: shared.Playlist) {
 			let imageUrl = URL(string: playlist.image)
-			if imageUrl == nil {
-				Log("bad image in \(Self.self)")
-			}
 			self.init(
 				image: imageUrl,
 				title: playlist.title,

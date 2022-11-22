@@ -4,7 +4,6 @@ import shared
 import ModuleLinker
 import Resolver
 import SharedUI
-import Utilities
 import shared
 
 class LoginViewModel: ObservableObject {
