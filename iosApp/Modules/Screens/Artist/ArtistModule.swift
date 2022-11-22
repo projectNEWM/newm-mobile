@@ -14,13 +14,9 @@ public final class ArtistModule: ModuleProtocol {
 	
 #if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
-		
+		mockResolver.register {
+			MockArtistViewUIModelProviding() as ArtistViewUIModelProviding
+		}
 	}
 #endif
-}
-
-extension ArtistModule: ArtistViewProviding {
-	public func artistView(id: String) -> AnyView {
-		ArtistView(id: id).erased
-	}
 }
