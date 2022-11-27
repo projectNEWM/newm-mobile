@@ -18,7 +18,7 @@ struct ThisWeekCell: View {
 			label
 		}
 		.padding()
-		.background(NEWMColor.grey600.swiftUIColor)
+		.background(NEWMColor.grey600())
 		.cornerRadius(8)
 	}
 	
@@ -37,7 +37,7 @@ struct ThisWeekCell: View {
 	private var label: some View {
 		Text(model.labelText)
 			.font(.inter(ofSize: 12))
-			.foregroundColor(NEWMColor.grey100.swiftUIColor)
+			.foregroundColor(NEWMColor.grey100())
 	}
 }
 

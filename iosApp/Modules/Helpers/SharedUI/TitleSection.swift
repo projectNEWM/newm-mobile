@@ -34,8 +34,8 @@ public struct TitleSection: View {
 		if model.isGreeting {
 			return title.erased
 		} else {
-			return title.foregroundStyle(LinearGradient(colors: [NEWMColor.lightBlue.swiftUIColor,
-																 NEWMColor.purple2.swiftUIColor],
+			return title.foregroundStyle(LinearGradient(colors: [NEWMColor.lightBlue(),
+																 NEWMColor.purple2()],
 														startPoint: .bottomLeading,
 														endPoint: .topTrailing)).erased
 		}

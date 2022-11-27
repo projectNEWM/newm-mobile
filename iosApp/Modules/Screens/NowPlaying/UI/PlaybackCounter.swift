@@ -58,8 +58,8 @@ struct PlaybackCounter: View {
 	
 	private func trackColor(filled: Bool) -> AnyShapeStyle {
 		filled
-		? AnyShapeStyle(LinearGradient(colors: [NEWMColor.pink2.swiftUIColor,
-												NEWMColor.purple2.swiftUIColor],
+		? AnyShapeStyle(LinearGradient(colors: [NEWMColor.pink2(),
+												NEWMColor.purple2()],
 									   startPoint: .leading,
 									   endPoint: .trailing))
 		: AnyShapeStyle(.gray)

@@ -8,7 +8,7 @@ public struct CompactCell: View {
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
-	private let subtitleColor: Color = NEWMColor.grey100.swiftUIColor
+	private let subtitleColor: Color = NEWMColor.grey100()
 	
 	private let imageSize: CGFloat = 60
 	

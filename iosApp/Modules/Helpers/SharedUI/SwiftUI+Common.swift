@@ -16,7 +16,7 @@ public extension Image {
 public extension View {
 	var sidePadding: CGFloat { 24 }
 	private func sectionTitleFont() -> some View {
-		font(.inter(ofSize: 12)).foregroundColor(NEWMColor.grey100.swiftUIColor)
+		font(.inter(ofSize: 12)).foregroundColor(NEWMColor.grey100())
 	}
 	
 	func addSectionTitle(_ title: String) -> some View {
@@ -59,4 +59,16 @@ public extension View {
 
 public extension Identifiable where Self: Hashable {
 	var id: Self { self }
+}
+
+public extension ImageAsset {
+	func callAsFunction() -> SwiftUI.Image {
+		swiftUIImage
+	}
+}
+
+public extension ColorAsset {
+	func callAsFunction() -> SwiftUI.Color {
+		swiftUIColor
+	}
 }

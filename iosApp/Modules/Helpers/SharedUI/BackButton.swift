@@ -13,7 +13,7 @@ struct BackButton: ViewModifier {
 	var btnBack: some View {
 		Button(action: { presentationMode.dismiss() }) {
 			HStack {
-				Asset.Media.backArrow.swiftUIImage
+				Asset.Media.backArrow()
 					.aspectRatio(contentMode: .fit)
 					.foregroundColor(.white)
 			}

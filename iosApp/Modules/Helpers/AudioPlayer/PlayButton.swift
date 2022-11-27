@@ -13,8 +13,8 @@ public struct PlayButton: View {
 			audioPlayer.playbackInfo.isPlaying.toggle()
 		} label: {
 			audioPlayer.playbackInfo.isPlaying ?
-			Asset.Media.PlayerIcons.pause.swiftUIImage.resizable() :
-			Asset.Media.PlayerIcons.play.swiftUIImage.resizable()
+			Asset.Media.PlayerIcons.pause().resizable() :
+			Asset.Media.PlayerIcons.play().resizable()
 		}
 		.aspectRatio(contentMode: .fit)
 	}
