@@ -12,9 +12,7 @@ struct ProfileImageSection: View {
 			Image("\(model.profileImage)")
 				.resizable()
 				.circleImage(size: 100)
-				.frame(alignment: .center)
-				.padding(10)
-			
+				.frame(alignment: .center)			
 		}
 	}
 }

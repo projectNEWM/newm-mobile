@@ -7,6 +7,13 @@ public extension Image {
 	func circleImage(size: CGFloat) -> some View {
 		self
 			.resizable()
+			.circle(size: size)
+	}
+}
+
+public extension View {
+	func circle(size: CGFloat) -> some View {
+		self
 			.frame(maxWidth: size, maxHeight: size, alignment: .center)
 			.aspectRatio(1, contentMode: .fit)
 			.cornerRadius(size / 2.0)

@@ -1,6 +1,7 @@
 import SwiftUI
 import Fonts
 import Colors
+import SharedUI
 
 struct ThisWeekCell: View {
 	private let iconSize: CGFloat = 32

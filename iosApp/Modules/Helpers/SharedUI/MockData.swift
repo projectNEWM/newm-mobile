@@ -90,7 +90,7 @@ public class MockData {
 		makePlaylist(id: "9"),
 	]
 	
-	static public func url(for testImage: ImageAsset) -> String {
+	public static func url(for testImage: ImageAsset) -> String {
 		guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {
 			fatalError()
 		}

@@ -22,7 +22,7 @@ class ArtistViewModel: ObservableObject {
 	func refresh() async {
 		do {
 			state = .loading
-			let uiModel = try await uiModelProvider.getModel()
+			let uiModel = try await uiModelProvider.getModel(artistId: "1")
 			state = .loaded((uiModel, self))
 		} catch {
 			state = .error(error)

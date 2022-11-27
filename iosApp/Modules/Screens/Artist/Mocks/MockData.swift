@@ -7,7 +7,7 @@ import shared
 import SharedUI
 
 class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
-	func getModel() async throws -> ArtistViewUIModel {
+	func getModel(artistId: String) throws -> ArtistViewUIModel {
 		Self.mockUIModel
 	}
 	
@@ -15,7 +15,7 @@ class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
 		ArtistViewUIModel(
 			title: "J-ROC",
 			headerImageSection: HeaderImageCellModel(headerImage: "bowie"),
-			profileImageSection: ProfileImageCellModel(profileImage: "bowie"),
+			profileImage: URL(string: MockData.url(for: Asset.MockAssets.artist0))!,
 			followSection: SupportButton.followButton(),
 			supportSection: SupportButton.supportButton(),
 			trackSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "LATEST TRACKS"),

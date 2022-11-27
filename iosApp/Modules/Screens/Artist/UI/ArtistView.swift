@@ -2,7 +2,6 @@ import SwiftUI
 import ModuleLinker
 import Resolver
 
-
 struct ArtistView: View {
 	@StateObject private var viewModel = ArtistViewModel()
 	

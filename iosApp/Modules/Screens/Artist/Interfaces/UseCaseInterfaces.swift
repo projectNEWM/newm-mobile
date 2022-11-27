@@ -5,7 +5,7 @@ import SwiftUI
 struct ArtistViewUIModel {
 	let title: String
 	let headerImageSection: HeaderImageCellModel
-	let profileImageSection: ProfileImageCellModel
+	let profileImage: URL
 	let followSection: any View
 	let supportSection: any View
 	let trackSection: CellsSectionModel<BigCellViewModel>
@@ -14,5 +14,5 @@ struct ArtistViewUIModel {
 }
 
 protocol ArtistViewUIModelProviding {
-	func getModel() async throws -> ArtistViewUIModel
+	func getModel(artistId: String) throws -> ArtistViewUIModel
 }
