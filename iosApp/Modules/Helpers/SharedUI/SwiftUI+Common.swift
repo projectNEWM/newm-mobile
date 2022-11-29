@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import ModuleLinker
+import Colors
 
 public extension Image {
 	func circleImage(size: CGFloat) -> some View {
@@ -15,23 +16,47 @@ public extension Image {
 public extension View {
 	var sidePadding: CGFloat { 24 }
 	private func sectionTitleFont() -> some View {
-		font(.inter(ofSize: 12)).foregroundColor(Color(.grey100))
+		font(.inter(ofSize: 12)).foregroundColor(NEWMColor.grey100.swiftUIColor)
 	}
 	
-	private func addSectionTitle(_ title: String) -> some View {
+	func addSectionTitle(_ title: String) -> some View {
 		VStack(alignment: .leading) {
 			Text(title).sectionTitleFont()
 				.padding(.leading, sidePadding)
 			self
 		}
 	}
+}
+
+public struct HorizontalScroller<Content>: View where Content: View {
+	public let title: String
+	@ViewBuilder public let content: () -> Content
 	
-	func addHorizontalScrollView(title: String) -> some View {
+	public init(title: String, @ViewBuilder content: @escaping () -> Content) {
+		self.title = title
+		self.content = content
+	}
+	
+	public var body: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
-			self
-			.padding([.leading, .trailing], sidePadding)
-			.fixedSize()
+			content()
+				.padding([.leading, .trailing], sidePadding)
+				.fixedSize()
+				.erased
 		}
 		.addSectionTitle(title)
 	}
+}
+
+public extension View {
+	func links<LinksView: View>(_ links: LinksView) -> some View {
+		ZStack {
+			links
+			self
+		}
+	}
+}
+
+public extension Identifiable where Self: Hashable {
+	var id: Self { self }
 }

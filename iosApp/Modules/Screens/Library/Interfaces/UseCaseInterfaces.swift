@@ -5,7 +5,7 @@ import SharedUI
 struct LibraryViewUIModel {
     let title: TitleSectionModel
     let recentlyPlayedSection: CellsSectionModel<BigCellViewModel>
-    let yourPlaylistsSection: CellsSectionModel<CompactCellViewModel>
+    let yourPlaylistsSection: CellsSectionModel<BigCellViewModel>
     let likedSongsSection: CellsSectionModel<BigCellViewModel>
 }
 

@@ -8,10 +8,6 @@ public final class SharedUIModule: ModuleProtocol {
 	
 	public func registerAllServices() {
 		Resolver.register {
-			self as IDLinking
-		}
-		
-		Resolver.register {
 			self as GradientTagProviding
 		}
 		
@@ -21,12 +17,6 @@ public final class SharedUIModule: ModuleProtocol {
 	}
 }
 
-extension SharedUIModule: IDLinking {
-	public func idLink<LinkedView: DataView>(selectedID: String?, linkedView: LinkedView.Type) -> AnyView {
-		IDLink<LinkedView>(selectedID: selectedID).erased
-	}
-}
-	
 extension SharedUIModule: GradientTagProviding {
 	public func gradientTag(title: String) -> AnyView {
 		GradientTag(title: title).erased
@@ -42,29 +32,6 @@ extension SharedUIModule: CircularProviding {
 #if DEBUG
 extension SharedUIModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
-		mockResolver.register {
-			self as TestImageProvider
-		}
 	}
 }
-
-extension SharedUIModule: TestImageProvider {
-	public func url(for testImage: TestImage) -> String {
-		guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("TempImage.png") else {
-			fatalError()
-		}
-
-		let pngData = image(for: testImage).pngData()
-		do { try pngData?.write(to: imageURL) } catch { }
-		return imageURL.absoluteString
-	}
-	
-	public func image(for testImage: TestImage) -> UIImage {
-		switch testImage {
-		case .bowie:
-			return .Bowie
-		}
-	}
-}
-
 #endif

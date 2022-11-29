@@ -12,9 +12,9 @@ class MainViewModel: ObservableObject {
 	@Injected private var loggedInUserUseCase: LoggedInUserUseCaseProtocol
 	
 	init() {
-		loggedInUserUseCase.loggedInUser
-			.map { $0 == nil }
-			.assign(to: \.shouldShowLogin, on: self)
-			.store(in: &cancellables)
+//		loggedInUserUseCase.loggedInUser
+//			.map { $0 == nil }
+//			.assign(to: \.shouldShowLogin, on: self)
+//			.store(in: &cancellables)
 	}
 }

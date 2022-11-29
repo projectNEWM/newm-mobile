@@ -3,13 +3,12 @@ import ModuleLinker
 import Resolver
 import SharedUI
 import Fonts
+import Colors
 
 struct PlaylistListViewCell: View {
 	let playlist: PlaylistListViewModel.Playlist
 	let imageSize: CGFloat = 80
-	
-	@Injected private var colorProvider: ColorProviding
-	
+		
 	var body: some View {
 		HStack {
 			AsyncImage(url: playlist.image) { phase in
@@ -28,7 +27,10 @@ struct PlaylistListViewCell: View {
 		.frame(alignment: .leading)
 		.padding()
 		.padding(.trailing)
-		.background(LinearGradient(colors: [colorProvider.color(for: .newmOffPink), colorProvider.color(for: .newmYellow)], startPoint: .top, endPoint: .bottom).opacity(0.31))
+		.background(LinearGradient(colors: [NEWMColor.offPink.swiftUIColor,
+											NEWMColor.yellow.swiftUIColor],
+								   startPoint: .top,
+								   endPoint: .bottom).opacity(0.31))
 		.cornerRadius(imageSize)
 	}
 	
@@ -45,7 +47,7 @@ struct PlaylistListViewCell: View {
 	private var creator: some View {
 		HStack {
 			Text(playlist.creator)
-				.foregroundColor(colorProvider.color(for: .newmPink))
+				.foregroundColor(NEWMColor.pink.swiftUIColor)
 				.font(.roboto(ofSize: 11))
 			Spacer()
 		}

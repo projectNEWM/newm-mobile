@@ -1,21 +1,23 @@
 import Foundation
 import SharedUI
+import shared
 
 struct HomeViewUIModel {
 	let greeting: TitleSectionModel
 	let title: TitleSectionModel
 	let thisWeekSection: ThisWeekSectionModel
-	let recentlyPlayedSection: CellsSectionModel<BigCellViewModel>
-	let justReleasedSection: CellsSectionModel<BigCellViewModel>
-	let moreOfWhatYouLikeSection: CellsSectionModel<BigCellViewModel>
-	let newmArtistsSection: CellsSectionModel<CompactCellViewModel>
-	let mostPopularThisWeek: CellsSectionModel<BigCellViewModel>
+	let recentlyPlayedSection: [Song]
+	let justReleasedSection: [Artist]
+	let moreOfWhatYouLikeSection: [Artist]
+	let newmArtistsSection: CellsSectionModel<BigCellViewModel>
+	let mostPopularThisWeek: [Artist]
 	let thisWeekTitle: String
 	let discoverTitle: String
 	let justReleasedTitle: String
 	let moreOfWhatYouLikeTitle: String
 	let newmArtistsTitle: String
 	let mostPopularThisWeekTitle: String
+	let recentlyPlayedTitle: String
 }
 
 struct ThisWeekSectionModel {

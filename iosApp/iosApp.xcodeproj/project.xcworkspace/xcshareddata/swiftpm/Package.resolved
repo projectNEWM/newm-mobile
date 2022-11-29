@@ -6,7 +6,7 @@
       "location" : "https://github.com/hmlongco/Resolver",
       "state" : {
         "branch" : "master",
-        "revision" : "4d2f11269f14c0a91ed52b2662c9c7db6f7f8e60"
+        "revision" : "c8cbb6b15bc9c4b7253e58387c35d6c18af4aa40"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-case-paths",
       "state" : {
-        "branch" : "main",
-        "revision" : "63797b9bf50f1bd7e817a1c336f340097fda412a"
+        "revision" : "bb436421f57269fbcfe7360735985321585a86e5",
+        "version" : "0.10.1"
       }
     },
     {
@@ -23,8 +23,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swiftui-navigation",
       "state" : {
-        "branch" : "main",
-        "revision" : "7191be709528b0d0040105c7071d35fbb923d462"
+        "revision" : "a974c35e3d3617f47e2de79e563b78c38bc6a9f1",
+        "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "xctest-dynamic-overlay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
+      "state" : {
+        "revision" : "16e6409ee82e1b81390bdffbf217b9c08ab32784",
+        "version" : "0.5.0"
       }
     }
   ],

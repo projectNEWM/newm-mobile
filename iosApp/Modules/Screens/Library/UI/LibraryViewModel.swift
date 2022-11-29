@@ -39,7 +39,7 @@ extension LibraryViewModel: LibraryViewActionHandling {
 	
 	func songTapped(id: String) {
 		print(#function + " " + id)
-		route = .songPlaying(id: id)
+		route = .nowPlaying(id: id)
 	}
 	
 	func playlistTapped(id: String) {

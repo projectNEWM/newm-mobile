@@ -1,4 +1,5 @@
 import SwiftUI
+import SharedUI
 
 struct ThisWeekSection: View {
 	private let cellModels: [ThisWeekCellModel]
@@ -12,18 +13,19 @@ struct ThisWeekSection: View {
 	}
 	
 	var body: some View {
-		HStack(spacing: 12) {
-			ForEach(cellModels) { model in
-				ThisWeekCell(model)
+		HorizontalScroller(title: .thisWeek) {
+			HStack(spacing: 12) {
+				ForEach(cellModels) { model in
+					ThisWeekCell(model)
+				}
 			}
 		}
-		.addHorizontalScrollView(title: .thisWeek)
 	}
 }
 
 struct ThisWeekSection_Previews: PreviewProvider {
 	static var previews: some View {
-		ThisWeekSection(MockHomeViewUIModelProviding.mockUIModel.thisWeekSection)
+		ThisWeekSection(MockHomeViewUIModelProvider.mockUIModel.thisWeekSection)
 			.preferredColorScheme(.dark)
 	}
 }

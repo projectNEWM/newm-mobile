@@ -3,7 +3,6 @@ import Combine
 import Resolver
 import ModuleLinker
 import shared
-import Utilities
 import SharedUI
 import Artist
 
@@ -39,10 +38,10 @@ extension HomeViewModel: HomeViewActionHandling {
 	
 	func songTapped(id: String) {
 		print(#function + " " + id)
-		route = .songPlaying(id: id)
+		route = .nowPlaying
 	}
 }
 
 extension ThisWeekCellModel: Identifiable {
-	var id: ObjectIdentifier { labelText.objectIdentifier }
+	var id: String { labelText }
 }

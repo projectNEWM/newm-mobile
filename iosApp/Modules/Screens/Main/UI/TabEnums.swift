@@ -30,7 +30,7 @@ extension MainViewModelTab: CustomStringConvertible, Identifiable {
 		}
 	}
 	
-	var id: ObjectIdentifier { description.objectIdentifier }
+	var id: Self { self }
 }
 
 extension MainViewModelTab.More: CustomStringConvertible, Identifiable {
@@ -44,7 +44,7 @@ extension MainViewModelTab.More: CustomStringConvertible, Identifiable {
 		}
 	}
 	
-	var id: ObjectIdentifier { description.objectIdentifier }
+	var id: Self { self }
 }
 
 extension MainViewModelTab: Hashable {
