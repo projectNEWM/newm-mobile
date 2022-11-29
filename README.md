@@ -57,7 +57,7 @@
 
 ## 📖 Getting Started
 
-<p> Clone the repo, open in Android Studio or XCode and get to building! You will need to setup your own firebase instance and apply your google-services.json file to get things working. Reach out to the team with any questions.<p>
+<p> Clone the repo, open in Android Studio or XCode and get to building! You will need to setup your own firebase instance and apply your google-services.json file to get things working. <p> You will also need to install <a href="https://github.com/SwiftGen/SwiftGen"><strong>SwiftGen</strong></a>.<p> Reach out to the team with any questions.<p>
 
 <!-- ROADMAP -->
 
@@ -82,7 +82,7 @@ If you have a suggestion, please fork the repo and create a pull request. You ca
 5. Open a Pull Request
 
 Want to help out but don't have a specific idea or suggestion? Reach out to
-<a href="https://github.com/andymiller813"> Andy</a> (amiller@projectnewm.io) and we can give you a ticket (or two 😉). We are also open to
+<a href="https://github.com/martyu"> Marty</a> (mulrich@newm.io) and we can give you a ticket (or two 😉). We are also open to
 bringing consistent contributors onto the core team.
 
 Don't forget to give the project a star! ⭐️
