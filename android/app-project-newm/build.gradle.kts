@@ -84,7 +84,6 @@ dependencies {
     implementation(Koin.android)
     implementation(Koin.androidCompose)
     implementation(Kotlin.reflect)
-    implementation(Ktor.clientAndroid)
 
     debugImplementation(Facebook.flipper)
     debugImplementation(Facebook.soloader)

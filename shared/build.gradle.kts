@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     kotlin(Plugins.multiplatform)
+    kotlin(Plugins.serialization)
     id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
@@ -40,23 +41,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                with(Ktor) {
-                    implementation(clientCore)
-                    implementation(clientJson)
-                    implementation(clientLogging)
-                    implementation(contentNegotiation)
-                    implementation(json)
-                }
-                with(SqlDelight) {
-                    implementation(runtime)
-                }
-                with(Koin) {
-                    api(core)
-                }
-                with(Kotlin ) {
-                    implementation(coroutinesCore)
-                    implementation(serializationCore)
-                }
+                implementation(Kotlin.coroutinesCore)
+                implementation(SqlDelight.runtime)
+                api(Koin.core)
+                implementation(Log.kermit)
+                implementation(Ktor.clientLogging)
+                implementation(Ktor.ktorClientCore)
+                implementation(Ktor.ktorClientCIO)
+                implementation(Ktor.clientContentNegotiation)
+                implementation(Ktor.kotlinXJson)
             }
         }
         val commonTest by getting {
@@ -69,10 +62,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                with(Ktor) {
-                    implementation(clientOkhttp)
-                    implementation(clientAndroid)
-                }
                 implementation(SqlDelight.androidDriver)
             }
         }
@@ -92,10 +81,6 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
 
             dependencies {
-                with(Ktor) {
-                    implementation(ios)
-                    implementation(iosDarwin)
-                }
                 implementation(SqlDelight.nativeDriver)
             }
         }
