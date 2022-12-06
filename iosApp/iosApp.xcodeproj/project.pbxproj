@@ -202,10 +202,11 @@
 		76ADDCDE2897491E008AA39A /* HomeView+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */; };
 		76ADDCE728980F61008AA39A /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */; };
 		76ADDCE828980F61008AA39A /* Home.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D3F28164A8400305605 /* Home.framework */; platformFilter = ios; };
-		76B21D09293F055D003692F7 /* MarketplaceViewProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765D1602293EF2050021FEC7 /* MarketplaceViewProviding.swift */; };
+		76B21D09293F055D003692F7 /* Marketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765D1602293EF2050021FEC7 /* Marketplace.swift */; };
 		76B21D0B293F0F26003692F7 /* RadioPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B21D0A293F0F26003692F7 /* RadioPicker.swift */; };
 		76B21D0C293F1C9E003692F7 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627328B28295909009D3C8A /* shared.xcframework */; };
 		76B21D0D293F1C9E003692F7 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627328B28295909009D3C8A /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76B21D10293F22E2003692F7 /* TrendingSongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B21D0F293F22E2003692F7 /* TrendingSongCell.swift */; };
 		76B430362921974300B74A5F /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B430352921974300B74A5F /* BackButton.swift */; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
@@ -937,7 +938,7 @@
 		765D15E9293EF1160021FEC7 /* Marketplace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Marketplace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		765D15FE293EF18C0021FEC7 /* MarketplaceModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceModule.swift; sourceTree = "<group>"; };
 		765D1600293EF1D60021FEC7 /* MarketplaceModule+ViewProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketplaceModule+ViewProviding.swift"; sourceTree = "<group>"; };
-		765D1602293EF2050021FEC7 /* MarketplaceViewProviding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketplaceViewProviding.swift; sourceTree = "<group>"; };
+		765D1602293EF2050021FEC7 /* Marketplace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marketplace.swift; sourceTree = "<group>"; };
 		765D1605293EF22F0021FEC7 /* MarketplaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceView.swift; sourceTree = "<group>"; };
 		765D1612293EF6DD0021FEC7 /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
 		765D1614293EF8F70021FEC7 /* Gradients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradients.swift; sourceTree = "<group>"; };
@@ -982,6 +983,7 @@
 		76ADDCE428980F61008AA39A /* HomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		76B21D0A293F0F26003692F7 /* RadioPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPicker.swift; sourceTree = "<group>"; };
+		76B21D0F293F22E2003692F7 /* TrendingSongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingSongCell.swift; sourceTree = "<group>"; };
 		76B430352921974300B74A5F /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		76B770EB27C5F2070009A58E /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B990BB2835203300F818E4 /* Fonts-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Fonts-Info.plist"; sourceTree = "<group>"; };
@@ -1399,7 +1401,7 @@
 				76562526284BEFB7004B6E4B /* Library.swift */,
 				76DC3A2828169995004D5021 /* Login.swift */,
 				7618FCBE28164BB5007573B4 /* Main.swift */,
-				765D1602293EF2050021FEC7 /* MarketplaceViewProviding.swift */,
+				765D1602293EF2050021FEC7 /* Marketplace.swift */,
 				7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */,
 				76764AED281CF4650095BEF9 /* Playlist.swift */,
 				7618FCBF28164BB5007573B4 /* SharedUI.swift */,
@@ -1764,6 +1766,7 @@
 			children = (
 				765D1600293EF1D60021FEC7 /* MarketplaceModule+ViewProviding.swift */,
 				765D1605293EF22F0021FEC7 /* MarketplaceView.swift */,
+				76B21D0F293F22E2003692F7 /* TrendingSongCell.swift */,
 				765D1612293EF6DD0021FEC7 /* MarketplaceViewModel.swift */,
 				76B21D0A293F0F26003692F7 /* RadioPicker.swift */,
 			);
@@ -3297,6 +3300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				765D1606293EF22F0021FEC7 /* MarketplaceView.swift in Sources */,
+				76B21D10293F22E2003692F7 /* TrendingSongCell.swift in Sources */,
 				765D15FF293EF18C0021FEC7 /* MarketplaceModule.swift in Sources */,
 				76B21D0B293F0F26003692F7 /* RadioPicker.swift in Sources */,
 				765D1601293EF1D60021FEC7 /* MarketplaceModule+ViewProviding.swift in Sources */,
@@ -3405,7 +3409,7 @@
 				76C76147291F4D8D0054D2F3 /* AudioPlayer.swift in Sources */,
 				760C2C7528165F450030ACF4 /* NowPlaying.swift in Sources */,
 				76DC3A1928167276004D5021 /* UIImage+Extensions.swift in Sources */,
-				76B21D09293F055D003692F7 /* MarketplaceViewProviding.swift in Sources */,
+				76B21D09293F055D003692F7 /* Marketplace.swift in Sources */,
 				760C2C7328165DE80030ACF4 /* SwiftUIView+Erased.swift in Sources */,
 				76DC3A4B281A0EE2004D5021 /* Localizable.swift in Sources */,
 				7618FCC728164BB5007573B4 /* Resolver+Mock.swift in Sources */,

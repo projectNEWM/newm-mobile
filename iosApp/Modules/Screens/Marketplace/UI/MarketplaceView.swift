@@ -8,8 +8,11 @@ struct MarketplaceView: View {
 	
     var body: some View {
 		ScrollView {
-			TitleSection(model: viewModel.titleSection)
-			RadioPicker(options: viewModel.allCategories)
+			LazyVStack(spacing: 32) {
+				TitleSection(model: viewModel.titleSection)
+				RadioPicker(options: viewModel.allCategories)
+				HorizontalStackSection(viewModel.trendingSongs, content: TrendingSongCell.init)
+			}
 		}
     }
 }

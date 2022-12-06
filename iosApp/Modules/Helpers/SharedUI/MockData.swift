@@ -7,8 +7,6 @@ import UIKit
 import SwiftUI
 
 public class MockData {
-	static var songCache = NSCache<NSString, Song>()
-	
 	public static func bigArtistCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
 		var numberGen = NonRandomNumberGenerator(seed: seed)
 		return artists.map { artist in
@@ -63,7 +61,6 @@ public class MockData {
 			duration: 124,
 			genre: Genre.companion.allCases.randomElement()!
 		)
-		//		songCache.setObject(song, forKey: NSString(string: song.songId))
 		return song
 	}
 	

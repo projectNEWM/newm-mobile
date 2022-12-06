@@ -35,7 +35,7 @@ public struct BigCell: View {
 					.frame(width: imageSize, height: imageSize)
 					.cornerRadius(10)
 			case .empty:
-				Image(uiImage: .placeholder!)
+				Image.placeholder
 					.resizable()
 					.frame(width: imageSize, height: imageSize)
 			case .failure(let error):
