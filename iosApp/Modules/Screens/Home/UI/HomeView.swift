@@ -26,8 +26,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
 	static var previews: some View {
-		//is this doing anything?
-//		Resolver.root = .mock
 		return HomeView()
 			.preferredColorScheme(.dark)
 	}

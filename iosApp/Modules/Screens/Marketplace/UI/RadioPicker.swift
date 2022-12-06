@@ -56,7 +56,7 @@ extension RadioPicker {
 				}
 			}
 			.cornerRadius(4)
-			.font(.inter(ofSize: 14))
+			.font(.interMedium(ofSize: 14))
 		}
 	}
 }

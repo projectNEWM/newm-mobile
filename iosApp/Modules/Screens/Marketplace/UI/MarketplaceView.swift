@@ -9,6 +9,7 @@ struct MarketplaceView: View {
     var body: some View {
 		ScrollView {
 			TitleSection(model: viewModel.titleSection)
+			RadioPicker(options: viewModel.allCategories)
 		}
     }
 }
