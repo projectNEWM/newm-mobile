@@ -4,5 +4,5 @@ import ModuleLinker
 import Colors
 
 class MarketplaceViewModel: ObservableObject {
-	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceTitleGradient.map(\.color))
+	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceGradient.map(\.color))
 }

@@ -205,6 +205,7 @@
 		76ADDCE728980F61008AA39A /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */; };
 		76ADDCE828980F61008AA39A /* Home.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D3F28164A8400305605 /* Home.framework */; platformFilter = ios; };
 		76B21D09293F055D003692F7 /* MarketplaceViewProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765D1602293EF2050021FEC7 /* MarketplaceViewProviding.swift */; };
+		76B21D0B293F0F26003692F7 /* RadioPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B21D0A293F0F26003692F7 /* RadioPicker.swift */; };
 		76B430362921974300B74A5F /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B430352921974300B74A5F /* BackButton.swift */; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
@@ -991,6 +992,7 @@
 		76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView+Navigation.swift"; sourceTree = "<group>"; };
 		76ADDCE428980F61008AA39A /* HomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		76B21D0A293F0F26003692F7 /* RadioPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPicker.swift; sourceTree = "<group>"; };
 		76B430352921974300B74A5F /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		76B770EB27C5F2070009A58E /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B990BB2835203300F818E4 /* Fonts-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Fonts-Info.plist"; sourceTree = "<group>"; };
@@ -1773,6 +1775,7 @@
 				765D1600293EF1D60021FEC7 /* MarketplaceModule+ViewProviding.swift */,
 				765D1605293EF22F0021FEC7 /* MarketplaceView.swift */,
 				765D1612293EF6DD0021FEC7 /* MarketplaceViewModel.swift */,
+				76B21D0A293F0F26003692F7 /* RadioPicker.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3306,6 +3309,7 @@
 			files = (
 				765D1606293EF22F0021FEC7 /* MarketplaceView.swift in Sources */,
 				765D15FF293EF18C0021FEC7 /* MarketplaceModule.swift in Sources */,
+				76B21D0B293F0F26003692F7 /* RadioPicker.swift in Sources */,
 				765D1601293EF1D60021FEC7 /* MarketplaceModule+ViewProviding.swift in Sources */,
 				765D1613293EF6DD0021FEC7 /* MarketplaceViewModel.swift in Sources */,
 			);

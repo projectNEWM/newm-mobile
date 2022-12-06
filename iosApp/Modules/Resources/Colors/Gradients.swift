@@ -1,7 +1,7 @@
 import Foundation
 
 public extension ColorAsset {
-	static var marketplaceTitleGradient: [ColorAsset] {
+	static var marketplaceGradient: [ColorAsset] {
 		[NEWMColor.orange2, NEWMColor.orange1]
 	}
 	
