@@ -6,6 +6,8 @@ plugins {
 android {
     compileSdk = Versions.androidCompileSdk
 
+    namespace = "io.newm.core.ui.utils"
+
     defaultConfig {
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk

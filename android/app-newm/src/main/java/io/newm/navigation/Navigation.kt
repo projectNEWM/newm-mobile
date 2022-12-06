@@ -22,9 +22,9 @@ fun Navigation(
         startDestination = Screen.HomeRoot.route
     ) {
         addHomeTree(navController)
-        addTribeTree(navController)
+        addTribeTree()
         addStarsTree()
-        addWalletTree(navController)
+        addWalletTree()
     }
 }
 
@@ -45,13 +45,13 @@ private fun NavGraphBuilder.addHomeTree(
     }
 }
 
-private fun NavGraphBuilder.addTribeTree(navController: NavHostController) {
+private fun NavGraphBuilder.addTribeTree() {
     navigation(
         route = Screen.TribeRoot.route,
         startDestination = Screen.TribeLanding.route
     ) {
         composable(Screen.TribeLanding.route) {
-            TribeScreen(navController = navController)
+            TribeScreen()
         }
     }
 }
@@ -67,13 +67,13 @@ private fun NavGraphBuilder.addStarsTree() {
     }
 }
 
-private fun NavGraphBuilder.addWalletTree(navController: NavHostController) {
+private fun NavGraphBuilder.addWalletTree() {
     navigation(
         route = Screen.WalletRoot.route,
         startDestination = Screen.WalletLanding.route
     ) {
         composable(Screen.WalletLanding.route) {
-            WalletScreen(navController = navController)
+            WalletScreen()
         }
     }
 }

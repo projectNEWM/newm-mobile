@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NewmSongList(onSongClicked: () -> Unit) {
     Box(

@@ -12,12 +12,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 
 internal const val TAG_WALLET_SCREEN = "TAG_WALLET_SCREEN"
 
 @Composable
-fun WalletScreen(navController: NavController) {
+fun WalletScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

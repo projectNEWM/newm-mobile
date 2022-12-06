@@ -7,6 +7,8 @@ plugins {
 android {
     compileSdk = Versions.androidCompileSdk
 
+    namespace = "io.newm.feature.now.playing"
+
     defaultConfig {
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk

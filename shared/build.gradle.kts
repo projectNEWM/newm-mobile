@@ -11,6 +11,7 @@ plugins {
 android {
     compileSdk = Versions.androidCompileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    namespace = "io.newm.shared"
     defaultConfig {
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk
@@ -20,7 +21,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    namespace = "io.newm.common"
 }
 
 kotlin {

@@ -12,12 +12,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 
 internal const val TAG_TRIBE_SCREEN = "TAG_TRIBE_SCREEN"
 
 @Composable
-fun TribeScreen(navController: NavController) {
+fun TribeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

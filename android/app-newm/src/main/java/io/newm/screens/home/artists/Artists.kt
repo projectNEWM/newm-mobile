@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import io.newm.core.ui.utils.ArtistBackgroundBrush
 import io.newm.core.resources.R
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ArtistList() {
     Box(
