@@ -1,6 +1,7 @@
 import Foundation
 import shared
 import SharedUI
+import ModuleLinker
 
 struct LibraryViewUIModel {
     let title: TitleSectionModel

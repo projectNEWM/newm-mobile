@@ -9,11 +9,9 @@ extension HomeView {
 	struct LoadedView: View {
 		@State private var shouldShowGreeting: Bool = true
 		@Binding private var route: HomeRoute?
-		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
 		
-		init(actionHandler: HomeViewActionHandling, uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
-			self.actionHandler = actionHandler
+		init(uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.uiModel = uiModel
 			self._route = route
 		}
@@ -70,12 +68,15 @@ extension HomeView {
 	}
 }
 
-struct HomeViewLoaded_Previews: PreviewProvider {
+struct HomeViewLoaded_Previews: PreviewProvider {	
 	static var previews: some View {
 		let vm = HomeViewModel()
-		return HomeView.LoadedView(actionHandler: vm,
-								   uiModel: MockHomeViewUIModelProvider.mockUIModel,
-								   route: .constant(nil))
+		return HomeView.LoadedView(
+			uiModel: MockHomeViewUIModelProvider.mockUIModel(
+				actionHandler: MockHomeActionHandler()
+			),
+			route: .constant(nil)
+		)
 		.preferredColorScheme(.dark)
 	}
 }

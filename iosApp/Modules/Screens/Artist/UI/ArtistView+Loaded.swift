@@ -68,7 +68,7 @@ extension ArtistView {
 }
 
 struct ArtistView_Preview: PreviewProvider {
-	private class MockActionHandler: ArtistViewActionHandling {
+	private class MockArtistActionHandler: ArtistViewActionHandling {
 		func songTapped(id: String) {}
 		func albumTapped(id: String) {}
 		func songPlayingTapped(id: String) {}
@@ -76,7 +76,7 @@ struct ArtistView_Preview: PreviewProvider {
 	static var previews: some View {
 		ArtistView.LoadedView(actionHandler: ArtistViewModel(artistId: MockData.artists.first!.id),
 							  uiModel: try! MockArtistViewUIModelProviding().getModel(artist: MockData.artists.first!,
-																					  actionHandler: MockActionHandler()),
+																					  actionHandler: MockArtistActionHandler()),
 							  route: .constant(nil))
 		.preferredColorScheme(.dark)
 	}

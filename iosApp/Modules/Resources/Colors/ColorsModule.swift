@@ -1,6 +1,5 @@
 import Foundation
 import Resolver
-import ModuleLinker
 
 public final class ColorsModule: ModuleProtocol {
 	public static let shared = ColorsModule()

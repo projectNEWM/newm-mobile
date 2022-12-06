@@ -5,24 +5,50 @@ import ModuleLinker
 import Resolver
 import shared
 import SharedUI
+import Colors
 
-class MockHomeViewUIModelProvider: HomeViewUIModelProviding {
+struct MockHomeViewUIModelProvider: HomeViewUIModelProviding {
+	let actionHandler: HomeViewActionHandling
+	
 	func getModel() async throws -> HomeViewUIModel {
-		Self.mockUIModel
+		Self.mockUIModel(actionHandler: actionHandler)
 	}
 	
-	static var mockUIModel: HomeViewUIModel {
-		HomeViewUIModel(
-			greeting: TitleSectionModel(isGreeting: true, title: "HEY MIAH", profilePic: URL(string: "")),
-			title: TitleSectionModel(isGreeting: false, title: "HOME", profilePic: URL(string: "")),
+	static func mockUIModel(actionHandler: HomeViewActionHandling) -> HomeViewUIModel {
+		func bigSongCells(seed: UInt64) -> [BigCellViewModel] {
+			MockData.bigSongCells_shuffled(seed: seed) { songId in
+				actionHandler.songTapped(id: songId)
+			}
+		}
+		
+		func bigArtistCells(seed: UInt64) -> [BigCellViewModel] {
+			MockData.bigArtistCells_shuffled(seed: seed) { artistId in
+				actionHandler.artistTapped(id: artistId)
+			}
+		}
+		
+		let justReleasedSection = CellsSectionModel(cells: bigArtistCells(seed: 4), title: "JUST RELEASED")
+		let moreOfWhatYouLikeSection = CellsSectionModel(cells: bigArtistCells(seed: 3), title: "MORE OF WHAT YOU LIKE")
+		let newmArtistsSection = CellsSectionModel(cells: bigArtistCells(seed: 2), title: "NEWM ARTISTS")
+		let mostPopularThisWeek = CellsSectionModel(cells: bigArtistCells(seed: 1), title: "MOST POPULAR THIS WEEK")
+		let recentlyPlayedSection = CellsSectionModel(cells: bigSongCells(seed: 1), title: "RECENTLY PLAYED")
+		
+		return HomeViewUIModel(
+			greeting: TitleSectionModel(isGreeting: true, title: "HEY MIAH", profilePic: URL(string: "https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg"), gradientColors: ColorAsset.homeTitleGradient.map(\.color)),
+			title: TitleSectionModel(isGreeting: false, title: "HOME", profilePic: URL(string: "https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg"), gradientColors: ColorAsset.homeTitleGradient.map(\.color)),
 			thisWeekSection: ThisWeekSectionModel(title: "THIS WEEK", newFollowers: 12, royalties: 51.56, earnings: 2.15),
-			recentlyPlayedSection: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1, onTap: {_ in}), title: "RECENTLY PLAYED"),
-			justReleasedSection: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}), title: "JUST RELEASED"),
-			moreOfWhatYouLikeSection: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 2, onTap: {_ in}), title: "MORE OF WHAT YOU LIKE"),
-			newmArtistsSection: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 3, onTap: {_ in}), title: "NEWM ARTISTS"),
-			mostPopularThisWeek: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 4, onTap: {_ in}), title: "MOST POPULAR THIS WEEK"),
+			recentlyPlayedSection: recentlyPlayedSection,
+			justReleasedSection: justReleasedSection,
+			moreOfWhatYouLikeSection: moreOfWhatYouLikeSection,
+			newmArtistsSection: newmArtistsSection,
+			mostPopularThisWeek: mostPopularThisWeek,
 			discoverTitle: "DISCOVER"
 		)
 	}
+}
+
+class MockHomeActionHandler: HomeViewActionHandling {
+	func artistTapped(id: String) {}
+	func songTapped(id: String) {}
 }
 #endif

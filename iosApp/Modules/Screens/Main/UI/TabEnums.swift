@@ -3,9 +3,8 @@ import Foundation
 enum MainViewModelTab: CaseIterable {
 	case home
     case library
-	case tribe
-	case stars
 	case wallet
+	case marketplace
 	case more
 	
 	/// hacky - need to do this because the built in "More" tab doesn't work with SwiftUI.
@@ -18,14 +17,14 @@ enum MainViewModelTab: CaseIterable {
 	}
 }
 
+//TODO: localize
 extension MainViewModelTab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
 		case .home: return "Home"
         case .library: return "Library"
-		case .tribe: return "Tribe"
-		case .stars: return "Stars"
 		case .wallet: return "Wallet"
+		case .marketplace: return "Martketplace"
 		case .more: return "More"
 		}
 	}
@@ -33,6 +32,7 @@ extension MainViewModelTab: CustomStringConvertible, Identifiable {
 	var id: Self { self }
 }
 
+//TODO: localize
 extension MainViewModelTab.More: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
