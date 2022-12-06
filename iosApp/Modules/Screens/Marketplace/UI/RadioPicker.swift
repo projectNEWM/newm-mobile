@@ -4,13 +4,20 @@ import Fonts
 
 struct RadioPicker<Option>: View where Option: CustomStringConvertible & Equatable & Hashable {
 	let options: [Option]
-	@State private var selectedOption: Option?
+	@State private var selectedOption: Option
+	
+	init(options: [Option]) {
+		guard options.isEmpty == false else { fatalError("Need some options") }
+		
+		self.options = options
+		_selectedOption = State<Option>(initialValue: options.first!)
+	}
 	
 	var body: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
 			HStack(alignment: .center, spacing: 16) {
 				ForEach(options, id: \.self) { option in
-					RadioButton(option: option, selectedOption: $selectedOption)
+					RadioButton(option: option, selectedOption: Binding<Option?>($selectedOption))
 				}
 			}
 			.padding(.leading, sidePadding)
