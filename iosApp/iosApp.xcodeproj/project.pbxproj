@@ -2129,7 +2129,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
-				766C16BB293EAD03009116DF /* ShellScript */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
@@ -2607,6 +2606,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76D01DA628164B2100305605 /* Build configuration list for PBXNativeTarget "ModuleLinker" */;
 			buildPhases = (
+				765D15E1293EDF920021FEC7 /* ShellScript */,
 				76D01D9A28164B2100305605 /* Sources */,
 				76D01D9928164B2100305605 /* Headers */,
 				76D01D9B28164B2100305605 /* Frameworks */,
@@ -2970,7 +2970,7 @@
 			shellPath = /bin/sh;
 			shellScript = "#swiftgen\ncd Modules/Resources/Colors\nswiftgen\n";
 		};
-		766C16BB293EAD03009116DF /* ShellScript */ = {
+		765D15E1293EDF920021FEC7 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2986,7 +2986,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:assembleXCFramework\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
