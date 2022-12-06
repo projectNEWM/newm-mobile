@@ -4,11 +4,9 @@ import SharedUI
 
 public struct HorizontalScrollingGridView: View {
 	private let model: CellsSectionModel<BigCellViewModel>
-	private let actionHandler: (String) -> ()
 	
-	public init(_ model: CellsSectionModel<BigCellViewModel>, actionHandler: @escaping (String) -> ()) {
+	public init(_ model: CellsSectionModel<BigCellViewModel>) {
 		self.model = model
-		self.actionHandler = actionHandler
 	}
 	
 	public var body: some View {
@@ -22,7 +20,7 @@ public struct HorizontalScrollingGridView: View {
 					CompactCell(model: cellModel, roundImage: true)
 						.frame(width: 180, alignment: .leading)
 						.fixedSize()
-						.onTapGesture { actionHandler(cellModel.id) }
+						.onTapGesture(perform: cellModel.onTap)
 				}
 			}
 		}
@@ -31,7 +29,7 @@ public struct HorizontalScrollingGridView: View {
 
 struct HorizontalScrollingGridView_Previews: PreviewProvider {
 	static var previews: some View {
-		HorizontalScrollingGridView(CellsSectionModel(cells: SharedUI.MockData.bigArtistCells, title: "NEWM ARTISTS"), actionHandler: {_ in})
+		HorizontalScrollingGridView(CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}), title: "NEWM ARTISTS"))
 			.preferredColorScheme(.dark)
 	}
 }

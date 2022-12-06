@@ -7,20 +7,24 @@ import shared
 import SharedUI
 
 class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
-	func getModel(artistId: String) throws -> ArtistViewUIModel {
-		Self.mockUIModel
+	func getModel(artist: Artist, actionHandler: ArtistViewActionHandling) throws -> ArtistViewUIModel {
+		Self.mockUIModel(artist: artist, actionHandler: actionHandler)
 	}
 	
-	static var mockUIModel: ArtistViewUIModel {
+	static func mockUIModel(artist: Artist, actionHandler: ArtistViewActionHandling) -> ArtistViewUIModel {
 		ArtistViewUIModel(
-			title: "J-ROC",
-			headerImageSection: HeaderImageCellModel(headerImage: "bowie"),
+			title: artist.name,
+			headerImageUrl: artist.image,
 			profileImage: URL(string: MockData.url(for: Asset.MockAssets.artist0))!,
 			followSection: SupportButton.followButton(),
 			supportSection: SupportButton.supportButton(),
-			trackSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "LATEST TRACKS"),
-			topSongsSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "TOP SONGS"),
-			albumSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "ALBUMS")
+			trackSection: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1, onTap: { id in
+				actionHandler.songTapped(id: id)
+			}), title: "LATEST TRACKS"),
+			topSongs: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 2, onTap: { id in actionHandler.songTapped(id: id) }), title: "TOP SONGS"),
+			albumSection: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 3, onTap: { album in
+				//TODO
+			}), title: "ALBUMS")
 		)
 	}
 }

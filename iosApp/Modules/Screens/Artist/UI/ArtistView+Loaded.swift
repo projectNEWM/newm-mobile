@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import SharedUI
+import shared
 
 extension ArtistView {
 	struct LoadedView: View {
@@ -21,15 +22,14 @@ extension ArtistView {
 			if #available(iOS 16.0, *) {
 				ScrollView {
 					VStack(spacing: sectionSpacing) {
-						HeaderImageSection(uiModel.headerImageSection)
+						HeaderImageSection(uiModel.headerImageUrl)
 						artistImage
-						HStack {
+						HStack(spacing: 12) {
 							SupportButton.followButton()
 							SupportButton.supportButton()
 						}
-						//					BigCellSection(uiModel.topSongsSection, actionHandler: actionHandler.songTapped)
-						TrackSection(uiModel.trackSection, actionHandler: actionHandler.songTapped)
-						//					BigCellSection(uiModel.albumSection, actionHandler: actionHandler.albumTapped)
+						topSongs
+						TrackSection(uiModel.trackSection)
 					}
 					.padding(.top, 100)
 				}
@@ -41,15 +41,13 @@ extension ArtistView {
 				//TODO: figure out how to do this in pre-ios16
 				ScrollView {
 					VStack(spacing: sectionSpacing) {
-						HeaderImageSection(uiModel.headerImageSection)
+						HeaderImageSection(uiModel.headerImageUrl)
 						artistImage
 						HStack {
 							SupportButton.followButton()
 							SupportButton.supportButton()
 						}
-	//					BigCellSection(uiModel.topSongsSection, actionHandler: actionHandler.songTapped)
-						TrackSection(uiModel.trackSection, actionHandler: actionHandler.songTapped)
-	//					BigCellSection(uiModel.albumSection, actionHandler: actionHandler.albumTapped)
+						TrackSection(uiModel.trackSection)
 					}
 				}
 				.backButton()
@@ -60,29 +58,26 @@ extension ArtistView {
 			AsyncImage(url: uiModel.profileImage)
 				.circle(size: 128)
 				.padding(.top, -(sectionSpacing+artistImageSize/2))
-//			{ phase in
-//				switch phase {
-//				case .success(let image):
-//					image.circleImage(size: 128)
-//				case .failure(let error):
-//					//TODO: LOG
-//					Text(error.localizedDescription)
-//				case .empty
-//				}
-//			}
+		}
+		
+		private var topSongs: some View {
+			//TODO: localize
+			HorizontalStackSection(uiModel.topSongs, content: BigCell.init)
 		}
 	}
 }
 
 struct ArtistView_Preview: PreviewProvider {
+	private class MockActionHandler: ArtistViewActionHandling {
+		func songTapped(id: String) {}
+		func albumTapped(id: String) {}
+		func songPlayingTapped(id: String) {}
+	}
 	static var previews: some View {
-		NavigationView {
-			NavigationLink("", destination: {
-				ArtistView.LoadedView(actionHandler: ArtistViewModel(),
-									  uiModel: try! MockArtistViewUIModelProviding().getModel(artistId: "1"),
-									  route: .constant(nil))
-			}(), isActive: .constant(true))
-		}
+		ArtistView.LoadedView(actionHandler: ArtistViewModel(artistId: MockData.artists.first!.id),
+							  uiModel: try! MockArtistViewUIModelProviding().getModel(artist: MockData.artists.first!,
+																					  actionHandler: MockActionHandler()),
+							  route: .constant(nil))
 		.preferredColorScheme(.dark)
 	}
 }

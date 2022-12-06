@@ -5,14 +5,29 @@ import Resolver
 import ModuleLinker
 import shared
 import SharedUI
+import AudioPlayer
+
+protocol ArtistRepo {
+	func artist(_ id: String) async -> Artist
+}
+
+class MockArtistRepo: ArtistRepo {
+	func artist(_ id: String) async -> Artist {
+		MockData.artists.first { $0.id == id }!
+	}
+}
 
 class ArtistViewModel: ObservableObject {
 	@MainActor @Published var state: ViewState<(ArtistViewUIModel, ArtistViewActionHandling)> = .loading
 	@Published var route: ArtistRoute?
+	@Injected private var audioPlayer: AudioPlayerImpl
+	@Injected private var artistRepo: ArtistRepo
+	private let artistId: String
 	
 	@Injected private var uiModelProvider: ArtistViewUIModelProviding
 
-	init() {
+	init(artistId: String) {
+		self.artistId = artistId
 		Task {
 			await refresh()
 		}
@@ -22,7 +37,7 @@ class ArtistViewModel: ObservableObject {
 	func refresh() async {
 		do {
 			state = .loading
-			let uiModel = try await uiModelProvider.getModel(artistId: "1")
+			let uiModel = try uiModelProvider.getModel(artist: await artistRepo.artist(artistId), actionHandler: self)
 			state = .loaded((uiModel, self))
 		} catch {
 			state = .error(error)
@@ -32,17 +47,15 @@ class ArtistViewModel: ObservableObject {
 
 extension ArtistViewModel: ArtistViewActionHandling {
 	func albumTapped(id: String) {
-		print(#function + " " + id)
 		route = .album(id: id)
 	}
 	
 	func songTapped(id: String) {
-		print(#function + " " + id)
-		route = .songPlaying(id: id)
+		audioPlayer.song = MockData.song(withID: id)
+		audioPlayer.playbackInfo.isPlaying = true
 	}
 	
 	func songPlayingTapped(id: String) {
-		print(#function + " " + id)
 		route = .songPlaying(id: id)
 	}
 }

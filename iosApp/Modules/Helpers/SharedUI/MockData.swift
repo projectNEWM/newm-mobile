@@ -9,7 +9,23 @@ import SwiftUI
 public class MockData {
 	static var songCache = NSCache<NSString, Song>()
 	
-	public static var bigArtistCells: [BigCellViewModel] = artists.map(BigCellViewModel.init)
+	public static func bigArtistCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
+		var numberGen = NonRandomNumberGenerator(seed: seed)
+		return artists.map { artist in
+			BigCellViewModel(artist: artist) {
+				onTap(artist.id)
+			}
+		}.shuffled(using: &numberGen)
+	}
+	
+	public static func bigSongCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
+		var numberGen = NonRandomNumberGenerator(seed: seed)
+		return songs.map { song in
+			BigCellViewModel(song: song) {
+				onTap(song.id)
+			}
+		}.shuffled(using: &numberGen)
+	}
 	
 	public static func makeArtist(name: String) -> Artist {
 		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.companion.allCases.randomElement()!.title, stars: 12000, id: name)
@@ -47,13 +63,13 @@ public class MockData {
 			duration: 124,
 			genre: Genre.companion.allCases.randomElement()!
 		)
-//		songCache.setObject(song, forKey: NSString(string: song.songId))
+		//		songCache.setObject(song, forKey: NSString(string: song.songId))
 		return song
 	}
-//
-//	public static func song(withID id: String) -> Song {
-//		songCache.object(forKey: NSString(string: id)) ?? makeSong(title: id)
-//	}
+	
+	public static func song(withID id: String) -> Song {
+		songs.first { $0.id == id }!
+	}
 	
 	public static var songs: [Song] = [
 		makeSong(title: "My Heart Hurts So Bad"),
@@ -114,5 +130,16 @@ extension Asset.MockAssets {
 		artist8,
 		artist9
 	]
+}
+
+public struct NonRandomNumberGenerator: RandomNumberGenerator {
+	let seed: UInt64
+	public func next() -> UInt64 {
+		seed
+	}
+	
+	public init(seed: UInt64) {
+		self.seed = seed
+	}
 }
 #endif

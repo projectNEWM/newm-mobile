@@ -1,6 +1,7 @@
 import SwiftUI
 import Resolver
 import SharedUI
+import shared
 
 public struct PlaylistsSection: View {
 	private let model: CellsSectionModel<BigCellViewModel>

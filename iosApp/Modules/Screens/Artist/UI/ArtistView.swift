@@ -3,7 +3,11 @@ import ModuleLinker
 import Resolver
 
 struct ArtistView: View {
-	@StateObject private var viewModel = ArtistViewModel()
+	@ObservedObject private var viewModel: ArtistViewModel
+	
+	init(artistId: String) {
+		viewModel = ArtistViewModel(artistId: artistId)
+	}
 	
 	public var body: some View {
 		switch viewModel.state {
@@ -19,6 +23,6 @@ struct ArtistView: View {
 
 struct ArtistView_Previews: PreviewProvider {
 	static var previews: some View {
-		return ArtistView()
+		return ArtistView(artistId: "1")
 	}
 }

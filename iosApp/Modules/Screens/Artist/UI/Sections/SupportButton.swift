@@ -11,6 +11,8 @@ struct SupportButton: View {
 	let iconImage: Image
 	let borderColor: Color?
 	
+	private let cornerRadius: CGFloat = 4
+	
 	init(titleText: String, backgroundColor: any ShapeStyle, iconImage: Image, borderColor: Color?) {
 		self.titleText = titleText
 		self.backgroundColor = backgroundColor
@@ -29,8 +31,8 @@ struct SupportButton: View {
 			.padding([.top, .bottom], 10)
 			.frame(width: 120, height: 35)
 			.background(backgroundColor)
-			.cornerRadius(8)
-			.overlay(RoundedRectangle(cornerRadius: 8)
+			.cornerRadius(cornerRadius)
+			.overlay(RoundedRectangle(cornerRadius: cornerRadius)
 				.stroke(NEWMColor.grey500(), lineWidth: 2))
 			.fixedSize()
 			.erased

@@ -8,6 +8,6 @@ public protocol ArtistViewProviding {
 
 extension ArtistModule: ArtistViewProviding {
 	public func artistView(id: String) -> AnyView {
-		ArtistView().erased
+		ArtistView(artistId: id).erased
 	}
 }

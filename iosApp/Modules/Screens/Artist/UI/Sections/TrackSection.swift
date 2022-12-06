@@ -1,26 +1,23 @@
 import SwiftUI
 import Resolver
 import SharedUI
+import shared
 
 public struct TrackSection: View {
 	@State var range: Range<Int> = 0..<4
 	
 	private let model: CellsSectionModel<BigCellViewModel>
-	private let actionHandler: (String) -> ()
 	
-	public init(_ model: CellsSectionModel<BigCellViewModel>, actionHandler: @escaping (String) -> ()) {
+	public init(_ model: CellsSectionModel<BigCellViewModel>) {
 		self.model = model
-		self.actionHandler = actionHandler
 	}
 	
 	public var body: some View {
 		LazyVStack(alignment: .leading) {
 			ForEach(model.cells) { cellModel in
-				//TODO: when (roundImage = false) isnt setting size correctly, set roundImage: false 
-				CompactCell(model: cellModel, roundImage: true)
-					.frame(width: 180, alignment: .leading)
-					.fixedSize()
-					.onTapGesture { actionHandler(cellModel.id) }
+				CompactCell(model: cellModel, roundImage: false)
+					.frame(maxWidth: .infinity, alignment: .leading)
+					.onTapGesture(perform: cellModel.onTap)
 			}
 		}
 		.padding([.leading, .trailing], sidePadding)
@@ -30,7 +27,9 @@ public struct TrackSection: View {
 
 struct TrackSection_Previews: PreviewProvider {
 	static var previews: some View {
-		TrackSection(CellsSectionModel(cells: SharedUI.MockData.bigArtistCells, title: "NEWM ARTISTS"), actionHandler: {_ in})
-			.preferredColorScheme(.dark)
+		ScrollView {
+			TrackSection(CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1) {_ in}, title: "TOP SONGS"))
+		}
+		.preferredColorScheme(.dark)
 	}
 }

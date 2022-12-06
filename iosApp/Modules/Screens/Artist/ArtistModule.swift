@@ -2,6 +2,7 @@ import Foundation
 import ModuleLinker
 import Resolver
 import SwiftUI
+import shared
 
 public final class ArtistModule: ModuleProtocol {
 	public static var shared = ArtistModule()
@@ -17,6 +18,14 @@ public final class ArtistModule: ModuleProtocol {
 		mockResolver.register {
 			MockArtistViewUIModelProviding() as ArtistViewUIModelProviding
 		}
+		
+		mockResolver.register {
+			MockArtistRepo() as ArtistRepo
+		}
 	}
 #endif
 }
+
+extension Song: Identifiable {}
+extension Artist: Identifiable {}
+

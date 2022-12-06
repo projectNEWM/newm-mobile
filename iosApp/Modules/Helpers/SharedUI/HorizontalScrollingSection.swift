@@ -1,4 +1,3 @@
-import Foundation
 import SwiftUI
 
 public struct HorizontalStackSection<Model, Content>: View where Model: Identifiable, Content: View {
@@ -6,10 +5,10 @@ public struct HorizontalStackSection<Model, Content>: View where Model: Identifi
 	let title: String
 	let models: [Model]
 	@ViewBuilder let content: (Model) -> Content
-	
-	public init(title: String, models: [Model], @ViewBuilder content: @escaping (Model) -> Content) {
-		self.title = title
-		self.models = models
+		
+	public init(_ sectionModel: CellsSectionModel<Model>, @ViewBuilder content: @escaping (Model) -> Content) {
+		title = sectionModel.title
+		models = sectionModel.cells
 		self.content = content
 	}
 	

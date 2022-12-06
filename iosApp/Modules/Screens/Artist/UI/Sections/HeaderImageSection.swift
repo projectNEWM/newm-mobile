@@ -2,41 +2,49 @@ import SwiftUI
 import UIKit
 
 struct HeaderImageSection: View {
-	private let model: HeaderImageCellModel
+	private let imageURL: String?
 	
-	init(_ model: HeaderImageCellModel) {
-		self.model = model
+	init(_ imageURL: String?) {
+		self.imageURL = imageURL
 	}
 	//TODO: parallax header hidden behind nav bar
 	var body: some View {
 		GeometryReader { geometry in
 			ZStack {
-				if geometry.frame(in: .global).minY <= 0 {
-					Image("\(model.headerImage)")
-						.resizable()
-//						.aspectRatio(16/9, contentMode: .fill)
-						.aspectRatio(contentMode: .fill)
-						.frame(height: geometry.size.height)
-						.offset(y: geometry.frame(in: .global).minY/9)
-						.clipped()
-				} else {
-					Image("\(model.headerImage)")
-						.resizable()
-//						.aspectRatio(16/9, contentMode: .fill)
-						.aspectRatio(contentMode: .fill)
-						.frame(width: geometry.size.width, height: geometry.size.height + geometry.frame(in: .global).minY)
-//						.padding(.top, UIScreen.main.bounds.size.height/10)
-						.clipped()
-						.offset(y: -geometry.frame(in: .global).minY)
-				}
+				image(size: geometry.size, frame: geometry.frame(in: .global))
 			}
 		}
 		.frame(height: 20)
+	}
+	
+	private func image(size: CGSize, frame: CGRect) -> some View {
+		let image = AsyncImage(
+			url: imageURL.flatMap(URL.init),
+			content: { image in
+				image.resizable()
+			}, placeholder: {
+				Image.placeholder.resizable()
+			})
+			.aspectRatio(contentMode: .fill)
+		
+		if frame.minY <= 0 {
+			return image
+				.frame(height: size.height)
+				.offset(y: frame.minY/9)
+				.clipped()
+				.erased
+		} else {
+			return image
+				.frame(width: size.width, height: size.height + frame.minY)
+				.clipped()
+				.offset(y: -frame.minY)
+				.erased
+		}
 	}
 }
 
 struct HeaderImageSection_Previews: PreviewProvider {
 	static var previews: some View {
-		HeaderImageSection(HeaderImageCellModel(headerImage: "bowie"))
+		HeaderImageSection("")
 	}
 }
