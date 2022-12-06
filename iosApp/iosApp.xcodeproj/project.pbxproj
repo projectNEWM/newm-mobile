@@ -267,7 +267,6 @@
 		76E69133292B50FC004F7E37 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; };
 		76F2E4E328D5092F0052A744 /* PlaybackCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */; };
 		76F823C528BEC2B3003A524C /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76F823C428BEC2B3003A524C /* Resolver */; };
-		76FBEAD8293310A60010127C /* BigCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FBEAD7293310A60010127C /* BigCellFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -971,7 +970,6 @@
 		76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		76E6910129284FA5004F7E37 /* HorizontalScrollingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingSection.swift; sourceTree = "<group>"; };
 		76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCounter.swift; sourceTree = "<group>"; };
-		76FBEAD7293310A60010127C /* BigCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCellFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1709,7 +1707,6 @@
 			isa = PBXGroup;
 			children = (
 				76D01D6828164A9E00305605 /* BigCell.swift */,
-				76FBEAD7293310A60010127C /* BigCellFactory.swift */,
 				76562509284BE7E6004B6E4B /* BigCellViewModel.swift */,
 			);
 			path = BigCells;
@@ -3007,7 +3004,6 @@
 				76562503284BE1D3004B6E4B /* CompactCell.swift in Sources */,
 				7656250C284BE8C9004B6E4B /* MockData.swift in Sources */,
 				76E6910229284FA5004F7E37 /* HorizontalScrollingSection.swift in Sources */,
-				76FBEAD8293310A60010127C /* BigCellFactory.swift in Sources */,
 				76ADDBC32886A466008AA39A /* ViewState.swift in Sources */,
 				7618FCE628164C6B007573B4 /* Circular.swift in Sources */,
 				7615B3292909A394008FC5A6 /* Icon+Generated.swift in Sources */,
