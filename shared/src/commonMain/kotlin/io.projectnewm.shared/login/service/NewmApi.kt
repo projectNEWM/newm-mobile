@@ -17,10 +17,7 @@ class NewmApi(
 
     suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
         val response = client.get("$baseUrl/v1/auth/code") {
-            headers {
-                contentType(ContentType.Application.Json)
-                accept(ContentType.Application.Json)
-            }
+            contentType(ContentType.Application.Json)
             parameter("email", email)
         }
 
@@ -36,10 +33,7 @@ class NewmApi(
 
     suspend fun register(user: NewUser): RegisterStatus {
         val response = client.put("$baseUrl/v1/users") {
-            headers {
-                contentType(ContentType.Application.Json)
-                accept(ContentType.Application.Json)
-            }
+            contentType(ContentType.Application.Json)
             setBody(user)
         }
         return when (response.status.value) {
@@ -59,10 +53,7 @@ class NewmApi(
     }
 
     suspend fun logIn(user: LogInUser) = client.post("$baseUrl/v1/auth/login") {
-        headers {
-            contentType(ContentType.Application.Json)
-            accept(ContentType.Application.Json)
-        }
+        contentType(ContentType.Application.Json)
         setBody(user)
     }.body<LoginResponse>()
 }
