@@ -104,7 +104,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 sqldelight {
     database("NewmDatabase") {
-        packageName = "io.newm.common.db"
-        sourceFolders = listOf("sqldelight")
+        packageName = "io.newm.shared.db.cache"
+//        sourceFolders = listOf("sqldelight")
     }
 }

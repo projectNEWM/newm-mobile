@@ -1,0 +1,17 @@
+CREATE TABLE AuthEntity(
+    id INTEGER NOT NULL PRIMARY KEY,
+    access_token TEXT NOT NULL,
+    refresh_token TEXT NOT NULL
+);
+
+selectAll:
+SELECT *
+FROM AuthEntity;
+
+insertAuthData:
+INSERT OR REPLACE
+INTO AuthEntity(
+    id,
+    access_token,
+    refresh_token
+) VALUES (?, ?, ?);
