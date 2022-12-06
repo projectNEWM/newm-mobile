@@ -10,16 +10,16 @@ plugins {
 android {
     compileSdk = Versions.androidCompileSdk
 
-    namespace = "io.newm"
-    testNamespace = "io.newm.test"
+    namespace = "io.projectnewm"
+    testNamespace = "io.projectnewm.test"
     defaultConfig {
         applicationId = "io.newm"
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
-        testApplicationId = "io.newm.test"
+        testInstrumentationRunner = "io.projectnewm.NewmAndroidJUnitRunner"
+        testApplicationId = "io.projectnewm.test"
     }
 
     buildTypes {
