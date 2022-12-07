@@ -3,6 +3,7 @@ import SharedUI
 import Resolver
 import Colors
 import ModuleLinker
+import shared
 
 struct MarketplaceView: View {
 	@InjectedObject private var viewModel: MarketplaceViewModel
@@ -16,6 +17,7 @@ struct MarketplaceView: View {
 				TitleSection(model: viewModel.titleSection)
 				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory)
 				categorySubSection
+				nftSongs
 			}
 		}
 	}
@@ -32,6 +34,13 @@ struct MarketplaceView: View {
 		case .genre:
 			horizontalArtistScroller(viewModel.bloomingArtists, rows: 2)
 			horizontalSmallSongScroller(viewModel.popularSongs, rows: 1)
+		}
+	}
+	
+	@ViewBuilder
+	private var nftSongs: some View {
+		LazyVStack {
+			ForEach(viewModel.nftSongs, content: NFTCell.init)
 		}
 	}
 }
@@ -69,31 +78,8 @@ extension MarketplaceView {
 	}
 }
 
-struct ArtistCell: View {
-	let model: ArtistCellModel
-	
-	var body: some View {
-		VStack(spacing: 4) {
-			AsyncImage(url: URL(string: model.imageUrl)) { image in
-				image.circleImage(size: 100)
-			} placeholder: {
-				Image.placeholder
-			}
-			Text(model.name)
-				.font(.inter(ofSize: 12).bold())
-				.padding(.top, 8)
-			//TODO: localize
-			Text("\(model.songsCount) songs")
-				.font(.inter(ofSize: 12))
-				.foregroundColor(NEWMColor.grey100.swiftUIColor)
-		}
-		.lineLimit(1)
-		.frame(width: 100)
-	}
-}
-
 struct MarketplaceView_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		Group {
 			MarketplaceView()
 			ArtistCell(model: ArtistCellModel(artist: MockData.artists.first!)).border(.white)
@@ -101,5 +87,5 @@ struct MarketplaceView_Previews: PreviewProvider {
 				.fixedSize()
 		}
 		.preferredColorScheme(.dark)
-    }
+	}
 }

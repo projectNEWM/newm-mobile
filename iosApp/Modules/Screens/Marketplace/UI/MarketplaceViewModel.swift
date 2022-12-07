@@ -13,6 +13,7 @@ class MarketplaceViewModel: ObservableObject {
 	lazy var newSongsToday: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "NEW SONGS TODAY")
 	lazy var popularSongs: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "POPULAR \(selectedCategory.description.uppercased()) SONGS")
 	lazy var bloomingArtists: CellsSectionModel<ArtistCellModel> = CellsSectionModel(cells: MockData.artists.shuffled().map(ArtistCellModel.init), title: "\(selectedCategory.description.uppercased()) ARTISTS BLOOMING")
+	lazy var nftSongs: [Song] = MockData.songs
 }
 
 struct ArtistCellModel: Identifiable {
@@ -49,3 +50,5 @@ extension MarketplaceViewModel {
 		}
 	}
 }
+
+extension Song: Identifiable {}

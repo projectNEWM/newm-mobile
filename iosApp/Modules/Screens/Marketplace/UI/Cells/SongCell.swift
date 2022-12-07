@@ -19,9 +19,6 @@ struct SongCell: View {
 		.overlay(alignment: .topTrailing) {
 			price
 		}
-		.overlay {
-			Asset.Media.playMiniFill.swiftUIImage
-		}
 		.lineLimit(1)
 		.onTapGesture {
 			audioPlayer.song = model.song
