@@ -6,31 +6,22 @@ public protocol MarketplaceViewProviding {
 	func marketplaceView() -> AnyView
 }
 
-public struct TrendingSongCellModel: Identifiable {
-	public let id: String
-	public let imageUrl: String
-	public let title: String
-	public let artistUrl: String
-	public let artistName: String
-	public let nftPrice: String = "Ɲ 2.1"
+public struct SongCellModel: Identifiable {
+	public let song: Song
+	public var id: String { song.id }
+	public var imageUrl: String { song.image }
+	public var title: String { song.title }
+	public var artistUrl: String { song.artist.image }
+	public var artistName: String { song.artist.name}
+	public var nftPrice: String = "Ɲ 2.1"
 	
-	public init(id: String, imageUrl: String, title: String, artistUrl: String, artistName: String) {
-		self.id = id
-		self.imageUrl = imageUrl
-		self.title = title
-		self.artistUrl = artistUrl
-		self.artistName = artistName
+	public init(song: Song) {
+		self.song = song
 	}
 }
 
 public extension Song {
-	var trendingCellModel: TrendingSongCellModel {
-		TrendingSongCellModel(
-			id: id,
-			imageUrl: image,
-			title: title,
-			artistUrl: artist.image,
-			artistName: artist.name
-		)
+	var trendingCellModel: SongCellModel {
+		SongCellModel(song: self)
 	}
 }

@@ -2,9 +2,13 @@ import SwiftUI
 import SharedUI
 import Colors
 import ModuleLinker
+import Resolver
+import AudioPlayer
+import shared
 
-struct TrendingSongCell: View {
-	let model: TrendingSongCellModel
+struct SongCell: View {
+	@Injected private var audioPlayer: AudioPlayerImpl
+	let model: SongCellModel
 	
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -15,8 +19,11 @@ struct TrendingSongCell: View {
 		.overlay(alignment: .topTrailing) {
 			price
 		}
-		.frame(width: 200)
 		.lineLimit(1)
+		.onTapGesture {
+			audioPlayer.song = model.song
+			audioPlayer.playbackInfo.isPlaying = true
+		}
 	}
 	
 	private var image: some View {
@@ -61,15 +68,11 @@ struct TrendingSongCell: View {
 	}
 }
 
-struct TrendingSongCell_Previews: PreviewProvider {
+struct SongCell_Previews: PreviewProvider {
 	static var previews: some View {
 		Group {
-			TrendingSongCell(model: MockData.songs.first!.trendingCellModel)
-			TrendingSongCell(model: TrendingSongCellModel(id: "1",
-														  imageUrl: MockData.url(for: Asset.MockAssets.artist1),
-														  title: "Song with a reallly long title that keeps going and going.",
-														  artistUrl: MockData.url(for: Asset.MockAssets.artist0),
-														  artistName: "Joe billy bob real loing name guy"))
+			SongCell(model: MockData.songs.first!.trendingCellModel)
+			SongCell(model: SongCellModel(song: MockData.songs.first!))
 		}
 		.preferredColorScheme(.dark)
 	}

@@ -8,7 +8,6 @@ public final class MainModule: ModuleProtocol {
 	public static let shared = MainModule()
 
 	public func registerAllServices() {
-		//TODO: should this be a separate resolver?
 		// Internal
 		Resolver.register {
 			[

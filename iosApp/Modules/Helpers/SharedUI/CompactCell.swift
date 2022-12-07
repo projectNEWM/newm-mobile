@@ -25,6 +25,7 @@ public struct CompactCell: View {
 				songs
 			}
 		}
+		.onTapGesture(perform: model.onTap)
     }
 	
 	@ViewBuilder
