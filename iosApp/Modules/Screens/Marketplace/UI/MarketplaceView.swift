@@ -13,13 +13,21 @@ struct MarketplaceView: View {
 	
 	var body: some View {
 		ScrollView {
-			LazyVStack(spacing: 32) {
+			LazyVStack(spacing: 24) {
 				TitleSection(model: viewModel.titleSection)
 				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory)
 				categorySubSection
+				switch viewModel.selectedCategory {
+				case .newSongs:
+					newSongsFilter.padding(.top, -30)
+				case .trending:
+					mostPopularFilter(middlePrompt: " songs in the last ")
+				case .genre(let genre):
+					mostPopularFilter(middlePrompt: " \(genre) songs in the last ")
+				}
 				nftSongs
 			}
-		}
+		}.font(.interMedium(ofSize: 14))
 	}
 	
 	@ViewBuilder
@@ -37,6 +45,43 @@ struct MarketplaceView: View {
 		}
 	}
 	
+	@ViewBuilder
+	private var newSongsFilter: some View {
+		HStack {
+			//TODO: localize
+			Text("New")
+			Picker("", selection: $viewModel.selectedGenre) {
+				ForEach(Genre.companion.allCases, id: \.title) {
+					Text($0.description).tag($0)
+				}
+			}
+			Text(" songs in the last ")
+			Picker("", selection: $viewModel.selectedTimespan) {
+				ForEach(MarketplaceViewModel.Timespan.allCases, id: \.hashValue) {
+					Text($0.description).tag($0)
+				}
+			}
+		}
+	}
+	
+	@ViewBuilder
+	private func mostPopularFilter(middlePrompt: String) -> some View {
+		HStack {
+			//TODO: localize
+			Picker("", selection: $viewModel.selectedFilterCategory) {
+				ForEach(MarketplaceViewModel.NFTFilterCategories.allCases, id: \.hashValue) {
+					Text($0.description).tag($0)
+				}
+			}
+			Text(" \(middlePrompt) ")
+			Picker("", selection: $viewModel.selectedTimespan) {
+				ForEach(MarketplaceViewModel.Timespan.allCases, id: \.hashValue) {
+					Text($0.description).tag($0)
+				}
+			}
+		}
+	}
+
 	@ViewBuilder
 	private var nftSongs: some View {
 		LazyVStack {
@@ -60,7 +105,7 @@ extension MarketplaceView {
 			}.padding(.top, 5)
 		}
 	}
-
+	
 	private func horizontalSmallSongScroller(_ model: CellsSectionModel<SongCellModel>, rows: Int) -> some View {
 		HorizontalScroller(title: model.title) {
 			LazyHGrid(

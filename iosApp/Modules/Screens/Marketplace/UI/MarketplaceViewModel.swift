@@ -5,10 +5,41 @@ import Colors
 import shared
 
 class MarketplaceViewModel: ObservableObject {
+	enum Timespan: CaseIterable, CustomStringConvertible {
+		case hours24
+		case days7
+		case days30
+		
+		var description: String {
+			switch self {
+			case .days30: return "30 days"
+			case .days7: return "7 days"
+			case .hours24: return "24 hours"
+			}
+		}
+	}
+	
+	enum NFTFilterCategories: CaseIterable, CustomStringConvertible {
+		case mostPopular
+		case biggestBooty
+		case longestTrack
+		
+		var description: String {
+			switch self {
+			case .biggestBooty: return "Biggest Booty"
+			case .longestTrack: return "Longest Track"
+			case .mostPopular: return "Most Popular"
+			}
+		}
+	}
+	
 	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceGradient.map(\.color))
 	let allCategories: [Category] = Category.allCases
 	@Published var selectedCategory: Category = Category.allCases[2]
-	
+	@Published var selectedGenre: Genre = Genre.companion.allCases[0]
+	@Published var selectedTimespan: Timespan = .hours24
+	@Published var selectedFilterCategory: NFTFilterCategories = .mostPopular
+
 	lazy var trendingSongs: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.map(\.trendingCellModel), title: "TRENDING SONGS")
 	lazy var newSongsToday: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "NEW SONGS TODAY")
 	lazy var popularSongs: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "POPULAR \(selectedCategory.description.uppercased()) SONGS")
