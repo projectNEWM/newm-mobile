@@ -3082,13 +3082,10 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Modules/Helpers/SharedUI/Media.xcassets",
-				"$(SRCROOT)/swiftgen.yml",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/XCAssets+Generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

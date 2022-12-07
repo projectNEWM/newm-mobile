@@ -4,7 +4,7 @@ import Colors
 import ModuleLinker
 import Resolver
 import AudioPlayer
-import shared
+import SharedUI
 
 struct SongCell: View {
 	@Injected private var audioPlayer: AudioPlayerImpl
@@ -18,6 +18,9 @@ struct SongCell: View {
 		}
 		.overlay(alignment: .topTrailing) {
 			price
+		}
+		.overlay {
+			Asset.Media.playMiniFill.swiftUIImage
 		}
 		.lineLimit(1)
 		.onTapGesture {
@@ -34,14 +37,13 @@ struct SongCell: View {
 		} placeholder: {
 			Image.placeholder
 		}
-		.padding(.bottom, 6)
 		.cornerRadius(6)
 	}
 	
 	private var title: some View {
 		Text(model.title)
 			.font(Font.inter(ofSize: 14).weight(.semibold))
-			.padding(.bottom, 5)
+			.padding(.bottom, -3)
 			.truncationMode(.tail)
 	}
 	
@@ -72,7 +74,12 @@ struct SongCell_Previews: PreviewProvider {
 	static var previews: some View {
 		Group {
 			SongCell(model: MockData.songs.first!.trendingCellModel)
-			SongCell(model: SongCellModel(song: MockData.songs.first!))
+			HStack {
+				SongCell(model: SongCellModel(song: MockData.songs.first!))
+					.frame(width: 150)
+				SongCell(model: SongCellModel(song: MockData.songs.first!))
+					.frame(width: 200)
+			}
 		}
 		.preferredColorScheme(.dark)
 	}
