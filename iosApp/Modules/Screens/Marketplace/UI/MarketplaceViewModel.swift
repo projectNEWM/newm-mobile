@@ -8,7 +8,7 @@ class MarketplaceViewModel: ObservableObject {
 	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceGradient.map(\.color))
 	@Published var selectedCategory: Category = Category.allCases.first!
 	@Published var trendingSongs: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.map(\.trendingCellModel), title: "TRENDING SONGS")
-	@Published var newSongsToday: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "NEW SONGS")
+	@Published var newSongsToday: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "NEW SONGS TODAY")
 
 	let allCategories: [Category] = Category.allCases
 }
