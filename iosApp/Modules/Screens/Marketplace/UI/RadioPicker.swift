@@ -30,7 +30,7 @@ extension RadioPicker {
 				if self.selectedOption == self.option {
 					baseBody
 						.background(
-							LinearGradient(gradient: Gradient(colors: [NEWMColor.orange2, NEWMColor.orange1].map(\.swiftUIColor)),
+							LinearGradient(gradient: Gradient(colors: [NEWMColor.orange2(), NEWMColor.orange1()]),
 										   startPoint: .topLeading,
 										   endPoint: .bottomTrailing)
 						)
@@ -38,9 +38,9 @@ extension RadioPicker {
 					baseBody
 						.overlay(
 							RoundedRectangle(cornerRadius: 4)
-								.stroke(NEWMColor.grey500.swiftUIColor, lineWidth: 2)
+								.stroke(NEWMColor.grey500(), lineWidth: 2)
 						)
-						.background(NEWMColor.grey600.swiftUIColor)
+						.background(NEWMColor.grey600())
 				}
 			}
 			.cornerRadius(4)

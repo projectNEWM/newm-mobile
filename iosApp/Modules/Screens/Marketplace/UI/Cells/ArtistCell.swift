@@ -18,7 +18,7 @@ struct ArtistCell: View {
 			//TODO: localize
 			Text("\(model.songsCount) songs")
 				.font(.inter(ofSize: 12))
-				.foregroundColor(NEWMColor.grey100.swiftUIColor)
+				.foregroundColor(NEWMColor.grey100())
 		}
 		.lineLimit(1)
 		.frame(width: 100)

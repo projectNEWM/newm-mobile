@@ -53,7 +53,7 @@ struct SongCell: View {
 			}
 			Text(model.artistName)
 				.font(Font.interMedium(ofSize: 12))
-				.foregroundColor(NEWMColor.grey100.swiftUIColor)
+				.foregroundColor(NEWMColor.grey100())
 		}
 		.frame(height: 28)
 	}

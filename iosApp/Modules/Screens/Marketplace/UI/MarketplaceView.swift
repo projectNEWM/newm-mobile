@@ -17,14 +17,7 @@ struct MarketplaceView: View {
 				TitleSection(model: viewModel.titleSection)
 				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory)
 				categorySubSection
-				switch viewModel.selectedCategory {
-				case .newSongs:
-					newSongsFilter.padding(.top, -30)
-				case .trending:
-					mostPopularFilter(middlePrompt: " songs in the last ")
-				case .genre(let genre):
-					mostPopularFilter(middlePrompt: " \(genre) songs in the last ")
-				}
+				filters
 				nftSongs
 			}
 		}.font(.interMedium(ofSize: 14))
@@ -46,42 +39,35 @@ struct MarketplaceView: View {
 	}
 	
 	@ViewBuilder
-	private var newSongsFilter: some View {
-		HStack {
-			//TODO: localize
-			Text("New")
-			Picker("", selection: $viewModel.selectedGenre) {
-				ForEach(Genre.companion.allCases, id: \.title) {
-					Text($0.description).tag($0)
-				}
-			}
-			Text(" songs in the last ")
-			Picker("", selection: $viewModel.selectedTimespan) {
-				ForEach(MarketplaceViewModel.Timespan.allCases, id: \.hashValue) {
-					Text($0.description).tag($0)
-				}
-			}
+	private var filters: some View {
+		switch viewModel.selectedCategory {
+		case .newSongs:
+			newSongsFilter.padding(.top, -30)
+		case .trending:
+			mostPopularFilter()
+		case .genre(let genre):
+			mostPopularFilter(genre: genre.title)
 		}
 	}
 	
 	@ViewBuilder
-	private func mostPopularFilter(middlePrompt: String) -> some View {
-		HStack {
-			//TODO: localize
-			Picker("", selection: $viewModel.selectedFilterCategory) {
-				ForEach(MarketplaceViewModel.NFTFilterCategories.allCases, id: \.hashValue) {
-					Text($0.description).tag($0)
-				}
-			}
-			Text(" \(middlePrompt) ")
-			Picker("", selection: $viewModel.selectedTimespan) {
-				ForEach(MarketplaceViewModel.Timespan.allCases, id: \.hashValue) {
-					Text($0.description).tag($0)
-				}
-			}
-		}
+	private var newSongsFilter: some View {
+		Filters(selectedOption1: $viewModel.selectedGenre,
+				selectedOption2: $viewModel.selectedTimespan,
+				allOptions1: Genre.companion.allCases,
+				allOptions2: MarketplaceViewModel.Timespan.allCases,
+				middlePrompt: "songs in the last")
 	}
-
+	
+	@ViewBuilder
+	private func mostPopularFilter(genre: String? = nil) -> some View {
+		Filters(selectedOption1: $viewModel.selectedFilterCategory,
+				selectedOption2: $viewModel.selectedTimespan,
+				allOptions1: MarketplaceViewModel.NFTFilterCategories.allCases,
+				allOptions2: MarketplaceViewModel.Timespan.allCases,
+				middlePrompt: "\(genre ?? "") songs in the last")
+	}
+	
 	@ViewBuilder
 	private var nftSongs: some View {
 		LazyVStack {

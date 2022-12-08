@@ -26,7 +26,7 @@ struct NFTCell: View {
 			}
 			.font(.inter(ofSize: 12))
 			.padding()
-			.background(NEWMColor.grey600.swiftUIColor)
+			.background(NEWMColor.grey600())
 			.cornerRadius(6)
 		}
 		.onTapGesture {
