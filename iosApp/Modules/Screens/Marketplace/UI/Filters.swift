@@ -9,11 +9,14 @@ struct Filters<Option1, Option2>: View where Option1: CustomStringConvertible & 
 	let allOptions2: [Option2]
 	
 	let middlePrompt: String
+	let showNew: Bool
 
 	var body: some View {
 		HStack(spacing: 4) {
 			//TODO: localize
-			Text("New")
+			if showNew {
+				Text("New")
+			}
 			//This is dumb but the label on the Picker doesn't show up.  https://stackoverflow.com/questions/69381385/swiftui-custom-picker-label-not-rendering
 			Menu {
 				Picker("", selection: $selectedOption1) {
@@ -55,11 +58,21 @@ struct Filters<Option1, Option2>: View where Option1: CustomStringConvertible & 
 
 struct Filters_Previews: PreviewProvider {
 	static var previews: some View {
-		Filters(selectedOption1: .constant("Option1"),
-				selectedOption2: .constant("Option2"),
-				allOptions1: ["Option1"],
-				allOptions2: ["Option2"],
-				middlePrompt: "most popular")
+		Group {
+			Filters(selectedOption1: .constant("Option1"),
+					selectedOption2: .constant("Option2"),
+					allOptions1: ["Option1"],
+					allOptions2: ["Option2"],
+					middlePrompt: "most popular",
+					showNew: false)
+			
+			Filters(selectedOption1: .constant("Option1"),
+					selectedOption2: .constant("Option2"),
+					allOptions1: ["Option1"],
+					allOptions2: ["Option2"],
+					middlePrompt: "most popular",
+					showNew: true)
+		}
 		.preferredColorScheme(.dark)
 	}
 }

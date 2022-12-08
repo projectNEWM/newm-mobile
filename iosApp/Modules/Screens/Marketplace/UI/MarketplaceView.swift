@@ -15,26 +15,58 @@ struct MarketplaceView: View {
 		ScrollView {
 			LazyVStack(spacing: 24) {
 				TitleSection(model: viewModel.titleSection)
+				searchField
 				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory)
 				categorySubSection
 				filters
 				nftSongs
 			}
-		}.font(.interMedium(ofSize: 14))
+		}
+	}
+	
+	@ViewBuilder
+	private var searchField: some View {
+		HStack {
+			Image(systemName: "magnifyingglass")
+			TextField("Search songs", text: $viewModel.searchTerm)
+				.padding(8)
+				.background(NEWMColor.grey500())
+				.overlay(RoundedRectangle(cornerRadius: 4)
+					.stroke(NEWMColor.grey400(), lineWidth: 2))
+				.font(.interMedium(ofSize: 16))
+		}
+		.padding([.leading, .trailing], sidePadding)
 	}
 	
 	@ViewBuilder
 	private var categorySubSection: some View {
 		switch viewModel.selectedCategory {
 		case .trending:
-			HorizontalStackSection(viewModel.trendingSongs) { model in
-				SongCell(model: model).frame(width: largerSongCellSize)
+			if viewModel.trendingSongsCells.cells.count == 0 {
+				Text("No results").padding().addSectionTitle(viewModel.trendingSongsCells.title)
+			} else {
+				HorizontalStackSection(viewModel.trendingSongsCells) { model in
+					SongCell(model: model).frame(width: largerSongCellSize)
+				}
 			}
 		case .newSongs:
-			horizontalSmallSongScroller(viewModel.newSongsToday, rows: 2)
+			if viewModel.newSongsTodayCells.cells.count == 0 {
+				Text("No results").padding().addSectionTitle(viewModel.newSongsTodayCells.title)
+			} else {
+				horizontalSmallSongScroller(viewModel.newSongsTodayCells, rows: 2)
+			}
 		case .genre:
-			horizontalArtistScroller(viewModel.bloomingArtists, rows: 2)
-			horizontalSmallSongScroller(viewModel.popularSongs, rows: 1)
+			if viewModel.bloomingArtistsCells.cells.isEmpty {
+				Text("No results").padding().addSectionTitle(viewModel.bloomingArtistsCells.title)
+			} else {
+				horizontalArtistScroller(viewModel.bloomingArtistsCells, rows: 2)
+			}
+			
+			if viewModel.popularSongsCells.cells.isEmpty {
+				Text("No results").padding().addSectionTitle(viewModel.popularSongsCells.title)
+			} else {
+				horizontalSmallSongScroller(viewModel.popularSongsCells, rows: 1)
+			}
 		}
 	}
 	
@@ -56,7 +88,8 @@ struct MarketplaceView: View {
 				selectedOption2: $viewModel.selectedTimespan,
 				allOptions1: Genre.companion.allCases,
 				allOptions2: MarketplaceViewModel.Timespan.allCases,
-				middlePrompt: "songs in the last")
+				middlePrompt: "songs in the last",
+				showNew: true)
 	}
 	
 	@ViewBuilder
@@ -65,7 +98,8 @@ struct MarketplaceView: View {
 				selectedOption2: $viewModel.selectedTimespan,
 				allOptions1: MarketplaceViewModel.NFTFilterCategories.allCases,
 				allOptions2: MarketplaceViewModel.Timespan.allCases,
-				middlePrompt: "\(genre ?? "") songs in the last")
+				middlePrompt: "\(genre ?? "") songs in the last",
+				showNew: false)
 	}
 	
 	@ViewBuilder

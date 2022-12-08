@@ -16,7 +16,7 @@ struct NFTCell: View {
 				AsyncImage(url: URL(string: song.image)) { image in
 					image.circleImage(size: 24)
 				} placeholder: {
-					Image.placeholder
+					Image.placeholder.circleImage(size: 24)
 				}
 
 				Text(song.title)

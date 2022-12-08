@@ -35,16 +35,23 @@ class MarketplaceViewModel: ObservableObject {
 	
 	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceGradient.map(\.color))
 	let allCategories: [Category] = Category.allCases
-	@Published var selectedCategory: Category = Category.allCases[2]
+	@Published var selectedCategory: Category = Category.allCases[0]
 	@Published var selectedGenre: Genre = Genre.companion.allCases[0]
 	@Published var selectedTimespan: Timespan = .hours24
 	@Published var selectedFilterCategory: NFTFilterCategories = .mostPopular
+	@Published var searchTerm: String = ""
+	
+	let trendingSongs = MockData.songs
+	let newSongsToday = MockData.songs.shuffled()
+	let popularSongs = MockData.songs.shuffled()
+	let bloomingArtists = MockData.artists.shuffled()
+	let nftSongs = MockData.songs
 
-	lazy var trendingSongs: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.map(\.trendingCellModel), title: "TRENDING SONGS")
-	lazy var newSongsToday: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "NEW SONGS TODAY")
-	lazy var popularSongs: CellsSectionModel<SongCellModel> = CellsSectionModel(cells: MockData.songs.shuffled().map(\.trendingCellModel), title: "POPULAR \(selectedCategory.description.uppercased()) SONGS")
-	lazy var bloomingArtists: CellsSectionModel<ArtistCellModel> = CellsSectionModel(cells: MockData.artists.shuffled().map(ArtistCellModel.init), title: "\(selectedCategory.description.uppercased()) ARTISTS BLOOMING")
-	lazy var nftSongs: [Song] = MockData.songs
+	var trendingSongsCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: trendingSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "TRENDING SONGS") }
+	var newSongsTodayCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: newSongsToday.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "NEW SONGS TODAY") }
+	var popularSongsCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: popularSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "POPULAR \(selectedCategory.description.uppercased()) SONGS") }
+	var bloomingArtistsCells: CellsSectionModel<ArtistCellModel> { CellsSectionModel(cells: bloomingArtists.filter { $0.name.lowercased().hasPrefix(searchTerm.lowercased()) }.map(ArtistCellModel.init), title: "\(selectedCategory.description.uppercased()) ARTISTS BLOOMING") }
+	var nftSongsCells: [Song] { nftSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) } }
 }
 
 struct ArtistCellModel: Identifiable {

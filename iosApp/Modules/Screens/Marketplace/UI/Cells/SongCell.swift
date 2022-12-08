@@ -49,7 +49,7 @@ struct SongCell: View {
 			AsyncImage(url: URL(string: model.artistUrl)) { image in
 				image.circleImage(size: 28)
 			} placeholder: {
-				Image.placeholder
+				Image.placeholder.circleImage(size: 28)
 			}
 			Text(model.artistName)
 				.font(Font.interMedium(ofSize: 12))
