@@ -68,7 +68,7 @@ extension HomeView {
 	}
 }
 
-struct HomeViewLoaded_Previews: PreviewProvider {	
+struct HomeViewLoaded_Previews: PreviewProvider {
 	static var previews: some View {
 		let vm = HomeViewModel()
 		return HomeView.LoadedView(

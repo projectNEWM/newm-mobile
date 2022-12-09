@@ -47,6 +47,7 @@ struct MockHomeViewUIModelProvider: HomeViewUIModelProviding {
 	}
 }
 
+//for xcode previews
 class MockHomeActionHandler: HomeViewActionHandling {
 	func artistTapped(id: String) {}
 	func songTapped(id: String) {}

@@ -35,8 +35,10 @@ public enum NEWMColor {
   public static let orange2 = ColorAsset(name: "orange2")
   public static let pink = ColorAsset(name: "pink")
   public static let pink2 = ColorAsset(name: "pink2")
+  public static let pink3 = ColorAsset(name: "pink3")
   public static let purple = ColorAsset(name: "purple")
   public static let purple2 = ColorAsset(name: "purple2")
+  public static let purple3 = ColorAsset(name: "purple3")
   public static let red = ColorAsset(name: "red")
   public static let yellow = ColorAsset(name: "yellow")
 }

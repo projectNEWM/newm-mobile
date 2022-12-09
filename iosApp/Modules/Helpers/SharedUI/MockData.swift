@@ -13,7 +13,7 @@ public class MockData {
 			BigCellViewModel(artist: artist) {
 				onTap(artist.id)
 			}
-		}.shuffled(using: &numberGen)
+		}//.shuffled(using: &numberGen)
 	}
 	
 	public static func bigSongCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
@@ -22,7 +22,7 @@ public class MockData {
 			BigCellViewModel(song: song) {
 				onTap(song.id)
 			}
-		}.shuffled(using: &numberGen)
+		}//.shuffled(using: &numberGen)
 	}
 	
 	public static func makeArtist(name: String) -> Artist {

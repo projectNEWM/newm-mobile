@@ -13,7 +13,6 @@ class HomeViewModel: ObservableObject {
 	@Published var route: HomeRoute?
 	
 	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
-	@Injected private var actionHandler: HomeViewActionHandling
 	@Injected private var audioPlayer: AudioPlayerImpl
 
 	init() {

@@ -8,4 +8,8 @@ public extension ColorAsset {
 	static var homeTitleGradient: [ColorAsset] {
 		[NEWMColor.lightBlue, NEWMColor.purple2]
 	}
+	
+	static var libraryGradient: [ColorAsset] {
+		[NEWMColor.purple3, NEWMColor.pink3]
+	}
 }

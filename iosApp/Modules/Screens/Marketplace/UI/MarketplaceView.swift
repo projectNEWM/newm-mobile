@@ -107,6 +107,7 @@ struct MarketplaceView: View {
 		LazyVStack {
 			ForEach(viewModel.nftSongs, content: NFTCell.init)
 		}
+		.padding([.leading, .trailing], sidePadding)
 	}
 }
 
