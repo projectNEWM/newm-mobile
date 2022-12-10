@@ -3,7 +3,6 @@ import Combine
 import Resolver
 import ModuleLinker
 import shared
-import Utilities
 import SharedUI
 
 class LibraryViewModel: ObservableObject {
@@ -32,6 +31,11 @@ class LibraryViewModel: ObservableObject {
 }
 
 extension LibraryViewModel: LibraryViewActionHandling {
+	func playlistTapped(id: String) {
+		print(#function + " " + id)
+		route = .playlist(id: id)
+	}
+	
 	func artistTapped(id: String) {
 		print(#function + " " + id)
 		route = .artist(id: id)
@@ -40,10 +44,5 @@ extension LibraryViewModel: LibraryViewActionHandling {
 	func songTapped(id: String) {
 		print(#function + " " + id)
 		route = .nowPlaying(id: id)
-	}
-	
-	func playlistTapped(id: String) {
-		print(#function + " " + id)
-		route = .playlist(id: id)
 	}
 }

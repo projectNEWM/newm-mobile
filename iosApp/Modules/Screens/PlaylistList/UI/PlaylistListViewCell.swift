@@ -27,8 +27,8 @@ struct PlaylistListViewCell: View {
 		.frame(alignment: .leading)
 		.padding()
 		.padding(.trailing)
-		.background(LinearGradient(colors: [NEWMColor.offPink.swiftUIColor,
-											NEWMColor.yellow.swiftUIColor],
+		.background(LinearGradient(colors: [NEWMColor.offPink(),
+											NEWMColor.yellow()],
 								   startPoint: .top,
 								   endPoint: .bottom).opacity(0.31))
 		.cornerRadius(imageSize)
@@ -47,7 +47,7 @@ struct PlaylistListViewCell: View {
 	private var creator: some View {
 		HStack {
 			Text(playlist.creator)
-				.foregroundColor(NEWMColor.pink.swiftUIColor)
+				.foregroundColor(NEWMColor.pink())
 				.font(.roboto(ofSize: 11))
 			Spacer()
 		}

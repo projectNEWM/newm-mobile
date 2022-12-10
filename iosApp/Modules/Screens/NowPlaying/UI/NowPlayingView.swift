@@ -80,9 +80,9 @@ extension NowPlayingView {
 			audioPlayer.playbackInfo.shuffle.toggle()
 		} label: {
 			if audioPlayer.playbackInfo.shuffle == true {
-				Asset.Media.PlayerIcons.shuffleSelected.swiftUIImage
+				Asset.Media.PlayerIcons.shuffleSelected()
 			} else {
-				Asset.Media.PlayerIcons.shuffle.swiftUIImage
+				Asset.Media.PlayerIcons.shuffle()
 			}
 		}
 	}
@@ -91,7 +91,7 @@ extension NowPlayingView {
 		Button {
 			audioPlayer.prev()
 		} label: {
-			Asset.Media.PlayerIcons.previous.swiftUIImage
+			Asset.Media.PlayerIcons.previous()
 		}
 	}
 	
@@ -99,7 +99,7 @@ extension NowPlayingView {
 		Button {
 			audioPlayer.next()
 		} label: {
-			Asset.Media.PlayerIcons.next.swiftUIImage
+			Asset.Media.PlayerIcons.next()
 		}
 	}
 	
@@ -108,7 +108,7 @@ extension NowPlayingView {
 			audioPlayer.cycleRepeatMode()
 		} label: {
 			//TODO: add different repeat image states
-			Asset.Media.PlayerIcons.repeat.swiftUIImage
+			Asset.Media.PlayerIcons.repeat()
 		}
 	}
 	
@@ -117,9 +117,9 @@ extension NowPlayingView {
 			song.favorited.toggle()
 		} label: {
 			if song.favorited {
-				Asset.Media.PlayerIcons.heartSelected.swiftUIImage
+				Asset.Media.PlayerIcons.heartSelected()
 			} else {
-				Asset.Media.PlayerIcons.heart.swiftUIImage
+				Asset.Media.PlayerIcons.heart()
 			}
 		}
 	}
@@ -128,7 +128,7 @@ extension NowPlayingView {
 		Button {
 			//TODO:
 		} label: {
-			Asset.Media.PlayerIcons.share.swiftUIImage
+			Asset.Media.PlayerIcons.share()
 		}
 	}
 	
@@ -136,7 +136,7 @@ extension NowPlayingView {
 		Button {
 			showTipping = true
 		} label: {
-			Asset.Media.PlayerIcons.heartAdd.swiftUIImage.resizable()
+			Asset.Media.PlayerIcons.heartAdd().resizable()
 		}
 	}
 	

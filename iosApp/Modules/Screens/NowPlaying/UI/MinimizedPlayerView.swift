@@ -29,12 +29,12 @@ struct MiniPlayerView: View {
 	private var progress: some View {
 		GeometryReader { geometry in
 			LinearGradient(colors: [
-				NEWMColor.yellow.swiftUIColor,
-				NEWMColor.orange.swiftUIColor,
-				NEWMColor.red.swiftUIColor,
-				NEWMColor.pink.swiftUIColor,
-				NEWMColor.purple.swiftUIColor,
-				NEWMColor.blue.swiftUIColor
+				NEWMColor.yellow(),
+				NEWMColor.orange(),
+				NEWMColor.red(),
+				NEWMColor.pink(),
+				NEWMColor.purple(),
+				NEWMColor.blue()
 			],
 						   startPoint: .leading,
 						   endPoint: UnitPoint(x: (geometry.size.width / audioPlayer.playbackInfo.percentPlayed) / geometry.size.width, y: 0.5))

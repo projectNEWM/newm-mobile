@@ -45,6 +45,7 @@ public enum Asset {
     }
     public static let backArrow = ImageAsset(name: "back-arrow")
     public static let placeholder = ImageAsset(name: "placeholder")
+    public static let starIcon = ImageAsset(name: "star-icon")
   }
   public enum MockAssets {
     public static let artist0 = ImageAsset(name: "artist0")

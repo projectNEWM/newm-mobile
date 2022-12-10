@@ -12,22 +12,16 @@ class MockHomeViewUIModelProvider: HomeViewUIModelProviding {
 	}
 	
 	static var mockUIModel: HomeViewUIModel {
-		return HomeViewUIModel(
+		HomeViewUIModel(
 			greeting: TitleSectionModel(isGreeting: true, title: "HEY MIAH", profilePic: URL(string: "")),
 			title: TitleSectionModel(isGreeting: false, title: "HOME", profilePic: URL(string: "")),
-			thisWeekSection: ThisWeekSectionModel(newFollowers: 12, royalties: 51.56, earnings: 2.15),
-			recentlyPlayedSection: MockData.songs,
-			justReleasedSection: MockData.artists,
-			moreOfWhatYouLikeSection: MockData.artists.shuffled(),
-			newmArtistsSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells, title: "NEWM ARTISTS"),
-			mostPopularThisWeek: MockData.artists.shuffled(),
-			thisWeekTitle: "THIS WEEK",
-			discoverTitle: "DISCOVER",
-			justReleasedTitle: "JUST RELEASED",
-			moreOfWhatYouLikeTitle: "MORE OF WHAT YOU LIKE",
-			newmArtistsTitle: "NEWM ARTISTS",
-			mostPopularThisWeekTitle: "MOST POPULAR THIS WEEK",
-			recentlyPlayedTitle: "RECENTLY PLAYED"
+			thisWeekSection: ThisWeekSectionModel(title: "THIS WEEK", newFollowers: 12, royalties: 51.56, earnings: 2.15),
+			recentlyPlayedSection: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1, onTap: {_ in}), title: "RECENTLY PLAYED"),
+			justReleasedSection: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}), title: "JUST RELEASED"),
+			moreOfWhatYouLikeSection: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 2, onTap: {_ in}), title: "MORE OF WHAT YOU LIKE"),
+			newmArtistsSection: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 3, onTap: {_ in}), title: "NEWM ARTISTS"),
+			mostPopularThisWeek: CellsSectionModel(cells: MockData.bigArtistCells_shuffled(seed: 4, onTap: {_ in}), title: "MOST POPULAR THIS WEEK"),
+			discoverTitle: "DISCOVER"
 		)
 	}
 }

@@ -8,7 +8,7 @@ public struct CompactCell: View {
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
-	private let subtitleColor: Color = NEWMColor.grey100.swiftUIColor
+	private let subtitleColor: Color = NEWMColor.grey100()
 	
 	private let imageSize: CGFloat = 60
 	
@@ -59,8 +59,8 @@ public struct CompactCell: View {
 struct CompactCell_Previews: PreviewProvider {
     static var previews: some View {
 		Group {
-			CompactCell(model: MockData.bigArtistCells.first!, roundImage: false)
-			CompactCell(model: MockData.bigArtistCells.first!, roundImage: true)
+			CompactCell(model: MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}).first!, roundImage: false)
+			CompactCell(model: MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}).first!, roundImage: true)
 		}
 		.preferredColorScheme(.dark)
     }

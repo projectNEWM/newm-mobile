@@ -4,12 +4,12 @@ import Resolver
 import Fonts
 import Colors
 
-public struct BigArtistCell: View {
+public struct BigCell: View {
 	private let model: BigCellViewModel
 	
 	private let titleFont: Font = .inter(ofSize: 12).bold()
 	private let subtitleFont: Font = .inter(ofSize: 12)
-	private let subtitleColor = NEWMColor.grey100.swiftUIColor
+	private let subtitleColor = NEWMColor.grey100()
 	private let imageSize: CGFloat = 130
 	
 	public init(model: BigCellViewModel) {
@@ -23,6 +23,7 @@ public struct BigArtistCell: View {
 			genre
 		}
 		.frame(width: imageSize)
+		.onTapGesture(perform: model.onTap)
 	}
 	
 	private var artistImage: some View {
@@ -66,12 +67,12 @@ public struct BigArtistCell: View {
 	}
 }
 
-struct BigArtistCell_Previews: PreviewProvider {
+struct BigCell_Previews: PreviewProvider {
 	static var previews: some View {
 		ScrollView(.horizontal) {
 			HStack {
-				ForEach(MockData.bigArtistCells.reversed(), id: \.id) { model in
-					BigArtistCell(model: model)
+				ForEach(MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}).reversed(), id: \.id) { model in
+					BigCell(model: model)
 				}
 			}
 			.preferredColorScheme(.dark)

@@ -16,8 +16,8 @@ struct GradientTag: View {
 			.font(.raleway(ofSize: 11).bold())
 			.padding([.top, .bottom], 4)
 			.padding([.leading, .trailing], 10)
-			.background(LinearGradient(colors: [NEWMColor.green.swiftUIColor,
-												NEWMColor.lightBlue.swiftUIColor],
+			.background(LinearGradient(colors: [NEWMColor.green(),
+												NEWMColor.lightBlue()],
 									   startPoint: .top,
 									   endPoint: .bottom))
 			.cornerRadius(20)

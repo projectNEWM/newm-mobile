@@ -18,11 +18,12 @@ extension LibraryView {
             ScrollView {
                 titleSection
                 VStack(spacing: 36) {
-//                    HorizontalScroller(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
-//                    PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.playlistTapped)
-//					HorizontalScroller(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
-                } 
+//					horizontalSection(title: <#T##String#>, models: <#T##[Model]#>, content: <#T##(Model) -> some View#>)(uiModel.recentlyPlayedSection, actionHandler: actionHandler.artistTapped)
+                    PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.playlistTapped)
+//					BigCellSection(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
+                }
             }
+//			.links(Links(route: $route))
         }
         
         private var titleSection: some View {

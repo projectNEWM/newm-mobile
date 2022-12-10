@@ -4,7 +4,6 @@ import SharedUI
 import shared
 import ModuleLinker
 import Resolver
-import AudioPlayer
 
 extension HomeView {
 	struct LoadedView: View {
@@ -12,8 +11,6 @@ extension HomeView {
 		@Binding private var route: HomeRoute?
 		private let actionHandler: HomeViewActionHandling
 		private let uiModel: HomeViewUIModel
-		
-		@Injected private var audioPlayer: AudioPlayerImpl
 		
 		init(actionHandler: HomeViewActionHandling, uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.actionHandler = actionHandler
@@ -26,7 +23,7 @@ extension HomeView {
 				titleSection
 				VStack(spacing: 36) {
 					ThisWeekSection(uiModel.thisWeekSection)
-					recentlyPlayingSection
+					recentlyPlayedSection
 					justReleasedSection
 					moreOfWhatYouLikeSection
 					newmArtistsSection
@@ -44,42 +41,24 @@ extension HomeView {
 			.links(Links(route: $route))
 		}
 		
-		private func horizontalBigArtistSection(title: String, artists: [Artist]) -> some View {
-			HorizontalStackSection(title: title, models: artists) { artist in
-				BigArtistCell(model: BigCellViewModel(artist: artist))
-					.onTapGesture {
-						route = .artist(id: artist.id)
-					}
-			}
-		}
-		
 		private var newmArtistsSection: some View {
-			HorizontalScrollingGridView(uiModel.newmArtistsSection) { artistId in
-				route = .artist(id: artistId)
-			}
+			HorizontalScrollingGridView(uiModel.newmArtistsSection)
 		}
 		
 		private var mostPopularThisWeekSection: some View {
-			horizontalBigArtistSection(title: uiModel.mostPopularThisWeekTitle, artists: uiModel.mostPopularThisWeek)
+			HorizontalStackSection(uiModel.mostPopularThisWeek, content: BigCell.init)
 		}
 		
-		@ViewBuilder
-		private var recentlyPlayingSection: some View {
-			HorizontalStackSection(title: uiModel.recentlyPlayedTitle, models: uiModel.recentlyPlayedSection) { song in
-				BigArtistCell(model: BigCellViewModel(song: song))
-					.onTapGesture {
-						audioPlayer.song = song
-						audioPlayer.playbackInfo.isPlaying = true
-					}
-			}
+		private var recentlyPlayedSection: some View {
+			HorizontalStackSection(uiModel.recentlyPlayedSection, content: BigCell.init)
 		}
 		
 		private var moreOfWhatYouLikeSection: some View {
-			horizontalBigArtistSection(title: uiModel.moreOfWhatYouLikeTitle, artists: uiModel.moreOfWhatYouLikeSection)
+			HorizontalStackSection(uiModel.moreOfWhatYouLikeSection, content: BigCell.init)
 		}
 		
 		private var justReleasedSection: some View {
-			horizontalBigArtistSection(title: uiModel.justReleasedTitle, artists: uiModel.justReleasedSection)
+			HorizontalStackSection(uiModel.justReleasedSection, content: BigCell.init)
 		}
 		
 		private var titleSection: some View {
@@ -90,9 +69,6 @@ extension HomeView {
 		}
 	}
 }
-
-extension Song: Identifiable {}
-extension Artist: Identifiable {}
 
 struct HomeViewLoaded_Previews: PreviewProvider {
 	static var previews: some View {
