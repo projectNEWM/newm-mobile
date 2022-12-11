@@ -6,24 +6,26 @@ import TabBar
 
 public final class MainModule: ModuleProtocol {
 	public static let shared = MainModule()
-	
-	@LazyInjected var homeViewProvider: HomeViewProviding
-    @LazyInjected var libraryViewProvider: LibraryViewProviding
-	@LazyInjected var walletViewProvider: WalletViewProviding
 
 	public func registerAllServices() {
-		//TODO: should this be a separate resolver?
 		// Internal
-		Resolver.register { [unowned self] in
+		Resolver.register {
 			[
 				TabViewProvider(image: Image(MainViewModelTab.home), tabName: MainViewModelTab.home.description) {
-					self.homeViewProvider.homeView()
+					@Injected var homeViewProvider: HomeViewProviding
+					return Resolver.resolve(HomeViewProviding.self).homeView()
 				},
                 TabViewProvider(image: Image(MainViewModelTab.library), tabName: MainViewModelTab.library.description) {
-                    self.libraryViewProvider.libraryView()
+					@Injected var libraryViewProvider: LibraryViewProviding
+					return libraryViewProvider.libraryView()
                 },
 				TabViewProvider(image: Image(MainViewModelTab.wallet), tabName: MainViewModelTab.wallet.description) {
-					self.walletViewProvider.walletView()
+					@Injected var walletViewProvider: WalletViewProviding
+					return walletViewProvider.walletView()
+				},
+				TabViewProvider(image: Image(MainViewModelTab.marketplace), tabName: MainViewModelTab.marketplace.description) {
+					@Injected var marketplaceViewProvider: MarketplaceViewProviding
+					return marketplaceViewProvider.marketplaceView()
 				}
 			]
 		}

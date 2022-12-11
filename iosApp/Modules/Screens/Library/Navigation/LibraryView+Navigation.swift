@@ -10,7 +10,6 @@ extension LibraryView {
 		@Binding var route: LibraryRoute?
 		@Injected private var playlistViewProvider: PlaylistViewProviding
 		@Injected private var artistViewProvider: ArtistViewProviding
-		@Injected private var songPlayingViewProvider: SongPlayingViewProviding
 		
 		var body: some View {
 			ZStack {
@@ -24,12 +23,6 @@ extension LibraryView {
 							   case: /LibraryRoute.artist,
 							   destination: { $artistId in
 					artistViewProvider.artistView(id: artistId)
-				}, onNavigate: clearLinks, label: {})
-				
-				NavigationLink(unwrapping: $route,
-							   case: /LibraryRoute.songPlaying,
-							   destination: { $songId in
-					songPlayingViewProvider.songPlayingView(id: songId)
 				}, onNavigate: clearLinks, label: {})
 			}
 		}

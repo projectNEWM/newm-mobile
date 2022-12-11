@@ -7,15 +7,13 @@ import UIKit
 import SwiftUI
 
 public class MockData {
-	static var songCache = NSCache<NSString, Song>()
-	
 	public static func bigArtistCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
 		var numberGen = NonRandomNumberGenerator(seed: seed)
 		return artists.map { artist in
 			BigCellViewModel(artist: artist) {
 				onTap(artist.id)
 			}
-		}.shuffled(using: &numberGen)
+		}//.shuffled(using: &numberGen)
 	}
 	
 	public static func bigSongCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
@@ -24,7 +22,7 @@ public class MockData {
 			BigCellViewModel(song: song) {
 				onTap(song.id)
 			}
-		}.shuffled(using: &numberGen)
+		}//.shuffled(using: &numberGen)
 	}
 	
 	public static func makeArtist(name: String) -> Artist {
@@ -63,7 +61,6 @@ public class MockData {
 			duration: 124,
 			genre: Genre.companion.allCases.randomElement()!
 		)
-		//		songCache.setObject(song, forKey: NSString(string: song.songId))
 		return song
 	}
 	
