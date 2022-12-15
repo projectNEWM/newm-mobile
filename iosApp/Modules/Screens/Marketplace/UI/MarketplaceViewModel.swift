@@ -33,7 +33,7 @@ class MarketplaceViewModel: ObservableObject {
 		}
 	}
 	
-	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceGradient.map(\.color))
+	@Published var titleSection = MarketplaceTitleSectionModel(title: "MARKETPLACE", gradient: Gradients.marketplaceGradient)
 	let allCategories: [Category] = Category.allCases
 	@Published var selectedCategory: Category = Category.allCases[0]
 	@Published var selectedGenre: Genre = Genre.companion.allCases[0]

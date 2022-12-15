@@ -21,7 +21,7 @@ public final class HomeModule: ModuleProtocol {
 extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
-			MockHomeViewUIModelProvider(actionHandler: mockResolver.resolve()) as HomeViewUIModelProviding
+			MockHomeViewUIModelProvider(actionHandler: $0.resolve()) as HomeViewUIModelProviding
 		}
 	}
 }

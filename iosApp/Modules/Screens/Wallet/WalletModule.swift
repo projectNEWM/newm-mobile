@@ -20,6 +20,9 @@ extension WalletModule: WalletViewProviding {
 #if DEBUG
 extension WalletModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
+		mockResolver.register {
+			WalletViewModel(currencyPicker: WalletViewModel.CurrencyPicker(title: "SELECT MAIN CURRENCY", options: Currency.allCases))
+		}
 	}
 }
 #endif

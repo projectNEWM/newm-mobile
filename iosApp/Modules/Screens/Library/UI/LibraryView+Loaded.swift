@@ -27,7 +27,9 @@ extension LibraryView {
         }
         
         private var titleSection: some View {
-            TitleSection(model: uiModel.title)
+			TitleSection(isGreeting: false,
+						 title: uiModel.title.title,
+						 gradient: uiModel.title.gradientColors)
                     .padding(.bottom, 41)
         }
     }

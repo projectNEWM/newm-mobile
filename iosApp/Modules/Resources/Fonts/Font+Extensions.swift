@@ -28,7 +28,7 @@ public extension Font {
 	}
 	
 	static func interMedium(ofSize size: CGFloat) -> Font {
-		.custom("Inter-Medium", size: size)
+		.custom("Inter", size: size).weight(.medium)
 	}
 	
 	static var thisWeekCellAmountFont: Font {

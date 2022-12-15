@@ -60,7 +60,10 @@ extension HomeView {
 		}
 		
 		private var titleSection: some View {
-			TitleSection(model: shouldShowGreeting ? uiModel.greeting : uiModel.title)
+			TitleSection(isGreeting: shouldShowGreeting,
+						 title: shouldShowGreeting ? uiModel.greeting.title : uiModel.title.title,
+						 profilePic: shouldShowGreeting ? uiModel.greeting.profilePic : uiModel.title.profilePic,
+						 gradient: uiModel.title.gradientHexColors)
 				.padding(.bottom, 41)
 			//TODO: THIS ANIMATION ISN'T WORKING
 				.transition(.opacity.animation(.easeInOut(duration: 1.0)))
@@ -70,7 +73,6 @@ extension HomeView {
 
 struct HomeViewLoaded_Previews: PreviewProvider {
 	static var previews: some View {
-		let vm = HomeViewModel()
 		return HomeView.LoadedView(
 			uiModel: MockHomeViewUIModelProvider.mockUIModel(
 				actionHandler: MockHomeActionHandler()

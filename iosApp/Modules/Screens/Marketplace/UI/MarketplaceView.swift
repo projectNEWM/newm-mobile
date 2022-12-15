@@ -14,7 +14,7 @@ struct MarketplaceView: View {
 	var body: some View {
 		ScrollView {
 			LazyVStack(spacing: 24) {
-				TitleSection(model: viewModel.titleSection)
+				title
 				searchField
 				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory)
 				categorySubSection
@@ -22,6 +22,12 @@ struct MarketplaceView: View {
 				nftSongs
 			}
 		}
+	}
+	
+	@ViewBuilder
+	private var title: some View {
+		TitleSection(title: viewModel.titleSection.title,
+					 gradient: viewModel.titleSection.gradient)
 	}
 	
 	@ViewBuilder
@@ -35,7 +41,7 @@ struct MarketplaceView: View {
 					.stroke(NEWMColor.grey400(), lineWidth: 2))
 				.font(.interMedium(ofSize: 16))
 		}
-		.padding([.leading, .trailing], sidePadding)
+		.addSidePadding()
 	}
 	
 	@ViewBuilder
@@ -107,7 +113,7 @@ struct MarketplaceView: View {
 		LazyVStack {
 			ForEach(viewModel.nftSongs, content: NFTCell.init)
 		}
-		.padding([.leading, .trailing], sidePadding)
+		.addSidePadding()
 	}
 }
 
@@ -155,3 +161,7 @@ struct MarketplaceView_Previews: PreviewProvider {
 		.preferredColorScheme(.dark)
 	}
 }
+//
+//extension TitleSection {
+//	init(model: markettit)
+//}

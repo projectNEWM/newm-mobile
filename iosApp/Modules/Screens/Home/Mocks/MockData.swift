@@ -34,8 +34,8 @@ struct MockHomeViewUIModelProvider: HomeViewUIModelProviding {
 		let recentlyPlayedSection = CellsSectionModel(cells: bigSongCells(seed: 1), title: "RECENTLY PLAYED")
 		
 		return HomeViewUIModel(
-			greeting: TitleSectionModel(isGreeting: true, title: "HEY MIAH", profilePic: URL(string: "https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg"), gradientColors: ColorAsset.homeTitleGradient.map(\.color)),
-			title: TitleSectionModel(isGreeting: false, title: "HOME", profilePic: URL(string: "https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg"), gradientColors: ColorAsset.homeTitleGradient.map(\.color)),
+			greeting: HomeTitleSectionModel(isGreeting: true, title: "HEY MIAH", profilePic: TitleSection.ProfilePic.show(URL(string: "https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg")), gradientHexColors: Gradients.homeTitleGradient),
+			title: HomeTitleSectionModel(isGreeting: false, title: "HOME", profilePic: TitleSection.ProfilePic.show(URL(string: "https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg")), gradientHexColors: Gradients.homeTitleGradient),
 			thisWeekSection: ThisWeekSectionModel(title: "THIS WEEK", newFollowers: 12, royalties: 51.56, earnings: 2.15),
 			recentlyPlayedSection: recentlyPlayedSection,
 			justReleasedSection: justReleasedSection,

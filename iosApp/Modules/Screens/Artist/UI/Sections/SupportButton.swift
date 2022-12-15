@@ -33,7 +33,7 @@ struct SupportButton: View {
 			.background(backgroundColor)
 			.cornerRadius(cornerRadius)
 			.overlay(RoundedRectangle(cornerRadius: cornerRadius)
-				.stroke(NEWMColor.grey500(), lineWidth: 2))
+				.stroke(borderColor ?? .clear, lineWidth: 2))
 			.fixedSize()
 			.erased
 		}
