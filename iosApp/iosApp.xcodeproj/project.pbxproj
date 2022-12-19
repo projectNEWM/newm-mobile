@@ -41,6 +41,8 @@
 		761837AB294A706F0033250B /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AA294A706F0033250B /* Artist.swift */; };
 		761837AD294A7A900033250B /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AC294A7A900033250B /* Currency.swift */; };
 		761837AF294A88B80033250B /* PickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AE294A88B80033250B /* PickerSheet.swift */; };
+		761837B1295116FC0033250B /* PortfolioSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B0295116FC0033250B /* PortfolioSection.swift */; };
+		761837B3295117AE0033250B /* PickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B2295117AE0033250B /* PickerButton.swift */; };
 		7618FCC228164BB5007573B4 /* ModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */; };
 		7618FCC328164BB5007573B4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBD28164BB5007573B4 /* Home.swift */; };
 		7618FCC428164BB5007573B4 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBE28164BB5007573B4 /* Main.swift */; };
@@ -876,6 +878,8 @@
 		761837AA294A706F0033250B /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		761837AC294A7A900033250B /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		761837AE294A88B80033250B /* PickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSheet.swift; sourceTree = "<group>"; };
+		761837B0295116FC0033250B /* PortfolioSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioSection.swift; sourceTree = "<group>"; };
+		761837B2295117AE0033250B /* PickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerButton.swift; sourceTree = "<group>"; };
 		7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleProtocol.swift; sourceTree = "<group>"; };
 		7618FCBD28164BB5007573B4 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		7618FCBE28164BB5007573B4 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
@@ -1407,6 +1411,7 @@
 				7618FDDE28164E32007573B4 /* WalletView.swift */,
 				761837A4294A5FA60033250B /* WalletTitleSectionModel.swift */,
 				761837A6294A604F0033250B /* WalletViewModel.swift */,
+				761837B0295116FC0033250B /* PortfolioSection.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1445,6 +1450,7 @@
 				765D15DF293EC2280021FEC7 /* HorizontalScroller.swift */,
 				7618FCDD28164C6B007573B4 /* Link.swift */,
 				7656250B284BE8C9004B6E4B /* MockData.swift */,
+				761837B2295117AE0033250B /* PickerButton.swift */,
 				761837AE294A88B80033250B /* PickerSheet.swift */,
 				760300312836805A00BBF78C /* Placeholder.swift */,
 				7618FCD828164C6B007573B4 /* SharedUIModule.swift */,
@@ -3197,6 +3203,7 @@
 				76E6910229284FA5004F7E37 /* HorizontalScrollingSection.swift in Sources */,
 				76ADDBC32886A466008AA39A /* ViewState.swift in Sources */,
 				7618FCE628164C6B007573B4 /* Circular.swift in Sources */,
+				761837B3295117AE0033250B /* PickerButton.swift in Sources */,
 				7615B3292909A394008FC5A6 /* Icon+Generated.swift in Sources */,
 				7618FCE428164C6B007573B4 /* GradientTag.swift in Sources */,
 				76562504284BE1D3004B6E4B /* BigCell.swift in Sources */,
@@ -3320,6 +3327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761837B1295116FC0033250B /* PortfolioSection.swift in Sources */,
 				7618FDE028164E32007573B4 /* WalletModule.swift in Sources */,
 				761837A7294A604F0033250B /* WalletViewModel.swift in Sources */,
 				7618FDDF28164E32007573B4 /* WalletView.swift in Sources */,

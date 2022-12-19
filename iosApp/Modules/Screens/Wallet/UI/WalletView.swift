@@ -15,7 +15,9 @@ public struct WalletView: View {
 			}
 		}
 	}
-	
+}
+
+extension WalletView {
 	@ViewBuilder
 	private var title: some View {
 		HStack {
@@ -32,15 +34,7 @@ public struct WalletView: View {
 		Button(action: {
 			showCurrencyPicker = true
 		}, label: {
-			HStack(spacing: 2) {
-				Text(viewModel.selectedCurrency.symbol).font(.inter(ofSize: 12).bold())
-				Asset.Media.arrowSmallDown.swiftUIImage
-			}
-			.padding(.leading, 18)
-			.padding(.trailing, 12)
-			.padding([.top, .bottom], 8)
-			.background(NEWMColor.grey600())
-			.cornerRadius(1000)
+			PickerButton(label: viewModel.selectedCurrency.symbol)
 		})
 		.foregroundColor(.white)
 		.sheet(isPresented: $showCurrencyPicker) {
@@ -55,6 +49,11 @@ public struct WalletView: View {
 			.presentationDragIndicator(.hidden)
 			.background(Color.black)
 		}
+	}
+	
+	@ViewBuilder
+	private var portfolioSection: some View {
+		PortfolioSection(model: viewModel.portfolioSection)
 	}
 }
 
