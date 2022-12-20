@@ -1,18 +1,18 @@
 import SwiftUI
 import Colors
 
-struct SegmentedButton<Option: RadioOption>: View, RadioButtonProtocol {
+public struct SegmentedButton<Option: RadioOption>: View, RadioButtonProtocol {
 	let option: Option
 	@Binding var selectedOption: Option?
 	let gradient: [String]
 
-	init(_ option: Option, selectedOption: Binding<Option?>, gradient: [String]) {
+	public init(_ option: Option, selectedOption: Binding<Option?>, gradient: [String]) {
 		self.option = option
 		self._selectedOption = selectedOption
 		self.gradient = gradient
 	}
 	
-    var body: some View {
+	public var body: some View {
 		VStack {
 			Text(option.description)
 			gradient.gradient.frame(height: 2)
@@ -53,7 +53,6 @@ public struct SegmentedRadioPicker<Option, RadioButtonType: RadioButtonProtocol>
 				RadioButtonType(option, selectedOption: Binding<Option?>($selectedOption), gradient: selectedOption == option ? gradient : [NEWMColor.grey400.hexString])
 			}
 		}
-		.padding(.leading, sidePadding)
 	}
 }
 

@@ -7,11 +7,13 @@ import Colors
 public struct WalletView: View {
 	@InjectedObject private var viewModel: WalletViewModel
 	@State private var showCurrencyPicker = false
+	@State var selectedPortfolioTransactions: String = WalletViewModel.portfolioTitle
 	
 	public var body: some View {
 		ScrollView {
 			LazyVStack(spacing: 24) {
 				title
+				portfolioAndTransactionsSection
 			}
 		}
 	}
@@ -52,8 +54,23 @@ extension WalletView {
 	}
 	
 	@ViewBuilder
-	private var portfolioSection: some View {
-		PortfolioView(model: viewModel.portfolioSection)
+	private var portfolioAndTransactionsSection: some View {
+		VStack {
+			SegmentedRadioPicker(options: [WalletViewModel.portfolioTitle, WalletViewModel.transactionTitle],
+								 selectedOption: $selectedPortfolioTransactions,
+								 RadioButtonType: SegmentedButton.self,
+								 gradient: selectedPortfolioTransactions == WalletViewModel.portfolioTitle ? Gradients.walletGradient : Gradients.libraryGradient)
+			.padding(.bottom)
+			switch selectedPortfolioTransactions {
+			case WalletViewModel.portfolioTitle:
+				PortfolioView(model: viewModel.portfolioSection)
+			case WalletViewModel.transactionTitle:
+				TransactionsView(model: viewModel.transactionsSection)
+					.addSidePadding()
+			default: fatalError("string wasn't portfolio or transaction")
+			}
+		}
+		.padding(.top)
 	}
 }
 

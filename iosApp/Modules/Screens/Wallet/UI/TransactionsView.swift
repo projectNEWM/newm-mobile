@@ -9,8 +9,12 @@ struct TransactionsView: View {
 	
     var body: some View {
 		VStack {
-			ForEach(model.sections, id: \.title, content: TransactionsSection.init)
-				.padding(.bottom, 40)
+			ForEach(model.sections, id: \.title) {
+				TransactionsSection(model: $0)
+				NEWMColor.grey600.swiftUIColor
+					.frame(height: 2)
+			}
+			.padding(.bottom, 20)
 		}
     }
 }
