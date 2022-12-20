@@ -46,6 +46,7 @@
 		761837B529512C7A0033250B /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B429512C7A0033250B /* TransactionsView.swift */; };
 		761837B729513ADE0033250B /* RadioPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B629513ADE0033250B /* RadioPicker.swift */; };
 		761837B929513E580033250B /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B829513E580033250B /* RadioButton.swift */; };
+		761837BB29514BA20033250B /* SegmentedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837BA29514BA20033250B /* SegmentedButton.swift */; };
 		7618FCC228164BB5007573B4 /* ModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */; };
 		7618FCC328164BB5007573B4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBD28164BB5007573B4 /* Home.swift */; };
 		7618FCC428164BB5007573B4 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBE28164BB5007573B4 /* Main.swift */; };
@@ -885,6 +886,7 @@
 		761837B429512C7A0033250B /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		761837B629513ADE0033250B /* RadioPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPicker.swift; sourceTree = "<group>"; };
 		761837B829513E580033250B /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		761837BA29514BA20033250B /* SegmentedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedButton.swift; sourceTree = "<group>"; };
 		7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleProtocol.swift; sourceTree = "<group>"; };
 		7618FCBD28164BB5007573B4 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		7618FCBE28164BB5007573B4 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
@@ -1451,15 +1453,16 @@
 				7618FCE128164C6B007573B4 /* Circular.swift */,
 				760300472838142700BBF78C /* CompactCell.swift */,
 				7618FCDF28164C6B007573B4 /* GradientTag.swift */,
-				76E6910129284FA5004F7E37 /* HorizontalScrollingSection.swift */,
 				765D15DF293EC2280021FEC7 /* HorizontalScroller.swift */,
+				76E6910129284FA5004F7E37 /* HorizontalScrollingSection.swift */,
 				7618FCDD28164C6B007573B4 /* Link.swift */,
 				7656250B284BE8C9004B6E4B /* MockData.swift */,
-				761837B2295117AE0033250B /* PickerButton.swift */,
 				761837AE294A88B80033250B /* PickerSheet.swift */,
 				760300312836805A00BBF78C /* Placeholder.swift */,
 				761837B829513E580033250B /* RadioButton.swift */,
 				761837B629513ADE0033250B /* RadioPicker.swift */,
+				761837B2295117AE0033250B /* PickerButton.swift */,
+				761837BA29514BA20033250B /* SegmentedButton.swift */,
 				7618FCD828164C6B007573B4 /* SharedUIModule.swift */,
 				7618FCDE28164C6B007573B4 /* SwiftUI+Common.swift */,
 				768B497C2903B81F0099911D /* TitleSection.swift */,
@@ -3221,6 +3224,7 @@
 				761837B929513E580033250B /* RadioButton.swift in Sources */,
 				7618FCE228164C6B007573B4 /* Link.swift in Sources */,
 				760300322836805A00BBF78C /* Placeholder.swift in Sources */,
+				761837BB29514BA20033250B /* SegmentedButton.swift in Sources */,
 				761837B729513ADE0033250B /* RadioPicker.swift in Sources */,
 				76D7D93C28568539009D53CF /* CellsSectionModel.swift in Sources */,
 				761837AF294A88B80033250B /* PickerSheet.swift in Sources */,

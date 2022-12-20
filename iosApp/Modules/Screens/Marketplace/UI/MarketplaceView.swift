@@ -16,12 +16,20 @@ struct MarketplaceView: View {
 			LazyVStack(spacing: 24) {
 				title
 				searchField
-				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory, RadioButtonType: RadioButton.self)
+				radioPicker
 				categorySubSection
 				filters
 				nftSongs
 			}
 		}
+	}
+	
+	@ViewBuilder
+	private var radioPicker: some View {
+		RadioPicker(options: viewModel.allCategories,
+					selectedOption: $viewModel.selectedCategory,
+					RadioButtonType: RadioButton.self,
+					gradient: [NEWMColor.orange, NEWMColor.orange1].hexStrings)
 	}
 	
 	@ViewBuilder
@@ -161,7 +169,3 @@ struct MarketplaceView_Previews: PreviewProvider {
 		.preferredColorScheme(.dark)
 	}
 }
-//
-//extension TitleSection {
-//	init(model: markettit)
-//}

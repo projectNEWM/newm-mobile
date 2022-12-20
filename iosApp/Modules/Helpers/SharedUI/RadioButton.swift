@@ -3,25 +3,22 @@ import Colors
 import Fonts
 
 public struct RadioButton<Option: Equatable & RadioOption>: View, RadioButtonProtocol {
-	public init(_ option: Option, selectedOption: Binding<Option?>) {
-		self.option = option
-		self._selectedOption = selectedOption
-	}
-	
 	let option: Option
 	@Binding var selectedOption: Option?
+	private let gradient: [String]
+	
+	public init(_ option: Option, selectedOption: Binding<Option?>, gradient: [String]) {
+		self.option = option
+		self._selectedOption = selectedOption
+		self.gradient = gradient
+	}
 	
 	public var body: some View {
 		Button(action: {
 			selectedOption = option
 		}) {
 			if selectedOption == option {
-				baseBody
-					.background(
-						LinearGradient(gradient: Gradient(colors: [NEWMColor.orange2(), NEWMColor.orange1()]),
-									   startPoint: .topLeading,
-									   endPoint: .bottomTrailing)
-					)
+				baseBody.background(gradient.gradient)
 			} else {
 				baseBody
 					.overlay(
@@ -46,14 +43,15 @@ public struct RadioButton<Option: Equatable & RadioOption>: View, RadioButtonPro
 	}
 }
 
-struct RadioPicker_Previews: PreviewProvider {
+struct RadioButton_Previews: PreviewProvider {
 	struct RadioPickerManager: View {
 		@State var option: String = "Option 1"
 		
 		var body: some View {
 			RadioPicker(options: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 6"],
 						selectedOption: $option,
-						RadioButtonType: RadioButton.self)
+						RadioButtonType: RadioButton.self,
+						gradient: [NEWMColor.orange.hexString, NEWMColor.orange1.hexString])
 		}
 	}
 	

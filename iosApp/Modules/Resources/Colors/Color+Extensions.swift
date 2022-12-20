@@ -50,7 +50,7 @@ public extension Array where Element == ColorAsset {
 	}
 }
 
-extension ColorAsset {
+public extension ColorAsset {
 	var hexString: String {
 		let components = color.cgColor.components
 		let r: CGFloat = components?[0] ?? 0.0
