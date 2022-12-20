@@ -5,7 +5,7 @@ import shared
 import Colors
 import Resolver
 
-struct PortfolioSection: View {
+struct PortfolioView: View {
 	let model: PortfolioSectionModel
 	
 	var body: some View {
@@ -17,7 +17,7 @@ struct PortfolioSection: View {
 	}
 }
 
-extension PortfolioSection {
+extension PortfolioView {
 	@ViewBuilder
 	private var pickerButton: some View {
 		PickerButton(label: model.pickerLabel)
@@ -64,7 +64,7 @@ extension PortfolioSection {
 
 struct PortfolioSection_Previews: PreviewProvider {
 	static var previews: some View {
-		PortfolioSection(model: Resolver.resolve(WalletViewModel.self).portfolioSection)
+		PortfolioView(model: Resolver.resolve(WalletViewModel.self).portfolioSection)
 			.preferredColorScheme(.dark)
 	}
 }

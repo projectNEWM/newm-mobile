@@ -53,7 +53,7 @@ extension WalletView {
 	
 	@ViewBuilder
 	private var portfolioSection: some View {
-		PortfolioSection(model: viewModel.portfolioSection)
+		PortfolioView(model: viewModel.portfolioSection)
 	}
 }
 

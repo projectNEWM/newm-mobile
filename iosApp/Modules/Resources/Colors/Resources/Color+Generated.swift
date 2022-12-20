@@ -27,6 +27,7 @@ public enum NEWMColor {
   public static let green = ColorAsset(name: "green")
   public static let green2 = ColorAsset(name: "green2")
   public static let grey100 = ColorAsset(name: "grey100")
+  public static let grey200 = ColorAsset(name: "grey200")
   public static let grey400 = ColorAsset(name: "grey400")
   public static let grey500 = ColorAsset(name: "grey500")
   public static let grey600 = ColorAsset(name: "grey600")

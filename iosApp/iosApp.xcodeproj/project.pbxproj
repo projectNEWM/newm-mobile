@@ -41,8 +41,9 @@
 		761837AB294A706F0033250B /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AA294A706F0033250B /* Artist.swift */; };
 		761837AD294A7A900033250B /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AC294A7A900033250B /* Currency.swift */; };
 		761837AF294A88B80033250B /* PickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AE294A88B80033250B /* PickerSheet.swift */; };
-		761837B1295116FC0033250B /* PortfolioSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B0295116FC0033250B /* PortfolioSection.swift */; };
+		761837B1295116FC0033250B /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B0295116FC0033250B /* PortfolioView.swift */; };
 		761837B3295117AE0033250B /* PickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B2295117AE0033250B /* PickerButton.swift */; };
+		761837B529512C7A0033250B /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B429512C7A0033250B /* TransactionsView.swift */; };
 		7618FCC228164BB5007573B4 /* ModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */; };
 		7618FCC328164BB5007573B4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBD28164BB5007573B4 /* Home.swift */; };
 		7618FCC428164BB5007573B4 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBE28164BB5007573B4 /* Main.swift */; };
@@ -878,8 +879,9 @@
 		761837AA294A706F0033250B /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		761837AC294A7A900033250B /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		761837AE294A88B80033250B /* PickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSheet.swift; sourceTree = "<group>"; };
-		761837B0295116FC0033250B /* PortfolioSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioSection.swift; sourceTree = "<group>"; };
+		761837B0295116FC0033250B /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
 		761837B2295117AE0033250B /* PickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerButton.swift; sourceTree = "<group>"; };
+		761837B429512C7A0033250B /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleProtocol.swift; sourceTree = "<group>"; };
 		7618FCBD28164BB5007573B4 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		7618FCBE28164BB5007573B4 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
@@ -1411,7 +1413,8 @@
 				7618FDDE28164E32007573B4 /* WalletView.swift */,
 				761837A4294A5FA60033250B /* WalletTitleSectionModel.swift */,
 				761837A6294A604F0033250B /* WalletViewModel.swift */,
-				761837B0295116FC0033250B /* PortfolioSection.swift */,
+				761837B0295116FC0033250B /* PortfolioView.swift */,
+				761837B429512C7A0033250B /* TransactionsView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3327,7 +3330,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				761837B1295116FC0033250B /* PortfolioSection.swift in Sources */,
+				761837B529512C7A0033250B /* TransactionsView.swift in Sources */,
+				761837B1295116FC0033250B /* PortfolioView.swift in Sources */,
 				7618FDE028164E32007573B4 /* WalletModule.swift in Sources */,
 				761837A7294A604F0033250B /* WalletViewModel.swift in Sources */,
 				7618FDDF28164E32007573B4 /* WalletView.swift in Sources */,
