@@ -14,6 +14,7 @@ public struct WalletView: View {
 			LazyVStack(spacing: 24) {
 				title
 				portfolioAndTransactionsSection
+				footerView
 			}
 		}
 	}
@@ -71,6 +72,16 @@ extension WalletView {
 			}
 		}
 		.padding(.top)
+	}
+	
+	@ViewBuilder
+	private var footerView: some View {
+		VStack {
+			Text("You're all caught up. 🎉")
+				.padding()
+				.font(.inter(ofSize: 14))
+				.foregroundColor(NEWMColor.grey100.swiftUIColor)
+		}
 	}
 }
 
