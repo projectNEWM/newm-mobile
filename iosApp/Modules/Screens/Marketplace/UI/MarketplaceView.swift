@@ -16,7 +16,7 @@ struct MarketplaceView: View {
 			LazyVStack(spacing: 24) {
 				title
 				searchField
-				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory)
+				RadioPicker(options: viewModel.allCategories, selectedOption: $viewModel.selectedCategory, RadioButtonType: RadioButton.self)
 				categorySubSection
 				filters
 				nftSongs
