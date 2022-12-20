@@ -13,7 +13,7 @@ android {
     namespace = "io.newm"
     testNamespace = "io.newm.test"
     defaultConfig {
-        applicationId = "io.projectnewm"
+        applicationId = "io.newm"
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk
         versionCode = 1
