@@ -26,7 +26,7 @@ jobs:
           java-version: '11'
 
       - name: create google-services.json
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-project-newm/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2

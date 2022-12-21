@@ -11,6 +11,7 @@ plugins {
 android {
     compileSdk = Versions.androidCompileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    namespace = "io.newm.shared"
     defaultConfig {
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk
@@ -20,7 +21,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    namespace = "io.newm.common"
 }
 
 kotlin {
@@ -104,7 +104,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 sqldelight {
     database("NewmDatabase") {
-        packageName = "io.newm.common.db"
-        sourceFolders = listOf("sqldelight")
+        packageName = "io.newm.shared.db.cache"
+//        sourceFolders = listOf("sqldelight")
     }
 }

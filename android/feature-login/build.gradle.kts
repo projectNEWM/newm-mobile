@@ -6,6 +6,8 @@ plugins {
 android {
     compileSdk = Versions.androidCompileSdk
 
+    namespace = "io.newm.feature.login"
+
     defaultConfig {
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk
