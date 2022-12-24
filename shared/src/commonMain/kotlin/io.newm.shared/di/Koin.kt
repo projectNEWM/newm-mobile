@@ -3,8 +3,10 @@ package io.newm.shared.di
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
+import io.newm.shared.HttpRoutes
 import io.newm.shared.login.UserSession
 import io.newm.shared.login.UserSessionImpl
 import kotlinx.coroutines.CoroutineScope
@@ -49,6 +51,9 @@ fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }
 
 fun createHttpClient(json: Json, enableNetworkLogs: Boolean) =
     HttpClient(CIO) {
+        defaultRequest {
+            url(HttpRoutes.HOST)
+        }
         install(ContentNegotiation) {
             json(json)
         }
