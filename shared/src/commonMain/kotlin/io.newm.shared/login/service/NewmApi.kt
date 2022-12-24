@@ -4,24 +4,22 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.newm.shared.HttpRoutes
 import io.newm.shared.login.models.*
 import org.koin.core.component.KoinComponent
 
 
 internal class NewmApi(
-    private val client: HttpClient,
-    var baseUrl: String = HttpRoutes.HOST,
+    private val client: HttpClient
 ) : KoinComponent {
 
     suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
-        val response = client.get("$baseUrl/v1/auth/code") {
+        val response = client.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
             parameter("email", email)
         }
 
-        return when (response.status.value) {
-            204 -> {
+        return when (response.status) {
+            HttpStatusCode.NoContent -> {
                 RequestEmailStatus.Success
             }
             else -> {
@@ -31,18 +29,18 @@ internal class NewmApi(
     }
 
     suspend fun register(user: NewUser): RegisterStatus {
-        val response = client.put("$baseUrl/v1/users") {
+        val response = client.put("/v1/users") {
             contentType(ContentType.Application.Json)
             setBody(user)
         }
-        return when (response.status.value) {
-            204 -> {
+        return when (response.status) {
+            HttpStatusCode.NoContent -> {
                 RegisterStatus.Success
             }
-            409 -> {
+            HttpStatusCode.Conflict -> {
                 RegisterStatus.UserAlreadyExists
             }
-            403 -> {
+            HttpStatusCode.Forbidden -> {
                 RegisterStatus.TwoFactorAuthenticationFailed
             }
             else -> {
@@ -51,7 +49,7 @@ internal class NewmApi(
         }
     }
 
-    suspend fun logIn(user: LogInUser) = client.post("$baseUrl/v1/auth/login") {
+    suspend fun logIn(user: LogInUser) = client.post("/v1/auth/login") {
         contentType(ContentType.Application.Json)
         setBody(user)
     }.body<LoginResponse>()
