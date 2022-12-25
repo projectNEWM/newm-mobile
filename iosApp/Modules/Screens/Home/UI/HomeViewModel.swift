@@ -43,7 +43,3 @@ extension HomeViewModel: HomeViewActionHandling {
 		audioPlayer.playbackInfo.isPlaying = true
 	}
 }
-
-extension ThisWeekCellModel: Identifiable {
-	var id: String { labelText }
-}

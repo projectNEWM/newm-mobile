@@ -22,13 +22,6 @@ struct HomeViewUIModel {
 	let discoverTitle: String
 }
 
-struct ThisWeekSectionModel {
-	let title: String
-	let newFollowers: Int
-	let royalties: Float
-	let earnings: Float
-}
-
 protocol HomeViewUIModelProviding {
 	func getModel() async throws -> HomeViewUIModel
 }

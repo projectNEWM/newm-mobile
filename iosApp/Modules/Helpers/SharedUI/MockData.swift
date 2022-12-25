@@ -112,6 +112,14 @@ public class MockData {
 		do { try pngData?.write(to: imageURL) } catch { }
 		return imageURL.absoluteString
 	}
+	
+	public static var thisWeekCells: [ThisWeekCellModel] {
+		[
+			ThisWeekCellModel(iconImage: Asset.Media.royaltiesIcon, amountText: "$42.39", labelText: "ROYALTIES THIS WEEK"),
+			ThisWeekCellModel(iconImage: Asset.Media.earningsIcon, amountText: "+24.34%", labelText: "EARNINGS THIS WEEK"),
+			ThisWeekCellModel(iconImage: Asset.Media.heartIcon, amountText: "+30", labelText: "FOLLOWERS THIS WEEK")
+		]
+	}
 }
 
 extension Asset.MockAssets {

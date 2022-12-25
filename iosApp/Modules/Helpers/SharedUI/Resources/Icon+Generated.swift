@@ -23,6 +23,8 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
   public enum Media {
+    public static let earningsIcon = ImageAsset(name: "EarningsIcon")
+    public static let heartIcon = ImageAsset(name: "HeartIcon")
     public enum PlayerIcons {
       public static let heartAdd = ImageAsset(name: "heart-add")
       public static let heartAddHighlighted = ImageAsset(name: "heart-add_highlighted")
@@ -43,6 +45,7 @@ public enum Asset {
       public static let shuffle = ImageAsset(name: "shuffle")
       public static let shuffleSelected = ImageAsset(name: "shuffle_selected")
     }
+    public static let royaltiesIcon = ImageAsset(name: "RoyaltiesIcon")
     public static let arrowSmallDown = ImageAsset(name: "arrow-small-down")
     public static let backArrow = ImageAsset(name: "back-arrow")
     public static let checkmark = ImageAsset(name: "checkmark")

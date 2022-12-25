@@ -1,9 +1,8 @@
 import SwiftUI
 import Fonts
 import Colors
-import SharedUI
 
-struct ThisWeekCell: View {
+public struct ThisWeekCell: View {
 	private let iconSize: CGFloat = 32
 	
 	private let model: ThisWeekCellModel
@@ -12,7 +11,7 @@ struct ThisWeekCell: View {
 		self.model = model
 	}
 	
-	var body: some View {
+	public var body: some View {
 		VStack(alignment: .leading) {
 			icon
 			amount
@@ -22,9 +21,11 @@ struct ThisWeekCell: View {
 		.background(NEWMColor.grey600())
 		.cornerRadius(8)
 	}
-	
+}
+
+extension ThisWeekCell {
 	private var icon: some View {
-		model.iconImage.image
+		model.iconImage.swiftUIImage
 			.frame(width: iconSize, height: iconSize)
 			.cornerRadius(4)
 	}
@@ -44,7 +45,7 @@ struct ThisWeekCell: View {
 
 struct ThisWeekCell_Previews: PreviewProvider {
 	static var previews: some View {
-		ThisWeekCell(ThisWeekCellModel(iconImage: .heart, amountText: "+56", labelText: "Followers this week"))
+		ThisWeekCell(ThisWeekCellModel(iconImage: Asset.Media.heartIcon, amountText: "+56", labelText: "Followers"))
 			.preferredColorScheme(.dark)
 	}
 }

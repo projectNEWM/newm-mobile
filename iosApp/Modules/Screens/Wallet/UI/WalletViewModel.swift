@@ -54,13 +54,15 @@ class WalletViewModel: ObservableObject {
 	let gradient = Gradients.walletGradient
 	let portfolioSection: PortfolioSectionModel
 	let transactionsSection: TransactionsSectionModel
+	let thisWeekSection: ThisWeekSectionModel
 	static let transactionTitle: String = "TRANSACTIONS"
 	static let portfolioTitle: String = "PORTFOLIO"
 	
-	init(selectedCurrency: Currency = Currency.allCases.first!, currencyPicker: WalletViewModel.CurrencyPicker, portfolioSection: PortfolioSectionModel, transactionsSection: TransactionsSectionModel) {
+	init(selectedCurrency: Currency = Currency.allCases.first!, currencyPicker: WalletViewModel.CurrencyPicker, portfolioSection: PortfolioSectionModel, transactionsSection: TransactionsSectionModel, thisWeekSection: ThisWeekSectionModel) {
 		self.selectedCurrency = selectedCurrency
 		self.currencyPicker = currencyPicker
 		self.portfolioSection = portfolioSection
 		self.transactionsSection = transactionsSection
+		self.thisWeekSection = thisWeekSection
 	}
 }

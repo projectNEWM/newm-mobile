@@ -1,5 +1,6 @@
 import SwiftUI
 import Colors
+import Fonts
 
 public struct SegmentedButton<Option: RadioOption>: View, RadioButtonProtocol {
 	let option: Option
@@ -15,8 +16,11 @@ public struct SegmentedButton<Option: RadioOption>: View, RadioButtonProtocol {
 	public var body: some View {
 		VStack {
 			Text(option.description)
+				.font(.inter(ofSize: 13).weight(.medium))
+				.padding(.bottom, 8)
 			gradient.gradient.frame(height: 2)
 		}
+		.foregroundStyle(gradient.gradient)
 		.onTapGesture {
 			selectedOption = option
 		}
@@ -72,6 +76,7 @@ struct SegmentedRadioPicker_Previews: PreviewProvider {
 	static var previews: some View {
 		Group {
 			SegmentedRadioPickerManager<SegmentedButton>()
+				.frame(width: 200)
 		}
 		.preferredColorScheme(.dark)
 	}

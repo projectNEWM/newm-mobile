@@ -73,7 +73,7 @@ extension WalletModule {
 									]
 								  ]
 								 ).map(TransactionsSectionModel.Section.init)
-				)
+				), thisWeekSection: ThisWeekSectionModel(title: "THIS WEEK IN REVIEW", cells: MockData.thisWeekCells)
 			)
 		}
 	}

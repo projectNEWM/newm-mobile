@@ -13,6 +13,7 @@ public struct WalletView: View {
 		ScrollView {
 			LazyVStack(spacing: 24) {
 				title
+				thisWeek
 				portfolioAndTransactionsSection
 				footerView
 			}
@@ -30,6 +31,11 @@ extension WalletView {
 			currencyPicker
 		}
 		.addSidePadding()
+	}
+	
+	@ViewBuilder
+	private var thisWeek: some View {
+		ThisWeekSection(viewModel.thisWeekSection)
 	}
 	
 	@ViewBuilder
