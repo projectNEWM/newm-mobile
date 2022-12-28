@@ -58,6 +58,7 @@
 ## 📖 Getting Started
 
 <p> Clone the repo, open in Android Studio or XCode and get to building! You will need to setup your own firebase instance and apply your google-services.json file to get things working. <p> You will also need to install <a href="https://github.com/SwiftGen/SwiftGen"><strong>SwiftGen</strong></a>.<p> Reach out to the team with any questions.<p>
+<p> NOTE: You may have trouble building the project if you're on a VPN.<p>
 
 <!-- ROADMAP -->
 
