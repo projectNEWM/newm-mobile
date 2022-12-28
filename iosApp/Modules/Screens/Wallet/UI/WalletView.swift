@@ -13,6 +13,7 @@ public struct WalletView: View {
 		ScrollView {
 			LazyVStack(spacing: 24) {
 				title
+				yourfunds
 				thisWeek
 				portfolioAndTransactionsSection
 				footerView
@@ -36,6 +37,11 @@ extension WalletView {
 	@ViewBuilder
 	private var thisWeek: some View {
 		ThisWeekSection(viewModel.thisWeekSection)
+	}
+	
+	@ViewBuilder
+	private var yourfunds: some View {
+		YourFundsSection(model: viewModel.yourFundsSection)
 	}
 	
 	@ViewBuilder
@@ -94,6 +100,38 @@ extension WalletView {
 extension Currency: CustomStringConvertible {
 	public var description: String {
 		"\(symbol) - \(title)"
+	}
+}
+
+struct YourFundsSection: View {
+	let model: YourFundsSectionModel
+	
+	var body: some View {
+		HStack {
+			VStack(alignment: .leading) {
+				Text(model.title)
+					.font(.inter(ofSize: 12))
+					.foregroundColor(NEWMColor.grey100.swiftUIColor)
+				Text(model.funds)
+					.font(.inter(ofSize: 45).weight(.black))
+				HStack(spacing: 16) {
+					button(model.sendTitle)
+					button(model.receiveTitle)
+				}
+				.foregroundColor(.white)
+			}
+			Spacer()
+		}
+		.addSidePadding()
+		.padding(.bottom)
+	}
+	
+	private func button(_ title: String) -> some View {
+		Button(title) { }
+			.padding([.leading, .trailing], 15)
+			.padding([.top, .bottom], 10)
+			.borderOverlay(color: .white, radius: 5, width: 2)
+			.font(.interMedium(ofSize: 12))
 	}
 }
 

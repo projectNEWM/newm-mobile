@@ -42,6 +42,13 @@ struct TransactionsSectionModel {
 	let sections: [Section]
 }
 
+struct YourFundsSectionModel {
+	let title = "YOUR FUNDS"
+	let funds = "$1,140.03"
+	let sendTitle = "Send"
+	let receiveTitle = "Receive"
+}
+
 class WalletViewModel: ObservableObject {
 	struct CurrencyPicker {
 		let title: String
@@ -57,12 +64,14 @@ class WalletViewModel: ObservableObject {
 	let thisWeekSection: ThisWeekSectionModel
 	static let transactionTitle: String = "TRANSACTIONS"
 	static let portfolioTitle: String = "PORTFOLIO"
+	let yourFundsSection: YourFundsSectionModel
 	
-	init(selectedCurrency: Currency = Currency.allCases.first!, currencyPicker: WalletViewModel.CurrencyPicker, portfolioSection: PortfolioSectionModel, transactionsSection: TransactionsSectionModel, thisWeekSection: ThisWeekSectionModel) {
+	init(selectedCurrency: Currency = Currency.allCases.first!, currencyPicker: WalletViewModel.CurrencyPicker, portfolioSection: PortfolioSectionModel, transactionsSection: TransactionsSectionModel, thisWeekSection: ThisWeekSectionModel, yourFundsSection: YourFundsSectionModel) {
 		self.selectedCurrency = selectedCurrency
 		self.currencyPicker = currencyPicker
 		self.portfolioSection = portfolioSection
 		self.transactionsSection = transactionsSection
 		self.thisWeekSection = thisWeekSection
+		self.yourFundsSection = yourFundsSection
 	}
 }
