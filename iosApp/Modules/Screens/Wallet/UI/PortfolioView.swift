@@ -4,9 +4,11 @@ import Fonts
 import shared
 import Colors
 import Resolver
+import AudioPlayer
 
 struct PortfolioView: View {
 	let model: PortfolioSectionModel
+	@InjectedObject private var audioPlayer: AudioPlayerImpl
 	
 	var body: some View {
 		LazyVStack(alignment: .trailing) {
@@ -28,16 +30,16 @@ extension PortfolioView {
 	@ViewBuilder
 	private var header: some View {
 		HStack {
-			Text(model.songHeaderTitle).font(.inter(ofSize: 14).weight(.semibold))
+			Text(model.songHeaderTitle).font(.inter(ofSize: 12).weight(.semibold))
 			Spacer()
-			Text(model.royaltyTitle).font(.inter(ofSize: 14).bold())
+			Text(model.royaltyTitle).font(.inter(ofSize: 12).bold())
 		}
 		.padding([.leading, .trailing], sidePadding/2)
 	}
 	
 	@ViewBuilder
 	private var songCells: some View {
-		LazyVStack {
+		LazyVStack(spacing: 0) {
 			ForEach(model.cells.indices) { index in
 				cell(index: index, model.cells[index])
 			}
@@ -59,8 +61,12 @@ extension PortfolioView {
 				.padding(.trailing, sidePadding/2)
 		}
 		.font(.inter(ofSize: 12).weight(.medium))
-		.padding([.top, .bottom], 8)
-		.background(index % 2 == 0 ? NEWMColor.grey600.swiftUIColor : .black)
+		.padding([.top, .bottom], 12)
+		.background(index % 2 == 0 ? NEWMColor.grey700.swiftUIColor : .black)
+		.onTapGesture {
+			audioPlayer.song = MockData.song(withID: model.id)
+			audioPlayer.playbackInfo.isPlaying = true
+		}
 	}
 }
 

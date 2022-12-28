@@ -32,7 +32,7 @@ extension WalletModule {
 					cells:
 						MockData.songs.prefix(10)
 						.map {
-							("\(MockData.songs.firstIndex(of: $0)!)", URL(string: $0.image)!, $0.title, "$2.34")
+							($0.title, URL(string: $0.image)!, $0.title, "$\(Int(arc4random_uniform(10))).\(Int(arc4random_uniform(10)))\(Int(arc4random_uniform(10)))")
 						}
 						.map(PortfolioSectionModel.Cell.init)
 				), transactionsSection: TransactionsSectionModel(

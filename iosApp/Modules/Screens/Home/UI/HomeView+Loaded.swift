@@ -59,6 +59,7 @@ extension HomeView {
 			HorizontalStackSection(uiModel.justReleasedSection, content: BigCell.init)
 		}
 		
+		@ViewBuilder
 		private var titleSection: some View {
 			TitleSection(isGreeting: shouldShowGreeting,
 						 title: shouldShowGreeting ? uiModel.greeting.title : uiModel.title.title,
