@@ -11,6 +11,8 @@ extension HomeView {
 		@Binding private var route: HomeRoute?
 		private let uiModel: HomeViewUIModel
 		
+		@State private var greetingTimer: Timer?
+		
 		init(uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.uiModel = uiModel
 			self._route = route
@@ -29,9 +31,8 @@ extension HomeView {
 				}
 			}
 			.onAppear {
-				//TODO: THIS ANIMATION ISN'T WORKING
-				withAnimation {
-					DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+				greetingTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
+					withAnimation {
 						shouldShowGreeting = false
 					}
 				}

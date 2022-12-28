@@ -29,7 +29,6 @@ public class AudioPlayerImpl: AudioPlayer {
 			NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: audioPlayer.currentItem, queue: nil) { [weak audioPlayer, weak self] _ in
 				audioPlayer?.seek(to: .zero)
 				self?.playbackInfo.isPlaying = false
-				self?.song = nil
 			}
 			audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: 1), queue: DispatchQueue.main) { @MainActor [weak self] time in
 				guard let self = self else { return }

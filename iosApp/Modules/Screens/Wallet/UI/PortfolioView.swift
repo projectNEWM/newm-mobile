@@ -58,7 +58,7 @@ extension PortfolioView {
 			Text(model.title)
 			Spacer()
 			Text(model.price)
-				.padding(.trailing, sidePadding/2)
+				.padding(.trailing, sidePadding)
 		}
 		.font(.inter(ofSize: 12).weight(.medium))
 		.padding([.top, .bottom], 12)

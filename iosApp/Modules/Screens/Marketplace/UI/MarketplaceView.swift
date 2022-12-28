@@ -4,6 +4,7 @@ import Resolver
 import Colors
 import ModuleLinker
 import shared
+import AudioPlayer
 
 struct MarketplaceView: View {
 	@InjectedObject private var viewModel: MarketplaceViewModel
@@ -29,7 +30,7 @@ struct MarketplaceView: View {
 		RadioPicker(options: viewModel.allCategories,
 					selectedOption: $viewModel.selectedCategory,
 					RadioButtonType: RadioButton.self,
-					gradient: [NEWMColor.orange, NEWMColor.orange1].hexStrings)
+					gradient: Gradients.marketplaceGradient)
 	}
 	
 	@ViewBuilder
@@ -119,7 +120,7 @@ struct MarketplaceView: View {
 	@ViewBuilder
 	private var nftSongs: some View {
 		LazyVStack {
-			ForEach(viewModel.nftSongs, content: NFTCell.init)
+			ForEach(viewModel.nftSongs, id: \.song.id, content: NFTCell.init)
 		}
 		.addSidePadding()
 	}
@@ -158,6 +159,48 @@ extension MarketplaceView {
 	}
 }
 
+struct NFTCell: View {
+	@InjectedObject private var audioPlayer: AudioPlayerImpl
+	let model: NFTCellModel
+	
+	var body: some View {
+		HStack {
+			Group {
+				if audioPlayer.song == model.song {
+					Image(systemName: "pause.fill")
+				} else {
+					Image(systemName: "play.fill")
+				}
+			}
+			.frame(width: 15)
+			.padding(.trailing, 6)
+			.fixedSize()
+			
+			HStack {
+				AsyncImage(url: URL(string: model.song.image)) { image in
+					image.circleImage(size: 24)
+				} placeholder: {
+					Image.placeholder.circleImage(size: 24)
+				}
+				
+				Text(model.song.title)
+				Spacer()
+				//TODO: fix
+				Text(model.value)
+			}
+			.font(.inter(ofSize: 12))
+			.padding(8)
+			.background(NEWMColor.grey600())
+			.cornerRadius(6)
+		}
+		.onTapGesture {
+			audioPlayer.song = model.song
+			audioPlayer.playbackInfo.isPlaying = true
+		}
+		.frame(height: 40)
+	}
+}
+
 struct MarketplaceView_Previews: PreviewProvider {
 	static var previews: some View {
 		Group {
@@ -165,6 +208,12 @@ struct MarketplaceView_Previews: PreviewProvider {
 			ArtistCell(model: ArtistCellModel(artist: MockData.artists.first!)).border(.white)
 				.frame(width: 200)
 				.fixedSize()
+			NFTCell(
+				model: NFTCellModel(
+					song: MockData.songs.first!,
+					value: "Ɲ\(Int.random09).\(Int.random09)\(Int.random09)"
+				)
+			)
 		}
 		.preferredColorScheme(.dark)
 	}
