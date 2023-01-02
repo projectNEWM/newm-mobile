@@ -31,6 +31,7 @@ public struct MainView: View {
 				.overlay {
 					miniPlayerView
 						.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
+						
 				}
 		}
 	}
@@ -64,11 +65,8 @@ public struct MainView: View {
 }
 
 struct MainView_Previews: PreviewProvider {
-	@InjectedObject static private var audioPlayer: AudioPlayerImpl
-	
 	static var previews: some View {
-		audioPlayer.song = MockData.songs.first!
-		return MainView()
+		MainView()
 	}
 }
 

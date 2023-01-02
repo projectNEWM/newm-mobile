@@ -25,7 +25,7 @@ public struct RadioPicker<Option, RadioButtonType: RadioButtonProtocol>: View wh
 	
 	public var body: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
-			HStack(alignment: .center, spacing: 16) {
+			HStack(alignment: .center, spacing: 8) {
 				ForEach(options, id: \.self) { option in
 					RadioButtonType(option, selectedOption: Binding<Option?>($selectedOption), gradient: selectedOption == option ? gradient : [NEWMColor.grey400.hexString])
 				}
