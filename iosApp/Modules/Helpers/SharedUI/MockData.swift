@@ -78,7 +78,7 @@ public class MockData {
 		makeSong(title: "Everytime I See Me"),
 		makeSong(title: "When It's Nighttime"),
 		makeSong(title: "For The First Time, For The Last Time"),
-		makeSong(title: "Bloodfart"),
+		makeSong(title: "Blooddart"),
 		makeSong(title: "Futures of My Past Are Now My Present"),
 		makeSong(title: "Into the Realm Of Possibilities"),
 		makeSong(title: "Finite Resources"),
@@ -111,6 +111,14 @@ public class MockData {
 		let pngData = testImage.image.pngData()
 		do { try pngData?.write(to: imageURL) } catch { }
 		return imageURL.absoluteString
+	}
+	
+	public static var thisWeekCells: [ThisWeekCellModel] {
+		[
+			ThisWeekCellModel(iconImage: Asset.Media.royaltiesIcon, amountText: "$42.39", labelText: "Royalties this week"),
+			ThisWeekCellModel(iconImage: Asset.Media.earningsIcon, amountText: "+24.34%", labelText: "Earnings this week"),
+			ThisWeekCellModel(iconImage: Asset.Media.heartIcon, amountText: "+30", labelText: "Followers this week")
+		]
 	}
 }
 

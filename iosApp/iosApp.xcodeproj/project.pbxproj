@@ -34,6 +34,25 @@
 		7614169F2816627E006A9665 /* TipsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7614169E2816627E006A9665 /* TipsModule.swift */; };
 		7615B3292909A394008FC5A6 /* Icon+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7615B3282909A394008FC5A6 /* Icon+Generated.swift */; };
 		7615B32C2909A3B6008FC5A6 /* Color+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7615B32A2909A3A3008FC5A6 /* Color+Generated.swift */; };
+		761837A229479F7E0033250B /* MarketplaceTitleSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837A129479F7E0033250B /* MarketplaceTitleSectionModel.swift */; };
+		761837A5294A5FA60033250B /* WalletTitleSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837A4294A5FA60033250B /* WalletTitleSectionModel.swift */; };
+		761837A7294A604F0033250B /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837A6294A604F0033250B /* WalletViewModel.swift */; };
+		761837A9294A6C130033250B /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837A8294A6C130033250B /* Color+Extensions.swift */; };
+		761837AB294A706F0033250B /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AA294A706F0033250B /* Artist.swift */; };
+		761837AD294A7A900033250B /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AC294A7A900033250B /* Currency.swift */; };
+		761837AF294A88B80033250B /* PickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837AE294A88B80033250B /* PickerSheet.swift */; };
+		761837B1295116FC0033250B /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B0295116FC0033250B /* PortfolioView.swift */; };
+		761837B3295117AE0033250B /* PickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B2295117AE0033250B /* PickerButton.swift */; };
+		761837B529512C7A0033250B /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B429512C7A0033250B /* TransactionsView.swift */; };
+		761837B729513ADE0033250B /* RadioPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B629513ADE0033250B /* RadioPicker.swift */; };
+		761837B929513E580033250B /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837B829513E580033250B /* RadioButton.swift */; };
+		761837BB29514BA20033250B /* SegmentedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837BA29514BA20033250B /* SegmentedButton.swift */; };
+		761837BE29527F160033250B /* ThisWeekSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF72856484400F18779 /* ThisWeekSection.swift */; };
+		761837BF29527FA20033250B /* ThisWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FE72856321400F18779 /* ThisWeekCell.swift */; };
+		761837C029527FA20033250B /* ThisWeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF42856459B00F18779 /* ThisWeekCellModel.swift */; };
+		761837C32957EA540033250B /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761837C22957EA540033250B /* StickyHeader.swift */; };
+		761837C5295819CB0033250B /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
+		761837C6295819CB0033250B /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7618FCC228164BB5007573B4 /* ModuleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */; };
 		7618FCC328164BB5007573B4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBD28164BB5007573B4 /* Home.swift */; };
 		7618FCC428164BB5007573B4 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCBE28164BB5007573B4 /* Main.swift */; };
@@ -87,7 +106,6 @@
 		7618FE0B28164E72007573B4 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		7618FE1A28164E7F007573B4 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		7618FE1F28164E83007573B4 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
-		7625CE2D294081760033C669 /* NFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625CE2C294081760033C669 /* NFTCell.swift */; };
 		7625CE2F294088110033C669 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625CE2E294088110033C669 /* ArtistCell.swift */; };
 		7625CE31294089990033C669 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		7625CE32294089990033C669 /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -98,12 +116,6 @@
 		7625D1532942B0740033C669 /* LibraryRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoute.swift */; };
 		7625D1552942B0A50033C669 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 7625D1542942B0A50033C669 /* SwiftUINavigation */; };
 		7625D1572942B0C60033C669 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 7625D1562942B0C60033C669 /* CasePaths */; };
-		7627EAB627FA892A00C0F7DA /* Home.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAB427FA892A00C0F7DA /* Home.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7627EABE27FA893D00C0F7DA /* Artist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAB727FA893D00C0F7DA /* Artist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7627EAC227FA893D00C0F7DA /* Login.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EAB927FA893D00C0F7DA /* Login.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7627EAC527FA893D00C0F7DA /* PlaylistList.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EABA27FA893D00C0F7DA /* PlaylistList.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7627EAC927FA893E00C0F7DA /* Tips.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EABB27FA893D00C0F7DA /* Tips.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7627EACB27FA893E00C0F7DA /* Wallet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627EABC27FA893D00C0F7DA /* Wallet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7628EBD527E551D60077ECFD /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628EBD427E551D60077ECFD /* iosAppTests.swift */; };
 		76325CCB28A128CC003836C7 /* LoginRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76325CCA28A128CC003836C7 /* LoginRoutes.swift */; };
 		76325CD128A12A2A003836C7 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76325CD028A12A2A003836C7 /* CreateAccountView.swift */; };
@@ -166,14 +178,12 @@
 		766E8FDC28562FCF00F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; };
 		766E8FDF28562FD600F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FE328562FDC00F18779 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
-		766E8FE82856321400F18779 /* ThisWeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FE72856321400F18779 /* ThisWeekCell.swift */; };
 		766E8FEF285636EE00F18779 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 766E8FEE285636EE00F18779 /* Media.xcassets */; };
-		766E8FF12856371B00F18779 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF02856371B00F18779 /* Media.swift */; };
 		766E8FF32856418A00F18779 /* HomeViewUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF22856418A00F18779 /* HomeViewUIModel.swift */; };
-		766E8FF52856459B00F18779 /* ThisWeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF42856459B00F18779 /* ThisWeekCellModel.swift */; };
-		766E8FF82856484400F18779 /* ThisWeekSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF72856484400F18779 /* ThisWeekSection.swift */; };
 		7670042B28275B5700ED72D8 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 7670042A28275B5700ED72D8 /* SwiftUINavigation */; };
 		7670043328279F4D00ED72D8 /* Artist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD5E28164D99007573B4 /* Artist.framework */; };
+		7673F26429582BE200B65F1A /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
+		7673F26529582BE200B65F1A /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76764AE2281A19720095BEF9 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76764AE1281A19720095BEF9 /* MockData.swift */; };
 		76764AE7281A28C60095BEF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7618FD2A28164CD5007573B4 /* Assets.xcassets */; };
 		76764AEB281A2DBC0095BEF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76D01D9628164B0400305605 /* Assets.xcassets */; };
@@ -212,7 +222,6 @@
 		76ADDCE728980F61008AA39A /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */; };
 		76ADDCE828980F61008AA39A /* Home.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D3F28164A8400305605 /* Home.framework */; platformFilter = ios; };
 		76B21D09293F055D003692F7 /* Marketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765D1602293EF2050021FEC7 /* Marketplace.swift */; };
-		76B21D0B293F0F26003692F7 /* RadioPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B21D0A293F0F26003692F7 /* RadioPicker.swift */; };
 		76B21D0C293F1C9E003692F7 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627328B28295909009D3C8A /* shared.xcframework */; };
 		76B21D0D293F1C9E003692F7 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7627328B28295909009D3C8A /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76B21D10293F22E2003692F7 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B21D0F293F22E2003692F7 /* SongCell.swift */; };
@@ -328,6 +337,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7618FD1628164CBD007573B4;
 			remoteInfo = Colors;
+		};
+		761837C7295819CC0033250B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76C76131291F445B0054D2F3;
+			remoteInfo = AudioPlayer;
 		};
 		7618FCD128164C5C007573B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -553,20 +569,6 @@
 			remoteGlobalIDString = 7618FD1628164CBD007573B4;
 			remoteInfo = Colors;
 		};
-		766E8FB128562ECE00F18779 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7555FF73242A565900829871 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7618FD3028164CE2007573B4;
-			remoteInfo = Fonts;
-		};
-		766E8FB428562ED200F18779 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7555FF73242A565900829871 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7618FD1628164CBD007573B4;
-			remoteInfo = Colors;
-		};
 		766E8FBA28562F2900F18779 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -630,13 +632,6 @@
 			remoteGlobalIDString = 7618FD1628164CBD007573B4;
 			remoteInfo = Colors;
 		};
-		766E8FDD28562FCF00F18779 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7555FF73242A565900829871 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7618FD3028164CE2007573B4;
-			remoteInfo = Fonts;
-		};
 		766E8FE128562FD600F18779 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -657,6 +652,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7618FD5D28164D99007573B4;
 			remoteInfo = Artist;
+		};
+		7673F26629582BE200B65F1A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76C76131291F445B0054D2F3;
+			remoteInfo = AudioPlayer;
 		};
 		7683128F27A38F480056BC6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -808,17 +810,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		761837C9295819CC0033250B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				761837C6295819CB0033250B /* AudioPlayer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7627EACB27FA893E00C0F7DA /* Wallet.framework in Embed Frameworks */,
-				7627EAC527FA893D00C0F7DA /* PlaylistList.framework in Embed Frameworks */,
 				765D15FB293EF1410021FEC7 /* Marketplace.framework in Embed Frameworks */,
 				7618FD6528164D99007573B4 /* Artist.framework in Embed Frameworks */,
-				7627EAB627FA892A00C0F7DA /* Home.framework in Embed Frameworks */,
 				767C42A428BECC0800EDE63E /* shared.xcframework in Embed Frameworks */,
 				7618FCD428164C5C007573B4 /* SharedUI.framework in Embed Frameworks */,
 				7618FDB828164DCD007573B4 /* Wallet.framework in Embed Frameworks */,
@@ -826,18 +836,26 @@
 				7618FD9828164DBB007573B4 /* NowPlaying.framework in Embed Frameworks */,
 				7618FD7828164DA2007573B4 /* Login.framework in Embed Frameworks */,
 				7656251B284BEF30004B6E4B /* Library.framework in Embed Frameworks */,
-				7627EAC927FA893E00C0F7DA /* Tips.framework in Embed Frameworks */,
 				7618FDA828164DC6007573B4 /* Tips.framework in Embed Frameworks */,
 				7618FD3828164CE2007573B4 /* Fonts.framework in Embed Frameworks */,
-				7627EAC227FA893D00C0F7DA /* Login.framework in Embed Frameworks */,
 				7618FD1E28164CBD007573B4 /* Colors.framework in Embed Frameworks */,
-				7627EABE27FA893D00C0F7DA /* Artist.framework in Embed Frameworks */,
 				7618FCF528164C86007573B4 /* TabBar.framework in Embed Frameworks */,
 				76D01DA528164B2100305605 /* ModuleLinker.framework in Embed Frameworks */,
 				76ADDBB128869FF3008AA39A /* Auth.framework in Embed Frameworks */,
 				76D01D4628164A8400305605 /* Home.framework in Embed Frameworks */,
 				7618FD8828164DAB007573B4 /* PlaylistList.framework in Embed Frameworks */,
 				76D01D8028164AE700305605 /* Main.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7673F26829582BE200B65F1A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7673F26529582BE200B65F1A /* AudioPlayer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -874,6 +892,20 @@
 		7614169E2816627E006A9665 /* TipsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsModule.swift; sourceTree = "<group>"; };
 		7615B3282909A394008FC5A6 /* Icon+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Icon+Generated.swift"; sourceTree = "<group>"; };
 		7615B32A2909A3A3008FC5A6 /* Color+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Generated.swift"; sourceTree = "<group>"; };
+		761837A129479F7E0033250B /* MarketplaceTitleSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceTitleSectionModel.swift; sourceTree = "<group>"; };
+		761837A4294A5FA60033250B /* WalletTitleSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTitleSectionModel.swift; sourceTree = "<group>"; };
+		761837A6294A604F0033250B /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
+		761837A8294A6C130033250B /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		761837AA294A706F0033250B /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
+		761837AC294A7A900033250B /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		761837AE294A88B80033250B /* PickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerSheet.swift; sourceTree = "<group>"; };
+		761837B0295116FC0033250B /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
+		761837B2295117AE0033250B /* PickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerButton.swift; sourceTree = "<group>"; };
+		761837B429512C7A0033250B /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		761837B629513ADE0033250B /* RadioPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPicker.swift; sourceTree = "<group>"; };
+		761837B829513E580033250B /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		761837BA29514BA20033250B /* SegmentedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedButton.swift; sourceTree = "<group>"; };
+		761837C22957EA540033250B /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
 		7618FCBC28164BB5007573B4 /* ModuleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleProtocol.swift; sourceTree = "<group>"; };
 		7618FCBD28164BB5007573B4 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		7618FCBE28164BB5007573B4 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
@@ -892,7 +924,6 @@
 		7618FCFB28164C92007573B4 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		7618FCFC28164C92007573B4 /* TabBarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarProvider.swift; sourceTree = "<group>"; };
 		7618FD1728164CBD007573B4 /* Colors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Colors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7618FD2628164CC9007573B4 /* ColorsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsModule.swift; sourceTree = "<group>"; };
 		7618FD2A28164CD5007573B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7618FD3128164CE2007573B4 /* Fonts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fonts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7618FD3C28164CED007573B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -923,7 +954,6 @@
 		7618FDDB28164E23007573B4 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		7618FDDD28164E32007573B4 /* WalletModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
 		7618FDDE28164E32007573B4 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
-		7625CE2C294081760033C669 /* NFTCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCell.swift; sourceTree = "<group>"; };
 		7625CE2E294088110033C669 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1502942B0740033C669 /* LibraryView+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LibraryView+Navigation.swift"; sourceTree = "<group>"; };
@@ -931,15 +961,6 @@
 		7627328B28295909009D3C8A /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = ../shared/build/XCFrameworks/release/shared.xcframework; sourceTree = SOURCE_ROOT; };
 		7627328D28295909009D3C8A /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = ../shared/build/XCFrameworks/debug/shared.xcframework; sourceTree = SOURCE_ROOT; };
 		7627329128295EA5009D3C8A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		7627EAAE27FA888400C0F7DA /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EAB427FA892A00C0F7DA /* Home.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Home.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EAB727FA893D00C0F7DA /* Artist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Artist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EAB827FA893D00C0F7DA /* Home.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Home.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EAB927FA893D00C0F7DA /* Login.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Login.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EABA27FA893D00C0F7DA /* PlaylistList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PlaylistList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EABB27FA893D00C0F7DA /* Tips.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Tips.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7627EABC27FA893D00C0F7DA /* Wallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Wallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7628EBCF27E550140077ECFD /* Main.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Main.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7628EBD427E551D60077ECFD /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
 		76325CCA28A128CC003836C7 /* LoginRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRoutes.swift; sourceTree = "<group>"; };
 		76325CD028A12A2A003836C7 /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
@@ -976,7 +997,6 @@
 		7669071229088D2A00D9F989 /* AudioPlayerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerImpl.swift; sourceTree = "<group>"; };
 		766E8FE72856321400F18779 /* ThisWeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisWeekCell.swift; sourceTree = "<group>"; };
 		766E8FEE285636EE00F18779 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		766E8FF02856371B00F18779 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		766E8FF22856418A00F18779 /* HomeViewUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewUIModel.swift; sourceTree = "<group>"; };
 		766E8FF42856459B00F18779 /* ThisWeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisWeekCellModel.swift; sourceTree = "<group>"; };
 		766E8FF72856484400F18779 /* ThisWeekSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisWeekSection.swift; sourceTree = "<group>"; };
@@ -1011,7 +1031,6 @@
 		76ADDCDD2897491E008AA39A /* HomeView+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView+Navigation.swift"; sourceTree = "<group>"; };
 		76ADDCE428980F61008AA39A /* HomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
-		76B21D0A293F0F26003692F7 /* RadioPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPicker.swift; sourceTree = "<group>"; };
 		76B21D0F293F22E2003692F7 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		76B21D12293F4B17003692F7 /* HorizontalScrollingGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingGridView.swift; sourceTree = "<group>"; };
 		76B430352921974300B74A5F /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
@@ -1195,6 +1214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7673F26429582BE200B65F1A /* AudioPlayer.framework in Frameworks */,
 				766E8FC428562FB000F18779 /* SharedUI.framework in Frameworks */,
 				76DC3A32281A0E6E004D5021 /* Resolver in Frameworks */,
 				7618FDEA28164E53007573B4 /* ModuleLinker.framework in Frameworks */,
@@ -1205,6 +1225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761837C5295819CB0033250B /* AudioPlayer.framework in Frameworks */,
 				76DE1C94284C010000B8CA7A /* SharedUI.framework in Frameworks */,
 				766E8FBC28562F2D00F18779 /* Colors.framework in Frameworks */,
 				7625D1552942B0A50033C669 /* SwiftUINavigation in Frameworks */,
@@ -1332,7 +1353,7 @@
 				7628EBD327E551B50077ECFD /* iosAppTests */,
 				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
 				7555FF7C242A565900829871 /* Products */,
-				7555FFB0242A642200829871 /* Frameworks */,
+				761837C4295819CB0033250B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1375,22 +1396,6 @@
 			path = iosApp;
 			sourceTree = "<group>";
 		};
-		7555FFB0242A642200829871 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7627EAB727FA893D00C0F7DA /* Artist.framework */,
-				7627EAB827FA893D00C0F7DA /* Home.framework */,
-				7627EAB927FA893D00C0F7DA /* Login.framework */,
-				7627EABA27FA893D00C0F7DA /* PlaylistList.framework */,
-				7627EABB27FA893D00C0F7DA /* Tips.framework */,
-				7627EABC27FA893D00C0F7DA /* Wallet.framework */,
-				7627EAB427FA892A00C0F7DA /* Home.framework */,
-				7627EAAE27FA888400C0F7DA /* Wallet.framework */,
-				7628EBCF27E550140077ECFD /* Main.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		76030033283694F900BBF78C /* Raleway */ = {
 			isa = PBXGroup;
 			children = (
@@ -1398,15 +1403,6 @@
 				7618FD3F28164CED007573B4 /* LICENSE.txt */,
 			);
 			path = Raleway;
-			sourceTree = "<group>";
-		};
-		760300462838141800BBF78C /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				766E8FE72856321400F18779 /* ThisWeekCell.swift */,
-				766E8FF42856459B00F18779 /* ThisWeekCellModel.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		760C2C5D281656290030ACF4 /* Property Wrappers */ = {
@@ -1426,11 +1422,42 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		761837A3294A5F8B0033250B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				7618FDDE28164E32007573B4 /* WalletView.swift */,
+				761837A4294A5FA60033250B /* WalletTitleSectionModel.swift */,
+				761837A6294A604F0033250B /* WalletViewModel.swift */,
+				761837B0295116FC0033250B /* PortfolioView.swift */,
+				761837B429512C7A0033250B /* TransactionsView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		761837C129527FA60033250B /* This Week */ = {
+			isa = PBXGroup;
+			children = (
+				766E8FF72856484400F18779 /* ThisWeekSection.swift */,
+				766E8FE72856321400F18779 /* ThisWeekCell.swift */,
+				766E8FF42856459B00F18779 /* ThisWeekCellModel.swift */,
+			);
+			path = "This Week";
+			sourceTree = "<group>";
+		};
+		761837C4295819CB0033250B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7618FCBB28164BB5007573B4 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				76C76146291F4D8D0054D2F3 /* AudioPlayer.swift */,
+				761837AA294A706F0033250B /* Artist.swift */,
 				76ADDBA228869F94008AA39A /* Auth.swift */,
+				761837AC294A7A900033250B /* Currency.swift */,
 				7618FCBD28164BB5007573B4 /* Home.swift */,
 				76562526284BEFB7004B6E4B /* Library.swift */,
 				76DC3A2828169995004D5021 /* Login.swift */,
@@ -1454,17 +1481,24 @@
 				7618FCE128164C6B007573B4 /* Circular.swift */,
 				760300472838142700BBF78C /* CompactCell.swift */,
 				7618FCDF28164C6B007573B4 /* GradientTag.swift */,
-				76E6910129284FA5004F7E37 /* HorizontalScrollingSection.swift */,
 				765D15DF293EC2280021FEC7 /* HorizontalScroller.swift */,
+				76E6910129284FA5004F7E37 /* HorizontalScrollingSection.swift */,
 				7618FCDD28164C6B007573B4 /* Link.swift */,
 				7656250B284BE8C9004B6E4B /* MockData.swift */,
+				761837B2295117AE0033250B /* PickerButton.swift */,
+				761837AE294A88B80033250B /* PickerSheet.swift */,
 				760300312836805A00BBF78C /* Placeholder.swift */,
+				761837B829513E580033250B /* RadioButton.swift */,
+				761837B629513ADE0033250B /* RadioPicker.swift */,
+				761837BA29514BA20033250B /* SegmentedButton.swift */,
 				7618FCD828164C6B007573B4 /* SharedUIModule.swift */,
 				7618FCDE28164C6B007573B4 /* SwiftUI+Common.swift */,
 				768B497C2903B81F0099911D /* TitleSection.swift */,
 				76ADDBC12886A3D5008AA39A /* ViewState.swift */,
 				767B1EF6284AC2C30065D1DE /* BigCells */,
 				76D7D936285681A7009D53CF /* Resources */,
+				761837C129527FA60033250B /* This Week */,
+				761837C22957EA540033250B /* StickyHeader.swift */,
 			);
 			path = SharedUI;
 			sourceTree = "<group>";
@@ -1483,8 +1517,8 @@
 			isa = PBXGroup;
 			children = (
 				7618FD2B28164CD5007573B4 /* Resources */,
-				7618FD2628164CC9007573B4 /* ColorsModule.swift */,
 				765D1614293EF8F70021FEC7 /* Gradients.swift */,
+				761837A8294A6C130033250B /* Color+Extensions.swift */,
 			);
 			path = Colors;
 			sourceTree = "<group>";
@@ -1555,7 +1589,7 @@
 		7618FDB228164DCD007573B4 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
-				7618FDDE28164E32007573B4 /* WalletView.swift */,
+				761837A3294A5F8B0033250B /* UI */,
 				7618FDDD28164E32007573B4 /* WalletModule.swift */,
 			);
 			path = Wallet;
@@ -1595,7 +1629,6 @@
 		7625CE302940881E0033C669 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				7625CE2C294081760033C669 /* NFTCell.swift */,
 				7625CE2E294088110033C669 /* ArtistCell.swift */,
 				76B21D0F293F22E2003692F7 /* SongCell.swift */,
 			);
@@ -1661,10 +1694,10 @@
 				76D01D4028164A8400305605 /* Home */,
 				768B497E2903B89F0099911D /* Library */,
 				7618FD7228164DA2007573B4 /* Login */,
-				765D15EA293EF1160021FEC7 /* Marketplace */,
 				76D01D7A28164AE700305605 /* Main */,
-				7618FD8228164DAB007573B4 /* PlaylistList */,
+				765D15EA293EF1160021FEC7 /* Marketplace */,
 				7618FD9228164DBB007573B4 /* NowPlaying */,
+				7618FD8228164DAB007573B4 /* PlaylistList */,
 				7618FDA228164DC6007573B4 /* Tips */,
 				7618FDB228164DCD007573B4 /* Wallet */,
 			);
@@ -1822,7 +1855,7 @@
 				765D1605293EF22F0021FEC7 /* MarketplaceView.swift */,
 				7625D14D29429CCC0033C669 /* Filters.swift */,
 				765D1612293EF6DD0021FEC7 /* MarketplaceViewModel.swift */,
-				76B21D0A293F0F26003692F7 /* RadioPicker.swift */,
+				761837A129479F7E0033250B /* MarketplaceTitleSectionModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1831,7 +1864,6 @@
 			isa = PBXGroup;
 			children = (
 				76B21D12293F4B17003692F7 /* HorizontalScrollingGridView.swift */,
-				766E8FF72856484400F18779 /* ThisWeekSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -2081,7 +2113,6 @@
 				76ADDCDB289748C1008AA39A /* HomeView+Loaded.swift */,
 				76ADDCD928974668008AA39A /* HomeViewActionHandling.swift */,
 				76D01D6B28164A9E00305605 /* HomeViewModel.swift */,
-				760300462838141800BBF78C /* Cells */,
 				766E8FF62856483400F18779 /* Sections */,
 			);
 			path = UI;
@@ -2093,7 +2124,6 @@
 				76D01D7128164ABD00305605 /* Localizable.strings */,
 				76D01D7228164ABD00305605 /* Strings.swift */,
 				766E8FEE285636EE00F18779 /* Media.xcassets */,
-				766E8FF02856371B00F18779 /* Media.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2478,7 +2508,6 @@
 			dependencies = (
 				7618FDFB28164E61007573B4 /* PBXTargetDependency */,
 				760300412836FE2000BBF78C /* PBXTargetDependency */,
-				766E8FDE28562FCF00F18779 /* PBXTargetDependency */,
 				766E8FE228562FD600F18779 /* PBXTargetDependency */,
 				766E8FE628562FDC00F18779 /* PBXTargetDependency */,
 			);
@@ -2549,12 +2578,14 @@
 				7618FDAD28164DCD007573B4 /* Sources */,
 				7618FDAE28164DCD007573B4 /* Frameworks */,
 				7618FDAF28164DCD007573B4 /* Resources */,
+				7673F26829582BE200B65F1A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				7618FDED28164E53007573B4 /* PBXTargetDependency */,
 				766E8FC728562FB000F18779 /* PBXTargetDependency */,
+				7673F26729582BE200B65F1A /* PBXTargetDependency */,
 			);
 			name = Wallet;
 			packageProductDependencies = (
@@ -2572,6 +2603,7 @@
 				76562510284BEF30004B6E4B /* Sources */,
 				76562511284BEF30004B6E4B /* Frameworks */,
 				76562512284BEF30004B6E4B /* Resources */,
+				761837C9295819CC0033250B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2580,6 +2612,7 @@
 				76DE1C97284C010000B8CA7A /* PBXTargetDependency */,
 				766E8FBB28562F2900F18779 /* PBXTargetDependency */,
 				766E8FBF28562F2D00F18779 /* PBXTargetDependency */,
+				761837C8295819CC0033250B /* PBXTargetDependency */,
 			);
 			name = Library;
 			packageProductDependencies = (
@@ -2752,8 +2785,6 @@
 				7603003028367FDB00BBF78C /* PBXTargetDependency */,
 				760300392836FAE200BBF78C /* PBXTargetDependency */,
 				760300452837FD0800BBF78C /* PBXTargetDependency */,
-				766E8FB228562ECE00F18779 /* PBXTargetDependency */,
-				766E8FB528562ED200F18779 /* PBXTargetDependency */,
 			);
 			name = Home;
 			packageProductDependencies = (
@@ -2929,9 +2960,9 @@
 				76D01D7828164AE700305605 /* Main */,
 				765D15E8293EF1160021FEC7 /* Marketplace */,
 				76D01D9D28164B2100305605 /* ModuleLinker */,
+				7618FD9028164DBB007573B4 /* NowPlaying */,
 				7618FD8028164DAB007573B4 /* PlaylistList */,
 				7618FCCC28164C5C007573B4 /* SharedUI */,
-				7618FD9028164DBB007573B4 /* NowPlaying */,
 				7618FCED28164C86007573B4 /* TabBar */,
 				7618FDA028164DC6007573B4 /* Tips */,
 				7618FDB028164DCD007573B4 /* Wallet */,
@@ -3203,12 +3234,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7656250A284BE7E6004B6E4B /* BigCellViewModel.swift in Sources */,
+				761837C029527FA20033250B /* ThisWeekCellModel.swift in Sources */,
 				76562503284BE1D3004B6E4B /* CompactCell.swift in Sources */,
+				761837BE29527F160033250B /* ThisWeekSection.swift in Sources */,
 				7656250C284BE8C9004B6E4B /* MockData.swift in Sources */,
 				76E6910229284FA5004F7E37 /* HorizontalScrollingSection.swift in Sources */,
 				76ADDBC32886A466008AA39A /* ViewState.swift in Sources */,
 				7618FCE628164C6B007573B4 /* Circular.swift in Sources */,
+				761837B3295117AE0033250B /* PickerButton.swift in Sources */,
 				7615B3292909A394008FC5A6 /* Icon+Generated.swift in Sources */,
+				761837BF29527FA20033250B /* ThisWeekCell.swift in Sources */,
+				761837C32957EA540033250B /* StickyHeader.swift in Sources */,
 				7618FCE428164C6B007573B4 /* GradientTag.swift in Sources */,
 				76562504284BE1D3004B6E4B /* BigCell.swift in Sources */,
 				7618FCE328164C6B007573B4 /* SharedUIModule.swift in Sources */,
@@ -3216,9 +3252,13 @@
 				768B497D2903B81F0099911D /* TitleSection.swift in Sources */,
 				765D15E0293EC2280021FEC7 /* HorizontalScroller.swift in Sources */,
 				76B430362921974300B74A5F /* BackButton.swift in Sources */,
+				761837B929513E580033250B /* RadioButton.swift in Sources */,
 				7618FCE228164C6B007573B4 /* Link.swift in Sources */,
 				760300322836805A00BBF78C /* Placeholder.swift in Sources */,
+				761837BB29514BA20033250B /* SegmentedButton.swift in Sources */,
+				761837B729513ADE0033250B /* RadioPicker.swift in Sources */,
 				76D7D93C28568539009D53CF /* CellsSectionModel.swift in Sources */,
+				761837AF294A88B80033250B /* PickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3238,6 +3278,7 @@
 			files = (
 				7615B32C2909A3B6008FC5A6 /* Color+Generated.swift in Sources */,
 				765D1615293EF8F70021FEC7 /* Gradients.swift in Sources */,
+				761837A9294A6C130033250B /* Color+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3329,8 +3370,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761837B529512C7A0033250B /* TransactionsView.swift in Sources */,
+				761837B1295116FC0033250B /* PortfolioView.swift in Sources */,
 				7618FDE028164E32007573B4 /* WalletModule.swift in Sources */,
+				761837A7294A604F0033250B /* WalletViewModel.swift in Sources */,
 				7618FDDF28164E32007573B4 /* WalletView.swift in Sources */,
+				761837A5294A5FA60033250B /* WalletTitleSectionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3357,12 +3402,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7625CE2D294081760033C669 /* NFTCell.swift in Sources */,
+				761837A229479F7E0033250B /* MarketplaceTitleSectionModel.swift in Sources */,
 				765D1606293EF22F0021FEC7 /* MarketplaceView.swift in Sources */,
 				7625CE2F294088110033C669 /* ArtistCell.swift in Sources */,
 				76B21D10293F22E2003692F7 /* SongCell.swift in Sources */,
 				765D15FF293EF18C0021FEC7 /* MarketplaceModule.swift in Sources */,
-				76B21D0B293F0F26003692F7 /* RadioPicker.swift in Sources */,
 				7625D14E29429CCC0033C669 /* Filters.swift in Sources */,
 				765D1601293EF1D60021FEC7 /* MarketplaceModule+ViewProviding.swift in Sources */,
 				765D1613293EF6DD0021FEC7 /* MarketplaceViewModel.swift in Sources */,
@@ -3421,15 +3465,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				766E8FE82856321400F18779 /* ThisWeekCell.swift in Sources */,
-				766E8FF82856484400F18779 /* ThisWeekSection.swift in Sources */,
 				76D01D7028164A9E00305605 /* HomeModule.swift in Sources */,
 				76ADDCDE2897491E008AA39A /* HomeView+Navigation.swift in Sources */,
 				76562502284BE1CE004B6E4B /* HomeViewModel.swift in Sources */,
 				766E8FF32856418A00F18779 /* HomeViewUIModel.swift in Sources */,
-				766E8FF52856459B00F18779 /* ThisWeekCellModel.swift in Sources */,
 				76ADDCDA28974668008AA39A /* HomeViewActionHandling.swift in Sources */,
-				766E8FF12856371B00F18779 /* Media.swift in Sources */,
 				760C2C542816544A0030ACF4 /* HomeView.swift in Sources */,
 				760C2C5A2816544A0030ACF4 /* Strings.swift in Sources */,
 				76562540284BFBD1004B6E4B /* HomeRoutes.swift in Sources */,
@@ -3470,8 +3510,10 @@
 				76C76147291F4D8D0054D2F3 /* AudioPlayer.swift in Sources */,
 				760C2C7528165F450030ACF4 /* NowPlaying.swift in Sources */,
 				76DC3A1928167276004D5021 /* UIImage+Extensions.swift in Sources */,
+				761837AB294A706F0033250B /* Artist.swift in Sources */,
 				76B21D09293F055D003692F7 /* Marketplace.swift in Sources */,
 				760C2C7328165DE80030ACF4 /* SwiftUIView+Erased.swift in Sources */,
+				761837AD294A7A900033250B /* Currency.swift in Sources */,
 				76DC3A4B281A0EE2004D5021 /* Localizable.swift in Sources */,
 				7618FCC728164BB5007573B4 /* Resolver+Mock.swift in Sources */,
 				76ADDBA328869F94008AA39A /* Auth.swift in Sources */,
@@ -3510,6 +3552,11 @@
 			platformFilter = ios;
 			target = 7618FD1628164CBD007573B4 /* Colors */;
 			targetProxy = 760300442837FD0800BBF78C /* PBXContainerItemProxy */;
+		};
+		761837C8295819CC0033250B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76C76131291F445B0054D2F3 /* AudioPlayer */;
+			targetProxy = 761837C7295819CC0033250B /* PBXContainerItemProxy */;
 		};
 		7618FCD228164C5C007573B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3687,18 +3734,6 @@
 			target = 7618FD1628164CBD007573B4 /* Colors */;
 			targetProxy = 766E8FAE28562EBF00F18779 /* PBXContainerItemProxy */;
 		};
-		766E8FB228562ECE00F18779 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = 7618FD3028164CE2007573B4 /* Fonts */;
-			targetProxy = 766E8FB128562ECE00F18779 /* PBXContainerItemProxy */;
-		};
-		766E8FB528562ED200F18779 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = 7618FD1628164CBD007573B4 /* Colors */;
-			targetProxy = 766E8FB428562ED200F18779 /* PBXContainerItemProxy */;
-		};
 		766E8FBB28562F2900F18779 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -3753,12 +3788,6 @@
 			target = 7618FD1628164CBD007573B4 /* Colors */;
 			targetProxy = 766E8FDA28562FC800F18779 /* PBXContainerItemProxy */;
 		};
-		766E8FDE28562FCF00F18779 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = 7618FD3028164CE2007573B4 /* Fonts */;
-			targetProxy = 766E8FDD28562FCF00F18779 /* PBXContainerItemProxy */;
-		};
 		766E8FE228562FD600F18779 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -3775,6 +3804,11 @@
 			isa = PBXTargetDependency;
 			target = 7618FD5D28164D99007573B4 /* Artist */;
 			targetProxy = 7670043528279F4D00ED72D8 /* PBXContainerItemProxy */;
+		};
+		7673F26729582BE200B65F1A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76C76131291F445B0054D2F3 /* AudioPlayer */;
+			targetProxy = 7673F26629582BE200B65F1A /* PBXContainerItemProxy */;
 		};
 		7683129027A38F480056BC6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4053,7 +4087,6 @@
 					"\"$(SRCROOT)/Modules\"/**",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4086,7 +4119,6 @@
 					"\"$(SRCROOT)/Modules\"/**",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4116,7 +4148,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4149,7 +4181,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4183,7 +4215,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4216,7 +4248,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4250,7 +4282,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4283,7 +4315,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4320,7 +4352,7 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4356,7 +4388,7 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4390,7 +4422,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4423,7 +4455,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4457,7 +4489,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4490,7 +4522,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4524,7 +4556,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4557,7 +4589,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4591,7 +4623,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4624,7 +4656,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4658,7 +4690,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4691,7 +4723,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4725,7 +4757,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4758,7 +4790,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4793,7 +4825,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4830,7 +4862,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4867,7 +4899,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4904,7 +4936,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4997,7 +5029,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5032,7 +5064,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5144,7 +5176,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5176,7 +5208,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5248,7 +5280,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5283,7 +5315,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5319,7 +5351,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5352,7 +5384,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5387,7 +5419,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5422,7 +5454,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 orgName. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

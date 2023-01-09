@@ -12,7 +12,7 @@ public struct HorizontalScroller<Content>: View where Content: View {
 	public var body: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
 			content()
-				.padding([.leading, .trailing], sidePadding)
+				.addSidePadding()
 				.fixedSize()
 				.erased
 		}

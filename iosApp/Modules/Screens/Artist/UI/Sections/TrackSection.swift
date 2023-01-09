@@ -20,7 +20,7 @@ public struct TrackSection: View {
 					.onTapGesture(perform: cellModel.onTap)
 			}
 		}
-		.padding([.leading, .trailing], sidePadding)
+		.addSidePadding()
 		.addSectionTitle(model.title)
 	}
 }

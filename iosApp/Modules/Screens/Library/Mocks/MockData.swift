@@ -16,7 +16,7 @@ struct MockLibraryViewUIModelProvider: LibraryViewUIModelProviding {
     
 	static func mockUIModel(actionHandler: LibraryViewActionHandling) -> LibraryViewUIModel {
         LibraryViewUIModel(
-			title: TitleSectionModel(isGreeting: false, title: "LIBRARY", gradientColors: ColorAsset.libraryGradient.map(\.color)),
+			title: LibraryTitleSectionModel(title: "LIBRARY", gradientColors: Gradients.libraryGradient),
 			recentlyPlayedSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigSongCells_shuffled(seed: 1, onTap: actionHandler.songTapped), title: "RECENTLY PLAYED"),
 			yourPlaylistsSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigArtistCells_shuffled(seed: 0, onTap: actionHandler.artistTapped), title: "YOUR PLAYLISTS"),
 			likedSongsSection: CellsSectionModel<BigCellViewModel>(cells: MockData.bigSongCells_shuffled(seed: 2, onTap: actionHandler.songTapped), title: "LIKED SONGS")

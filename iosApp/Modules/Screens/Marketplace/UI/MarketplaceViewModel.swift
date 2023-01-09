@@ -21,19 +21,19 @@ class MarketplaceViewModel: ObservableObject {
 	
 	enum NFTFilterCategories: CaseIterable, CustomStringConvertible {
 		case mostPopular
-		case biggestBooty
+		case biggestTrack
 		case longestTrack
 		
 		var description: String {
 			switch self {
-			case .biggestBooty: return "Biggest Booty"
+			case .biggestTrack: return "Biggest Track"
 			case .longestTrack: return "Longest Track"
 			case .mostPopular: return "Most Popular"
 			}
 		}
 	}
 	
-	@Published var titleSection = TitleSectionModel(title: "MARKETPLACE", gradientColors: ColorAsset.marketplaceGradient.map(\.color))
+	@Published var titleSection = MarketplaceTitleSectionModel(title: "MARKETPLACE", gradient: Gradients.marketplaceGradient)
 	let allCategories: [Category] = Category.allCases
 	@Published var selectedCategory: Category = Category.allCases[0]
 	@Published var selectedGenre: Genre = Genre.companion.allCases[0]
@@ -45,13 +45,13 @@ class MarketplaceViewModel: ObservableObject {
 	let newSongsToday = MockData.songs.shuffled()
 	let popularSongs = MockData.songs.shuffled()
 	let bloomingArtists = MockData.artists.shuffled()
-	let nftSongs = MockData.songs
+	let nftSongs = MockData.songs.map { NFTCellModel(song: $0, value: "Ɲ\(Int.random09).\(Int.random09)\(Int.random09)") }
 
 	var trendingSongsCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: trendingSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "TRENDING SONGS") }
 	var newSongsTodayCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: newSongsToday.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "NEW SONGS TODAY") }
 	var popularSongsCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: popularSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "POPULAR \(selectedCategory.description.uppercased()) SONGS") }
 	var bloomingArtistsCells: CellsSectionModel<ArtistCellModel> { CellsSectionModel(cells: bloomingArtists.filter { $0.name.lowercased().hasPrefix(searchTerm.lowercased()) }.map(ArtistCellModel.init), title: "\(selectedCategory.description.uppercased()) ARTISTS BLOOMING") }
-	var nftSongsCells: [Song] { nftSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) } }
+	var nftSongsCells: [NFTCellModel] { nftSongs.filter { $0.song.title.lowercased().hasPrefix(searchTerm.lowercased()) } }
 }
 
 struct ArtistCellModel: Identifiable {
@@ -90,3 +90,14 @@ extension MarketplaceViewModel {
 }
 
 extension Song: Identifiable {}
+
+extension Int {
+	static var random09: Int {
+		Int.random(in: 0..<9)
+	}
+}
+
+struct NFTCellModel {
+	let song: Song
+	let value: String
+}

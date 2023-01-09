@@ -33,6 +33,10 @@ public extension View {
 			self
 		}
 	}
+	
+	func addSidePadding() -> some View {
+		padding([.leading, .trailing], sidePadding)
+	}
 }
 
 public extension View {
@@ -59,3 +63,40 @@ public extension ColorAsset {
 		swiftUIColor
 	}
 }
+
+public enum TextStyle {
+	//[String] is hex values
+	case screenTitle([String])
+}
+
+public extension Text {
+	@ViewBuilder
+	func style(_ style: TextStyle) -> some View {
+		switch style {
+		case .screenTitle(let hexStrings):
+			self
+				.font(.newmTitle1)
+				.foregroundStyle(LinearGradient(colors: hexStrings.colors, startPoint: .leading, endPoint: .trailing))
+		}
+	}
+}
+
+public struct BorderOverlay: ViewModifier {
+	let color: any ShapeStyle
+	let radius: CGFloat
+	let width: CGFloat
+	
+	public func body(content: Content) -> some View {
+		content
+			.overlay(RoundedRectangle(cornerRadius: radius)
+				.stroke(color, lineWidth: width))
+			.erased
+	}
+}
+
+public extension View {
+	func borderOverlay(color: any ShapeStyle, radius: CGFloat, width: CGFloat) -> some View {
+		modifier(BorderOverlay(color: color, radius: radius, width: width))
+	}
+}
+

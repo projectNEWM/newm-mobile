@@ -34,7 +34,7 @@
 		<false/>
 	</dict>
 	<key>UILaunchStoryboardName</key>
-	<string>SplashScreen</string>
+	<string>SplashScreen.storyboard</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDarkContent</string>
 	<key>UISupportedInterfaceOrientations</key>

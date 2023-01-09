@@ -11,6 +11,8 @@ extension HomeView {
 		@Binding private var route: HomeRoute?
 		private let uiModel: HomeViewUIModel
 		
+		@State private var greetingTimer: Timer?
+		
 		init(uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.uiModel = uiModel
 			self._route = route
@@ -29,9 +31,8 @@ extension HomeView {
 				}
 			}
 			.onAppear {
-				//TODO: THIS ANIMATION ISN'T WORKING
-				withAnimation {
-					DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+				greetingTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
+					withAnimation {
 						shouldShowGreeting = false
 					}
 				}
@@ -59,8 +60,12 @@ extension HomeView {
 			HorizontalStackSection(uiModel.justReleasedSection, content: BigCell.init)
 		}
 		
+		@ViewBuilder
 		private var titleSection: some View {
-			TitleSection(model: shouldShowGreeting ? uiModel.greeting : uiModel.title)
+			TitleSection(isGreeting: shouldShowGreeting,
+						 title: shouldShowGreeting ? uiModel.greeting.title : uiModel.title.title,
+						 profilePic: shouldShowGreeting ? uiModel.greeting.profilePic : uiModel.title.profilePic,
+						 gradient: uiModel.title.gradientHexColors)
 				.padding(.bottom, 41)
 			//TODO: THIS ANIMATION ISN'T WORKING
 				.transition(.opacity.animation(.easeInOut(duration: 1.0)))
@@ -70,7 +75,6 @@ extension HomeView {
 
 struct HomeViewLoaded_Previews: PreviewProvider {
 	static var previews: some View {
-		let vm = HomeViewModel()
 		return HomeView.LoadedView(
 			uiModel: MockHomeViewUIModelProvider.mockUIModel(
 				actionHandler: MockHomeActionHandler()

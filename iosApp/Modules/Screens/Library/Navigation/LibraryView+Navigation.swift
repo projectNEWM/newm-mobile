@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 import Resolver
 import ModuleLinker
-import Artist
 import SwiftUINavigation
 
 extension LibraryView {

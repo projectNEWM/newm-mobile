@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import Colors
 
 public protocol GradientTagProviding {
 	func gradientTag(title: String) -> AnyView
@@ -18,9 +17,9 @@ public struct TitleSectionModel {
 	public let isGreeting: Bool
 	public let title: String
 	public let profilePic: URL?
-	public let gradientColors: [UIColor]
+	public let gradientColors: [String]
 	
-	public init(isGreeting: Bool = false, title: String, profilePic: URL? = nil, gradientColors: [UIColor]) {
+	public init(isGreeting: Bool = false, title: String, profilePic: URL? = nil, gradientColors: [String]) {
 		self.isGreeting = isGreeting
 		self.title = title
 		self.profilePic = profilePic
