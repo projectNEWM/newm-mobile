@@ -4,6 +4,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
+import com.karumi.shot.ScreenshotTest
+import io.newm.core.theme.NewmTheme
 import io.newm.interactions.BottomBarInteractions
 import io.newm.interactions.NewmAppInteractions
 import io.newm.interactions.onBottomBar
@@ -12,7 +14,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class HomeAppNavigationTest {
+class HomeScreenDarkModeTest: ScreenshotTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<LoginActivity>()
@@ -21,7 +23,9 @@ class HomeAppNavigationTest {
     @Before
     fun setup() {
         composeTestRule.activity.setContent {
-            NewmApp()
+            NewmTheme(darkTheme = true) {
+                NewmApp()
+            }
         }
     }
 
@@ -30,6 +34,41 @@ class HomeAppNavigationTest {
         onNewmApp {
             assertHomeScreenIsDisplayed()
         }
+        compareScreenshot(composeTestRule, "Home Screen (Dark Mode)")
+    }
+
+    @Test
+    fun when_tap_library_on_bottom_bar_then_switches_to_library_screen() {
+        onNewmApp {
+            onBottomBar {
+                libraryButtonInteraction.performClick()
+            }
+            assertLibraryScreenIsDisplayed()
+        }
+        compareScreenshot(composeTestRule, "Library Screen (Dark Mode)")
+    }
+
+    @Test
+    fun when_tap_wallet_on_bottom_bar_then_switches_to_wallet_screen() {
+        onNewmApp {
+            onBottomBar {
+                walletButtonInteraction.performClick()
+            }
+            assertWalletScreenIsDisplayed()
+        }
+        compareScreenshot(composeTestRule, "Wallet Screen (Dark Mode)")
+    }
+
+    @Test
+    fun when_tap_marketplace_on_bottom_bar_then_switches_to_marketplace_screen() {
+        onNewmApp {
+            onBottomBar {
+                marketplaceButtonInteraction.performClick()
+            }
+
+            assertMarketplaceScreenIsDisplayed()
+        }
+        compareScreenshot(composeTestRule, "Marketplace Screen (Dark Mode)")
     }
 
     @Test
@@ -41,39 +80,6 @@ class HomeAppNavigationTest {
             onBottomBar { homeButtonInteraction.performClick() }
 
             homeScreenInteraction.assertIsDisplayed()
-        }
-    }
-
-    @Test
-    fun when_tap_library_on_bottom_bar_then_switches_to_library_screen() {
-        onNewmApp {
-            onBottomBar {
-                libraryButtonInteraction.performClick()
-            }
-
-            assertLibraryScreenIsDisplayed()
-        }
-    }
-
-    @Test
-    fun when_tap_wallet_on_bottom_bar_then_switches_to_wallet_screen() {
-        onNewmApp {
-            onBottomBar {
-                walletButtonInteraction.performClick()
-            }
-
-            assertWalletScreenIsDisplayed()
-        }
-    }
-
-    @Test
-    fun when_tap_marketplace_on_bottom_bar_then_switches_to_marketplace_screen() {
-        onNewmApp {
-            onBottomBar {
-                marketplaceButtonInteraction.performClick()
-            }
-
-            assertMarketplaceScreenIsDisplayed()
         }
     }
 

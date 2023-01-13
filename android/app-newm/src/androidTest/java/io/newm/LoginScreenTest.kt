@@ -3,6 +3,7 @@ package io.newm
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.karumi.shot.ScreenshotTest
+import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.LoginScreen
 import org.junit.Before
 import org.junit.Rule
@@ -16,7 +17,9 @@ class LoginScreenTest : ScreenshotTest {
     @Before
     fun setup() {
         composeTestRule.activity.setContent {
-            LoginScreen(onUserLoggedIn = {})
+            NewmTheme(darkTheme = true) {
+                LoginScreen(onUserLoggedIn = {})
+            }
         }
     }
 
