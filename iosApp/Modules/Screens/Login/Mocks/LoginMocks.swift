@@ -2,14 +2,16 @@ import Foundation
 import ModuleLinker
 import Combine
 import UIKit
+import shared
 
-class MockLogInLogOutUseCase: LogInUseCaseProtocol, LogOutUseCaseProtocol, LoggedInUserUseCaseProtocol {
+#if DEBUG
+class MockLogInLogOutUseCase: LogOutUseCaseProtocol, LoggedInUserUseCaseProtocol {
 	private static let authCredsKey = "authCreds"
 
 	/*@UserDefault(authCredsKey, defaultValue: nil)*/ private var authCreds: AuthCredentials?
 	
 	public var loggedInUser: AnyPublisher<String?, Never> { _loggedInUser.eraseToAnyPublisher() }
-	private lazy var _loggedInUser = CurrentValueSubject<String?, Never>(authCreds?.user)
+	lazy var _loggedInUser = CurrentValueSubject<String?, Never>(authCreds?.user)
 	static let shared = MockLogInLogOutUseCase()
 
 	func logIn(email: String, password: String) async throws {
@@ -17,6 +19,7 @@ class MockLogInLogOutUseCase: LogInUseCaseProtocol, LogOutUseCaseProtocol, Logge
 		let user = email
 		authCreds = AuthCredentials(authTokens: authTokens, user: user)
 		_loggedInUser.send(user)
+		return
 	}
 	
 	func logOut() {
@@ -42,3 +45,4 @@ extension UIWindow {
 		NotificationCenter.default.post(name: .deviceDidShakeNotification, object: event)
 	}
 }
+#endif

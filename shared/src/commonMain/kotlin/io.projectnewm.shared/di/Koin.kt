@@ -20,6 +20,8 @@ import io.projectnewm.shared.login.usecases.SignupUseCase
 import io.projectnewm.shared.login.usecases.SignupUseCaseImpl
 import io.projectnewm.shared.platformModule
 import kotlinx.serialization.json.Json
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 fun initKoin(enableNetworkLogs: Boolean = true, appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
@@ -56,3 +58,21 @@ fun createHttpClient(json: Json, enableNetworkLogs: Boolean) =
             }
         }
     }
+
+class LoginUseCaseFactory() : KoinComponent {
+    private val loginUseCase: LoginUseCase by inject()
+
+    @Throws(Exception::class)
+    fun loginUseCase(): LoginUseCase {
+        return loginUseCase
+    }
+}
+
+class SignupUseCaseFactory() : KoinComponent {
+    private val signupUseCase: SignupUseCase by inject()
+
+    @Throws(Exception::class)
+    fun signupUseCase(): SignupUseCase {
+        return signupUseCase
+    }
+}

@@ -17,7 +17,21 @@ public final class LoginModule: ModuleProtocol {
 		}
 		
 		Resolver.register {
-			self as CreateAccountViewProviding
+			do {
+				return try LoginUseCaseFactory().loginUseCase()
+			} catch {
+				print(error)
+				fatalError(error.localizedDescription)
+			}
+		}
+		
+		Resolver.register {
+			do {
+				return try SignupUseCaseFactory().signupUseCase()
+			} catch {
+				print(error)
+				fatalError(error.localizedDescription)
+			}
 		}
 		
 		Resolver.register {
@@ -33,9 +47,9 @@ extension LoginModule {
 			MockLogInLogOutUseCase.shared as LoggedInUserUseCaseProtocol
 		}
 		
-		mockResolver.register {
-			MockLogInLogOutUseCase.shared as LogInUseCaseProtocol
-		}
+//		mockResolver.register {
+//			MockLogInLogOutUseCase.shared as LoginUseCase
+//		}
 		
 		mockResolver.register {
 			MockLogInLogOutUseCase.shared as LogOutUseCaseProtocol
