@@ -9,6 +9,7 @@ interface SignupUseCase {
     suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus
 
     suspend fun registerUser(
+        nickname: String,
         email: String,
         password: String,
         passwordConfirmation: String,
@@ -23,12 +24,14 @@ internal class SignupUseCaseImpl(private val repository: LogInRepository) : Sign
     }
 
     override suspend fun registerUser(
+        nickname: String,
         email: String,
         password: String,
         passwordConfirmation: String,
         verificationCode: String
     ): RegisterStatus {
         val newUser = NewUser(
+            nickname = nickname,
             email = email,
             newPassword = password,
             confirmPassword = passwordConfirmation,

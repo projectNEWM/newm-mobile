@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.ImeAction
 import io.newm.feature.login.screen.TextFieldError
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.core.resources.R
+import io.newm.core.theme.NewmColors
 
 @Composable
 fun Email(
@@ -31,7 +32,7 @@ fun Email(
                 Text(
                     text = stringResource(id = R.string.email),
                     style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onSurface
+                    color = MaterialTheme.colors.onBackground
                 )
             }
         },
@@ -52,7 +53,7 @@ fun Email(
             }
         ),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.error,
         )
     )
 

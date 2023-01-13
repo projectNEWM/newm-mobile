@@ -4,8 +4,11 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,37 +22,44 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.newm.core.ui.utils.SongRingBrush
 import io.newm.core.ui.utils.ToBeImplemented
 import io.newm.core.ui.utils.shortToast
 import io.newm.core.resources.R
+import io.newm.core.theme.NewmColors
+import io.newm.core.theme.NewmTheme
+import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.utils.ActionButtonBackgroundBrush
 import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.Password
 import io.newm.feature.login.screen.password.PasswordState
+import org.koin.androidx.compose.getKoin
+import org.koin.androidx.compose.getViewModel
 
 internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 
 @Composable
 fun LoginScreen(
     onUserLoggedIn: () -> Unit,
-    onSignupClick: () -> Unit,
     viewModel: LoginViewModel = org.koin.androidx.compose.get()
 ) {
     val context = LocalContext.current
     PreLoginArtistBackgroundContentTemplate {
-        LoginPageMainTextImage(textImage = R.drawable.ic_login_enter_newmiverse)
-
         val state = viewModel.state.collectAsState()
         LaunchedEffect(state.value.isUserLoggedIn, state.value.errorMessage) {
             if (state.value.isUserLoggedIn) {
                 context.shortToast("Enjoy!")
                 onUserLoggedIn()
             }
-            if(!state.value.errorMessage.isNullOrBlank()) {
+            if (!state.value.errorMessage.isNullOrBlank()) {
                 context.shortToast(state.value.errorMessage.orEmpty())
             }
         }
@@ -69,113 +79,48 @@ fun LoginScreen(
             modifier = Modifier.focusRequester(focusRequester),
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ForgotPassword()
-
         Spacer(modifier = Modifier.height(32.dp))
 
-        Box(Modifier.clickable {
-            viewModel.attemptToLogin(
-                email = emailState.text, password = passwordState.text
-            )
-        }) {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                painter = painterResource(R.drawable.ic_login_enter_newm_button),
-                contentDescription = "Newm Login Welcome Text",
-                contentScale = ContentScale.FillHeight,
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Box(
-            modifier = Modifier
-                .height(48.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 70.dp)
-                .clip(RoundedCornerShape(4.dp))
-                .border(BorderStroke(1.dp, SongRingBrush()))
-                .clickable {
-                    onUserLoggedIn()
-                    context.shortToast("Welcome Guest")
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Continue as Guest",
-                color = MaterialTheme.colors.onSurface,
-                fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        CreateAccount(onSignupClick)
-    }
-}
-
-@Composable
-fun ForgotPassword() {
-    ToBeImplemented("Forgot Password Coming Soon!") {
-        Text(
-            text = "Uh Oh! I Forgot My Password",
-            style = TextStyle(textDecoration = TextDecoration.Underline),
-            textAlign = TextAlign.End,
-            color = MaterialTheme.colors.onSurface
+        PrimaryButton(
+            text = "Login",
+            onClick = {
+                viewModel.attemptToLogin(
+                    email = emailState.text, password = passwordState.text
+                )
+            }
         )
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
-
-@Composable
-fun CreateAccount(onSignupClick: () -> Unit) {
-    Text(
-        text = "Or Create Your Free Account",
-        style = TextStyle(textDecoration = TextDecoration.Underline),
-        textAlign = TextAlign.End,
-        color = MaterialTheme.colors.onSurface,
-        modifier = Modifier.clickable { onSignupClick() }
-    )
-}
-
 
 @Composable
 fun LoginPageMainImage(@DrawableRes mainImage: Int) {
     Image(
         modifier = Modifier
-            .width(150.dp)
-            .height(150.dp),
+            .width(250.dp)
+            .height(250.dp),
         painter = painterResource(mainImage),
         contentDescription = "Newm Login Logo",
         contentScale = ContentScale.Crop,
     )
-
 }
 
-@Composable
-private fun LoginPageMainTextImage(@DrawableRes textImage: Int) {
-    Image(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
-        painter = painterResource(textImage),
-        contentDescription = "Newm Login Welcome Text",
-        contentScale = ContentScale.FillHeight,
-    )
-}
-
-@Composable
-internal fun LoginPageBackgroundImage(@DrawableRes backgroundImage: Int) {
-    Image(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        painter = painterResource(backgroundImage),
-        contentDescription = "Newm Login Screen",
-        contentScale = ContentScale.Crop,
-    )
-}
+//@Preview
+//@Composable
+//private fun DefaultLightLoginScreenPreview() {
+//    NewmTheme(darkTheme = false) {
+//        LoginScreen(
+//            onUserLoggedIn = {},
+//        )
+//    }
+//}
+//
+//@Preview
+//@Composable
+//private fun DefaultDarkLoginScreenPreview() {
+//    NewmTheme(darkTheme = true) {
+//        LoginScreen(
+//            onUserLoggedIn = {},
+//        )
+//    }
+//}

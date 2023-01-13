@@ -14,6 +14,7 @@ interface LogInRepository {
     suspend fun registerUser(
         firstName: String,
         lastName: String,
+        nickname: String,
         pictureUrl: String,
         email: String,
         newPassword: String,
@@ -73,6 +74,7 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
     override suspend fun registerUser(
         firstName: String,
         lastName: String,
+        nickname: String,
         pictureUrl: String,
         email: String,
         newPassword: String,
@@ -81,13 +83,14 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
     ): RegisterStatus {
         return service.register(
             NewUser(
-                firstName,
-                lastName,
-                pictureUrl,
-                email,
-                newPassword,
-                confirmPassword,
-                authCode
+                firstName = firstName,
+                lastName = lastName,
+                nickname = nickname,
+                pictureUrl = pictureUrl,
+                email = email,
+                newPassword = newPassword,
+                confirmPassword = confirmPassword,
+                authCode = authCode
             )
         )
     }

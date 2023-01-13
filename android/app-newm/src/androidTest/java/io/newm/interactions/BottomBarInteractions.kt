@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.test.platform.app.InstrumentationRegistry
-import io.newm.R
+import io.newm.core.resources.R
 import io.newm.TAG_BOTTOM_NAVIGATION
 
 fun onBottomBar(composeTestRule: ComposeTestRule, actions: BottomBarInteractions.() -> Unit) {
@@ -23,21 +23,21 @@ class BottomBarInteractions(private val composeTestRule: ComposeTestRule) {
             )
         }
 
+    val libraryButtonInteraction: SemanticsNodeInteraction
+        get() = composeTestRule.onNode(
+            hasContentDescriptionExactly(context.getString(R.string.library))
+                .and(hasBottomBarAncestor)
+        )
+
     val walletButtonInteraction: SemanticsNodeInteraction
         get() = composeTestRule.onNode(
             hasContentDescriptionExactly(context.getString(R.string.wallet))
                 .and(hasBottomBarAncestor)
         )
 
-    val starsButtonInteraction: SemanticsNodeInteraction
+    val marketplaceButtonInteraction: SemanticsNodeInteraction
         get() = composeTestRule.onNode(
-            hasContentDescriptionExactly(context.getString(R.string.stars))
-                .and(hasBottomBarAncestor)
-        )
-
-    val tribeButtonInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNode(
-            hasContentDescriptionExactly(context.getString(R.string.tribe))
+            hasContentDescriptionExactly(context.getString(R.string.marketplace))
                 .and(hasBottomBarAncestor)
         )
 }

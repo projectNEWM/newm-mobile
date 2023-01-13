@@ -12,5 +12,5 @@ private fun emailValidationError(email: String): String {
 }
 
 private fun isEmailValid(email: String): Boolean {
-    return LoginFieldValidator.isEmailValid(email)
+    return email.isNullOrEmpty()
 }

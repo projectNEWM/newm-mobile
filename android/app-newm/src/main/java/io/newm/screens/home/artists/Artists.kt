@@ -19,7 +19,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.core.ui.utils.ArtistBackgroundBrush
+import io.newm.core.ui.utils.ActionButtonBackgroundBrush
 import io.newm.core.resources.R
 
 @Composable
@@ -63,7 +63,7 @@ fun ArtistCard(onArtistClicked: () -> Unit) {
         onClick = onArtistClicked
     ) {
         Column(
-            modifier = Modifier.background(brush = ArtistBackgroundBrush()),
+            modifier = Modifier.background(brush = ActionButtonBackgroundBrush()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

@@ -10,9 +10,11 @@ data class LogInUser(
     @SerialName("password") val password: String
 )
 
+@Serializable
 data class NewUser(
     val firstName: String? = null,
     val lastName: String? = null,
+    val nickname: String? = null,
     val pictureUrl: String? = null,
     val email: String,
     val newPassword: String,

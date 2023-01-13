@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class NewmAppComposableTest {
+class HomeAppNavigationTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<LoginActivity>()
@@ -45,24 +45,13 @@ class NewmAppComposableTest {
     }
 
     @Test
-    fun when_tap_tribe_on_bottom_bar_then_switches_to_tribe_screen() {
+    fun when_tap_library_on_bottom_bar_then_switches_to_library_screen() {
         onNewmApp {
             onBottomBar {
-                tribeButtonInteraction.performClick()
+                libraryButtonInteraction.performClick()
             }
 
-            assertTribeScreenIsDisplayed()
-        }
-    }
-
-    @Test
-    fun when_tap_stars_on_bottom_bar_then_switches_to_stars_screen() {
-        onNewmApp {
-            onBottomBar {
-                starsButtonInteraction.performClick()
-            }
-
-            assertStarsScreenIsDisplayed()
+            assertLibraryScreenIsDisplayed()
         }
     }
 
@@ -77,10 +66,20 @@ class NewmAppComposableTest {
         }
     }
 
+    @Test
+    fun when_tap_marketplace_on_bottom_bar_then_switches_to_marketplace_screen() {
+        onNewmApp {
+            onBottomBar {
+                marketplaceButtonInteraction.performClick()
+            }
+
+            assertMarketplaceScreenIsDisplayed()
+        }
+    }
+
     private fun onNewmApp(actions: NewmAppInteractions.() -> Unit) =
         onNewmApp(composeTestRule, actions)
 
     private fun onBottomBar(actions: BottomBarInteractions.() -> Unit) =
         onBottomBar(composeTestRule, actions)
-
 }

@@ -1,6 +1,5 @@
 package io.newm.feature.login.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.newm.shared.login.models.LoginStatus
@@ -24,28 +23,24 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
                     wrongPassword = false,
                     errorMessage = ""
                 )
-
                 when (val status: LoginStatus = useCase.logIn(email, password)) {
                     is LoginStatus.Success -> {
                         _state.value = _state.value.copy(
                             isUserLoggedIn = status.data.isValid(),
                             errorMessage = null
                         )
-                        Log.d("cje466", "LoginStatus.Success")
                     }
                     is LoginStatus.WrongPassword -> {
                         _state.value = _state.value.copy(
                             wrongPassword = true,
                             errorMessage = "invalid Password"
                         )
-                        Log.d("cje466", "LoginStatus.WrongPassword")
                     }
                     is LoginStatus.UserNotFound -> {
                         _state.value = _state.value.copy(
                             emailNotFound = true,
                             errorMessage = "An account for: $email Doesn't exist! Please sign up first!"
                         )
-                        Log.d("cje466", "LoginStatus.UserNotFound")
                     }
                     else -> {
                         // no-op

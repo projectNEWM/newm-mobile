@@ -5,8 +5,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import io.newm.screens.home.TAG_HOME_SCREEN
-import io.newm.screens.stars.TAG_STARS_SCREEN
-import io.newm.screens.tribe.TAG_TRIBE_SCREEN
+import io.newm.screens.marketplace.TAG_MARKETPLACE_SCREEN
+import io.newm.screens.library.TAG_LIBRARY_SCREEN
 import io.newm.screens.wallet.TAG_WALLET_SCREEN
 
 fun onNewmApp(
@@ -17,38 +17,33 @@ fun onNewmApp(
 }
 
 class NewmAppInteractions(private val composeTestRule: ComposeTestRule) {
-    private val walletScreenInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithTag(TAG_WALLET_SCREEN)
-
-    private val starsScreenInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithTag(TAG_STARS_SCREEN)
-
-    private val tribeScreenInteraction: SemanticsNodeInteraction
-        get() = composeTestRule.onNodeWithTag(TAG_TRIBE_SCREEN)
 
     val homeScreenInteraction: SemanticsNodeInteraction
         get() = composeTestRule.onNodeWithTag(TAG_HOME_SCREEN)
 
+    private val walletScreenInteraction: SemanticsNodeInteraction
+        get() = composeTestRule.onNodeWithTag(TAG_WALLET_SCREEN)
+
+    private val marketPlaceScreenInteraction: SemanticsNodeInteraction
+        get() = composeTestRule.onNodeWithTag(TAG_MARKETPLACE_SCREEN)
+
+    private val libraryScreenInteraction: SemanticsNodeInteraction
+        get() = composeTestRule.onNodeWithTag(TAG_LIBRARY_SCREEN)
+
+
+
     fun assertHomeScreenIsDisplayed() {
         homeScreenInteraction.assertIsDisplayed()
 
-        listOf(tribeScreenInteraction, starsScreenInteraction, walletScreenInteraction).forEach {
+        listOf(libraryScreenInteraction, walletScreenInteraction, marketPlaceScreenInteraction).forEach {
             it.assertDoesNotExist()
         }
     }
 
-    fun assertTribeScreenIsDisplayed() {
-        tribeScreenInteraction.assertIsDisplayed()
+    fun assertLibraryScreenIsDisplayed() {
+        libraryScreenInteraction.assertIsDisplayed()
 
-        listOf(homeScreenInteraction, starsScreenInteraction, walletScreenInteraction).forEach {
-            it.assertDoesNotExist()
-        }
-    }
-
-    fun assertStarsScreenIsDisplayed() {
-        starsScreenInteraction.assertIsDisplayed()
-
-        listOf(homeScreenInteraction, tribeScreenInteraction, walletScreenInteraction).forEach {
+        listOf(homeScreenInteraction, walletScreenInteraction, marketPlaceScreenInteraction).forEach {
             it.assertDoesNotExist()
         }
     }
@@ -56,7 +51,15 @@ class NewmAppInteractions(private val composeTestRule: ComposeTestRule) {
     fun assertWalletScreenIsDisplayed() {
         walletScreenInteraction.assertIsDisplayed()
 
-        listOf(homeScreenInteraction, tribeScreenInteraction, starsScreenInteraction).forEach {
+        listOf(homeScreenInteraction, libraryScreenInteraction, marketPlaceScreenInteraction).forEach {
+            it.assertDoesNotExist()
+        }
+    }
+
+    fun assertMarketplaceScreenIsDisplayed() {
+        marketPlaceScreenInteraction.assertIsDisplayed()
+
+        listOf(homeScreenInteraction, libraryScreenInteraction, walletScreenInteraction).forEach {
             it.assertDoesNotExist()
         }
     }

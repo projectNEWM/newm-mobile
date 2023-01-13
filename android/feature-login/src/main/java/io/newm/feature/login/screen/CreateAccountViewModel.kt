@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
+class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
 
     private val _state = MutableStateFlow(SignupUserState())
     val state: StateFlow<SignupUserState>
@@ -41,6 +41,12 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
         )
     }
 
+    fun setNickName(nickname: String) {
+        _state.value = _state.value.copy(
+            nickname = nickname
+        )
+    }
+
     fun requestCode() {
         viewModelScope.launch {
             _state.value.let {
@@ -68,6 +74,7 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
             )
 
             val status = useCase.registerUser(
+                nickname = _state.value.nickname.orEmpty(),
                 email = _state.value.email.orEmpty(),
                 password = _state.value.password.orEmpty(),
                 passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
@@ -101,6 +108,7 @@ class SignupViewModel(private val useCase: SignupUseCase) : ViewModel() {
     }
 
     data class SignupUserState(
+        val nickname: String? = null,
         val email: String? = null,
         val password: String? = null,
         val passwordConfirmation: String? = null,

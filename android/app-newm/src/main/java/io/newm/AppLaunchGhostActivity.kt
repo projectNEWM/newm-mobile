@@ -7,7 +7,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import io.newm.shared.login.UserSession
 import org.koin.android.ext.android.inject
 
-class LaunchNewmActivity : ComponentActivity() {
+class AppLaunchGhostActivity : ComponentActivity() {
 
     private val userSession: UserSession by inject()
 
@@ -26,15 +26,10 @@ class LaunchNewmActivity : ComponentActivity() {
     }
 
     private fun launchHomeActivity() {
-        startActivity(Intent(this@LaunchNewmActivity, HomeActivity::class.java))
+        startActivity(Intent(this@AppLaunchGhostActivity, HomeActivity::class.java))
     }
 
     private fun launchLoginActivity() {
-        startActivity(Intent(this@LaunchNewmActivity, LoginActivity::class.java))
-    }
-
-    //TODO: Replace with refresh token from db
-    companion object {
-        var isUserLoggedIn: Boolean = false
+        startActivity(Intent(this@AppLaunchGhostActivity, LoginActivity::class.java))
     }
 }

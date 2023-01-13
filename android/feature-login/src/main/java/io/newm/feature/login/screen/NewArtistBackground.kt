@@ -12,7 +12,6 @@ fun PreLoginArtistBackgroundContentTemplate(content: @Composable () -> Unit) {
     Box(
         modifier = Modifier.fillMaxHeight().fillMaxWidth(),
     ) {
-        LoginPageBackgroundImage(backgroundImage = R.drawable.bg_login)
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,

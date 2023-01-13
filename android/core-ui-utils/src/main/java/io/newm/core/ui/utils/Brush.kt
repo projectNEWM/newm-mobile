@@ -31,7 +31,7 @@ fun SongRingBrush(): Brush {
 }
 
 @Composable
-fun ArtistBackgroundBrush(): Brush {
+fun ActionButtonBackgroundBrush(): Brush {
     return Brush.verticalGradient(
         colors = listOf(
             colorResource(id = R.color.purple_artist_background_1),

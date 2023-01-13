@@ -16,6 +16,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import io.newm.core.theme.NewmColors
 import io.newm.feature.login.screen.TextFieldError
 import io.newm.feature.login.screen.TextFieldState
 
@@ -82,7 +83,7 @@ fun Password(
             }
         ),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.onSurface,
+            textColor = MaterialTheme.colors.error,
         )
     )
 

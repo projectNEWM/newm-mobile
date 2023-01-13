@@ -1,4 +1,4 @@
-package io.newm.screens.stars
+package io.newm.screens.library
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,18 +13,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
-internal const val TAG_STARS_SCREEN = "TAG_STARS_SCREEN"
+internal const val TAG_LIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 
 @Composable
-fun StarsScreen() {
+fun LibraryScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
-            .testTag(TAG_STARS_SCREEN)
+            .testTag(TAG_LIBRARY_SCREEN)
     ) {
         Text(
-            text = "Coming Soon",
+            text = "Library",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

@@ -24,7 +24,7 @@ fun WalletScreen() {
             .testTag(TAG_WALLET_SCREEN)
     ) {
         Text(
-            text = "Coming Soon",
+            text = "Wallet",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

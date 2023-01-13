@@ -15,8 +15,10 @@ sealed class Screen(val route: String) {
     object WalletLanding : Screen("wallet-landing")
 
     //Single Screens
+    object LoginLandingScreen : Screen("login-landing")
     object LoginScreen : Screen("login")
     object Signup : Screen("signup")
     object VerificationCode : Screen("verification")
+    object WhatShouldWeCallYou : Screen("what-should-we-call-you")
     object NowPlayingScreen : Screen("now-playing")
 }

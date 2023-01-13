@@ -2,7 +2,6 @@ package io.newm
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.*
@@ -13,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -26,8 +24,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.airbnb.android.showkase.models.Showkase
-import io.newm.components.NewmRainbowDivider
-import io.newm.core.theme.NewmBlack
 import io.newm.navigation.Navigation
 import io.newm.screens.Screen
 import io.newm.core.resources.R
@@ -96,7 +92,6 @@ private fun DebugMenuButton() {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun NewmBottomNavigation(
     currentRootScreen: Screen,
@@ -109,10 +104,7 @@ internal fun NewmBottomNavigation(
         exit = slideOutVertically(targetOffsetY = { it }),
     ) {
         Column(Modifier.height(76.dp)) {
-            NewmRainbowDivider()
             BottomNavigation(
-                backgroundColor = NewmBlack,
-                contentColor = Color.White,
                 modifier = Modifier
                     .fillMaxHeight()
                     .testTag(TAG_BOTTOM_NAVIGATION)
@@ -120,26 +112,26 @@ internal fun NewmBottomNavigation(
                 HomeBottomNavigationItem(
                     icon = R.drawable.ic_home,
                     selected = currentRootScreen == Screen.HomeRoot,
-                    label = stringResource(R.string.home),
-                    onClick = { onNavigationSelected(Screen.HomeRoot) }
+                    onClick = { onNavigationSelected(Screen.HomeRoot) },
+                    contentDescription = stringResource(R.string.home)
                 )
                 HomeBottomNavigationItem(
-                    icon = R.drawable.ic_tribe,
+                    icon = R.drawable.ic_library,
                     selected = currentRootScreen == Screen.TribeRoot,
-                    label = stringResource(R.string.tribe),
-                    onClick = { onNavigationSelected(Screen.TribeRoot) }
-                )
-                HomeBottomNavigationItem(
-                    icon = R.drawable.ic_stars,
-                    selected = currentRootScreen == Screen.StarsRoot,
-                    label = stringResource(R.string.stars),
-                    onClick = { onNavigationSelected(Screen.StarsRoot) }
+                    onClick = { onNavigationSelected(Screen.TribeRoot) },
+                    contentDescription = stringResource(R.string.library)
                 )
                 HomeBottomNavigationItem(
                     icon = R.drawable.ic_wallet,
                     selected = currentRootScreen == Screen.WalletRoot,
-                    label = stringResource(R.string.wallet),
-                    onClick = { onNavigationSelected(Screen.WalletRoot) }
+                    onClick = { onNavigationSelected(Screen.WalletRoot) },
+                    contentDescription = stringResource(R.string.wallet)
+                )
+                HomeBottomNavigationItem(
+                    icon = R.drawable.ic_marketplace,
+                    selected = currentRootScreen == Screen.StarsRoot,
+                    onClick = { onNavigationSelected(Screen.StarsRoot) },
+                    contentDescription = stringResource(R.string.marketplace)
                 )
             }
         }
@@ -156,13 +148,12 @@ fun BottomNavigationBarPreview() {
 private fun RowScope.HomeBottomNavigationItem(
     @DrawableRes icon: Int,
     selected: Boolean,
-    label: String,
     onClick: () -> Unit,
+    contentDescription: String?
 ) {
     BottomNavigationItem(
-        icon = { Icon(painterResource(id = icon), contentDescription = label) },
+        icon = { Icon(painterResource(id = icon), contentDescription = contentDescription) },
         modifier = Modifier.align(Alignment.CenterVertically),
-        label = { Text(label) },
         selected = selected,
         onClick = onClick
     )

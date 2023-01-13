@@ -16,7 +16,7 @@ class LoginScreenTest : ScreenshotTest {
     @Before
     fun setup() {
         composeTestRule.activity.setContent {
-            LoginScreen(onUserLoggedIn = {}, onSignupClick = {})
+            LoginScreen(onUserLoggedIn = {})
         }
     }
 
