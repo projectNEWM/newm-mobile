@@ -1,8 +1,8 @@
-import io.projectnewm.shared.di.commonModule
-import io.projectnewm.shared.login.models.LoginStatus
-import io.projectnewm.shared.login.models.RequestEmailStatus
-import io.projectnewm.shared.login.repository.LogInRepository
-import io.projectnewm.shared.platformModule
+import io.newm.shared.di.commonModule
+import io.newm.shared.login.models.LoginStatus
+import io.newm.shared.login.models.RequestEmailStatus
+import io.newm.shared.login.repository.LogInRepository
+import shared.platformModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -23,7 +23,7 @@ class LoginRepositoryTest : KoinTest {
     init {
         Dispatchers.setMain(StandardTestDispatcher())
         startKoin {
-            modules(commonModule(enableNetworkLogs = false), platformModule())
+            modules(commonModule(enableNetworkLogs = false), shared.platformModule())
         }
     }
 

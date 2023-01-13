@@ -20,10 +20,10 @@ jobs:
           java-version: 11
 
       - name: create google-services.json
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-project-newm/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
 
       - name: build android app
-        run: ./gradlew :android:app-project-newm:assembleDebug
+        run: ./gradlew :android:app-newm:assembleDebug
 
       - uses: actions/upload-artifact@v2
         with:
