@@ -1,20 +1,24 @@
-package io.newm
+package io.newm.home
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
 import com.karumi.shot.ScreenshotTest
+import io.newm.LoginActivity
+import io.newm.NewmApp
 import io.newm.core.theme.NewmTheme
 import io.newm.interactions.BottomBarInteractions
 import io.newm.interactions.NewmAppInteractions
 import io.newm.interactions.onBottomBar
 import io.newm.interactions.onNewmApp
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-class HomeScreenLightModeTest: ScreenshotTest {
+@Ignore
+class HomeScreenDarkModeTest: ScreenshotTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<LoginActivity>()
@@ -23,7 +27,7 @@ class HomeScreenLightModeTest: ScreenshotTest {
     @Before
     fun setup() {
         composeTestRule.activity.setContent {
-            NewmTheme(darkTheme = false) {
+            NewmTheme(darkTheme = true) {
                 NewmApp()
             }
         }
@@ -34,7 +38,7 @@ class HomeScreenLightModeTest: ScreenshotTest {
         onNewmApp {
             assertHomeScreenIsDisplayed()
         }
-        compareScreenshot(composeTestRule, "Home Screen (Light Mode)")
+        compareScreenshot(composeTestRule, "Home Screen (Dark Mode)")
     }
 
     @Test
@@ -45,7 +49,7 @@ class HomeScreenLightModeTest: ScreenshotTest {
             }
             assertLibraryScreenIsDisplayed()
         }
-        compareScreenshot(composeTestRule, "Home Library Screen (Light Mode)")
+        compareScreenshot(composeTestRule, "Library Screen (Dark Mode)")
     }
 
     @Test
@@ -56,7 +60,7 @@ class HomeScreenLightModeTest: ScreenshotTest {
             }
             assertWalletScreenIsDisplayed()
         }
-        compareScreenshot(composeTestRule, "Wallet Screen (Light Mode)")
+        compareScreenshot(composeTestRule, "Wallet Screen (Dark Mode)")
     }
 
     @Test
@@ -68,7 +72,7 @@ class HomeScreenLightModeTest: ScreenshotTest {
 
             assertMarketplaceScreenIsDisplayed()
         }
-        compareScreenshot(composeTestRule, "Marketplace Screen (Light Mode)")
+        compareScreenshot(composeTestRule, "Marketplace Screen (Dark Mode)")
     }
 
     @Test

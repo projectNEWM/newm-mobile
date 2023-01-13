@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.ui.buttons.PrimaryButton
 
 @Composable
-fun WhatSWhatShouldWeCallYouScreen(
+fun WhatShouldWeCallYouScreen(
     viewModel: CreateAccountViewModel,
     done: () -> Unit,
 ) {

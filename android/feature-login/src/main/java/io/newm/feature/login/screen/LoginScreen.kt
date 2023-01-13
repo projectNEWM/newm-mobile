@@ -105,22 +105,22 @@ fun LoginPageMainImage(@DrawableRes mainImage: Int) {
     )
 }
 
-//@Preview
-//@Composable
-//private fun DefaultLightLoginScreenPreview() {
-//    NewmTheme(darkTheme = false) {
-//        LoginScreen(
-//            onUserLoggedIn = {},
-//        )
-//    }
-//}
-//
-//@Preview
-//@Composable
-//private fun DefaultDarkLoginScreenPreview() {
-//    NewmTheme(darkTheme = true) {
-//        LoginScreen(
-//            onUserLoggedIn = {},
-//        )
-//    }
-//}
+@Preview
+@Composable
+private fun DefaultLightLoginScreenPreview() {
+    NewmTheme(darkTheme = false) {
+        LoginScreen(
+            onUserLoggedIn = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DefaultDarkLoginScreenPreview() {
+    NewmTheme(darkTheme = true) {
+        LoginScreen(
+            onUserLoggedIn = {},
+        )
+    }
+}

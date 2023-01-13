@@ -95,9 +95,11 @@ dependencies {
     debugImplementation(Google.composeUiTestManifest)
 
     testImplementation(JUnit.jUnit)
+    testImplementation(Mockk.mockk)
 
     androidTestImplementation(Google.espressoTest)
     androidTestImplementation(Google.Test.composeUiTestJUnit)
     androidTestImplementation(JUnit.androidxComposeJUnit)
     androidTestImplementation(JUnit.androidxJUnit)
+    androidTestImplementation(Mockk.android)
 }

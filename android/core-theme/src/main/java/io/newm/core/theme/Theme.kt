@@ -5,8 +5,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-fun NewmTheme(darkTheme: Boolean = true, content: @Composable () -> Unit) {
-    val colors = if (darkTheme || isSystemInDarkTheme()) {
+fun NewmTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+    val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette

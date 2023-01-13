@@ -65,7 +65,7 @@ fun WelcomeToNewm(
             )
         }
         composable(Screen.WhatShouldWeCallYou.route) {
-            WhatSWhatShouldWeCallYouScreen(
+            WhatShouldWeCallYouScreen(
                 viewModel = signupViewModel,
                 done = { navController.navigate(Screen.VerificationCode.route) }
             )
