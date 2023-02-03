@@ -4,12 +4,13 @@ import SwiftUI
 
 extension LoginModule: LoginViewProviding {
 	public func loginView() -> AnyView {
-		LoginView().erased
+		EmptyView().erased
 	}
 }
 
 extension LoginModule: CreateAccountViewProviding {
 	public func createAccountView() -> AnyView {
-		CreateAccountView().erased
+//		CreateAccountView().erased
+		EmptyView().erased
 	}
 }

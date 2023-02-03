@@ -95,7 +95,7 @@ public struct BorderOverlay: ViewModifier {
 }
 
 public extension View {
-	func borderOverlay(color: any ShapeStyle, radius: CGFloat, width: CGFloat) -> some View {
+	func borderOverlay(color: any ShapeStyle, radius: CGFloat = 0, width: CGFloat) -> some View {
 		modifier(BorderOverlay(color: color, radius: radius, width: width))
 	}
 }

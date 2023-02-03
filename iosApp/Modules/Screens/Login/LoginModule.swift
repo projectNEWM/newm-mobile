@@ -12,9 +12,9 @@ public final class LoginModule: ModuleProtocol {
 			self as LoginViewProviding
 		}
 		
-		Resolver.register {
-			LoginViewModel()
-		}
+//		Resolver.register {
+//			LoginViewModel()
+//		}
 		
 		Resolver.register {
 			do {
