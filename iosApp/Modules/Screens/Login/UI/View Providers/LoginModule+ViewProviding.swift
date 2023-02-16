@@ -4,7 +4,11 @@ import SwiftUI
 
 extension LoginModule: LoginViewProviding {
 	public func loginView() -> AnyView {
-		EmptyView().erased
+		NavigationView {
+			LandingView()
+		}
+		.preferredColorScheme(.dark)
+		.erased
 	}
 }
 

@@ -31,7 +31,6 @@ public struct MainView: View {
 				.overlay {
 					miniPlayerView
 						.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
-						
 				}
 		}
 	}

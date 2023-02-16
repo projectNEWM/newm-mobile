@@ -2,6 +2,7 @@ import Foundation
 import shared
 import Resolver
 
+@MainActor
 class CreateAccountViewModel: ObservableObject {
 	@Published var email: String = ""
 	@Published var password: String = ""
@@ -10,23 +11,27 @@ class CreateAccountViewModel: ObservableObject {
 	@Published var error: String?
 	@Published var loading: Bool = false
 	
-	@Injected private var createAccountUseCase: SignupUseCase
+	var nextEnabled: Bool {
+		password == confirmPassword &&
+		LoginFieldValidator().validate(email: email, password: password)
+	}
 	
-	var passwordsMatch: Bool { password == confirmPassword }
+	@Injected private var createAccountUseCase: SignupUseCase
 	
 	@Published var route: CreateAccountRoute?
 	
-	func confirmTapped() {
+	func next() {
 		loading = true
-		Task {
-			do {
-				try await createAccountUseCase.requestEmailConfirmationCode(email: email)
-				loading = false
-				route = .codeConfirmation(.init(password: password, passwordConfirmation: confirmPassword, email: email))
-			} catch {
-				loading = false
-				self.error = error.localizedDescription
-			}
-		}
+		route = .codeConfirmation
+//		Task {
+//			do {
+//				try await createAccountUseCase.requestEmailConfirmationCode(email: email)
+//				loading = false
+//				route = .codeConfirmation(.init(password: password, passwordConfirmation: confirmPassword, email: email))
+//			} catch {
+//				loading = false
+//				self.error = error.localizedDescription
+//			}
+//		}
 	}
 }

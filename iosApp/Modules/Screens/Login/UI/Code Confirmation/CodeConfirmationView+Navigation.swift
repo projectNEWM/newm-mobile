@@ -4,16 +4,16 @@ import Resolver
 import ModuleLinker
 import SwiftUINavigation
 
-extension CreateAccountView {
+extension CodeConfirmationView {
 	struct Links: View {
-		@Binding var route: CreateAccountRoute?
+		@Binding var route: CodeConfirmationRoute?
 		
 		var body: some View {
 			ZStack {
 				NavigationLink(unwrapping: $route,
-							   case: /CreateAccountRoute.codeConfirmation,
-							   destination: { _ in
-					CodeConfirmationView()
+							   case: /CodeConfirmationRoute.username,
+							   destination: { code in
+					UsernameView()
 				}, onNavigate: clearLinks, label: {})
 			}
 		}

@@ -1,3 +1,10 @@
 "WELCOME_TO_NEWM" = "Welcome to NEWM";
 "LOGIN" = "Login";
 "CREATE_NEW_ACCOUNT" = "Create new account";
+"ENTER" = "Enter";
+"EMAIL" = "E-MAIL";
+"PASSWORD" = "PASSWORD";
+"YOUR_PASSWORD" = "Your password";
+"EMAIL_PROMPT" = "john@mail.com";
+"CONFIRM_PASSWORD" = "Confirm your password";
+"NEXT" = "Next";

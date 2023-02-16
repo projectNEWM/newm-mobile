@@ -2,19 +2,16 @@ import Foundation
 import Combine
 import ModuleLinker
 import Resolver
+import shared
 
+@MainActor
 class MainViewModel: ObservableObject {
-	private var cancellables = Set<AnyCancellable>()
-
 	@Published var selectedTab: MainViewModelTab = .home
-	@MainActor @Published var shouldShowLogin: Bool = false
-
-	@Injected private var loggedInUserUseCase: LoggedInUserUseCaseProtocol
+	@Published var shouldShowLogin: Bool = false
 	
-	init() {
-//		loggedInUserUseCase.loggedInUser
-//			.map { $0 == nil }
-//			.assign(to: \.shouldShowLogin, on: self)
-//			.store(in: &cancellables)
-	}
+	private var cancelables = Set<AnyCancellable>()
+
+	@Injected private var userSession: UserSession
+	
+	init() {}
 }

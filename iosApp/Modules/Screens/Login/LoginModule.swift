@@ -12,10 +12,6 @@ public final class LoginModule: ModuleProtocol {
 			self as LoginViewProviding
 		}
 		
-//		Resolver.register {
-//			LoginViewModel()
-//		}
-		
 		Resolver.register {
 			do {
 				return try LoginUseCaseFactory().loginUseCase()
@@ -40,6 +36,13 @@ public final class LoginModule: ModuleProtocol {
 	}
 }
 
+func buttonText(_ text: String) -> some View {
+	Text(verbatim: text)
+		.padding()
+		.frame(maxWidth: .infinity)
+		.bold()
+}
+
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
@@ -47,9 +50,9 @@ extension LoginModule {
 			MockLogInLogOutUseCase.shared as LoggedInUserUseCaseProtocol
 		}
 		
-//		mockResolver.register {
+		mockResolver.register {
 //			MockLogInLogOutUseCase.shared as LoginUseCase
-//		}
+		}
 		
 		mockResolver.register {
 			MockLogInLogOutUseCase.shared as LogOutUseCaseProtocol

@@ -18,6 +18,7 @@ struct LandingView: View {
 			.font(.inter(ofSize: 14).weight(.semibold))
 		}
 		.padding()
+		.links(Links(route: $viewModel.route))
 	}
 	
 	@ViewBuilder
@@ -28,15 +29,10 @@ struct LandingView: View {
 	
 	@ViewBuilder
 	private var loginButton: some View {
-		HStack {
-			Spacer()
-			Button {
-				viewModel.login()
-			} label: {
-				Text(verbatim: .login)
-					.padding()
-			}
-			Spacer()
+		Button {
+			viewModel.login()
+		} label: {
+			buttonText(.login)
 		}
 		.background(Gradients.loginGradient.gradient)
 		.foregroundColor(.white)
@@ -44,19 +40,14 @@ struct LandingView: View {
 	
 	@ViewBuilder
 	private var createAccountButton: some View {
-		HStack {
-			Spacer()
-			Button {
-				viewModel.createAccount()
-			} label: {
-				Text(verbatim: .createNewAccount)
-					.padding()
-			}
-			Spacer()
+		Button {
+			viewModel.createAccount()
+		} label: {
+			buttonText(.createNewAccount)
 		}
 		.background(.clear)
-		.foregroundColor(NEWMColor.pink.swiftUIColor)
-		.borderOverlay(color: NEWMColor.grey500.swiftUIColor, width: 2)
+		.foregroundColor(NEWMColor.pink())
+		.borderOverlay(color: NEWMColor.grey500(), width: 2)
 	}
 }
 

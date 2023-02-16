@@ -11,7 +11,7 @@ struct TransactionsView: View {
 		VStack {
 			ForEach(model.sections, id: \.title) {
 				TransactionsSection(model: $0)
-				NEWMColor.grey600.swiftUIColor
+				NEWMColor.grey600()
 					.frame(height: 2)
 			}
 			.padding(.bottom, 20)
@@ -43,10 +43,10 @@ struct TransactionCell: View {
 				HStack {
 					Text(model.title1)
 					if let title2 = model.title2 {
-						Text("\(title2)").foregroundColor(NEWMColor.grey100.swiftUIColor)
+						Text("\(title2)").foregroundColor(NEWMColor.grey100())
 					}
 				}
-				Text(model.time).foregroundColor(NEWMColor.grey200.swiftUIColor)
+				Text(model.time).foregroundColor(NEWMColor.grey200())
 			}.font(.inter(ofSize: 12).weight(.medium))
 			Spacer()
 			Text(model.amount).font(.inter(ofSize: 12).bold())

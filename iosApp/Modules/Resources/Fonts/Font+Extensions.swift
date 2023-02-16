@@ -31,6 +31,10 @@ public extension Font {
 		.custom("Inter", size: size).weight(.medium)
 	}
 	
+	static func dmSerifItalic(ofSize size: CGFloat) -> Font {
+		.custom("DMSerifText-Italic", size: size)
+	}
+	
 	static var thisWeekCellAmountFont: Font {
 		var fontDescriptor = UIFont(name: "RalewayRoman-Medium", size: 20)!.fontDescriptor
 		var fontFeatures = [

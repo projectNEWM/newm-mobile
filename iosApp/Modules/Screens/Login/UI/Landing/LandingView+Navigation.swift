@@ -1,19 +1,25 @@
 import Foundation
-import SwiftUI
 import Resolver
-import ModuleLinker
+import SwiftUI
 import SwiftUINavigation
 
-extension CreateAccountView {
+extension LandingView {
 	struct Links: View {
-		@Binding var route: CreateAccountRoute?
+		@Binding var route: LandingRoute?
 		
 		var body: some View {
 			ZStack {
 				NavigationLink(unwrapping: $route,
-							   case: /CreateAccountRoute.codeConfirmation,
+							   case: /LandingRoute.login,
 							   destination: { _ in
-					CodeConfirmationView()
+					LoginView()
+						.backButton()
+				}, onNavigate: clearLinks, label: {})
+				
+				NavigationLink(unwrapping: $route,
+							   case: /LandingRoute.createAccount,
+							   destination: { _ in
+					CreateAccountView()
 				}, onNavigate: clearLinks, label: {})
 			}
 		}

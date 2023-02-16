@@ -19,7 +19,7 @@ public struct PickerSheet<Option>: View where Option: CustomStringConvertible & 
 	
 	public var body: some View {
 		VStack {
-			NEWMColor.grey400.swiftUIColor.frame(height: 2)
+			NEWMColor.grey400().frame(height: 2)
 			ScrollView(showsIndicators: false) {
 				HStack {
 					Text(title).font(.interMedium(ofSize: 12)).foregroundColor(NEWMColor.grey100())
