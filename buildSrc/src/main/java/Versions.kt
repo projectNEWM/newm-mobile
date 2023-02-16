@@ -32,4 +32,5 @@ object Versions {
     const val showkase = "1.0.0-beta12"
     const val sqlDelight = "1.5.4"
     const val kermit = "1.0.0"
+    const val testParameterInjector = "1.10"
 }

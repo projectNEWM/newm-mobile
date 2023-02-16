@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -23,18 +24,39 @@ fun CreateAccountScreen(
     onNext: () -> Unit,
     viewModel: CreateAccountViewModel
 ) {
+    val userState by viewModel.state.collectAsState()
+
+    CreateAccountScreen(
+        onUserLoggedIn = onUserLoggedIn,
+        onNext = onNext,
+        userState = userState,
+        setUserEmail = viewModel::setUserEmail,
+        setUserPassword = viewModel::setUserPassword,
+        setUserPasswordConfirmation = viewModel::setUserPasswordConfirmation,
+        requestCode = viewModel::requestCode,
+    )
+}
+
+@Composable
+internal fun CreateAccountScreen(
+    onUserLoggedIn: () -> Unit,
+    onNext: () -> Unit,
+    userState: CreateAccountViewModel.SignupUserState,
+    setUserEmail: (String) -> Unit,
+    setUserPassword: (String) -> Unit,
+    setUserPasswordConfirmation: (String) -> Unit,
+    requestCode: () -> Unit,
+) {
     PreLoginArtistBackgroundContentTemplate {
 
-        val userState = viewModel.state.collectAsState()
-
         LaunchedEffect(
-            key1 = userState.value.verificationRequested,
-            key2 = userState.value.verificationRequested
+            key1 = userState.verificationRequested,
+            key2 = userState.verificationRequested
         ) {
-            if (userState.value.verificationRequested) {
+            if (userState.verificationRequested) {
                 onNext()
             }
-            if (userState.value.isUserRegistered) {
+            if (userState.isUserRegistered) {
                 onUserLoggedIn()
             }
         }
@@ -66,10 +88,10 @@ fun CreateAccountScreen(
             if (passwordState1.isValid && passwordState2.isValid
                 && passwordState1.text == passwordState2.text || true
             ) {
-                viewModel.setUserEmail("cescobar+2@newm.io")
-                viewModel.setUserPassword("Password18")
-                viewModel.setUserPasswordConfirmation("Password18")
-                viewModel.requestCode()
+                setUserEmail("cescobar+2@newm.io")
+                setUserPassword("Password18")
+                setUserPasswordConfirmation("Password18")
+                requestCode()
             }
         }
     }

@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.androidLibrary)
     kotlin(Plugins.android)
+    id(Plugins.paparazzi)
 }
 
 android {
@@ -54,6 +55,7 @@ dependencies {
     debugImplementation(Google.composeUiTestManifest)
 
     testImplementation(JUnit.jUnit)
+    testImplementation(Google.testParameterInjector)
 
     androidTestImplementation(JUnit.androidxJUnit)
     androidTestImplementation(Google.espressoTest)
