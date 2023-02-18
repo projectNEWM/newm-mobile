@@ -1,7 +1,7 @@
 package io.newm.feature.login.screen
 
 import app.cash.paparazzi.DeviceConfig
-import app.cash.paparazzi.DeviceConfig.Companion.PIXEL_2
+import app.cash.paparazzi.DeviceConfig.Companion.NEXUS_4
 import app.cash.paparazzi.DeviceConfig.Companion.PIXEL_6
 import app.cash.paparazzi.Paparazzi
 import com.google.testing.junit.testparameterinjector.TestParameter
@@ -20,7 +20,6 @@ class CreateAccountScreenTest(
     @get:Rule
     val paparazzi = Paparazzi(
         deviceConfig = testDevice.deviceConfig.copy(fontScale = fontScale.scale),
-        theme = "android:Theme.Material.Light.NoActionBar"
     )
 
     @Test
@@ -52,7 +51,7 @@ enum class TestTheme {
 enum class TestDevice(
     val deviceConfig: DeviceConfig,
 ) {
-    Pixel2(PIXEL_2),
+    Nexus4(NEXUS_4),
     Pixel6(PIXEL_6)
 }
 
