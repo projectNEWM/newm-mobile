@@ -84,7 +84,7 @@ internal fun CreateAccountScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SecondaryButton(text = "Next") {
+        SecondaryButton(text = "Nextttt") {
             if (passwordState1.isValid && passwordState2.isValid
                 && passwordState1.text == passwordState2.text || true
             ) {

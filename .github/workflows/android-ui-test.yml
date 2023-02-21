@@ -25,12 +25,11 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
       - name: create google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
 
       - name: run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 28
-          profile: pixel_4_xl
-          script: adb shell settings put global hidden_api_policy_p_apps 1 && adb shell settings put global hidden_api_policy_pre_p_apps 1 && ./gradlew debugExecuteScreenshotTests
+        run: ./gradlew verifyPaparazziDebug
