@@ -5,6 +5,8 @@
 .DS_Store
 /build
 */build
+# Paparazzi failure output folder
+**/out
 /captures
 .externalNativeBuild
 .cxx
