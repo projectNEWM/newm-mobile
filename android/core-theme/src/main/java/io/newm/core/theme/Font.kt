@@ -15,3 +15,10 @@ val montserrat = FontFamily(
     Font(R.font.montserrat_medium, weight = FontWeight.Medium)
     // TODO: More fonts
 )
+
+val inter = FontFamily(
+    Font(R.font.inter_normal, weight = FontWeight.Normal),
+    Font(R.font.inter_semibold, weight = FontWeight.SemiBold),
+    Font(R.font.inter_bold, weight = FontWeight.Bold)
+    // TODO: More fonts
+)
