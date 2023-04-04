@@ -33,7 +33,7 @@ fun initKoin(enableNetworkLogs: Boolean = true, appDeclaration: KoinAppDeclarati
 
 // called by iOS etc
 //https://johnoreilly.dev/posts/kotlinmultiplatform-koin/
-fun initKoin() = initKoin(enableNetworkLogs = false) {}
+fun initKoin() = initKoin(enableNetworkLogs = true) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
@@ -47,7 +47,11 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<UserSession> { UserSessionImpl() }
 }
 
-fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }
+fun createJson() = Json {
+    isLenient = true
+    ignoreUnknownKeys = true
+    encodeDefaults = true
+}
 
 fun createHttpClient(json: Json, enableNetworkLogs: Boolean) =
     HttpClient(CIO) {

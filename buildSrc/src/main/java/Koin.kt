@@ -1,6 +1,6 @@
 object Koin {
-    private const val VERSION = "3.2.2"
-    private const val koinAndroidCompose = "3.3.0"
+    private const val VERSION = "3.4.0"
+    private const val koinAndroidCompose = "3.4.3"
 
     const val core = "io.insert-koin:koin-core:${VERSION}"
     const val ktor = "io.insert-koin:koin-ktor:${VERSION}"
