@@ -10,8 +10,7 @@ class MockData {
 	}
 	
 	static var artistImageUrl: String {
-		@Injected var imageProvider: TestImageProvider
-		return imageProvider.url(for: .bowie)
+		""
 	}
 }
 #endif

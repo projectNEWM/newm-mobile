@@ -20,9 +20,7 @@ public final class LibraryModule: ModuleProtocol {
 #if DEBUG
 extension LibraryModule {
     public func registerAllMockedServices(mockResolver: Resolver) {
-        mockResolver.register {
-            MockLibraryViewUIModelProviding() as LibraryViewUIModelProviding
-        }
-    }
+
+	}
 }
 #endif

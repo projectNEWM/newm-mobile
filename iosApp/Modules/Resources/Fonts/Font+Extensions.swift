@@ -27,6 +27,10 @@ public extension Font {
 		.custom("Inter", size: size)
 	}
 	
+	static func interMedium(ofSize size: CGFloat) -> Font {
+		.custom("Inter", size: size).weight(.medium)
+	}
+	
 	static var thisWeekCellAmountFont: Font {
 		var fontDescriptor = UIFont(name: "RalewayRoman-Medium", size: 20)!.fontDescriptor
 		var fontFeatures = [
@@ -46,6 +50,7 @@ public extension Font {
 }
 
 public extension Font {
+	static let caption2: Font = .custom("caption2", fixedSize: 12)
 	static let caption3: Font = .custom("caption3", fixedSize: 11)
 	static let caption4: Font = .custom("caption4", fixedSize: 10)
     static let newmTitle1: Font = .ralewayExtraBold(ofSize: 32)

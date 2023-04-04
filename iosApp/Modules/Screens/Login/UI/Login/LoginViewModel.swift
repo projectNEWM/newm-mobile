@@ -4,7 +4,7 @@ import shared
 import ModuleLinker
 import Resolver
 import SharedUI
-import Utilities
+import shared
 
 class LoginViewModel: ObservableObject {
 	//TODO: move localizable to strings file
@@ -20,16 +20,20 @@ class LoginViewModel: ObservableObject {
 	@Published var state: ViewState<Void> = .loaded(())
 	@Published var route: LoginRoute?
 	
-	var fieldsAreValid: Bool { loginFieldValidator.validate(email: email, password: password) }
+	var fieldsAreValid: Bool {
+		loginFieldValidator.isEmailValid(email: email) && loginFieldValidator.isPasswordValid(password: password)
+	}
 	
 	@Injected private var loginFieldValidator: LoginFieldValidator
-	@Injected private var logInUseCase: LogInUseCaseProtocol
+	@Injected private var logInUseCase: LoginUseCase
 
 	func enterNewmTapped() {
 		state = .loading
 		Task { @MainActor in
 			do {
-				try await logInUseCase.logIn(email: email, password: email)
+//				try await logInUseCase.logIn(email: email, password: email)
+//				//TODO: remove this when KMM sets up use case
+//				MockLogInLogOutUseCase.shared._loggedInUser.send(email)
 				state = .loaded(())
 			} catch {
 				state = .error(error)

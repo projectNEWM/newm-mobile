@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "heart-add-fill.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

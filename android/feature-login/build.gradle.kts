@@ -1,10 +1,13 @@
 plugins {
     id(Plugins.androidLibrary)
     kotlin(Plugins.android)
+    id(Plugins.paparazzi)
 }
 
 android {
     compileSdk = Versions.androidCompileSdk
+
+    namespace = "io.newm.feature.login"
 
     defaultConfig {
         minSdk = Versions.androidMinSdk
@@ -52,6 +55,7 @@ dependencies {
     debugImplementation(Google.composeUiTestManifest)
 
     testImplementation(JUnit.jUnit)
+    testImplementation(Google.testParameterInjector)
 
     androidTestImplementation(JUnit.androidxJUnit)
     androidTestImplementation(Google.espressoTest)

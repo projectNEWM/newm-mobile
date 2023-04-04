@@ -23,6 +23,7 @@ object Google {
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.androidxNavigation}"
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.androidxSplashScreen}"
+    const val testParameterInjector = "com.google.testparameterinjector:test-parameter-injector:${Versions.testParameterInjector}"
 
     object Test {
         const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"

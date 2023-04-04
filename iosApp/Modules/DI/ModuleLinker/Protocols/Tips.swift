@@ -24,5 +24,5 @@ public enum TipAmount: CaseIterable, CustomStringConvertible, Identifiable {
 		}
 	}
 	
-	public var id: ObjectIdentifier { description.objectIdentifier }
+	public var id: Self { self }
 }

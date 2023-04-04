@@ -2,6 +2,7 @@ import Foundation
 import ModuleLinker
 import Resolver
 import SwiftUI
+import shared
 
 public final class ArtistModule: ModuleProtocol {
 	public static var shared = ArtistModule()
@@ -14,13 +15,17 @@ public final class ArtistModule: ModuleProtocol {
 	
 #if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
+		mockResolver.register {
+			MockArtistViewUIModelProviding() as ArtistViewUIModelProviding
+		}
 		
+		mockResolver.register {
+			MockArtistRepo() as ArtistRepo
+		}
 	}
 #endif
 }
 
-extension ArtistModule: ArtistViewProviding {
-	public func artistView(id: String) -> AnyView {
-		ArtistView(id: id).erased
-	}
-}
+extension Song: Identifiable {}
+extension Artist: Identifiable {}
+

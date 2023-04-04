@@ -1,70 +1,63 @@
 import SwiftUI
-import ModuleLinker
 
-extension ColorsModule: ColorProviding {
-	public func color(for newmColor: NEWMColor) -> Color {
-		switch newmColor {
-		case .newmLightBlue:
-			return Color(.newmLightBlue)
-		case .newmBlue:
-			return Color(.newmBlue)
-		case .newmPurple:
-			return Color(.newmPurple)
-		case .newmPink:
-			return Color(.newmPink)
-		case .newmRed:
-			return Color(.newmRed)
-		case .newmOrange:
-			return Color(.newmOrange)
-		case .newmYellow:
-			return Color(.newmYellow)
-		case .newmGreen:
-			return Color(.newmGreen)
-		case .newmOffPink:
-			return Color(.newmOffPink)
-		case .grey100:
-			return Color(.grey100)
-		case .grey600:
-			return Color(.grey600)
-		case .newmPurple2:
-			return Color(.newmPurple2)
-		}
-	}
+enum ColorError: Error {
+	case invalidHex
+	case hexScanFailed
 }
 
 public extension Color {
-	init(_ newmColor: NEWMColor) {
-		self = {
-			switch newmColor {
-			case .newmLightBlue:
-				return Color(value: NEWMColor.newmLightBlue.rawValue)
-			case .newmBlue:
-				return Color(value: NEWMColor.newmBlue.rawValue)
-			case .newmPurple:
-				return Color(value: NEWMColor.newmPurple.rawValue)
-			case .newmPink:
-				return Color(value: NEWMColor.newmPink.rawValue)
-			case .newmRed:
-				return Color(value: NEWMColor.newmRed.rawValue)
-			case .newmOrange:
-				return Color(value: NEWMColor.newmOrange.rawValue)
-			case .newmYellow:
-				return Color(value: NEWMColor.newmYellow.rawValue)
-			case .newmGreen:
-				return Color(value: NEWMColor.newmGreen.rawValue)
-			case .newmOffPink:
-				return Color(value: NEWMColor.newmOffPink.rawValue)
-			case .grey100:
-				return Color(value: NEWMColor.grey100.rawValue)
-			case .grey600:
-				return Color(value: NEWMColor.grey600.rawValue)
-			case .newmPurple2:
-				return Color(value: NEWMColor.newmPurple2.rawValue)
-			}
-		}()
+	init(hex: String) throws {
+		var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+		hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+		var rgb: UInt64 = 0
+
+		var r: CGFloat = 0.0
+		var g: CGFloat = 0.0
+		var b: CGFloat = 0.0
+		var a: CGFloat = 1.0
+
+		let length = hexSanitized.count
+
+		guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { throw ColorError.hexScanFailed }
+
+		if length == 6 {
+			r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+			g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+			b = CGFloat(rgb & 0x0000FF) / 255.0
+		} else if length == 8 {
+			r = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
+			g = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
+			b = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
+			a = CGFloat(rgb & 0x000000FF) / 255.0
+		} else {
+			throw ColorError.invalidHex
+		}
+
+		self.init(red: r, green: g, blue: b, opacity: a)
 	}
-	
-	init(value: String) {
-		self = Color(value, bundle: Bundle(for: ColorsModule.self))
+}
+
+public extension Array where Element == String {
+	var colors: [Color] {
+		try! map(Color.init(hex:))
+	}
+}
+
+public extension Array where Element == ColorAsset {
+	var hexStrings: [String] {
+		map(\.hexString)
+	}
+}
+
+public extension ColorAsset {
+	var hexString: String {
+		let components = color.cgColor.components
+		let r: CGFloat = components?[0] ?? 0.0
+		let g: CGFloat = components?[1] ?? 0.0
+		let b: CGFloat = components?[2] ?? 0.0
+		
+		let hexString = String.init(format: "#%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
+		return hexString
 	}
 }

@@ -12,4 +12,5 @@ extension String {
 	@Localizable(HomeModule.self) static var followersThisWeek = "FOLLOWERS_THIS_WEEK"
 	@Localizable(HomeModule.self) static var royaltiesThisWeek = "ROYALTIES_THIS_WEEK"
 	@Localizable(HomeModule.self) static var earningsThisWeek = "EARNINGS_THIS_WEEK"
+	@Localizable(HomeModule.self) static var recentlyPlayed = "RECENTLY_PLAYED"
 }

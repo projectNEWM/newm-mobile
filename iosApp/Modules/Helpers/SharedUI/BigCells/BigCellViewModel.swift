@@ -1,37 +1,40 @@
 import Foundation
 import shared
-import Utilities
+import Resolver
+import ModuleLinker
 
 public struct BigCellViewModel: Identifiable {
 	public let image: URL?
 	public let name: String
 	public let genre: String
-	public let artistID: String
-	public var id: ObjectIdentifier { artistID.objectIdentifier }
+	public let id: String
+	public let onTap: () -> ()
 }
 
 public extension BigCellViewModel {
-	init(artist: Artist) {
+	init(artist: Artist, onTap: @escaping () -> ()) {
 		if let imageUrl = URL(string: artist.image) {
 			self.image = imageUrl
 		} else {
-			Log("bad artist image URL")
 			image = nil
 		}
 		name = artist.name
 		genre = artist.genre
-		artistID = artist.id
+		id = artist.id
+		self.onTap = onTap
 	}
-	
-	init(song: Song) {
+}
+
+public extension BigCellViewModel {
+	init(song: Song, onTap: @escaping () -> ()) {
 		if let imageUrl = URL(string: song.image) {
 			self.image = imageUrl
 		} else {
-			Log("bad song image URL")
 			image = nil
 		}
 		name = song.title
-		artistID = song.songId
-		genre = "GENRE"
+		id = song.id
+		genre = song.genre.title
+		self.onTap = onTap
 	}
 }

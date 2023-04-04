@@ -16,29 +16,28 @@ extension LibraryView {
         
         var body: some View {
             ScrollView {
-                titleSection
+				titleSection
                 VStack(spacing: 36) {
-                    BigCellSection(uiModel.recentlyPlayedSection, actionHandler: actionHandler.songTapped)
+					HorizontalStackSection(uiModel.recentlyPlayedSection, content: BigCell.init)
                     PlaylistsSection(uiModel.yourPlaylistsSection, actionHandler: actionHandler.playlistTapped)
-                    BigCellSection(uiModel.likedSongsSection, actionHandler: actionHandler.songTapped)
-                } 
+					HorizontalStackSection(uiModel.likedSongsSection, content: BigCell.init)
+                }
             }
+			.links(LibraryView.Links(route: $route))
         }
         
         private var titleSection: some View {
-            TitleSection(model: uiModel.title)
+			TitleSection(isGreeting: false,
+						 title: uiModel.title.title,
+						 gradient: uiModel.title.gradientColors)
                     .padding(.bottom, 41)
-                //TODO: THIS ANIMATION ISN'T WORKING
-                //                .transition(.opacity.animation(.easeInOut(duration: 1.0)))
         }
     }
 }
 
 struct LibraryView_Preview: PreviewProvider {
     static var previews: some View {
-        //is this doing anything?
-//        Resolver.root = .mock
-        return LibraryView()
+        LibraryView()
             .preferredColorScheme(.dark)
     }
 }

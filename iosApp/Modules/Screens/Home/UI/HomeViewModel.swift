@@ -3,15 +3,17 @@ import Combine
 import Resolver
 import ModuleLinker
 import shared
-import Utilities
 import SharedUI
 import Artist
+import AudioPlayer
+import Colors
 
 class HomeViewModel: ObservableObject {
-	@MainActor @Published var state: ViewState<(HomeViewUIModel, HomeViewActionHandling)> = .loading
+	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
 	@Published var route: HomeRoute?
 	
-	@Injected private var uiModelProvider: HomeViewUIModelProviding
+	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
+	@Injected private var audioPlayer: AudioPlayerImpl
 
 	init() {
 		Task {
@@ -24,7 +26,7 @@ class HomeViewModel: ObservableObject {
 		do {
 			state = .loading
 			let uiModel = try await uiModelProvider.getModel()
-			state = .loaded((uiModel, self))
+			state = .loaded(uiModel)
 		} catch {
 			state = .error(error)
 		}
@@ -33,16 +35,11 @@ class HomeViewModel: ObservableObject {
 
 extension HomeViewModel: HomeViewActionHandling {
 	func artistTapped(id: String) {
-		print(#function + " " + id)
 		route = .artist(id: id)
 	}
 	
 	func songTapped(id: String) {
-		print(#function + " " + id)
-		route = .songPlaying(id: id)
+		audioPlayer.song = MockData.song(withID: id)
+		audioPlayer.playbackInfo.isPlaying = true
 	}
-}
-
-extension ThisWeekCellModel: Identifiable {
-	var id: ObjectIdentifier { labelText.objectIdentifier }
 }

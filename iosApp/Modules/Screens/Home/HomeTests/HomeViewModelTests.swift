@@ -9,6 +9,6 @@ class HomeViewModelTests: XCTestCase {
 		guard case .artist = vm.route else { return XCTFail() }
 		vm.route = nil
 		vm.songTapped(id: "1")
-		guard case .songPlaying = vm.route else { return XCTFail() }
+		guard case .nowPlaying = vm.route else { return XCTFail() }
 	}
 }

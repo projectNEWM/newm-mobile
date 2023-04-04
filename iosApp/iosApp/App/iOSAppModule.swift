@@ -6,14 +6,15 @@ import Wallet
 import Home
 import SharedUI
 import SwiftUI
-import Colors
 import Fonts
 import Login
-import SongPlaying
+import NowPlaying
 import PlaylistList
 import Tips
 import Artist
 import Library
+import AudioPlayer
+import Marketplace
 
 struct iOSAppModule: ModuleProtocol {
 	static var shared = iOSAppModule()
@@ -25,13 +26,14 @@ struct iOSAppModule: ModuleProtocol {
             LibraryModule.shared,
 			SharedUIModule.shared,
 			MainModule.shared,
-			ColorsModule.shared,
 			FontsModule.shared,
 			LoginModule.shared,
-			SongPlayingModule.shared,
+			NowPlayingModule.shared,
 			PlaylistModule.shared,
 			TipsModule.shared,
 			ArtistModule.shared,
+			AudioPlayerModule.shared,
+			MarketplaceModule.shared
 		]
 	}()
 	
