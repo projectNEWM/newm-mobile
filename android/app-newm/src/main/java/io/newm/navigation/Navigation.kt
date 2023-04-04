@@ -35,8 +35,8 @@ private fun NavGraphBuilder.addHomeTree() {
     ) {
         composable(route = Screen.HomeLanding.route) {
             HomeScreen(
-                onAvatarClick = {}, //TODO: Implement profile screen
-                onSearchClick = {}  //TODO: Implement search screen
+                onShowProfile = {}, //TODO: Implement profile screen
+                onThisWeekViewAll = {}, //TODO: Implement View All screen
             )
         }
 

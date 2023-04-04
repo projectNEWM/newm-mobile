@@ -10,7 +10,9 @@ val Black = Color.Black
 val Purple = Color(0xFFDC3CAA)
 val Pinkish = Color(0xFFF53C69)
 val Gray = Color(0xFF1C1C1E)
+val Gray600 = Color(0xFF121214)
 val Red = Color(0xFFFF0000)
+val Gray100 = Color(0xFF8E8E93)
 
 
 val LightColorPalette = lightColors(
