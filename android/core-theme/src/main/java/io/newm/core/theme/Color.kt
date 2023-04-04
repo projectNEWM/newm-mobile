@@ -1,6 +1,8 @@
 package io.newm.core.theme
 
 import androidx.compose.material.lightColors
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.airbnb.android.showkase.annotation.ShowkaseColor
 
@@ -13,6 +15,13 @@ val Gray = Color(0xFF1C1C1E)
 val Gray600 = Color(0xFF121214)
 val Red = Color(0xFFFF0000)
 val Gray100 = Color(0xFF8E8E93)
+val LightSkyBlue = Color(0xFF5091EB)
+val DarkViolet = Color(0xFFC341F0)
+val DarkPink = Color(0xFFF53C69)
+val OceanGreen = Color(0xFF41BE91)
+val BrightOrange = Color(0xFFFF6E32)
+val YellowJacket = Color(0xFFFFC33C)
+
 
 
 val LightColorPalette = lightColors(
