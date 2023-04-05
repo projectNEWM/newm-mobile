@@ -23,7 +23,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.airbnb.android.showkase.models.Showkase
+//import com.airbnb.android.showkase.models.Showkase
 import io.newm.navigation.Navigation
 import io.newm.screens.Screen
 import io.newm.core.resources.R
@@ -77,19 +77,21 @@ internal fun NewmApp(
 
 @Composable
 private fun DebugMenuButton() {
-    val context = LocalContext.current
+//    val context = LocalContext.current
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        IconButton(
-            modifier = Modifier.align(Alignment.TopStart),
-            onClick = { context.startActivity(Showkase.getBrowserIntent(context)) }) {
-            Icon(
-                imageVector = Icons.Default.Build,
-                contentDescription = "Debug",
-                tint = MaterialTheme.colors.onPrimary
-            )
-        }
-    }
+//    Box(modifier = Modifier.fillMaxSize()) {
+//        IconButton(
+//            modifier = Modifier.align(Alignment.TopStart),
+//            onClick = {
+//                context.startActivity(Showkase.getBrowserIntent(context))
+//            }) {
+//            Icon(
+//                imageVector = Icons.Default.Build,
+//                contentDescription = "Debug",
+//                tint = MaterialTheme.colors.onPrimary
+//            )
+//        }
+//    }
 }
 
 @Composable

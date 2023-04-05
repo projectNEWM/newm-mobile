@@ -2,7 +2,6 @@ package io.newm.core.theme
 
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
-import com.airbnb.android.showkase.annotation.ShowkaseColor
 
 
 val White = Color.White
@@ -40,41 +39,40 @@ val DarkColorPalette = lightColors(
 
 object NewmColors {
 
-    // ShowkaseColor
-    @ShowkaseColor(name = "Primary", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "Primary", group = ColorGroups.lightColors)
     val Primary = DarkColorPalette.primary
 
-    @ShowkaseColor(name = "PrimaryVariant", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "PrimaryVariant", group = ColorGroups.lightColors)
     val PrimaryVariant = DarkColorPalette.primaryVariant
 
-    @ShowkaseColor(name = "Secondary", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "Secondary", group = ColorGroups.lightColors)
     val Secondary = DarkColorPalette.secondary
 
-    @ShowkaseColor(name = "SecondaryVariant", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "SecondaryVariant", group = ColorGroups.lightColors)
     val SecondaryVariant = DarkColorPalette.secondaryVariant
 
-    @ShowkaseColor(name = "Background", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "Background", group = ColorGroups.lightColors)
     val Background = DarkColorPalette.background
 
-    @ShowkaseColor(name = "Surface", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "Surface", group = ColorGroups.lightColors)
     val Surface = DarkColorPalette.surface
 
-    @ShowkaseColor(name = "Error", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "Error", group = ColorGroups.lightColors)
     val Error = Red
 
-    @ShowkaseColor(name = "OnPrimary", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "OnPrimary", group = ColorGroups.lightColors)
     val OnPrimary = DarkColorPalette.onPrimary
 
-    @ShowkaseColor(name = "OnSecondary", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "OnSecondary", group = ColorGroups.lightColors)
     val OnSecondary = DarkColorPalette.onSecondary
 
-    @ShowkaseColor(name = "OnBackground", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "OnBackground", group = ColorGroups.lightColors)
     val OnBackground = DarkColorPalette.onBackground
 
-    @ShowkaseColor(name = "OnSurface", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "OnSurface", group = ColorGroups.lightColors)
     val OnSurface = DarkColorPalette.onSurface
 
-    @ShowkaseColor(name = "OnError", group = ColorGroups.lightColors)
+//    @ShowkaseColor(name = "OnError", group = ColorGroups.lightColors)
     val OnError = DarkColorPalette.onError
 }
 
