@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginResponse(
-    @SerialName("accessToken") val accessToken: String,
-    @SerialName("refreshToken") val refreshToken: String
+    val accessToken: String? = null,
+    val refreshToken: String? = null
 )
 
 sealed class LoginStatus {
@@ -17,7 +17,7 @@ sealed class LoginStatus {
 }
 
 fun LoginResponse.isValid(): Boolean {
-    return accessToken.isNotBlank() && refreshToken.isNotBlank()
+    return accessToken?.isNotBlank() == true && refreshToken?.isNotBlank() == true
 }
 
 sealed class RegisterStatus {

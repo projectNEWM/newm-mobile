@@ -37,9 +37,9 @@ android {
 
 dependencies {
 
-    kapt(Airbnb.showkaseProcessor)
+//    kapt(Airbnb.showkaseProcessor)
 
-    implementation(Airbnb.showkase)
+//    implementation(Airbnb.showkase)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)
     implementation(Google.composeMaterial)

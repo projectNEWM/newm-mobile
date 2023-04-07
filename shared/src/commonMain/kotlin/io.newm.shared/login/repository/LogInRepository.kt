@@ -41,15 +41,10 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
                 service.logIn(LogInUser(email = email, password = password))
 
             return if (response.isValid()) {
-                println("cje466 LogInRepositoryImpl accessToken - ${response.accessToken}")
-                println("cje466 LogInRepositoryImpl refreshToken - ${response.refreshToken}")
                 val auth = db.instance?.newmAuthQueries
-                println("cje466 DB BEFORE ${auth?.selectAll()?.executeAsList()}")
-                auth?.insertAuthData(1, response.accessToken, response.refreshToken)
-                println("cje466 DB AFTER ${auth?.selectAll()?.executeAsList()}")
+                auth?.insertAuthData(1, response.accessToken.orEmpty(), response.refreshToken.orEmpty())
                 LoginStatus.Success(response)
             } else {
-                println("cje466 LogInRepositoryImpl refreshToken - LoginStatus.UnknownError")
                 LoginStatus.UnknownError
             }
         } catch (e: ClientRequestException) {
