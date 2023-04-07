@@ -31,7 +31,7 @@ class LoginViewModel: ObservableObject {
 		state = .loading
 		Task { @MainActor in
 			do {
-//				try await logInUseCase.logIn(email: email, password: email)
+				try await logInUseCase.logIn(email: email, password: password)
 //				//TODO: remove this when KMM sets up use case
 //				MockLogInLogOutUseCase.shared._loggedInUser.send(email)
 				state = .loaded(())

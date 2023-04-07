@@ -18,8 +18,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
@@ -44,7 +44,7 @@ kotlin {
                 implementation(Kotlin.coroutinesCore)
                 implementation(SqlDelight.runtime)
                 api(Koin.core)
-                implementation(Log.kermit)
+                api(Log.kermit)
                 implementation(Ktor.clientLogging)
                 implementation(Ktor.ktorClientCore)
                 implementation(Ktor.ktorClientCIO)
