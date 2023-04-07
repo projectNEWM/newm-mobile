@@ -29,8 +29,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
@@ -58,8 +58,7 @@ android {
 
 dependencies {
 
-    kapt(Airbnb.showkaseProcessor)
-
+//    kapt(Airbnb.showkaseProcessor)
     implementation(platform(Google.firebase))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreResources))
@@ -68,7 +67,7 @@ dependencies {
     implementation(project(Modules.login))
     implementation(project(Modules.shared))
 
-    implementation(Airbnb.showkase)
+//    implementation(Airbnb.showkase)
     implementation(Google.activityCompose)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)

@@ -1,8 +1,7 @@
 package io.newm
 
 import android.app.Application
-import com.airbnb.android.showkase.annotation.ShowkaseRoot
-import com.airbnb.android.showkase.annotation.ShowkaseRootModule
+import co.touchlab.kermit.Logger
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.crashreporter.CrashReporterPlugin
@@ -15,8 +14,8 @@ import io.newm.di.viewmodels.viewModule
 import io.newm.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
-@ShowkaseRoot
-class NewmApplication : Application(), ShowkaseRootModule {
+//@ShowkaseRoot
+class NewmApplication : Application() { //}, ShowkaseRootModule {
 
     override fun onCreate() {
         super.onCreate()
@@ -28,6 +27,8 @@ class NewmApplication : Application(), ShowkaseRootModule {
                 viewModule
             )
         }
+
+        Logger.d { "NewmAndroid - NewmApplication" }
     }
 
     private fun devtoolsSetup() {

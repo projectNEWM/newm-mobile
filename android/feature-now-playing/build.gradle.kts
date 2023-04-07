@@ -19,8 +19,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     buildFeatures {
@@ -37,12 +37,12 @@ android {
 }
 
 dependencies {
-    kapt(Airbnb.showkaseProcessor)
+//    kapt(Airbnb.showkaseProcessor)
 
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.shared))
 
-    implementation(Airbnb.showkase)
+//    implementation(Airbnb.showkase)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)
     implementation(Google.composeMaterial)

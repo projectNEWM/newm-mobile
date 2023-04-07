@@ -1,6 +1,7 @@
 package shared
 
 import com.squareup.sqldelight.android.AndroidSqliteDriver
+import io.ktor.client.engine.android.*
 import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.db.NewmDatabaseWrapper
 import org.koin.dsl.module
@@ -10,4 +11,5 @@ actual fun platformModule() = module {
         val driver = AndroidSqliteDriver(NewmDatabase.Schema, get(), "newm.db")
         NewmDatabaseWrapper(NewmDatabase(driver))
     }
+    single { Android.create() }
 }
