@@ -11,6 +11,7 @@ import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.marketplace.MarketplaceScreen
 import io.newm.screens.library.LibraryScreen
+import io.newm.screens.search.SearchScreen
 import io.newm.screens.wallet.WalletScreen
 
 @Composable
@@ -23,6 +24,7 @@ fun Navigation(
     ) {
         addHomeTree()
         addTribeTree()
+        addSearchTree()
         addStarsTree()
         addWalletTree()
     }
@@ -53,6 +55,17 @@ private fun NavGraphBuilder.addTribeTree() {
     ) {
         composable(Screen.TribeLanding.route) {
             LibraryScreen()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addSearchTree() {
+    navigation(
+        route = Screen.SearchRoot.route,
+        startDestination = Screen.SearchLanding.route
+    ) {
+        composable(Screen.SearchLanding.route) {
+            SearchScreen()
         }
     }
 }

@@ -1,6 +1,7 @@
 package io.newm
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -12,12 +13,20 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -27,8 +36,15 @@ import androidx.navigation.compose.rememberNavController
 import io.newm.navigation.Navigation
 import io.newm.screens.Screen
 import io.newm.core.resources.R
+import io.newm.core.theme.*
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
+
+private val HomeIconGradient = iconGradient(LightSkyBlue, DarkViolet)
+private val LibraryIconGradient = iconGradient(DarkViolet, DarkPink)
+private val SearchIconGradient = iconGradient(DarkPink, BrightOrange)
+private val WalletIconGradient = iconGradient(OceanGreen, LightSkyBlue)
+private val MarketIconGradient = iconGradient(BrightOrange, YellowJacket)
 
 @Composable
 internal fun NewmApp(
@@ -78,7 +94,6 @@ internal fun NewmApp(
 @Composable
 private fun DebugMenuButton() {
 //    val context = LocalContext.current
-
 //    Box(modifier = Modifier.fillMaxSize()) {
 //        IconButton(
 //            modifier = Modifier.align(Alignment.TopStart),
@@ -109,31 +124,49 @@ internal fun NewmBottomNavigation(
             BottomNavigation(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .testTag(TAG_BOTTOM_NAVIGATION)
+                    .testTag(TAG_BOTTOM_NAVIGATION),
+                    backgroundColor = Black,
+                    contentColor = Gray100
             ) {
                 HomeBottomNavigationItem(
-                    icon = R.drawable.ic_home,
                     selected = currentRootScreen == Screen.HomeRoot,
+                    iconResId = R.drawable.ic_home,
+                    labelResId = R.string.home,
+                    selectedIconBrush = HomeIconGradient,
+                    selectedLabelColor = DarkViolet,
                     onClick = { onNavigationSelected(Screen.HomeRoot) },
-                    contentDescription = stringResource(R.string.home)
                 )
                 HomeBottomNavigationItem(
-                    icon = R.drawable.ic_library,
                     selected = currentRootScreen == Screen.TribeRoot,
+                    iconResId = R.drawable.ic_library,
+                    labelResId = R.string.library,
+                    selectedIconBrush = LibraryIconGradient,
+                    selectedLabelColor = DarkPink,
                     onClick = { onNavigationSelected(Screen.TribeRoot) },
-                    contentDescription = stringResource(R.string.library)
                 )
                 HomeBottomNavigationItem(
-                    icon = R.drawable.ic_wallet,
+                    selected = currentRootScreen == Screen.SearchRoot,
+                    iconResId = R.drawable.ic_search,
+                    labelResId = R.string.search,
+                    selectedIconBrush = SearchIconGradient,
+                    selectedLabelColor = BrightOrange,
+                    onClick = { onNavigationSelected(Screen.SearchRoot) },
+                )
+                HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.WalletRoot,
+                    iconResId = R.drawable.ic_wallet,
+                    labelResId = R.string.wallet,
+                    selectedIconBrush = WalletIconGradient,
+                    selectedLabelColor = LightSkyBlue,
                     onClick = { onNavigationSelected(Screen.WalletRoot) },
-                    contentDescription = stringResource(R.string.wallet)
                 )
                 HomeBottomNavigationItem(
-                    icon = R.drawable.ic_marketplace,
                     selected = currentRootScreen == Screen.StarsRoot,
+                    iconResId = R.drawable.ic_marketplace,
+                    labelResId = R.string.marketplace,
+                    selectedIconBrush = MarketIconGradient,
+                    selectedLabelColor = YellowJacket,
                     onClick = { onNavigationSelected(Screen.StarsRoot) },
-                    contentDescription = stringResource(R.string.marketplace)
                 )
             }
         }
@@ -146,16 +179,46 @@ fun BottomNavigationBarPreview() {
     NewmBottomNavigation(Screen.HomeRoot, true) {}
 }
 
+// Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
 @Composable
 private fun RowScope.HomeBottomNavigationItem(
-    @DrawableRes icon: Int,
     selected: Boolean,
+    @DrawableRes iconResId: Int,
+    @StringRes labelResId: Int,
+    selectedIconBrush: Brush,
+    selectedLabelColor: Color,
     onClick: () -> Unit,
-    contentDescription: String?
 ) {
+    val label = stringResource(id = labelResId)
     BottomNavigationItem(
-        icon = { Icon(painterResource(id = icon), contentDescription = contentDescription) },
-        modifier = Modifier.align(Alignment.CenterVertically),
+        icon = {
+            Icon(
+                modifier = if (selected) {
+                    Modifier
+                        .align(Alignment.CenterVertically)
+                        .graphicsLayer(alpha = 0.99f)   // After migration to compose 1.4+ replace with .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
+                        .drawWithCache {
+                            onDrawWithContent {
+                                drawContent()
+                                drawRect(selectedIconBrush, blendMode = BlendMode.SrcAtop)
+                            }
+                        }
+                } else {
+                    Modifier.align(Alignment.CenterVertically)
+                },
+                painter = painterResource(id = iconResId),
+                contentDescription = label,
+            )
+        },
+        label = {
+            Text(
+                text = label,
+                fontFamily = inter,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 10.sp,
+                color = if (selected) selectedLabelColor else Color.Unspecified
+            )
+        },
         selected = selected,
         onClick = onClick
     )
@@ -182,3 +245,12 @@ val routesWithoutBottomNavBar: List<String> by lazy {
         Screen.NowPlayingScreen.route
     )
 }
+
+private fun iconGradient(
+    startColor: Color,
+    endColor: Color
+) = Brush.linearGradient(
+    listOf(startColor, endColor),
+    start = Offset(0f, Float.POSITIVE_INFINITY),    // bottom-left
+    end = Offset(Float.POSITIVE_INFINITY, 0f)       // top-right
+)
