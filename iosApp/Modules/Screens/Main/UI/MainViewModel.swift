@@ -7,7 +7,7 @@ import shared
 @MainActor
 class MainViewModel: ObservableObject {
 	@Published var selectedTab: MainViewModelTab = .home
-	@Published var shouldShowLogin: Bool = false
+	@Published var shouldShowLogin: Bool = true
 	
 	private var cancelables = Set<AnyCancellable>()
 
