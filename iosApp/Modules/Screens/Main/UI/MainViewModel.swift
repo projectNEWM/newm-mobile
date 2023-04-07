@@ -7,7 +7,7 @@ class MainViewModel: ObservableObject {
 	private var cancellables = Set<AnyCancellable>()
 
 	@Published var selectedTab: MainViewModelTab = .home
-	@MainActor @Published var shouldShowLogin: Bool = false
+	@MainActor @Published var shouldShowLogin: Bool = true
 
 	@Injected private var loggedInUserUseCase: LoggedInUserUseCaseProtocol
 	

@@ -2,6 +2,7 @@ package io.newm.feature.login.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import io.newm.shared.login.models.RegisterStatus
 import io.newm.shared.login.models.RequestEmailStatus
 import io.newm.shared.login.usecases.SignupUseCase
@@ -16,6 +17,10 @@ class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
     val state: StateFlow<SignupUserState>
         get() = _state.asStateFlow()
 
+
+    init {
+        Logger.d { "NewmAndroid - CreateAccountViewModel" }
+    }
 
     fun setUserEmail(email: String) {
         _state.value = _state.value.copy(
@@ -48,6 +53,8 @@ class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
     }
 
     fun requestCode() {
+        Logger.d { "NewmAndroid - CreateAccountViewModel: requestCode()" }
+
         viewModelScope.launch {
             _state.value.let {
                 if (it.email?.isEmpty() == false && it.password == it.passwordConfirmation) {
@@ -68,6 +75,7 @@ class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
     }
 
     fun verifyAccount() {
+        Logger.d { "NewmAndroid - CreateAccountViewModel: verifyAccount()" }
         viewModelScope.launch {
             _state.value = _state.value.copy(
                 errorMessage = null
@@ -87,21 +95,25 @@ class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
                         isUserRegistered = true,
                         errorMessage = null
                     )
+                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus Success" }
                 }
                 is RegisterStatus.UserAlreadyExists -> {
                     _state.value = _state.value.copy(
                         errorMessage = "User associated with that Email Already Exists"
                     )
+                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus UserAlreadyExists" }
                 }
                 is RegisterStatus.UnknownError -> {
                     _state.value = _state.value.copy(
                         errorMessage = "Unknown Error"
                     )
+                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus UnknownError" }
                 }
                 is RegisterStatus.TwoFactorAuthenticationFailed -> {
                     _state.value = _state.value.copy(
                         errorMessage = "Wrong Verification Code"
                     )
+                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus Wrong Verification Code" }
                 }
             }
         }

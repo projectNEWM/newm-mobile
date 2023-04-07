@@ -23,6 +23,14 @@ public final class LoginModule: ModuleProtocol {
 		Resolver.register {
 			LoginFieldValidator()
 		}
+        Resolver.register {
+            do {
+                return try LoginUseCaseFactory().loginUseCase()
+            } catch {
+                print(error)
+                fatalError(error.localizedDescription)
+            }
+        }
 	}
 }
 
