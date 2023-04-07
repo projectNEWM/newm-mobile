@@ -63,6 +63,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(SqlDelight.androidDriver)
+                implementation(Ktor.clientAndroid)
             }
         }
         val androidTest by getting {
@@ -79,8 +80,8 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-
             dependencies {
+                implementation(Ktor.iosDarwin)
                 implementation(SqlDelight.nativeDriver)
             }
         }
