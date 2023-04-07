@@ -9,12 +9,24 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="home">Home</string>
+    <string name="library">Library</string>
+    <string name="search">Search</string>
     <string name="community">Community</string>
     <string name="tribe">Tribe</string>
     <string name="stars">Stars</string>
     <string name="wallet">Wallet</string>
+    <string name="marketplace">Market</string>
     <string name="compose">Compose</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="welcome">Hey %s 👋</string>
+    <string name="title_this_week">THIS WEEK</string>
+    <string name="view_all">VIEW ALL</string>
+    <string name="title_this_week_followers">+%s</string>
+    <string name="title_this_week_royalties">$%s</string>
+    <string name="title_this_week_earnings">+$%s</string>
+    <string name="subtitle_this_week_followers">Followers this week</string>
+    <string name="subtitle_this_week_royalties">Royalties this week</string>
+    <string name="subtitle_this_week_earnings">Earnings</string>
 </resources>

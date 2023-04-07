@@ -9,8 +9,9 @@ import androidx.navigation.compose.navigation
 import io.newm.feature.now.playing.NowPlayingScreen
 import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
-import io.newm.screens.stars.StarsScreen
-import io.newm.screens.tribe.TribeScreen
+import io.newm.screens.marketplace.MarketplaceScreen
+import io.newm.screens.library.LibraryScreen
+import io.newm.screens.search.SearchScreen
 import io.newm.screens.wallet.WalletScreen
 
 @Composable
@@ -21,22 +22,24 @@ fun Navigation(
         navController = navController,
         startDestination = Screen.HomeRoot.route
     ) {
-        addHomeTree(navController)
+        addHomeTree()
         addTribeTree()
+        addSearchTree()
         addStarsTree()
         addWalletTree()
     }
 }
 
-private fun NavGraphBuilder.addHomeTree(
-    navController: NavHostController
-) {
+private fun NavGraphBuilder.addHomeTree() {
     navigation(
         route = Screen.HomeRoot.route,
         startDestination = Screen.HomeLanding.route
     ) {
         composable(route = Screen.HomeLanding.route) {
-            HomeScreen(onClickSong = { navController.navigate(Screen.NowPlayingScreen.route) })
+            HomeScreen(
+                onShowProfile = {}, //TODO: Implement profile screen
+                onThisWeekViewAll = {}, //TODO: Implement View All screen
+            )
         }
 
         composable(Screen.NowPlayingScreen.route) {
@@ -51,7 +54,18 @@ private fun NavGraphBuilder.addTribeTree() {
         startDestination = Screen.TribeLanding.route
     ) {
         composable(Screen.TribeLanding.route) {
-            TribeScreen()
+            LibraryScreen()
+        }
+    }
+}
+
+private fun NavGraphBuilder.addSearchTree() {
+    navigation(
+        route = Screen.SearchRoot.route,
+        startDestination = Screen.SearchLanding.route
+    ) {
+        composable(Screen.SearchLanding.route) {
+            SearchScreen()
         }
     }
 }
@@ -62,7 +76,7 @@ private fun NavGraphBuilder.addStarsTree() {
         startDestination = Screen.StarsLanding.route
     ) {
         composable(Screen.StarsLanding.route) {
-            StarsScreen()
+            MarketplaceScreen()
         }
     }
 }

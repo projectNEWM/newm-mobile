@@ -6,7 +6,12 @@ sealed class Screen(val route: String) {
     object HomeLanding : Screen("home-landing")
 
     object TribeRoot : Screen("tribe-root")
+
     object TribeLanding : Screen("tribe-landing")
+
+    object SearchRoot : Screen("search-root")
+
+    object SearchLanding : Screen("search-landing")
 
     object StarsRoot : Screen("stars-root")
     object StarsLanding : Screen("stars-landing")

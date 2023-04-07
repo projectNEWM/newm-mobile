@@ -1,6 +1,7 @@
 package io.newm.shared.di
 
 import io.ktor.client.*
+import io.ktor.client.engine.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.defaultRequest
@@ -39,7 +40,7 @@ fun initKoin() = initKoin(enableNetworkLogs = false) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
-    single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
+    single { createHttpClient(get(), get(), enableNetworkLogs = enableNetworkLogs) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
 
     single { NewmApi(get()) }
@@ -51,8 +52,8 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }
 
-fun createHttpClient(json: Json, enableNetworkLogs: Boolean) =
-    HttpClient(CIO) {
+fun createHttpClient(httpClientEngine: HttpClientEngine, json: Json, enableNetworkLogs: Boolean) =
+    HttpClient(httpClientEngine) {
         defaultRequest {
             url(HttpRoutes.HOST)
         }
