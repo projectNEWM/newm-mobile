@@ -30,7 +30,7 @@ fun ThisWeekCarousel(
 ) {
     Column {
         Row(
-            modifier = Modifier.padding(start = 12.dp, end = 12.dp),
+            modifier = Modifier.padding(horizontal = 12.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.title_this_week),
@@ -47,7 +47,7 @@ fun ThisWeekCarousel(
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.clickable { onViewAll() })
         }
-        Row() {
+        Row {
             ThisWeekCard(
                 imageRes = R.drawable.ic_followers,
                 title = stringResource(R.string.title_this_week_followers, followers),
