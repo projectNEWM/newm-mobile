@@ -114,15 +114,11 @@
 		7625D14E29429CCC0033C669 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D14D29429CCC0033C669 /* Filters.swift */; };
 		7625D1522942B0740033C669 /* LibraryView+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1502942B0740033C669 /* LibraryView+Navigation.swift */; };
 		7625D1532942B0740033C669 /* LibraryRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoute.swift */; };
-		7625D1552942B0A50033C669 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 7625D1542942B0A50033C669 /* SwiftUINavigation */; };
-		7625D1572942B0C60033C669 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 7625D1562942B0C60033C669 /* CasePaths */; };
 		7628EBD527E551D60077ECFD /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628EBD427E551D60077ECFD /* iosAppTests.swift */; };
 		76325CCB28A128CC003836C7 /* LoginRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76325CCA28A128CC003836C7 /* LoginRoutes.swift */; };
 		76325CD128A12A2A003836C7 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76325CD028A12A2A003836C7 /* CreateAccountView.swift */; };
 		76325CD328A12A37003836C7 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76325CD228A12A37003836C7 /* CreateAccountViewModel.swift */; };
-		76325CD528A13AE0003836C7 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 76325CD428A13AE0003836C7 /* SwiftUINavigation */; };
 		76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
-		7632CEC2291B331400B7BE75 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 7632CEC1291B331400B7BE75 /* CasePaths */; };
 		7648DE12292C69EF006F7259 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DDFA292C69EF006F7259 /* MockData.swift */; };
 		7648DE13292C69EF006F7259 /* ProfileImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DDFD292C69EF006F7259 /* ProfileImageCellModel.swift */; };
 		7648DE15292C69EF006F7259 /* TrackCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DDFF292C69EF006F7259 /* TrackCellModel.swift */; };
@@ -180,7 +176,6 @@
 		766E8FE328562FDC00F18779 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
 		766E8FEF285636EE00F18779 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 766E8FEE285636EE00F18779 /* Media.xcassets */; };
 		766E8FF32856418A00F18779 /* HomeViewUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766E8FF22856418A00F18779 /* HomeViewUIModel.swift */; };
-		7670042B28275B5700ED72D8 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 7670042A28275B5700ED72D8 /* SwiftUINavigation */; };
 		7670043328279F4D00ED72D8 /* Artist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD5E28164D99007573B4 /* Artist.framework */; };
 		7673F26429582BE200B65F1A /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		7673F26529582BE200B65F1A /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -207,7 +202,6 @@
 		768B499B2903B89F0099911D /* LibraryViewUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B498F2903B89F0099911D /* LibraryViewUIModel.swift */; };
 		7696194628A14BD9005782F1 /* LoginModule+ViewProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696194528A14BD9005782F1 /* LoginModule+ViewProviding.swift */; };
 		7696194828A14C2D005782F1 /* HomeModule+ViewProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696194728A14C2D005782F1 /* HomeModule+ViewProviding.swift */; };
-		769994A828A1409F0074C772 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 769994A728A1409F0074C772 /* SwiftUINavigation */; };
 		76A223FE281FB43900F7188A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A223FD281FB43900F7188A /* MockData.swift */; };
 		76ADDBA328869F94008AA39A /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDBA228869F94008AA39A /* Auth.swift */; };
 		76ADDBB028869FF3008AA39A /* Auth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76ADDBAA28869FF3008AA39A /* Auth.framework */; };
@@ -1095,7 +1089,6 @@
 				76D01D4528164A8400305605 /* Home.framework in Frameworks */,
 				76D01DA428164B2100305605 /* ModuleLinker.framework in Frameworks */,
 				76C76138291F445B0054D2F3 /* AudioPlayer.framework in Frameworks */,
-				769994A828A1409F0074C772 /* SwiftUINavigation in Frameworks */,
 				767C42A328BECC0800EDE63E /* shared.xcframework in Frameworks */,
 				7618FD7728164DA2007573B4 /* Login.framework in Frameworks */,
 				7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */,
@@ -1168,7 +1161,6 @@
 				766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */,
 				766E8FAC28562EBF00F18779 /* Colors.framework in Frameworks */,
 				76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */,
-				76325CD528A13AE0003836C7 /* SwiftUINavigation in Frameworks */,
 				7618FDFF28164E67007573B4 /* ModuleLinker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1228,10 +1220,8 @@
 				761837C5295819CB0033250B /* AudioPlayer.framework in Frameworks */,
 				76DE1C94284C010000B8CA7A /* SharedUI.framework in Frameworks */,
 				766E8FBC28562F2D00F18779 /* Colors.framework in Frameworks */,
-				7625D1552942B0A50033C669 /* SwiftUINavigation in Frameworks */,
 				766E8FB828562F2900F18779 /* Fonts.framework in Frameworks */,
 				76562525284BEF6C004B6E4B /* Resolver in Frameworks */,
-				7625D1572942B0C60033C669 /* CasePaths in Frameworks */,
 				7656251F284BEF68004B6E4B /* ModuleLinker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1306,9 +1296,7 @@
 				7603002D28367FDB00BBF78C /* SharedUI.framework in Frameworks */,
 				7670043328279F4D00ED72D8 /* Artist.framework in Frameworks */,
 				760300362836FAE200BBF78C /* Fonts.framework in Frameworks */,
-				7632CEC2291B331400B7BE75 /* CasePaths in Frameworks */,
 				76D01DBC28164B6600305605 /* ModuleLinker.framework in Frameworks */,
-				7670042B28275B5700ED72D8 /* SwiftUINavigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2346,7 +2334,6 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
-				769994A728A1409F0074C772 /* SwiftUINavigation */,
 				76F823C428BEC2B3003A524C /* Resolver */,
 			);
 			productName = iosApp;
@@ -2488,7 +2475,6 @@
 			name = Login;
 			packageProductDependencies = (
 				76DC3A39281A0E80004D5021 /* Resolver */,
-				76325CD428A13AE0003836C7 /* SwiftUINavigation */,
 			);
 			productName = Login;
 			productReference = 7618FD7128164DA1007573B4 /* Login.framework */;
@@ -2617,8 +2603,6 @@
 			name = Library;
 			packageProductDependencies = (
 				76562524284BEF6C004B6E4B /* Resolver */,
-				7625D1542942B0A50033C669 /* SwiftUINavigation */,
-				7625D1562942B0C60033C669 /* CasePaths */,
 			);
 			productName = Library;
 			productReference = 76562514284BEF30004B6E4B /* Library.framework */;
@@ -2789,8 +2773,6 @@
 			name = Home;
 			packageProductDependencies = (
 				76DC3A49281A0EA9004D5021 /* Resolver */,
-				7670042A28275B5700ED72D8 /* SwiftUINavigation */,
-				7632CEC1291B331400B7BE75 /* CasePaths */,
 			);
 			productName = Home;
 			productReference = 76D01D3F28164A8400305605 /* Home.framework */;
@@ -2941,8 +2923,6 @@
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
 				760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */,
-				7670042728275B4C00ED72D8 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
-				7670042C28275B6800ED72D8 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -5694,22 +5674,6 @@
 				kind = branch;
 			};
 		};
-		7670042728275B4C00ED72D8 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.0;
-			};
-		};
-		7670042C28275B6800ED72D8 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -5717,26 +5681,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
-		};
-		7625D1542942B0A50033C669 /* SwiftUINavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7670042728275B4C00ED72D8 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
-			productName = SwiftUINavigation;
-		};
-		7625D1562942B0C60033C669 /* CasePaths */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7670042C28275B6800ED72D8 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
-			productName = CasePaths;
-		};
-		76325CD428A13AE0003836C7 /* SwiftUINavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7670042728275B4C00ED72D8 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
-			productName = SwiftUINavigation;
-		};
-		7632CEC1291B331400B7BE75 /* CasePaths */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7670042C28275B6800ED72D8 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
-			productName = CasePaths;
 		};
 		76562524284BEF6C004B6E4B /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -5747,16 +5691,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
-		};
-		7670042A28275B5700ED72D8 /* SwiftUINavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7670042728275B4C00ED72D8 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
-			productName = SwiftUINavigation;
-		};
-		769994A728A1409F0074C772 /* SwiftUINavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7670042728275B4C00ED72D8 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
-			productName = SwiftUINavigation;
 		};
 		76ADDBBA2886A004008AA39A /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
