@@ -12,6 +12,8 @@ public struct TitleSection: View {
 	public let title: String
 	public let profilePic: ProfilePic
 	public let gradient: [String]
+	
+	static public let height: CGFloat = 50
 
 	public init(isGreeting: Bool = false, title: String, profilePic: ProfilePic = .hide, gradient: [String]) {
 		self.isGreeting = isGreeting
@@ -30,15 +32,18 @@ public struct TitleSection: View {
 	
 	@ViewBuilder
 	private var titleView: some View {
-		let title = Text(title)
-			.font(.newmTitle1)
-		if isGreeting {
-			title
-		} else {
-			title.foregroundStyle(LinearGradient(colors: gradient.colors,
-												 startPoint: .bottomLeading,
-												 endPoint: .topTrailing))
+		Group {
+			let title = Text(title)
+				.font(.newmTitle1)
+			if isGreeting {
+				title
+			} else {
+				title.foregroundStyle(LinearGradient(colors: gradient.colors,
+													 startPoint: .bottomLeading,
+													 endPoint: .topTrailing))
+			}
 		}
+		.frame(height: TitleSection.height)
 	}
 	
 	@ViewBuilder
