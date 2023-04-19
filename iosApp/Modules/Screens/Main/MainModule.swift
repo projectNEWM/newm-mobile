@@ -3,6 +3,15 @@ import Resolver
 import SwiftUI
 import ModuleLinker
 import TabBar
+import shared
+
+class MockUserSession: UserSession {
+	var userLoggedIn = true
+	
+	func isUserLoggedIn() -> Bool {
+		userLoggedIn
+	}
+}
 
 public final class MainModule: ModuleProtocol {
 	public static let shared = MainModule()
@@ -28,6 +37,15 @@ public final class MainModule: ModuleProtocol {
 					return marketplaceViewProvider.marketplaceView()
 				}
 			]
+		}
+		
+		Resolver.register {
+			do {
+				return try UserSessionFactory().userSession() as UserSession
+			} catch {
+				print(error)
+				fatalError(error.localizedDescription)
+			}
 		}
 		
 		// Public

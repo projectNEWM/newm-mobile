@@ -3,7 +3,7 @@ import SwiftUI
 import Combine
 
 public protocol LoginViewProviding {
-	func loginView() -> AnyView
+	func loginView(shouldShow: Binding<Bool>) -> AnyView
 }
 
 public protocol LoggedInUserUseCaseProtocol {

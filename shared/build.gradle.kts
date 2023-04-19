@@ -6,6 +6,9 @@ plugins {
     id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
+    id("com.google.devtools.ksp") version "1.8.20-1.0.11"
+    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-7"
+
 }
 
 android {
@@ -108,4 +111,8 @@ sqldelight {
         packageName = "io.newm.shared.db.cache"
 //        sourceFolders = listOf("sqldelight")
     }
+}
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }

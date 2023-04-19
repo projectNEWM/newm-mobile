@@ -2,12 +2,20 @@ import Foundation
 import Resolver
 import ModuleLinker
 import SwiftUI
+import shared
 
 public final class MarketplaceModule: ModuleProtocol {
 	public static let shared = MarketplaceModule()
 	
 	public func registerAllServices() {
-		
+		Resolver.register {
+			do {
+				try GetGenresUseCaseFactory().getGenresUseCase()
+			} catch {
+				print(error)
+				fatalError(error.localizedDescription)
+			}
+		}
 	}
 }
 
@@ -16,10 +24,6 @@ extension MarketplaceModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		Resolver.register {
 			self as MarketplaceViewProviding
-		}
-		
-		Resolver.register {
-			MarketplaceViewModel()
 		}
 	}
 }

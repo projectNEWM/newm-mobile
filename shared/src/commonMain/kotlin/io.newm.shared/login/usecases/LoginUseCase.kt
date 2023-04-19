@@ -1,14 +1,17 @@
 package io.newm.shared.login.usecases
 
-import io.newm.shared.login.models.LoginStatus
+import io.newm.shared.login.repository.KMMException
 import io.newm.shared.login.repository.LogInRepository
+import kotlin.coroutines.cancellation.CancellationException
 
 interface LoginUseCase {
-    suspend fun logIn(email: String, password: String): LoginStatus
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun logIn(email: String, password: String)
 }
 
 internal class LoginUseCaseImpl(private val repository: LogInRepository) : LoginUseCase {
-    override suspend fun logIn(email: String, password: String): LoginStatus {
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun logIn(email: String, password: String) {
         return repository.logIn(email = email, password = password)
     }
 }

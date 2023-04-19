@@ -1,6 +1,5 @@
 package io.newm.shared.login.models
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,25 +8,18 @@ data class LoginResponse(
     val refreshToken: String? = null
 )
 
-sealed class LoginStatus {
-    data class Success(val data: LoginResponse) : LoginStatus()
-    object WrongPassword : LoginStatus()
-    object UserNotFound : LoginStatus()
-    object UnknownError : LoginStatus()
+sealed class LoginException: Throwable() {
+    object WrongPassword : LoginException()
+    object UserNotFound : LoginException()
+    object UnknownError : LoginException()
 }
 
 fun LoginResponse.isValid(): Boolean {
     return accessToken?.isNotBlank() == true && refreshToken?.isNotBlank() == true
 }
 
-sealed class RegisterStatus {
-    object Success : RegisterStatus()
-    object UserAlreadyExists : RegisterStatus()
-    object TwoFactorAuthenticationFailed : RegisterStatus()
-    object UnknownError : RegisterStatus()
-}
-
-sealed class RequestEmailStatus {
-    object Success : RequestEmailStatus()
-    object Failure : RequestEmailStatus()
+enum class RegisterError {
+    UserAlreadyExists,
+    TwoFactorAuthenticationFailed,
+    UnknownError
 }

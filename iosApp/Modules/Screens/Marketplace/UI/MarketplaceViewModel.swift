@@ -3,7 +3,9 @@ import SharedUI
 import ModuleLinker
 import Colors
 import shared
+import Resolver
 
+@MainActor
 class MarketplaceViewModel: ObservableObject {
 	enum Timespan: CaseIterable, CustomStringConvertible {
 		case hours24
@@ -33,10 +35,18 @@ class MarketplaceViewModel: ObservableObject {
 		}
 	}
 	
+	var genres: [String] = []
+	
+	//TODO: for some reason if I use @Injected here, it tries to get called before it's registered.  wtf.
+	private var getGenresUseCase: GetGenresUseCase!
+	
+	@Published var isLoading: Bool = true
+	@Published var error: String? = nil
+	
 	@Published var titleSection = MarketplaceTitleSectionModel(title: "MARKETPLACE", gradient: Gradients.marketplaceGradient)
-	let allCategories: [Category] = Category.allCases
-	@Published var selectedCategory: Category = Category.allCases[0]
-	@Published var selectedGenre: Genre = Genre.companion.allCases[0]
+	var allCategories: [Category] { Category.allCases(genres: genres) }
+	@Published var selectedCategory: Category!
+	@Published var selectedGenre: String!
 	@Published var selectedTimespan: Timespan = .hours24
 	@Published var selectedFilterCategory: NFTFilterCategories = .mostPopular
 	@Published var searchTerm: String = ""
@@ -52,6 +62,31 @@ class MarketplaceViewModel: ObservableObject {
 	var popularSongsCells: CellsSectionModel<SongCellModel> { CellsSectionModel(cells: popularSongs.filter { $0.title.lowercased().hasPrefix(searchTerm.lowercased()) }.map(\.trendingCellModel), title: "POPULAR \(selectedCategory.description.uppercased()) SONGS") }
 	var bloomingArtistsCells: CellsSectionModel<ArtistCellModel> { CellsSectionModel(cells: bloomingArtists.filter { $0.name.lowercased().hasPrefix(searchTerm.lowercased()) }.map(ArtistCellModel.init), title: "\(selectedCategory.description.uppercased()) ARTISTS BLOOMING") }
 	var nftSongsCells: [NFTCellModel] { nftSongs.filter { $0.song.title.lowercased().hasPrefix(searchTerm.lowercased()) } }
+	
+	init() {
+		isLoading = true
+		do {
+			getGenresUseCase = try GetGenresUseCaseFactory().getGenresUseCase()
+		} catch {
+			self.error = error.localizedDescription
+		}
+		Task {
+			await fetch()
+			selectedCategory = allCategories[0]
+			selectedGenre = genres[0]
+			isLoading = false
+		}
+	}
+	
+	private func fetch() async {
+		isLoading = true
+		do {
+			genres = try await getGenresUseCase.getGenres()
+		} catch {
+			self.error = error.localizedDescription
+		}
+		isLoading = false
+	}
 }
 
 struct ArtistCellModel: Identifiable {
@@ -64,11 +99,11 @@ struct ArtistCellModel: Identifiable {
 }
 
 extension MarketplaceViewModel {
-	enum Category: CaseIterable, Hashable, CustomStringConvertible {
+	enum Category: Hashable, CustomStringConvertible {
 		case trending
 		case newSongs
-		case genre(Genre)
-		
+		case genre(String)
+
 		//TODO: localize
 		var description: String {
 			switch self {
@@ -77,14 +112,14 @@ extension MarketplaceViewModel {
 			case .trending:
 				return "Trending"
 			case .genre(let genre):
-				return genre.title
+				return genre
 			}
 		}
-		
-		static var allCases: [MarketplaceViewModel.Category] {
-			[.trending, .newSongs]
+
+		static func allCases(genres: [String]) -> [Category] {
+			[Category.trending, Category.newSongs]
 			+
-			Genre.Companion().allCases.map(Category.genre)
+			genres.map(Category.genre)
 		}
 	}
 }

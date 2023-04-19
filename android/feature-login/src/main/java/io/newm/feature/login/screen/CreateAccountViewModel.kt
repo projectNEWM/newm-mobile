@@ -3,8 +3,7 @@ package io.newm.feature.login.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import io.newm.shared.login.models.RegisterStatus
-import io.newm.shared.login.models.RequestEmailStatus
+import io.newm.shared.login.models.RegisterException
 import io.newm.shared.login.usecases.SignupUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

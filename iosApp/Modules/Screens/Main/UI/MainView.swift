@@ -22,8 +22,8 @@ public struct MainView: View {
 		GeometryReader { geometry in
 			TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
 				.preferredColorScheme(.dark)
-				.fullScreenCover(isPresented: $viewModel.shouldShowLogin) { } content: {
-					loginViewProvider.loginView()
+				.fullScreenCover(isPresented: $viewModel.shouldShowLogin) {
+					loginViewProvider.loginView(shouldShow: $viewModel.shouldShowLogin)
 				}
 				.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
 					sheetView
@@ -31,7 +31,6 @@ public struct MainView: View {
 				.overlay {
 					miniPlayerView
 						.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
-						
 				}
 		}
 	}

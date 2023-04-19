@@ -17,6 +17,10 @@ public struct Gradients {
 	public static var walletGradient: [String] {
 		[NEWMColor.blue2, NEWMColor.green2].hexStrings
 	}
+	
+	public static var loginGradient: [String] {
+		[NEWMColor.purple, NEWMColor.pink].hexStrings
+	}
 }
 
 public extension Array where Element == String {
