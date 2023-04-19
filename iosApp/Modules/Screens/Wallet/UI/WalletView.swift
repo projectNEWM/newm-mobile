@@ -31,6 +31,7 @@ extension WalletView {
 			Spacer()
 			currencyPicker
 		}
+		.frame(height: TitleSection.height)
 		.addSidePadding()
 	}
 	
