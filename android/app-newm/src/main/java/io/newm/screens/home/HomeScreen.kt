@@ -1,9 +1,15 @@
 package io.newm.screens.home
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import io.newm.core.resources.R
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 
@@ -11,11 +17,12 @@ internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 fun HomeScreen(
     onShowProfile: () -> Unit,
     onThisWeekViewAll: () -> Unit,
+    onRecentlyPlayedViewAll: () -> Unit,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(state = rememberScrollState())
             .testTag(TAG_HOME_SCREEN),
         verticalArrangement = Arrangement.Top
     ) {
@@ -29,6 +36,27 @@ fun HomeScreen(
             royalties = 51.56,
             earnings = 2.15,
             onViewAll = onThisWeekViewAll
+        )
+        MusicCarousel(
+            title = stringResource(id = R.string.title_explore_music_carousel),
+            musicModels = exploreMusicModels, //TODO: Replace Hardcoded values with values from ViewModel
+            onViewDetails = {}
+        )
+        MusicCarousel(
+            title = stringResource(id = R.string.title_recently_played_music_carousel),
+            musicModels = recentlyPlayedMusicModels,
+            onViewDetails = {},
+            onViewAll = onRecentlyPlayedViewAll
+        )
+        MusicCarousel(
+            title = stringResource(id = R.string.title_just_released_music_carousel),
+            musicModels = justReleasedMusicModels,
+            onViewDetails = {}
+        )
+        MusicCarousel(
+            title = stringResource(id = R.string.title_just_for_you_music_carousel),
+            musicModels = justForYouMusicModels,
+            onViewDetails = {}
         )
     }
 }

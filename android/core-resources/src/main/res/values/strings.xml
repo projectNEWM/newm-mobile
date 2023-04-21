@@ -29,4 +29,8 @@
     <string name="subtitle_this_week_followers">Followers this week</string>
     <string name="subtitle_this_week_royalties">Royalties this week</string>
     <string name="subtitle_this_week_earnings">Earnings</string>
+    <string name="title_explore_music_carousel">EXPLORE NEW MUSIC</string>
+    <string name="title_recently_played_music_carousel">RECENTLY PLAYED</string>
+    <string name="title_just_released_music_carousel">JUST RELEASED</string>
+    <string name="title_just_for_you_music_carousel">JUST FOR YOU</string>
 </resources>
