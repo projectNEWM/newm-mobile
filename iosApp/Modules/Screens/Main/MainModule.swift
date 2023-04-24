@@ -32,10 +32,10 @@ public final class MainModule: ModuleProtocol {
 					@Injected var walletViewProvider: WalletViewProviding
 					return walletViewProvider.walletView()
 				},
-				TabViewProvider(image: Image(MainViewModelTab.marketplace), tabName: MainViewModelTab.marketplace.description) {
-					@Injected var marketplaceViewProvider: MarketplaceViewProviding
-					return marketplaceViewProvider.marketplaceView()
-				}
+//				TabViewProvider(image: Image(MainViewModelTab.marketplace), tabName: MainViewModelTab.marketplace.description) {
+//					@Injected var marketplaceViewProvider: MarketplaceViewProviding
+//					return marketplaceViewProvider.marketplaceView()
+//				}
 			]
 		}
 		

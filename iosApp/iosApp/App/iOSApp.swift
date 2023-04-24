@@ -2,6 +2,7 @@ import SwiftUI
 import Resolver
 import ModuleLinker
 import shared
+import FacebookCore
 
 @main
 struct iOSApp: App {
@@ -15,6 +16,11 @@ struct iOSApp: App {
 		mainViewProvider = Resolver.resolve()
 		
 		setUpAppearance()
+		
+		FBSDKCoreKit.ApplicationDelegate.shared.application(
+			UIApplication.shared,
+			didFinishLaunchingWithOptions: [:]
+		)
 	}
 	
 	var body: some Scene {
@@ -23,6 +29,14 @@ struct iOSApp: App {
 				mainViewProvider.mainView()
 			}
 			.preferredColorScheme(.dark)
+//			.onOpenURL { url in
+//				ApplicationDelegate.shared.application(
+//							UIApplication.shared,
+//							open: url,
+//							sourceApplication: nil,
+//							annotation: [UIApplication.OpenURLOptionsKey.annotation]
+//						)
+//			}
 		}
 	}
 	
