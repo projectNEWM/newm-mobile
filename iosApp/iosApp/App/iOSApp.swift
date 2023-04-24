@@ -17,10 +17,10 @@ struct iOSApp: App {
 		
 		setUpAppearance()
 		
-		FBSDKCoreKit.ApplicationDelegate.shared.application(
-			UIApplication.shared,
-			didFinishLaunchingWithOptions: [:]
-		)
+//		FBSDKCoreKit.ApplicationDelegate.shared.application(
+//			UIApplication.shared,
+//			didFinishLaunchingWithOptions: [:]
+//		)
 	}
 	
 	var body: some Scene {

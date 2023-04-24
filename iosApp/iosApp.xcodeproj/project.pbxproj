@@ -96,6 +96,8 @@
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
 		7628EBD527E551D60077ECFD /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628EBD427E551D60077ECFD /* iosAppTests.swift */; };
 		76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
+		7636E4E229F67D2800D3A83C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7636E4E129F67D2800D3A83C /* GoogleSignIn */; };
+		7636E4E429F67D2800D3A83C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7636E4E329F67D2800D3A83C /* GoogleSignInSwift */; };
 		7648DE12292C69EF006F7259 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DDFA292C69EF006F7259 /* MockData.swift */; };
 		7648DE13292C69EF006F7259 /* ProfileImageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DDFD292C69EF006F7259 /* ProfileImageCellModel.swift */; };
 		7648DE15292C69EF006F7259 /* TrackCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DDFF292C69EF006F7259 /* TrackCellModel.swift */; };
@@ -1064,7 +1066,6 @@
 		76DC3A4C281A0F1D004D5021 /* ModuleLinkerModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleLinkerModule.swift; sourceTree = "<group>"; };
 		76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCounter.swift; sourceTree = "<group>"; };
-		76FB0E6029F3615700C23F18 /* FacebookLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLogin.swift; sourceTree = "<group>"; };
 		76FB0E6429F6695000C23F18 /* FacebookLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1150,9 +1151,11 @@
 				76DC3A3A281A0E80004D5021 /* Resolver in Frameworks */,
 				766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */,
 				76FB0E6329F3674C00C23F18 /* FacebookLogin in Frameworks */,
+				7636E4E429F67D2800D3A83C /* GoogleSignInSwift in Frameworks */,
 				766E8FAC28562EBF00F18779 /* Colors.framework in Frameworks */,
 				76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */,
 				7618FDFF28164E67007573B4 /* ModuleLinker.framework in Frameworks */,
+				7636E4E229F67D2800D3A83C /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,7 +1325,6 @@
 				7555FF7D242A565900829871 /* iosApp */,
 				7628EBD327E551B50077ECFD /* iosAppTests */,
 				768FCAB227B7292C00D0C0EB /* iosAppUITests */,
-				76FB0E5429F3610B00C23F18 /* Auth */,
 				7555FF7C242A565900829871 /* Products */,
 				761837C4295819CB0033250B /* Frameworks */,
 			);
@@ -2173,14 +2175,6 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
-		76FB0E5429F3610B00C23F18 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				76FB0E6029F3615700C23F18 /* FacebookLogin.swift */,
-			);
-			path = Auth;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2474,6 +2468,8 @@
 			packageProductDependencies = (
 				76DC3A39281A0E80004D5021 /* Resolver */,
 				76FB0E6229F3674C00C23F18 /* FacebookLogin */,
+				7636E4E129F67D2800D3A83C /* GoogleSignIn */,
+				7636E4E329F67D2800D3A83C /* GoogleSignInSwift */,
 			);
 			productName = Login;
 			productReference = 7618FD7128164DA1007573B4 /* Login.framework */;
@@ -2896,6 +2892,8 @@
 			packageReferences = (
 				760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */,
 				76FB0E4929F360DF00C23F18 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				7636E4E029F67D2800D3A83C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				7636E4E629F67F0F00D3A83C /* XCRemoteSwiftPackageReference "AppAuth-iOS" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -5616,6 +5614,22 @@
 				kind = branch;
 			};
 		};
+		7636E4E029F67D2800D3A83C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		7636E4E629F67F0F00D3A83C /* XCRemoteSwiftPackageReference "AppAuth-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openid/AppAuth-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		76FB0E4929F360DF00C23F18 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
@@ -5631,6 +5645,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		7636E4E129F67D2800D3A83C /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7636E4E029F67D2800D3A83C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		7636E4E329F67D2800D3A83C /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7636E4E029F67D2800D3A83C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		76562524284BEF6C004B6E4B /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;

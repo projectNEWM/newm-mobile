@@ -2,6 +2,8 @@ import SwiftUI
 import SharedUI
 import Colors
 import ModuleLinker
+import GoogleSignInSwift
+import GoogleSignIn
 
 public struct LandingView: View {
 	@Binding private var shouldShow: Bool
@@ -58,7 +60,8 @@ extension LandingView {
 			Group {
 				loginButton
 				createAccountButton
-				facebookLoginButton
+//				facebookLoginButton
+				googleSignInButton
 			}
 			.cornerRadius(4)
 			.font(.inter(ofSize: 14).weight(.semibold))
@@ -98,6 +101,27 @@ extension LandingView {
 			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
 			.cornerRadius(4)
 			.padding(.top)
+	}
+	
+	private var rootViewController: UIViewController? {
+		guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
+			//TODO: log error
+			return nil
+		}
+		return rootVC
+	}
+	
+	@ViewBuilder
+	private var googleSignInButton: some View {
+		if let rootVC = rootViewController {
+			GoogleSignInButton {
+				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { signInResult, error in
+					//TODO: save sign in result
+				}
+			}
+		} else {
+			EmptyView()
+		}
 	}
 }
 
