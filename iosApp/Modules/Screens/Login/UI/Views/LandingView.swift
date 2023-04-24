@@ -58,6 +58,7 @@ extension LandingView {
 			Group {
 				loginButton
 				createAccountButton
+				facebookLoginButton
 			}
 			.cornerRadius(4)
 			.font(.inter(ofSize: 14).weight(.semibold))
@@ -87,6 +88,16 @@ extension LandingView {
 		.background(.clear)
 		.foregroundColor(NEWMColor.pink())
 		.borderOverlay(color: NEWMColor.grey500(), radius: 4, width: 2)
+	}
+	
+	@ViewBuilder
+	private var facebookLoginButton: some View {
+		FacebookLoginButton()
+			.frame(height: 40)
+			.addSidePadding()
+			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
+			.cornerRadius(4)
+			.padding(.top)
 	}
 }
 
