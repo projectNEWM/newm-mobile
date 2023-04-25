@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import io.newm.shared.login.models.RegisterException
+import io.newm.shared.login.repository.KMMException
 import io.newm.shared.login.usecases.SignupUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,17 +58,14 @@ class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
         viewModelScope.launch {
             _state.value.let {
                 if (it.email?.isEmpty() == false && it.password == it.passwordConfirmation) {
-                    when (useCase.requestEmailConfirmationCode(it.email)) {
-                        is RequestEmailStatus.Success -> {
-                            _state.value = _state.value.copy(
-                                verificationRequested = true
-                            )
-                        }
-                        else -> {
-                            print("Unable to request code")
-                        }
+                    try {
+                        useCase.requestEmailConfirmationCode(it.email)
+                        _state.value = _state.value.copy(
+                            verificationRequested = true
+                        )
+                    } catch (e: KMMException) {
+                        print("KMMException - ${e.message}")
                     }
-
                 }
             }
         }
@@ -80,41 +78,39 @@ class CreateAccountViewModel(private val useCase: SignupUseCase) : ViewModel() {
                 errorMessage = null
             )
 
-            val status = useCase.registerUser(
-                nickname = _state.value.nickname.orEmpty(),
-                email = _state.value.email.orEmpty(),
-                password = _state.value.password.orEmpty(),
-                passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
-                verificationCode = _state.value.emailVerificationCode.orEmpty()
-            )
-
-            when (status) {
-                is RegisterStatus.Success -> {
-                    _state.value = _state.value.copy(
-                        isUserRegistered = true,
-                        errorMessage = null
-                    )
-                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus Success" }
+            try {
+                useCase.registerUser(
+                    nickname = _state.value.nickname.orEmpty(),
+                    email = _state.value.email.orEmpty(),
+                    password = _state.value.password.orEmpty(),
+                    passwordConfirmation = _state.value.passwordConfirmation.orEmpty(),
+                    verificationCode = _state.value.emailVerificationCode.orEmpty()
+                )
+                _state.value = _state.value.copy(
+                    isUserRegistered = true,
+                    errorMessage = null
+                )
+                Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus Success" }
+            } catch (e: RegisterException) {
+                when (e) {
+                    is RegisterException.TwoFactorAuthenticationFailed -> {
+                        _state.value = _state.value.copy(
+                            errorMessage = "Wrong Verification Code"
+                        )
+                        Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus Wrong Verification Code" }
+                    }
+                    is RegisterException.UserAlreadyExists -> {
+                        _state.value = _state.value.copy(
+                            errorMessage = "User associated with that Email Already Exists"
+                        )
+                        Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus UserAlreadyExists" }
+                    }
                 }
-                is RegisterStatus.UserAlreadyExists -> {
-                    _state.value = _state.value.copy(
-                        errorMessage = "User associated with that Email Already Exists"
-                    )
-                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus UserAlreadyExists" }
-                }
-                is RegisterStatus.UnknownError -> {
-                    _state.value = _state.value.copy(
-                        errorMessage = "Unknown Error"
-                    )
-                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus UnknownError" }
-                }
-                is RegisterStatus.TwoFactorAuthenticationFailed -> {
-                    _state.value = _state.value.copy(
-                        errorMessage = "Wrong Verification Code"
-                    )
-                    Logger.d { "NewmAndroid - CreateAccountViewModel: RegisterStatus Wrong Verification Code" }
-                }
+                print("KMMException - ${e.message}")
+            } catch (e: KMMException) {
+                print("KMMException - ${e.message}")
             }
+
         }
     }
 

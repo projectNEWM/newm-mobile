@@ -7,6 +7,7 @@ import io.ktor.http.*
 import io.newm.shared.login.models.LogInUser
 import io.newm.shared.login.models.LoginResponse
 import io.newm.shared.login.models.NewUser
+import io.newm.shared.login.models.RegisterException
 import io.newm.shared.login.repository.KMMException
 import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
@@ -40,10 +41,10 @@ internal class NewmApi(
         }
         when (response.status) {
             HttpStatusCode.Conflict -> {
-                throw KMMException("User already Exists")
+                throw RegisterException.UserAlreadyExists("User already Exists")
             }
             HttpStatusCode.Forbidden -> {
-                throw KMMException("Invalid Code")
+                throw RegisterException.TwoFactorAuthenticationFailed("TwoFactorAuthenticationFailed")
             }
             else -> {
                 throw KMMException("Unknown Error")

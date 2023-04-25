@@ -3,16 +3,13 @@ package io.newm.shared.login.repository
 import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.*
 import io.newm.shared.db.NewmDatabaseWrapper
-import io.newm.shared.login.models.LogInUser
-import io.newm.shared.login.models.LoginResponse
-import io.newm.shared.login.models.NewUser
-import io.newm.shared.login.models.isValid
+import io.newm.shared.login.models.*
 import io.newm.shared.login.service.NewmApi
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
-class KMMException(message: String) : Throwable(message)
+open class KMMException(message: String) : Throwable(message)
 
 interface LogInRepository {
     @Throws(Exception::class)
@@ -63,24 +60,24 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
                 auth?.insertAuthData(1, response.accessToken.orEmpty(), response.refreshToken.orEmpty())
                 logger.d { "logIn: LoginStatus Success" }
             } else {
-                logger.d { "logIn: LoginStatus UnknownError" }
-                throw KMMException("UnknownErrorException")
+                logger.d { "logIn: Fail to login: $response" }
             }
         } catch (e: ClientRequestException) {
             when (e.response.status.value) {
                 404 -> {
                     logger.d { "logIn: LoginStatus UserNotFound (404)" }
                     //404 NOT FOUND If no registered user with 'email' is found
-                    throw KMMException("UserNotFoundException")
+                    throw LoginException.UserNotFound("UserNotFoundException")
                 }
                 401 -> {
                     logger.d { "logIn: LoginStatus WrongPassword (401): $e" }
                     //401 UNAUTHORIZED if 'password' is invalid.
-                    throw KMMException("WrongPasswordException")
+                    throw LoginException.WrongPassword("WrongPasswordException")
                 }
                 else -> {
-                    logger.d { "logIn: LoginStatus 1 -UnknownError: $e" }
-                    throw KMMException("UnknownErrorException")
+                    // No-Op
+                    logger.d { "logIn: LoginStatus: ${e.response.status}" }
+                    throw e
                 }
             }
         } catch (e: Exception) {

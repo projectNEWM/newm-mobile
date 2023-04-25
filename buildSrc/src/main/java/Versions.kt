@@ -12,7 +12,7 @@ object Versions {
     const val androidxLifecycle = "2.5.1"
     const val androidxNavigation = "2.5.1"
     const val androidxSplashScreen = "1.0.0"
-    const val composeCompiler = "1.4.5"
+    const val composeCompiler = "1.4.6"
     const val compose = "1.4.0"
     const val composeMaterialIcons = "1.3.0-beta01"
     const val crashlyticsClasspath = "2.9.1"
