@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 import SharedUI
-import shared
 
 extension ArtistView {
 	struct LoadedView: View {

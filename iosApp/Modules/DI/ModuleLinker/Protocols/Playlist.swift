@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import shared
+import Models
 
 public protocol PlaylistViewProviding {
 	func playlistView(id: String) -> AnyView

@@ -2,7 +2,7 @@ import Foundation
 import UIKit.UIImage
 import Resolver
 import ModuleLinker
-import shared
+import Models
 
 class PlaylistListViewModel: ObservableObject {
 	@Injected private var playlistListUseCase: PlaylistListUseCaseProtocol
@@ -35,13 +35,13 @@ extension PlaylistListViewModel {
 			self.playlistID = playlistID
 		}
 		
-		init(_ playlist: shared.Playlist) {
+		init(_ playlist: Models.Playlist) {
 			let imageUrl = URL(string: playlist.image)
 			self.init(
 				image: imageUrl,
 				title: playlist.title,
 				creator: playlist.creator.userName,
-				genre: playlist.genre,
+				genre: playlist.genre.title,
 				starCount: "\(playlist.starCount) ✭",
 				playCount: "\(playlist.playCount)",
 				playlistID: playlist.playlistId

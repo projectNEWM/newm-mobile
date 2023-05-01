@@ -2,7 +2,6 @@ import Foundation
 import ModuleLinker
 import Resolver
 import SwiftUI
-import shared
 
 public final class LoginModule: ModuleProtocol {
 	public static var shared = LoginModule()
@@ -10,28 +9,6 @@ public final class LoginModule: ModuleProtocol {
 	public func registerAllServices() {
 		Resolver.register {
 			self as LoginViewProviding
-		}
-		
-		Resolver.register {
-			do {
-				return try LoginUseCaseFactory().loginUseCase()
-			} catch {
-				print(error)
-				fatalError(error.localizedDescription)
-			}
-		}
-		
-		Resolver.register {
-			do {
-				return try SignupUseCaseFactory().signupUseCase()
-			} catch {
-				print(error)
-				fatalError(error.localizedDescription)
-			}
-		}
-		
-		Resolver.register {
-			LoginFieldValidator()
 		}
 	}
 }

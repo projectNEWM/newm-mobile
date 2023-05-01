@@ -1,7 +1,7 @@
 import Foundation
-import shared
 import Resolver
 import ModuleLinker
+import Models
 
 public struct BigCellViewModel: Identifiable {
 	public let image: URL?

@@ -2,7 +2,7 @@ import Foundation
 import ModuleLinker
 import Resolver
 import SwiftUI
-import shared
+import Models
 
 public final class ArtistModule: ModuleProtocol {
 	public static var shared = ArtistModule()

@@ -2,7 +2,7 @@ import Foundation
 import AVFoundation.AVPlayer
 import Combine
 import ModuleLinker
-import shared
+import Models
 
 class SongIDConverter {
 	func callAsFunction(_ id: String) -> URL {

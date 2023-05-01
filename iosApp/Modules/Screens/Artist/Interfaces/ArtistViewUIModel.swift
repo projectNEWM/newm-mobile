@@ -1,7 +1,7 @@
 import Foundation
 import SharedUI
 import SwiftUI
-import shared
+import Models
 
 struct ArtistViewUIModel {
 	let title: String

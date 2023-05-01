@@ -1,7 +1,6 @@
 import SwiftUI
 import SharedUI
 import Fonts
-import shared
 import Colors
 import Resolver
 import AudioPlayer

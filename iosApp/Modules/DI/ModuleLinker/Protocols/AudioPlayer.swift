@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import shared
+import Models
 
 public protocol AudioPlayer: ObservableObject {
 	var song: Song? { set get }
