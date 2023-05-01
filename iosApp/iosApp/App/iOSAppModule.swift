@@ -2,7 +2,7 @@ import Foundation
 import Resolver
 import ModuleLinker
 import Main
-import Wallet
+//import Wallet
 import Home
 import SharedUI
 import SwiftUI
@@ -14,14 +14,14 @@ import Tips
 import Artist
 import Library
 import AudioPlayer
-import Marketplace
+//import Marketplace
 
 struct iOSAppModule: ModuleProtocol {
 	static var shared = iOSAppModule()
 	
 	let modules: [ModuleProtocol] = {
 		[
-			WalletModule.shared,
+//			WalletModule.shared,
 			HomeModule.shared,
             LibraryModule.shared,
 			SharedUIModule.shared,
@@ -33,7 +33,7 @@ struct iOSAppModule: ModuleProtocol {
 			TipsModule.shared,
 			ArtistModule.shared,
 			AudioPlayerModule.shared,
-			MarketplaceModule.shared
+//			MarketplaceModule.shared
 		]
 	}()
 	

@@ -1,15 +1,13 @@
 import Foundation
 
-class LoginFieldValidator {
-	func validate(email: String, password: String) -> Bool {
+public class LoginFieldValidator {
+	public init() {}
+	
+	public func validate(email: String, password: String) -> Bool {
 		return isValidEmail(email) && isValidPassword(password)
 	}
 	
-	func isEmailValid(email: String) -> Bool {
-		return isValidEmail(email)
-	}
-	
-	func isPasswordValid(password: String) -> Bool {
+	private func isPasswordValid(password: String) -> Bool {
 		return isValidPassword(password)
 	}
 	

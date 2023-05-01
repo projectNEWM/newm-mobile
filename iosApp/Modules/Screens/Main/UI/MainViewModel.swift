@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import ModuleLinker
 import Resolver
-import shared
 import Auth
 
 @MainActor

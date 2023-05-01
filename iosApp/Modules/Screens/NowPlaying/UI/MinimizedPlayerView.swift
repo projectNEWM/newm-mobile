@@ -3,7 +3,6 @@ import SharedUI
 import AudioPlayer
 import Resolver
 import ModuleLinker
-import shared
 import Colors
 
 struct MiniPlayerView: View {

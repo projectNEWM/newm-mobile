@@ -3,7 +3,6 @@ import SharedUI
 import Resolver
 import Colors
 import ModuleLinker
-import shared
 import AudioPlayer
 
 struct MarketplaceView: View {

@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 import SharedUI
-import shared
 import ModuleLinker
 import Resolver
 

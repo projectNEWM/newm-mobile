@@ -1,5 +1,4 @@
 import Foundation
-import shared
 
 enum HomeRoute {
 	case artist(id: String)

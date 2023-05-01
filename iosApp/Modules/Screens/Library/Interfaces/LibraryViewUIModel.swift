@@ -1,5 +1,4 @@
 import Foundation
-import shared
 import SharedUI
 import ModuleLinker
 

@@ -1,5 +1,4 @@
 import Foundation
-import shared
 import Resolver
 import Auth
 import GoogleSignIn
@@ -20,6 +19,7 @@ class LandingViewModel: ObservableObject {
 			
 	private let loginManager = Auth.LoginManager()
 	private let userManager = UserManager()
+	private let loginFieldValidator = LoginFieldValidator()
 
 	var nicknameIsValid: Bool {
 		nickname.count > 0
@@ -27,11 +27,11 @@ class LandingViewModel: ObservableObject {
 		
 	var createAccountFieldsAreValid: Bool {
 		password == confirmPassword &&
-		LoginFieldValidator().validate(email: email, password: password)
+		loginFieldValidator.validate(email: email, password: password)
 	}
 	
 	var loginFieldsAreValid: Bool {
-		LoginFieldValidator().validate(email: email, password: password)
+		loginFieldValidator.validate(email: email, password: password)
 	}
 	
 	var confirmationCodeIsValid: Bool {

@@ -3,7 +3,6 @@ import Foundation
 import SwiftUI
 import ModuleLinker
 import Resolver
-import shared
 import SharedUI
 import Colors
 

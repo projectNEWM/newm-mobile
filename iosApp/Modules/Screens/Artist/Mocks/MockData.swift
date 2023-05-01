@@ -3,8 +3,8 @@ import Foundation
 import SwiftUI
 import ModuleLinker
 import Resolver
-import shared
 import SharedUI
+import Models
 
 class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
 	func getModel(artist: Artist, actionHandler: ArtistViewActionHandling) throws -> ArtistViewUIModel {

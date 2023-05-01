@@ -2,7 +2,6 @@ import Foundation
 import ModuleLinker
 import Resolver
 import SwiftUI
-import shared
 
 public final class NowPlayingModule: ModuleProtocol {
 	public static var shared = NowPlayingModule()

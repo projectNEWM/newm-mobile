@@ -3,9 +3,9 @@ import UIKit
 import Combine
 import Resolver
 import ModuleLinker
-import shared
 import SharedUI
 import AudioPlayer
+import Models
 
 protocol ArtistRepo {
 	func artist(_ id: String) async -> Artist
