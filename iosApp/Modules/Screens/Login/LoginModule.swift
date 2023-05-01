@@ -46,17 +46,17 @@ func buttonText(_ text: String) -> some View {
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
-		mockResolver.register {
-			MockLogInLogOutUseCase.shared as LoggedInUserUseCaseProtocol
-		}
+//		mockResolver.register {
+//			MockLogInLogOutUseCase.shared as LoggedInUserUseCaseProtocol
+//		}
 		
-		mockResolver.register {
+//		mockResolver.register {
 //			MockLogInLogOutUseCase.shared as LoginUseCase
-		}
+//		}
 		
-		mockResolver.register {
-			MockLogInLogOutUseCase.shared as LogOutUseCaseProtocol
-		}
+//		mockResolver.register {
+//			MockLogInLogOutUseCase.shared as LogOutUseCaseProtocol
+//		}
 	}
 }
 #endif

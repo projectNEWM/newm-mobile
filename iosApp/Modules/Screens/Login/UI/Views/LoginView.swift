@@ -22,7 +22,7 @@ extension LandingView {
 
 struct LoginView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView(shouldShow: .constant(true))
+		LandingView()
 			.loginView
 			.preferredColorScheme(.dark)
 	}

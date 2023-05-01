@@ -31,10 +31,11 @@ extension LandingView {
 					.padding(.bottom)
 				
 				Button {
-					viewModel.registerUser()
+					viewModel.requestNickname()
 				} label: {
 					buttonText(.next)
 				}
+				.disabled(viewModel.confirmationCodeIsValid == false)
 				.background(Gradients.loginGradient.gradient)
 				.accentColor(.white)
 				.cornerRadius(4)
@@ -48,7 +49,7 @@ extension LandingView {
 
 struct CodeConfirmation_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView(shouldShow: .constant(true))
+		LandingView()
 			.codeConfirmationView
 			.preferredColorScheme(.dark)
 	}

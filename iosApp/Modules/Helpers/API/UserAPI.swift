@@ -1,0 +1,23 @@
+import Foundation
+
+public class UserAPI: NEWMAPI {
+	var url: URL { stagingURLv1.appending(path: "users") }
+	
+	override public init() {}
+	
+	public func delete() async throws {
+		let request = makeRequest(url: url.appending(path: "me"), body: nil, method: .DELETE)
+		try await sendRequest(request)
+	}
+	
+	public func create(nickname: String, email: String, password: String, passwordConfirmation: String, verificationCode: String) async throws {
+		let request = makeRequest(url: url, body: [
+			"nickname": nickname,
+			"email": email,
+			"newPassword": password,
+			"confirmPassword": passwordConfirmation,
+			"authCode": verificationCode
+		], method: .PUT)
+		try await sendRequest(request)
+	}
+}

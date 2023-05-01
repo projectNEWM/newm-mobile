@@ -23,7 +23,7 @@ public struct MainView: View {
 			TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
 				.preferredColorScheme(.dark)
 				.fullScreenCover(isPresented: $viewModel.shouldShowLogin) {
-					loginViewProvider.loginView(shouldShow: $viewModel.shouldShowLogin)
+					loginViewProvider.loginView()
 				}
 				.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
 					sheetView
