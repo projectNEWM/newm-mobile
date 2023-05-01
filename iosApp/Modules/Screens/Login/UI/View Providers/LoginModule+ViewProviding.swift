@@ -3,9 +3,9 @@ import ModuleLinker
 import SwiftUI
 
 extension LoginModule: LoginViewProviding {
-	public func loginView(shouldShow: Binding<Bool>) -> AnyView {
+	public func loginView() -> AnyView {
 		NavigationView {
-			LandingView(shouldShow: shouldShow)
+			LandingView()
 		}
 		.preferredColorScheme(.dark)
 		.erased

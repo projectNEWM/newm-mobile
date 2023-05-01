@@ -4,16 +4,11 @@ import Colors
 import ModuleLinker
 import GoogleSignInSwift
 import GoogleSignIn
+import AuthenticationServices
 
 public struct LandingView: View {
-	@Binding private var shouldShow: Bool
-	
 	@StateObject var viewModel = LandingViewModel()
 	@FocusState var isTextFieldFocused: Bool
-	
-	init(shouldShow: Binding<Bool>) {
-		self._shouldShow = shouldShow
-	}
 		
 	public var body: some View {
 		ZStack {
@@ -21,21 +16,18 @@ public struct LandingView: View {
 				landingView
 					.padding()
 					.navigationDestination(for: LandingRoute.self) { route in
-						Group {
-							switch route {
-							case .createAccount:
-								createAccountView
-							case .codeConfirmation:
-								codeConfirmationView
-							case .username:
-								usernameView
-							case .done:
-								doneView
-							case .login:
-								loginView
-							}
+						switch route {
+						case .createAccount:
+							createAccountView.backButton()
+						case .codeConfirmation:
+							codeConfirmationView.backButton()
+						case .nickname:
+							nicknameView.backButton()
+						case .done:
+							doneView
+						case .login:
+							loginView.backButton()
 						}
-						.backButton()
 					}
 			}
 			.alert(String.error, isPresented: isPresent($viewModel.error), actions: {}) {
@@ -60,7 +52,7 @@ extension LandingView {
 			Group {
 				loginButton
 				createAccountButton
-//				facebookLoginButton
+				facebookLoginButton
 				googleSignInButton
 			}
 			.cornerRadius(4)
@@ -95,13 +87,27 @@ extension LandingView {
 	
 	@ViewBuilder
 	private var facebookLoginButton: some View {
-		FacebookLoginButton()
+		FacebookLoginButton(logInCompletionHandler: viewModel.handleFacebookLogin, logOutCompletionHandler: viewModel.handleFacebookLogout)
 			.frame(height: 40)
 			.addSidePadding()
 			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
 			.cornerRadius(4)
 			.padding(.top)
 	}
+	
+//	@ViewBuilder
+//	private var signInWithAppleButton: some View {
+//		SignInWithAppleButton(.signIn) { request in
+//			request.requestedScopes = [.email, .fullName]
+//		} onCompletion: { result in
+//		case .success(let authResults):
+//			print("Authorisation successful")
+//			LoginManager.
+//		case .error(let error):
+//			print("Authorisation failed: \(error.localizedDescription)")
+//		}
+//
+//	}
 	
 	private var rootViewController: UIViewController? {
 		guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
@@ -115,9 +121,7 @@ extension LandingView {
 	private var googleSignInButton: some View {
 		if let rootVC = rootViewController {
 			GoogleSignInButton {
-				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { signInResult, error in
-					//TODO: save sign in result
-				}
+				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC, completion: viewModel.handleGoogleSignIn)
 			}
 		} else {
 			EmptyView()
@@ -140,7 +144,7 @@ extension LandingView {
 
 struct LandingView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView(shouldShow: .constant(true))
+		LandingView()
 			.preferredColorScheme(.dark)
 	}
 }

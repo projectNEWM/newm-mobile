@@ -4,13 +4,13 @@ import Colors
 
 extension LandingView {
 	@ViewBuilder
-	var usernameView: some View {
+	var nicknameView: some View {
 		VStack {
 			Text(verbatim: .whatShouldWeCallYou)
 				.font(.ralewayExtraBold(ofSize: 40))
 				.multilineTextAlignment(.center)
 
-			TextEditor(text: $viewModel.username)
+			TextEditor(text: $viewModel.nickname)
 				.foregroundStyle(Gradients.loginGradient.gradient)
 				.multilineTextAlignment(.center)
 				.font(.dmSerifItalic(ofSize: 40))
@@ -27,7 +27,7 @@ extension LandingView {
 			nextButton(title: .next) {
 				viewModel.registerUser()
 			}
-			.disabled(!viewModel.usernameIsValid)
+			.disabled(!viewModel.nicknameIsValid)
 		}
 		.padding()
 		.onAppear {
@@ -38,8 +38,8 @@ extension LandingView {
 
 struct UsernameView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView(shouldShow: .constant(true))
-			.usernameView
+		LandingView()
+			.nicknameView
 			.preferredColorScheme(.dark)
 	}
 }
