@@ -21,7 +21,6 @@ extension HomeView {
 			ScrollView {
 				titleSection
 				VStack(spacing: 36) {
-					ThisWeekSection(uiModel.thisWeekSection)
 					recentlyPlayedSection
 					justReleasedSection
 					moreOfWhatYouLikeSection
