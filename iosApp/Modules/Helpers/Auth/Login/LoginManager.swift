@@ -54,6 +54,11 @@ public class LoginManager {
 		try await api.requestEmailVerificationCode(for: email)
 	}
 	
+	public func loginWithApple(result: ASAuthorization) async throws {
+		let token = (result.credential as! ASAuthorizationAppleIDCredential).authorizationCode!.base64EncodedString()
+		try await api.login(method: .apple(accessToken: token))
+	}
+	
 	private func signOutOfApple() {
 		//TODO:
 	}
