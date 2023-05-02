@@ -64,8 +64,8 @@ extension HomeView {
 						 profilePic: shouldShowGreeting ? uiModel.greeting.profilePic : uiModel.title.profilePic,
 						 gradient: uiModel.title.gradientHexColors)
 				.padding(.bottom, 41)
-			//TODO: THIS ANIMATION ISN'T WORKING
-				.transition(.opacity.animation(.easeInOut(duration: 1.0)))
+				.transition(.opacity)
+				.animation(.easeInOut(duration: 1.0), value: shouldShowGreeting)
 		}
 	}
 }
