@@ -9,6 +9,8 @@ import AuthenticationServices
 public struct LandingView: View {
 	@StateObject var viewModel = LandingViewModel()
 	@FocusState var isTextFieldFocused: Bool
+	
+	private let socialSignInButtonHeight: CGFloat = 40
 		
 	public var body: some View {
 		ZStack {
@@ -54,6 +56,7 @@ extension LandingView {
 				createAccountButton
 				facebookLoginButton
 				googleSignInButton
+				signInWithAppleButton
 			}
 			.cornerRadius(4)
 			.font(.inter(ofSize: 14).weight(.semibold))
@@ -88,26 +91,23 @@ extension LandingView {
 	@ViewBuilder
 	private var facebookLoginButton: some View {
 		FacebookLoginButton(logInCompletionHandler: viewModel.handleFacebookLogin, logOutCompletionHandler: viewModel.handleFacebookLogout)
-			.frame(height: 40)
+			.frame(height: socialSignInButtonHeight)
 			.addSidePadding()
 			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
 			.cornerRadius(4)
 			.padding(.top)
 	}
 	
-//	@ViewBuilder
-//	private var signInWithAppleButton: some View {
-//		SignInWithAppleButton(.signIn) { request in
-//			request.requestedScopes = [.email, .fullName]
-//		} onCompletion: { result in
-//		case .success(let authResults):
-//			print("Authorisation successful")
-//			LoginManager.
-//		case .error(let error):
-//			print("Authorisation failed: \(error.localizedDescription)")
-//		}
-//
-//	}
+	@ViewBuilder
+	private var signInWithAppleButton: some View {
+		SignInWithAppleButton(.signIn) { request in
+			request.requestedScopes = [.fullName, .email]
+		} onCompletion: { result in
+			viewModel.handleAppleSignIn(result: result)
+		}
+		.signInWithAppleButtonStyle(.white)
+		.frame(height: socialSignInButtonHeight)
+	}
 	
 	private var rootViewController: UIViewController? {
 		guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
@@ -123,6 +123,7 @@ extension LandingView {
 			GoogleSignInButton {
 				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC, completion: viewModel.handleGoogleSignIn)
 			}
+			.frame(height: socialSignInButtonHeight)
 		} else {
 			EmptyView()
 		}

@@ -3,6 +3,7 @@ import Resolver
 import Auth
 import GoogleSignIn
 import FacebookLogin
+import AuthenticationServices
 
 @MainActor
 class LandingViewModel: ObservableObject {
@@ -141,6 +142,19 @@ class LandingViewModel: ObservableObject {
 				self.error = "\(error)"
 			}
 			isLoading = false
+		}
+	}
+	
+	func handleAppleSignIn(result: Result<ASAuthorization, Error>) {
+		switch result {
+		case .success(let authResults):
+			isLoading = true
+			Task {
+				try await LoginManager().loginWithApple(result: authResults)
+				isLoading = false
+			}
+		case .failure(let error):
+			self.error = "\(error)"
 		}
 	}
 }
