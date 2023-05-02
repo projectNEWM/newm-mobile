@@ -93,7 +93,7 @@ extension WalletView {
 			Text("You're all caught up. 🎉")
 				.padding()
 				.font(.inter(ofSize: 14))
-				.foregroundColor(NEWMColor.grey100.swiftUIColor)
+				.foregroundColor(NEWMColor.grey100())
 		}
 	}
 }
@@ -112,7 +112,7 @@ struct YourFundsSection: View {
 			VStack(alignment: .leading) {
 				Text(model.title)
 					.font(.inter(ofSize: 12))
-					.foregroundColor(NEWMColor.grey100.swiftUIColor)
+					.foregroundColor(NEWMColor.grey100())
 				Text(model.funds)
 					.font(.inter(ofSize: 45).weight(.black))
 				HStack(spacing: 16) {

@@ -23,7 +23,6 @@ extension LibraryView {
 					HorizontalStackSection(uiModel.likedSongsSection, content: BigCell.init)
                 }
             }
-			.links(LibraryView.Links(route: $route))
         }
         
         private var titleSection: some View {

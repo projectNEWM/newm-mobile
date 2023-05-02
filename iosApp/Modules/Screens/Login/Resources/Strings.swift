@@ -1,10 +1,21 @@
 import Foundation
+import ModuleLinker
 
 extension String {
-	static var title: String { "ENTER_NEWMIVERSE" }
-	static var emailPlaceholder: String { "YOUR_EMAIL" }
-	static var passwordPlaceholder: String { "PASSWORD" }
-	static var forgotPassword: String { "FORGOT_PASSWORD" }
-	static var enterNewm: String { "ENTER_NEWM" }
-	static var createAccount: String { "CREATE_FREE_ACCOUNT" }
+	@Localizable(LoginModule.self) static var welcomeToNewm = "WELCOME_TO_NEWM"
+	@Localizable(LoginModule.self) static var login = "LOGIN"
+	@Localizable(LoginModule.self) static var createNewAccount = "CREATE_NEW_ACCOUNT"
+	@Localizable(LoginModule.self) static var enter = "ENTER"
+	@Localizable(LoginModule.self) static var email = "EMAIL"
+	@Localizable(LoginModule.self) static var password = "PASSWORD"
+	@Localizable(LoginModule.self) static var yourPassword = "YOUR_PASSWORD"
+	@Localizable(LoginModule.self) static var emailPrompt = "EMAIL_PROMPT"
+	@Localizable(LoginModule.self) static var confirmPassword = "CONFIRM_PASSWORD"
+	@Localizable(LoginModule.self) static var next = "NEXT"
+	@Localizable(LoginModule.self) static var error = "ERROR"
+	@Localizable(LoginModule.self) static var unknownError = "UNKNOWN_ERROR"
+	@Localizable(LoginModule.self) static var resendEmail = "RESEND_EMAIL"
+	@Localizable(LoginModule.self) static var verificationCode = "VERIFICATION_CODE"
+	@Localizable(LoginModule.self) static var whatShouldWeCallYou = "WHAT_SHOULD_WE_CALL_YOU"
+	@Localizable(LoginModule.self) static var shallWe = "SHALL_WE"
 }

@@ -37,7 +37,6 @@ extension HomeView {
 					}
 				}
 			}
-			.links(Links(route: $route))
 		}
 		
 		private var newmArtistsSection: some View {

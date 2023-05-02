@@ -24,7 +24,7 @@ extension PortfolioView {
 	private var pickerButton: some View {
 		PickerButton(label: model.pickerLabel)
 			.padding([.bottom, .trailing], sidePadding/2)
-			.foregroundColor(NEWMColor.grey100.swiftUIColor)
+			.foregroundColor(NEWMColor.grey100())
 	}
 	
 	@ViewBuilder
@@ -62,7 +62,7 @@ extension PortfolioView {
 		}
 		.font(.inter(ofSize: 12).weight(.medium))
 		.padding([.top, .bottom], 12)
-		.background(index % 2 == 0 ? NEWMColor.grey700.swiftUIColor : .black)
+		.background(index % 2 == 0 ? NEWMColor.grey700() : .black)
 		.onTapGesture {
 			audioPlayer.song = MockData.song(withID: model.id)
 			audioPlayer.playbackInfo.isPlaying = true

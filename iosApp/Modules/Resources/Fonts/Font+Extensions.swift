@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import ModuleLinker
 
 public extension Font {
 	static func ralewayBlack(ofSize size: CGFloat) -> Font {
@@ -29,6 +28,10 @@ public extension Font {
 	
 	static func interMedium(ofSize size: CGFloat) -> Font {
 		.custom("Inter", size: size).weight(.medium)
+	}
+	
+	static func dmSerifItalic(ofSize size: CGFloat) -> Font {
+		.custom("DMSerifText-Italic", size: size)
 	}
 	
 	static var thisWeekCellAmountFont: Font {

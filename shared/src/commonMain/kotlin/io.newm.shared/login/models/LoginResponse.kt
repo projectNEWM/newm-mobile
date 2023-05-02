@@ -1,6 +1,6 @@
 package io.newm.shared.login.models
 
-import kotlinx.serialization.SerialName
+import io.newm.shared.login.repository.KMMException
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,25 +9,18 @@ data class LoginResponse(
     val refreshToken: String? = null
 )
 
-sealed class LoginStatus {
-    data class Success(val data: LoginResponse) : LoginStatus()
-    object WrongPassword : LoginStatus()
-    object UserNotFound : LoginStatus()
-    object UnknownError : LoginStatus()
+sealed class LoginException(message: String): KMMException(message) {
+    data class WrongPassword(override val message: String) : LoginException(message)
+
+    data class UserNotFound(override val message: String) : LoginException(message)
 }
 
 fun LoginResponse.isValid(): Boolean {
     return accessToken?.isNotBlank() == true && refreshToken?.isNotBlank() == true
 }
 
-sealed class RegisterStatus {
-    object Success : RegisterStatus()
-    object UserAlreadyExists : RegisterStatus()
-    object TwoFactorAuthenticationFailed : RegisterStatus()
-    object UnknownError : RegisterStatus()
-}
+sealed class RegisterException(message: String): KMMException(message) {
+    data class UserAlreadyExists(override val message: String) : RegisterException(message)
 
-sealed class RequestEmailStatus {
-    object Success : RequestEmailStatus()
-    object Failure : RequestEmailStatus()
+    data class TwoFactorAuthenticationFailed(override val message: String) : RegisterException(message)
 }

@@ -13,25 +13,34 @@ public final class LoginModule: ModuleProtocol {
 		}
 		
 		Resolver.register {
-			LoginViewModel()
+			do {
+				return try LoginUseCaseFactory().loginUseCase()
+			} catch {
+				print(error)
+				fatalError(error.localizedDescription)
+			}
 		}
 		
 		Resolver.register {
-			self as CreateAccountViewProviding
+			do {
+				return try SignupUseCaseFactory().signupUseCase()
+			} catch {
+				print(error)
+				fatalError(error.localizedDescription)
+			}
 		}
 		
 		Resolver.register {
 			LoginFieldValidator()
 		}
-        Resolver.register {
-            do {
-                return try LoginUseCaseFactory().loginUseCase()
-            } catch {
-                print(error)
-                fatalError(error.localizedDescription)
-            }
-        }
 	}
+}
+
+func buttonText(_ text: String) -> some View {
+	Text(verbatim: text)
+		.padding()
+		.frame(maxWidth: .infinity)
+		.bold()
 }
 
 #if DEBUG
@@ -42,7 +51,7 @@ extension LoginModule {
 		}
 		
 		mockResolver.register {
-			MockLogInLogOutUseCase.shared as LogInUseCaseProtocol
+//			MockLogInLogOutUseCase.shared as LoginUseCase
 		}
 		
 		mockResolver.register {

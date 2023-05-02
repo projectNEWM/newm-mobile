@@ -1,35 +1,39 @@
 package io.newm.shared.login.usecases
 
 import io.newm.shared.login.models.NewUser
-import io.newm.shared.login.models.RegisterStatus
-import io.newm.shared.login.models.RequestEmailStatus
+import io.newm.shared.login.repository.KMMException
 import io.newm.shared.login.repository.LogInRepository
+import kotlin.coroutines.cancellation.CancellationException
 
 interface SignupUseCase {
-    suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun requestEmailConfirmationCode(email: String)
 
+    @Throws(KMMException::class, CancellationException::class)
     suspend fun registerUser(
         nickname: String,
         email: String,
         password: String,
         passwordConfirmation: String,
         verificationCode: String
-    ): RegisterStatus
+    )
 }
 
 internal class SignupUseCaseImpl(private val repository: LogInRepository) : SignupUseCase {
 
-    override suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun requestEmailConfirmationCode(email: String) {
         return repository.requestEmailConfirmationCode(email)
     }
 
+    @Throws(KMMException::class, CancellationException::class)
     override suspend fun registerUser(
         nickname: String,
         email: String,
         password: String,
         passwordConfirmation: String,
         verificationCode: String
-    ): RegisterStatus {
+    ) {
         val newUser = NewUser(
             nickname = nickname,
             email = email,
@@ -37,7 +41,7 @@ internal class SignupUseCaseImpl(private val repository: LogInRepository) : Sign
             confirmPassword = passwordConfirmation,
             authCode = verificationCode
         )
-        return repository.registerUser(newUser)
+        repository.registerUser(newUser)
     }
 
 }

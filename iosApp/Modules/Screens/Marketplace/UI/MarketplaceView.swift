@@ -7,20 +7,24 @@ import shared
 import AudioPlayer
 
 struct MarketplaceView: View {
-	@InjectedObject private var viewModel: MarketplaceViewModel
+	@StateObject private var viewModel = MarketplaceViewModel()
 	
 	private let largerSongCellSize: CGFloat = 200
 	private let smallerSongCellSize: CGFloat = 150
 	
 	var body: some View {
-		ScrollView {
-			LazyVStack(spacing: 24) {
-				title
-				searchField
-				radioPicker
-				categorySubSection
-				filters
-				nftSongs
+		if viewModel.isLoading {
+			ProgressView()
+		} else {
+			ScrollView {
+				LazyVStack(spacing: 24) {
+					title
+					searchField
+					radioPicker
+					categorySubSection
+					filters
+					nftSongs
+				}
 			}
 		}
 	}
@@ -82,6 +86,8 @@ struct MarketplaceView: View {
 			} else {
 				horizontalSmallSongScroller(viewModel.popularSongsCells, rows: 1)
 			}
+		case .none:
+			EmptyView()
 		}
 	}
 	
@@ -93,7 +99,9 @@ struct MarketplaceView: View {
 		case .trending:
 			mostPopularFilter()
 		case .genre(let genre):
-			mostPopularFilter(genre: genre.title)
+			mostPopularFilter(genre: genre)
+		case .none:
+			EmptyView()
 		}
 	}
 	
@@ -101,7 +109,7 @@ struct MarketplaceView: View {
 	private var newSongsFilter: some View {
 		Filters(selectedOption1: $viewModel.selectedGenre,
 				selectedOption2: $viewModel.selectedTimespan,
-				allOptions1: Genre.companion.allCases,
+				allOptions1: viewModel.genres,
 				allOptions2: MarketplaceViewModel.Timespan.allCases,
 				middlePrompt: "songs in the last",
 				showNew: true)

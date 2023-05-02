@@ -4,15 +4,21 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.newm.shared.login.models.*
+import io.newm.shared.login.models.LogInUser
+import io.newm.shared.login.models.LoginResponse
+import io.newm.shared.login.models.NewUser
+import io.newm.shared.login.models.RegisterException
+import io.newm.shared.login.repository.KMMException
 import org.koin.core.component.KoinComponent
+import kotlin.coroutines.cancellation.CancellationException
 
 
 internal class NewmApi(
     private val client: HttpClient
 ) : KoinComponent {
 
-    suspend fun requestEmailConfirmationCode(email: String): RequestEmailStatus {
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun requestEmailConfirmationCode(email: String) {
         val response = client.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
             parameter("email", email)
@@ -20,35 +26,33 @@ internal class NewmApi(
 
         return when (response.status) {
             HttpStatusCode.NoContent -> {
-                RequestEmailStatus.Success
             }
             else -> {
-                RequestEmailStatus.Failure
+                throw KMMException("Unknown Error")
             }
         }
     }
 
-    suspend fun register(user: NewUser): RegisterStatus {
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun register(user: NewUser) {
         val response = client.put("/v1/users") {
             contentType(ContentType.Application.Json)
             setBody(user)
         }
-        return when (response.status) {
-            HttpStatusCode.NoContent -> {
-                RegisterStatus.Success
-            }
+        when (response.status) {
             HttpStatusCode.Conflict -> {
-                RegisterStatus.UserAlreadyExists
+                throw RegisterException.UserAlreadyExists("User already Exists")
             }
             HttpStatusCode.Forbidden -> {
-                RegisterStatus.TwoFactorAuthenticationFailed
+                throw RegisterException.TwoFactorAuthenticationFailed("TwoFactorAuthenticationFailed")
             }
             else -> {
-                RegisterStatus.UnknownError
+                throw KMMException("Unknown Error")
             }
         }
     }
 
+    @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(user: LogInUser) = client.post("/v1/auth/login") {
         contentType(ContentType.Application.Json)
         setBody(user)

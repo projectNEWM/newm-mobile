@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-VariableFont.ttf</string>
+		<string>DMSerifText-Italic.ttf</string>
 	</array>
 </dict>
 </plist>
