@@ -18,6 +18,9 @@ fun HomeScreen(
     onShowProfile: () -> Unit,
     onThisWeekViewAll: () -> Unit,
     onRecentlyPlayedViewAll: () -> Unit,
+    onMusicViewDetails: (MusicModel) -> Unit,
+    onArtistViewDetails: (ArtistModel) -> Unit,
+    onArtistListViewMore: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -40,23 +43,29 @@ fun HomeScreen(
         MusicCarousel(
             title = stringResource(id = R.string.title_explore_music_carousel),
             musicModels = exploreMusicModels, //TODO: Replace Hardcoded values with values from ViewModel
-            onViewDetails = {}
+            onViewDetails = onMusicViewDetails
         )
         MusicCarousel(
             title = stringResource(id = R.string.title_recently_played_music_carousel),
             musicModels = recentlyPlayedMusicModels,
-            onViewDetails = {},
+            onViewDetails = onMusicViewDetails,
             onViewAll = onRecentlyPlayedViewAll
         )
         MusicCarousel(
             title = stringResource(id = R.string.title_just_released_music_carousel),
             musicModels = justReleasedMusicModels,
-            onViewDetails = {}
+            onViewDetails = onMusicViewDetails
         )
         MusicCarousel(
             title = stringResource(id = R.string.title_just_for_you_music_carousel),
             musicModels = justForYouMusicModels,
-            onViewDetails = {}
+            onViewDetails = onMusicViewDetails
+        )
+        ArtistList(
+            title = stringResource(id = R.string.title_artist_list),
+            artistModels = artistListModels,
+            onViewDetails = onArtistViewDetails,
+            onViewMore = onArtistListViewMore
         )
     }
 }

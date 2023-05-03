@@ -40,6 +40,9 @@ private fun NavGraphBuilder.addHomeTree() {
                 onShowProfile = {}, //TODO: Implement profile screen
                 onThisWeekViewAll = {}, //TODO: Implement View All screen
                 onRecentlyPlayedViewAll = {}, //TODO: Implement View All screen
+                onArtistListViewMore = {}, //TODO: Implement View More screen
+                onArtistViewDetails = {}, //TODO: Implement Artist Details screen
+                onMusicViewDetails = {}, //TODO: Implement Music Details screen
             )
         }
 

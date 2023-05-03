@@ -35,10 +35,10 @@ fun MusicCarousel(
 ) {
     Column(
         modifier = Modifier
-            .padding(top = 28.dp)
+            .padding(top = 32.dp)
             .fillMaxWidth()
     ) {
-        Row(modifier = Modifier.padding(horizontal = 12.dp)) {
+        Row(modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(
                 text = title,
                 fontFamily = inter,
@@ -58,7 +58,11 @@ fun MusicCarousel(
                 )
             }
         }
-        LazyRow(modifier = Modifier.padding(top = 4.dp)) {
+        LazyRow(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .padding(horizontal = 14.dp)
+        ) {
             items(musicModels) { MusicCarouselItem(it) { onViewDetails(it) } }
         }
     }
