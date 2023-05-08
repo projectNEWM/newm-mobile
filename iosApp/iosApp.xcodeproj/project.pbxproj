@@ -311,6 +311,8 @@
 		76E69133292B50FC004F7E37 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; };
 		76EAFC502A08ED0900ACD862 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */; };
 		76EAFC522A08F09600ACD862 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */; };
+		76EAFC582A09087A00ACD862 /* DMSerifText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76EAFC542A0907FB00ACD862 /* DMSerifText-Regular.ttf */; };
+		76EAFC592A09087A00ACD862 /* DMSerifText-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76EAFC552A0907FB00ACD862 /* DMSerifText-Italic.ttf */; };
 		76F2E4E328D5092F0052A744 /* PlaybackCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */; };
 		76F823C528BEC2B3003A524C /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76F823C428BEC2B3003A524C /* Resolver */; };
 		76FB0E4B29F360DF00C23F18 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 76FB0E4A29F360DF00C23F18 /* FacebookLogin */; };
@@ -1130,6 +1132,8 @@
 		76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
+		76EAFC542A0907FB00ACD862 /* DMSerifText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSerifText-Regular.ttf"; sourceTree = "<group>"; };
+		76EAFC552A0907FB00ACD862 /* DMSerifText-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSerifText-Italic.ttf"; sourceTree = "<group>"; };
 		76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCounter.swift; sourceTree = "<group>"; };
 		76FB0E6429F6695000C23F18 /* FacebookLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1555,6 +1559,7 @@
 		7618FD3228164CE2007573B4 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				76EAFC532A0907FB00ACD862 /* DM_Serif_Text */,
 				76B990BC2835204A00F818E4 /* Inter */,
 				76030033283694F900BBF78C /* Raleway */,
 				7618FD3C28164CED007573B4 /* Info.plist */,
@@ -2305,6 +2310,15 @@
 				766E8FF22856418A00F18779 /* HomeViewUIModel.swift */,
 			);
 			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		76EAFC532A0907FB00ACD862 /* DM_Serif_Text */ = {
+			isa = PBXGroup;
+			children = (
+				76EAFC542A0907FB00ACD862 /* DMSerifText-Regular.ttf */,
+				76EAFC552A0907FB00ACD862 /* DMSerifText-Italic.ttf */,
+			);
+			path = DM_Serif_Text;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3153,8 +3167,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				760300342836994200BBF78C /* Raleway-VariableFont_wght.ttf in Resources */,
+				76EAFC582A09087A00ACD862 /* DMSerifText-Regular.ttf in Resources */,
 				76B43C6627D875E900F21076 /* Assets.xcassets in Resources */,
 				7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */,
+				76EAFC592A09087A00ACD862 /* DMSerifText-Italic.ttf in Resources */,
 				76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */,
 				760300352836995100BBF78C /* Inter-VariableFont.ttf in Resources */,
 				76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */,
