@@ -1,12 +1,21 @@
 import SwiftUI
 import SharedUI
+import Colors
 
 extension LandingView {
 	@ViewBuilder
 	var loginView: some View {
 		ZStack {
 			VStack {
-				Asset.Media.logo.swiftUIImage.resizable().frame(width: 112, height: 112).padding(40)
+				HStack {
+					Spacer()
+					Button("Forgot password?") {
+						viewModel.forgotPassword()
+					}
+				}
+				.frame(alignment: .trailing)
+				.foregroundColor(try! Color(hex: "DC3CAA"))
+				Asset.Media.logo.swiftUIImage.resizable().frame(width: 112, height: 112).padding(30)
 				LoginTextField(title: .email, prompt: .emailPrompt, isSecure: false, text: $viewModel.email).padding(.bottom)
 				LoginTextField(title: .password, prompt: .yourPassword, isSecure: true, text: $viewModel.password).padding(.bottom)
 				nextButton(title: .next) {

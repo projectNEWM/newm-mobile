@@ -4,4 +4,6 @@ enum LandingRoute {
 	case codeConfirmation
 	case nickname
 	case done
+	case forgotPassword
+	case enterNewPassword
 }

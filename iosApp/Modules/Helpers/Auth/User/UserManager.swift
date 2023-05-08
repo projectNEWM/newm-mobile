@@ -35,4 +35,8 @@ public class UserManager {
 			}
 		}
 	}
+	
+	public func resetPassword(email: String, password: String, confirmPassword: String, authCode: String) async throws {
+		try await api.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: authCode)
+	}
 }
