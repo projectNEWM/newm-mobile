@@ -46,3 +46,17 @@ struct iOSApp: App {
 		UITabBar.appearance().standardAppearance = UITabBarAppearance(barAppearance: barAppearance)
 	}
 }
+
+extension UIWindow {
+	open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+		if motion == .motionShake {
+			Task {
+				do {
+					try await LoginManager().logOut()
+				} catch {
+					print(error)
+				}
+			}
+		}
+	}
+}

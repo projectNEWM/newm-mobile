@@ -309,6 +309,8 @@
 		76DE1C94284C010000B8CA7A /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
 		76E3CA6F27A8DC8200C24DC2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */; };
 		76E69133292B50FC004F7E37 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; };
+		76EAFC502A08ED0900ACD862 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */; };
+		76EAFC522A08F09600ACD862 /* EnterNewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */; };
 		76F2E4E328D5092F0052A744 /* PlaybackCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */; };
 		76F823C528BEC2B3003A524C /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76F823C428BEC2B3003A524C /* Resolver */; };
 		76FB0E4B29F360DF00C23F18 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 76FB0E4A29F360DF00C23F18 /* FacebookLogin */; };
@@ -1126,6 +1128,8 @@
 		76DC3A2828169995004D5021 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		76DC3A4C281A0F1D004D5021 /* ModuleLinkerModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleLinkerModule.swift; sourceTree = "<group>"; };
 		76E3CA6E27A8DC8200C24DC2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNewPasswordView.swift; sourceTree = "<group>"; };
 		76F2E4E228D5092F0052A744 /* PlaybackCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCounter.swift; sourceTree = "<group>"; };
 		76FB0E6429F6695000C23F18 /* FacebookLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1822,6 +1826,8 @@
 				765A35F529E9052E00B939BD /* LoginView.swift */,
 				765A35F129E9052E00B939BD /* UsernameView.swift */,
 				76FB0E6429F6695000C23F18 /* FacebookLoginButton.swift */,
+				76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */,
+				76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3478,6 +3484,7 @@
 			files = (
 				765A360629E9052E00B939BD /* LandingView.swift in Sources */,
 				765A360729E9052E00B939BD /* LandingViewModel.swift in Sources */,
+				76EAFC502A08ED0900ACD862 /* ForgotPasswordView.swift in Sources */,
 				765A361829E9052E00B939BD /* Strings.swift in Sources */,
 				765A361B29E9052E00B939BD /* Image+Extensions.swift in Sources */,
 				765A361029E9052E00B939BD /* DoneView.swift in Sources */,
@@ -3485,6 +3492,7 @@
 				765A361129E9052E00B939BD /* LoginModule+ViewProviding.swift in Sources */,
 				765A360B29E9052E00B939BD /* CreateAccountView.swift in Sources */,
 				765A361E29E9052E00B939BD /* LoginModule.swift in Sources */,
+				76EAFC522A08F09600ACD862 /* EnterNewPasswordView.swift in Sources */,
 				765A361429E9052E00B939BD /* UsernameView.swift in Sources */,
 				765A360829E9052E00B939BD /* LandingViewRoutes.swift in Sources */,
 				76FB0E6529F6695000C23F18 /* FacebookLoginButton.swift in Sources */,

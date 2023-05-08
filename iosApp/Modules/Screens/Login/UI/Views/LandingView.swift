@@ -29,6 +29,10 @@ public struct LandingView: View {
 							doneView
 						case .login:
 							loginView.backButton()
+						case .forgotPassword:
+							forgotPasswordView.backButton()
+						case .enterNewPassword:
+							enterNewPasswordView.backButton()
 						}
 					}
 			}
@@ -56,7 +60,7 @@ extension LandingView {
 				createAccountButton
 				facebookLoginButton
 				googleSignInButton
-				signInWithAppleButton
+//				signInWithAppleButton
 			}
 			.cornerRadius(4)
 			.font(.inter(ofSize: 14).weight(.semibold))

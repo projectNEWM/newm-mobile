@@ -55,6 +55,32 @@ class LandingViewModel: ObservableObject {
 		}
 	}
 	
+	func forgotPassword() {
+		navPath.append(.forgotPassword)
+	}
+	
+	func requestPasswordResetCode() {
+		navPath.append(.enterNewPassword)
+		Task {
+			do {
+				try await loginManager.requestEmailVerificationCode(for: email)
+			} catch {
+				self.error = "\(error)"
+			}
+		}
+	}
+	
+	func resetPassword() {
+		Task {
+			do {
+				try await userManager.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
+				try await loginManager.login(email: email, password: password)
+			} catch {
+				self.error = "\(error)"
+			}
+		}
+	}
+	
 	func createAccount() {
 		navPath.append(.createAccount)
 	}

@@ -20,4 +20,14 @@ public class UserAPI: NEWMAPI {
 		], method: .PUT)
 		try await sendRequest(request)
 	}
+	
+	public func resetPassword(email: String, password: String, confirmPassword: String, authCode: String) async throws {
+		let request = makeRequest(url: url.appending(path: "password"), body: [
+			"email": email,
+			"newPassword": password,
+			"confirmPassword": password,
+			"authCode": authCode
+		], method: .PUT)
+		try await sendRequest(request)
+	}
 }
