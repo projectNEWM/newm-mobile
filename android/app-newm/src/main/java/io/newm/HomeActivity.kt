@@ -10,7 +10,7 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NewmTheme() {
+            NewmTheme(darkTheme = true) {
                 NewmApp()
             }
         }

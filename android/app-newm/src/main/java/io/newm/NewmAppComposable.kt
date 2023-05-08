@@ -7,8 +7,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -19,7 +17,6 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -137,14 +134,6 @@ internal fun NewmBottomNavigation(
                     onClick = { onNavigationSelected(Screen.HomeRoot) },
                 )
                 HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.TribeRoot,
-                    iconResId = R.drawable.ic_library,
-                    labelResId = R.string.library,
-                    selectedIconBrush = LibraryIconGradient,
-                    selectedLabelColor = DarkPink,
-                    onClick = { onNavigationSelected(Screen.TribeRoot) },
-                )
-                HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.SearchRoot,
                     iconResId = R.drawable.ic_search,
                     labelResId = R.string.search,
@@ -153,21 +142,14 @@ internal fun NewmBottomNavigation(
                     onClick = { onNavigationSelected(Screen.SearchRoot) },
                 )
                 HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.WalletRoot,
-                    iconResId = R.drawable.ic_wallet,
-                    labelResId = R.string.wallet,
-                    selectedIconBrush = WalletIconGradient,
-                    selectedLabelColor = LightSkyBlue,
-                    onClick = { onNavigationSelected(Screen.WalletRoot) },
+                    selected = currentRootScreen == Screen.LibraryRoot,
+                    iconResId = R.drawable.ic_library,
+                    labelResId = R.string.library,
+                    selectedIconBrush = LibraryIconGradient,
+                    selectedLabelColor = DarkPink,
+                    onClick = { onNavigationSelected(Screen.LibraryRoot) },
                 )
-                HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.StarsRoot,
-                    iconResId = R.drawable.ic_marketplace,
-                    labelResId = R.string.marketplace,
-                    selectedIconBrush = MarketIconGradient,
-                    selectedLabelColor = YellowJacket,
-                    onClick = { onNavigationSelected(Screen.StarsRoot) },
-                )
+
             }
         }
     }

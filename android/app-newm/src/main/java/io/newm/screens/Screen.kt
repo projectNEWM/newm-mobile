@@ -5,9 +5,9 @@ sealed class Screen(val route: String) {
     object HomeRoot : Screen("home-root")
     object HomeLanding : Screen("home-landing")
 
-    object TribeRoot : Screen("tribe-root")
+    object LibraryRoot : Screen("library-root")
 
-    object TribeLanding : Screen("tribe-landing")
+    object LibraryLanding : Screen("library-landing")
 
     object SearchRoot : Screen("search-root")
 

@@ -20,7 +20,7 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
-            NewmTheme {
+            NewmTheme(darkTheme = true) {
                 WelcomeToNewm(::launchHomeActivity)
             }
         }
