@@ -9,7 +9,7 @@ enum LoginError: Error {
 	case facebookAccessTokenMissing
 }
 
-public class LoginManager {
+public class LoginManager: ObservableObject {
 	//TODO: update this with user info
 	@Published public var userIsLoggedIn: Bool = false
 	let api = LoginAPI()

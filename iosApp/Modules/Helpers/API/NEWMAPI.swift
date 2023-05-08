@@ -40,7 +40,7 @@ public class NEWMAPI {
 	}
 		
 	@discardableResult
-	func sendRequest(_ request: URLRequest) async throws -> Data {
+	func sendRequest(_ request: URLRequest, tryRefresh: Bool = true) async throws -> Data {
 		let (data, response) = try await URLSession.shared.data(for: request)
 		
 		print(response)
@@ -50,11 +50,24 @@ public class NEWMAPI {
 			throw APIError.invalidResponse
 		}
 		
+		if tryRefresh {
+			guard httpResponse.statusCode != 401 else {
+				tokenManager.authToken = try await sendRequest(makeRefreshRequest(), tryRefresh: false).decode()
+				return try await sendRequest(request, tryRefresh: false)
+			}
+		}
+		
 		guard (200...299).contains(httpResponse.statusCode) else {
 			throw APIError.httpError(httpResponse.statusCode)
 		}
 		
 		return data
+	}
+	
+	private func makeRefreshRequest() -> URLRequest {
+		var request = URLRequest(url: stagingURLv1.appending(path: "auth").appending(path: "refresh"))
+		tokenManager.authToken.flatMap { request.setValue("Bearer \($0.refreshToken)", forHTTPHeaderField: "Authorization") }
+		return request
 	}
 	
 	func makeRequest(url: URL, body: [String:String]?, method: HTTPMethod) -> URLRequest {

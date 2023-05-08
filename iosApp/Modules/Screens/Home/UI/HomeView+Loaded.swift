@@ -3,6 +3,7 @@ import SwiftUI
 import SharedUI
 import ModuleLinker
 import Resolver
+import Auth
 
 extension HomeView {
 	struct LoadedView: View {
@@ -11,6 +12,7 @@ extension HomeView {
 		private let uiModel: HomeViewUIModel
 		
 		@State private var greetingTimer: Timer?
+		@StateObject private var loginManager = LoginManager()
 		
 		init(uiModel: HomeViewUIModel, route: Binding<HomeRoute?>) {
 			self.uiModel = uiModel
@@ -28,11 +30,18 @@ extension HomeView {
 					mostPopularThisWeekSection
 				}
 			}
-			.onAppear {
-				greetingTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
-					withAnimation {
-						shouldShowGreeting = false
-					}
+			.onChange(of: loginManager.userIsLoggedIn) { _ in
+				resetGreetingTimer()
+			}
+			.onAppear(perform: resetGreetingTimer)
+		}
+		
+		private func resetGreetingTimer() {
+			shouldShowGreeting = true
+			greetingTimer?.invalidate()
+			greetingTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
+				withAnimation {
+					shouldShowGreeting = false
 				}
 			}
 		}

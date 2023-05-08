@@ -209,6 +209,8 @@
 		768B499B2903B89F0099911D /* LibraryViewUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B498F2903B89F0099911D /* LibraryViewUIModel.swift */; };
 		7696194828A14C2D005782F1 /* HomeModule+ViewProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696194728A14C2D005782F1 /* HomeModule+ViewProviding.swift */; };
 		76A223FE281FB43900F7188A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A223FD281FB43900F7188A /* MockData.swift */; };
+		76A9FA672A07C3990025E58B /* Auth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D4229F8688200EB6357 /* Auth.framework */; };
+		76A9FA682A07C3990025E58B /* Auth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D4229F8688200EB6357 /* Auth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76ADDCDA28974668008AA39A /* HomeViewActionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCD928974668008AA39A /* HomeViewActionHandling.swift */; };
 		76ADDCDC289748C1008AA39A /* HomeView+Loaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCDB289748C1008AA39A /* HomeView+Loaded.swift */; };
 		76ADDCE728980F61008AA39A /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ADDCE628980F61008AA39A /* HomeViewModelTests.swift */; };
@@ -658,6 +660,13 @@
 			remoteGlobalIDString = 7555FF7A242A565900829871;
 			remoteInfo = iosApp;
 		};
+		76A9FA692A07C3990025E58B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76B52D4129F8688200EB6357;
+			remoteInfo = Auth;
+		};
 		76ADDCE928980F61008AA39A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -865,6 +874,17 @@
 				7618FD8828164DAB007573B4 /* PlaylistList.framework in Embed Frameworks */,
 				76B52D4929F8688200EB6357 /* Auth.framework in Embed Frameworks */,
 				76D01D8028164AE700305605 /* Main.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76A9FA6B2A07C3990025E58B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				76A9FA682A07C3990025E58B /* Auth.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1347,6 +1367,7 @@
 				7670043328279F4D00ED72D8 /* Artist.framework in Frameworks */,
 				760300362836FAE200BBF78C /* Fonts.framework in Frameworks */,
 				76D01DBC28164B6600305605 /* ModuleLinker.framework in Frameworks */,
+				76A9FA672A07C3990025E58B /* Auth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2910,6 +2931,7 @@
 				76D01D3B28164A8400305605 /* Sources */,
 				76D01D3C28164A8400305605 /* Frameworks */,
 				76D01D3D28164A8400305605 /* Resources */,
+				76A9FA6B2A07C3990025E58B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2919,6 +2941,7 @@
 				7603003028367FDB00BBF78C /* PBXTargetDependency */,
 				760300392836FAE200BBF78C /* PBXTargetDependency */,
 				760300452837FD0800BBF78C /* PBXTargetDependency */,
+				76A9FA6A2A07C3990025E58B /* PBXTargetDependency */,
 			);
 			name = Home;
 			packageProductDependencies = (
@@ -3964,6 +3987,11 @@
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
 			targetProxy = 7683128F27A38F480056BC6B /* PBXContainerItemProxy */;
+		};
+		76A9FA6A2A07C3990025E58B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76B52D4129F8688200EB6357 /* Auth */;
+			targetProxy = 76A9FA692A07C3990025E58B /* PBXContainerItemProxy */;
 		};
 		76ADDCEA28980F61008AA39A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

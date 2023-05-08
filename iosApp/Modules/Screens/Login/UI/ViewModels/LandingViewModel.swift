@@ -150,7 +150,11 @@ class LandingViewModel: ObservableObject {
 		case .success(let authResults):
 			isLoading = true
 			Task {
-				try await LoginManager().loginWithApple(result: authResults)
+				do {
+					try await LoginManager().loginWithApple(result: authResults)
+				} catch {
+					self.error = "\(error)"
+				}
 				isLoading = false
 			}
 		case .failure(let error):
