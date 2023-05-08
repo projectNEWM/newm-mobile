@@ -2,10 +2,11 @@ package io.newm.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,10 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.Gray100
-import io.newm.core.theme.Gray600
-import io.newm.core.theme.NewmTheme
-import io.newm.core.theme.inter
+import io.newm.core.theme.*
 
 @Composable
 fun ThisWeekCarousel(
@@ -30,13 +28,14 @@ fun ThisWeekCarousel(
 ) {
     Column {
         Row(
-            modifier = Modifier.padding(horizontal = 12.dp)
+            modifier = Modifier.padding(horizontal = 20.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.title_this_week),
                 fontFamily = inter,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
+                color = Gray100
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -44,10 +43,14 @@ fun ThisWeekCarousel(
                 fontFamily = inter,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 12.sp,
-                color = MaterialTheme.colors.primary,
+                color = Purple,
                 modifier = Modifier.clickable { onViewAll() })
         }
-        Row {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 14.dp)
+                .horizontalScroll(rememberScrollState()),
+        ) {
             ThisWeekCard(
                 imageRes = R.drawable.ic_followers,
                 title = stringResource(R.string.title_this_week_followers, followers),

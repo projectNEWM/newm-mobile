@@ -1,6 +1,5 @@
 package io.newm.screens.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -11,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,7 +25,7 @@ fun WelcomeBar(
     Row(
         modifier = Modifier
             .height(120.dp)
-            .padding(start = 20.dp, end = 20.dp)
+            .padding(horizontal = 20.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {

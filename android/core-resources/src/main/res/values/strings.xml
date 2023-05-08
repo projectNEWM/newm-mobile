@@ -23,6 +23,7 @@
     <string name="welcome">Hey %s 👋</string>
     <string name="title_this_week">THIS WEEK</string>
     <string name="view_all">VIEW ALL</string>
+    <string name="view_more">VIEW MORE</string>
     <string name="title_this_week_followers">+%s</string>
     <string name="title_this_week_royalties">$%s</string>
     <string name="title_this_week_earnings">+$%s</string>
@@ -33,4 +34,6 @@
     <string name="title_recently_played_music_carousel">RECENTLY PLAYED</string>
     <string name="title_just_released_music_carousel">JUST RELEASED</string>
     <string name="title_just_for_you_music_carousel">JUST FOR YOU</string>
+    <string name="title_artist_list">NEWM ARTISTS</string>
+    <string name="artist_list_songs">%s Songs</string>
 </resources>
