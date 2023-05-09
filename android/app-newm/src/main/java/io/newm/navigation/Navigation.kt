@@ -23,10 +23,8 @@ fun Navigation(
         startDestination = Screen.HomeRoot.route
     ) {
         addHomeTree()
-        addTribeTree()
         addSearchTree()
-        addStarsTree()
-        addWalletTree()
+        addLibraryTree()
     }
 }
 
@@ -52,12 +50,12 @@ private fun NavGraphBuilder.addHomeTree() {
     }
 }
 
-private fun NavGraphBuilder.addTribeTree() {
+private fun NavGraphBuilder.addLibraryTree() {
     navigation(
-        route = Screen.TribeRoot.route,
-        startDestination = Screen.TribeLanding.route
+        route = Screen.LibraryRoot.route,
+        startDestination = Screen.LibraryLanding.route
     ) {
-        composable(Screen.TribeLanding.route) {
+        composable(Screen.LibraryLanding.route) {
             LibraryScreen()
         }
     }
@@ -70,28 +68,6 @@ private fun NavGraphBuilder.addSearchTree() {
     ) {
         composable(Screen.SearchLanding.route) {
             SearchScreen()
-        }
-    }
-}
-
-private fun NavGraphBuilder.addStarsTree() {
-    navigation(
-        route = Screen.StarsRoot.route,
-        startDestination = Screen.StarsLanding.route
-    ) {
-        composable(Screen.StarsLanding.route) {
-            MarketplaceScreen()
-        }
-    }
-}
-
-private fun NavGraphBuilder.addWalletTree() {
-    navigation(
-        route = Screen.WalletRoot.route,
-        startDestination = Screen.WalletLanding.route
-    ) {
-        composable(Screen.WalletLanding.route) {
-            WalletScreen()
         }
     }
 }
