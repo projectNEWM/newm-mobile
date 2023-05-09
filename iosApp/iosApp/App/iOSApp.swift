@@ -15,11 +15,7 @@ struct iOSApp: App {
 		mainViewProvider = Resolver.resolve()
 		
 		setUpAppearance()
-		
-		ApplicationDelegate.shared.application(
-			UIApplication.shared,
-			didFinishLaunchingWithOptions: [:]
-		)
+		configureFacebook()
 	}
 	
 	var body: some Scene {
@@ -39,6 +35,13 @@ struct iOSApp: App {
 		}
 	}
 	
+	private func configureFacebook() {
+		ApplicationDelegate.shared.application(
+			UIApplication.shared,
+			didFinishLaunchingWithOptions: [:]
+		)
+	}
+	
 	private func setUpAppearance() {
 		UINavigationBar.appearance().tintColor = .white
 		let barAppearance = UIBarAppearance()
@@ -50,13 +53,7 @@ struct iOSApp: App {
 extension UIWindow {
 	open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
 		if motion == .motionShake {
-			Task {
-				do {
-					try await LoginManager().logOut()
-				} catch {
-					print(error)
-				}
-			}
+			Auth.LoginManager().logOut()
 		}
 	}
 }
