@@ -35,11 +35,12 @@ internal class NewmApi(
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun register(user: NewUser) {
-        val response = client.put("/v1/users") {
+        val response = client.post("/v1/users") {
             contentType(ContentType.Application.Json)
             setBody(user)
         }
         when (response.status) {
+            HttpStatusCode.OK -> {}
             HttpStatusCode.Conflict -> {
                 throw RegisterException.UserAlreadyExists("User already Exists")
             }
