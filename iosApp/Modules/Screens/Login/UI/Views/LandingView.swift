@@ -60,7 +60,7 @@ extension LandingView {
 				createAccountButton
 				facebookLoginButton
 				googleSignInButton
-//				signInWithAppleButton
+				signInWithAppleButton
 			}
 			.cornerRadius(4)
 			.font(.inter(ofSize: 14).weight(.semibold))

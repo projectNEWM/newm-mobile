@@ -55,8 +55,8 @@ public class LoginManager: ObservableObject {
 	}
 	
 	public func loginWithApple(result: ASAuthorization) async throws {
-		let token = (result.credential as! ASAuthorizationAppleIDCredential).authorizationCode!.base64EncodedString()
-		try await api.login(method: .apple(accessToken: token))
+		let token = String(data: (result.credential as! ASAuthorizationAppleIDCredential).identityToken!, encoding: .utf8)!
+		try await api.login(method: .apple(idToken: token))
 	}
 	
 	private func signOutOfApple() {

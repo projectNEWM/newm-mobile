@@ -3,7 +3,7 @@ import Foundation
 public enum LoginMethod {
 	case facebook(accessToken: String)
 	case google(accessToken: String)
-	case apple(accessToken: String)
+	case apple(idToken: String)
 	case email(email: String, password: String)
 	
 	var path: String? {
@@ -32,7 +32,9 @@ public class LoginAPI: NEWMAPI {
 	}
 	
 	public func requestEmailVerificationCode(for email: String) async throws {
-		let request = makeRequest(url: authAPI.appending(path: "code").appending(queryItems: [URLQueryItem(name: "email", value: email)]), body: nil, method: .GET)
+		let request = makeRequest(url: authAPI
+			.appending(path: "code")
+			.appending(queryItems: [URLQueryItem(name: "email", value: email)]), body: nil, method: .GET)
 		try await sendRequest(request)
 	}
 }
@@ -43,8 +45,8 @@ extension LoginAPI {
 			switch loginMethod {
 			case .email(let email, let password):
 				return ["email": email, "password": password]
-			case .apple(let accessToken):
-				return ["accessToken": accessToken]
+			case .apple(let idToken):
+				return ["idToken": idToken]
 			case .facebook(let accessToken):
 				return ["accessToken": accessToken]
 			case .google(let accessToken):
