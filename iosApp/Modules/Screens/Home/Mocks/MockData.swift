@@ -1,4 +1,3 @@
-#if DEBUG
 import Foundation
 import SwiftUI
 import ModuleLinker
@@ -51,4 +50,3 @@ class MockHomeActionHandler: HomeViewActionHandling {
 	func artistTapped(id: String) {}
 	func songTapped(id: String) {}
 }
-#endif

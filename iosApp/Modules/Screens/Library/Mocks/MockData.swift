@@ -1,4 +1,3 @@
-#if DEBUG
 import Foundation
 import SwiftUI
 import ModuleLinker
@@ -22,5 +21,3 @@ struct MockLibraryViewUIModelProvider: LibraryViewUIModelProviding {
         )
     }
 }
-
-#endif

@@ -1,4 +1,3 @@
-#if DEBUG
 import Foundation
 import Resolver
 import ModuleLinker
@@ -147,4 +146,3 @@ public struct NonRandomNumberGenerator: RandomNumberGenerator {
 		self.seed = seed
 	}
 }
-#endif

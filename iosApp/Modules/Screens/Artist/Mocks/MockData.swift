@@ -1,4 +1,3 @@
-#if DEBUG
 import Foundation
 import SwiftUI
 import ModuleLinker
@@ -28,4 +27,3 @@ class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
 		)
 	}
 }
-#endif
