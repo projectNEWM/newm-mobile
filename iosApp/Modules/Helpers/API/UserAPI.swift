@@ -17,7 +17,7 @@ public class UserAPI: NEWMAPI {
 			"newPassword": password,
 			"confirmPassword": passwordConfirmation,
 			"authCode": verificationCode
-		], method: .PUT)
+		], method: .POST)
 		try await sendRequest(request)
 	}
 	
