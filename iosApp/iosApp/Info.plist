@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>0.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -30,18 +30,18 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>4171461756290307</string>
+	<key>FacebookClientToken</key>
+	<string>$(FACEBOOK_CLIENT_TOKEN)</string>
+	<key>FacebookDisplayName</key>
+	<string>NEWM</string>
+	<key>GIDClientID</key>
+	<string>489785482974-hvron45nt22d0nb54qrplksne6202e19.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
 	</array>
-	<key>FacebookAppID</key>
-	<string>4171461756290307</string>
-	<key>FacebookDisplayName</key>
-	<string>NEWM</string>
-	<key>FacebookClientToken</key>
-	<string>24b70a241783decc05c7480a73f04e92</string>
-	<key>GIDClientID</key>
-	<string>489785482974-hvron45nt22d0nb54qrplksne6202e19.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
