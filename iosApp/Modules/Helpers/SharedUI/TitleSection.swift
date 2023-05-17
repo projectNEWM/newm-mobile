@@ -27,7 +27,9 @@ public struct TitleSection: View {
 			titleView
 			Spacer()
 			profilePicView
-		}.addSidePadding()
+		}
+		.addSidePadding()
+		.frame(height: 50)
     }
 	
 	@ViewBuilder

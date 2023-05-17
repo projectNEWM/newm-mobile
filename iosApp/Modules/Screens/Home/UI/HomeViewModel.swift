@@ -2,18 +2,20 @@ import Foundation
 import Combine
 import Resolver
 import ModuleLinker
-import shared
 import SharedUI
 import Artist
 import AudioPlayer
 import Colors
+import Auth
 
 class HomeViewModel: ObservableObject {
 	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
-	@Published var route: HomeRoute?
+	@Published var route = [HomeRoute]()
 	
 	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
 	@Injected private var audioPlayer: AudioPlayerImpl
+
+	@Published var loginManager = LoginManager()
 
 	init() {
 		Task {
@@ -35,7 +37,7 @@ class HomeViewModel: ObservableObject {
 
 extension HomeViewModel: HomeViewActionHandling {
 	func artistTapped(id: String) {
-		route = .artist(id: id)
+		route.append(.artist(id: id))
 	}
 	
 	func songTapped(id: String) {

@@ -2,16 +2,15 @@ import SwiftUI
 import SharedUI
 import Colors
 import ModuleLinker
+import GoogleSignInSwift
+import GoogleSignIn
+import AuthenticationServices
 
 public struct LandingView: View {
-	@Binding private var shouldShow: Bool
-	
 	@StateObject var viewModel = LandingViewModel()
 	@FocusState var isTextFieldFocused: Bool
 	
-	init(shouldShow: Binding<Bool>) {
-		self._shouldShow = shouldShow
-	}
+	private let socialSignInButtonHeight: CGFloat = 40
 		
 	public var body: some View {
 		ZStack {
@@ -19,21 +18,22 @@ public struct LandingView: View {
 				landingView
 					.padding()
 					.navigationDestination(for: LandingRoute.self) { route in
-						Group {
-							switch route {
-							case .createAccount:
-								createAccountView
-							case .codeConfirmation:
-								codeConfirmationView
-							case .username:
-								usernameView
-							case .done:
-								doneView
-							case .login:
-								loginView
-							}
+						switch route {
+						case .createAccount:
+							createAccountView.backButton()
+						case .codeConfirmation:
+							codeConfirmationView.backButton()
+						case .nickname:
+							nicknameView.backButton()
+						case .done:
+							doneView
+						case .login:
+							loginView.backButton()
+						case .forgotPassword:
+							forgotPasswordView.backButton()
+						case .enterNewPassword:
+							enterNewPasswordView.backButton()
 						}
-						.backButton()
 					}
 			}
 			.alert(String.error, isPresented: isPresent($viewModel.error), actions: {}) {
@@ -58,6 +58,9 @@ extension LandingView {
 			Group {
 				loginButton
 				createAccountButton
+				facebookLoginButton
+				googleSignInButton
+				signInWithAppleButton
 			}
 			.cornerRadius(4)
 			.font(.inter(ofSize: 14).weight(.semibold))
@@ -88,6 +91,47 @@ extension LandingView {
 		.foregroundColor(NEWMColor.pink())
 		.borderOverlay(color: NEWMColor.grey500(), radius: 4, width: 2)
 	}
+	
+	@ViewBuilder
+	private var facebookLoginButton: some View {
+		FacebookLoginButton(logInCompletionHandler: viewModel.handleFacebookLogin, logOutCompletionHandler: viewModel.handleFacebookLogout)
+			.frame(height: socialSignInButtonHeight)
+			.addSidePadding()
+			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
+			.cornerRadius(4)
+			.padding(.top)
+	}
+	
+	@ViewBuilder
+	private var signInWithAppleButton: some View {
+		SignInWithAppleButton(.signIn) { request in
+			request.requestedScopes = [.fullName, .email]
+		} onCompletion: { result in
+			viewModel.handleAppleSignIn(result: result)
+		}
+		.signInWithAppleButtonStyle(.white)
+		.frame(height: socialSignInButtonHeight)
+	}
+	
+	private var rootViewController: UIViewController? {
+		guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
+			//TODO: log error
+			return nil
+		}
+		return rootVC
+	}
+	
+	@ViewBuilder
+	private var googleSignInButton: some View {
+		if let rootVC = rootViewController {
+			GoogleSignInButton {
+				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC, completion: viewModel.handleGoogleSignIn)
+			}
+			.frame(height: socialSignInButtonHeight)
+		} else {
+			EmptyView()
+		}
+	}
 }
 
 extension LandingView {
@@ -105,7 +149,7 @@ extension LandingView {
 
 struct LandingView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView(shouldShow: .constant(true))
+		LandingView()
 			.preferredColorScheme(.dark)
 	}
 }

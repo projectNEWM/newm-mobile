@@ -1,9 +1,7 @@
 import Foundation
-import shared
 
-enum HomeRoute {
+enum HomeRoute: Hashable {
 	case artist(id: String)
-	case nowPlaying
 	case playlist(id: String)
 	case allPlaylists
 }

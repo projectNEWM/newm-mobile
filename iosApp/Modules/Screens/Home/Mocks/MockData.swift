@@ -1,9 +1,7 @@
-#if DEBUG
 import Foundation
 import SwiftUI
 import ModuleLinker
 import Resolver
-import shared
 import SharedUI
 import Colors
 
@@ -52,4 +50,3 @@ class MockHomeActionHandler: HomeViewActionHandling {
 	func artistTapped(id: String) {}
 	func songTapped(id: String) {}
 }
-#endif

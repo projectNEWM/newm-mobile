@@ -1,14 +1,13 @@
-#if DEBUG
 import Foundation
-import shared
 import Resolver
 import ModuleLinker
 import UIKit
 import SwiftUI
+import Models
 
 public class MockData {
 	public static func bigArtistCells_shuffled(seed: UInt64, onTap: @escaping (String) -> ()) -> [BigCellViewModel] {
-		var numberGen = NonRandomNumberGenerator(seed: seed)
+//		var numberGen = NonRandomNumberGenerator(seed: seed)
 		return artists.map { artist in
 			BigCellViewModel(artist: artist) {
 				onTap(artist.id)
@@ -26,7 +25,7 @@ public class MockData {
 	}
 	
 	public static func makeArtist(name: String) -> Artist {
-		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.companion.allCases.randomElement()!.title, stars: 12000, id: name)
+		Artist(image: url(for: Asset.MockAssets.allArtists.randomElement()!), name: name, genre: Genre.allCases.randomElement()!.title, stars: 12000, id: name)
 	}
 	
 	public static var artists: [Artist] = [
@@ -59,7 +58,7 @@ public class MockData {
 			id: title,
 			favorited: false,
 			duration: 124,
-			genre: Genre.companion.allCases.randomElement()!
+			genre: Genre.allCases.randomElement()!
 		)
 		return song
 	}
@@ -88,7 +87,7 @@ public class MockData {
 	]
 	
 	static func makePlaylist(id: String) -> Playlist {
-		Playlist(image: "", title: "Music for Gaming", creator: User(userName: "NEWM User"), songCount: 32, playlistId: id, genre: "Rock", starCount: 13, playCount: 439)
+		Playlist(image: "", title: "Music for Gaming", creator: User(userName: "NEWM User"), songCount: 32, playlistId: id, genre: .rock, starCount: 13, playCount: 439)
 	}
 	
 	public static var playlists: [Playlist] = [
@@ -147,4 +146,3 @@ public struct NonRandomNumberGenerator: RandomNumberGenerator {
 		self.seed = seed
 	}
 }
-#endif

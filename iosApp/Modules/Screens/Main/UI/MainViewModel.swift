@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import ModuleLinker
 import Resolver
-import shared
+import Auth
 
 @MainActor
 class MainViewModel: ObservableObject {
@@ -10,11 +10,11 @@ class MainViewModel: ObservableObject {
 	
 	@Published var shouldShowLogin: Bool = false
 	
+	private let loginManager = LoginManager()
+	
 	private var cancelables = Set<AnyCancellable>()
 	
-	@Injected private var userSession: UserSession
-	
 	init() {
-		shouldShowLogin = !userSession.isUserLoggedIn()
+		loginManager.$userIsLoggedIn.map { !$0 }.assign(to: &$shouldShowLogin)
 	}
 }

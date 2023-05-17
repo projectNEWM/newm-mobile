@@ -1,8 +1,7 @@
-#if DEBUG
 import Foundation
 import ModuleLinker
 import Resolver
-import shared
+import Models
 
 class MockPlaylistListUseCase: PlaylistListUseCaseProtocol {
 	func execute() -> [Playlist] {
@@ -15,4 +14,3 @@ class MockPlaylistListUseCase: PlaylistListUseCaseProtocol {
 		]
 	}
 }
-#endif

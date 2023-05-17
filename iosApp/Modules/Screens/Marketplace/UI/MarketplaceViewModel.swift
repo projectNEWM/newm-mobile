@@ -2,7 +2,6 @@ import Foundation
 import SharedUI
 import ModuleLinker
 import Colors
-import shared
 import Resolver
 
 @MainActor

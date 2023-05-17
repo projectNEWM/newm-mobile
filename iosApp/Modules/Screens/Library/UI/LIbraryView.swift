@@ -26,7 +26,6 @@ struct LibraryView: View {
 struct LibraryView_Previews: PreviewProvider {
     static var previews: some View {
         //is this doing anything?
-        Resolver.root = .mock
         return LibraryView()
             .preferredColorScheme(.dark)
     }

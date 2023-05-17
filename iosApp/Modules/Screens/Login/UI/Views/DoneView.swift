@@ -7,7 +7,7 @@ extension LandingView {
 		VStack {
 			Spacer()
 			
-			Text("Aaaaaand you're all done, \(viewModel.username)!")
+			Text("Aaaaaand you're all done, \(viewModel.nickname)!")
 					.font(.ralewayExtraBold(ofSize: 40))
 					.padding(.bottom)
 
@@ -31,8 +31,8 @@ extension LandingView {
 			}
 			.font(.interMedium(ofSize: 14))
 
-			nextButton(title: .next) {
-				viewModel.wantsToBeShown = false
+			nextButton(title: .enterNewm) {
+				viewModel.login()
 			}
 		}
 		.navigationBarBackButtonHidden()
@@ -43,7 +43,7 @@ extension LandingView {
 
 struct DoneView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView(shouldShow: .constant(true))
+		LandingView()
 			.doneView
 			.preferredColorScheme(.dark)
 	}

@@ -3,15 +3,6 @@ import Resolver
 import SwiftUI
 import ModuleLinker
 import TabBar
-import shared
-
-class MockUserSession: UserSession {
-	var userLoggedIn = true
-	
-	func isUserLoggedIn() -> Bool {
-		userLoggedIn
-	}
-}
 
 public final class MainModule: ModuleProtocol {
 	public static let shared = MainModule()
@@ -28,24 +19,15 @@ public final class MainModule: ModuleProtocol {
 					@Injected var libraryViewProvider: LibraryViewProviding
 					return libraryViewProvider.libraryView()
                 },
-				TabViewProvider(image: Image(MainViewModelTab.wallet), tabName: MainViewModelTab.wallet.description) {
-					@Injected var walletViewProvider: WalletViewProviding
-					return walletViewProvider.walletView()
-				},
-				TabViewProvider(image: Image(MainViewModelTab.marketplace), tabName: MainViewModelTab.marketplace.description) {
-					@Injected var marketplaceViewProvider: MarketplaceViewProviding
-					return marketplaceViewProvider.marketplaceView()
-				}
+//				TabViewProvider(image: Image(MainViewModelTab.wallet), tabName: MainViewModelTab.wallet.description) {
+//					@Injected var walletViewProvider: WalletViewProviding
+//					return walletViewProvider.walletView()
+//				},
+//				TabViewProvider(image: Image(MainViewModelTab.marketplace), tabName: MainViewModelTab.marketplace.description) {
+//					@Injected var marketplaceViewProvider: MarketplaceViewProviding
+//					return marketplaceViewProvider.marketplaceView()
+//				}
 			]
-		}
-		
-		Resolver.register {
-			do {
-				return try UserSessionFactory().userSession() as UserSession
-			} catch {
-				print(error)
-				fatalError(error.localizedDescription)
-			}
 		}
 		
 		// Public

@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 import SharedUI
-import shared
 
 extension ArtistView {
 	struct LoadedView: View {
@@ -38,7 +37,6 @@ extension ArtistView {
 				.toolbarBackground(Color.black, for: .navigationBar)
 				.navigationTitle(uiModel.title)
 			} else {
-				//TODO: figure out how to do this in pre-ios16
 				ScrollView {
 					VStack(spacing: sectionSpacing) {
 						HeaderImageSection(uiModel.headerImageUrl)

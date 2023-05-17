@@ -2,7 +2,6 @@ import Foundation
 import Resolver
 import ModuleLinker
 import SwiftUI
-import shared
 
 public final class MarketplaceModule: ModuleProtocol {
 	public static let shared = MarketplaceModule()

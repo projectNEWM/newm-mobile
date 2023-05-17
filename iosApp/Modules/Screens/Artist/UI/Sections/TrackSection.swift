@@ -1,7 +1,6 @@
 import SwiftUI
 import Resolver
 import SharedUI
-import shared
 
 public struct TrackSection: View {
 	@State var range: Range<Int> = 0..<4

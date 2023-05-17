@@ -1,6 +1,5 @@
 import Foundation
 import SharedUI
-import shared
 import ModuleLinker
 
 struct HomeTitleSectionModel {

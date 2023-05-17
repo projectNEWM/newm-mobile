@@ -3,8 +3,8 @@ import ModuleLinker
 import Resolver
 import SharedUI
 import Fonts
-import shared
 import AudioPlayer
+import Models
 
 public struct NowPlayingView: View {
 	typealias Seconds = Int
@@ -114,7 +114,7 @@ extension NowPlayingView {
 	
 	private var favoriteButton: some View {
 		Button {
-			song.favorited.toggle()
+			audioPlayer.song?.favorited.toggle()
 		} label: {
 			if song.favorited {
 				Asset.Media.PlayerIcons.heartSelected()
