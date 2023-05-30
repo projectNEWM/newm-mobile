@@ -26,4 +26,5 @@ sealed class Screen(val route: String) {
     object VerificationCode : Screen("verification")
     object WhatShouldWeCallYou : Screen("what-should-we-call-you")
     object NowPlayingScreen : Screen("now-playing")
+    object Profile : Screen("profile")
 }

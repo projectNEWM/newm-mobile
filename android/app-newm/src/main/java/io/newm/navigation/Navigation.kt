@@ -9,10 +9,9 @@ import androidx.navigation.compose.navigation
 import io.newm.feature.now.playing.NowPlayingScreen
 import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
-import io.newm.screens.marketplace.MarketplaceScreen
 import io.newm.screens.library.LibraryScreen
+import io.newm.screens.profile.ProfileScreen
 import io.newm.screens.search.SearchScreen
-import io.newm.screens.wallet.WalletScreen
 
 @Composable
 fun Navigation(
@@ -22,20 +21,20 @@ fun Navigation(
         navController = navController,
         startDestination = Screen.HomeRoot.route
     ) {
-        addHomeTree()
+        addHomeTree(navController)
         addSearchTree()
         addLibraryTree()
     }
 }
 
-private fun NavGraphBuilder.addHomeTree() {
+private fun NavGraphBuilder.addHomeTree(navController: NavHostController) {
     navigation(
         route = Screen.HomeRoot.route,
         startDestination = Screen.HomeLanding.route
     ) {
         composable(route = Screen.HomeLanding.route) {
             HomeScreen(
-                onShowProfile = {}, //TODO: Implement profile screen
+                onShowProfile = { navController.navigate(Screen.Profile.route) },
                 onThisWeekViewAll = {}, //TODO: Implement View All screen
                 onRecentlyPlayedViewAll = {}, //TODO: Implement View All screen
                 onArtistListViewMore = {}, //TODO: Implement View More screen
@@ -46,6 +45,9 @@ private fun NavGraphBuilder.addHomeTree() {
 
         composable(Screen.NowPlayingScreen.route) {
             NowPlayingScreen()
+        }
+        composable(Screen.Profile.route) {
+            ProfileScreen(onNavigateUp = { navController.navigateUp() })
         }
     }
 }
@@ -71,3 +73,4 @@ private fun NavGraphBuilder.addSearchTree() {
         }
     }
 }
+
