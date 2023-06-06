@@ -6,4 +6,5 @@ object Modules {
     const val nowPlaying = ":android:feature-now-playing"
     const val login = ":android:feature-login"
     const val shared = ":shared"
+    const val testUtils = ":android:core-test-utils"
 }
