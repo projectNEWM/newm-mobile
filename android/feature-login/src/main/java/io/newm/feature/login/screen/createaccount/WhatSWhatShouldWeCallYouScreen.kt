@@ -8,6 +8,7 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import androidx.compose.ui.unit.dp
 import io.newm.core.ui.buttons.PrimaryButton
 
@@ -15,6 +16,17 @@ import io.newm.core.ui.buttons.PrimaryButton
 fun WhatShouldWeCallYouScreen(
     viewModel: CreateAccountViewModel,
     done: () -> Unit,
+) {
+    WhatShouldWeCallYouScreenContent(
+        setNickName = viewModel::setNickName,
+        done = done,
+    )
+}
+
+@Composable
+internal fun WhatShouldWeCallYouScreenContent(
+    done: () -> Unit,
+    setNickName: (String) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -42,7 +54,7 @@ fun WhatShouldWeCallYouScreen(
                 value = text,
                 onValueChange = {
                     text = it
-                    viewModel.setNickName(it)
+                    setNickName(it)
                 },
                 label = {
                     Text("")
@@ -50,7 +62,7 @@ fun WhatShouldWeCallYouScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(text = "Next") {
-                if(text.isNotEmpty()) {
+                if (text.isNotEmpty()) {
                     done.invoke()
                 }
             }

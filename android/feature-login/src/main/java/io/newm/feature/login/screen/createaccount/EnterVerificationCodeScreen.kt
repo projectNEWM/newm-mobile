@@ -20,6 +20,23 @@ fun EnterVerificationCodeScreen(
     viewModel: CreateAccountViewModel,
     onVerificationComplete: () -> Unit,
 ) {
+    val state by viewModel.state.collectAsState()
+    
+    EnterVerificationScreenContent(
+        state = state,
+        onVerificationComplete = onVerificationComplete,
+        setEmailVerificationCode = viewModel::setEmailVerificationCode,
+        verifyAccount = viewModel::verifyAccount,
+    )
+}
+
+@Composable
+internal fun EnterVerificationScreenContent(
+    state: CreateAccountViewModel.SignupUserState,
+    onVerificationComplete: () -> Unit,
+    setEmailVerificationCode: (String) -> Unit,
+    verifyAccount: () -> Unit,
+) {
     val context = LocalContext.current
     Box(
         modifier = Modifier
@@ -53,14 +70,13 @@ fun EnterVerificationCodeScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             var text by remember { mutableStateOf("") }
-            val state = viewModel.state.collectAsState()
 
-            LaunchedEffect(key1 = state.value.isUserRegistered, key2 = state.value.errorMessage) {
-                if (state.value.isUserRegistered) {
+            LaunchedEffect(key1 = state.isUserRegistered, key2 = state.errorMessage) {
+                if (state.isUserRegistered) {
                     onVerificationComplete()
                 }
-                if (!state.value.errorMessage.isNullOrBlank()) {
-                    context.shortToast(state.value.errorMessage.orEmpty())
+                if (!state.errorMessage.isNullOrBlank()) {
+                    context.shortToast(state.errorMessage.orEmpty())
                 }
             }
 
@@ -69,7 +85,7 @@ fun EnterVerificationCodeScreen(
                 value = text,
                 onValueChange = {
                     text = it
-                    viewModel.setEmailVerificationCode(it)
+                    setEmailVerificationCode(it)
                 },
                 label = {
                     Text("Enter Verification Code:")
@@ -77,7 +93,7 @@ fun EnterVerificationCodeScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(text = "Continue") {
-                viewModel.verifyAccount()
+                verifyAccount()
             }
         }
     }
