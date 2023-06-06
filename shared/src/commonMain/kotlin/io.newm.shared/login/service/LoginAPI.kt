@@ -13,7 +13,7 @@ import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 
 
-internal class NewmApi(
+internal class LoginAPI(
     private val client: HttpClient
 ) : KoinComponent {
 
@@ -58,4 +58,18 @@ internal class NewmApi(
         contentType(ContentType.Application.Json)
         setBody(user)
     }.body<LoginResponse>()
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun resetPassword(
+        email: String,
+        newPassword: String,
+        confirmPassword: String,
+        authCode: String
+    ) = client.put("/v1/users/password") {
+        contentType(ContentType.Application.Json)
+        parameter("email", email)
+        parameter("newPassword", newPassword)
+        parameter("confirmPassword", confirmPassword)
+        parameter("authCode", authCode)
+    }
 }

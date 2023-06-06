@@ -4,7 +4,7 @@ import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.*
 import io.newm.shared.db.NewmDatabaseWrapper
 import io.newm.shared.login.models.*
-import io.newm.shared.login.service.NewmApi
+import io.newm.shared.login.service.LoginAPI
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
@@ -32,7 +32,7 @@ interface LogInRepository {
 }
 
 internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
-    private val service: NewmApi by inject()
+    private val service: LoginAPI by inject()
     private val db: NewmDatabaseWrapper by inject()
 
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
