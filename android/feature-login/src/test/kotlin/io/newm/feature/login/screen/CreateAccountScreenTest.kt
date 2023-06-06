@@ -7,6 +7,8 @@ import app.cash.paparazzi.Paparazzi
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.newm.core.theme.NewmTheme
+import io.newm.feature.login.screen.createaccount.CreateAccountScreen
+import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

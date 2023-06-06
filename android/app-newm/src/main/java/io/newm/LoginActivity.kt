@@ -12,6 +12,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.*
+import io.newm.feature.login.screen.createaccount.CreateAccountScreen
+import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
+import io.newm.feature.login.screen.createaccount.EnterVerificationCodeScreen
+import io.newm.feature.login.screen.createaccount.WhatShouldWeCallYouScreen
 import io.newm.screens.Screen
 
 class LoginActivity : ComponentActivity() {
