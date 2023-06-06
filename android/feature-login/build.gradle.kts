@@ -54,6 +54,7 @@ dependencies {
     debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)
 
+    testImplementation(project(Modules.testUtils))
     testImplementation(JUnit.jUnit)
     testImplementation(Google.testParameterInjector)
 

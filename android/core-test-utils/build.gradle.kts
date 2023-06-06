@@ -1,0 +1,39 @@
+plugins {
+    id(Plugins.androidLibrary)
+    kotlin(Plugins.android)
+}
+
+android {
+    compileSdk = Versions.androidCompileSdk
+
+    namespace = "io.newm.core.test.utils"
+
+    defaultConfig {
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
+        resourcePrefix = "core_test_utils"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation(project(Modules.coreTheme))
+    implementation(Google.composeUi)
+    implementation("app.cash.paparazzi:paparazzi:${Versions.paparazzi}")
+}
