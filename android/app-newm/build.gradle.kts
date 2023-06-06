@@ -2,7 +2,6 @@ plugins {
     id(Plugins.androidApplication)
     id(Plugins.crashlytics)
     id(Plugins.googleServices)
-    id(Plugins.shot)
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
 }

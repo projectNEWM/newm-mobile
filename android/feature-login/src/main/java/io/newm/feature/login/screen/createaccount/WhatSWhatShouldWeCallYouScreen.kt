@@ -1,4 +1,4 @@
-package io.newm.feature.login.screen
+package io.newm.feature.login.screen.createaccount
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

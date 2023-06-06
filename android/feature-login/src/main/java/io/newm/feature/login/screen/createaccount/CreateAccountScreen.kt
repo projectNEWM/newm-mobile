@@ -1,4 +1,4 @@
-package io.newm.feature.login.screen
+package io.newm.feature.login.screen.createaccount
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -17,6 +17,7 @@ import io.newm.feature.login.screen.password.Password
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.core.resources.R
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.feature.login.screen.PreLoginArtistBackgroundContentTemplate
 
 @Composable
 fun CreateAccountScreen(

@@ -1,7 +1,7 @@
 package io.newm.di.viewmodels
 
 import io.newm.screens.home.categories.MusicalCategoriesViewModel
-import io.newm.feature.login.screen.CreateAccountViewModel
+import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
 import io.newm.feature.login.screen.LoginViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
