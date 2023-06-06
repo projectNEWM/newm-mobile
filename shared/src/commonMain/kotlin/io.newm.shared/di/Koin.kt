@@ -11,16 +11,19 @@ import io.newm.shared.login.UserSession
 import io.newm.shared.login.UserSessionImpl
 import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.login.repository.LogInRepositoryImpl
-import io.newm.shared.login.service.NewmApi
+import io.newm.shared.login.service.LoginAPI
 import io.newm.shared.login.usecases.LoginUseCase
 import io.newm.shared.login.usecases.LoginUseCaseImpl
 import io.newm.shared.login.usecases.SignupUseCase
 import io.newm.shared.login.usecases.SignupUseCaseImpl
-import io.newm.shared.playlist.repository.GenresRepository
-import io.newm.shared.playlist.repository.GenresRepositoryImpl
-import io.newm.shared.playlist.service.GenresAPI
-import io.newm.shared.playlist.usecases.GetGenresUseCase
-import io.newm.shared.playlist.usecases.GetGenresUseCaseImpl
+import io.newm.shared.repositories.GenresRepository
+import io.newm.shared.repositories.GenresRepositoryImpl
+import io.newm.shared.repositories.UserRepository
+import io.newm.shared.repositories.UserRepositoryImpl
+import io.newm.shared.services.GenresAPI
+import io.newm.shared.services.UserAPI
+import io.newm.shared.usecases.GetGenresUseCase
+import io.newm.shared.usecases.GetGenresUseCaseImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -46,15 +49,19 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(get(), get(), enableNetworkLogs = enableNetworkLogs) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
-
-    single { NewmApi(get()) }
+    // Internal API Services
+    single { LoginAPI(get()) }
     single { GenresAPI(get()) }
-    single<SignupUseCase> { SignupUseCaseImpl(get()) }
-    single<LoginUseCase> { LoginUseCaseImpl(get()) }
+    single { UserAPI(get()) }
+    // Internal Repositories
     single<LogInRepository> { LogInRepositoryImpl() }
-    single<UserSession> { UserSessionImpl() }
-    single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<GenresRepository> { GenresRepositoryImpl() }
+    single<UserRepository> { UserRepositoryImpl() }
+    // External Use Cases
+    single<LoginUseCase> { LoginUseCaseImpl(get()) }
+    single<SignupUseCase> { SignupUseCaseImpl(get()) }
+    single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
+    single<UserSession> { UserSessionImpl() }
 }
 
 fun createJson() = Json {
