@@ -16,11 +16,13 @@ import io.newm.shared.login.usecases.LoginUseCase
 import io.newm.shared.login.usecases.LoginUseCaseImpl
 import io.newm.shared.login.usecases.SignupUseCase
 import io.newm.shared.login.usecases.SignupUseCaseImpl
-import io.newm.shared.repositories.GenresRepository
+import io.newm.shared.repositories.*
 import io.newm.shared.repositories.GenresRepositoryImpl
+import io.newm.shared.repositories.PlaylistRepositoryImpl
 import io.newm.shared.repositories.UserRepository
 import io.newm.shared.repositories.UserRepositoryImpl
 import io.newm.shared.services.GenresAPI
+import io.newm.shared.services.PlaylistAPI
 import io.newm.shared.services.UserAPI
 import io.newm.shared.usecases.GetGenresUseCase
 import io.newm.shared.usecases.GetGenresUseCaseImpl
@@ -53,10 +55,12 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { LoginAPI(get()) }
     single { GenresAPI(get()) }
     single { UserAPI(get()) }
+    single { PlaylistAPI(get()) }
     // Internal Repositories
     single<LogInRepository> { LogInRepositoryImpl() }
     single<GenresRepository> { GenresRepositoryImpl() }
     single<UserRepository> { UserRepositoryImpl() }
+    single<PlaylistRepository> { PlaylistRepositoryImpl() }
     // External Use Cases
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }

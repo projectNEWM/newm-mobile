@@ -53,8 +53,19 @@ internal class UserAPI(private val client: HttpClient) : KoinComponent {
     }.body()
 
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun getUserCount(): UserCount = client.get("/v1/users/count") {
+    suspend fun getUserCount(
+        ids: String? = null,
+        roles: String? = null,
+        genres: String? = null,
+        olderThan: String? = null,
+        newerThan: String? = null
+    ): UserCount = client.get("/v1/users/count") {
         contentType(ContentType.Application.Json)
+        parameter("ids", ids)
+        parameter("roles", roles)
+        parameter("genres", genres)
+        parameter("olderThan", olderThan)
+        parameter("newerThan", newerThan)
     }.body()
 
     @Throws(KMMException::class, CancellationException::class)
