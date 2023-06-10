@@ -1,29 +1,48 @@
 package io.newm.screens.profile
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import io.newm.R
 import io.newm.core.theme.Black
+import io.newm.core.ui.buttons.PrimaryButton
 
 internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
+
+//TODO This is a temporary model for the profile needs to be replaced with real model from ViewModel
+data class ProfileModel(
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val bannerUrl: String,
+    val avatarUrl: String,
+    val currentPassword: String? = null,
+    val newPassword: String? = null,
+    val confirmPassword: String? = null
+)
 
 @Composable
 fun ProfileScreen(
     onNavigateUp: () -> Unit
 ) {
+    //TODO This should come from the ViewModel
+    val profile = ProfileModel(
+        firstName = "Abel",
+        lastName = "Tesfaye",
+        email = "abel@gmail.com",
+        bannerUrl = "https://images.pexels.com/photos/3002/black-and-white-surfer-surfing.jpg",
+        avatarUrl = "https://cdns-images.dzcdn.net/images/artist/033d460f704896c9caca89a1d753a137/200x200.jpg"
+    )
+    var updatedProfile by remember { mutableStateOf(profile) }
+    val isModified = profile != updatedProfile
     Scaffold(
         topBar = {
             TopAppBar(
@@ -38,9 +57,18 @@ fun ProfileScreen(
                     }
                 }
             )
-        }
+        },
+        floatingActionButton = {
+            if (isModified) {
+                PrimaryButton(
+                    text = stringResource(id = R.string.profile_save_button_label),
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    onClick = {} //TODO Save updatedProfile into ViewModel
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { contentPadding ->
-
         Column(
             modifier = Modifier
                 .padding(contentPadding)
@@ -49,11 +77,18 @@ fun ProfileScreen(
                 .testTag(TAG_PROFILE_SCREEN),
             verticalArrangement = Arrangement.Top
         ) {
-            //TODO: Replace hardcoded values with real values
             ProfileBanner(
-                bannerUrl = "https://images.pexels.com/photos/3002/black-and-white-surfer-surfing.jpg",
-                avatarUrl = "https://cdns-images.dzcdn.net/images/artist/033d460f704896c9caca89a1d753a137/200x200.jpg"
+                bannerUrl = profile.bannerUrl,
+                avatarUrl = profile.avatarUrl
             )
+            Spacer(modifier = Modifier.height(40.dp))
+            ProfileForm(
+                profile = updatedProfile,
+                onProfileUpdated = { updatedProfile = it }
+            )
+            if (isModified) {
+                Spacer(modifier = Modifier.height(80.dp))
+            }
         }
     }
 }
