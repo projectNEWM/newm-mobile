@@ -11,7 +11,6 @@ class SongIDConverter {
 	}
 }
 
-//TODO: move to KMM
 public class AudioPlayerImpl: AudioPlayer {
 	static let shared = AudioPlayerImpl()
 	

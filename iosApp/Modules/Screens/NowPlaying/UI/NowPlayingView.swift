@@ -69,7 +69,7 @@ extension NowPlayingView {
 			Spacer()
 			PlayButton().frame(width: 80, height: 80).padding(.top, 50)
 			Spacer()
-			nextButton.padding(.top, 50)
+			actionButton.padding(.top, 50)
 			Spacer()
 			repeatButton
 		}
@@ -95,7 +95,7 @@ extension NowPlayingView {
 		}
 	}
 	
-	private var nextButton: some View {
+	private var actionButton: some View {
 		Button {
 			audioPlayer.next()
 		} label: {

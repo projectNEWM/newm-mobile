@@ -2,7 +2,7 @@ import SwiftUI
 import Resolver
 import ModuleLinker
 import FacebookCore
-import Auth
+import Domain
 
 @main
 struct iOSApp: App {
@@ -53,7 +53,9 @@ struct iOSApp: App {
 extension UIWindow {
 	open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
 		if motion == .motionShake {
-			Auth.LoginManager().logOut()
+			Task {
+				LoginManager.shared.logOut()
+			}
 		}
 	}
 }

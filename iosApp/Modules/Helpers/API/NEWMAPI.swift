@@ -5,12 +5,27 @@ enum HTTPMethod: String {
 	case POST
 	case PUT
 	case GET
+	case PATCH
 }
 
-public enum APIError: Error {
+public enum APIError: LocalizedError {
 	case invalidResponse
-	case httpError(Int)
-	case invalidData
+	case httpError(statusCode: Int, cause: String?)
+	
+	public var errorDescription: String? {
+		switch self {
+		case .httpError(_, let cause):
+			return "\(cause ?? "Unknown")"
+		default:
+			return "Error"
+		}
+	}
+}
+
+private struct ErrorResponse: Decodable {
+	let code: Int
+	let description: String
+	let cause: String
 }
 
 public class NEWMAPI {
@@ -27,12 +42,14 @@ public class NEWMAPI {
 	func sendRequest(_ request: URLRequest, tryRefresh: Bool = true) async throws -> Data {
 		let (data, response) = try await URLSession.shared.data(for: request)
 		
-		print(response)
+		print("response: \(response.url)")
 		print(String(data: data, encoding: .utf8))
 		
 		guard let httpResponse = response as? HTTPURLResponse else {
 			throw APIError.invalidResponse
 		}
+		
+		print(httpResponse.statusCode)
 		
 		if tryRefresh {
 			guard httpResponse.statusCode != 401 else {
@@ -42,7 +59,8 @@ public class NEWMAPI {
 		}
 		
 		guard (200...299).contains(httpResponse.statusCode) else {
-			throw APIError.httpError(httpResponse.statusCode)
+			let cause = try? JSONDecoder().decode(ErrorResponse.self, from: data).cause
+			throw APIError.httpError(statusCode: httpResponse.statusCode, cause: cause)
 		}
 		
 		return data
@@ -62,7 +80,7 @@ public class NEWMAPI {
 		tokenManager.authToken.flatMap { request.setValue("Bearer \($0.accessToken)", forHTTPHeaderField: "Authorization") }
 		request.httpBody = body.flatMap { try! JSONSerialization.data(withJSONObject: $0) }
 		
-		print(request)
+		print("request: \(request)")
 		print(request.httpMethod)
 		request.httpBody.flatMap { print(String(data: $0, encoding: .utf8)) }
 		print(request.allHTTPHeaderFields)
@@ -73,9 +91,6 @@ public class NEWMAPI {
 
 public extension Data {
 	func decode<T: Decodable>() throws -> T {
-		guard let object = try? JSONDecoder().decode(T.self, from: self) else {
-			throw APIError.invalidData
-		}
-		return object
+		try JSONDecoder().decode(T.self, from: self)
 	}
 }

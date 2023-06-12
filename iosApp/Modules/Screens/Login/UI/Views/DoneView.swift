@@ -1,5 +1,6 @@
 import SwiftUI
 import Colors
+import SharedUI
 
 extension LandingView {
 	@ViewBuilder
@@ -20,7 +21,7 @@ extension LandingView {
 
 			Group {
 				Text("By tapping 'Enter NEWM', you agree to NEWM's")
-					.foregroundColor(NEWMColor.grey200.swiftUIColor)
+					.foregroundColor(NEWMColor.grey200())
 
 				Text("Privacy Policy & Terms of Service.")
 					.underline()
@@ -31,7 +32,7 @@ extension LandingView {
 			}
 			.font(.interMedium(ofSize: 14))
 
-			nextButton(title: .enterNewm) {
+			actionButton(title: .enterNewm) {
 				viewModel.login()
 			}
 		}

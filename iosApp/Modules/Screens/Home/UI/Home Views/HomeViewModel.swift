@@ -6,24 +6,28 @@ import SharedUI
 import Artist
 import AudioPlayer
 import Colors
-import Auth
+import Domain
 
+@MainActor
 class HomeViewModel: ObservableObject {
-	@MainActor @Published var state: ViewState<HomeViewUIModel> = .loading
+	@Published var state: ViewState<HomeViewUIModel> = .loading
 	@Published var route = [HomeRoute]()
-	
+	@Published var shouldShowGreeting: Bool = true
+
+	@Published private var greetingTimer: Timer?
+
 	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
 	@Injected private var audioPlayer: AudioPlayerImpl
 
-	@Published var loginManager = LoginManager()
+	@Published var loginManager = LoginManager.shared
 
 	init() {
 		Task {
+			resetGreetingTimer()
 			await refresh()
 		}
 	}
 	
-	@MainActor
 	func refresh() async {
 		do {
 			state = .loading
@@ -31,6 +35,14 @@ class HomeViewModel: ObservableObject {
 			state = .loaded(uiModel)
 		} catch {
 			state = .error(error)
+		}
+	}
+	
+	func resetGreetingTimer() {
+		shouldShowGreeting = true
+		Task { @MainActor in
+			try! await Task.sleep(nanoseconds: 3_000_000_000)
+			shouldShowGreeting = false
 		}
 	}
 }
@@ -43,5 +55,9 @@ extension HomeViewModel: HomeViewActionHandling {
 	func songTapped(id: String) {
 		audioPlayer.song = MockData.song(withID: id)
 		audioPlayer.playbackInfo.isPlaying = true
+	}
+	
+	func profileTapped() {
+		route.append(.profile)
 	}
 }

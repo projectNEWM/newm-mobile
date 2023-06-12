@@ -13,13 +13,6 @@ public final class LoginModule: ModuleProtocol {
 	}
 }
 
-func buttonText(_ text: String) -> some View {
-	Text(verbatim: text)
-		.padding()
-		.frame(maxWidth: .infinity)
-		.bold()
-}
-
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {

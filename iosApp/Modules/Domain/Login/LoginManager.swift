@@ -16,7 +16,10 @@ public class LoginManager: ObservableObject {
 	
 	var appleSignInID: String?
 	
-	public init() {
+	//TODO: make actor
+	public static let shared = LoginManager()
+	
+	private init() {
 		api.$userIsLoggedIn.assign(to: &$userIsLoggedIn)
 	}
 		
@@ -48,6 +51,7 @@ public class LoginManager: ObservableObject {
 		FacebookLogin.LoginManager().logOut()
 		GIDSignIn.sharedInstance.signOut()
 		signOutOfApple()
+		UserManager.shared.currentUser = nil
 	}
 	
 	public func requestEmailVerificationCode(for email: String) async throws {

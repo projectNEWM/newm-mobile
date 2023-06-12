@@ -2,7 +2,7 @@
 //import ModuleLinker
 //import Combine
 //import UIKit
-//import Auth
+//import Domain
 //
 //class MockLogInLogOutUseCase: LogInUseCaseProtocol, LogOutUseCaseProtocol, LoggedInUserUseCaseProtocol {
 //	private static let authCredsKey = "authCreds"

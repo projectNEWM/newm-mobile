@@ -32,7 +32,6 @@ extension ArtistView {
 					}
 					.padding(.top, 100)
 				}
-				.backButton()
 				.toolbarBackground(.visible, for: .navigationBar)
 				.toolbarBackground(Color.black, for: .navigationBar)
 				.navigationTitle(uiModel.title)
@@ -48,13 +47,12 @@ extension ArtistView {
 						TrackSection(uiModel.trackSection)
 					}
 				}
-				.backButton()
 			}
 		}
 		
 		private var artistImage: some View {
 			AsyncImage(url: uiModel.profileImage)
-				.circle(size: 128)
+				.circle(size: artistImageSize)
 				.padding(.top, -(sectionSpacing+artistImageSize/2))
 		}
 		

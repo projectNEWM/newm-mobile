@@ -1,14 +1,14 @@
 import SwiftUI
 import UIKit
 
-struct HeaderImageSection: View {
+public struct HeaderImageSection: View {
 	private let imageURL: String?
 	
-	init(_ imageURL: String?) {
+	public init(_ imageURL: String?) {
 		self.imageURL = imageURL
 	}
 	//TODO: parallax header hidden behind nav bar
-	var body: some View {
+	public var body: some View {
 		GeometryReader { geometry in
 			ZStack {
 				image(size: geometry.size, frame: geometry.frame(in: .global))

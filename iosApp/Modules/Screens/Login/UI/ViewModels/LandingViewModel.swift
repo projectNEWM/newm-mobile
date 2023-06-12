@@ -1,6 +1,6 @@
 import Foundation
 import Resolver
-import Auth
+import Domain
 import GoogleSignIn
 import FacebookLogin
 import AuthenticationServices
@@ -18,8 +18,8 @@ class LandingViewModel: ObservableObject {
 	@Published var confirmPassword: String = ""
 	@Published var nickname: String = ""
 			
-	private let loginManager = Auth.LoginManager()
-	private let userManager = UserManager()
+	private let loginManager = Domain.LoginManager.shared
+	private let userManager = UserManager.shared
 	private let loginFieldValidator = LoginFieldValidator()
 
 	var nicknameIsValid: Bool {
@@ -49,7 +49,7 @@ class LandingViewModel: ObservableObject {
 			do {
 				try await loginManager.login(email: email, password: password)
 			} catch {
-				self.error = "\(error)"
+				self.error = error.localizedDescription
 			}
 			isLoading = false
 		}
@@ -65,7 +65,7 @@ class LandingViewModel: ObservableObject {
 			do {
 				try await loginManager.requestEmailVerificationCode(for: email)
 			} catch {
-				self.error = "\(error)"
+				self.error = error.localizedDescription
 			}
 		}
 	}
@@ -76,7 +76,7 @@ class LandingViewModel: ObservableObject {
 				try await userManager.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
 				try await loginManager.login(email: email, password: password)
 			} catch {
-				self.error = "\(error)"
+				self.error = error.localizedDescription
 			}
 		}
 	}
@@ -93,7 +93,7 @@ class LandingViewModel: ObservableObject {
 			do {
 				try await loginManager.requestEmailVerificationCode(for: email)
 			} catch {
-				self.error = "\(error)"
+				self.error = error.localizedDescription
 			}
 		}
 	}
@@ -116,9 +116,13 @@ class LandingViewModel: ObservableObject {
 				case .twoFAFailed:
 					self.error = "You entered the incorrect verification code."
 					navigateBackTo(.codeConfirmation)
+				case .dataUnavailable:
+					self.error = "Failed to fetch data."
+				case .displayError(let errorString):
+					self.error = errorString
 				}
 			} catch {
-				self.error = "\(error)"
+				self.error = error.localizedDescription
 			}
 			
 			isLoading = false
@@ -141,12 +145,12 @@ class LandingViewModel: ObservableObject {
 				do {
 					try await loginManager.loginWithFacebook(result: loginResult)
 				} catch {
-					self.error = "\(error)"
+					self.error = error.localizedDescription
 				}
 				isLoading = false
 			}
 		case .failure(let error):
-			self.error = "\(error)"
+			self.error = error.localizedDescription
 		}
 	}
 	
@@ -156,7 +160,7 @@ class LandingViewModel: ObservableObject {
 	
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
 		guard let result = result, error == nil else {
-			self.error = String(describing: error)
+			self.error = error?.localizedDescription
 			return
 		}
 		
@@ -165,7 +169,7 @@ class LandingViewModel: ObservableObject {
 			do {
 				try await loginManager.loginWithGoogle(result: result)
 			} catch {
-				self.error = "\(error)"
+				self.error = error.localizedDescription
 			}
 			isLoading = false
 		}
@@ -177,7 +181,7 @@ class LandingViewModel: ObservableObject {
 			isLoading = true
 			Task {
 				do {
-					try await LoginManager().loginWithApple(result: authResults)
+					try await LoginManager.shared.loginWithApple(result: authResults)
 				} catch {
 					self.error = "\(error)"
 				}

@@ -1,6 +1,7 @@
 import SwiftUI
 import Fonts
 import Colors
+import SharedUI
 
 extension LandingView {
 	@ViewBuilder
@@ -17,8 +18,8 @@ extension LandingView {
 					.foregroundStyle(Gradients.loginGradient.gradient)
 					.padding()
 					.padding(.bottom, 40)
-				LoginTextField(title: .email, prompt: .emailPrompt, isSecure: false, text: $viewModel.email).padding(.bottom)
-				nextButton(title: "Reset password") {
+				NEWMTextField(title: .email, prompt: .emailPrompt, isSecure: false, text: $viewModel.email).padding(.bottom)
+				actionButton(title: "Reset password") {
 					viewModel.requestPasswordResetCode()
 				}
 			}

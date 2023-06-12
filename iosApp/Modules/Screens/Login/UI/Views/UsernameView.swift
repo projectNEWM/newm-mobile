@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Colors
+import SharedUI
 
 extension LandingView {
 	@ViewBuilder
@@ -16,7 +17,7 @@ extension LandingView {
 				.font(.dmSerifItalic(ofSize: 40))
 				.padding()
 				.frame(height: 300)
-				.accentColor(NEWMColor.pink.swiftUIColor)
+				.accentColor(NEWMColor.pink())
 				.focused($isTextFieldFocused)
 				.autocorrectionDisabled()
 				.autocapitalization(.none)
@@ -24,7 +25,7 @@ extension LandingView {
 
 			Spacer()
 			
-			nextButton(title: .next) {
+			actionButton(title: .next) {
 				viewModel.registerUser()
 			}
 			.disabled(!viewModel.nicknameIsValid)

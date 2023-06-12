@@ -2,7 +2,7 @@ import Foundation
 import Combine
 import ModuleLinker
 import Resolver
-import Auth
+import Domain
 
 @MainActor
 class MainViewModel: ObservableObject {
@@ -10,7 +10,7 @@ class MainViewModel: ObservableObject {
 	
 	@Published var shouldShowLogin: Bool = false
 	
-	private let loginManager = LoginManager()
+	private let loginManager = LoginManager.shared
 	
 	private var cancelables = Set<AnyCancellable>()
 	

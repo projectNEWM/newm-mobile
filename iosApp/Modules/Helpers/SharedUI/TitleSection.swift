@@ -12,14 +12,16 @@ public struct TitleSection: View {
 	public let title: String
 	public let profilePic: ProfilePic
 	public let gradient: [String]
+	private let profileAction: () -> ()
 	
 	static public let height: CGFloat = 50
 
-	public init(isGreeting: Bool = false, title: String, profilePic: ProfilePic = .hide, gradient: [String]) {
+	public init(isGreeting: Bool = false, title: String, profilePic: ProfilePic = .hide, gradient: [String], profileAction: @escaping () -> () = {}) {
 		self.isGreeting = isGreeting
 		self.title = title
 		self.profilePic = profilePic
 		self.gradient = gradient
+		self.profileAction = profileAction
 	}
 	
     public var body: some View {
@@ -52,19 +54,21 @@ public struct TitleSection: View {
 	private var profilePicView: some View {
 		switch profilePic {
 		case .show(let url):
-			if let url = url {
-				AsyncImage(url: url) { phase in
-					switch phase {
-					case .success(let image):
-						image.circleImage(size: 44)
-					default:
-						//TODO: log
-						Image.placeholder.circleImage(size: 44)
+			Group {
+				if let url = url {
+					AsyncImage(url: url) { phase in
+						switch phase {
+						case .success(let image):
+							image.circleImage(size: 44)
+						default:
+							//TODO: log
+							Image.placeholder.circleImage(size: 44)
+						}
 					}
+				} else {
+					Image.placeholder.circleImage(size: 44)
 				}
-			} else {
-				Image.placeholder.circleImage(size: 44)
-			}
+			}.onTapGesture(perform: profileAction)
 		case .hide:
 			EmptyView()
 		}

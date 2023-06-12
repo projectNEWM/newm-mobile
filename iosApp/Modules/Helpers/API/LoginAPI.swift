@@ -24,7 +24,7 @@ public class LoginAPI: NEWMAPI {
 	
 	public func login(method: LoginMethod) async throws {
 		let request = makeLoginPostRequest(loginMethod: method)
-		tokenManager.authToken = try await sendRequest(request).decode()
+		tokenManager.authToken = try await sendRequest(request, tryRefresh: false).decode()
 	}
 	
 	public func logOut() {
@@ -35,7 +35,7 @@ public class LoginAPI: NEWMAPI {
 		let request = makeRequest(url: authAPI
 			.appending(path: "code")
 			.appending(queryItems: [URLQueryItem(name: "email", value: email)]), body: nil, method: .GET)
-		try await sendRequest(request)
+		try await sendRequest(request, tryRefresh: false)
 	}
 }
 
