@@ -32,6 +32,7 @@ public struct MainView: View {
 						miniPlayerView
 							.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
 							.transition(.move(edge: .bottom))
+							.animation(.easeInOut, value: audioPlayer.song)
 					}
 					.transition(.move(edge: .bottom))
 			}
