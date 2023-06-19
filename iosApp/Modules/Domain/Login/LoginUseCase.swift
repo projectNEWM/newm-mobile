@@ -9,7 +9,7 @@ enum LoginError: Error {
 	case facebookAccessTokenMissing
 }
 
-public class LoginManager: ObservableObject {
+public class LoginUseCase: ObservableObject {
 	//TODO: update this with user info
 	@Published public var userIsLoggedIn: Bool = false
 	private let api: LoginAPI
@@ -17,7 +17,7 @@ public class LoginManager: ObservableObject {
 	private var appleSignInID: String?
 	
 	//TODO: make actor
-	public static let shared = LoginManager()
+	public static let shared = LoginUseCase()
 	
 	private init(api: LoginAPI = LoginAPI()) {
 		self.api = api

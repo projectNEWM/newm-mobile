@@ -19,7 +19,7 @@ class LandingViewModel: ObservableObject {
 	@Published var confirmPassword: String = ""
 	@Published var nickname: String = ""
 			
-	private let loginManager = Domain.LoginManager.shared
+	private let logInUseCase = LoginUseCase.shared
 	@Injected private var userManager: any UserManaging
 	private let loginFieldValidator = LoginFieldValidator()
 
@@ -48,7 +48,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await loginManager.login(email: email, password: password)
+				try await logInUseCase.login(email: email, password: password)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -64,7 +64,7 @@ class LandingViewModel: ObservableObject {
 		navPath.append(.enterNewPassword)
 		Task {
 			do {
-				try await loginManager.requestEmailVerificationCode(for: email)
+				try await logInUseCase.requestEmailVerificationCode(for: email)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -75,7 +75,7 @@ class LandingViewModel: ObservableObject {
 		Task {
 			do {
 				try await userManager.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
-				try await loginManager.login(email: email, password: password)
+				try await logInUseCase.login(email: email, password: password)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -92,7 +92,7 @@ class LandingViewModel: ObservableObject {
 		}
 		Task {
 			do {
-				try await loginManager.requestEmailVerificationCode(for: email)
+				try await logInUseCase.requestEmailVerificationCode(for: email)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -144,7 +144,7 @@ class LandingViewModel: ObservableObject {
 			isLoading = true
 			Task {
 				do {
-					try await loginManager.loginWithFacebook(result: loginResult)
+					try await logInUseCase.loginWithFacebook(result: loginResult)
 				} catch {
 					self.error = error.localizedDescription
 				}
@@ -156,7 +156,7 @@ class LandingViewModel: ObservableObject {
 	}
 	
 	func handleFacebookLogout() {
-		loginManager.logOut()
+		logInUseCase.logOut()
 	}
 	
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
@@ -168,7 +168,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await loginManager.loginWithGoogle(result: result)
+				try await logInUseCase.loginWithGoogle(result: result)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -182,7 +182,7 @@ class LandingViewModel: ObservableObject {
 			isLoading = true
 			Task {
 				do {
-					try await LoginManager.shared.loginWithApple(result: authResults)
+					try await LoginUseCase.shared.loginWithApple(result: authResults)
 				} catch {
 					self.error = "\(error)"
 				}

@@ -19,7 +19,7 @@ class HomeViewModel: ObservableObject {
 	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
 	@Injected private var audioPlayer: AudioPlayerImpl
 
-	@Published var loginManager = LoginManager.shared
+	@Published var logInUseCase = LoginUseCase.shared
 
 	init() {
 		Task {

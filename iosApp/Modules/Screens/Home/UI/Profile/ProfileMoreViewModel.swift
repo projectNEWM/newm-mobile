@@ -7,7 +7,7 @@ class ProfileMoreViewModel: ObservableObject {
 	typealias Row = (title: String, url: String)
 	typealias Section = (title: String, rows: [Row])
 	
-	private let loginManager = LoginManager.shared
+	private let logInUseCase = LoginUseCase.shared
 	
 	var sections: [Section] {
 		[
@@ -24,6 +24,6 @@ class ProfileMoreViewModel: ObservableObject {
 	}
 	
 	func logOut() {
-		loginManager.logOut()
+		logInUseCase.logOut()
 	}
 }

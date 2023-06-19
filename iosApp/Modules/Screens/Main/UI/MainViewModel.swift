@@ -11,11 +11,11 @@ class MainViewModel: ObservableObject {
 	
 	@Published var shouldShowLogin: Bool = false
 	
-	private let loginManager = LoginManager.shared
+	private let logInUseCase = LoginUseCase.shared
 	
 	private var cancelables = Set<AnyCancellable>()
 	
 	init() {
-		loginManager.$userIsLoggedIn.map { !$0 }.assign(to: &$shouldShowLogin)
+		logInUseCase.$userIsLoggedIn.map { !$0 }.assign(to: &$shouldShowLogin)
 	}
 }

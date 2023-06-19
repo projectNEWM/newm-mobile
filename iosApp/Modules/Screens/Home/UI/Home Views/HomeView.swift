@@ -21,7 +21,7 @@ struct HomeView: View {
 					mostPopularThisWeekSection
 				}
 			}
-			.onChange(of: viewModel.loginManager.userIsLoggedIn) { _ in
+			.onChange(of: viewModel.logInUseCase.userIsLoggedIn) { _ in
 				viewModel.resetGreetingTimer()
 			}
 			.navigationDestination(for: HomeRoute.self) { route in

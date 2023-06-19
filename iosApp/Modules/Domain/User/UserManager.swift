@@ -19,7 +19,7 @@ class UserManager: UserManaging, ObservableObject {
 		} catch {
 			try handleError(error)
 		}
-		LoginManager.shared.logOut()
+		LoginUseCase.shared.logOut()
 	}
 	
 	public func createUser(nickname: String, email: String, password: String, passwordConfirmation: String, verificationCode: String) async throws {
