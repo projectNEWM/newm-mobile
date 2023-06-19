@@ -10,10 +10,6 @@ public final class LibraryModule: ModuleProtocol {
 		Resolver.register {
 			self as LibraryViewProviding
 		}
-		
-        Resolver.register {
-            LibraryViewModel()
-        }
     }
 }
 

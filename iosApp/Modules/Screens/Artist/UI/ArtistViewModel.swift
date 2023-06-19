@@ -17,8 +17,9 @@ class MockArtistRepo: ArtistRepo {
 	}
 }
 
+@MainActor
 class ArtistViewModel: ObservableObject {
-	@MainActor @Published var state: ViewState<(ArtistViewUIModel, ArtistViewActionHandling)> = .loading
+	@Published var state: ViewState<(ArtistViewUIModel, ArtistViewActionHandling)> = .loading
 	@Published var route: ArtistRoute?
 	@Injected private var audioPlayer: AudioPlayerImpl
 	@Injected private var artistRepo: ArtistRepo
@@ -33,7 +34,6 @@ class ArtistViewModel: ObservableObject {
 		}
 	}
 	
-	@MainActor
 	func refresh() async {
 		do {
 			state = .loading

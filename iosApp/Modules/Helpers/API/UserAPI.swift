@@ -9,9 +9,7 @@ public class UserAPI: NEWMAPI {
 	}
 	
 	var url: URL { stagingURLv1.appending(path: "users") }
-	
-	override public init() {}
-	
+		
 	public func delete() async throws {
 		let request = makeRequest(url: url.appending(path: "me"), body: nil, method: .DELETE)
 		try await sendRequest(request)
