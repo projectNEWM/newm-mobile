@@ -4,6 +4,7 @@ import Domain
 import GoogleSignIn
 import FacebookLogin
 import AuthenticationServices
+import ModuleLinker
 
 @MainActor
 class LandingViewModel: ObservableObject {
@@ -19,7 +20,7 @@ class LandingViewModel: ObservableObject {
 	@Published var nickname: String = ""
 			
 	private let loginManager = Domain.LoginManager.shared
-	private let userManager = UserManager.shared
+	@Injected private var userManager: any UserManaging
 	private let loginFieldValidator = LoginFieldValidator()
 
 	var nicknameIsValid: Bool {

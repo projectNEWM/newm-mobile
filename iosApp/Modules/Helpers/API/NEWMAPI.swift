@@ -36,8 +36,8 @@ public class NEWMAPI {
 		
 		let (data, response) = try await dataFetcher.data(for: request)
 		
-		print("response: \(response.url)")
-		print(String(data: data, encoding: .utf8))
+		print("response: \(response.url?.absoluteString ?? "url missing")")
+		print(String(data: data, encoding: .utf8)!)
 		
 		guard let httpResponse = response as? HTTPURLResponse else {
 			throw APIError.invalidResponse
@@ -92,8 +92,8 @@ public extension Data {
 extension URLRequest {
 	func prettyPrint() {
 		print("request: \(self)")
-		print(self.httpMethod)
-		self.httpBody.flatMap { print(String(data: $0, encoding: .utf8)) }
-		print(self.allHTTPHeaderFields)
+		print(self.httpMethod ?? "none")
+		self.httpBody.flatMap { print(String(data: $0, encoding: .utf8) ?? "no body") }
+		print(self.allHTTPHeaderFields ?? [:])
 	}
 }

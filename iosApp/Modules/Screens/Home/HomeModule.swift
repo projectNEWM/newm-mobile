@@ -2,7 +2,6 @@ import Foundation
 import Resolver
 import ModuleLinker
 import SwiftUI
-import Domain
 
 public final class HomeModule: ModuleProtocol {
 	public static let shared = HomeModule()

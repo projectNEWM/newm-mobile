@@ -13,8 +13,6 @@ struct ProfileView: View {
 	private let sectionSpacing: CGFloat = 12
 	@State private var keyboardObserver = KeyboardObserver()
 	@State private var showMore = false
-
-	init() {}
 	
 	var body: some View {
 		mainView
@@ -105,8 +103,9 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
-			NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: {EmptyView()})
+		Resolver.root = .mock
+		return NavigationView {
+			NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
 		}
 		.preferredColorScheme(.dark)
 	}

@@ -3,18 +3,7 @@ import API
 import Models
 import ModuleLinker
 
-public enum UserManagerError: Error {
-	case accountExists
-	case twoFAFailed
-	case dataUnavailable
-	case displayError(String)
-}
-
-public protocol UserManaging: ObservableObject {
-	var currentUser: User? { get }
-}
-
-public class UserManager: UserManaging, ObservableObject {
+class UserManager: UserManaging, ObservableObject {
 	private let api = UserAPI()
 	
 	@Published public var currentUser: User?
@@ -25,20 +14,36 @@ public class UserManager: UserManaging, ObservableObject {
 	private init() {}
 	
 	public func deleteUser() async throws {
-		try await execute { try await api.delete() }
+		do {
+			try await api.delete()
+		} catch {
+			try handleError(error)
+		}
 		LoginManager.shared.logOut()
 	}
 	
 	public func createUser(nickname: String, email: String, password: String, passwordConfirmation: String, verificationCode: String) async throws {
-		try await execute { try await api.create(nickname: nickname, email: email, password: password, passwordConfirmation: passwordConfirmation, verificationCode: verificationCode) }
+		do {
+			try await api.create(nickname: nickname, email: email, password: password, passwordConfirmation: passwordConfirmation, verificationCode: verificationCode)
+		} catch {
+			try handleError(error)
+		}
 	}
 	
 	public func resetPassword(email: String, password: String, confirmPassword: String, authCode: String) async throws {
-		try await execute { try await api.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: authCode) }
+		do {
+			try await api.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: authCode)
+		} catch {
+			try handleError(error)
+		}
 	}
 	
 	public func fetchCurrentUser() async throws {
-		try await execute { currentUser = try await api.getCurrentUser() }
+		do {
+			currentUser = try await api.getCurrentUser()
+		} catch {
+			try handleError(error)
+		}
 	}
 	
 	public func updateUserInfo(firstName: String?, lastName: String?, currentPassword: String?, newPassword: String?, confirmNewPassword: String?) async throws {
@@ -49,14 +54,16 @@ public class UserManager: UserManaging, ObservableObject {
 			confirmPassword: confirmNewPassword?.nilIfEmpty,
 			currentPassword: currentPassword?.nilIfEmpty
 		)
-		try await execute { try await api.update(user: updatedUser) }
-		try await fetchCurrentUser()
+		do {
+			try await api.update(user: updatedUser)
+			try await fetchCurrentUser()
+		} catch {
+			try handleError(error)
+		}
 	}
 	
-	private func execute(_ block: () async throws -> ()) async throws {
-		do {
-			try await block()
-		} catch let error as UserAPI.Error {
+	private func handleError(_ error: Error) throws {
+		if let error = error as? UserAPI.Error {
 			switch error {
 			case .accountExists:
 				throw UserManagerError.accountExists
@@ -65,7 +72,7 @@ public class UserManager: UserManaging, ObservableObject {
 			case .unprocessableEntity(let cause):
 				throw UserManagerError.displayError(cause)
 			}
-		} catch let error as APIError {
+		} else if let error = error as? APIError {
 			switch error {
 			case .invalidResponse:
 				throw UserManagerError.dataUnavailable

@@ -10,7 +10,7 @@ public struct User: Codable {
 	public let bannerUrl: URL?
 	public let email: String?
 	
-	public init(id: String, createdAt: String, firstName: String, lastName: String, nickname: String, pictureUrl: URL, bannerUrl: URL, email: String) {
+	public init(id: String, createdAt: String, firstName: String?, lastName: String?, nickname: String?, pictureUrl: URL?, bannerUrl: URL?, email: String?) {
 		self.id = id
 		self.createdAt = createdAt
 		self.firstName = firstName

@@ -3,6 +3,7 @@ import Combine
 import ModuleLinker
 import Resolver
 import Domain
+import API
 
 @MainActor
 class MainViewModel: ObservableObject {

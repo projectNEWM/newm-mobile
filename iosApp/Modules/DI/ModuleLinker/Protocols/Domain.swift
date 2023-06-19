@@ -1,0 +1,19 @@
+import Foundation
+import Models
+
+public protocol UserManaging {
+	var currentUser: User? { get }
+
+	func deleteUser() async throws
+	func createUser(nickname: String, email: String, password: String, passwordConfirmation: String, verificationCode: String) async throws
+	func resetPassword(email: String, password: String, confirmPassword: String, authCode: String) async throws
+	func fetchCurrentUser() async throws
+	func updateUserInfo(firstName: String?, lastName: String?, currentPassword: String?, newPassword: String?, confirmNewPassword: String?) async throws
+}
+
+public enum UserManagerError: LocalizedError {
+	case accountExists
+	case twoFAFailed
+	case dataUnavailable
+	case displayError(String)
+}

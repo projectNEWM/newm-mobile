@@ -7,7 +7,7 @@ import Combine
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-	@Published private var userManager = UserManager.shared
+	@Injected private var userManager: any UserManaging
 	
 	var user: User? { userManager.currentUser }
 	
@@ -20,6 +20,8 @@ final class ProfileViewModel: ObservableObject {
 	
 	@Published var error: String?
 	@Published var isLoading: Bool = false
+	
+	private var cancels = Set<AnyCancellable>()
 	
 	var ptrOffset: CGFloat = 0
 	
@@ -76,12 +78,6 @@ final class ProfileViewModel: ObservableObject {
 					newPassword: newPassword,
 					confirmNewPassword: confirmPassword
 				)
-			} catch let error as UserManagerError {
-				switch error {
-				case .dataUnavailable: self.error = "Unable to fetch data."
-				case .displayError(let error): self.error = error
-				default: self.error = error.localizedDescription
-				}
 			} catch {
 				self.error = error.localizedDescription
 			}
