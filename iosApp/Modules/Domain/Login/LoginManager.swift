@@ -12,9 +12,9 @@ enum LoginError: Error {
 public class LoginManager: ObservableObject {
 	//TODO: update this with user info
 	@Published public var userIsLoggedIn: Bool = false
-	let api: LoginAPI
+	private let api: LoginAPI
 	
-	var appleSignInID: String?
+	private var appleSignInID: String?
 	
 	//TODO: make actor
 	public static let shared = LoginManager()

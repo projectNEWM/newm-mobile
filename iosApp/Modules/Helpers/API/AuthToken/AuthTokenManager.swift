@@ -1,7 +1,7 @@
 import Foundation
 import KeychainSwift
 
-class AuthTokenManager {
+class AuthTokenManager: ObservableObject {
 	@Published var authToken: AuthToken? {
 		didSet {
 			if let authToken {

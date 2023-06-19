@@ -68,18 +68,23 @@ struct ProfileView: View {
 			}
 			.loadingToast(isLoading: $viewModel.isLoading)
 		}
+		.sheet(isPresented: $showMore) {
+			ProfileMoreView()
+				.presentationDetents([.medium])
+		}
 	}
 	
+	@ViewBuilder
 	private var artistImage: some View {
 		AsyncImage(url: viewModel.user?.pictureUrl)
 			.circle(size: userImageSize)
 			.padding(.top, -(sectionSpacing+userImageSize/2))
 	}
 	
+	@ViewBuilder
 	private var bottomSection: some View {
-		func sectionHeader(_ text: String) -> some View { Text(text).font(.inter(ofSize: 16).bold()) }
-		return VStack(alignment: .leading, spacing: 20) {
-			sectionHeader("YOUR PROFILE").padding(.top, 40)
+		VStack(alignment: .leading, spacing: 20) {
+			bottomSectionHeader("YOUR PROFILE").padding(.top, 40)
 			NEWMTextField(title: "FIRST NAME", prompt: "", isSecure: false, text: $viewModel.firstName)
 				.textContentType(.givenName)
 				.keyboardType(.asciiCapable)
@@ -90,7 +95,7 @@ struct ProfileView: View {
 				.textContentType(.emailAddress)
 				.keyboardType(.asciiCapable)
 			Divider().padding(.bottom)
-			sectionHeader("CHANGE PASSWORD")
+			bottomSectionHeader("CHANGE PASSWORD")
 			NEWMTextField(title: "CURRENT PASSWORD", prompt: "Your password", isSecure: true, text: $viewModel.currentPassword)
 				.textContentType(.password)
 			NEWMTextField(title: "NEW PASSWORD", prompt: "New password", isSecure: true, text: $viewModel.newPassword)
@@ -98,6 +103,10 @@ struct ProfileView: View {
 			NEWMTextField(title: "CONFIRM NEW PASSWORD", prompt: "New password", isSecure: true, text: $viewModel.confirmPassword).padding(.bottom)
 				.textContentType(.newPassword)
 		}
+	}
+	
+	private func bottomSectionHeader(_ text: String) -> some View {
+		Text(text).font(.inter(ofSize: 16).bold())
 	}
 }
 

@@ -1,7 +1,7 @@
 import Foundation
 import Models
 
-public protocol UserManaging {
+public protocol UserManaging: ObservableObject {
 	var currentUser: User? { get }
 
 	func deleteUser() async throws
