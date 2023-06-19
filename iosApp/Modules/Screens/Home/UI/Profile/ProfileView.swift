@@ -22,33 +22,6 @@ struct ProfileView: View {
 	}
 	
 	@ViewBuilder
-	private var saveButton: some View {
-		if viewModel.showSaveButton {
-			Button("Save", action: viewModel.save)
-				.foregroundStyle(Gradients.loginGradient.gradient)
-				.erased
-		} else {
-			Button {
-				showMore = true
-			} label: {
-				Image(systemName: "ellipsis")
-					.rotationEffect(.degrees(90))
-					.foregroundColor(.white)
-			}
-		}
-	}
-	
-//	@ViewBuilder
-//	private var saveButton: some View {
-//		VStack {
-//			Spacer()
-//			if viewModel.showSaveButton {
-//				actionButton(title: "Save", action: viewModel.save).addSidePadding()
-//			}
-//		}
-//	}
-	
-	@ViewBuilder
 	private var mainView: some View {
 		ZStack {
 			ScrollView {
@@ -74,6 +47,33 @@ struct ProfileView: View {
 		}
 	}
 	
+	@ViewBuilder
+	private var saveButton: some View {
+		if viewModel.showSaveButton {
+			Button("Save", action: viewModel.save)
+				.foregroundStyle(Gradients.loginGradient.gradient)
+				.erased
+		} else {
+			Button {
+				showMore = true
+			} label: {
+				Image(systemName: "ellipsis")
+					.rotationEffect(.degrees(90))
+					.foregroundColor(.white)
+			}
+		}
+	}
+	
+//	@ViewBuilder
+//	private var saveButton: some View {
+//		VStack {
+//			Spacer()
+//			if viewModel.showSaveButton {
+//				actionButton(title: "Save", action: viewModel.save).addSidePadding()
+//			}
+//		}
+//	}
+		
 	@ViewBuilder
 	private var artistImage: some View {
 		AsyncImage(url: viewModel.user?.pictureUrl)

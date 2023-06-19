@@ -44,6 +44,7 @@ extension Resolver: ResolverRegistering {
 	public static func registerAllServices() {
 		iOSAppModule.shared.registerAllServices()
 #if DEBUG
+		Resolver.root.add(child: .mock)
 		iOSAppModule.shared.registerAllMockedServices(mockResolver: .mock)
 #endif
 	}
@@ -56,7 +57,6 @@ extension iOSAppModule {
 
 #if DEBUG
 	func registerAllMockedServices(mockResolver: Resolver) {
-		mockResolver.add(child: .mock)
 		modules.forEach { $0.registerAllMockedServices(mockResolver: .mock) }
 	}
 #endif

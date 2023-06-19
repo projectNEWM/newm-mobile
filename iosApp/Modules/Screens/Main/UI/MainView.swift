@@ -21,7 +21,7 @@ public struct MainView: View {
 	public var body: some View {
 		GeometryReader { geometry in
 			if viewModel.shouldShowLogin {
-				loginViewProvider.loginView().transition(.slide)
+				loginViewProvider.loginView().transition(.move(edge: .bottom))
 			} else {
 				TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
 					.preferredColorScheme(.dark)
@@ -31,9 +31,12 @@ public struct MainView: View {
 					.overlay {
 						miniPlayerView
 							.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
+							.transition(.move(edge: .bottom))
 					}
+					.transition(.move(edge: .bottom))
 			}
 		}
+		.animation(.easeInOut, value: viewModel.shouldShowLogin)
 	}
 	
 	@ViewBuilder
