@@ -3,6 +3,7 @@ import Resolver
 import ModuleLinker
 import FacebookCore
 import Domain
+import UIKit
 
 @main
 struct iOSApp: App {
@@ -50,11 +51,18 @@ struct iOSApp: App {
 	}
 }
 
+//#if INTERNAL
+//#if ENTERPRISE
+//TODO: uncomment this for prod
 extension UIWindow {
 	open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
 		if motion == .motionShake {
-			Task {
-				LoginManager.shared.logOut()
+			if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+				let alert = UIAlertController(title: "App version", message: appVersion, preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+				rootViewController?.present(alert, animated: true)
+			} else {
+				print("Unable to retrieve app version.")
 			}
 		}
 	}
