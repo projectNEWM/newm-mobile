@@ -12,13 +12,13 @@ class ProfileMoreViewModel: ObservableObject {
 	var sections: [Section] {
 		[
 			(title: .helpAndSupport, [
-				(title: .faq, url: "http://google.com"),
-				(title: .askTheCommunity, url: "http://google.com")
+				(title: .faq, url: "https://www.youtube.com/watch?v=LBjUh4bYF8w"),
+				(title: .askTheCommunity, url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 			]),
 			(title: .companyRelated, [
-				(title: .documents, url: "http://google.com"),
-				(title: .privacyPolicy, url: "http://google.com"),
-				(title: .termsAndConditions, url: "http://google.com")
+				(title: .documents, url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
+				(title: .privacyPolicy, url: "https://www.youtube.com/watch?v=LBjUh4bYF8w"),
+				(title: .termsAndConditions, url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 			])
 		]
 	}
