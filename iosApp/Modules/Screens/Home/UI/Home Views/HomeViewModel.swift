@@ -3,23 +3,16 @@ import Combine
 import Resolver
 import ModuleLinker
 import SharedUI
-import Artist
 import AudioPlayer
-import Colors
-import Domain
 
 @MainActor
 class HomeViewModel: ObservableObject {
 	@Published var state: ViewState<HomeViewUIModel> = .loading
 	@Published var route = [HomeRoute]()
 	@Published var shouldShowGreeting: Bool = true
-
-	@Published private var greetingTimer: Timer?
-
+	
 	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
 	@Injected private var audioPlayer: AudioPlayerImpl
-
-	@Published var logInUseCase = LoginUseCase.shared
 
 	init() {
 		Task {

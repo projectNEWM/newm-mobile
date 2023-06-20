@@ -1,13 +1,12 @@
 import SwiftUI
 import ModuleLinker
 import Resolver
-import Artist
 import SharedUI
 
 struct HomeView: View {
-	@StateObject var viewModel = HomeViewModel()
+	@StateObject fileprivate var viewModel = HomeViewModel()
 		
-	@Injected var artistViewProvider: ArtistViewProviding
+	@Injected private var artistViewProvider: ArtistViewProviding
 	
 	var body: some View {
 		NavigationStack(path: $viewModel.route) {
@@ -20,9 +19,6 @@ struct HomeView: View {
 					newmArtistsSection
 					mostPopularThisWeekSection
 				}
-			}
-			.onChange(of: viewModel.logInUseCase.userIsLoggedIn) { _ in
-				viewModel.resetGreetingTimer()
 			}
 			.navigationDestination(for: HomeRoute.self) { route in
 				switch route {
