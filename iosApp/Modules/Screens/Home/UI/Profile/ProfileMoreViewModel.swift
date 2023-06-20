@@ -1,5 +1,5 @@
 import Foundation
-import Domain
+import Data
 import Resolver
 
 @MainActor
@@ -7,7 +7,7 @@ class ProfileMoreViewModel: ObservableObject {
 	typealias Row = (title: String, url: String)
 	typealias Section = (title: String, rows: [Row])
 	
-	private let logInUseCase = LoginUseCase.shared
+	private let loginRepo = LoginRepo.shared
 	
 	var sections: [Section] {
 		[
@@ -24,6 +24,6 @@ class ProfileMoreViewModel: ObservableObject {
 	}
 	
 	func logOut() {
-		logInUseCase.logOut()
+		loginRepo.logOut()
 	}
 }

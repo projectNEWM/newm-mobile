@@ -1,9 +1,9 @@
 import Foundation
-import Domain
+import Data
 import Models
 import ModuleLinker
 
-class MockUserManager: UserManaging {
+class MockUserRepo: UserManaging {
 	func deleteUser() async throws {
 		
 	}

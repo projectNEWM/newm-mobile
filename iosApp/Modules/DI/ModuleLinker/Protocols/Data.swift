@@ -11,7 +11,7 @@ public protocol UserManaging: ObservableObject {
 	func updateUserInfo(firstName: String?, lastName: String?, currentPassword: String?, newPassword: String?, confirmNewPassword: String?) async throws
 }
 
-public enum UserManagerError: LocalizedError {
+public enum UserRepoError: LocalizedError {
 	case accountExists
 	case twoFAFailed
 	case dataUnavailable

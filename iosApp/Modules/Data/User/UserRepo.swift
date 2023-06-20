@@ -3,13 +3,13 @@ import API
 import Models
 import ModuleLinker
 
-class UserManager: UserManaging, ObservableObject {
+class UserRepo: UserManaging, ObservableObject {
 	private let api = UserAPI()
 	
 	@Published public var currentUser: User?
 	
 	//TODO: make actor
-	public static let shared = UserManager()
+	public static let shared = UserRepo()
 	
 	private init() {}
 	
@@ -19,7 +19,7 @@ class UserManager: UserManaging, ObservableObject {
 		} catch {
 			try handleError(error)
 		}
-		LoginUseCase.shared.logOut()
+		LoginRepo.shared.logOut()
 	}
 	
 	public func createUser(nickname: String, email: String, password: String, passwordConfirmation: String, verificationCode: String) async throws {
@@ -66,18 +66,18 @@ class UserManager: UserManaging, ObservableObject {
 		if let error = error as? UserAPI.Error {
 			switch error {
 			case .accountExists:
-				throw UserManagerError.accountExists
+				throw UserRepoError.accountExists
 			case .twoFAFailed:
-				throw UserManagerError.twoFAFailed
+				throw UserRepoError.twoFAFailed
 			case .unprocessableEntity(let cause):
-				throw UserManagerError.displayError(cause)
+				throw UserRepoError.displayError(cause)
 			}
 		} else if let error = error as? APIError {
 			switch error {
 			case .invalidResponse:
-				throw UserManagerError.dataUnavailable
+				throw UserRepoError.dataUnavailable
 			case .httpError(_, let cause):
-				throw UserManagerError.displayError(cause ?? "An unknown error occurred.")
+				throw UserRepoError.displayError(cause ?? "An unknown error occurred.")
 			}
 		}
 	}

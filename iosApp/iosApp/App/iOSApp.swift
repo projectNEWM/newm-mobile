@@ -2,7 +2,7 @@ import SwiftUI
 import Resolver
 import ModuleLinker
 import FacebookCore
-import Domain
+import Data
 import UIKit
 
 @main

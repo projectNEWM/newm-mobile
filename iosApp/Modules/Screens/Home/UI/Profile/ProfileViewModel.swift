@@ -1,5 +1,5 @@
 import Foundation
-import Domain
+import Data
 import Resolver
 import Models
 import ModuleLinker
@@ -7,9 +7,9 @@ import Combine
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-	@Injected private var userManager: any UserManaging
+	@Injected private var userRepo: any UserManaging
 	
-	var user: User? { userManager.currentUser }
+	var user: User? { userRepo.currentUser }
 	
 	@Published var firstName: String = ""
 	@Published var lastName: String = ""
@@ -60,7 +60,7 @@ final class ProfileViewModel: ObservableObject {
 	func loadUser() async {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
-			try await userManager.fetchCurrentUser()
+			try await userRepo.fetchCurrentUser()
 			updateUserFields()
 		} catch {
 			self.error = error.localizedDescription
@@ -71,7 +71,7 @@ final class ProfileViewModel: ObservableObject {
 		Task {
 			isLoading = true
 			do {
-				try await userManager.updateUserInfo(
+				try await userRepo.updateUserInfo(
 					firstName: firstName,
 					lastName: lastName,
 					currentPassword: currentPassword,

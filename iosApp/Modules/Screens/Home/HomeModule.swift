@@ -21,7 +21,7 @@ extension HomeModule {
 		}
 		
 		mockResolver.register {
-			MockUserManager() as any UserManaging
+			MockUserRepo() as any UserManaging
 		}
 	}
 }

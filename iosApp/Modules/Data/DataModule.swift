@@ -3,18 +3,18 @@ import Resolver
 import ModuleLinker
 import SwiftUI
 
-public final class DomainModule: ModuleProtocol {
-	public static let shared = DomainModule()
+public final class DataModule: ModuleProtocol {
+	public static let shared = DataModule()
 	
 	public func registerAllServices() {
 		Resolver.register {
-			UserManager.shared as any UserManaging
+			UserRepo.shared as any UserManaging
 		}
 	}
 }
 
 #if DEBUG
-extension DomainModule {
+extension DataModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {		
 	}
 }

@@ -21,7 +21,7 @@ extension LoginModule {
 //		}
 		
 //		mockResolver.register {
-//			MockLogInLogOutUseCase.shared as LoginUseCase
+//			MockLogInLogOutUseCase.shared as LoginRepo
 //		}
 		
 //		mockResolver.register {

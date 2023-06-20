@@ -1,7 +1,7 @@
 import SwiftUI
 import SharedUI
 import Models
-import Domain
+import Data
 import ModuleLinker
 import Resolver
 import SharedUI

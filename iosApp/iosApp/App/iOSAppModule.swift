@@ -15,7 +15,7 @@ import Artist
 import Library
 import AudioPlayer
 //import Marketplace
-import Domain
+import Data
 
 struct iOSAppModule: ModuleProtocol {
 	static var shared = iOSAppModule()
@@ -35,7 +35,7 @@ struct iOSAppModule: ModuleProtocol {
 			ArtistModule.shared,
 			AudioPlayerModule.shared,
 //			MarketplaceModule.shared
-			DomainModule.shared
+			DataModule.shared
 		]
 	}()
 }

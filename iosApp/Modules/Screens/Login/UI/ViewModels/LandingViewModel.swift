@@ -1,6 +1,6 @@
 import Foundation
 import Resolver
-import Domain
+import Data
 import GoogleSignIn
 import FacebookLogin
 import AuthenticationServices
@@ -19,8 +19,8 @@ class LandingViewModel: ObservableObject {
 	@Published var confirmPassword: String = ""
 	@Published var nickname: String = ""
 			
-	private let logInUseCase = LoginUseCase.shared
-	@Injected private var userManager: any UserManaging
+	private let logInRepo = LoginRepo.shared
+	@Injected private var userRepo: any UserManaging
 	private let loginFieldValidator = LoginFieldValidator()
 
 	var nicknameIsValid: Bool {
@@ -48,7 +48,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await logInUseCase.login(email: email, password: password)
+				try await logInRepo.login(email: email, password: password)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -64,7 +64,7 @@ class LandingViewModel: ObservableObject {
 		navPath.append(.enterNewPassword)
 		Task {
 			do {
-				try await logInUseCase.requestEmailVerificationCode(for: email)
+				try await logInRepo.requestEmailVerificationCode(for: email)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -74,8 +74,8 @@ class LandingViewModel: ObservableObject {
 	func resetPassword() {
 		Task {
 			do {
-				try await userManager.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
-				try await logInUseCase.login(email: email, password: password)
+				try await userRepo.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
+				try await logInRepo.login(email: email, password: password)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -92,7 +92,7 @@ class LandingViewModel: ObservableObject {
 		}
 		Task {
 			do {
-				try await logInUseCase.requestEmailVerificationCode(for: email)
+				try await logInRepo.requestEmailVerificationCode(for: email)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -107,9 +107,9 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await userManager.createUser(nickname: nickname, email: email, password: password, passwordConfirmation: confirmPassword, verificationCode: confirmationCode)
+				try await userRepo.createUser(nickname: nickname, email: email, password: password, passwordConfirmation: confirmPassword, verificationCode: confirmationCode)
 				navPath.append(.done)
-			} catch let error as UserManagerError {
+			} catch let error as UserRepoError {
 				switch error {
 				case .accountExists:
 					self.error = "An account with this email already exists."
@@ -144,7 +144,7 @@ class LandingViewModel: ObservableObject {
 			isLoading = true
 			Task {
 				do {
-					try await logInUseCase.loginWithFacebook(result: loginResult)
+					try await logInRepo.loginWithFacebook(result: loginResult)
 				} catch {
 					self.error = error.localizedDescription
 				}
@@ -156,7 +156,7 @@ class LandingViewModel: ObservableObject {
 	}
 	
 	func handleFacebookLogout() {
-		logInUseCase.logOut()
+		logInRepo.logOut()
 	}
 	
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
@@ -168,7 +168,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await logInUseCase.loginWithGoogle(result: result)
+				try await logInRepo.loginWithGoogle(result: result)
 			} catch {
 				self.error = error.localizedDescription
 			}
@@ -182,7 +182,7 @@ class LandingViewModel: ObservableObject {
 			isLoading = true
 			Task {
 				do {
-					try await LoginUseCase.shared.loginWithApple(result: authResults)
+					try await logInRepo.loginWithApple(result: authResults)
 				} catch {
 					self.error = "\(error)"
 				}
