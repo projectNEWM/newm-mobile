@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.ui.utils.HotPinkBrush
 
 @Composable
-fun PrimaryButton(text: String, onClick: () -> Unit) {
+fun PrimaryButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .height(40.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(0.dp))
+            .clip(RoundedCornerShape(4.dp))
             .background(brush = HotPinkBrush())
             .clickable {
                 onClick.invoke()
@@ -48,7 +48,7 @@ fun SecondaryButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .height(40.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(2.dp))
+            .clip(RoundedCornerShape(4.dp))
             .border(BorderStroke(1.dp, Gray))
             .clickable {
                 onClick.invoke()
