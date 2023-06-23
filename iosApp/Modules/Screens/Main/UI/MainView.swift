@@ -20,19 +20,24 @@ public struct MainView: View {
 	
 	public var body: some View {
 		GeometryReader { geometry in
-			TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
-				.preferredColorScheme(.dark)
-				.fullScreenCover(isPresented: $viewModel.shouldShowLogin) {
-					loginViewProvider.loginView()
-				}
-				.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
-					sheetView
-				}
-				.overlay {
-					miniPlayerView
-						.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
-				}
+			if viewModel.shouldShowLogin {
+				loginViewProvider.loginView().transition(.move(edge: .bottom))
+			} else {
+				TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
+					.preferredColorScheme(.dark)
+					.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
+						sheetView
+					}
+					.overlay {
+						miniPlayerView
+							.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
+							.transition(.move(edge: .bottom))
+							.animation(.easeInOut, value: audioPlayer.song)
+					}
+					.transition(.move(edge: .bottom))
+			}
 		}
+		.animation(.easeInOut, value: viewModel.shouldShowLogin)
 	}
 	
 	@ViewBuilder

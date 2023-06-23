@@ -15,6 +15,7 @@ import Artist
 import Library
 import AudioPlayer
 //import Marketplace
+import Data
 
 struct iOSAppModule: ModuleProtocol {
 	static var shared = iOSAppModule()
@@ -34,28 +35,29 @@ struct iOSAppModule: ModuleProtocol {
 			ArtistModule.shared,
 			AudioPlayerModule.shared,
 //			MarketplaceModule.shared
+			DataModule.shared
 		]
 	}()
-	
-	func registerAllServices() {
-		modules.forEach { $0.registerAllServices() }
-	}
 }
 
 extension Resolver: ResolverRegistering {
 	public static func registerAllServices() {
-		iOSAppModule.shared.modules.forEach { $0.registerAllServices() }
+		iOSAppModule.shared.registerAllServices()
 #if DEBUG
+		Resolver.root.add(child: .mock)
 		iOSAppModule.shared.registerAllMockedServices(mockResolver: .mock)
 #endif
 	}
 }
 
-#if DEBUG
 extension iOSAppModule {
+	func registerAllServices() {
+		modules.forEach { $0.registerAllServices() }
+	}
+
+#if DEBUG
 	func registerAllMockedServices(mockResolver: Resolver) {
-		Resolver.root.add(child: .mock)
 		modules.forEach { $0.registerAllMockedServices(mockResolver: .mock) }
 	}
-}
 #endif
+}

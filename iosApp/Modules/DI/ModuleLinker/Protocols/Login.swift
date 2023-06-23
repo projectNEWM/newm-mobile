@@ -10,7 +10,7 @@ public protocol LoggedInUserUseCaseProtocol {
 	var loggedInUser: AnyPublisher<String?, Never> { get }
 }
 
-public protocol LogInUseCaseProtocol {
+public protocol LoginRepoProtocol {
 	func logIn(email: String, password: String) async throws
 }
 

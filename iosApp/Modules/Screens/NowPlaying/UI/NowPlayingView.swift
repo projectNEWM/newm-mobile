@@ -69,7 +69,7 @@ extension NowPlayingView {
 			Spacer()
 			PlayButton().frame(width: 80, height: 80).padding(.top, 50)
 			Spacer()
-			nextButton.padding(.top, 50)
+			actionButton.padding(.top, 50)
 			Spacer()
 			repeatButton
 		}
@@ -95,7 +95,7 @@ extension NowPlayingView {
 		}
 	}
 	
-	private var nextButton: some View {
+	private var actionButton: some View {
 		Button {
 			audioPlayer.next()
 		} label: {
@@ -107,9 +107,16 @@ extension NowPlayingView {
 		Button {
 			audioPlayer.cycleRepeatMode()
 		} label: {
-			//TODO: add different repeat image states
-			Asset.Media.PlayerIcons.repeat()
+			switch audioPlayer.playbackInfo.repeatMode {
+			case .all:
+				Asset.Media.PlayerIcons.Repeat.repeatFill()
+			case .one:
+				Asset.Media.PlayerIcons.Repeat.repeatOneFill()
+			case .none:
+				Asset.Media.PlayerIcons.Repeat.repeat()
+			}
 		}
+		.frame(width: 48, height: 48)
 	}
 	
 	private var favoriteButton: some View {
@@ -149,13 +156,6 @@ extension NowPlayingView {
 	}
 }
 
-struct NowPlayingView_Previews: PreviewProvider {
-	static var previews: some View {
-		NowPlayingView()
-			.preferredColorScheme(.dark)
-	}
-}
-
 private extension NowPlayingView {
 	nonisolated static var playbackTimePlaceholder: String { "--:--" }
 }
@@ -172,5 +172,12 @@ extension Int {
 		}
 		
 		return playbackTime
+	}
+}
+
+struct NowPlayingView_Previews: PreviewProvider {
+	static var previews: some View {
+		NowPlayingView()
+			.preferredColorScheme(.dark)
 	}
 }

@@ -1,8 +1,8 @@
 import Foundation
 import KeychainSwift
 
-class AuthTokenManager {
-	@Published public var authToken: AuthToken? {
+class AuthTokenManager: ObservableObject {
+	@Published var authToken: AuthToken? {
 		didSet {
 			if let authToken {
 				storeAuthToken(authToken)
@@ -12,12 +12,15 @@ class AuthTokenManager {
 		}
 	}
 	
-	private let accessTokenKey: String = "accessToken"
-	private let refreshTokenKey: String = "refreshToken"
+	private let accessTokenKey: String
+	private let refreshTokenKey: String
 	
 	static let shared = AuthTokenManager()
 
-	private init() {
+	init(accessTokenKey: String = "accessToken", refreshTokenKey: String = "refreshToken") {
+		self.accessTokenKey = accessTokenKey
+		self.refreshTokenKey = refreshTokenKey
+		
 		let keychain = KeychainSwift()
 		guard let accessToken = keychain.get(accessTokenKey), let refreshToken = keychain.get(refreshTokenKey) else {
 			return

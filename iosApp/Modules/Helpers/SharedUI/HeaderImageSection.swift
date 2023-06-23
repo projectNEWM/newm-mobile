@@ -1,14 +1,14 @@
 import SwiftUI
 import UIKit
 
-struct HeaderImageSection: View {
+public struct HeaderImageSection: View {
 	private let imageURL: String?
 	
-	init(_ imageURL: String?) {
+	public init(_ imageURL: String?) {
 		self.imageURL = imageURL
 	}
 	//TODO: parallax header hidden behind nav bar
-	var body: some View {
+	public var body: some View {
 		GeometryReader { geometry in
 			ZStack {
 				image(size: geometry.size, frame: geometry.frame(in: .global))
@@ -17,6 +17,7 @@ struct HeaderImageSection: View {
 		.frame(height: 20)
 	}
 	
+	@ViewBuilder
 	private func image(size: CGSize, frame: CGRect) -> some View {
 		let image = AsyncImage(
 			url: imageURL.flatMap(URL.init),
@@ -28,13 +29,13 @@ struct HeaderImageSection: View {
 			.aspectRatio(contentMode: .fill)
 		
 		if frame.minY <= 0 {
-			return image
+			image
 				.frame(height: size.height)
 				.offset(y: frame.minY/9)
 				.clipped()
 				.erased
 		} else {
-			return image
+			image
 				.frame(width: size.width, height: size.height + frame.minY)
 				.clipped()
 				.offset(y: -frame.minY)
@@ -45,6 +46,6 @@ struct HeaderImageSection: View {
 
 struct HeaderImageSection_Previews: PreviewProvider {
 	static var previews: some View {
-		HeaderImageSection("")
+		HeaderImageSection("https://resizing.flixster.com/xhyRkgdbTuATF4u0C2pFWZQZZtw=/300x300/v2/https://flxt.tmsimg.com/assets/p175884_k_v9_ae.jpg")
 	}
 }

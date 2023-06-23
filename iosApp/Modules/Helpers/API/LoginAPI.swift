@@ -19,16 +19,14 @@ public enum LoginMethod {
 public class LoginAPI: NEWMAPI {
 	private var authAPI: URL { stagingURLv1.appending(path: "auth") }
 	private var loginAPI: URL { authAPI.appending(path: "login") }
-	
-	override public init() {}
-	
+		
 	public func login(method: LoginMethod) async throws {
 		let request = makeLoginPostRequest(loginMethod: method)
-		tokenManager.authToken = try await sendRequest(request).decode()
+		setToken(try await sendRequest(request).decode())
 	}
 	
 	public func logOut() {
-		tokenManager.authToken = nil
+		setToken(nil)
 	}
 	
 	public func requestEmailVerificationCode(for email: String) async throws {

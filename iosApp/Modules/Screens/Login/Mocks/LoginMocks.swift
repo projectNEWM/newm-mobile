@@ -2,9 +2,9 @@
 //import ModuleLinker
 //import Combine
 //import UIKit
-//import Auth
+//import Data
 //
-//class MockLogInLogOutUseCase: LogInUseCaseProtocol, LogOutUseCaseProtocol, LoggedInUserUseCaseProtocol {
+//class MockLogInLogOutUseCase: LoginRepoProtocol, LogOutUseCaseProtocol, LoggedInUserUseCaseProtocol {
 //	private static let authCredsKey = "authCreds"
 //
 //	/*@UserDefault(authCredsKey, defaultValue: nil)*/ private var authCreds: AuthToken?

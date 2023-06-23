@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "C79352F7-C6E7-47B2-A267-E5745D648056",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "76AA88F72A38D3F900F25113",
+        "name" : "APITests"
+      }
+    }
+  ],
+  "version" : 1
+}

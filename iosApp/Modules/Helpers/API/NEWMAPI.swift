@@ -1,57 +1,56 @@
 import Foundation
 
-enum HTTPMethod: String {
-	case DELETE
-	case POST
-	case PUT
-	case GET
-}
-
-public enum APIError: Error {
-	case invalidResponse
-	case httpError(Int)
-	case invalidData
-}
-
 public class NEWMAPI {
-	let tokenManager = AuthTokenManager.shared
+	private let tokenManager: AuthTokenManager
+	private let dataFetcher: DataFetching
 	var stagingURLv1: URL { URL(string: "https://garage.newm.io/v1")! }
 
 	@Published public var userIsLoggedIn: Bool = false
-
+	
+	convenience
 	public init() {
+		self.init(tokenManager: AuthTokenManager.shared, dataFetcher: URLSession.shared)
+	}
+
+	init(tokenManager: AuthTokenManager, dataFetcher: DataFetching) {
+		self.tokenManager = tokenManager
+		self.dataFetcher = dataFetcher
 		tokenManager.$authToken.map { $0 != nil }.assign(to: &$userIsLoggedIn)
 	}
-		
+	
+	func setToken(_ token: AuthToken?) {
+		tokenManager.authToken = token
+	}
+	
 	@discardableResult
-	func sendRequest(_ request: URLRequest, tryRefresh: Bool = true) async throws -> Data {
-		let (data, response) = try await URLSession.shared.data(for: request)
+	func sendRequest(_ request: URLRequest) async throws -> Data {
+		try await updateTokens()
+		var request = request
+		tokenManager.authToken.flatMap { request.setValue("Bearer \($0.accessToken)", forHTTPHeaderField: "Authorization") }
+		return try await _sendRequest(request)
+	}
+	
+	@discardableResult
+	private func _sendRequest(_ request: URLRequest) async throws -> Data {
+		request.prettyPrint()
 		
-		print(response)
-		print(String(data: data, encoding: .utf8))
+		let (data, response) = try await dataFetcher.data(for: request)
+		
+		print("response: \(response.url?.absoluteString ?? "url missing")")
+		print(String(data: data, encoding: .utf8)!)
 		
 		guard let httpResponse = response as? HTTPURLResponse else {
 			throw APIError.invalidResponse
 		}
 		
-		if tryRefresh {
-			guard httpResponse.statusCode != 401 else {
-				tokenManager.authToken = try await sendRequest(makeRefreshRequest(), tryRefresh: false).decode()
-				return try await sendRequest(request, tryRefresh: false)
-			}
-		}
-		
+		print(httpResponse.statusCode)
+				
 		guard (200...299).contains(httpResponse.statusCode) else {
-			throw APIError.httpError(httpResponse.statusCode)
+			let cause = try? JSONDecoder().decode(ErrorResponse.self, from: data).cause
+			throw APIError.httpError(statusCode: httpResponse.statusCode, cause: cause)
 		}
 		
 		return data
-	}
-	
-	private func makeRefreshRequest() -> URLRequest {
-		var request = URLRequest(url: stagingURLv1.appending(path: "auth").appending(path: "refresh"))
-		tokenManager.authToken.flatMap { request.setValue("Bearer \($0.refreshToken)", forHTTPHeaderField: "Authorization") }
-		return request
 	}
 	
 	func makeRequest(url: URL, body: [String:String]?, method: HTTPMethod) -> URLRequest {
@@ -59,23 +58,42 @@ public class NEWMAPI {
 		request.httpMethod = method.rawValue
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("application/json", forHTTPHeaderField: "Accept")
-		tokenManager.authToken.flatMap { request.setValue("Bearer \($0.accessToken)", forHTTPHeaderField: "Authorization") }
 		request.httpBody = body.flatMap { try! JSONSerialization.data(withJSONObject: $0) }
 		
-		print(request)
-		print(request.httpMethod)
-		request.httpBody.flatMap { print(String(data: $0, encoding: .utf8)) }
-		print(request.allHTTPHeaderFields)
-
 		return request
+	}
+	
+	func updateTokens() async throws {
+		if let authToken = tokenManager.authToken {
+			switch (authToken.accessTokenExpired, authToken.refreshTokenExpired) {
+			case (true, false):
+				try await refreshTokens()
+			case (true, true):
+				tokenManager.authToken = nil
+			case (false, _):
+				break
+			}
+		}
+	}
+
+	private func refreshTokens() async throws {
+		var request = URLRequest(url: stagingURLv1.appending(path: "auth").appending(path: "refresh"))
+		tokenManager.authToken.flatMap { request.setValue("Bearer \($0.refreshToken)", forHTTPHeaderField: "Authorization") }
+		tokenManager.authToken = try await _sendRequest(request).decode()
 	}
 }
 
 public extension Data {
 	func decode<T: Decodable>() throws -> T {
-		guard let object = try? JSONDecoder().decode(T.self, from: self) else {
-			throw APIError.invalidData
-		}
-		return object
+		try JSONDecoder().decode(T.self, from: self)
+	}
+}
+
+extension URLRequest {
+	func prettyPrint() {
+		print("request: \(self)")
+		print(self.httpMethod ?? "none")
+		self.httpBody.flatMap { print(String(data: $0, encoding: .utf8) ?? "no body") }
+		print(self.allHTTPHeaderFields ?? [:])
 	}
 }

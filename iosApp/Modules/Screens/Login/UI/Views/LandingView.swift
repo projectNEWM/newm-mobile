@@ -75,7 +75,7 @@ extension LandingView {
 	
 	@ViewBuilder
 	private var loginButton: some View {
-		nextButton(title: .login) {
+		actionButton(title: .login) {
 			viewModel.goToLogin()
 		}
 	}
@@ -131,19 +131,6 @@ extension LandingView {
 		} else {
 			EmptyView()
 		}
-	}
-}
-
-extension LandingView {
-	@ViewBuilder
-	func nextButton(title: String, action: @escaping () -> ()) -> some View {
-		Button(action: action) {
-			buttonText(title)
-				.background(Gradients.loginGradient.gradient)
-		}
-		.accentColor(.white)
-		.cornerRadius(4)
-		.padding([.bottom, .top])
 	}
 }
 

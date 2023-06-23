@@ -40,7 +40,7 @@ extension PlaylistListViewModel {
 			self.init(
 				image: imageUrl,
 				title: playlist.title,
-				creator: playlist.creator.userName,
+				creator: playlist.creator.nickname ?? "Nick Name",
 				genre: playlist.genre.title,
 				starCount: "\(playlist.starCount) ✭",
 				playCount: "\(playlist.playCount)",

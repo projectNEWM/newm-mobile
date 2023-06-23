@@ -3,11 +3,20 @@ import SwiftUI
 
 struct BackButton: ViewModifier {
 	@Environment(\.presentationMode) @Binding var presentationMode: PresentationMode
+	let withToolbar: Bool
 	
 	func body(content: Content) -> some View {
-		content
+		let modContent = content
 			.navigationBarBackButtonHidden(true)
 			.navigationBarItems(leading: btnBack)
+		if withToolbar {
+			return modContent
+				.toolbarBackground(.visible, for: .navigationBar)
+				.toolbarBackground(Color.black, for: .navigationBar)
+				.erased
+		} else {
+			return modContent.erased
+		}
 	}
 	
 	var btnBack: some View {
@@ -22,7 +31,7 @@ struct BackButton: ViewModifier {
 }
 
 public extension View {
-	func backButton() -> some View {
-		modifier(BackButton())
+	func backButton(withToolbar: Bool = false) -> some View {
+		modifier(BackButton(withToolbar: withToolbar))
 	}
 }

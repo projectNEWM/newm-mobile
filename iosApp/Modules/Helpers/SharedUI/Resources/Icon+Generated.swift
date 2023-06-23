@@ -39,7 +39,11 @@ public enum Asset {
       public static let playHighlighted = ImageAsset(name: "play_highlighted")
       public static let previous = ImageAsset(name: "previous")
       public static let previousHighlighted = ImageAsset(name: "previous_highlighted")
-      public static let `repeat` = ImageAsset(name: "repeat")
+      public enum Repeat {
+        public static let repeatFill = ImageAsset(name: "repeat-fill")
+        public static let repeatOneFill = ImageAsset(name: "repeat-one-fill")
+        public static let `repeat` = ImageAsset(name: "repeat")
+      }
       public static let shareHighlighted = ImageAsset(name: "share-highlighted")
       public static let share = ImageAsset(name: "share")
       public static let shuffle = ImageAsset(name: "shuffle")

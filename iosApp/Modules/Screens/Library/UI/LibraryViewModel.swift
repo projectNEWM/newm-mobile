@@ -5,8 +5,9 @@ import ModuleLinker
 import SharedUI
 import AudioPlayer
 
+@MainActor
 class LibraryViewModel: ObservableObject {
-	@MainActor @Published var state: ViewState<(LibraryViewUIModel, LibraryViewActionHandling)> = .loading
+	@Published var state: ViewState<(LibraryViewUIModel, LibraryViewActionHandling)> = .loading
 	@Published var route: LibraryRoute?
 	@Injected private var audioPlayer: AudioPlayerImpl
 	

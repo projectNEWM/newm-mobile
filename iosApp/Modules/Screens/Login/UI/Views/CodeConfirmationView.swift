@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Colors
+import SharedUI
 
 extension LandingView {
 	@ViewBuilder
@@ -27,7 +28,7 @@ extension LandingView {
 				.font(.inter(ofSize: 14))
 				.padding()
 
-				LoginTextField(title: nil, prompt: .verificationCode, isSecure: false, text: $viewModel.confirmationCode)
+				NEWMTextField(title: nil, prompt: .verificationCode, isSecure: false, text: $viewModel.confirmationCode)
 					.padding(.bottom)
 				
 				Button {

@@ -10,10 +10,6 @@ public final class HomeModule: ModuleProtocol {
 		Resolver.register {
 			self as HomeViewProviding
 		}
-		
-		Resolver.register {
-			HomeViewModel()
-		}
 	}
 }
 
@@ -22,6 +18,10 @@ extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
 			MockHomeViewUIModelProvider(actionHandler: $0.resolve()) as HomeViewUIModelProviding
+		}
+		
+		mockResolver.register {
+			MockUserRepo() as any UserManaging
 		}
 	}
 }
