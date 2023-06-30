@@ -79,7 +79,7 @@ internal fun NewmApp(
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
-            Navigation(navController)
+            Navigation(navController, isBottomNavBarVisible)
         }
 
         if (BuildConfig.DEBUG) {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -14,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import io.newm.R
 import io.newm.core.theme.Black
 import io.newm.core.ui.buttons.PrimaryButton
+import kotlinx.coroutines.launch
 
 internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 
@@ -29,9 +31,17 @@ data class ProfileModel(
     val confirmPassword: String? = null
 )
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen(
-    onNavigateUp: () -> Unit
+    isBottomBarVisible: MutableState<Boolean>,
+    onNavigateUp: () -> Unit,
+    onLogout: () -> Unit,
+    onShowTermsAndConditions: () -> Unit,
+    onShowPrivacyPolicy: () -> Unit,
+    onShowDocuments: () -> Unit,
+    onShowAskTheCommunity: () -> Unit,
+    onShowFaq: () -> Unit
 ) {
     //TODO This should come from the ViewModel
     val profile = ProfileModel(
@@ -43,6 +53,10 @@ fun ProfileScreen(
     )
     var updatedProfile by remember { mutableStateOf(profile) }
     val isModified = profile != updatedProfile
+    val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
+    isBottomBarVisible.value = !sheetState.isVisible
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,6 +68,11 @@ fun ProfileScreen(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back",
                         )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { scope.launch { sheetState.show() } }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "Overflow")
                     }
                 }
             )
@@ -86,9 +105,16 @@ fun ProfileScreen(
                 profile = updatedProfile,
                 onProfileUpdated = { updatedProfile = it }
             )
-            if (isModified) {
-                Spacer(modifier = Modifier.height(80.dp))
-            }
         }
     }
+
+    ProfileBottomSheet(
+        sheetState = sheetState,
+        onLogout = onLogout,
+        onShowTermsAndConditions = onShowTermsAndConditions,
+        onShowPrivacyPolicy = onShowPrivacyPolicy,
+        onShowDocuments = onShowDocuments,
+        onShowAskTheCommunity = onShowAskTheCommunity,
+        onShowFaq = onShowFaq
+    )
 }

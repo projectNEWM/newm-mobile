@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -43,13 +44,18 @@ fun PrimaryButton(text: String, modifier: Modifier = Modifier, onClick: () -> Un
 }
 
 @Composable
-fun SecondaryButton(text: String, onClick: () -> Unit) {
+fun SecondaryButton(
+    text: String,
+    textColor: Color = MaterialTheme.colors.primary,
+    borderColor: Color = Gray,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .height(40.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
-            .border(BorderStroke(1.dp, Gray))
+            .border(BorderStroke(1.dp, borderColor))
             .clickable {
                 onClick.invoke()
             },
@@ -57,7 +63,7 @@ fun SecondaryButton(text: String, onClick: () -> Unit) {
     ) {
         Text(
             text = text,
-            color = MaterialTheme.colors.primary,
+            color = textColor,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.Bold,
         )
