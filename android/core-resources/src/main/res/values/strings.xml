@@ -45,4 +45,14 @@
     <string name="profile_form_password_current_password">CURRENT PASSWORD</string>
     <string name="profile_form_password_new_password">NEW PASSWORD</string>
     <string name="profile_form_password_confirm_password">CONFIRM NEW PASSWORD</string>
+    <string name="profile_terms_and_condition">Terms &amp; Conditions</string>
+    <string name="profile_privacy_policy">Privacy Policy</string>
+    <string name="profile_documents">Documents</string>
+    <string name="profile_ask_the_community">Ask the community</string>
+    <string name="profile_faq">FAQ</string>
+    <string name="profile_company_related">COMPANY RELATED</string>
+    <string name="profile_help_and_support">HELP &amp; SUPPORT</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_placeholder_your_password">Your Password</string>string>
+    <string name="profile_placeholder_new_password">New Password</string>string>
 </resources>
