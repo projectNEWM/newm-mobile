@@ -66,6 +66,9 @@ dependencies {
     implementation(project(Modules.login))
     implementation(project(Modules.shared))
 
+    implementation(Circuit.foundation)
+    implementation(Circuit.retained)
+
 //    implementation(Airbnb.showkase)
     implementation(Google.activityCompose)
     implementation(Google.androidxCore)

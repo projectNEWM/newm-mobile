@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.androidLibrary)
     kotlin(Plugins.android)
+    id(Plugins.parcelize)
     id(Plugins.paparazzi)
 }
 
@@ -39,6 +40,9 @@ dependencies {
     implementation(project(Modules.shared))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.coreResources))
+
+    implementation(Circuit.foundation)
+    implementation(Circuit.retained)
 
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
