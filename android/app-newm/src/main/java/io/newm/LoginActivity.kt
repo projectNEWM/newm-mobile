@@ -5,14 +5,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.CircuitConfig
+import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.retained.LocalRetainedStateRegistry
+import com.slack.circuit.retained.continuityRetainedStateRegistry
 import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.*
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
+import io.newm.feature.login.screen.createaccount.CreateAccountPresenter
+import io.newm.feature.login.screen.createaccount.CreateAccountUi
 import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
 import io.newm.feature.login.screen.createaccount.EnterVerificationCodeScreen
 import io.newm.feature.login.screen.createaccount.WhatShouldWeCallYouScreen
@@ -20,12 +28,41 @@ import io.newm.screens.Screen
 
 class LoginActivity : ComponentActivity() {
 
+    // TODO inject
+    private val circuitConfig: CircuitConfig = CircuitConfig.Builder()
+        .addPresenterFactory { screen, navigator, _ ->
+            when (screen) {
+                is CreateAccountScreen -> CreateAccountPresenter()
+
+                else -> null
+            }
+        }
+        .addUiFactory { screen, _ ->
+            when (screen) {
+                is CreateAccountScreen -> CreateAccountUi()
+                else -> null
+            }
+        }.build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
             NewmTheme(darkTheme = true) {
-                WelcomeToNewm(::launchHomeActivity)
+                CircuitDependencies {
+                    WelcomeToNewm(::launchHomeActivity)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun CircuitDependencies(
+        content: @Composable () -> Unit
+    ) {
+        CircuitCompositionLocals(circuitConfig) {
+            CompositionLocalProvider(LocalRetainedStateRegistry provides continuityRetainedStateRegistry()) {
+                content()
             }
         }
     }
@@ -60,13 +97,7 @@ fun WelcomeToNewm(
             )
         }
         composable(Screen.Signup.route) {
-            CreateAccountScreen(
-                viewModel = signupViewModel,
-                onUserLoggedIn = onStartHomeActivity,
-                onNext = {
-                    navController.navigate(Screen.WhatShouldWeCallYou.route)
-                },
-            )
+            CircuitContent(screen = CreateAccountScreen)
         }
         composable(Screen.WhatShouldWeCallYou.route) {
             WhatShouldWeCallYouScreen(

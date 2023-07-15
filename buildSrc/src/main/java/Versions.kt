@@ -2,8 +2,8 @@ object Versions {
     const val androidCompileSdk = 33
     const val androidMinSdk = 30
     const val androidTargetSdk = 33
-
     const val androidGradlePlugin = "7.4.2"
+
     const val androidxActivity = "1.5.1"
     const val androidxAppCompat = "1.5.0"
     const val androidxConstraintLayout = "2.1.4"
@@ -12,6 +12,7 @@ object Versions {
     const val androidxLifecycle = "2.5.1"
     const val androidxNavigation = "2.5.1"
     const val androidxSplashScreen = "1.0.0"
+    const val circuit = "0.9.1"
     const val composeCompiler = "1.4.6"
     const val compose = "1.4.0"
     const val composeMaterialIcons = "1.3.0-beta01"

@@ -4,27 +4,26 @@ import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.newm.core.test.utils.SnapshotTest
 import io.newm.core.test.utils.SnapshotTestConfiguration
-import io.newm.feature.login.screen.createaccount.CreateAccountScreen
-import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
+import io.newm.feature.login.screen.createaccount.CreateAccountUiState
+import io.newm.feature.login.screen.createaccount.signupform.SignUpFormUi
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class CreateAccountScreenTest(
+class CreateAccountUiTest(
     @TestParameter private val testConfiguration: SnapshotTestConfiguration,
 ) : SnapshotTest(testConfiguration) {
 
     @Test
-    fun default() {
+    fun `default sign up form`() {
         snapshot {
-            CreateAccountScreen(
-                userState = CreateAccountViewModel.SignupUserState(),
-                onNext = {},
-                onUserLoggedIn = {},
-                setUserPasswordConfirmation = {},
-                setUserPassword = {},
-                requestCode = {},
-                setUserEmail = {}
+            SignUpFormUi(
+                state = CreateAccountUiState.SignupForm(
+                    passwordConfirmationState = TextFieldState(),
+                    passwordState = TextFieldState(),
+                    emailState = TextFieldState(),
+                    eventSink = {},
+                )
             )
         }
     }

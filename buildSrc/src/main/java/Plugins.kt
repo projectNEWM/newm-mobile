@@ -1,4 +1,5 @@
 object Plugins {
+    const val parcelize = "kotlin-parcelize"
     const val android = "android"
     const val androidApplication = "com.android.application"
     const val androidLibrary = "com.android.library"
