@@ -59,7 +59,7 @@ class NetworkClientFactory(
         }
     }
 
-    val RefreshTokenPlugin = createClientPlugin("RefreshTokenPlugin") {
+    private val refreshTokenPlugin = createClientPlugin("RefreshTokenPlugin") {
         onRequest { request, _ ->
             if(request.url.encodedPath == "/v1/auth/refresh") {
                 request.headers.remove(HttpHeaders.Authorization)
@@ -67,7 +67,6 @@ class NetworkClientFactory(
             }
         }
     }
-
 
     private fun createAuthHttpClient(): HttpClient {
         logger.d { "NewmKMM - createAuthHttpClient" }
@@ -111,6 +110,7 @@ class NetworkClientFactory(
                                     refreshToken = tokenManager.getRefreshToken()!!
                                 )
                             } else {
+                                logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
                                 throw Exception("Invalid Token response")
                             }
                         } catch (e: Exception) {
@@ -120,7 +120,7 @@ class NetworkClientFactory(
                     }
                 }
             }
-            install(RefreshTokenPlugin)
+            install(refreshTokenPlugin)
         }
     }
 }
