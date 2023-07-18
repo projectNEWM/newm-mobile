@@ -2,6 +2,7 @@ package io.newm.shared.login.repository
 
 import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.*
+import io.newm.shared.TokenManager
 import io.newm.shared.db.NewmDatabaseWrapper
 import io.newm.shared.login.models.*
 import io.newm.shared.login.service.LoginAPI
@@ -14,10 +15,13 @@ open class KMMException(message: String) : Throwable(message)
 interface LogInRepository {
     @Throws(Exception::class)
     suspend fun requestEmailConfirmationCode(email: String)
+
     @Throws(Exception::class)
     suspend fun registerUser(user: NewUser)
+
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(email: String, password: String)
+
     @Throws(KMMException::class, CancellationException::class)
     suspend fun registerUser(
         firstName: String,
@@ -33,7 +37,7 @@ interface LogInRepository {
 
 internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
     private val service: LoginAPI by inject()
-    private val db: NewmDatabaseWrapper by inject()
+    private val tokenManager: TokenManager by inject()
 
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
@@ -56,11 +60,15 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
                 service.logIn(LogInUser(email = email, password = password))
 
             if (response.isValid()) {
-                val auth = db.instance?.newmAuthQueries
-                auth?.insertAuthData(1, response.accessToken.orEmpty(), response.refreshToken.orEmpty())
+                logger.d { "logIn: LoginStatus Valid Response" }
+                tokenManager.setAuthTokens(
+                    response.accessToken.orEmpty(),
+                    response.refreshToken.orEmpty()
+                )
                 logger.d { "logIn: LoginStatus Success" }
             } else {
                 logger.d { "logIn: Fail to login: $response" }
+                throw Exception("Response is not valid: $response")
             }
         } catch (e: ClientRequestException) {
             when (e.response.status.value) {

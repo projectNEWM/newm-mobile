@@ -26,7 +26,7 @@ object Versions {
     const val kotlin = "1.8.20"
     const val kotlinxSerialization = "1.5.0"
     const val kotlinCoroutines = "1.6.4"
-    const val ktor = "2.2.4"
+    const val ktor = "2.3.2"
     const val logback = "1.2.23"
     const val material = "1.6.1"
     const val paparazzi = "1.2.0"

@@ -25,6 +25,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+dependencies {
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
+}
 
 kotlin {
     android()
@@ -53,6 +56,7 @@ kotlin {
                 implementation(Ktor.ktorClientCIO)
                 implementation(Ktor.clientContentNegotiation)
                 implementation(Ktor.kotlinXJson)
+                implementation(Ktor.clientAuth)
             }
         }
         val commonTest by getting {

@@ -17,26 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.R
 import io.newm.core.theme.*
-
-private val formTitleStyle = TextStyle(
-    fontSize = 16.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Bold,
-    color = White
-)
-
-private val formLabelStyle = TextStyle(
-    fontSize = 12.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Bold,
-    color = Gray100
-)
-
-private val formTextFieldStyle = TextStyle(
-    fontSize = 16.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Normal,
-)
+import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.core.ui.text.formTitleStyle
 
 @Composable
 fun ProfileForm(
@@ -98,41 +80,3 @@ fun ProfileForm(
     }
 }
 
-@Composable
-private fun TextFieldWithLabel(
-    labelResId: Int,
-    value: String? = null,
-    onValueChange: (String) -> Unit,
-    isPassword: Boolean = false,
-    enabled: Boolean = true,
-    placeholderResId: Int? = null
-) {
-    var updatedValue by remember { mutableStateOf(value.orEmpty()) }
-    Spacer(modifier = Modifier.height(20.dp))
-    Text(
-        text = stringResource(id = labelResId),
-        style = formLabelStyle
-    )
-    Spacer(modifier = Modifier.height(4.dp))
-    OutlinedTextField(
-        value = updatedValue,
-        onValueChange = {
-            updatedValue = it
-            onValueChange(it)
-        },
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        textStyle = formTextFieldStyle,
-        colors =
-        TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Gray500,
-            unfocusedBorderColor = Gray500,
-            backgroundColor = if (enabled) Gray600 else Gray650,
-            textColor = if (enabled) White else White50
-        ),
-        modifier = Modifier
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(4.dp),
-        enabled = enabled,
-        placeholder = placeholderResId?.let { { Text(text = stringResource(id = it)) } }
-    )
-}

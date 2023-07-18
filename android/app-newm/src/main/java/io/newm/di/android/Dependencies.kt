@@ -1,14 +1,22 @@
-package io.newm.di.viewmodels
+package io.newm.di.android
 
+import io.newm.Logout
+import io.newm.RestartApp
 import io.newm.screens.home.categories.MusicalCategoriesViewModel
 import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
+import io.newm.screens.profile.ProfileViewModel
 import io.newm.feature.login.screen.LoginViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 val viewModule = module {
     viewModelOf(::MusicalCategoriesViewModel)
-    //TODO: Separate viewmodel models per feature instead of wiring them manually
     viewModelOf(::CreateAccountViewModel)
     viewModelOf(::LoginViewModel)
+    viewModelOf(::ProfileViewModel)
+}
+
+val androidModules = module {
+    single { Logout(get(), get()) }
+    single { RestartApp(get()) }
 }

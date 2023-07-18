@@ -4,7 +4,8 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.newm.shared.db.NewmDatabaseWrapper
+import io.newm.shared.TokenManager
+import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.login.repository.KMMException
 import io.newm.shared.models.User
 import io.newm.shared.models.UserCount
@@ -12,24 +13,18 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class UserAPI(private val client: HttpClient) : KoinComponent {
+internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
 
-    private val db: NewmDatabaseWrapper by inject()
+    private val authHttpClient: HttpClient  = networkClient.authHttpClient()
 
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun getCurrentUser(): User = client.get("/v1/users/me") {
+    suspend fun getCurrentUser(): User = authHttpClient.get("/v1/users/me") {
         contentType(ContentType.Application.Json)
-        bearerAuth(
-            db.instance?.newmAuthQueries?.selectAll()?.executeAsOne()?.access_token.toString()
-        )
     }.body()
 
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun getUserById(userId: String): User = client.get("/v1/users/$userId") {
+    suspend fun getUserById(userId: String): User = authHttpClient.get("/v1/users/$userId") {
         contentType(ContentType.Application.Json)
-        bearerAuth(
-            db.instance?.newmAuthQueries?.selectAll()?.executeAsOne()?.access_token.toString()
-        )
     }.body()
 
     @Throws(KMMException::class, CancellationException::class)
@@ -41,7 +36,7 @@ internal class UserAPI(private val client: HttpClient) : KoinComponent {
         genres: String? = null,
         olderThan: String? = null,
         newerThan: String? = null
-    ): List<User> = client.get("/v1/users") {
+    ): List<User> = authHttpClient.get("/v1/users") {
         contentType(ContentType.Application.Json)
         parameter("offset", offset)
         parameter("limit", limit)
@@ -59,7 +54,7 @@ internal class UserAPI(private val client: HttpClient) : KoinComponent {
         genres: String? = null,
         olderThan: String? = null,
         newerThan: String? = null
-    ): UserCount = client.get("/v1/users/count") {
+    ): UserCount = authHttpClient.get("/v1/users/count") {
         contentType(ContentType.Application.Json)
         parameter("ids", ids)
         parameter("roles", roles)
@@ -69,8 +64,7 @@ internal class UserAPI(private val client: HttpClient) : KoinComponent {
     }.body()
 
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun deleteCurrentUser() = client.delete("/v1/users/me") {
+    suspend fun deleteCurrentUser() = authHttpClient.delete("/v1/users/me") {
         contentType(ContentType.Application.Json)
-        bearerAuth(db.instance?.newmAuthQueries?.selectAll()?.executeAsOne()?.access_token.toString())
     }
 }

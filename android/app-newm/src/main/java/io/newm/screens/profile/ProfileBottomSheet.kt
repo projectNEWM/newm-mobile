@@ -100,6 +100,7 @@ fun ProfileBottomSheet(
                         text = stringResource(R.string.profile_logout),
                         onClick = onLogout
                     )
+                    Spacer(modifier = Modifier.height(48.dp))
                 }
             }
         },

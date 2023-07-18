@@ -6,6 +6,7 @@ object Ktor {
     const val ios = "io.ktor:ktor-client-ios:${Versions.ktor}"
     const val iosDarwin = "io.ktor:ktor-client-darwin:${Versions.ktor}"
     // Kmm Dependencies
+    const val clientAuth = "io.ktor:ktor-client-auth:${Versions.ktor}"
     const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     const val ktorClientCore = "io.ktor:ktor-client-core:${Versions.ktor}"
     const val ktorClientCIO = "io.ktor:ktor-client-cio:${Versions.ktor}"

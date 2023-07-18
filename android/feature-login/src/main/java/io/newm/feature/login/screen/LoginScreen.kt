@@ -1,15 +1,12 @@
 package io.newm.feature.login.screen
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -22,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.shortToast
 import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.email.EmailState
@@ -61,29 +59,33 @@ internal fun LoginScreenContent(
                 context.shortToast(state.errorMessage.orEmpty())
             }
         }
-        val focusRequester = remember { FocusRequester() }
-        val emailState = remember { EmailState() }
-        Email(emailState = emailState, onImeAction = { focusRequester.requestFocus() })
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+
+        TextFieldWithLabel(
+            labelResId = R.string.email,
+            onValueChange = { value ->
+                email = value
+            },
+            enabled = true
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        val passwordState = remember { PasswordState() }
-        Password(
-            label = stringResource(id = R.string.password),
-            passwordState = passwordState,
-            onImeAction = {
-                attemptToLogin(emailState.text, passwordState.text)
+        TextFieldWithLabel(
+            labelResId = R.string.password,
+            onValueChange = { value ->
+                password = value
             },
-            modifier = Modifier.focusRequester(focusRequester),
+            isPassword = true,
         )
-
         Spacer(modifier = Modifier.height(32.dp))
 
         PrimaryButton(
             text = "Login",
             onClick = {
                 attemptToLogin(
-                    emailState.text, passwordState.text
+                    email, password
                 )
             }
         )

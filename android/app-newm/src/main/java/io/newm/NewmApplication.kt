@@ -9,10 +9,13 @@ import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
 import com.facebook.flipper.plugins.inspector.DescriptorMapping
 import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
 import com.facebook.flipper.plugins.navigation.NavigationFlipperPlugin
+import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
-import io.newm.di.viewmodels.viewModule
+import io.newm.di.android.androidModules
+import io.newm.di.android.viewModule
 import io.newm.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
+
 
 //@ShowkaseRoot
 class NewmApplication : Application() { //}, ShowkaseRootModule {
@@ -23,9 +26,7 @@ class NewmApplication : Application() { //}, ShowkaseRootModule {
 
         initKoin(enableNetworkLogs = true) {
             androidContext(this@NewmApplication)
-            modules(
-                viewModule
-            )
+            modules(viewModule, androidModules)
         }
 
         Logger.d { "NewmAndroid - NewmApplication" }
@@ -39,6 +40,7 @@ class NewmApplication : Application() { //}, ShowkaseRootModule {
             client.addPlugin(CrashReporterPlugin.getInstance())
             client.addPlugin(DatabasesFlipperPlugin(this))
             client.addPlugin(NavigationFlipperPlugin.getInstance())
+            client.addPlugin(SharedPreferencesFlipperPlugin(this, "newm_encrypted_shared_prefs"))
             client.start()
         }
     }

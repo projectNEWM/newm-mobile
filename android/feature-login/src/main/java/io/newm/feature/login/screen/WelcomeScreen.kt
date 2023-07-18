@@ -40,8 +40,6 @@ fun WelcomeScreen(onLogin: () -> Unit, onCreateAccount: () -> Unit, onContinueAs
             Spacer(modifier = Modifier.height(16.dp))
             SecondaryButton(text = "Create new account", onClick = onCreateAccount)
             Spacer(modifier = Modifier.height(16.dp))
-            SecondaryButton(text = "Continue as guest", onClick = onContinueAsGuest)
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

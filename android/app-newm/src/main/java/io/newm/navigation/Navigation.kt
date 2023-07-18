@@ -12,6 +12,7 @@ import io.newm.feature.now.playing.NowPlayingScreen
 import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
+import io.newm.screens.profile.ProfileRoute
 import io.newm.screens.profile.ProfileScreen
 import io.newm.screens.search.SearchScreen
 
@@ -53,15 +54,9 @@ private fun NavGraphBuilder.addHomeTree(
             NowPlayingScreen()
         }
         composable(Screen.Profile.route) {
-            ProfileScreen(
+            ProfileRoute(
                 isBottomBarVisible = isBottomBarVisible,
                 onNavigateUp = { navController.navigateUp() },
-                onLogout = {}, //TODO: Implement logout functionality
-                onShowTermsAndConditions = {}, //TODO: Link the appropriate page
-                onShowPrivacyPolicy = {}, //TODO: Link the appropriate page
-                onShowDocuments = {}, //TODO: Link the appropriate page
-                onShowAskTheCommunity = {}, //TODO: Link the appropriate page
-                onShowFaq = {}, //TODO: Link the appropriate page
             )
         }
     }

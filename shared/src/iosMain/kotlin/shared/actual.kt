@@ -12,4 +12,5 @@ actual fun platformModule() = module {
         NewmDatabaseWrapper(NewmDatabase(driver))
     }
     single { Darwin.create() }
+    single { SecureStorage("user-account") }
 }

@@ -34,6 +34,8 @@ android {
 
 dependencies {
     api(project(Modules.coreResources))
+    
+    implementation(project(Modules.coreTheme))
 
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)

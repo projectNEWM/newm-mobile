@@ -6,7 +6,7 @@ import io.newm.shared.services.UserAPI
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal interface UserRepository {
+interface UserRepository {
     suspend fun getCurrentUser(): User
     suspend fun getUserById(userId: String): User
     suspend fun getUsers(
