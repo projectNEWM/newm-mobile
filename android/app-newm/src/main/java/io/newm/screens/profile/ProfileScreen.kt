@@ -22,18 +22,6 @@ import org.koin.compose.koinInject
 
 internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 
-//TODO This is a temporary model for the profile needs to be replaced with real model from ViewModel
-data class ProfileModel(
-    val firstName: String,
-    val lastName: String,
-    val email: String,
-    val bannerUrl: String,
-    val avatarUrl: String,
-    val currentPassword: String? = null,
-    val newPassword: String? = null,
-    val confirmPassword: String? = null
-)
-
 @Composable
 fun ProfileRoute(
     isBottomBarVisible: MutableState<Boolean>,
@@ -86,16 +74,8 @@ fun ProfileScreen(
     onShowAskTheCommunity: () -> Unit,
     onShowFaq: () -> Unit,
 ) {
-    //TODO This should come from the ViewModel
-    val profile = ProfileModel(
-        firstName = user.firstName.orEmpty(),
-        lastName = user.lastName.orEmpty(),
-        email = user.email.orEmpty(),
-        bannerUrl = user.bannerUrl.orEmpty(),
-        avatarUrl = user.pictureUrl.orEmpty(),
-    )
-    var updatedProfile by remember { mutableStateOf(profile) }
-    val isModified = profile != updatedProfile
+    var updatedProfile by remember { mutableStateOf(user) }
+    val isModified = user != updatedProfile
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
     isBottomBarVisible.value = !sheetState.isVisible
@@ -140,8 +120,8 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.Top
         ) {
             ProfileBanner(
-                bannerUrl = profile.bannerUrl,
-                avatarUrl = profile.avatarUrl
+                bannerUrl = user.bannerUrl.orEmpty(),
+                avatarUrl = user.pictureUrl.orEmpty()
             )
             Spacer(modifier = Modifier.height(40.dp))
             ProfileForm(

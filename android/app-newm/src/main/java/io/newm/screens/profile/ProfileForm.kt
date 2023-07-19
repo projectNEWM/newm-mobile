@@ -19,11 +19,12 @@ import io.newm.R
 import io.newm.core.theme.*
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
+import io.newm.shared.models.User
 
 @Composable
 fun ProfileForm(
-    profile: ProfileModel,
-    onProfileUpdated: (ProfileModel) -> Unit
+    profile: User,
+    onProfileUpdated: (User) -> Unit
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 20.dp)

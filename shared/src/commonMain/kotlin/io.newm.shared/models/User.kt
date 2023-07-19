@@ -26,6 +26,9 @@ data class User(
     val companyLogoUrl: String? = null,
     val companyIpRights: String? = null,
     val verificationStatus: String? = null,
+    val currentPassword: String? = null,
+    val newPassword: String? = null,
+    val confirmPassword: String? = null
 )
 
 @Serializable
