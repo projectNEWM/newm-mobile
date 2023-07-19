@@ -25,6 +25,7 @@ import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
 import io.newm.feature.login.screen.createaccount.EnterVerificationCodeScreen
 import io.newm.feature.login.screen.createaccount.WhatShouldWeCallYouScreen
 import io.newm.screens.Screen
+import org.koin.compose.koinInject
 
 class LoginActivity : ComponentActivity() {
 
@@ -76,7 +77,7 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun WelcomeToNewm(
     onStartHomeActivity: () -> Unit,
-    signupViewModel: CreateAccountViewModel = org.koin.androidx.compose.get(),
+    signupViewModel: CreateAccountViewModel = koinInject(),
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = Screen.LoginLandingScreen.route) {

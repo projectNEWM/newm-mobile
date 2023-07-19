@@ -25,13 +25,14 @@ import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.Password
 import io.newm.feature.login.screen.password.PasswordState
+import org.koin.compose.koinInject
 
 internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 
 @Composable
 fun LoginScreen(
     onUserLoggedIn: () -> Unit,
-    viewModel: LoginViewModel = org.koin.androidx.compose.get()
+    viewModel: LoginViewModel = koinInject()
 ) {
     val state by viewModel.state.collectAsState()
 
