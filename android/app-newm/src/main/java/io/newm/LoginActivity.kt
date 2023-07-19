@@ -89,7 +89,6 @@ fun WelcomeToNewm(
                 onCreateAccount = {
                     navController.navigate(Screen.Signup.route)
                 },
-                onContinueAsGuest = onStartHomeActivity
             )
         }
         composable(Screen.LoginScreen.route) {
