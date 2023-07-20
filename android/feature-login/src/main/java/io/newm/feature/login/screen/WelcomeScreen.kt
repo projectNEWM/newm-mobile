@@ -16,7 +16,7 @@ import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 
 @Composable
-fun WelcomeScreen(onLogin: () -> Unit, onCreateAccount: () -> Unit, onContinueAsGuest: () -> Unit) {
+fun WelcomeScreen(onLogin: () -> Unit, onCreateAccount: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,8 +40,6 @@ fun WelcomeScreen(onLogin: () -> Unit, onCreateAccount: () -> Unit, onContinueAs
             Spacer(modifier = Modifier.height(16.dp))
             SecondaryButton(text = "Create new account", onClick = onCreateAccount)
             Spacer(modifier = Modifier.height(16.dp))
-            SecondaryButton(text = "Continue as guest", onClick = onContinueAsGuest)
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -53,7 +51,6 @@ private fun DefaultLightWelcomePreview() {
         WelcomeScreen(
             onLogin = {},
             onCreateAccount = {},
-            onContinueAsGuest = {}
         )
     }
 }
@@ -65,7 +62,6 @@ private fun DefaultDarkWelcomePreview() {
         WelcomeScreen(
             onLogin = {},
             onCreateAccount = {},
-            onContinueAsGuest = {}
         )
     }
 }

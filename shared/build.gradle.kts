@@ -6,7 +6,7 @@ plugins {
     id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
-    id("com.google.devtools.ksp") version "1.8.20-1.0.11"
+    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-7"
 
 }
@@ -17,7 +17,6 @@ android {
     namespace = "io.newm.shared"
     defaultConfig {
         minSdk = Versions.androidMinSdk
-        targetSdk = Versions.androidTargetSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -25,9 +24,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+dependencies {
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+}
 
 kotlin {
-    android()
+    androidTarget()
 
     val xcf = XCFramework()
     listOf(
@@ -53,6 +55,7 @@ kotlin {
                 implementation(Ktor.ktorClientCIO)
                 implementation(Ktor.clientContentNegotiation)
                 implementation(Ktor.kotlinXJson)
+                implementation(Ktor.clientAuth)
             }
         }
         val commonTest by getting {
@@ -69,12 +72,14 @@ kotlin {
                 implementation(Ktor.clientAndroid)
             }
         }
-        val androidTest by getting {
+
+        named("androidUnitTest") {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

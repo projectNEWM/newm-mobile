@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -15,44 +16,66 @@ import androidx.compose.ui.unit.dp
 import io.newm.R
 import io.newm.core.theme.Black
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.shared.models.User
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 
-//TODO This is a temporary model for the profile needs to be replaced with real model from ViewModel
-data class ProfileModel(
-    val firstName: String,
-    val lastName: String,
-    val email: String,
-    val bannerUrl: String,
-    val avatarUrl: String,
-    val currentPassword: String? = null,
-    val newPassword: String? = null,
-    val confirmPassword: String? = null
-)
+@Composable
+fun ProfileRoute(
+    isBottomBarVisible: MutableState<Boolean>,
+    onNavigateUp: () -> Unit,
+    viewModel: ProfileViewModel = koinInject()
+) {
+    val state by viewModel.state.collectAsState()
+
+    when (state) {
+        ProfileState.Loading -> {
+            LoadingScreen()
+        }
+        is ProfileState.Content -> {
+            ProfileScreen(
+                isBottomBarVisible = isBottomBarVisible,
+                onNavigateUp = onNavigateUp,
+                user = (state as ProfileState.Content).profile,
+                onLogout = viewModel::logout,
+                onShowTermsAndConditions = {}, //TODO: Link the appropriate page
+                onShowPrivacyPolicy = {}, //TODO: Link the appropriate page
+                onShowDocuments = {}, //TODO: Link the appropriate page
+                onShowAskTheCommunity = {}, //TODO: Link the appropriate page
+                onShowFaq = {}, //TODO: Link the appropriate page
+            )
+        }
+    }
+}
+
+
+@Composable
+fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen(
     isBottomBarVisible: MutableState<Boolean>,
     onNavigateUp: () -> Unit,
+    user: User,
     onLogout: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
     onShowDocuments: () -> Unit,
     onShowAskTheCommunity: () -> Unit,
-    onShowFaq: () -> Unit
+    onShowFaq: () -> Unit,
 ) {
-    //TODO This should come from the ViewModel
-    val profile = ProfileModel(
-        firstName = "Abel",
-        lastName = "Tesfaye",
-        email = "abel@gmail.com",
-        bannerUrl = "https://images.pexels.com/photos/3002/black-and-white-surfer-surfing.jpg",
-        avatarUrl = "https://cdns-images.dzcdn.net/images/artist/033d460f704896c9caca89a1d753a137/200x200.jpg"
-    )
-    var updatedProfile by remember { mutableStateOf(profile) }
-    val isModified = profile != updatedProfile
+    var updatedProfile by remember { mutableStateOf(user) }
+    val isModified = user != updatedProfile
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
     isBottomBarVisible.value = !sheetState.isVisible
@@ -97,8 +120,8 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.Top
         ) {
             ProfileBanner(
-                bannerUrl = profile.bannerUrl,
-                avatarUrl = profile.avatarUrl
+                bannerUrl = user.bannerUrl.orEmpty(),
+                avatarUrl = user.pictureUrl.orEmpty()
             )
             Spacer(modifier = Modifier.height(40.dp))
             ProfileForm(

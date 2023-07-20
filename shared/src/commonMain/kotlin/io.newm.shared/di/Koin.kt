@@ -1,14 +1,25 @@
 package io.newm.shared.di
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.auth.*
+import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
+import io.ktor.http.auth.*
 import io.ktor.serialization.kotlinx.json.*
 import io.newm.shared.HttpRoutes
+import io.newm.shared.TokenManager
+import io.newm.shared.TokenManagerImpl
 import io.newm.shared.login.UserSession
 import io.newm.shared.login.UserSessionImpl
+import io.newm.shared.login.models.LoginResponse
+import io.newm.shared.login.models.isValid
 import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.login.repository.LogInRepositoryImpl
 import io.newm.shared.login.service.LoginAPI
@@ -30,8 +41,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
@@ -49,14 +58,16 @@ fun initKoin() = initKoin(enableNetworkLogs = true) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
-    single { createHttpClient(get(), get(), enableNetworkLogs = enableNetworkLogs) }
+    single { createHttpClient(get(), get(), get(), enableNetworkLogs = enableNetworkLogs) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal API Services
+    single { LoginAPI(get()) }
     single { LoginAPI(get()) }
     single { GenresAPI(get()) }
     single { UserAPI(get()) }
     single { PlaylistAPI(get()) }
     // Internal Repositories
+    single<TokenManager> { TokenManagerImpl() }
     single<LogInRepository> { LogInRepositoryImpl() }
     single<GenresRepository> { GenresRepositoryImpl() }
     single<UserRepository> { UserRepositoryImpl() }
@@ -74,54 +85,10 @@ fun createJson() = Json {
     encodeDefaults = true
 }
 
-fun createHttpClient(httpClientEngine: HttpClientEngine, json: Json, enableNetworkLogs: Boolean) =
-    HttpClient(httpClientEngine) {
-        defaultRequest {
-            url(HttpRoutes.HOST)
-        }
-        install(ContentNegotiation) {
-            json(json)
-        }
-        if (enableNetworkLogs) {
-            install(Logging) {
-                logger = Logger.DEFAULT
-                level = LogLevel.ALL
-            }
-        }
-    }
-
-class LoginUseCaseFactory() : KoinComponent {
-    private val loginUseCase: LoginUseCase by inject()
-
-    @Throws(Exception::class)
-    fun loginUseCase(): LoginUseCase {
-        return loginUseCase
-    }
-}
-
-class SignupUseCaseFactory() : KoinComponent {
-    private val signupUseCase: SignupUseCase by inject()
-
-    @Throws(Exception::class)
-    fun signupUseCase(): SignupUseCase {
-        return signupUseCase
-    }
-}
-
-class UserSessionFactory() : KoinComponent {
-    private val userSession: UserSession by inject()
-
-    @Throws(Exception::class)
-    fun userSession(): UserSession {
-        return userSession
-    }
-}
-
-class GetGenresUseCaseFactory() : KoinComponent {
-    private val getGenresUseCase: GetGenresUseCase by inject()
-
-    @Throws(Exception::class)
-    fun getGenresUseCase(): GetGenresUseCase {
-        return getGenresUseCase
-    }
-}
+fun createHttpClient(
+    httpClientEngine: HttpClientEngine,
+    json: Json,
+    tokenManager: TokenManager,
+    enableNetworkLogs: Boolean,
+): NetworkClientFactory =
+    NetworkClientFactory(httpClientEngine, json, tokenManager, enableNetworkLogs)

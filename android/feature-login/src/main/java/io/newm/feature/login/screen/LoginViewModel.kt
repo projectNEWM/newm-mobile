@@ -22,7 +22,6 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
     }
 
     fun attemptToLogin(email: String, password: String) {
-        Logger.d { "NewmAndroid - LoginViewModel:attemptToLogin email: $email" }
         if (email.isNotBlank() && password.isNotBlank()) {
             viewModelScope.launch {
                 _state.value = _state.value.copy(

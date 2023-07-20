@@ -4,6 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.login.models.LogInUser
 import io.newm.shared.login.models.LoginResponse
 import io.newm.shared.login.models.NewUser
@@ -14,12 +15,14 @@ import kotlin.coroutines.cancellation.CancellationException
 
 
 internal class LoginAPI(
-    private val client: HttpClient
+    networkClient: NetworkClientFactory
 ) : KoinComponent {
+
+    private val httpClient: HttpClient = networkClient.httpClient()
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun requestEmailConfirmationCode(email: String) {
-        val response = client.get("/v1/auth/code") {
+        val response = httpClient.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
             parameter("email", email)
         }
@@ -35,7 +38,7 @@ internal class LoginAPI(
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun register(user: NewUser) {
-        val response = client.post("/v1/users") {
+        val response = httpClient.post("/v1/users") {
             contentType(ContentType.Application.Json)
             setBody(user)
         }
@@ -54,7 +57,7 @@ internal class LoginAPI(
     }
 
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logIn(user: LogInUser) = client.post("/v1/auth/login") {
+    suspend fun logIn(user: LogInUser) = httpClient.post("/v1/auth/login") {
         contentType(ContentType.Application.Json)
         setBody(user)
     }.body<LoginResponse>()
@@ -65,7 +68,7 @@ internal class LoginAPI(
         newPassword: String,
         confirmPassword: String,
         authCode: String
-    ) = client.put("/v1/users/password") {
+    ) = httpClient.put("/v1/users/password") {
         contentType(ContentType.Application.Json)
         parameter("email", email)
         parameter("newPassword", newPassword)

@@ -4,17 +4,16 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.newm.shared.db.NewmDatabaseWrapper
+import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.login.repository.KMMException
 import io.newm.shared.models.Genre
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class GenresAPI(
-    private val client: HttpClient
+    networkClient: NetworkClientFactory
 ) : KoinComponent {
-    private val db: NewmDatabaseWrapper by inject()
+    private val authClient: HttpClient  = networkClient.authHttpClient()
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun getGenres(
@@ -27,9 +26,8 @@ internal class GenresAPI(
         moods: String? = null,
         olderThan: String? = null,
         newerThan: String? = null
-    ) = client.get("/v1/distribution/genres") {
+    ) = authClient.get("/v1/distribution/genres") {
         contentType(ContentType.Application.Json)
-        bearerAuth(db.instance?.newmAuthQueries?.selectAll()?.executeAsOne()?.access_token.toString())
         parameter("offset", offset)
         parameter("limit", limit)
         parameter("phrase", phrase)

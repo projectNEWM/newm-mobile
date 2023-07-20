@@ -18,7 +18,6 @@ class WelcomeScreenTest(
             WelcomeScreen(
                 onLogin = {},
                 onCreateAccount = {},
-                onContinueAsGuest = {},
             )
         }
     }
