@@ -29,7 +29,7 @@ dependencies {
 }
 
 kotlin {
-    android()
+    androidTarget()
 
     val xcf = XCFramework()
     listOf(
