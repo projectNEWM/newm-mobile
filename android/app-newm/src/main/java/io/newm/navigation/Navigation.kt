@@ -18,12 +18,10 @@ import io.newm.screens.search.SearchScreen
 
 @Composable
 fun Navigation(
-    navController: NavHostController,
-    isBottomBarVisible: MutableState<Boolean>
+    navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
 ) {
     NavHost(
-        navController = navController,
-        startDestination = Screen.HomeRoot.route
+        navController = navController, startDestination = Screen.HomeRoot.route
     ) {
         addHomeTree(navController, isBottomBarVisible)
         addSearchTree()
@@ -32,21 +30,20 @@ fun Navigation(
 }
 
 private fun NavGraphBuilder.addHomeTree(
-    navController: NavHostController,
-    isBottomBarVisible: MutableState<Boolean>
+    navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
 ) {
+    val nowPlaying = { navController.navigate(Screen.NowPlayingScreen.route) }
     navigation(
-        route = Screen.HomeRoot.route,
-        startDestination = Screen.HomeLanding.route
+        route = Screen.HomeRoot.route, startDestination = Screen.HomeLanding.route
     ) {
         composable(route = Screen.HomeLanding.route) {
             HomeScreen(
                 onShowProfile = { navController.navigate(Screen.Profile.route) },
-                onThisWeekViewAll = {}, //TODO: Implement View All screen
-                onRecentlyPlayedViewAll = {}, //TODO: Implement View All screen
-                onArtistListViewMore = {}, //TODO: Implement View More screen
-                onArtistViewDetails = {}, //TODO: Implement Artist Details screen
-                onMusicViewDetails = {}, //TODO: Implement Music Details screen
+                onThisWeekViewAll = { nowPlaying.invoke() }, //TODO: Implement View All screen
+                onRecentlyPlayedViewAll = { nowPlaying.invoke() }, //TODO: Implement View All screen
+                onArtistListViewMore = { nowPlaying.invoke() }, //TODO: Implement View More screen
+                onArtistViewDetails = { nowPlaying.invoke() }, //TODO: Implement Artist Details screen
+                onMusicViewDetails = { nowPlaying.invoke() }, //TODO: Implement Music Details screen
             )
         }
 
@@ -64,8 +61,7 @@ private fun NavGraphBuilder.addHomeTree(
 
 private fun NavGraphBuilder.addLibraryTree() {
     navigation(
-        route = Screen.LibraryRoot.route,
-        startDestination = Screen.LibraryLanding.route
+        route = Screen.LibraryRoot.route, startDestination = Screen.LibraryLanding.route
     ) {
         composable(Screen.LibraryLanding.route) {
             LibraryScreen()
@@ -75,8 +71,7 @@ private fun NavGraphBuilder.addLibraryTree() {
 
 private fun NavGraphBuilder.addSearchTree() {
     navigation(
-        route = Screen.SearchRoot.route,
-        startDestination = Screen.SearchLanding.route
+        route = Screen.SearchRoot.route, startDestination = Screen.SearchLanding.route
     ) {
         composable(Screen.SearchLanding.route) {
             SearchScreen()
