@@ -1,9 +1,7 @@
 package io.newm.screens.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -51,16 +49,16 @@ fun ProfileBottomSheet(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
+                        text = stringResource(R.string.profile_faq),
                         textColor = White,
                         borderColor = Gray500,
-                        text = stringResource(R.string.profile_faq),
                         onClick = onShowFaq
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
+                        text = stringResource(R.string.profile_ask_the_community),
                         textColor = White,
                         borderColor = Gray500,
-                        text = stringResource(R.string.profile_ask_the_community),
                         onClick = onShowAskTheCommunity
                     )
                     Spacer(modifier = Modifier.height(28.dp))
@@ -73,31 +71,31 @@ fun ProfileBottomSheet(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
+                        text = stringResource(R.string.profile_documents),
                         textColor = White,
                         borderColor = Gray500,
-                        text = stringResource(R.string.profile_documents),
                         onClick = onShowDocuments,
 
                         )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
+                        text = stringResource(R.string.profile_privacy_policy),
                         textColor = White,
                         borderColor = Gray500,
-                        text = stringResource(R.string.profile_privacy_policy),
                         onClick = onShowPrivacyPolicy
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
+                        text = stringResource(R.string.profile_terms_and_condition),
                         textColor = White,
                         borderColor = Gray500,
-                        text = stringResource(R.string.profile_terms_and_condition),
                         onClick = onShowTermsAndConditions
                     )
                     Spacer(modifier = Modifier.height(28.dp))
                     SecondaryButton(
+                        text = stringResource(R.string.profile_logout),
                         textColor = SystemRed,
                         borderColor = SystemRed,
-                        text = stringResource(R.string.profile_logout),
                         onClick = onLogout
                     )
                     Spacer(modifier = Modifier.height(48.dp))

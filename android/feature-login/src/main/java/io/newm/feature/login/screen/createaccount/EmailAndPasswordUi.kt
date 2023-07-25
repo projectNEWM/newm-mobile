@@ -1,4 +1,4 @@
-package io.newm.feature.login.screen.createaccount.signupform
+package io.newm.feature.login.screen.createaccount
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -13,16 +13,19 @@ import io.newm.feature.login.screen.password.Password
 import io.newm.core.resources.R
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.feature.login.screen.PreLoginArtistBackgroundContentTemplate
-import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SignupForm
+import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
 
 @Composable
-fun SignUpFormUi(
-    state: SignupForm,
+fun EmailAndPasswordUi(
+    modifier: Modifier,
+    state: EmailAndPasswordUiState,
 ) {
     val onEvent = state.eventSink
     val focusRequester = remember { FocusRequester() }
 
-    PreLoginArtistBackgroundContentTemplate {
+    PreLoginArtistBackgroundContentTemplate(
+        modifier = modifier,
+    ) {
         Email(
             emailState = state.emailState,
             onImeAction = { focusRequester.requestFocus() }

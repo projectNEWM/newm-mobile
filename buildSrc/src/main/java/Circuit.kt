@@ -9,4 +9,6 @@ object Circuit {
     const val runtimeUi = "com.slack.circuit:circuit-runtime-ui:${Versions.circuit}"
     // This is be used to remember values that survive configuration changes using rememberRetained{}
     const val retained = "com.slack.circuit:circuit-retained:${Versions.circuit}"
+    // This is used to test circuit presenters
+    const val test = "com.slack.circuit:circuit-test:${Versions.circuit}"
 }

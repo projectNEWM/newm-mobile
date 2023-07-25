@@ -19,13 +19,13 @@ import com.slack.circuit.retained.continuityRetainedStateRegistry
 import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.*
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
-import io.newm.feature.login.screen.createaccount.CreateAccountPresenter
+import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
-import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
-import io.newm.feature.login.screen.createaccount.EnterVerificationCodeScreen
-import io.newm.feature.login.screen.createaccount.WhatShouldWeCallYouScreen
+import io.newm.feature.login.screen.createaccount.CreateAccountUiState
 import io.newm.screens.Screen
-import org.koin.compose.koinInject
+import io.newm.utils.ui
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class LoginActivity : ComponentActivity() {
 
@@ -33,14 +33,16 @@ class LoginActivity : ComponentActivity() {
     private val circuitConfig: CircuitConfig = CircuitConfig.Builder()
         .addPresenterFactory { screen, navigator, _ ->
             when (screen) {
-                is CreateAccountScreen -> CreateAccountPresenter()
-
+                is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
                 else -> null
             }
         }
         .addUiFactory { screen, _ ->
             when (screen) {
-                is CreateAccountScreen -> CreateAccountUi()
+                is CreateAccountScreen -> ui<CreateAccountUiState> { state, modifier ->
+                    CreateAccountUi(state, modifier)
+                }
+
                 else -> null
             }
         }.build()
@@ -77,7 +79,6 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun WelcomeToNewm(
     onStartHomeActivity: () -> Unit,
-    signupViewModel: CreateAccountViewModel = koinInject(),
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = Screen.LoginLandingScreen.route) {
@@ -98,18 +99,6 @@ fun WelcomeToNewm(
         }
         composable(Screen.Signup.route) {
             CircuitContent(screen = CreateAccountScreen)
-        }
-        composable(Screen.WhatShouldWeCallYou.route) {
-            WhatShouldWeCallYouScreen(
-                viewModel = signupViewModel,
-                done = { navController.navigate(Screen.VerificationCode.route) }
-            )
-        }
-        composable(Screen.VerificationCode.route) {
-            EnterVerificationCodeScreen(
-                viewModel = signupViewModel,
-                onVerificationComplete = onStartHomeActivity
-            )
         }
     }
 }

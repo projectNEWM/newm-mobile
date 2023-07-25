@@ -8,28 +8,19 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import androidx.compose.ui.unit.dp
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabel
 
 @Composable
-fun WhatShouldWeCallYouScreen(
-    viewModel: CreateAccountViewModel,
-    done: () -> Unit,
+internal fun WhatShouldWeCallYouUi(
+    modifier: Modifier,
+    state: CreateAccountUiState.SetNameUiState,
 ) {
-    WhatShouldWeCallYouScreenContent(
-        setNickName = viewModel::setNickName,
-        done = done,
-    )
-}
+    val onEvent = state.eventSink
 
-@Composable
-internal fun WhatShouldWeCallYouScreenContent(
-    done: () -> Unit,
-    setNickName: (String) -> Unit,
-) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(MaterialTheme.colors.background),
@@ -47,23 +38,14 @@ internal fun WhatShouldWeCallYouScreenContent(
             )
             Spacer(modifier = Modifier.height(32.dp))
 
-            var text by remember { mutableStateOf("") }
-
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = text,
-                onValueChange = {
-                    text = it
-                    setNickName(it)
-                },
-                label = {
-                    Text("")
-                }
+            TextFieldWithLabel(
+                value = state.name.text,
+                onValueChange = state.name::text::set,
             )
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(text = "Next") {
-                if (text.isNotEmpty()) {
-                    done.invoke()
+                if (state.name.text.isNotEmpty()) {
+                    onEvent(SetNameUiEvent.Next)
                 }
             }
         }

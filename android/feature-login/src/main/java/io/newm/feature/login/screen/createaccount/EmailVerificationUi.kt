@@ -9,37 +9,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.shortToast
+import io.newm.feature.login.R
 
 @Composable
-fun EnterVerificationCodeScreen(
-    viewModel: CreateAccountViewModel,
-    onVerificationComplete: () -> Unit,
+internal fun EmailVerificationUi(
+    modifier: Modifier = Modifier,
+    state: CreateAccountUiState.EmailVerificationUiState,
 ) {
-    val state by viewModel.state.collectAsState()
-    
-    EnterVerificationScreenContent(
-        state = state,
-        onVerificationComplete = onVerificationComplete,
-        setEmailVerificationCode = viewModel::setEmailVerificationCode,
-        verifyAccount = viewModel::verifyAccount,
-    )
-}
+    val onEvent = state.eventSink
 
-@Composable
-internal fun EnterVerificationScreenContent(
-    state: CreateAccountViewModel.SignupUserState,
-    onVerificationComplete: () -> Unit,
-    setEmailVerificationCode: (String) -> Unit,
-    verifyAccount: () -> Unit,
-) {
     val context = LocalContext.current
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(MaterialTheme.colors.background),
@@ -69,31 +57,22 @@ internal fun EnterVerificationScreenContent(
                 style = MaterialTheme.typography.caption
             )
             Spacer(modifier = Modifier.height(16.dp))
-            var text by remember { mutableStateOf("") }
 
-            LaunchedEffect(key1 = state.isUserRegistered, key2 = state.errorMessage) {
-                if (state.isUserRegistered) {
-                    onVerificationComplete()
-                }
+            LaunchedEffect(state.errorMessage) {
                 if (!state.errorMessage.isNullOrBlank()) {
-                    context.shortToast(state.errorMessage.orEmpty())
+                    context.shortToast(state.errorMessage)
                 }
             }
 
-            TextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = text,
-                onValueChange = {
-                    text = it
-                    setEmailVerificationCode(it)
-                },
-                label = {
-                    Text("Enter Verification Code:")
-                }
+            TextFieldWithLabel(
+                labelResId = R.string.loginEnter_verification_code,
+                value = state.verificationCode.text,
+                onValueChange = state.verificationCode::text::set,
             )
+
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(text = "Continue") {
-                verifyAccount()
+                onEvent(EmailVerificationUiEvent.Next)
             }
         }
     }

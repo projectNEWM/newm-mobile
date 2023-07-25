@@ -41,7 +41,7 @@ val formTextFieldStyle = TextStyle(
 
 @Composable
 fun TextFieldWithLabel(
-    labelResId: Int,
+    labelResId: Int? = null,
     value: String? = null,
     onValueChange: (String) -> Unit,
     isPassword: Boolean = false,
@@ -50,10 +50,12 @@ fun TextFieldWithLabel(
 ) {
     var updatedValue by remember { mutableStateOf(value.orEmpty()) }
     Spacer(modifier = Modifier.height(20.dp))
-    Text(
-        text = stringResource(id = labelResId),
-        style = formLabelStyle
-    )
+    labelResId?.let {
+        Text(
+            text = stringResource(id = labelResId),
+            style = formLabelStyle
+        )
+    }
     Spacer(modifier = Modifier.height(4.dp))
     OutlinedTextField(
         value = updatedValue,

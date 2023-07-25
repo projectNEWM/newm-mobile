@@ -11,9 +11,9 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
 
 @Composable
-fun PreLoginArtistBackgroundContentTemplate(content: @Composable () -> Unit) {
+fun PreLoginArtistBackgroundContentTemplate(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
