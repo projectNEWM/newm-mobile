@@ -25,6 +25,8 @@ val OceanGreen = Color(0xFF41BE91)
 val BrightOrange = Color(0xFFFF6E32)
 val YellowJacket = Color(0xFFFFC33C)
 val SystemRed = Color(0xFFEB5545)
+val SteelPink = Color(0xFFD841F0)
+val CerisePink = Color(0xFFF53C74)
 
 
 

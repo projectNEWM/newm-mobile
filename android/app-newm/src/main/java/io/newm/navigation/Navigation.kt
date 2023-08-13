@@ -73,7 +73,9 @@ private fun NavGraphBuilder.addLibraryTree() {
         startDestination = Screen.LibraryLanding.route
     ) {
         composable(Screen.LibraryLanding.route) {
-            LibraryScreen()
+            LibraryScreen(
+                onSongView = {} //TODO: Implement on song view
+            )
         }
     }
 }

@@ -1,5 +1,6 @@
 package io.newm
 
+//import com.airbnb.android.showkase.models.Showkase
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
@@ -12,7 +13,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -29,11 +29,11 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-//import com.airbnb.android.showkase.models.Showkase
-import io.newm.navigation.Navigation
-import io.newm.screens.Screen
 import io.newm.core.resources.R
 import io.newm.core.theme.*
+import io.newm.core.ui.utils.iconGradient
+import io.newm.navigation.Navigation
+import io.newm.screens.Screen
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
@@ -227,12 +227,3 @@ val routesWithoutBottomNavBar: List<String> by lazy {
         Screen.NowPlayingScreen.route
     )
 }
-
-private fun iconGradient(
-    startColor: Color,
-    endColor: Color
-) = Brush.linearGradient(
-    listOf(startColor, endColor),
-    start = Offset(0f, Float.POSITIVE_INFINITY),    // bottom-left
-    end = Offset(Float.POSITIVE_INFINITY, 0f)       // top-right
-)
