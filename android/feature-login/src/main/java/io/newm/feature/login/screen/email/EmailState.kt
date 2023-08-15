@@ -1,5 +1,6 @@
 package io.newm.feature.login.screen.email
 
+import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.shared.login.util.LoginFieldValidator
 
@@ -12,5 +13,5 @@ private fun emailValidationError(email: String): String {
 }
 
 private fun isEmailValid(email: String): Boolean {
-    return email.isNullOrEmpty()
+    return EMAIL_ADDRESS.matcher(email).matches()
 }

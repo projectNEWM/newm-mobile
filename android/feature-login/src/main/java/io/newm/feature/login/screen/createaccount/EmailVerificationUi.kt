@@ -56,7 +56,7 @@ internal fun EmailVerificationUi(
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.caption
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(36.dp))
 
             LaunchedEffect(state.errorMessage) {
                 if (!state.errorMessage.isNullOrBlank()) {
