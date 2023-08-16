@@ -40,4 +40,5 @@ dependencies {
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
     implementation(Google.material)
+    implementation(Google.materialIconsExtended)
 }

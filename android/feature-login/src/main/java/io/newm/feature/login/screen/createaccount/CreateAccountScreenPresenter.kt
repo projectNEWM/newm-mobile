@@ -12,6 +12,7 @@ import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVerificationUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SetNameUiState
+import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.login.usecases.SignupUseCase
@@ -24,13 +25,11 @@ class CreateAccountScreenPresenter constructor(
     @Composable
     override fun present(): CreateAccountUiState {
         var step by rememberRetained { mutableStateOf(Step.EmailAndPassword) }
-        val userEmail = rememberRetained { TextFieldState() }
+        val userEmail = rememberRetained { EmailState() }
         val password = rememberRetained { PasswordState() }
         val passwordConfirmation = rememberRetained { ConfirmPasswordState(password) }
         val name = rememberRetained { TextFieldState() }
         val verificationCode = rememberRetained { TextFieldState() }
-
-        // Do we navigate back? Which steps can navigate back?
 
         val coroutineScope = rememberCoroutineScope()
 

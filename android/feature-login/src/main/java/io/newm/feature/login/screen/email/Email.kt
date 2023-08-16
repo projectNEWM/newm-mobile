@@ -3,41 +3,23 @@ package io.newm.feature.login.screen.email
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import io.newm.feature.login.screen.TextFieldError
-import io.newm.feature.login.screen.TextFieldState
 import io.newm.core.resources.R
-import io.newm.core.theme.NewmColors
+import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.feature.login.screen.TextFieldState
 
 @Composable
 fun Email(
-    emailState: TextFieldState = remember { EmailState() },
+    modifier: Modifier = Modifier,
+    emailState: TextFieldState,
     imeAction: ImeAction = ImeAction.Next,
     onImeAction: () -> Unit = {}
 ) {
-    // TODO use TextFieldWithLabel
-    OutlinedTextField(
-        value = emailState.text,
-        onValueChange = {
-            emailState.text = it
-        },
-        label = {
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(
-                    text = stringResource(id = R.string.email),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onBackground
-                )
-            }
-        },
-        modifier = Modifier
+    TextFieldWithLabel(
+        modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
                 emailState.onFocusChange(focusState.isFocused)
@@ -45,7 +27,9 @@ fun Email(
                     emailState.enableShowErrors()
                 }
             },
-        textStyle = MaterialTheme.typography.body2,
+        onValueChange = { emailState.text = it },
+        value = emailState.text,
+        labelResId = R.string.email,
         isError = emailState.showErrors(),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
         keyboardActions = KeyboardActions(
@@ -53,10 +37,6 @@ fun Email(
                 onImeAction()
             }
         ),
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.error,
-        )
+        helperText = emailState.getError(),
     )
-
-    emailState.getError()?.let { error -> TextFieldError(textError = error) }
 }
