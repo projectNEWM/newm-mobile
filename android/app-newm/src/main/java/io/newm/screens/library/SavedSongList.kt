@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,25 +32,27 @@ fun SavedSongList(
     songModels: List<SongModel>,
     onSongView: (SongModel) -> Unit,
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .padding(top = 20.dp)
     ) {
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(bottom = 4.dp),
-                text = stringResource(id = R.string.title_saved_song_list),
-                fontFamily = inter,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp,
-                color = Gray100
-            )
-        }
+        Text(
+            modifier = Modifier
+                .padding(bottom = 4.dp),
+            text = stringResource(id = R.string.title_saved_song_list),
+            fontFamily = inter,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 12.sp,
+            color = Gray100
+        )
         if (songModels.isEmpty()) {
-            item { EmptyStateItem() }
+            EmptyStateItem()
         } else {
-            items(songModels) { SavedSongItem(it) { onSongView(it) } }
+            songModels.forEach { song ->
+                SavedSongItem(song) {
+                    onSongView(song)
+                }
+            }
         }
     }
 }
