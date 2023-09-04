@@ -27,6 +27,13 @@
 		760C2C7A28165FFC0030ACF4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7618FDD328164E12007573B4 /* Localizable.strings */; };
 		760C2C7B28165FFC0030ACF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7618FDD628164E12007573B4 /* Assets.xcassets */; };
 		760C2C7D281660F70030ACF4 /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C2C7C281660F70030ACF4 /* Tips.swift */; };
+		760E5FA12AA68F8000177715 /* ErrorReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760E5FA02AA68F8000177715 /* ErrorReporting.swift */; };
+		760E5FA92AA6909400177715 /* LoggingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760E5FA82AA6909400177715 /* LoggingModule.swift */; };
+		760E5FAD2AA690F300177715 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
+		760E5FAF2AA694CC00177715 /* SentryErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760E5FAE2AA694CC00177715 /* SentryErrorReporter.swift */; };
+		760E5FB02AA6950000177715 /* libLogging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 760E5FA62AA6909400177715 /* libLogging.a */; };
+		760E5FB42AA6952B00177715 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 760E5FB32AA6952B00177715 /* Sentry */; };
+		760E5FB62AA6955F00177715 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760E5FB52AA6955F00177715 /* Resolver */; };
 		7614169C28166232006A9665 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7618FDDA28164E23007573B4 /* Localizable.strings */; };
 		7614169D28166232006A9665 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FDDB28164E23007573B4 /* Strings.swift */; };
 		7614169F2816627E006A9665 /* TipsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7614169E2816627E006A9665 /* TipsModule.swift */; };
@@ -62,6 +69,8 @@
 		7618FD6528164D99007573B4 /* Artist.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD5E28164D99007573B4 /* Artist.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7618FD7728164DA2007573B4 /* Login.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD7128164DA1007573B4 /* Login.framework */; };
 		7618FD7828164DA2007573B4 /* Login.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD7128164DA1007573B4 /* Login.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7618FD8728164DAB007573B4 /* PlaylistList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD8128164DAB007573B4 /* PlaylistList.framework */; };
+		7618FD8828164DAB007573B4 /* PlaylistList.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD8128164DAB007573B4 /* PlaylistList.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7618FD9728164DBB007573B4 /* NowPlaying.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD9128164DBB007573B4 /* NowPlaying.framework */; };
 		7618FD9828164DBB007573B4 /* NowPlaying.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD9128164DBB007573B4 /* NowPlaying.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7618FDA728164DC6007573B4 /* Tips.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FDA128164DC6007573B4 /* Tips.framework */; };
@@ -82,10 +91,6 @@
 		7618FE0B28164E72007573B4 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		7618FE1A28164E7F007573B4 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		7618FE1F28164E83007573B4 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
-		761ADD3B2AE734AA001B56CF /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
-		761ADD422AE88A56001B56CF /* Notification+KMM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761ADD412AE88A56001B56CF /* Notification+KMM.swift */; };
-		761ADD442AEA0746001B56CF /* Error+KMMException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761ADD432AEA0746001B56CF /* Error+KMMException.swift */; };
-		761ADD472AEA0ECF001B56CF /* LandingViewModel+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761ADD452AEA0EAA001B56CF /* LandingViewModel+ErrorHandling.swift */; };
 		7625CE2F294088110033C669 /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625CE2E294088110033C669 /* ArtistCell.swift */; };
 		7625CE31294089990033C669 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		7625CE3529408A3B0033C669 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
@@ -220,6 +225,7 @@
 		76A24DE72A3FE76900559460 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A24DE62A3FE76900559460 /* APIError.swift */; };
 		76A24DE92A3FEDD300559460 /* DataModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A24DE82A3FEDD300559460 /* DataModule.swift */; };
 		76A24DED2A3FF07E00559460 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76A24DEC2A3FF07E00559460 /* Resolver */; };
+		76A24DEE2A3FF22300559460 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A24DEA2A3FEF7E00559460 /* Data.swift */; };
 		76A24DEF2A3FF26600559460 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; };
 		76A24DF02A3FF26600559460 /* ModuleLinker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A24DF52A4026A000559460 /* MockUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A24DF42A4026A000559460 /* MockUserManager.swift */; };
@@ -244,8 +250,12 @@
 		76B21D13293F4B17003692F7 /* HorizontalScrollingGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B21D12293F4B17003692F7 /* HorizontalScrollingGridView.swift */; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
+		76B52D4829F8688200EB6357 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D4229F8688200EB6357 /* Data.framework */; };
+		76B52D4929F8688200EB6357 /* Data.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D4229F8688200EB6357 /* Data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76B52D5629F86B7200EB6357 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D4229F8688200EB6357 /* Data.framework */; };
 		76B52D5E29F86C0400EB6357 /* LoginRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B52D5D29F86C0400EB6357 /* LoginRepo.swift */; };
+		76B52D6A29F86D4100EB6357 /* API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D6429F86D4000EB6357 /* API.framework */; };
+		76B52D6B29F86D4100EB6357 /* API.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D6429F86D4000EB6357 /* API.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76B52D7229F86F0800EB6357 /* API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D6429F86D4000EB6357 /* API.framework */; };
 		76B52D7929F8793600EB6357 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B52D4229F8688200EB6357 /* Data.framework */; };
 		76B52D8229FE4F0F00EB6357 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 76B52D8129FE4F0F00EB6357 /* FacebookLogin */; };
@@ -374,6 +384,13 @@
 			remoteGlobalIDString = 7618FD1628164CBD007573B4;
 			remoteInfo = Colors;
 		};
+		760E5FB12AA6950000177715 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 760E5FA52AA6909400177715;
+			remoteInfo = Logging;
+		};
 		761837C7295819CC0033250B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -422,6 +439,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7618FD7028164DA1007573B4;
 			remoteInfo = Login;
+		};
+		7618FD8528164DAB007573B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7618FD8028164DAB007573B4;
+			remoteInfo = PlaylistList;
 		};
 		7618FD9528164DBB007573B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -703,12 +727,26 @@
 			remoteGlobalIDString = 7555FF7A242A565900829871;
 			remoteInfo = iosApp;
 		};
+		76B52D4629F8688200EB6357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76B52D4129F8688200EB6357;
+			remoteInfo = Auth;
+		};
 		76B52D5829F86B7200EB6357 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 76B52D4129F8688200EB6357;
 			remoteInfo = Auth;
+		};
+		76B52D6829F86D4100EB6357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76B52D6329F86D4000EB6357;
+			remoteInfo = API;
 		};
 		76B52D7429F86F0800EB6357 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -794,6 +832,13 @@
 			remoteGlobalIDString = 7555FF7A242A565900829871;
 			remoteInfo = iosApp;
 		};
+		76CB88E828A275F800878D8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76CB88C328A273DB00878D8C;
+			remoteInfo = SharedExtensions;
+		};
 		76D01D4328164A8400305605 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -867,6 +912,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		760E5FA42AA6909400177715 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -874,6 +928,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				7618FD6528164D99007573B4 /* Artist.framework in Embed Frameworks */,
+				76B52D6B29F86D4100EB6357 /* API.framework in Embed Frameworks */,
 				7618FCD428164C5C007573B4 /* SharedUI.framework in Embed Frameworks */,
 				76C76139291F445B0054D2F3 /* AudioPlayer.framework in Embed Frameworks */,
 				7618FD9828164DBB007573B4 /* NowPlaying.framework in Embed Frameworks */,
@@ -885,6 +940,8 @@
 				7618FCF528164C86007573B4 /* TabBar.framework in Embed Frameworks */,
 				76D01DA528164B2100305605 /* ModuleLinker.framework in Embed Frameworks */,
 				76D01D4628164A8400305605 /* Home.framework in Embed Frameworks */,
+				7618FD8828164DAB007573B4 /* PlaylistList.framework in Embed Frameworks */,
+				76B52D4929F8688200EB6357 /* Data.framework in Embed Frameworks */,
 				76D01D8028164AE700305605 /* Main.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -933,6 +990,10 @@
 		760C2C7428165F450030ACF4 /* NowPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlaying.swift; sourceTree = "<group>"; };
 		760C2C7628165FB40030ACF4 /* NowPlayingModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingModule.swift; sourceTree = "<group>"; };
 		760C2C7C281660F70030ACF4 /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
+		760E5FA02AA68F8000177715 /* ErrorReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporting.swift; sourceTree = "<group>"; };
+		760E5FA62AA6909400177715 /* libLogging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLogging.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		760E5FA82AA6909400177715 /* LoggingModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingModule.swift; sourceTree = "<group>"; };
+		760E5FAE2AA694CC00177715 /* SentryErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryErrorReporter.swift; sourceTree = "<group>"; };
 		7614169E2816627E006A9665 /* TipsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsModule.swift; sourceTree = "<group>"; };
 		7615B32A2909A3A3008FC5A6 /* Color+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Generated.swift"; sourceTree = "<group>"; };
 		761837A129479F7E0033250B /* MarketplaceTitleSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceTitleSectionModel.swift; sourceTree = "<group>"; };
@@ -980,10 +1041,6 @@
 		7618FDDB28164E23007573B4 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		7618FDDD28164E32007573B4 /* WalletModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModule.swift; sourceTree = "<group>"; };
 		7618FDDE28164E32007573B4 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
-		761ADD3A2AE734AA001B56CF /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = ../shared/build/XCFrameworks/debug/shared.xcframework; sourceTree = "<group>"; };
-		761ADD412AE88A56001B56CF /* Notification+KMM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+KMM.swift"; sourceTree = "<group>"; };
-		761ADD432AEA0746001B56CF /* Error+KMMException.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+KMMException.swift"; sourceTree = "<group>"; };
-		761ADD452AEA0EAA001B56CF /* LandingViewModel+ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LandingViewModel+ErrorHandling.swift"; sourceTree = "<group>"; };
 		7625CE2E294088110033C669 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1512942B0740033C669 /* LibraryRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryRoutes.swift; sourceTree = "<group>"; };
@@ -1185,19 +1242,32 @@
 				76FB0E4B29F360DF00C23F18 /* FacebookLogin in Frameworks */,
 				7618FD9728164DBB007573B4 /* NowPlaying.framework in Frameworks */,
 				7618FD6428164D99007573B4 /* Artist.framework in Frameworks */,
+				760E5FB02AA6950000177715 /* libLogging.a in Frameworks */,
 				7618FDA728164DC6007573B4 /* Tips.framework in Frameworks */,
 				76D01D4528164A8400305605 /* Home.framework in Frameworks */,
 				76D01DA428164B2100305605 /* ModuleLinker.framework in Frameworks */,
 				76C76138291F445B0054D2F3 /* AudioPlayer.framework in Frameworks */,
+				76B52D6A29F86D4100EB6357 /* API.framework in Frameworks */,
 				7618FD7728164DA2007573B4 /* Login.framework in Frameworks */,
 				7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */,
 				7618FCF428164C86007573B4 /* TabBar.framework in Frameworks */,
 				76562530284BF6E7004B6E4B /* Library.framework in Frameworks */,
 				76D01D7F28164AE700305605 /* Main.framework in Frameworks */,
-				761ADD3B2AE734AA001B56CF /* shared.xcframework in Frameworks */,
 				7618FCD328164C5C007573B4 /* SharedUI.framework in Frameworks */,
 				7618FD1D28164CBD007573B4 /* Colors.framework in Frameworks */,
+				76B52D4829F8688200EB6357 /* Data.framework in Frameworks */,
 				76F823C528BEC2B3003A524C /* Resolver in Frameworks */,
+				7618FD8728164DAB007573B4 /* PlaylistList.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		760E5FA32AA6909400177715 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				760E5FB62AA6955F00177715 /* Resolver in Frameworks */,
+				760E5FAD2AA690F300177715 /* ModuleLinker.framework in Frameworks */,
+				760E5FB42AA6952B00177715 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1458,7 +1528,6 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
-				761ADD3A2AE734AA001B56CF /* shared.xcframework */,
 				76EAFC5C2A0AE33E00ACD862 /* Secrets.xcconfig */,
 				76B990BB2835203300F818E4 /* Fonts-Info.plist */,
 				7627329028295E8C009D3C8A /* Documentation */,
@@ -1498,6 +1567,7 @@
 				76B52D6429F86D4000EB6357 /* API.framework */,
 				76C9633F2A00235600E6B612 /* libModels.a */,
 				76AA88F82A38D3F900F25113 /* APITests.xctest */,
+				760E5FA62AA6909400177715 /* libLogging.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1533,13 +1603,20 @@
 		760C2C7128165D920030ACF4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				761ADD432AEA0746001B56CF /* Error+KMMException.swift */,
-				761ADD412AE88A56001B56CF /* Notification+KMM.swift */,
+				7618FCDC28164C6B007573B4 /* UIImage+Extensions.swift */,
 				76DB3B972A13252F001AF2AD /* String+NilIfEmpty.swift */,
 				760C2C7228165DE80030ACF4 /* SwiftUIView+Erased.swift */,
-				7618FCDC28164C6B007573B4 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		760E5FA72AA6909400177715 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				760E5FA82AA6909400177715 /* LoggingModule.swift */,
+				760E5FAE2AA694CC00177715 /* SentryErrorReporter.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 		761837A3294A5F8B0033250B /* UI */ = {
@@ -1864,12 +1941,12 @@
 				765A35E829E9052E00B939BD /* CodeConfirmationView.swift */,
 				765A35E429E9052E00B939BD /* CreateAccountView.swift */,
 				765A35EB29E9052E00B939BD /* DoneView.swift */,
-				76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */,
-				76FB0E6429F6695000C23F18 /* FacebookLoginButton.swift */,
-				76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */,
 				765A35DE29E9052E00B939BD /* LandingView.swift */,
 				765A35F529E9052E00B939BD /* LoginView.swift */,
 				765A35F129E9052E00B939BD /* UsernameView.swift */,
+				76FB0E6429F6695000C23F18 /* FacebookLoginButton.swift */,
+				76EAFC4F2A08ED0900ACD862 /* ForgotPasswordView.swift */,
+				76EAFC512A08F09600ACD862 /* EnterNewPasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2260,6 +2337,7 @@
 			isa = PBXGroup;
 			children = (
 				76CE046629EE3F30002AF94B /* Binding.swift */,
+				760E5FA02AA68F8000177715 /* ErrorReporting.swift */,
 				766B1EC62A15C74B0083DE3E /* KeyboardObserver.swift */,
 			);
 			path = Utilities;
@@ -2268,7 +2346,6 @@
 		76CE046A29EE6596002AF94B /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				761ADD452AEA0EAA001B56CF /* LandingViewModel+ErrorHandling.swift */,
 				765A35DF29E9052E00B939BD /* LandingViewModel.swift */,
 			);
 			path = ViewModels;
@@ -2285,6 +2362,7 @@
 		76CF98B927DEFD7100AC185E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				760E5FA72AA6909400177715 /* Logging */,
 				76B52D4329F8688200EB6357 /* Data */,
 				7627EA6027FA7F3800C0F7DA /* DI */,
 				7627EA3827FA685E00C0F7DA /* Helpers */,
@@ -2540,6 +2618,7 @@
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
 				7628EBD227E550140077ECFD /* Embed Frameworks */,
+				760E5FB82AA69E4A00177715 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2553,10 +2632,15 @@
 				7618FD1C28164CBD007573B4 /* PBXTargetDependency */,
 				7618FD3628164CE2007573B4 /* PBXTargetDependency */,
 				7618FD7628164DA2007573B4 /* PBXTargetDependency */,
+				7618FD8628164DAB007573B4 /* PBXTargetDependency */,
 				7618FD9628164DBB007573B4 /* PBXTargetDependency */,
 				7618FDA628164DC6007573B4 /* PBXTargetDependency */,
 				76562519284BEF30004B6E4B /* PBXTargetDependency */,
+				76CB88E928A275F800878D8C /* PBXTargetDependency */,
 				76C76137291F445B0054D2F3 /* PBXTargetDependency */,
+				76B52D4729F8688200EB6357 /* PBXTargetDependency */,
+				76B52D6929F86D4100EB6357 /* PBXTargetDependency */,
+				760E5FB22AA6950000177715 /* PBXTargetDependency */,
 			);
 			name = iosApp;
 			packageProductDependencies = (
@@ -2566,6 +2650,27 @@
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		760E5FA52AA6909400177715 /* Logging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 760E5FAA2AA6909400177715 /* Build configuration list for PBXNativeTarget "Logging" */;
+			buildPhases = (
+				760E5FA22AA6909400177715 /* Sources */,
+				760E5FA32AA6909400177715 /* Frameworks */,
+				760E5FA42AA6909400177715 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Logging;
+			packageProductDependencies = (
+				760E5FB32AA6952B00177715 /* Sentry */,
+				760E5FB52AA6955F00177715 /* Resolver */,
+			);
+			productName = Logging;
+			productReference = 760E5FA62AA6909400177715 /* libLogging.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 		7618FCCC28164C5C007573B4 /* SharedUI */ = {
 			isa = PBXNativeTarget;
@@ -3083,7 +3188,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76D01DA628164B2100305605 /* Build configuration list for PBXNativeTarget "ModuleLinker" */;
 			buildPhases = (
-				761ADD102AE389F0001B56CF /* ShellScript */,
 				76D01D9A28164B2100305605 /* Sources */,
 				76D01D9928164B2100305605 /* Headers */,
 				76D01D9B28164B2100305605 /* Frameworks */,
@@ -3108,13 +3212,16 @@
 		7555FF73242A565900829871 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = NEWM;
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {
 						CreatedOnToolsVersion = 11.3.1;
 						LastSwiftMigration = 1320;
+					};
+					760E5FA52AA6909400177715 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 					7618FCCC28164C5C007573B4 = {
 						CreatedOnToolsVersion = 13.3.1;
@@ -3209,6 +3316,7 @@
 				76FB0E4929F360DF00C23F18 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				76B52D4F29F8694400EB6357 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				76C9631929FFC13A00E6B612 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				76FE35822AA68C09001BB5E3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -3223,6 +3331,7 @@
 				7618FD3028164CE2007573B4 /* Fonts */,
 				76D01D3E28164A8400305605 /* Home */,
 				76562513284BEF30004B6E4B /* Library */,
+				760E5FA52AA6909400177715 /* Logging */,
 				7618FD7028164DA1007573B4 /* Login */,
 				76D01D7828164AE700305605 /* Main */,
 				765D15E8293EF1160021FEC7 /* Marketplace */,
@@ -3441,6 +3550,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		760E5FB82AA69E4A00177715 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=project-newm\nexport SENTRY_PROJECT=newm-ios\nERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" --force-foreground 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"error: sentry-cli - $ERROR\"\nfi\nelse\necho \"error: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
 		7615B3242908AA0F008FC5A6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -3477,23 +3604,6 @@
 			shellPath = /bin/sh;
 			shellScript = "#swiftgen\ncd Modules/Resources/Colors\nswiftgen\n";
 		};
-		761ADD102AE389F0001B56CF /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#cd \"$SRCROOT/..\"\n#./gradlew :shared:assembleXCFramework\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3503,6 +3613,15 @@
 			files = (
 				76D09EFC27FAC4B800E2BAD3 /* iOSAppModule.swift in Sources */,
 				7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		760E5FA22AA6909400177715 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				760E5FAF2AA694CC00177715 /* SentryErrorReporter.swift in Sources */,
+				760E5FA92AA6909400177715 /* LoggingModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3614,7 +3733,6 @@
 				76FB0E6529F6695000C23F18 /* FacebookLoginButton.swift in Sources */,
 				765A360529E9052E00B939BD /* LoginMocks.swift in Sources */,
 				765A361729E9052E00B939BD /* LoginView.swift in Sources */,
-				761ADD472AEA0ECF001B56CF /* LandingViewModel+ErrorHandling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3820,11 +3938,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				761ADD422AE88A56001B56CF /* Notification+KMM.swift in Sources */,
 				76562535284BF758004B6E4B /* Library.swift in Sources */,
 				76764AF3281D015B0095BEF9 /* Playlist.swift in Sources */,
-				761ADD442AEA0746001B56CF /* Error+KMMException.swift in Sources */,
 				76D9F1F92A1714E300C93E1C /* KeyboardObserver.swift in Sources */,
+				760E5FA12AA68F8000177715 /* ErrorReporting.swift in Sources */,
 				760C2C7D281660F70030ACF4 /* Tips.swift in Sources */,
 				76DC3A4D281A0F1D004D5021 /* ModuleLinkerModule.swift in Sources */,
 				7618FCC628164BB5007573B4 /* Wallet.swift in Sources */,
@@ -3835,6 +3952,7 @@
 				7618FCC228164BB5007573B4 /* ModuleProtocol.swift in Sources */,
 				76CE046729EE3F30002AF94B /* Binding.swift in Sources */,
 				76C76147291F4D8D0054D2F3 /* AudioPlayer.swift in Sources */,
+				76A24DEE2A3FF22300559460 /* Data.swift in Sources */,
 				760C2C7528165F450030ACF4 /* NowPlaying.swift in Sources */,
 				76DC3A1928167276004D5021 /* UIImage+Extensions.swift in Sources */,
 				761837AB294A706F0033250B /* Artist.swift in Sources */,
@@ -3880,6 +3998,11 @@
 			target = 7618FD1628164CBD007573B4 /* Colors */;
 			targetProxy = 760300442837FD0800BBF78C /* PBXContainerItemProxy */;
 		};
+		760E5FB22AA6950000177715 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 760E5FA52AA6909400177715 /* Logging */;
+			targetProxy = 760E5FB12AA6950000177715 /* PBXContainerItemProxy */;
+		};
 		761837C8295819CC0033250B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 76C76131291F445B0054D2F3 /* AudioPlayer */;
@@ -3914,6 +4037,11 @@
 			isa = PBXTargetDependency;
 			target = 7618FD7028164DA1007573B4 /* Login */;
 			targetProxy = 7618FD7528164DA2007573B4 /* PBXContainerItemProxy */;
+		};
+		7618FD8628164DAB007573B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7618FD8028164DAB007573B4 /* PlaylistList */;
+			targetProxy = 7618FD8528164DAB007573B4 /* PBXContainerItemProxy */;
 		};
 		7618FD9628164DBB007573B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4142,10 +4270,20 @@
 			target = 7555FF7A242A565900829871 /* iosApp */;
 			targetProxy = 76ADDCF328981B03008AA39A /* PBXContainerItemProxy */;
 		};
+		76B52D4729F8688200EB6357 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76B52D4129F8688200EB6357 /* Data */;
+			targetProxy = 76B52D4629F8688200EB6357 /* PBXContainerItemProxy */;
+		};
 		76B52D5929F86B7200EB6357 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 76B52D4129F8688200EB6357 /* Data */;
 			targetProxy = 76B52D5829F86B7200EB6357 /* PBXContainerItemProxy */;
+		};
+		76B52D6929F86D4100EB6357 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76B52D6329F86D4000EB6357 /* API */;
+			targetProxy = 76B52D6829F86D4100EB6357 /* PBXContainerItemProxy */;
 		};
 		76B52D7529F86F0800EB6357 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4208,6 +4346,11 @@
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
 			targetProxy = 76CB88D128A273DB00878D8C /* PBXContainerItemProxy */;
+		};
+		76CB88E928A275F800878D8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			targetProxy = 76CB88E828A275F800878D8C /* PBXContainerItemProxy */;
 		};
 		76D01D4428164A8400305605 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4341,6 +4484,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -4406,6 +4550,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -4432,7 +4577,6 @@
 					"\"$(SRCROOT)/Modules\"/**",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = NEWM;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4440,7 +4584,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -4467,7 +4610,6 @@
 					"\"$(SRCROOT)/Modules\"/**",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = NEWM;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4475,8 +4617,45 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		760E5FAB2AA6909400177715 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S2X9VNR2UC;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		760E5FAC2AA6909400177715 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S2X9VNR2UC;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4499,7 +4678,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4509,7 +4687,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.SharedUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4534,7 +4711,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4544,7 +4720,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.SharedUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4570,7 +4745,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4580,7 +4754,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.TabBar;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4605,7 +4778,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4615,7 +4787,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.TabBar;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4641,7 +4812,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4651,7 +4821,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Colors;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4676,7 +4845,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4686,7 +4854,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Colors;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4713,7 +4880,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4723,7 +4889,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Fonts;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4749,7 +4914,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4759,7 +4923,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Fonts;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4785,7 +4948,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4795,7 +4957,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Artist;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4820,7 +4981,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4830,7 +4990,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Artist;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4856,7 +5015,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4866,7 +5024,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Login;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4891,7 +5048,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4901,7 +5057,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Login;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4927,7 +5082,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4937,7 +5091,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.PlaylistList;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4962,7 +5115,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4972,7 +5124,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.PlaylistList;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4998,7 +5149,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5008,7 +5158,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.NowPlaying;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5033,7 +5182,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5043,7 +5191,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.NowPlaying;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5069,7 +5216,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5079,7 +5225,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Tips;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5104,7 +5249,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5114,7 +5258,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Tips;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5140,7 +5283,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5150,7 +5292,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Wallet;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5175,7 +5316,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5185,7 +5325,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Wallet;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5212,7 +5351,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5223,7 +5361,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -5251,7 +5388,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5262,7 +5398,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -5288,7 +5423,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5299,7 +5433,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -5325,7 +5458,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5336,7 +5468,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -5355,7 +5486,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.APITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5373,7 +5503,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.APITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5394,7 +5523,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.HomeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5414,7 +5542,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.HomeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5441,7 +5568,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5454,7 +5580,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -5481,7 +5606,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5494,7 +5618,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -5521,7 +5644,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5558,7 +5680,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5590,7 +5711,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.iosAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5613,7 +5733,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.iosAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5640,7 +5759,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5672,7 +5790,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 NEWM. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5699,7 +5816,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = TM6M46M9D2;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -5717,7 +5833,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TM6M46M9D2;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -5737,7 +5852,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.SharedExtensionsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5758,7 +5872,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.SharedExtensionsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5786,7 +5899,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5797,7 +5909,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -5823,7 +5934,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5834,7 +5944,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -5861,7 +5970,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5871,7 +5979,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Main;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5896,7 +6003,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5906,7 +6012,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.Main;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5933,7 +6038,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5943,7 +6047,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.ModuleLinker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -5970,7 +6073,6 @@
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5980,7 +6082,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.ModuleLinker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6006,6 +6107,15 @@
 			buildConfigurations = (
 				7555FFA6242A565B00829871 /* Debug */,
 				7555FFA7242A565B00829871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		760E5FAA2AA6909400177715 /* Build configuration list for PBXNativeTarget "Logging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				760E5FAB2AA6909400177715 /* Debug */,
+				760E5FAC2AA6909400177715 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -6252,10 +6362,28 @@
 				minimumVersion = 16.0.0;
 			};
 		};
+		76FE35822AA68C09001BB5E3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		760C2C4D281653C00030ACF4 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+		760E5FB32AA6952B00177715 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76FE35822AA68C09001BB5E3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		760E5FB52AA6955F00177715 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
