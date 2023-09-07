@@ -35,6 +35,7 @@ fun SavedSongList(
     Column(
         modifier = Modifier
             .padding(top = 20.dp)
+            .padding(horizontal = 20.dp)
     ) {
         Text(
             modifier = Modifier

@@ -26,11 +26,10 @@ data class AlbumModel(
 )
 
 @Composable
-fun MusicCarousel(
+fun SavedAlbumCarousel(
     title: String,
     albumModels: List<AlbumModel>,
     onViewDetails: (AlbumModel) -> Unit,
-    onViewAll: (() -> Unit)? = null
 ) {
     Column(
         modifier = Modifier
@@ -45,24 +44,17 @@ fun MusicCarousel(
                 fontSize = 12.sp,
                 color = Gray100
             )
-            if (onViewAll != null) {
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = stringResource(id = R.string.view_all),
-                    modifier = Modifier.clickable { onViewAll() },
-                    fontFamily = inter,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 12.sp,
-                    color = Purple
-                )
-            }
         }
-        LazyRow(
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .padding(horizontal = 14.dp)
-        ) {
-            items(albumModels) { AlbumCarouselItem(it) { onViewDetails(it) } }
+        if (albumModels.isEmpty()) {
+            EmptyStateItem(modifier = Modifier.padding(horizontal = 20.dp))
+        } else {
+            LazyRow(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .padding(horizontal = 14.dp)
+            ) {
+                items(albumModels) { AlbumCarouselItem(it) { onViewDetails(it) } }
+            }
         }
     }
 }

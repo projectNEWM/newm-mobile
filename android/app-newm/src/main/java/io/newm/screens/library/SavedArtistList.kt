@@ -2,9 +2,6 @@ package io.newm.screens.library
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,30 +16,28 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray100
-import io.newm.core.theme.Purple
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 
-
-data class ArtistModel(
+data class LibraryArtistModel(
     val name: String,
     val songCount: Int,
     val imageUrl: String,
 )
 
 @Composable
-fun ArtistList(
+fun SavedArtistList(
     title: String,
-    artistModels: List<ArtistModel>,
-    onViewDetails: (ArtistModel) -> Unit,
-    onViewMore: () -> Unit
+    artistModels: List<LibraryArtistModel>,
+    onViewDetails: (LibraryArtistModel) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .padding(top = 32.dp)
+            .padding(horizontal = 20.dp)
             .fillMaxWidth()
     ) {
-        Row(modifier = Modifier.padding(horizontal = 20.dp)) {
+        Row {
             Text(
                 text = title,
                 fontFamily = inter,
@@ -51,38 +46,31 @@ fun ArtistList(
                 color = Gray100
             )
             Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = stringResource(id = R.string.view_more),
-                modifier = Modifier.clickable { onViewMore() },
-                fontFamily = inter,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 12.sp,
-                color = Purple
-            )
         }
-        LazyHorizontalGrid(
+        Column(
             modifier = Modifier
-                .padding(top = 8.dp)
-                .padding(horizontal = 14.dp)
-                .height(264.dp),
-            rows = GridCells.Fixed(4),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(top = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(artistModels) { ArtistItem(it) { onViewDetails(it) } }
+            if (artistModels.isEmpty()) {
+                EmptyStateItem()
+            } else {
+                artistModels.forEach { artist ->
+                    ArtistItem(artist) {
+                        onViewDetails(artist)
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
 private fun ArtistItem(
-    artist: ArtistModel,
+    artist: LibraryArtistModel,
     onClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier
-            .height(60.dp)
-            .width(212.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(

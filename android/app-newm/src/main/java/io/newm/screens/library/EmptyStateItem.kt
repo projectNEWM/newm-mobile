@@ -19,7 +19,7 @@ import io.newm.core.theme.Gray600
 import io.newm.core.theme.inter
 
 @Composable
-fun EmptyStateItem() {
+fun EmptyStateItem(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = stringResource(id = R.string.library_empty_state_label),
         onValueChange = {},
@@ -35,7 +35,7 @@ fun EmptyStateItem() {
             backgroundColor = Gray600,
             textColor = Gray100
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = 4.dp),
         shape = RoundedCornerShape(8.dp),
