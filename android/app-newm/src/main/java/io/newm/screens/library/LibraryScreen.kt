@@ -27,16 +27,17 @@ internal const val TAG_LIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 fun LibraryScreen(
     onSongView: (SongModel) -> Unit,
     onArtistViewDetails: (LibraryArtistModel) -> Unit,
+    onAlbumViewDetails: (AlbumModel) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp)
             .verticalScroll(state = rememberScrollState())
             .testTag(TAG_LIBRARY_SCREEN)
     ) {
         Text(
             text = stringResource(id = R.string.title_library),
+            modifier = Modifier.padding(horizontal = 20.dp),
             style = TextStyle(
                 fontFamily = raleway,
                 fontWeight = FontWeight.Bold,
@@ -45,10 +46,15 @@ fun LibraryScreen(
             )
         )
         SavedSongList(savedSongModels, onSongView)
-        LibraryArtistList(
+        SavedArtistList(
             title = stringResource(id = R.string.library_artists),
             artistModels = libraryArtistListModels,
             onViewDetails = onArtistViewDetails
+        )
+        SavedAlbumCarousel(
+            title = stringResource(id = R.string.library_albums),
+            albumModels = savedAlbumsModels,
+            onViewDetails = onAlbumViewDetails
         )
     }
 }

@@ -90,16 +90,16 @@ val savedAlbumsModels = listOf(
     AlbumModel(
         title = "The Forest Fall",
         genre = "R&B",
-        imageUrl = "https://i.pinimg.com/originals/ae/78/41/ae7841d2c1f2fd60a863d97c5ce2446b.jpg",
+        imageUrl = "https://preview.redd.it/6e5lnfxovhs41.png?width=600&format=png&auto=webp&s=a59f248a0eeb1d636b03952eb4469b578ebdab7d",
     ),
     AlbumModel(
         title = "The Rejecteds",
         genre = "Pop",
-        imageUrl = "https://www.billboard.com/wp-content/uploads/2022/03/20.-Joy-Division-%E2%80%98Unknown-Pleasures-1979-album-art-billboard-1240.jpg?w=600",
+        imageUrl = "https://preview.redd.it/z4otbf8vwhs41.png?width=600&format=png&auto=webp&s=d4d3e7305ee20b820f80b785f685e4f87bf03807",
     ),
     AlbumModel(
         title = "Lucia Melin",
         genre = "Pop",
-        imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKYEc3YP0R2wv0jk4SMyOoHosddzzSeApTEw&usqp=CAU",
+        imageUrl = "https://preview.redd.it/v7j19hz3xhs41.png?width=600&format=png&auto=webp&s=9fd58a2816368c3e6c6a63a585fd5789aa9b0d38",
     ),
 )
