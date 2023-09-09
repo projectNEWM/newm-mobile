@@ -2,14 +2,13 @@ package io.newm.feature.login.screen.password
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.text.input.ImeAction
 import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.feature.login.screen.TextFieldState
 
 @Composable
@@ -17,8 +16,8 @@ fun Password(
     @StringRes label: Int,
     passwordState: TextFieldState,
     modifier: Modifier = Modifier,
-    imeAction: ImeAction = ImeAction.Done,
-    onImeAction: () -> Unit = {}
+    keyboardOptions: KeyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
 
     TextFieldWithLabel(
@@ -35,12 +34,8 @@ fun Password(
         isPassword = true,
         labelResId = label,
         isError = passwordState.showErrors(),
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                onImeAction()
-            }
-        ),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         helperText = passwordState.getError(),
     )
 }

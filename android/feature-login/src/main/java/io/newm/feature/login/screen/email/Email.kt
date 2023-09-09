@@ -6,17 +6,17 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.text.input.ImeAction
 import io.newm.core.resources.R
 import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.feature.login.screen.TextFieldState
 
 @Composable
 fun Email(
     modifier: Modifier = Modifier,
     emailState: TextFieldState,
-    imeAction: ImeAction = ImeAction.Next,
-    onImeAction: () -> Unit = {}
+    keyboardOptions: KeyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.EMAIL,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     TextFieldWithLabel(
         modifier = modifier
@@ -31,12 +31,8 @@ fun Email(
         value = emailState.text,
         labelResId = R.string.email,
         isError = emailState.showErrors(),
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                onImeAction()
-            }
-        ),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         helperText = emailState.getError(),
     )
 }
