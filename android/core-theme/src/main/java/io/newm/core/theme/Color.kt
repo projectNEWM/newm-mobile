@@ -1,8 +1,7 @@
 package io.newm.core.theme
 
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 
@@ -41,7 +40,7 @@ val LightColorPalette = lightColors(
     onError = White
 )
 
-val DarkColorPalette = lightColors(
+val DarkColorPalette = darkColors(
     primary = Purple,
     primaryVariant = Pinkish,
     background = Black,
