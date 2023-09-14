@@ -16,13 +16,13 @@ class DebugNewmApplication : NewmApplication() {
         Logger.d { "NewmAndroid - Debug Newm Application" }
 
         SoLoader.init(this, false)
-        val client = AndroidFlipperClient.getInstance(this)
-        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-        client.addPlugin(CrashReporterPlugin.getInstance())
-        client.addPlugin(DatabasesFlipperPlugin(this))
-        client.addPlugin(NavigationFlipperPlugin.getInstance())
-        client.addPlugin(SharedPreferencesFlipperPlugin(this, "newm_encrypted_shared_prefs"))
-        client.start()
+        AndroidFlipperClient.getInstance(this).apply {
+            addPlugin(InspectorFlipperPlugin(this@DebugNewmApplication, DescriptorMapping.withDefaults()))
+            addPlugin(CrashReporterPlugin.getInstance())
+            addPlugin(DatabasesFlipperPlugin(this@DebugNewmApplication))
+            addPlugin(NavigationFlipperPlugin.getInstance())
+            addPlugin(SharedPreferencesFlipperPlugin(this@DebugNewmApplication, "newm_encrypted_shared_prefs"))
+        }.start()
 
         super.onCreate()
     }
