@@ -2,7 +2,6 @@ package io.newm.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,7 +12,6 @@ import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
 import io.newm.screens.profile.ProfileRoute
-import io.newm.screens.profile.ProfileScreen
 import io.newm.screens.search.SearchScreen
 
 @Composable

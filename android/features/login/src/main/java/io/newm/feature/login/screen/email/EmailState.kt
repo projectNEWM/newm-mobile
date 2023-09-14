@@ -2,7 +2,6 @@ package io.newm.feature.login.screen.email
 
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import io.newm.feature.login.screen.TextFieldState
-import io.newm.shared.login.util.LoginFieldValidator
 
 class EmailState : TextFieldState(validator = ::isEmailValid, errorFor = ::emailValidationError)
 /**
