@@ -21,7 +21,7 @@
 
 <br />
 <div align="center">
-  <a href="https://projectnewm.io/">
+  <a href="https://newm.io/">
     <img src="./assets/images/NEWM-logo.png" alt="Logo" width="100" height="100">
   </a>
 
@@ -96,11 +96,13 @@ Don't forget to give the project a star! ⭐️
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/andymiller813"><img src="https://avatars.githubusercontent.com/u/3392370?v=4" width="100px;" alt=""/><br /><sub><b>Andy Miller</b></sub></a><br /> </td>
     <td align="center"><a href="https://github.com/martyu"><img src="https://avatars.githubusercontent.com/u/595982?v=4" width="100px;" alt=""/><br /><sub><b>Marty Ulrich</b></sub></a><br /> </td>
     <td align="center"><a href="https://github.com/cristhianescobar"><img src="https://avatars.githubusercontent.com/u/5350018?v=4" width="100px;" alt=""/><br /><sub><b>Cristhian Escobar</b></sub></a><br /> </td>
     <td align="center"><a href="https://github.com/j-mateo"><img src="https://avatars.githubusercontent.com/u/3849278?v=4" width="100px;" alt=""/><br /><sub><b>Jose Mateo</b></sub></a><br /> </td>
-  </tr>
+    <td align="center"><a href="https://github.com/Jermainelr"><img src="https://avatars.githubusercontent.com/u/29381704?v=4" width="100px;" alt=""/><br /><sub><b>Jermaine Lara</b></sub></a><br /> </td>
+    <td align="center"><a href="https://github.com/wlara"><img src="https://avatars.githubusercontent.com/u/13438984?v=4" width="100px;" alt=""/><br /><sub><b>Walter Lara</b></sub></a><br /> </td>
+
+</tr>
 </table>
 
 <!-- SOCIALS -->

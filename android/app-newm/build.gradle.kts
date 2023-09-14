@@ -22,8 +22,36 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
+            isDebuggable = false
             isMinifyEnabled = false
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isMinifyEnabled = false
+        }
+    }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("production") {
+            namespace = "io.newm"
+            applicationId = "io.newm"
+            dimension = "version"
+        }
+        create("development") {
+            namespace = "io.newm"
+            applicationId = "io.newm"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            dimension = "version"
         }
     }
 
