@@ -2,8 +2,10 @@ package io.newm.screens.library
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.R
 import io.newm.core.theme.*
+import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.textGradient
 
 internal const val TAG_LIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
@@ -45,6 +48,17 @@ fun LibraryScreen(
                 brush = textGradient(SteelPink, CerisePink)
             )
         )
+        if (savedSongModels.isNotEmpty() ||
+            savedAlbumsModels.isNotEmpty() ||
+            libraryArtistListModels.isNotEmpty()
+        ) {
+            SearchBar(
+                placeholderResId = R.string.library_search,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+            )
+        }
         SavedSongList(savedSongModels, onSongView)
         SavedArtistList(
             title = stringResource(id = R.string.library_artists),

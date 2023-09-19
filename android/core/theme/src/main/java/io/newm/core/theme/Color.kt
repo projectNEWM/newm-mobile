@@ -11,6 +11,7 @@ val Black = Color.Black
 val Black90 = Color(0xE5000000)
 val Purple = Color(0xFFDC3CAA)
 val Pinkish = Color(0xFFF53C69)
+val Gray300 = Color(0xFF48484A)
 val Gray400 = Color(0xFF2C2C2E)
 val Gray500 = Color(0xFF1C1C1E)
 val Gray600 = Color(0xFF121214)

@@ -60,6 +60,7 @@
     <string name="library_empty_state_label">Nothing here yet!</string>
     <string name="library_artists">YOUR ARTISTS</string>
     <string name="library_albums">YOUR ALBUMS</string>
+    <string name="library_search">Search</string>
 
 
 </resources>

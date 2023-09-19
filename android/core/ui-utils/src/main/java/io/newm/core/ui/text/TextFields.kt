@@ -74,6 +74,9 @@ object TextFieldWithLabelDefaults {
             autoCorrect = false,
             keyboardType = KeyboardType.Email,
         )
+
+        @Stable
+        val NON_UNDERLINED = KeyboardOptions(keyboardType = KeyboardType.Password)
     }
 }
 
@@ -87,7 +90,7 @@ fun TextFieldWithLabel(
     enabled: Boolean = true,
     placeholderResId: Int? = null,
     isError: Boolean = false,
-    keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else KeyboardOptions.Default,
+    keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     helperText: String? = null,
 ) {
