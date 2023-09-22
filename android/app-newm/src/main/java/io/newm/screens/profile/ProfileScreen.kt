@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.newm.R
+import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.shared.models.User
