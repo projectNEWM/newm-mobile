@@ -23,12 +23,25 @@ jobs:
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
 
       - name: build android app
-        run: ./gradlew :android:app-newm:assembleDebug
+        run: ./gradlew :android:app-newm:assembleRelease
+
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign app APK
+        # ID used to access action output
+        id: sign_app
+        with:
+          releaseDirectory: ${{ secrets.RELEASE_APK_PATH }}
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "30.0.2"
 
       - uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: ${{ secrets.DEBUG_APK_PATH }}
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -36,4 +49,4 @@ jobs:
           appId: ${{secrets.FIREBASE_ANDROID_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: dev-team
-          file: ${{ secrets.DEBUG_APK_PATH }}
+          file: ${{steps.sign_app.outputs.signedReleaseFile}}
