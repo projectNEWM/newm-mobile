@@ -18,6 +18,7 @@ object Google {
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     const val crashlyticsClasspath = "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlyticsClasspath}"
     const val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
+    const val playServicesAuth = "com.google.android.gms:play-services-auth:${Versions.googleServicesAuth}"
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycle}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.androidxNavigation}"

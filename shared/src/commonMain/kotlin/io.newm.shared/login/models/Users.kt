@@ -2,12 +2,14 @@ package io.newm.shared.login.models
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class LogInUser(
     val email: String,
     val password: String
 )
+
+@Serializable
+data class GoogleSignInRequest(val idToken: String)
 
 @Serializable
 data class NewUser(

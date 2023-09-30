@@ -48,6 +48,7 @@ dependencies {
     implementation(Google.composeMaterial)
     implementation(Google.composeUi)
     implementation(Google.composeUiToolingPreview)
+    implementation(Google.playServicesAuth)
     implementation(Google.material)
     implementation(Google.navigationCompose)
     implementation(Google.materialIconsExtended)
@@ -59,6 +60,7 @@ dependencies {
     debugImplementation(Google.composeUiTestManifest)
 
     testImplementation(project(Modules.testUtils))
+    testImplementation(Circuit.test)
     testImplementation(JUnit.jUnit)
     testImplementation(Google.testParameterInjector)
 

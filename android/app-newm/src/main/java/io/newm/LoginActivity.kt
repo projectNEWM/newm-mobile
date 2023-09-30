@@ -11,18 +11,26 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.CircuitConfig
 import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.push
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.retained.LocalRetainedStateRegistry
 import com.slack.circuit.retained.continuityRetainedStateRegistry
 import io.newm.core.theme.NewmTheme
-import io.newm.feature.login.screen.*
+import io.newm.feature.login.screen.LoginScreenUi
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState
+import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
+import io.newm.feature.login.screen.welcome.WelcomeScreenUi
+import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.Screen
+import io.newm.screens.Screen.LoginLandingScreen
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -34,6 +42,7 @@ class LoginActivity : ComponentActivity() {
         .addPresenterFactory { screen, navigator, _ ->
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
+                is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
                 else -> null
             }
         }
@@ -41,6 +50,10 @@ class LoginActivity : ComponentActivity() {
             when (screen) {
                 is CreateAccountScreen -> ui<CreateAccountUiState> { state, modifier ->
                     CreateAccountUi(state, modifier)
+                }
+
+                is LoginLandingScreen -> ui<WelcomeScreenUiState> { state, modifier ->
+                    WelcomeScreenUi(modifier, state)
                 }
 
                 else -> null
@@ -81,24 +94,19 @@ fun WelcomeToNewm(
     onStartHomeActivity: () -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
-    NavHost(navController = navController, startDestination = Screen.LoginLandingScreen.route) {
-        composable(Screen.LoginLandingScreen.route) {
-            WelcomeScreen(
-                onLogin = {
-                    navController.navigate(Screen.LoginScreen.route)
-                },
-                onCreateAccount = {
-                    navController.navigate(Screen.Signup.route)
-                },
-            )
+    NavHost(navController = navController, startDestination = LoginLandingScreen.route) {
+        composable(LoginLandingScreen.route) {
+            val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
+            val circuitNavigator = rememberCircuitNavigator(backstack)
+            val newmNavigator = rememberNewmNavigator(circuitNavigator, navController, onStartHomeActivity)
+            NavigableCircuitContent(newmNavigator, backstack)
         }
         composable(Screen.LoginScreen.route) {
-            LoginScreen(
-                onUserLoggedIn = onStartHomeActivity
-            )
+            LoginScreenUi(onUserLoggedIn = onStartHomeActivity)
         }
         composable(Screen.Signup.route) {
             CircuitContent(screen = CreateAccountScreen)
         }
     }
 }
+

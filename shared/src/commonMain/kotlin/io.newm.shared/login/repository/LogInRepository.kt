@@ -3,7 +3,6 @@ package io.newm.shared.login.repository
 import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.*
 import io.newm.shared.TokenManager
-import io.newm.shared.db.NewmDatabaseWrapper
 import io.newm.shared.login.models.*
 import io.newm.shared.login.service.LoginAPI
 import org.koin.core.component.KoinComponent
@@ -21,6 +20,9 @@ interface LogInRepository {
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(email: String, password: String)
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun oAuthLogin(oAuthData: OAuthData)
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun registerUser(
@@ -55,21 +57,22 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun logIn(email: String, password: String) {
         logger.d { "logIn: email $email" }
-        return try {
-            val response: LoginResponse =
-                service.logIn(LogInUser(email = email, password = password))
+        return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
+    }
 
-            if (response.isValid()) {
-                logger.d { "logIn: LoginStatus Valid Response" }
-                tokenManager.setAuthTokens(
-                    response.accessToken.orEmpty(),
-                    response.refreshToken.orEmpty()
-                )
-                logger.d { "logIn: LoginStatus Success" }
-            } else {
-                logger.d { "logIn: Fail to login: $response" }
-                throw Exception("Response is not valid: $response")
-            }
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
+        logger.d { "logIn: oAuth" }
+        when (oAuthData) {
+            is OAuthData.Facebook -> TODO()
+            is OAuthData.Google -> service.loginWithGoogle(GoogleSignInRequest(idToken = oAuthData.idToken))
+            is OAuthData.LinkedIn -> TODO()
+        }
+    }
+
+    private suspend fun handleLoginResponse(request: suspend () -> LoginResponse) {
+        try {
+            storeAccessToken(request())
         } catch (e: ClientRequestException) {
             when (e.response.status.value) {
                 404 -> {
@@ -117,5 +120,19 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
                 authCode = authCode
             )
         )
+    }
+
+    private fun storeAccessToken(response: LoginResponse) {
+        if (response.isValid()) {
+            logger.d { "logIn: LoginStatus Valid Response" }
+            tokenManager.setAuthTokens(
+                response.accessToken.orEmpty(),
+                response.refreshToken.orEmpty()
+            )
+            logger.d { "logIn: LoginStatus Success" }
+        } else {
+            logger.d { "logIn: Fail to login: $response" }
+            throw Exception("Response is not valid: $response")
+        }
     }
 }

@@ -1,10 +1,18 @@
 package io.newm.shared.login.service
 
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.client.request.post
+import io.ktor.client.request.put
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory
+import io.newm.shared.login.models.GoogleSignInRequest
 import io.newm.shared.login.models.LogInUser
 import io.newm.shared.login.models.LoginResponse
 import io.newm.shared.login.models.NewUser
@@ -61,6 +69,21 @@ internal class LoginAPI(
         contentType(ContentType.Application.Json)
         setBody(user)
     }.body<LoginResponse>()
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun loginWithGoogle(request: GoogleSignInRequest): LoginResponse {
+        val response = httpClient.post("/v1/auth/login/google") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+
+        return when (response.status) {
+            HttpStatusCode.OK -> response.body<LoginResponse>()
+            else -> {
+                throw KMMException("HTTP Error ${response.status}: ${response.bodyAsText()}")
+            }
+        }
+    }
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun resetPassword(
