@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.resources.R
 
 @Composable
 fun WelcomeScreen(onLogin: () -> Unit, onCreateAccount: () -> Unit) {
@@ -28,7 +29,7 @@ fun WelcomeScreen(onLogin: () -> Unit, onCreateAccount: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LoginPageMainImage(io.newm.core.resources.R.drawable.ic_newm_logo)
+            LoginPageMainImage(R.drawable.ic_newm_logo)
             Text(
                 text = "Welcome to NEWM",
                 fontSize = 30.sp,

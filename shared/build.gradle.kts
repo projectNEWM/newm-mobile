@@ -6,8 +6,8 @@ plugins {
     id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
-    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
-    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-7"
+    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
+    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-18"
 
 }
 
@@ -107,7 +107,7 @@ kotlin {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 

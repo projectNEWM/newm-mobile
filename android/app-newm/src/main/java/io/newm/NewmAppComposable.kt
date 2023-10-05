@@ -82,9 +82,9 @@ internal fun NewmApp(
             Navigation(navController, isBottomNavBarVisible)
         }
 
-        if (BuildConfig.DEBUG) {
-            DebugMenuButton()
-        }
+//        if (BuildConfig.DEBUG) {
+//            DebugMenuButton()
+//        }
     }
 }
 
