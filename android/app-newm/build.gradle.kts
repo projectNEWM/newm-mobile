@@ -2,6 +2,7 @@ plugins {
     id(Plugins.androidApplication)
     id(Plugins.crashlytics)
     id(Plugins.googleServices)
+    id(Plugins.parcelize)
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
 }
@@ -112,6 +113,7 @@ dependencies {
     implementation(Google.navigationCompose)
     implementation(Google.navigationUiKtx)
     implementation(Google.splashScreen)
+    implementation(Google.playServicesAuth)
     implementation(Koin.android)
     implementation(Koin.androidCompose)
     implementation(Kotlin.reflect)

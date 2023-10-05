@@ -1,5 +1,8 @@
 package io.newm.screens
 
+import kotlinx.parcelize.Parcelize
+import com.slack.circuit.runtime.Screen as CircuitScreen
+
 sealed class Screen(val route: String) {
     //High Navigation Roots
     object HomeRoot : Screen("home-root")
@@ -20,8 +23,8 @@ sealed class Screen(val route: String) {
     object WalletLanding : Screen("wallet-landing")
 
     //Single Screens
-    object LoginLandingScreen : Screen("login-landing")
-    object LoginScreen : Screen("login")
+    @Parcelize object LoginLandingScreen : Screen("login-landing"), CircuitScreen
+    @Parcelize object LoginScreen : Screen("login"), CircuitScreen
     object Signup : Screen("signup")
     object VerificationCode : Screen("verification")
     object WhatShouldWeCallYou : Screen("what-should-we-call-you")

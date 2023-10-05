@@ -31,7 +31,7 @@ import org.koin.compose.koinInject
 internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 
 @Composable
-fun LoginScreen(
+fun LoginScreenUi(
     onUserLoggedIn: () -> Unit,
     viewModel: LoginViewModel = koinInject()
 ) {
@@ -124,7 +124,7 @@ fun LoginPageMainImage(@DrawableRes mainImage: Int) {
 @Composable
 private fun DefaultLightLoginScreenPreview() {
     NewmTheme(darkTheme = false) {
-        LoginScreen(
+        LoginScreenUi(
             onUserLoggedIn = {},
         )
     }
@@ -134,7 +134,7 @@ private fun DefaultLightLoginScreenPreview() {
 @Composable
 private fun DefaultDarkLoginScreenPreview() {
     NewmTheme(darkTheme = true) {
-        LoginScreen(
+        LoginScreenUi(
             onUserLoggedIn = {},
         )
     }
