@@ -15,6 +15,7 @@ object Versions {
     const val circuit = "0.9.1"
     const val composeCompiler = "1.5.3"
     const val compose = "1.4.3"
+    const val media3 = "1.1.0"
     const val composeMaterialIcons = "1.3.0-beta01"
     const val crashlyticsClasspath = "2.9.1"
     const val espresso = "3.4.0"

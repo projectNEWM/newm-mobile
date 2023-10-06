@@ -34,5 +34,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.now.playing.MusicPlayerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

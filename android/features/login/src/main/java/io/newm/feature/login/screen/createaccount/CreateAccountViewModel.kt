@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import io.newm.shared.login.models.RegisterException
 import io.newm.shared.login.repository.KMMException
-import io.newm.shared.login.usecases.SignupUseCase
+import io.newm.shared.usecases.SignupUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

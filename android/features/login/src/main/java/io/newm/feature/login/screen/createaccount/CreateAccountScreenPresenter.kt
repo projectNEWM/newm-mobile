@@ -15,7 +15,7 @@ import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SetNameUi
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
-import io.newm.shared.login.usecases.SignupUseCase
+import io.newm.shared.usecases.SignupUseCase
 import kotlinx.coroutines.launch
 
 class CreateAccountScreenPresenter constructor(

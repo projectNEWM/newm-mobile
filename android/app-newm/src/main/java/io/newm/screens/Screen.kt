@@ -12,6 +12,10 @@ sealed class Screen(val route: String) {
 
     object LibraryLanding : Screen("library-landing")
 
+    object NFTLibraryRoot : Screen("nft-library-root")
+
+    object NFTLibraryLanding : Screen("nft-library-landing")
+
     object SearchRoot : Screen("search-root")
 
     object SearchLanding : Screen("search-landing")

@@ -126,6 +126,14 @@ internal fun NewmBottomNavigation(
                     contentColor = Gray100
             ) {
                 HomeBottomNavigationItem(
+                    selected = currentRootScreen == Screen.NFTLibraryRoot,
+                    iconResId = R.drawable.ic_library,
+                    labelResId = R.string.nft_library,
+                    selectedIconBrush = LibraryIconGradient,
+                    selectedLabelColor = DarkPink,
+                    onClick = { onNavigationSelected(Screen.NFTLibraryRoot) },
+                )
+                HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.HomeRoot,
                     iconResId = R.drawable.ic_home,
                     labelResId = R.string.home,
@@ -208,7 +216,7 @@ private fun RowScope.HomeBottomNavigationItem(
 
 @Composable
 private fun NavController.currentRootScreenAsState(): State<Screen> {
-    val currentRootScreen = remember { mutableStateOf<Screen>(Screen.HomeRoot) }
+    val currentRootScreen = remember { mutableStateOf<Screen>(Screen.NFTLibraryRoot) }
     LaunchedEffect(this) {
         currentBackStackEntryFlow.collect { entry ->
             allScreens.find { entry.destination.parent?.route == it.route }?.let {

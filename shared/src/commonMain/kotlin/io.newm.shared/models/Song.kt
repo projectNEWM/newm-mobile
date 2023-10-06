@@ -30,4 +30,5 @@ data class Song(
     val streamUrl: String? = null,
     val nftPolicyId: String? = null,
     val nftName: String? = null,
+    val tempSourceId: Int = 0
 )

@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
+import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.shared.models.User
 import kotlinx.coroutines.launch
@@ -31,9 +32,7 @@ fun ProfileRoute(
     val state by viewModel.state.collectAsState()
 
     when (state) {
-        ProfileState.Loading -> {
-            LoadingScreen()
-        }
+        ProfileState.Loading -> LoadingScreen()
         is ProfileState.Content -> {
             ProfileScreen(
                 isBottomBarVisible = isBottomBarVisible,
@@ -47,17 +46,6 @@ fun ProfileRoute(
                 onShowFaq = {}, //TODO: Link the appropriate page
             )
         }
-    }
-}
-
-
-@Composable
-fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 
