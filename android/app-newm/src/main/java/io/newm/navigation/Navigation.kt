@@ -2,25 +2,34 @@ package io.newm.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import io.newm.feature.now.playing.NowPlayingScreen
+import io.newm.feature.now.playing.MusicPlayerActivity
+import io.newm.feature.now.playing.MusicPlayerScreen
 import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
+import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.ProfileRoute
 import io.newm.screens.search.SearchScreen
+import io.newm.shared.models.Song
 
 @Composable
 fun Navigation(
     navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
 ) {
+    val context = LocalContext.current
     NavHost(
-        navController = navController, startDestination = Screen.HomeRoot.route
+        navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
+        addNFTLibraryTree(onPlaySong = { song ->
+//            navController.navigate(Screen.NowPlayingScreen.route)
+            context.startActivity(MusicPlayerActivity.createIntent(context, song.id))
+        })
         addHomeTree(navController, isBottomBarVisible)
         addSearchTree()
         addLibraryTree()
@@ -45,9 +54,9 @@ private fun NavGraphBuilder.addHomeTree(
             )
         }
 
-        composable(Screen.NowPlayingScreen.route) {
-            NowPlayingScreen()
-        }
+//        composable(Screen.NowPlayingScreen.route) {
+//            MusicPlayerScreen()
+//        }
         composable(Screen.Profile.route) {
             ProfileRoute(
                 isBottomBarVisible = isBottomBarVisible,
@@ -67,6 +76,16 @@ private fun NavGraphBuilder.addLibraryTree() {
                 onArtistViewDetails = {},//TODO: Implement on artist view
                 onAlbumViewDetails = {}//TODO: Implement on album view
             )
+        }
+    }
+}
+
+private fun NavGraphBuilder.addNFTLibraryTree(onPlaySong: (Song) -> Unit) {
+    navigation(
+        route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
+    ) {
+        composable(Screen.NFTLibraryLanding.route) { backStackEntry ->
+            NFTLibraryScreen(onPlaySong)
         }
     }
 }

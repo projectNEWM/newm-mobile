@@ -6,6 +6,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import io.newm.core.ui.LoadingScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVerificationUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SetNameUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
@@ -29,13 +30,3 @@ fun CreateAccountUi(state: CreateAccountUiState, modifier: Modifier) {
     }
 }
 
-
-@Composable
-private fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}

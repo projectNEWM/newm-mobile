@@ -25,6 +25,9 @@ object Google {
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.androidxNavigation}"
     const val splashScreen = "androidx.core:core-splashscreen:${Versions.androidxSplashScreen}"
     const val testParameterInjector = "com.google.testparameterinjector:test-parameter-injector:${Versions.testParameterInjector}"
+    const val media3Exoplayer = "androidx.media3:media3-exoplayer:${Versions.media3}"
+    const val media3ui = "androidx.media3:media3-ui:${Versions.media3}"
+    const val media3Common = "androidx.media3:media3-common:${Versions.media3}"
 
     object Test {
         const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"

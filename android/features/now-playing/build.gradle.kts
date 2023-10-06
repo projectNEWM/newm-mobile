@@ -41,6 +41,7 @@ dependencies {
 
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.shared))
+    implementation(project(Modules.coreUiUtils))
 
 //    implementation(Airbnb.showkase)
     implementation(Google.androidxCore)
@@ -49,9 +50,12 @@ dependencies {
     implementation(Google.composeUi)
     implementation(Google.composeUiToolingPreview)
     implementation(Google.constraintLayout)
-    implementation(Google.exoplayerCore)
-    implementation(Google.exoplayerHls)
-    implementation(Google.exoplayerUi)
+    implementation(Koin.android)
+    implementation(Koin.androidCompose)
+    implementation(Google.media3Exoplayer)
+    implementation(Google.media3ui)
+    implementation(Google.media3Common)
+    implementation(Coil.compose)
     implementation(Google.material)
     implementation(Google.navigationCompose)
 
