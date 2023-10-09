@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
-class MusicPlayerActivity: ComponentActivity() {
+class DemoPlayerActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -16,7 +16,7 @@ class MusicPlayerActivity: ComponentActivity() {
             return
         }
         setContent {
-            MusicPlayerScreen(songId)
+            DemoPlayerScreen(songId)
         }
     }
 
@@ -24,7 +24,7 @@ class MusicPlayerActivity: ComponentActivity() {
         private const val EXTRA_SONG_ID = "song_id"
 
         fun createIntent(context: Context, songId: String): Intent {
-            return Intent(context, MusicPlayerActivity::class.java).apply {
+            return Intent(context, DemoPlayerActivity::class.java).apply {
                 putExtra(EXTRA_SONG_ID, songId)
             }
         }

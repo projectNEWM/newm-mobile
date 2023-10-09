@@ -7,7 +7,7 @@ import io.newm.core.ui.LoadingScreen
 import org.koin.compose.koinInject
 
 @Composable
-fun MusicPlayerScreen(songId: String, viewModel: MusicPlayerViewModel = koinInject()) {
+fun DemoPlayerScreen(songId: String, viewModel: DemoPlayerViewModel = koinInject()) {
     viewModel.setSongId(songId)
     val state by viewModel.state.collectAsState()
 

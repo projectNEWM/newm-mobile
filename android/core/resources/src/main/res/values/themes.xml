@@ -10,6 +10,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.ProjectNewm.NoActionBar.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="Theme.ProjectNewm.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ProjectNewm.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

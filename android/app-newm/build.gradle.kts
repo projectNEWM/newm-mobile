@@ -93,6 +93,7 @@ dependencies {
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.nowPlaying))
     implementation(project(Modules.login))
+    implementation(project(Modules.musicPlayer))
     implementation(project(Modules.shared))
 
     implementation(Circuit.foundation)

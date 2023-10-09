@@ -35,9 +35,15 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.now.playing.MusicPlayerActivity"
+            android:name=".feature.now.playing.DemoPlayerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.musicplayer.MusicPlayerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
 
     </application>
 </manifest>
