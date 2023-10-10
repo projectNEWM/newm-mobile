@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,7 @@ internal const val TAG_LIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun LibraryScreen(
-    onSongView: (SongModel) -> Unit,
+    onSongPlay: (String) -> Unit,
     onArtistViewDetails: (LibraryArtistModel) -> Unit,
     onAlbumViewDetails: (AlbumModel) -> Unit,
 ) {
@@ -59,7 +58,7 @@ fun LibraryScreen(
                     .padding(20.dp),
             )
         }
-        SavedSongList(savedSongModels, onSongView)
+        SavedSongList(savedSongModels, onSongPlay)
         SavedArtistList(
             title = stringResource(id = R.string.library_artists),
             artistModels = libraryArtistListModels,

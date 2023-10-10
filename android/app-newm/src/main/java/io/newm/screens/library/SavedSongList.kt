@@ -22,15 +22,17 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 
 data class SongModel(
+    val id: String,
     val title: String,
     val artist: String,
     val imageUrl: String,
+    val streamUrl: String
 )
 
 @Composable
 fun SavedSongList(
     songModels: List<SongModel>,
-    onSongView: (SongModel) -> Unit,
+    onSongPlay: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -51,7 +53,7 @@ fun SavedSongList(
         } else {
             songModels.forEach { song ->
                 SavedSongItem(song) {
-                    onSongView(song)
+                    onSongPlay(song.id)
                 }
             }
         }

@@ -5,11 +5,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import io.newm.feature.now.playing.MusicPlayerActivity
-import io.newm.feature.now.playing.MusicPlayerScreen
+import io.newm.feature.musicplayer.MusicPlayerActivity
+import io.newm.feature.now.playing.DemoPlayerActivity
 import io.newm.screens.Screen
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
@@ -28,11 +30,12 @@ fun Navigation(
     ) {
         addNFTLibraryTree(onPlaySong = { song ->
 //            navController.navigate(Screen.NowPlayingScreen.route)
-            context.startActivity(MusicPlayerActivity.createIntent(context, song.id))
+            context.startActivity(DemoPlayerActivity.createIntent(context, song.id))
         })
         addHomeTree(navController, isBottomBarVisible)
         addSearchTree()
-        addLibraryTree()
+        addLibraryTree(navController)
+        addMusicPlayerTree()
     }
 }
 
@@ -66,13 +69,15 @@ private fun NavGraphBuilder.addHomeTree(
     }
 }
 
-private fun NavGraphBuilder.addLibraryTree() {
+private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
     navigation(
         route = Screen.LibraryRoot.route, startDestination = Screen.LibraryLanding.route
     ) {
         composable(Screen.LibraryLanding.route) {
             LibraryScreen(
-                onSongView = {}, //TODO: Implement on song view
+                onSongPlay = { songId ->
+                    navController.navigate(Screen.MusicPlayer.routeOf(songId))
+                },
                 onArtistViewDetails = {},//TODO: Implement on artist view
                 onAlbumViewDetails = {}//TODO: Implement on album view
             )
@@ -100,3 +105,11 @@ private fun NavGraphBuilder.addSearchTree() {
     }
 }
 
+private fun NavGraphBuilder.addMusicPlayerTree() {
+    activity(
+        route = Screen.MusicPlayer.route
+    ) {
+        activityClass = MusicPlayerActivity::class
+        argument("songId") { type = NavType.StringType }
+    }
+}

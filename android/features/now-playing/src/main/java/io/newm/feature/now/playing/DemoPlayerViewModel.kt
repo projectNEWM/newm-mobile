@@ -2,7 +2,6 @@ package io.newm.feature.now.playing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import io.newm.shared.models.Song
 import io.newm.shared.usecases.WalletNFTSongsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 
-class MusicPlayerViewModel(private val useCase: WalletNFTSongsUseCase): ViewModel(){
+class DemoPlayerViewModel(private val useCase: WalletNFTSongsUseCase): ViewModel(){
     private val songIdFlow: MutableStateFlow<String?> = MutableStateFlow(null)
 
     private var _state: StateFlow<MusicPlayerState> = songIdFlow.filterNotNull().flatMapLatest { songId ->
