@@ -6,6 +6,7 @@ object Modules {
     const val nowPlaying = ":android:features:now-playing"
     const val login = ":android:features:login"
     const val musicPlayer = ":android:features:music-player"
+    const val barcodeScanner = ":android:features:barcode-scanner"
     const val shared = ":shared"
     const val testUtils = ":android:core:test-utils"
 }
