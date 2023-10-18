@@ -10,6 +10,7 @@ import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.feature.musicplayer.MusicPlayerActivity
 import io.newm.feature.now.playing.DemoPlayerActivity
 import io.newm.screens.Screen
@@ -28,14 +29,17 @@ fun Navigation(
     NavHost(
         navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
-        addNFTLibraryTree(onPlaySong = { song ->
-//            navController.navigate(Screen.NowPlayingScreen.route)
-            context.startActivity(DemoPlayerActivity.createIntent(context, song.id))
-        })
+        addNFTLibraryTree(
+            onPlaySong = { song ->
+                context.startActivity(DemoPlayerActivity.createIntent(context, song.id))
+            },
+            onConnectWalletClick = { navController.navigate(Screen.BarcodeScanner.route) }
+        )
         addHomeTree(navController, isBottomBarVisible)
         addSearchTree()
         addLibraryTree(navController)
         addMusicPlayerTree()
+        addBarcodeScannerTree()
     }
 }
 
@@ -85,12 +89,14 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
     }
 }
 
-private fun NavGraphBuilder.addNFTLibraryTree(onPlaySong: (Song) -> Unit) {
+private fun NavGraphBuilder.addNFTLibraryTree(
+    onPlaySong: (Song) -> Unit, onConnectWalletClick: () -> Unit
+) {
     navigation(
         route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
     ) {
         composable(Screen.NFTLibraryLanding.route) { backStackEntry ->
-            NFTLibraryScreen(onPlaySong)
+            NFTLibraryScreen(onPlaySong, onConnectWalletClick)
         }
     }
 }
@@ -111,5 +117,13 @@ private fun NavGraphBuilder.addMusicPlayerTree() {
     ) {
         activityClass = MusicPlayerActivity::class
         argument("songId") { type = NavType.StringType }
+    }
+}
+
+private fun NavGraphBuilder.addBarcodeScannerTree() {
+    activity(
+        route = Screen.BarcodeScanner.route
+    ) {
+        activityClass = BarcodeScannerActivity::class
     }
 }

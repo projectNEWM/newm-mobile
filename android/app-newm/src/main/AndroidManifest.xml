@@ -45,5 +45,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
 
+        <activity
+            android:name=".feature.barcode.scanner.BarcodeScannerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
+
     </application>
 </manifest>

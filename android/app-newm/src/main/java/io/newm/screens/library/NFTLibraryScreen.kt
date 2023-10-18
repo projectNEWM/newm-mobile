@@ -29,6 +29,7 @@ import coil.compose.AsyncImage
 import io.newm.core.resources.R
 import io.newm.core.theme.*
 import io.newm.core.ui.LoadingScreen
+import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.textGradient
 import io.newm.shared.models.Song
@@ -40,6 +41,7 @@ internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 @Composable
 fun NFTLibraryScreen(
     onPlaySong: (Song) -> Unit,
+    onConnectWalletClick: () -> Unit,
     viewModel: NFTLibraryViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -47,7 +49,7 @@ fun NFTLibraryScreen(
     when (state) {
         NFTLibraryState.Loading -> LoadingScreen()
         is NFTLibraryState.Content -> {
-            SongList(songs = (state as NFTLibraryState.Content).songs, onPlaySong)
+            SongList(songs = (state as NFTLibraryState.Content).songs, onPlaySong, onConnectWalletClick)
         }
     }
 
@@ -55,7 +57,7 @@ fun NFTLibraryScreen(
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit) {
+fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit, onConnectWalletClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,6 +87,10 @@ fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit) {
             )
         }
 
+        PrimaryButton(text = "Connect Wallet", onClick = {
+            Log.d("NFTLibraryScreen", "Login")
+            onConnectWalletClick.invoke()
+        })
         if (songs.isNotEmpty()) {
             songs.forEach { song ->
                 RowSongItem(song = song, onClick = onPlaySong)

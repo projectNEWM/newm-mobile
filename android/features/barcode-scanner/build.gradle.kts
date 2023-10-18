@@ -1,15 +1,15 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "io.newm.feature.musicplayer"
+    namespace = "io.newm.feature.barcode.scanner"
     compileSdk = Versions.androidCompileSdk
 
     defaultConfig {
         minSdk = Versions.androidMinSdk
-        resourcePrefix = "musicplayer"
+        resourcePrefix = "barcode-scanner"
     }
 
     compileOptions {
@@ -31,7 +31,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.shared))
     implementation(project(Modules.coreUiUtils))
@@ -45,13 +44,9 @@ dependencies {
     implementation(Google.material)
     implementation(Google.navigationCompose)
     implementation(Google.materialIconsExtended)
-    implementation(Coil.compose)
 
-    implementation(Koin.android)
-    implementation(Koin.androidCompose)
-
-    debugImplementation(Google.composeUiTooling)
-    debugImplementation(Google.composeUiTestManifest)
-
-    testImplementation(project(Modules.testUtils))
+    implementation("com.google.mlkit:barcode-scanning:17.2.0")
+    implementation("androidx.camera:camera-camera2:1.4.0-alpha01")
+    implementation("androidx.camera:camera-lifecycle:1.4.0-alpha01")
+    implementation("androidx.camera:camera-view:1.4.0-alpha01")
 }

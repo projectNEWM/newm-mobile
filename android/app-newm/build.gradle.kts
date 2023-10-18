@@ -94,6 +94,7 @@ dependencies {
     implementation(project(Modules.nowPlaying))
     implementation(project(Modules.login))
     implementation(project(Modules.musicPlayer))
+    implementation(project(Modules.barcodeScanner))
     implementation(project(Modules.shared))
 
     implementation(Circuit.foundation)

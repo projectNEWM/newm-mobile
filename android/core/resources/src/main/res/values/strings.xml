@@ -63,6 +63,7 @@
     <string name="library_artists">YOUR ARTISTS</string>
     <string name="library_albums">YOUR ALBUMS</string>
     <string name="library_search">Search</string>
+    <string name="barcode_scanner_scan_xpub_key">Scan xPub Barcode</string>
 
 
 </resources>
