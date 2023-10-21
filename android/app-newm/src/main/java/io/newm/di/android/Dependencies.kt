@@ -7,18 +7,21 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import io.newm.Logout
 import io.newm.RestartApp
-import io.newm.screens.home.categories.MusicalCategoriesViewModel
-import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
-import io.newm.screens.profile.ProfileViewModel
 import io.newm.feature.login.screen.LoginViewModel
-import io.newm.screens.library.NFTLibraryViewModel
-import io.newm.feature.musicplayer.MusicPlayerViewModel
-import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncherImpl
+import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
+import io.newm.feature.login.screen.createaccount.CreateAccountViewModel
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
+import io.newm.feature.musicplayer.repository.MockMusicRepository
+import io.newm.feature.musicplayer.repository.MusicRepository
+import io.newm.feature.musicplayer.viewmodel.MusicPlayerViewModel
 import io.newm.feature.now.playing.DemoPlayerViewModel
+import io.newm.screens.home.categories.MusicalCategoriesViewModel
+import io.newm.screens.library.NFTLibraryViewModel
+import io.newm.screens.profile.ProfileViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -33,7 +36,7 @@ val viewModule = module {
     viewModelOf(::ProfileViewModel)
     viewModelOf(::NFTLibraryViewModel)
     viewModelOf(::DemoPlayerViewModel)
-    viewModelOf(::MusicPlayerViewModel)
+    viewModel { params -> MusicPlayerViewModel(params.get(), params.get(), get()) }
 
     factory { params -> CreateAccountScreenPresenter(params.get(), get()) }
     single<GoogleSignInLauncher> {
@@ -56,6 +59,7 @@ val viewModule = module {
             activityResultContract = ActivityResultContracts.StartActivityForResult()
         )
     }
+    single<MusicRepository> { MockMusicRepository(androidContext()) }
 }
 
 val androidModules = module {
