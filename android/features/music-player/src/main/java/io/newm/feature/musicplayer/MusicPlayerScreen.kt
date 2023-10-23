@@ -4,22 +4,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import io.newm.core.ui.LoadingScreen
+import io.newm.feature.musicplayer.viewmodel.MusicPlayerState
+import io.newm.feature.musicplayer.viewmodel.MusicPlayerViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun MusicPlayerScreen(
-    songId: String,
     onNavigateUp: () -> Unit,
     viewModel: MusicPlayerViewModel = koinInject()
 ) {
-    viewModel.setSongId(songId)
     val state by viewModel.state.collectAsState()
 
-    when (state) {
+    when (val uiState = state) {
         is MusicPlayerState.Loading -> LoadingScreen()
         is MusicPlayerState.Content -> MusicPlayerViewer(
-            song = (state as MusicPlayerState.Content).song,
-            onNavigateUp = onNavigateUp
+            song = uiState.song,
+            onNavigateUp = onNavigateUp,
+            playbackStatus = uiState.playbackStatus,
+            onEvent = viewModel::onEvent
         )
     }
 }

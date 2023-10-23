@@ -27,6 +27,7 @@ object Google {
     const val testParameterInjector = "com.google.testparameterinjector:test-parameter-injector:${Versions.testParameterInjector}"
     const val media3Exoplayer = "androidx.media3:media3-exoplayer:${Versions.media3}"
     const val media3ui = "androidx.media3:media3-ui:${Versions.media3}"
+    const val media3Session = "androidx.media3:media3-session:${Versions.media3}"
     const val media3Common = "androidx.media3:media3-common:${Versions.media3}"
 
     object Test {
