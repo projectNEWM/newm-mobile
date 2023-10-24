@@ -20,6 +20,7 @@ import io.newm.shared.repositories.UserRepositoryImpl
 import io.newm.shared.services.GenresAPI
 import io.newm.shared.services.PlaylistAPI
 import io.newm.shared.services.UserAPI
+import io.newm.shared.services.CardanoWalletAPI
 import io.newm.shared.usecases.GetGenresUseCase
 import io.newm.shared.usecases.GetGenresUseCaseImpl
 import io.newm.shared.usecases.WalletNFTSongsUseCase
@@ -53,18 +54,19 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { GenresAPI(get()) }
     single { UserAPI(get()) }
     single { PlaylistAPI(get()) }
+    single { CardanoWalletAPI(get()) }
     // Internal Repositories
     single<TokenManager> { TokenManagerImpl() }
     single<LogInRepository> { LogInRepositoryImpl() }
     single<GenresRepository> { GenresRepositoryImpl() }
     single<UserRepository> { UserRepositoryImpl() }
     single<PlaylistRepository> { PlaylistRepositoryImpl() }
-    single { WalletNFTSongsRepository() }
+    single<CardanoWalletRepository> { CardanoWalletRepositoryImpl() }
     // External Use Cases
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTSongsUseCase> { WalletNFTSongsUseCaseImpl() }
+    single<WalletNFTSongsUseCase> { WalletNFTSongsUseCaseImpl(get()) }
     single<UserSession> { UserSessionImpl() }
 }
 

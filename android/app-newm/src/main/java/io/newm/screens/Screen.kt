@@ -16,10 +16,6 @@ sealed class Screen(val route: String) {
 
     object NFTLibraryLanding : Screen("nft-library-landing")
 
-    object SearchRoot : Screen("search-root")
-
-    object SearchLanding : Screen("search-landing")
-
     //Single Screens
     @Parcelize
     object LoginLandingScreen : Screen("login-landing"), CircuitScreen

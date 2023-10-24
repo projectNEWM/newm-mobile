@@ -18,7 +18,6 @@ import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
 import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.ProfileRoute
-import io.newm.screens.search.SearchScreen
 import io.newm.shared.models.Song
 
 @Composable
@@ -36,7 +35,6 @@ fun Navigation(
             onConnectWalletClick = { navController.navigate(Screen.BarcodeScanner.route) }
         )
         addHomeTree(navController, isBottomBarVisible)
-        addSearchTree()
         addLibraryTree(navController)
         addMusicPlayerTree()
         addBarcodeScannerTree()
@@ -97,16 +95,6 @@ private fun NavGraphBuilder.addNFTLibraryTree(
     ) {
         composable(Screen.NFTLibraryLanding.route) { backStackEntry ->
             NFTLibraryScreen(onPlaySong, onConnectWalletClick)
-        }
-    }
-}
-
-private fun NavGraphBuilder.addSearchTree() {
-    navigation(
-        route = Screen.SearchRoot.route, startDestination = Screen.SearchLanding.route
-    ) {
-        composable(Screen.SearchLanding.route) {
-            SearchScreen()
         }
     }
 }

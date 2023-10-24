@@ -142,14 +142,6 @@ internal fun NewmBottomNavigation(
                     onClick = { onNavigationSelected(Screen.HomeRoot) },
                 )
                 HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.SearchRoot,
-                    iconResId = R.drawable.ic_search,
-                    labelResId = R.string.search,
-                    selectedIconBrush = SearchIconGradient,
-                    selectedLabelColor = BrightOrange,
-                    onClick = { onNavigationSelected(Screen.SearchRoot) },
-                )
-                HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.LibraryRoot,
                     iconResId = R.drawable.ic_library,
                     labelResId = R.string.library,

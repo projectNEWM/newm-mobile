@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class NFTLibraryViewModel(private val useCase: WalletNFTSongsUseCase) : ViewModel() {
 
@@ -40,6 +41,9 @@ class NFTLibraryViewModel(private val useCase: WalletNFTSongsUseCase) : ViewMode
 
     fun setXPub(xPub: String) {
         this.xPub.value = xPub
+        viewModelScope.launch {
+            useCase.getWalletNFTs(xPub)
+        }
     }
 }
 

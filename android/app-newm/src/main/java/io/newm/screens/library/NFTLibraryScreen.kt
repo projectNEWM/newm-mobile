@@ -37,7 +37,7 @@ import org.koin.compose.koinInject
 
 internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 
-
+val XPUB = "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl"
 @Composable
 fun NFTLibraryScreen(
     onPlaySong: (Song) -> Unit,
@@ -45,7 +45,7 @@ fun NFTLibraryScreen(
     viewModel: NFTLibraryViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsState()
-    viewModel.setXPub("xpub6")
+    viewModel.setXPub(XPUB)
     when (state) {
         NFTLibraryState.Loading -> LoadingScreen()
         is NFTLibraryState.Content -> {
