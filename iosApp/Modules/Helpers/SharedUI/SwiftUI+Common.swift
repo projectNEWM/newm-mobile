@@ -88,8 +88,8 @@ public struct BorderOverlay: ViewModifier {
 	
 	public func body(content: Content) -> some View {
 		content
-			.overlay(RoundedRectangle(cornerRadius: radius)
-				.stroke(color, lineWidth: width))
+//			.overlay(RoundedRectangle(cornerRadius: radius)
+//				.stroke(color, lineWidth: width))
 			.erased
 	}
 }
