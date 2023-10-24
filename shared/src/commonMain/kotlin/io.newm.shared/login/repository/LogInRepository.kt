@@ -21,6 +21,10 @@ interface LogInRepository {
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(email: String, password: String)
 
+    fun logOut()
+
+    fun userIsLoggedIn(): Boolean
+
     @Throws(KMMException::class, CancellationException::class)
     suspend fun oAuthLogin(oAuthData: OAuthData)
 
@@ -58,6 +62,14 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
     override suspend fun logIn(email: String, password: String) {
         logger.d { "logIn: email $email" }
         return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
+    }
+
+    override fun logOut() {
+        tokenManager.clearToken()
+    }
+
+    override fun userIsLoggedIn(): Boolean {
+        return tokenManager.getAccessToken() != null
     }
 
     @Throws(KMMException::class, CancellationException::class)

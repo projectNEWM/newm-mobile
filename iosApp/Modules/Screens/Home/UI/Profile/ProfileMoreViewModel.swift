@@ -1,13 +1,14 @@
 import Foundation
 import Data
 import Resolver
+import shared
 
 @MainActor
 class ProfileMoreViewModel: ObservableObject {
 	typealias Row = (title: String, url: String)
 	typealias Section = (title: String, rows: [Row])
 	
-	private let loginRepo = LoginRepo.shared
+	@Injected private var loginUseCase: LoginUseCase
 	
 	var sections: [Section] {
 		[
@@ -24,6 +25,6 @@ class ProfileMoreViewModel: ObservableObject {
 	}
 	
 	func logOut() {
-		loginRepo.logOut()
+		loginUseCase.logOut()
 	}
 }

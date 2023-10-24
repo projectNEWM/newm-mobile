@@ -2,9 +2,11 @@ import Foundation
 import API
 import Models
 import ModuleLinker
+import Resolver
 
 class UserRepo: UserManaging, ObservableObject {
 	private let api = UserAPI()
+	@Injected private var loginRepo: LoginRepo
 	
 	@Published public var currentUser: User?
 	
@@ -19,7 +21,7 @@ class UserRepo: UserManaging, ObservableObject {
 		} catch {
 			try handleError(error)
 		}
-		LoginRepo.shared.logOut()
+		loginRepo.logOut()
 	}
 	
 	public func createUser(nickname: String, email: String, password: String, passwordConfirmation: String, verificationCode: String) async throws {

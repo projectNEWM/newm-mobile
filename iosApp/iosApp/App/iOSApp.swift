@@ -4,12 +4,14 @@ import ModuleLinker
 import FacebookCore
 import Data
 import UIKit
+import shared
 
 @main
 struct iOSApp: App {
 	let mainViewProvider: MainViewProviding
 	
 	init() {
+		KoinKt.doInitKoin()
 #if DEBUG
 		UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 #endif
