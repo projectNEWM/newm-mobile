@@ -17,7 +17,7 @@ public class LoginRepo: ObservableObject {
 	private var appleSignInID: String?
 	
 	//TODO: make actor
-	public static let shared = LoginRepo()
+//	public static let shared = LoginRepo()
 	
 	private init(api: LoginAPI = LoginAPI()) {
 		self.api = api

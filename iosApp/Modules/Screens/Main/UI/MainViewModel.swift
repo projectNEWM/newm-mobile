@@ -4,18 +4,17 @@ import ModuleLinker
 import Resolver
 import Data
 import API
+import shared
 
 @MainActor
 class MainViewModel: ObservableObject {
 	@Published var selectedTab: MainViewModelTab = .home
 	
-	@Published var shouldShowLogin: Bool = false
+	var shouldShowLogin: Bool {
+		loginUseCase.userIsLoggedIn == false
+	}
 	
-	private let loginRepo = LoginRepo.shared
+	@Injected private var loginUseCase: LoginUseCase
 	
 	private var cancelables = Set<AnyCancellable>()
-	
-	init() {
-		loginRepo.$userIsLoggedIn.map { !$0 }.assign(to: &$shouldShowLogin)
-	}
 }
