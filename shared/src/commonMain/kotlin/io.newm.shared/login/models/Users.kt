@@ -9,7 +9,16 @@ data class LogInUser(
 )
 
 @Serializable
-data class GoogleSignInRequest(val idToken: String)
+data class GoogleSignInRequest(val accessToken: String)
+
+@Serializable
+data class AppleSignInRequest(val idToken: String)
+
+@Serializable
+data class FacebookSignInRequest(val accessToken: String)
+
+@Serializable
+data class LinkedInSignInRequest(val accessToken: String)
 
 @Serializable
 data class NewUser(

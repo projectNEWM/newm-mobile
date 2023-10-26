@@ -16,8 +16,6 @@ public struct MainView: View {
 	
 	@State var route: MainViewRoute?
 	
-	public init() {}
-	
 	public var body: some View {
 		GeometryReader { geometry in
 			if viewModel.shouldShowLogin {

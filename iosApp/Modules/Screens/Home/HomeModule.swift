@@ -19,10 +19,6 @@ extension HomeModule {
 		mockResolver.register {
 			MockHomeViewUIModelProvider(actionHandler: $0.resolve()) as HomeViewUIModelProviding
 		}
-		
-		mockResolver.register {
-			MockUserRepo() as any UserManaging
-		}
 	}
 }
 #endif

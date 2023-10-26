@@ -12,7 +12,10 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory
+import io.newm.shared.login.models.AppleSignInRequest
+import io.newm.shared.login.models.FacebookSignInRequest
 import io.newm.shared.login.models.GoogleSignInRequest
+import io.newm.shared.login.models.LinkedInSignInRequest
 import io.newm.shared.login.models.LogInUser
 import io.newm.shared.login.models.LoginResponse
 import io.newm.shared.login.models.NewUser
@@ -73,6 +76,51 @@ internal class LoginAPI(
     @Throws(KMMException::class, CancellationException::class)
     suspend fun loginWithGoogle(request: GoogleSignInRequest): LoginResponse {
         val response = httpClient.post("/v1/auth/login/google") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+
+        return when (response.status) {
+            HttpStatusCode.OK -> response.body<LoginResponse>()
+            else -> {
+                throw KMMException("HTTP Error ${response.status}: ${response.bodyAsText()}")
+            }
+        }
+    }
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun loginWithApple(request: AppleSignInRequest): LoginResponse {
+        val response = httpClient.post("/v1/auth/login/apple") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+
+        return when (response.status) {
+            HttpStatusCode.OK -> response.body<LoginResponse>()
+            else -> {
+                throw KMMException("HTTP Error ${response.status}: ${response.bodyAsText()}")
+            }
+        }
+    }
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun loginWithFacebook(request: FacebookSignInRequest): LoginResponse {
+        val response = httpClient.post("/v1/auth/login/facebook") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+
+        return when (response.status) {
+            HttpStatusCode.OK -> response.body<LoginResponse>()
+            else -> {
+                throw KMMException("HTTP Error ${response.status}: ${response.bodyAsText()}")
+            }
+        }
+    }
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun loginWithLinkedIn(request: LinkedInSignInRequest): LoginResponse {
+        val response = httpClient.post("/v1/auth/login/linkedin") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }

@@ -3,6 +3,8 @@ package io.newm.shared.usecases
 import io.newm.shared.login.models.NewUser
 import io.newm.shared.login.repository.KMMException
 import io.newm.shared.login.repository.LogInRepository
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 interface SignupUseCase {
@@ -43,5 +45,12 @@ internal class SignupUseCaseImpl(private val repository: LogInRepository) : Sign
         )
         repository.registerUser(newUser)
     }
+}
 
+class SignupUseCaseProvider(): KoinComponent {
+    private val signUpUseCase: SignupUseCase by inject()
+
+    fun get(): SignupUseCase {
+        return signUpUseCase
+    }
 }

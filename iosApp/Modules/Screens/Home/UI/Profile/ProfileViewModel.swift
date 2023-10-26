@@ -4,12 +4,13 @@ import Resolver
 import Models
 import ModuleLinker
 import Combine
+import shared
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-	@Injected private var userRepo: any UserManaging
+//	@Injected private var userRepo: any UserManaging
 	
-	var user: User? { userRepo.currentUser }
+//	var user: User? { userRepo.currentUser }
 	
 	@Published var firstName: String = ""
 	@Published var lastName: String = ""
@@ -26,27 +27,28 @@ final class ProfileViewModel: ObservableObject {
 	var ptrOffset: CGFloat = 0
 	
 	var showSaveButton: Bool {
-		guard let user = user else { return false }
-		
-		func hasNewPassword() -> Bool {
-			currentPassword.isEmpty == false &&
-			newPassword.isEmpty == false &&
-			confirmPassword.isEmpty == false
-		}
-		
-		func infoFieldsAreEmpty() -> Bool {
-			firstName.isEmpty &&
-			lastName.isEmpty &&
-			currentPassword.isEmpty
-		}
-		
-		func hasNewInfo() -> Bool {
-			firstName != user.firstName ||
-			lastName != user.lastName ||
-			email != user.email
-		}
-		
-		return hasNewPassword() || (infoFieldsAreEmpty() == false && hasNewInfo())
+//		guard let user = user else { return false }
+//		
+//		func hasNewPassword() -> Bool {
+//			currentPassword.isEmpty == false &&
+//			newPassword.isEmpty == false &&
+//			confirmPassword.isEmpty == false
+//		}
+//		
+//		func infoFieldsAreEmpty() -> Bool {
+//			firstName.isEmpty &&
+//			lastName.isEmpty &&
+//			currentPassword.isEmpty
+//		}
+//		
+//		func hasNewInfo() -> Bool {
+//			firstName != user.firstName ||
+//			lastName != user.lastName ||
+//			email != user.email
+//		}
+//		
+//		return hasNewPassword() || (infoFieldsAreEmpty() == false && hasNewInfo())
+		false
 	}
 	
 	init() {
@@ -58,37 +60,37 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	func loadUser() async {
-		// don't set loading state here, since this might be called from the view's "refreshable"
-		do {
-			try await userRepo.fetchCurrentUser()
-			updateUserFields()
-		} catch {
-			self.error = error.localizedDescription
-		}
+//		// don't set loading state here, since this might be called from the view's "refreshable"
+//		do {
+////			try await userRepo.fetchCurrentUser()
+//			updateUserFields()
+//		} catch {
+//			self.error = error.localizedDescription
+//		}
 	}
 	
 	func save() {
 		Task {
 			isLoading = true
-			do {
-				try await userRepo.updateUserInfo(
-					firstName: firstName,
-					lastName: lastName,
-					currentPassword: currentPassword,
-					newPassword: newPassword,
-					confirmNewPassword: confirmPassword
-				)
-			} catch {
-				self.error = error.localizedDescription
-			}
+//			do {
+////				try await userRepo.updateUserInfo(
+////					firstName: firstName,
+////					lastName: lastName,
+////					currentPassword: currentPassword,
+////					newPassword: newPassword,
+////					confirmNewPassword: confirmPassword
+////				)
+//			} catch {
+//				self.error = error.localizedDescription
+//			}
 			isLoading = false
 		}
 	}
 	
 	private func updateUserFields() {
-		guard let user = user else { return }
-		firstName = user.firstName.emptyIfNil
-		lastName = user.lastName.emptyIfNil
-		email = user.email.emptyIfNil
+//		guard let user = user else { return }
+//		firstName = user.firstName.emptyIfNil
+//		lastName = user.lastName.emptyIfNil
+//		email = user.email.emptyIfNil
 	}
 }

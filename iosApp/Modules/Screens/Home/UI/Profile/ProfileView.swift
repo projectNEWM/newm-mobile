@@ -26,7 +26,7 @@ struct ProfileView: View {
 		ZStack {
 			ScrollView {
 				VStack(alignment: .leading) {
-					HeaderImageSection(viewModel.user?.bannerUrl?.absoluteString)
+//					HeaderImageSection(viewModel.user?.bannerUrl?.absoluteString)
 					artistImage
 					bottomSection
 						.addSidePadding()
@@ -76,7 +76,7 @@ struct ProfileView: View {
 		
 	@ViewBuilder
 	private var artistImage: some View {
-		AsyncImage(url: viewModel.user?.pictureUrl)
+		AsyncImage(url: /*viewModel.user?.pictureUrl*/nil)
 			.circle(size: userImageSize)
 			.padding(.top, -(sectionSpacing+userImageSize/2))
 	}
