@@ -15,23 +15,16 @@ public final class LoginModule: ModuleProtocol {
 		Resolver.register {
 			LoginUseCaseProvider().get() as LoginUseCase
 		}
+		
+		Resolver.register {
+			SignupUseCaseProvider().get() as SignupUseCase
+		}
 	}
 }
 
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
-//		mockResolver.register {
-//			MockLogInLogOutUseCase.shared as LoggedInUserUseCaseProtocol
-//		}
-		
-//		mockResolver.register {
-//			MockLogInLogOutUseCase.shared as LoginRepo
-//		}
-		
-//		mockResolver.register {
-//			MockLogInLogOutUseCase.shared as LogOutUseCaseProtocol
-//		}
 	}
 }
 #endif

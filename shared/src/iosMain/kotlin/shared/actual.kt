@@ -13,5 +13,5 @@ actual fun platformModule() = module {
         NewmDatabaseWrapper(NewmDatabase(driver))
     }
     single { Darwin.create() }
-    single { KVault(get(), "user-account") }
+    single { KVault() }
 }

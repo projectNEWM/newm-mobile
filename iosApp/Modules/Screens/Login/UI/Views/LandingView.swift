@@ -58,7 +58,7 @@ extension LandingView {
 			Group {
 				loginButton
 				createAccountButton
-				facebookLoginButton
+//				facebookLoginButton
 				googleSignInButton
 				signInWithAppleButton
 			}
@@ -92,15 +92,15 @@ extension LandingView {
 		.borderOverlay(color: NEWMColor.grey500(), radius: 4, width: 2)
 	}
 	
-	@ViewBuilder
-	private var facebookLoginButton: some View {
-		FacebookLoginButton(logInCompletionHandler: viewModel.handleFacebookLogin, logOutCompletionHandler: viewModel.handleFacebookLogout)
-			.frame(height: socialSignInButtonHeight)
-			.addSidePadding()
-			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
-			.cornerRadius(4)
-			.padding(.top)
-	}
+//	@ViewBuilder
+//	private var facebookLoginButton: some View {
+//		FacebookLoginButton(logInCompletionHandler: viewModel.handleFacebookLogin, logOutCompletionHandler: viewModel.handleFacebookLogout)
+//			.frame(height: socialSignInButtonHeight)
+//			.addSidePadding()
+//			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
+//			.cornerRadius(4)
+//			.padding(.top)
+//	}
 	
 	@ViewBuilder
 	private var signInWithAppleButton: some View {

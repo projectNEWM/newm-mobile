@@ -7,9 +7,6 @@ public final class DataModule: ModuleProtocol {
 	public static let shared = DataModule()
 	
 	public func registerAllServices() {
-		Resolver.register {
-			UserRepo.shared as any UserManaging
-		}
 	}
 }
 
