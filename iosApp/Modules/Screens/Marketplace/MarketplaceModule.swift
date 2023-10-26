@@ -3,7 +3,7 @@ import Resolver
 import ModuleLinker
 import SwiftUI
 
-public final class MarketplaceModule: ModuleProtocol {
+public final class MarketplaceModule: Module {
 	public static let shared = MarketplaceModule()
 	
 	public func registerAllServices() {

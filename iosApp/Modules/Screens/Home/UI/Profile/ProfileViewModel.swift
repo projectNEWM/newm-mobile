@@ -61,12 +61,12 @@ final class ProfileViewModel: ObservableObject {
 	
 	func loadUser() async {
 //		// don't set loading state here, since this might be called from the view's "refreshable"
-//		do {
-////			try await userRepo.fetchCurrentUser()
-//			updateUserFields()
-//		} catch {
-//			self.error = error.localizedDescription
-//		}
+		do {
+			try await userRepo.fetchCurrentUser()
+			updateUserFields()
+		} catch {
+			self.error = error.localizedDescription
+		}
 	}
 	
 	func save() {

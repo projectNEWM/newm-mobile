@@ -2,7 +2,7 @@ import Foundation
 import ModuleLinker
 import Resolver
 
-public final class AudioPlayerModule: ModuleProtocol {
+public final class AudioPlayerModule: Module {
 	public static var shared = AudioPlayerModule()
 	
 	public func registerAllServices() {

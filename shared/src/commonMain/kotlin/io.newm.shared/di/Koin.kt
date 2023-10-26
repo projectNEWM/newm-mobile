@@ -18,6 +18,8 @@ import io.newm.shared.repositories.WalletNFTSongsRepository
 import io.newm.shared.services.GenresAPI
 import io.newm.shared.services.PlaylistAPI
 import io.newm.shared.services.UserAPI
+import io.newm.shared.usecases.GetCurrentUserUseCase
+import io.newm.shared.usecases.GetCurrentUserUseCaseImpl
 import io.newm.shared.usecases.GetGenresUseCase
 import io.newm.shared.usecases.GetGenresUseCaseImpl
 import io.newm.shared.usecases.LoginUseCase
@@ -67,6 +69,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<WalletNFTSongsUseCase> { WalletNFTSongsUseCaseImpl() }
     single<UserSession> { UserSessionImpl() }
+    single<GetCurrentUserUseCase> { GetCurrentUserUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

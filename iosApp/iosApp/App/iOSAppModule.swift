@@ -17,10 +17,10 @@ import AudioPlayer
 //import Marketplace
 import Data
 
-struct iOSAppModule: ModuleProtocol {
+struct iOSAppModule: Module {
 	static var shared = iOSAppModule()
 	
-	let modules: [ModuleProtocol] = {
+	let modules: [Module] = {
 		[
 //			WalletModule.shared,
 			HomeModule.shared,

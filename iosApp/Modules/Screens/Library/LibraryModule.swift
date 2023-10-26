@@ -3,7 +3,7 @@ import Resolver
 import ModuleLinker
 import SwiftUI
 
-public final class LibraryModule: ModuleProtocol {
+public final class LibraryModule: Module {
 	public static let shared = LibraryModule()
 		
 	public func registerAllServices() {

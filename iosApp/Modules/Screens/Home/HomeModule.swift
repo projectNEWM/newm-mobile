@@ -3,7 +3,7 @@ import Resolver
 import ModuleLinker
 import SwiftUI
 
-public final class HomeModule: ModuleProtocol {
+public final class HomeModule: Module {
 	public static let shared = HomeModule()
 	
 	public func registerAllServices() {

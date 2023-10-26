@@ -4,7 +4,7 @@ import SwiftUI
 import ModuleLinker
 import TabBar
 
-public final class MainModule: ModuleProtocol {
+public final class MainModule: Module {
 	public static let shared = MainModule()
 
 	public func registerAllServices() {

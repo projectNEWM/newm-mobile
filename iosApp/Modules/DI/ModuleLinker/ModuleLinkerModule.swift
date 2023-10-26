@@ -1,7 +1,7 @@
 import Foundation
 import Resolver
 
-public final class ModuleLinkerModule: ModuleProtocol {
+public final class ModuleLinkerModule: Module {
 	public static var shared = ModuleLinkerModule()
 	
 	public func registerAllServices() {

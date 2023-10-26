@@ -3,7 +3,7 @@ import Resolver
 import ModuleLinker
 import SwiftUI
 
-public final class FontsModule: ModuleProtocol {
+public final class FontsModule: Module {
 	public static var shared = FontsModule()
 	
 	public func registerAllServices() {}

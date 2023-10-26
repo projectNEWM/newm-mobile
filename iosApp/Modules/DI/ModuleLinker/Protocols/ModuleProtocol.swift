@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Resolver
 
-public protocol ModuleProtocol {
+public protocol Module {
 	static var shared: Self { get }
 	func registerAllServices()
 #if DEBUG
