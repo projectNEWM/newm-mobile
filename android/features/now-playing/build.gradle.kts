@@ -40,6 +40,7 @@ dependencies {
 //    kapt(Airbnb.showkaseProcessor)
 
     implementation(project(Modules.coreTheme))
+    implementation(project(Modules.musicPlayer))
     implementation(project(Modules.shared))
     implementation(project(Modules.coreUiUtils))
 
