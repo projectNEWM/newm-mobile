@@ -7,11 +7,13 @@ import io.newm.shared.login.models.*
 import io.newm.shared.login.service.LoginAPI
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import shared.Notification
+import shared.postNotification
 import kotlin.coroutines.cancellation.CancellationException
 
 open class KMMException(message: String) : Throwable(message)
 
-interface LogInRepository {
+internal interface LogInRepository {
     @Throws(Exception::class)
     suspend fun requestEmailConfirmationCode(email: String)
 
@@ -20,6 +22,10 @@ interface LogInRepository {
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(email: String, password: String)
+
+    fun logOut()
+
+    fun userIsLoggedIn(): Boolean
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun oAuthLogin(oAuthData: OAuthData)
@@ -60,19 +66,31 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
         return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
     }
 
+    override fun logOut() {
+        tokenManager.clearToken()
+        postNotification(Notification.loginStateChanged)
+    }
+
+    override fun userIsLoggedIn(): Boolean {
+        return tokenManager.getAccessToken() != null
+    }
+
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
         logger.d { "logIn: oAuth" }
         when (oAuthData) {
-            is OAuthData.Facebook -> TODO()
-            is OAuthData.Google -> service.loginWithGoogle(GoogleSignInRequest(idToken = oAuthData.idToken))
-            is OAuthData.LinkedIn -> TODO()
+            is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
+            is OAuthData.Google -> service.loginWithGoogle(GoogleSignInRequest(accessToken = oAuthData.idToken))
+            is OAuthData.Apple -> service.loginWithApple(AppleSignInRequest(idToken = oAuthData.idToken))
+            is OAuthData.LinkedIn -> service.loginWithLinkedIn(LinkedInSignInRequest(accessToken = oAuthData.accessToken))
         }
     }
 
+    @Throws(KMMException::class, CancellationException::class)
     private suspend fun handleLoginResponse(request: suspend () -> LoginResponse) {
         try {
             storeAccessToken(request())
+            postNotification(Notification.loginStateChanged)
         } catch (e: ClientRequestException) {
             when (e.response.status.value) {
                 404 -> {

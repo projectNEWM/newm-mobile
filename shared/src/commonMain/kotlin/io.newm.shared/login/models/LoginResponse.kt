@@ -11,7 +11,6 @@ data class LoginResponse(
 
 sealed class LoginException(message: String): KMMException(message) {
     data class WrongPassword(override val message: String) : LoginException(message)
-
     data class UserNotFound(override val message: String) : LoginException(message)
 }
 
@@ -21,6 +20,5 @@ fun LoginResponse.isValid(): Boolean {
 
 sealed class RegisterException(message: String): KMMException(message) {
     data class UserAlreadyExists(override val message: String) : RegisterException(message)
-
     data class TwoFactorAuthenticationFailed(override val message: String) : RegisterException(message)
 }
