@@ -8,13 +8,14 @@ import io.newm.shared.login.UserSessionImpl
 import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.login.repository.LogInRepositoryImpl
 import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.repositories.CardanoWalletRepository
+import io.newm.shared.repositories.CardanoWalletRepositoryImpl
 import io.newm.shared.repositories.GenresRepository
 import io.newm.shared.repositories.GenresRepositoryImpl
 import io.newm.shared.repositories.PlaylistRepository
 import io.newm.shared.repositories.PlaylistRepositoryImpl
 import io.newm.shared.repositories.UserRepository
 import io.newm.shared.repositories.UserRepositoryImpl
-import io.newm.shared.repositories.WalletNFTSongsRepository
 import io.newm.shared.services.GenresAPI
 import io.newm.shared.services.PlaylistAPI
 import io.newm.shared.services.UserAPI
