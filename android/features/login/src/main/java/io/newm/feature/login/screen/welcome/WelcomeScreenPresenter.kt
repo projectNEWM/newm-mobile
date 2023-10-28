@@ -1,7 +1,6 @@
 package io.newm.feature.login.screen.welcome
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContract
@@ -22,12 +21,12 @@ import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.login.repository.KMMException
-import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.login.repository.OAuthData
+import io.newm.shared.usecases.LoginUseCase
 
 class WelcomeScreenPresenter(
     private val navigator: Navigator,
-    private val repository: LogInRepository,
+    private val loginUseCase: LoginUseCase,
     private val googleSignInLauncher: GoogleSignInLauncher,
     private val activityResultContract: ActivityResultContract<Intent, ActivityResult>,
 ) : Presenter<WelcomeScreenUiState> {
@@ -56,7 +55,7 @@ class WelcomeScreenPresenter(
                     val idToken = account.idToken
                     idToken ?: throw IllegalStateException("Google sign in failed. idToken is null")
 
-                    repository.oAuthLogin(OAuthData.Google(idToken))
+                    loginUseCase.logInWithGoogle(idToken)
                     navigator.goTo(HomeScreen)
                 } catch (e: ApiException) {
                     // The ApiException status code indicates the detailed failure reason.

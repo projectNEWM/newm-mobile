@@ -55,7 +55,7 @@ val viewModule = module {
         WelcomeScreenPresenter(
             navigator = params.get(),
             googleSignInLauncher = get(),
-            repository = get(),
+            loginUseCase = get(),
             activityResultContract = ActivityResultContracts.StartActivityForResult()
         )
     }
