@@ -38,5 +38,4 @@ internal class GenresAPI(
         parameter("olderThan", olderThan)
         parameter("newerThan", newerThan)
     }.body<List<Genre>>()
-
 }

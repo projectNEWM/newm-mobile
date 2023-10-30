@@ -26,7 +26,8 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 object Constants { // TODO move to build config
-    const val googleAuthServerClientId = "489785482974-d5g8ggup9c9e1uod25lvbop0hpd4thgr.apps.googleusercontent.com"
+    const val googleAuthServerClientId =
+        "489785482974-d5g8ggup9c9e1uod25lvbop0hpd4thgr.apps.googleusercontent.com"
 }
 
 val viewModule = module {
@@ -34,8 +35,8 @@ val viewModule = module {
     viewModelOf(::CreateAccountViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::ProfileViewModel)
-    viewModelOf(::NFTLibraryViewModel)
     viewModelOf(::DemoPlayerViewModel)
+    viewModelOf(::NFTLibraryViewModel)
     viewModel { params -> MusicPlayerViewModel(params.get(), params.get(), get()) }
 
     factory { params -> CreateAccountScreenPresenter(params.get(), get()) }

@@ -4,25 +4,23 @@ package io.newm.screens.library
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
-import io.newm.screens.profile.ProfileState
 import io.newm.shared.models.Song
-import io.newm.shared.models.User
-import io.newm.shared.repositories.UserRepository
+import io.newm.shared.usecases.WalletConnectUseCase
 import io.newm.shared.usecases.WalletNFTSongsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class NFTLibraryViewModel(private val useCase: WalletNFTSongsUseCase) : ViewModel() {
+class NFTLibraryViewModel(
+    private val useCase: WalletNFTSongsUseCase,
+    private val walletConnectManager: WalletConnectUseCase
+) : ViewModel() {
 
     private val xPub: MutableStateFlow<String?> = MutableStateFlow(null)
 
@@ -41,8 +39,12 @@ class NFTLibraryViewModel(private val useCase: WalletNFTSongsUseCase) : ViewMode
 
     fun setXPub(xPub: String) {
         this.xPub.value = xPub
+        if(!walletConnectManager.isConnected()) {
+            walletConnectManager.connect(xPub)
+        }
+
         viewModelScope.launch {
-            useCase.getWalletNFTs(xPub)
+            useCase.getWalletNFTs()
         }
     }
 }
