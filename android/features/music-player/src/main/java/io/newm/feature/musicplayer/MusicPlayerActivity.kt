@@ -20,9 +20,12 @@ import org.koin.core.parameter.parametersOf
 
 class MusicPlayerActivity : ComponentActivity() {
     private val mediaPlayer: MutableState<Player?> = mutableStateOf(null)
+    private var controllerFuture: ListenableFuture<MediaController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initMediaController()
+
         val songId = requireNotNull(intent.getStringExtra(EXTRA_SONG_ID))
 
         setContent {
@@ -44,10 +47,7 @@ class MusicPlayerActivity : ComponentActivity() {
         }
     }
 
-    private var controllerFuture: ListenableFuture<MediaController>? = null
-
-    override fun onStart() {
-        super.onStart()
+    private fun initMediaController() {
         val sessionToken = SessionToken(this, ComponentName(this, MediaService::class.java))
         controllerFuture = MediaController.Builder(this, sessionToken).buildAsync().apply {
             addListener(
