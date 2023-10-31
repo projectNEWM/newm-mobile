@@ -25,8 +25,11 @@ class NFTLibraryViewModel(
 
     private var _state: StateFlow<NFTLibraryState> =
         useCase.getAllWalletNFTSongs().mapLatest {
-            NFTLibraryState.Content(it)
-
+            if(walletConnectManager.isConnected()){
+                NFTLibraryState.Content(it)
+            } else {
+                NFTLibraryState.NoWalletFound
+            }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),

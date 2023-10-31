@@ -32,7 +32,7 @@ fun Navigation(
             onPlaySong = { songId ->
                 navController.navigate(Screen.MusicPlayer.routeOf(songId.id))
             },
-            onConnectWalletClick = onConnectWalletClick
+            goToProfile = { navController.navigate(Screen.ProfileViewRoot.route) }
         )
         addHomeTree(navController, isBottomBarVisible)
         addProfileViewTree(onEditProfileClick)
@@ -102,13 +102,13 @@ private fun NavGraphBuilder.addProfileViewTree(
 }
 
 private fun NavGraphBuilder.addNFTLibraryTree(
-    onPlaySong: (Song) -> Unit, onConnectWalletClick: () -> Unit
+    onPlaySong: (Song) -> Unit, goToProfile: () -> Unit
 ) {
     navigation(
         route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
     ) {
         composable(Screen.NFTLibraryLanding.route) { backStackEntry ->
-            NFTLibraryScreen(onPlaySong, onConnectWalletClick)
+            NFTLibraryScreen(onPlaySong, goToProfile)
         }
     }
 }

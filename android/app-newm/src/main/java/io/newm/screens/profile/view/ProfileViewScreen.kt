@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.permissions.AppPermission
+import io.newm.core.ui.permissions.doWithPermission
+import io.newm.core.ui.permissions.rememberRequestPermissionIntent
 import io.newm.core.ui.text.formTextFieldStyle
 import io.newm.core.ui.text.formTitleStyle
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
@@ -42,7 +45,7 @@ fun ProfileViewScreen(
             ProfileViewContent(
                 user = (state as ProfileViewState.Content).profile,
                 isWalletConnected = (state as ProfileViewState.Content).isWalletConnected,
-                onConnectWalletClick = {xpubKey -> viewModel.connectWallet(xpubKey)},
+                onConnectWalletClick = { xpubKey -> viewModel.connectWallet(xpubKey) },
                 onEditProfileClick = onEditProfileClick,
                 disconnectWallet = { viewModel.disconnectWallet() },
                 logout = { viewModel.logout() }
@@ -74,6 +77,10 @@ fun ProfileViewContent(
             onConnectWalletClick(xpubKey)
         }
     }
+
+    val requestPermission = rememberRequestPermissionIntent(
+        onGranted = { /*TODO*/ },
+        onDismiss = { /*TODO*/ })
 
     Column(
         modifier = Modifier
@@ -113,7 +120,8 @@ fun ProfileViewContent(
                 text = "Disconnect Wallet",
                 onClick = {
                     disconnectWallet()
-                    Toast.makeText(context, "Wallet has been disconnected.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Wallet has been disconnected.", Toast.LENGTH_SHORT)
+                        .show()
                 }
             )
         } else {
@@ -121,8 +129,16 @@ fun ProfileViewContent(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 text = "Connect Wallet",
                 onClick = {
-                    val intent = Intent(context, BarcodeScannerActivity::class.java)
-                    launcher.launch(intent)
+                    context.run {
+                        doWithPermission(
+                            onGranted = {
+                                val intent = Intent(this, BarcodeScannerActivity::class.java)
+                                launcher.launch(intent)
+                            },
+                            requestPermissionLauncher = requestPermission,
+                            appPermission = AppPermission.CAMERA
+                        )
+                    }
                 }
             )
         }

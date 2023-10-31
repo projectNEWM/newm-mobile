@@ -2,6 +2,8 @@ package io.newm.screens.library
 
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -41,7 +44,7 @@ internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 @Composable
 fun NFTLibraryScreen(
     onPlaySong: (Song) -> Unit,
-    onConnectWalletClick: () -> Unit,
+    goToProfile: () -> Unit,
     viewModel: NFTLibraryViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -63,7 +66,7 @@ fun NFTLibraryScreen(
         )
         when (state) {
             NFTLibraryState.Loading -> LoadingScreen()
-            NFTLibraryState.NoWalletFound -> EmptyNFTListScreen(onConnectWalletClick)
+            NFTLibraryState.NoWalletFound -> EmptyNFTListScreen(goToProfile)
             is NFTLibraryState.Content -> {
                 SongList(
                     songs = (state as NFTLibraryState.Content).songs,
@@ -77,20 +80,27 @@ fun NFTLibraryScreen(
 }
 
 @Composable
-fun EmptyNFTListScreen(onConnectWalletClick: () -> Unit) {
-    Column(
+fun EmptyNFTListScreen(goToProfile: () -> Unit) {
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .testTag(TAG_NFTLIBRARY_SCREEN)
+            .testTag(TAG_NFTLIBRARY_SCREEN),
+        contentAlignment = Alignment.Center // This centers the content both horizontally and vertically
     ) {
-        Text(
-            text = stringResource(id = R.string.title_nft_library),
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                modifier = Modifier.padding(all = 16.dp),
+                text =
+                "Connect your Cardano wallet using the xpub key to play songs from your NFTs."
+            )
 
-        PrimaryButton(text = "Connect Wallet", onClick = {
-            Log.d("NFTLibraryScreen", "Login")
-            onConnectWalletClick.invoke()
-        })
+            PrimaryButton(text = "Go to profile", onClick = {
+                goToProfile.invoke()
+            })
+        }
     }
 }
 
