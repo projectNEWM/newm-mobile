@@ -16,6 +16,7 @@ interface MusicPlayer {
     val playbackStatus: StateFlow<PlaybackStatus>
     fun play()
     fun pause()
+    fun stop()
     fun next()
     fun previous()
     fun seekTo(position: Long)
@@ -26,6 +27,7 @@ class MusicPlayerImpl(
     private val player: Player,
 ) : MusicPlayer {
     private val _playbackStatus = MutableStateFlow(PlaybackStatus.EMPTY)
+
     override val playbackStatus: StateFlow<PlaybackStatus>
         get() = _playbackStatus.asStateFlow()
 
@@ -47,13 +49,15 @@ class MusicPlayerImpl(
 
     private fun updatePlaybackStatus() {
         _playbackStatus.update {
+            val state = when (player.playbackState) {
+                Player.STATE_BUFFERING -> PlaybackState.BUFFERING
+                Player.STATE_READY -> if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
+                else -> PlaybackState.STOPPED
+            }
+
             Log.d("MusicPlayer", "Updating playback status")
             PlaybackStatus(
-                state = when (player.playbackState) {
-                    Player.STATE_BUFFERING -> PlaybackState.BUFFERING
-                    Player.STATE_READY -> if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
-                    else -> PlaybackState.STOPPED
-                },
+                state = state,
                 position = player.currentPosition,
                 duration = player.duration,
                 track = playlist?.tracks?.get(player.currentMediaItemIndex),
@@ -62,13 +66,17 @@ class MusicPlayerImpl(
     }
 
     override fun play() {
-        Log.d("MusicPlayer", "Play")
         player.play()
     }
 
     override fun pause() {
         Log.d("MusicPlayer", "Pause")
         player.pause()
+    }
+
+    override fun stop() {
+        Log.d("MusicPlayer", "Stop")
+        player.stop()
     }
 
     override fun next() {
@@ -107,4 +115,6 @@ class MusicPlayerImpl(
         player.seekTo(initialTrackIndex, 0)
         player.prepare()
     }
+
+
 }
