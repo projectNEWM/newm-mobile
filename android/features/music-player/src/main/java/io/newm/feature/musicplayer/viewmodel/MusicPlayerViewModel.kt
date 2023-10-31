@@ -11,13 +11,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 
 class MusicPlayerViewModel(
     private val musicPlayer: MusicPlayer,
@@ -39,6 +36,8 @@ class MusicPlayerViewModel(
             musicPlayer.playbackStatus,
             songFlow
         ) { playbackStatus, song ->
+            songIdFlow.update { playbackStatus.track?.id }
+
             MusicPlayerState.Content(
                 song = song,
                 playbackStatus = playbackStatus
