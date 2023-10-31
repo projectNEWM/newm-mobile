@@ -17,7 +17,7 @@ import io.newm.shared.TokenManager
 import io.newm.shared.login.models.LoginResponse
 import kotlinx.serialization.json.Json
 
-class NetworkClientFactory(
+internal class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
     private val tokenManager: TokenManager,

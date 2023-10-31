@@ -13,70 +13,40 @@ import kotlin.coroutines.cancellation.CancellationException
 
 open class KMMException(message: String) : Throwable(message)
 
-internal interface LogInRepository {
-    @Throws(Exception::class)
-    suspend fun requestEmailConfirmationCode(email: String)
-
-    @Throws(Exception::class)
-    suspend fun registerUser(user: NewUser)
-
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun logIn(email: String, password: String)
-
-    fun logOut()
-
-    fun userIsLoggedIn(): Boolean
-
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun oAuthLogin(oAuthData: OAuthData)
-
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun registerUser(
-        firstName: String,
-        lastName: String,
-        nickname: String,
-        pictureUrl: String,
-        email: String,
-        newPassword: String,
-        confirmPassword: String,
-        authCode: String
-    )
-}
-
-internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
+internal class LogInRepository : KoinComponent {
     private val service: LoginAPI by inject()
     private val tokenManager: TokenManager by inject()
 
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
     @Throws(Exception::class)
-    override suspend fun requestEmailConfirmationCode(email: String) {
+    suspend fun requestEmailConfirmationCode(email: String) {
         logger.d { "requestEmailConfirmationCode: email $email" }
         return service.requestEmailConfirmationCode(email)
     }
 
-    override suspend fun registerUser(user: NewUser) {
+    suspend fun registerUser(user: NewUser) {
         logger.d { "registerUser: email $user" }
         return service.register(user)
     }
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun logIn(email: String, password: String) {
+    suspend fun logIn(email: String, password: String) {
         logger.d { "logIn: email $email" }
         return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
     }
 
-    override fun logOut() {
+    fun logOut() {
         tokenManager.clearToken()
         postNotification(Notification.loginStateChanged)
     }
 
-    override fun userIsLoggedIn(): Boolean {
+    fun userIsLoggedIn(): Boolean {
         return tokenManager.getAccessToken() != null
     }
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
+    suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
         logger.d { "logIn: oAuth" }
         when (oAuthData) {
             is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
@@ -98,11 +68,13 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
                     //404 NOT FOUND If no registered user with 'email' is found
                     throw LoginException.UserNotFound("UserNotFoundException")
                 }
+
                 401 -> {
                     logger.d { "logIn: LoginStatus WrongPassword (401): $e" }
                     //401 UNAUTHORIZED if 'password' is invalid.
                     throw LoginException.WrongPassword("WrongPasswordException")
                 }
+
                 else -> {
                     // No-Op
                     logger.d { "logIn: LoginStatus: ${e.response.status}" }
@@ -116,7 +88,7 @@ internal class LogInRepositoryImpl : KoinComponent, LogInRepository {
     }
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun registerUser(
+    suspend fun registerUser(
         firstName: String,
         lastName: String,
         nickname: String,

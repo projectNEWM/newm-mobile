@@ -1,6 +1,7 @@
 package io.newm.shared.login
 
 import io.newm.shared.TokenManager
+import io.newm.shared.repositories.WalletConnectManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
@@ -18,6 +19,7 @@ internal class UserSessionImpl : KoinComponent, UserSession {
     private val _mutableUserLoginState = MutableStateFlow(false)
 
     private val tokenManager: TokenManager by inject()
+    private val walletConnectManager: WalletConnectManager by inject()
 
     init {
         _mutableUserLoginState.value = userLoginStateValue()
@@ -33,5 +35,6 @@ internal class UserSessionImpl : KoinComponent, UserSession {
 
     override fun logout() {
         tokenManager.clearToken()
+        walletConnectManager.disconnect()
     }
 }
