@@ -124,13 +124,12 @@ class BarcodeScannerActivity : ComponentActivity() {
 
     private fun onValidXpubKey(xpubKey: String) {
         val resultIntent = Intent().apply {
-            putExtra("SCAN_RESULT", xpubKey)
+            putExtra(XPUB_KEY, xpubKey)
         }
         this.apply {
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
-        Toast.makeText(this, "Barcode found", Toast.LENGTH_SHORT).show()
     }
 
     @Composable
@@ -215,6 +214,7 @@ class BarcodeScannerActivity : ComponentActivity() {
     }
 
     companion object {
+        const val XPUB_KEY = "XPUB_SCAN_RESULT_KEY"
         private val TEST_XPUB_KEY =
             "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl"
     }

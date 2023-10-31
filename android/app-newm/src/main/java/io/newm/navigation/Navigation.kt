@@ -35,7 +35,7 @@ fun Navigation(
             onConnectWalletClick = onConnectWalletClick
         )
         addHomeTree(navController, isBottomBarVisible)
-        addProfileViewTree(onConnectWalletClick, onEditProfileClick)
+        addProfileViewTree(onEditProfileClick)
         addLibraryTree(navController)
         addMusicPlayerTree()
         addBarcodeScannerTree()
@@ -88,7 +88,6 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.addProfileViewTree(
-    onConnectWalletClick: () -> Unit,
     onEditProfileClick: () -> Unit
 ) {
     navigation(
@@ -96,7 +95,6 @@ private fun NavGraphBuilder.addProfileViewTree(
     ) {
         composable(Screen.ProfileViewLanding.route) {
             ProfileViewScreen(
-                onConnectWalletClick = onConnectWalletClick,
                 onEditProfileClick = onEditProfileClick
             )
         }
