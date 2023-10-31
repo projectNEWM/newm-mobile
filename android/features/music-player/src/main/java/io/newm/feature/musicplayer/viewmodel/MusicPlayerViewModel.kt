@@ -6,47 +6,49 @@ import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.models.Song
+import io.newm.shared.usecases.WalletNFTSongsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 
 class MusicPlayerViewModel(
     private val musicPlayer: MusicPlayer,
     songId: String,
     musicRepository: MusicRepository,
+    private val useCase: WalletNFTSongsUseCase
 ) : ViewModel() {
     private val songIdFlow: MutableStateFlow<String?> = MutableStateFlow(songId)
 
-    private var _state: StateFlow<MusicPlayerState> =
-        combine(
-            songIdFlow,
-            musicPlayer.playbackStatus,
-        ) { songId, playbackStatus ->
-            if (songId == null) {
-                MusicPlayerState.Loading
-            } else {
-                val song = Song( //TODO: Replace hard coded values
-                    id = songId,
-                    ownerId = "",
-                    createdAt = "",
-                    title = "",
-                    genres = emptyList(),
-                    mintingStatus = "",
-                    marketplaceStatus = "",
-                    coverArtUrl = "https://images.unsplash.com/photo-1589405858862-2ac9cbb41321?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8fA%3D%3D&w=1000&q=80"
-                )
-                MusicPlayerState.Content(
-                    song = song,
-                    playbackStatus = playbackStatus
-                )
+    private val _state: StateFlow<MusicPlayerState> by lazy {
+        val songFlow = songIdFlow.flatMapLatest { songId ->
+            useCase.getAllWalletNFTSongs().map { songs ->
+                val songMap: Map<String, Song> = songs.associateBy { song -> song.id }
+                val songToPlay = songMap[songId]
+                songToPlay ?: songs.first()
             }
+        }
+        combine(
+            musicPlayer.playbackStatus,
+            songFlow
+        ) { playbackStatus, song ->
+            MusicPlayerState.Content(
+                song = song,
+                playbackStatus = playbackStatus
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = MusicPlayerState.Loading
         )
+    }
 
     val state: StateFlow<MusicPlayerState>
         get() = _state

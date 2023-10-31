@@ -22,35 +22,32 @@ class NFTLibraryViewModel(
     private val walletConnectManager: WalletConnectUseCase
 ) : ViewModel() {
 
-    private val xPub: MutableStateFlow<String?> = MutableStateFlow(null)
 
-    private var _state: StateFlow<NFTLibraryState> = xPub.filterNotNull().flatMapLatest { xPub ->
-        useCase.getAllWalletNFTSongs(xPub).mapLatest {
+    private var _state: StateFlow<NFTLibraryState> =
+        useCase.getAllWalletNFTSongs().mapLatest {
             NFTLibraryState.Content(it)
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = NFTLibraryState.Loading
-    )
+
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = NFTLibraryState.NoWalletFound
+        )
 
     val state: StateFlow<NFTLibraryState>
         get() = _state
 
-    fun setXPub(xPub: String) {
-        this.xPub.value = xPub
-        if(!walletConnectManager.isConnected()) {
-            walletConnectManager.connect(xPub)
-        }
-
-        viewModelScope.launch {
-            useCase.getWalletNFTs()
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            useCase.getWalletNFTs()
+//        }
+//    }
 }
 
 sealed interface NFTLibraryState {
     data object Loading : NFTLibraryState
+
+    data object NoWalletFound : NFTLibraryState
+
     data class Content(val songs: List<Song>) : NFTLibraryState
 }
 

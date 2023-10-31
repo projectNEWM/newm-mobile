@@ -8,6 +8,10 @@ sealed class Screen(val route: String) {
     object HomeRoot : Screen("home-root")
     object HomeLanding : Screen("home-landing")
 
+    object ProfileViewRoot : Screen("profile-view-root")
+
+    object ProfileViewLanding : Screen("profile-view-landing")
+
     object LibraryRoot : Screen("library-root")
 
     object LibraryLanding : Screen("library-landing")
@@ -19,10 +23,10 @@ sealed class Screen(val route: String) {
     //Single Screens
     @Parcelize
     object LoginLandingScreen : Screen("login-landing"), CircuitScreen
+
     @Parcelize
     object LoginScreen : Screen("login"), CircuitScreen
     object Signup : Screen("signup")
-    object NowPlayingScreen : Screen("now-playing")
     object Profile : Screen("profile")
     object BarcodeScanner : Screen("barcode-scanner")
 

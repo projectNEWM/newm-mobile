@@ -22,7 +22,7 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
     }
 
     fun attemptToLogin(email: String, password: String) {
-        if (email.isNotBlank() && password.isNotBlank()) {
+        if (email.sanitize().isNotBlank() && password.sanitize().isNotBlank()) {
             viewModelScope.launch {
                 _state.value = _state.value.copy(
                     wrongPassword = false,
@@ -62,4 +62,8 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
         val isUserLoggedIn: Boolean = false,
         val errorMessage: String? = null
     )
+
+    private fun String.sanitize(): String {
+        return this.trim().replace("\n", "")
+    }
 }

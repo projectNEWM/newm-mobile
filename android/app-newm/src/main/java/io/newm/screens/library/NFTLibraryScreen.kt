@@ -37,7 +37,7 @@ import org.koin.compose.koinInject
 
 internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 
-val XPUB = "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl"
+@OptIn(ExperimentalTextApi::class)
 @Composable
 fun NFTLibraryScreen(
     onPlaySong: (Song) -> Unit,
@@ -45,24 +45,10 @@ fun NFTLibraryScreen(
     viewModel: NFTLibraryViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsState()
-    viewModel.setXPub(XPUB)
-    when (state) {
-        NFTLibraryState.Loading -> LoadingScreen()
-        is NFTLibraryState.Content -> {
-            SongList(songs = (state as NFTLibraryState.Content).songs, onPlaySong, onConnectWalletClick)
-        }
-    }
-
-}
-
-@OptIn(ExperimentalTextApi::class)
-@Composable
-fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit, onConnectWalletClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
-            .verticalScroll(state = rememberScrollState())
             .testTag(TAG_NFTLIBRARY_SCREEN)
     ) {
         Text(
@@ -75,29 +61,59 @@ fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit, onConnectWalletClick
                 brush = textGradient(SteelPink, CerisePink)
             )
         )
-        if (savedSongModels.isNotEmpty() ||
-            savedAlbumsModels.isNotEmpty() ||
-            libraryArtistListModels.isNotEmpty()
-        ) {
-            SearchBar(
-                placeholderResId = R.string.library_search,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-            )
+        when (state) {
+            NFTLibraryState.Loading -> LoadingScreen()
+            NFTLibraryState.NoWalletFound -> EmptyNFTListScreen(onConnectWalletClick)
+            is NFTLibraryState.Content -> {
+                SongList(
+                    songs = (state as NFTLibraryState.Content).songs,
+                    onPlaySong = onPlaySong
+                )
+            }
+
         }
+    }
+
+}
+
+@Composable
+fun EmptyNFTListScreen(onConnectWalletClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(TAG_NFTLIBRARY_SCREEN)
+    ) {
+        Text(
+            text = stringResource(id = R.string.title_nft_library),
+        )
 
         PrimaryButton(text = "Connect Wallet", onClick = {
             Log.d("NFTLibraryScreen", "Login")
             onConnectWalletClick.invoke()
         })
+    }
+}
+
+@Composable
+fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState())
+            .testTag(TAG_NFTLIBRARY_SCREEN)
+    ) {
+//        TODO: Implement Search
+//        SearchBar(
+//            placeholderResId = R.string.library_search,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(vertical = 16.dp),
+//        )
         if (songs.isNotEmpty()) {
             songs.forEach { song ->
                 RowSongItem(song = song, onClick = onPlaySong)
             }
         }
-
-
     }
 }
 

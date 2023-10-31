@@ -1,30 +1,43 @@
 package io.newm.feature.musicplayer
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.PauseCircleOutline
-import androidx.compose.material.icons.filled.PlayCircleOutline
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import io.newm.core.resources.R
+import io.newm.core.theme.Gray100
+import io.newm.core.theme.White
+import io.newm.core.theme.inter
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
@@ -38,16 +51,10 @@ internal fun MusicPlayerViewer(
     onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     Box {
-        AsyncImage(
-            model = song.coverArtUrl,
-            modifier = Modifier
-                .fillMaxSize(),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-        )
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 IconButton(onClick = onNavigateUp) {
@@ -73,7 +80,38 @@ internal fun MusicPlayerViewer(
                     )
                 }
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                modifier = Modifier.padding(top = 24.dp),
+                text = "Playing from your NFT library".toUpperCase(Locale.current),
+                fontFamily = inter,
+                fontWeight = FontWeight.Light,
+                fontSize = 12.sp,
+                color = Gray100,
+            )
+            AsyncImage(
+                model = song.coverArtUrl,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.6f)
+                    .clip(RoundedCornerShape(4.dp)),
+                contentScale = ContentScale.FillWidth,
+                contentDescription = null,
+            )
+            Text(
+                modifier = Modifier.padding(top = 24.dp),
+                text = song.title,
+                fontFamily = inter,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = White
+            )
+            Text(
+                text = song.ownerId,
+                fontFamily = inter,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+                color = Gray100
+            )
             PlayerControllers(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 playbackStatus = playbackStatus,
@@ -132,12 +170,16 @@ private fun PreviousTrackButton(
         modifier = modifier,
         onClick = onClick
     ) {
-        Icon(
-            imageVector = Icons.Filled.SkipPrevious,
-            contentDescription = "Skip previous",
-            tint = Color.White
+        Image(
+            modifier = Modifier
+                .wrapContentSize()
+                .clickable(onClick = onClick),
+            painter = painterResource(R.drawable.music_player_ic_previous),
+            contentDescription = "Previous Song"
         )
     }
+
+
 }
 
 @Composable
@@ -146,21 +188,26 @@ private fun PlayButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         modifier = modifier,
         onClick = onClick
     ) {
-        Icon(
-            imageVector = Icons.Filled.PlayCircleOutline,
-            contentDescription = "Play",
-            tint = Color.White
+        Image(
+            modifier = Modifier
+                .wrapContentSize()
+                .clickable(onClick = onClick),
+            painter = painterResource(R.drawable.music_player_ic_play),
+            contentDescription = "Play"
         )
     }
+
 }
 
 @Composable
 fun PauseButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            imageVector = Icons.Filled.PauseCircleOutline,
+        Image(
+            modifier = Modifier
+                .wrapContentSize()
+                .clickable(onClick = onClick),
+            painter = painterResource(R.drawable.music_player_ic_pause),
             contentDescription = "Pause",
-            tint = Color.White
         )
     }
 }
@@ -168,11 +215,24 @@ fun PauseButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 fun NextTrackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            imageVector = Icons.Filled.SkipNext,
-            contentDescription = "Skip next",
-            tint = Color.White
+        Image(
+            modifier = Modifier
+                .wrapContentSize(),
+            painter = painterResource(R.drawable.music_player_ic_next),
+            contentDescription = "Next Song"
         )
     }
+
+}
+
+@Composable
+private fun ShuffleIcon() {
+    Image(
+        modifier = Modifier
+            .wrapContentSize()
+            .offset(x = 28.dp, y = (-14).dp),
+        painter = painterResource(R.drawable.music_player_ic_shuffle),
+        contentDescription = "Shuffle"
+    )
 }
 
