@@ -35,11 +35,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.now.playing.DemoPlayerActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".feature.musicplayer.MusicPlayerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

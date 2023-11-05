@@ -20,6 +20,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +47,8 @@ import java.util.concurrent.Executors
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
+import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
 
 class BarcodeScannerActivity : ComponentActivity() {
@@ -57,22 +60,32 @@ class BarcodeScannerActivity : ComponentActivity() {
             Box(modifier = Modifier.fillMaxSize()) {
                 PreviewViewComposable()
                 CameraOverlay()
-
-                Row(
+                Text(
                     modifier = Modifier
-                        .align(Alignment.TopCenter)
                         .fillMaxWidth()
-                        .padding(all = 16.dp),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(vertical = 24.dp, horizontal = 16.dp)
+                        .align(Alignment.TopStart),
+                    text = stringResource(id = R.string.barcode_scanner_connect_wallet),
+                    style = formTitleStyle
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 24.dp)
+                        .align(Alignment.BottomCenter),
                 ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        text = stringResource(id = R.string.barcode_scanner_scan_xpub_key),
-                        style = formTitleStyle
+                    TextFieldWithLabel(
+                        labelResId = R.string.barcode_scanner_paste_xpub_key,
+                        onValueChange = { value ->
+                            if (value.startsWith("xpub")) {
+                                onValidXpubKey(value)
+                            }
+                        },
                     )
-                    Spacer(modifier = Modifier.weight(1f))
+                    SecondaryButton(text = stringResource(id = R.string.barcode_scanner_use_test_xpub_key),
+                        onClick = { onValidXpubKey(TEST_XPUB_KEY) })
                 }
+
             }
         }
     }
@@ -80,31 +93,26 @@ class BarcodeScannerActivity : ComponentActivity() {
     @Composable
     fun CameraOverlay(modifier: Modifier = Modifier) {
         Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier.matchParentSize(),
-                content = {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        clipPath(
-                            path = Path().apply {
-                                addRect(
-                                    Rect(
+            Box(modifier = Modifier.matchParentSize(), content = {
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    clipPath(
+                        path = Path().apply {
+                            addRect(
+                                Rect(
                                     left = (size.width - 250.dp.toPx()) / 2,
                                     top = (size.height - 250.dp.toPx()) / 2,
                                     right = (size.width + 250.dp.toPx()) / 2,
                                     bottom = (size.height + 250.dp.toPx()) / 2
-                                    )
                                 )
-                            },
-                            clipOp = ClipOp.Difference
-                        ) {
-                            drawRect(Color.Black.copy(alpha = 0.8f))
-                        }
+                            )
+                        }, clipOp = ClipOp.Difference
+                    ) {
+                        drawRect(Color.Black.copy(alpha = 0.8f))
                     }
                 }
-            )
+            })
 
             Box(
                 modifier = Modifier
@@ -114,6 +122,15 @@ class BarcodeScannerActivity : ComponentActivity() {
         }
     }
 
+    private fun onValidXpubKey(xpubKey: String) {
+        val resultIntent = Intent().apply {
+            putExtra(XPUB_KEY, xpubKey)
+        }
+        this.apply {
+            setResult(Activity.RESULT_OK, resultIntent)
+            finish()
+        }
+    }
 
     @Composable
     fun PreviewViewComposable() {
@@ -127,29 +144,18 @@ class BarcodeScannerActivity : ComponentActivity() {
                 cameraProviderFuture.addListener({
                     val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-                    val preview = Preview.Builder()
-                        .build()
-                        .also {
-                            it.setSurfaceProvider(previewView.surfaceProvider)
-                        }
+                    val preview = Preview.Builder().build().also {
+                        it.setSurfaceProvider(previewView.surfaceProvider)
+                    }
 
                     val imageCapture = ImageCapture.Builder().build()
 
-                    val imageAnalyzer = ImageAnalysis.Builder()
-                        .build()
-                        .also {
-                            it.setAnalyzer(cameraExecutor, BarcodeAnalyser { barcodeResult ->
-                                // Return the result to the calling activity
-                                val resultIntent = Intent().apply {
-                                    putExtra("SCAN_RESULT", barcodeResult)
-                                }
-                                context.apply {
-                                    setResult(Activity.RESULT_OK, resultIntent)
-                                    finish()
-                                }
-                                Toast.makeText(context, "Barcode found", Toast.LENGTH_SHORT).show()
-                            })
-                        }
+                    val imageAnalyzer = ImageAnalysis.Builder().build().also {
+                        it.setAnalyzer(cameraExecutor, BarcodeAnalyser { barcodeResult ->
+                            // Return the result to the calling activity
+                            onValidXpubKey(barcodeResult)
+                        })
+                    }
 
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -171,9 +177,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                     }
                 }, ContextCompat.getMainExecutor(context))
                 previewView
-            },
-            modifier = Modifier
-                .fillMaxSize()
+            }, modifier = Modifier.fillMaxSize()
         )
     }
 
@@ -182,9 +186,8 @@ class BarcodeScannerActivity : ComponentActivity() {
     ) : ImageAnalysis.Analyzer {
         @OptIn(ExperimentalGetImage::class)
         override fun analyze(imageProxy: ImageProxy) {
-            val options = BarcodeScannerOptions.Builder()
-                .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-                .build()
+            val options =
+                BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
 
             val scanner = BarcodeScanning.getClient(options)
             val mediaImage = imageProxy.image
@@ -192,23 +195,27 @@ class BarcodeScannerActivity : ComponentActivity() {
                 val image =
                     InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
-                scanner.process(image)
-                    .addOnSuccessListener { barcodes ->
-                        if (barcodes.size > 0) {
-                            barcodes.forEach {
-                                if(it.rawValue?.startsWith("xpub") == true) {
-                                    Log.d("DEBUG cje466", "Barcode found: ${it.rawValue}")
-                                    onValidScan(it.rawValue.toString())
-                                }
+                scanner.process(image).addOnSuccessListener { barcodes ->
+                    if (barcodes.size > 0) {
+                        barcodes.forEach {
+                            if (it.rawValue?.startsWith("xpub") == true) {
+                                Log.d("DEBUG cje466", "Barcode found: ${it.rawValue}")
+                                onValidScan(it.rawValue.toString())
                             }
                         }
                     }
-                    .addOnFailureListener {
-                        // Task failed with an exception
-                        // ...
-                    }
+                }.addOnFailureListener {
+                    // Task failed with an exception
+                    // ...
+                }
             }
             imageProxy.close()
         }
+    }
+
+    companion object {
+        const val XPUB_KEY = "XPUB_SCAN_RESULT_KEY"
+        private val TEST_XPUB_KEY =
+            "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl"
     }
 }

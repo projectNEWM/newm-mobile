@@ -91,7 +91,6 @@ dependencies {
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.nowPlaying))
     implementation(project(Modules.login))
     implementation(project(Modules.musicPlayer))
     implementation(project(Modules.barcodeScanner))

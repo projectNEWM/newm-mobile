@@ -34,9 +34,9 @@ class MockMusicRepository(
 
     override fun fetchPlaylist(playlistId: String): Playlist {
         // TODO find by id
-        val tracks = savedSongModels.map { songModel ->
+        val tracks = savedSongModels.mapIndexed { index, songModel ->
             Track(
-                id = songModel.title,
+                id = index.toString(),
                 title = songModel.title,
                 url = songModel.getAssetSourceSongURI(context).toString(),
                 artist = songModel.artist,

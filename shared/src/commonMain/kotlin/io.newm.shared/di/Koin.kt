@@ -2,31 +2,29 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.TokenManager
-import io.newm.shared.TokenManagerImpl
 import io.newm.shared.login.UserSession
 import io.newm.shared.login.UserSessionImpl
 import io.newm.shared.login.repository.LogInRepository
-import io.newm.shared.login.repository.LogInRepositoryImpl
 import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.repositories.CardanoWalletRepository
 import io.newm.shared.repositories.GenresRepository
-import io.newm.shared.repositories.GenresRepositoryImpl
 import io.newm.shared.repositories.PlaylistRepository
-import io.newm.shared.repositories.PlaylistRepositoryImpl
 import io.newm.shared.repositories.UserRepository
-import io.newm.shared.repositories.UserRepositoryImpl
-import io.newm.shared.repositories.WalletNFTSongsRepository
+import io.newm.shared.repositories.WalletConnectManager
 import io.newm.shared.services.GenresAPI
 import io.newm.shared.services.PlaylistAPI
 import io.newm.shared.services.UserAPI
 import io.newm.shared.services.CardanoWalletAPI
-import io.newm.shared.usecases.GetCurrentUserUseCase
-import io.newm.shared.usecases.GetCurrentUserUseCaseImpl
 import io.newm.shared.usecases.GetGenresUseCase
 import io.newm.shared.usecases.GetGenresUseCaseImpl
 import io.newm.shared.usecases.LoginUseCase
 import io.newm.shared.usecases.LoginUseCaseImpl
 import io.newm.shared.usecases.SignupUseCase
 import io.newm.shared.usecases.SignupUseCaseImpl
+import io.newm.shared.usecases.UserProfileUseCase
+import io.newm.shared.usecases.UserProfileUseCaseImpl
+import io.newm.shared.usecases.WalletConnectUseCase
+import io.newm.shared.usecases.WalletConnectUseCaseImpl
 import io.newm.shared.usecases.WalletNFTSongsUseCase
 import io.newm.shared.usecases.WalletNFTSongsUseCaseImpl
 import kotlinx.coroutines.CoroutineScope
@@ -59,19 +57,21 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { PlaylistAPI(get()) }
     single { CardanoWalletAPI(get()) }
     // Internal Repositories
-    single<TokenManager> { TokenManagerImpl() }
-    single<LogInRepository> { LogInRepositoryImpl() }
-    single<GenresRepository> { GenresRepositoryImpl() }
-    single<UserRepository> { UserRepositoryImpl() }
-    single<PlaylistRepository> { PlaylistRepositoryImpl() }
-    single<CardanoWalletRepository> { CardanoWalletRepositoryImpl() }
-    // External Use Cases
+    single { TokenManager() }
+    single { LogInRepository() }
+    single { GenresRepository() }
+    single { UserRepository() }
+    single { PlaylistRepository() }
+    single { CardanoWalletRepository() }
+    single { WalletConnectManager(get()) }
+    // External Use Cases to be consumed outside of KMM
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
+    single<UserProfileUseCase> { UserProfileUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTSongsUseCase> { WalletNFTSongsUseCaseImpl(get()) }
+    single<WalletNFTSongsUseCase> { WalletNFTSongsUseCaseImpl(get(), get()) }
+    single<WalletConnectUseCase> { WalletConnectUseCaseImpl(get()) }
     single<UserSession> { UserSessionImpl() }
-    single<GetCurrentUserUseCase> { GetCurrentUserUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {
@@ -80,7 +80,7 @@ fun createJson() = Json {
     encodeDefaults = true
 }
 
-fun createHttpClient(
+internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
     json: Json,
     tokenManager: TokenManager,

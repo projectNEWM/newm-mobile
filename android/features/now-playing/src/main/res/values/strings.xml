@@ -1,7 +1,0 @@
-<resources>
-    <string name="now_playing_mock_song_name">Lust is Necessary</string>
-    <string name="now_playing_mock_artist_name">The Velvetines</string>
-    <string name="now_playing_mock_time">3:23:00</string>
-    <string name="now_playing_mock_number_shares">543</string>
-    <string name="now_playing_mock_number_stars">12K</string>
-</resources>

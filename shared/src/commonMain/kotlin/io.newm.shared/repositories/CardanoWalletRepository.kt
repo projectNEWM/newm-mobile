@@ -6,16 +6,13 @@ import io.newm.shared.services.LedgerAssetMetadata
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal interface CardanoWalletRepository {
-    suspend fun getWalletNFTs(xpub: String): List<NFTTrack>
-}
 
-internal class CardanoWalletRepositoryImpl : KoinComponent, CardanoWalletRepository {
+internal class CardanoWalletRepository : KoinComponent {
 
     private val service: CardanoWalletAPI by inject()
     private val logger = Logger.withTag("NewmKMM-CardanoWalletRepository")
 
-    override suspend fun getWalletNFTs(xpub: String): List<NFTTrack> {
+    suspend fun getWalletNFTs(xpub: String): List<NFTTrack> {
         val walletNFTs = service.getWalletNFTs(xpub)
         val tracks = walletNFTs.mapNotNull {
             when (it.getMusicMetadataVersion()) {

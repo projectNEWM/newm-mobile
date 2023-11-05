@@ -134,22 +134,29 @@ internal fun NewmBottomNavigation(
                     onClick = { onNavigationSelected(Screen.NFTLibraryRoot) },
                 )
                 HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.HomeRoot,
-                    iconResId = R.drawable.ic_home,
-                    labelResId = R.string.home,
-                    selectedIconBrush = HomeIconGradient,
-                    selectedLabelColor = DarkViolet,
-                    onClick = { onNavigationSelected(Screen.HomeRoot) },
-                )
-                HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.LibraryRoot,
-                    iconResId = R.drawable.ic_library,
-                    labelResId = R.string.library,
+                    selected = currentRootScreen == Screen.ProfileViewRoot,
+                    iconResId = R.drawable.ic_profile,
+                    labelResId = R.string.profile,
                     selectedIconBrush = LibraryIconGradient,
                     selectedLabelColor = DarkPink,
-                    onClick = { onNavigationSelected(Screen.LibraryRoot) },
+                    onClick = { onNavigationSelected(Screen.ProfileViewRoot) },
                 )
-
+//                HomeBottomNavigationItem(
+//                    selected = currentRootScreen == Screen.HomeRoot,
+//                    iconResId = R.drawable.ic_home,
+//                    labelResId = R.string.home,
+//                    selectedIconBrush = HomeIconGradient,
+//                    selectedLabelColor = DarkViolet,
+//                    onClick = { onNavigationSelected(Screen.HomeRoot) },
+//                )
+//                HomeBottomNavigationItem(
+//                    selected = currentRootScreen == Screen.LibraryRoot,
+//                    iconResId = R.drawable.ic_library,
+//                    labelResId = R.string.library,
+//                    selectedIconBrush = LibraryIconGradient,
+//                    selectedLabelColor = DarkPink,
+//                    onClick = { onNavigationSelected(Screen.LibraryRoot) },
+//                )
             }
         }
     }
@@ -224,6 +231,6 @@ val allScreens: List<Screen>
 
 val routesWithoutBottomNavBar: List<String> by lazy {
     listOf(
-        Screen.NowPlayingScreen.route
+        Screen.Profile.route
     )
 }

@@ -4,13 +4,11 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.newm.shared.TokenManager
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.login.repository.KMMException
 import io.newm.shared.models.User
 import io.newm.shared.models.UserCount
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {

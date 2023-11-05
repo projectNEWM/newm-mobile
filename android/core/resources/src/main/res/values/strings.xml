@@ -11,6 +11,7 @@
     <string name="home">Home</string>
     <string name="nft_library">NFT Library</string>
     <string name="library">Library</string>
+    <string name="profile">Profile</string>
     <string name="search">Search</string>
     <string name="community">Community</string>
     <string name="tribe">Tribe</string>
@@ -63,7 +64,9 @@
     <string name="library_artists">YOUR ARTISTS</string>
     <string name="library_albums">YOUR ALBUMS</string>
     <string name="library_search">Search</string>
-    <string name="barcode_scanner_scan_xpub_key">Scan xPub Barcode</string>
+    <string name="barcode_scanner_connect_wallet">Connect Wallet</string>
+    <string name="barcode_scanner_paste_xpub_key">OR USE THE XPUB KEY</string>
+    <string name="barcode_scanner_use_test_xpub_key">Connect Test XPUB Key</string>
 
 
 </resources>
