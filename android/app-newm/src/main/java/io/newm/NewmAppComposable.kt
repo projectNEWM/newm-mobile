@@ -141,22 +141,22 @@ internal fun NewmBottomNavigation(
                     selectedLabelColor = DarkPink,
                     onClick = { onNavigationSelected(Screen.ProfileViewRoot) },
                 )
-//                HomeBottomNavigationItem(
-//                    selected = currentRootScreen == Screen.HomeRoot,
-//                    iconResId = R.drawable.ic_home,
-//                    labelResId = R.string.home,
-//                    selectedIconBrush = HomeIconGradient,
-//                    selectedLabelColor = DarkViolet,
-//                    onClick = { onNavigationSelected(Screen.HomeRoot) },
-//                )
-//                HomeBottomNavigationItem(
-//                    selected = currentRootScreen == Screen.LibraryRoot,
-//                    iconResId = R.drawable.ic_library,
-//                    labelResId = R.string.library,
-//                    selectedIconBrush = LibraryIconGradient,
-//                    selectedLabelColor = DarkPink,
-//                    onClick = { onNavigationSelected(Screen.LibraryRoot) },
-//                )
+                HomeBottomNavigationItem(
+                    selected = currentRootScreen == Screen.HomeRoot,
+                    iconResId = R.drawable.ic_home,
+                    labelResId = R.string.home,
+                    selectedIconBrush = HomeIconGradient,
+                    selectedLabelColor = DarkViolet,
+                    onClick = { onNavigationSelected(Screen.HomeRoot) },
+                )
+                HomeBottomNavigationItem(
+                    selected = currentRootScreen == Screen.LibraryRoot,
+                    iconResId = R.drawable.ic_library,
+                    labelResId = R.string.library,
+                    selectedIconBrush = LibraryIconGradient,
+                    selectedLabelColor = DarkPink,
+                    onClick = { onNavigationSelected(Screen.LibraryRoot) },
+                )
             }
         }
     }

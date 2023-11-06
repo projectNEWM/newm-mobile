@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
@@ -35,7 +36,7 @@ class MusicPlayerActivity : ComponentActivity() {
                         getViewModel {
                             parametersOf(
                                 songId,
-                                MusicPlayerImpl(player)
+                                MusicPlayerImpl(player, lifecycleScope)
                             )
                         }
                     }
