@@ -16,6 +16,7 @@ internal class CardanoWalletRepository : KoinComponent {
         val walletNFTs = service.getWalletNFTs(xpub)
         val tracks = walletNFTs.mapNotNull {
             when (it.getMusicMetadataVersion()) {
+                1 -> it.getTrackFromMusicMetadataV1()
                 2 -> it.getTrackFromMusicMetadataV2()
                 else -> {
                     logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
@@ -33,15 +34,10 @@ fun List<LedgerAssetMetadata>.getMusicMetadataVersion(): Int? {
 }
 
 data class NFTTrack(
-    val name: String,
-    val image: String,
-    val imageMimeType: String,
-    val files: List<File>,
-    val musicMetadataVersion: Int,
-    val releaseType: String?,
-    val releaseTitle: String?,
-    val distributor: String?,
-    val publicationDate: String?
+    val songName: String,
+    val imageUrl: String,
+    val songSrc: String,
+    val artist: List<String> = emptyList(),
 )
 
 data class File(
@@ -50,38 +46,47 @@ data class File(
     val src: String
 )
 
+fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(): NFTTrack? {
+    val imageId = this.find { it.key == "image" }?.value ?: return null
+    val artistNames = this.find { it.key == "artists" }
+        ?.children
+        ?.flatMap { artist ->
+            artist.children.mapNotNull { detail ->
+                if (detail.key == "name") detail.value as? String else null
+            }
+        }.orEmpty()
+
+    val songSrcId = this.find { it.key == "image" }?.value ?: return null
+
+    return NFTTrack(
+        songName = find { it.key == "song_title" }?.value ?: "Where is the song name?",
+        imageUrl = "https://arweave.net/${imageId.replace("ar://", "")}",
+        songSrc = "https://bcsh.mypinata.cloud/ipfs/${songSrcId.replace("ar://", "")}",
+        artist = artistNames,
+    )
+}
+
+
 fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(): NFTTrack? {
     val name = this.find { it.key == "name" }?.value ?: return null
     val image = this.find { it.key == "image" }?.value ?: return null
-    val imageMimeType = this.find { it.key == "mediaType" }?.value ?: return null
-    val musicMetadataVersion =
-        this.find { it.key == "music_metadata_version" }?.value?.toInt() ?: return null
 
-    val fileList = this.find { it.key == "files" }?.children?.mapNotNull {
+    var source = ""
+    this.find { it.key == "files" }?.children?.mapNotNull {
         val fileName =
             it.children.find { child -> child.key == "name" }?.value ?: return@mapNotNull null
         val fileMediaType =
             it.children.find { child -> child.key == "mediaType" }?.value ?: return@mapNotNull null
-        val fileSrc =
+        source =
             it.children.find { child -> child.key == "src" }?.value ?: return@mapNotNull null
-        File(fileName, fileMediaType, fileSrc)
+        File(fileName, fileMediaType, source)
     }.orEmpty()
 
-    val release = this.find { it.key == "release" }?.children
-    val releaseType = release?.find { it.key == "release_type" }?.value
-    val releaseTitle = release?.find { it.key == "release_title" }?.value
-    val distributor = release?.find { it.key == "distributor" }?.value
-    val publicationDate = release?.find { it.key == "publication_date" }?.value
 
     return NFTTrack(
-        name,
-        image,
-        imageMimeType,
-        fileList,
-        musicMetadataVersion,
-        releaseType,
-        releaseTitle,
-        distributor,
-        publicationDate
+        songName = name,
+        imageUrl = "https://arweave.net/${image.replace("ar://", "")}",
+        songSrc = "https://bcsh.mypinata.cloud/ipfs/${source.replace("ar://", "")}",
+        artist = listOf("{artistNames}"),
     )
 }

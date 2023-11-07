@@ -1,56 +1,35 @@
 package io.newm.shared.repositories.testdata
 
-import io.newm.shared.models.Genre
-import io.newm.shared.models.Song
-import kotlinx.coroutines.delay
+import io.newm.shared.repositories.NFTTrack
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 internal object MockSongs {
 
-    fun getSongsFlow(): Flow<List<Song>> = flow {
+    fun getSongsFlow(): Flow<List<NFTTrack>> = flow {
         emit(
-            savedSongModels.mapIndexed { index, mockSongModel ->
-                mockSongModel.toMockSong(index.toString())
+            savedSongModels.mapIndexed { _, mockSongModel ->
+                mockSongModel.toMockSong()
             }
         )
     }
 
-    private fun MockSongModel.toMockSong(songId: String): Song {
+    private fun MockSongModel.toMockSong(): NFTTrack {
         return createSong(
-            id = songId,
-            ownerId = artist,
             title = title,
             coverArtUrl = imageUrl,
-            assetId = assetId
         )
     }
 
     private fun createSong(
-        id: String,
-        ownerId: String,
         title: String,
-        createdAt: String = 0L.toString(),
-        genres: List<Genre> = emptyList(),
-        mintingStatus: String = "",
-        marketplaceStatus: String = "",
         coverArtUrl: String,
-        assetId: Int
-    ): Song = Song(
-        id = id,
-        ownerId = ownerId,
-        createdAt = createdAt,
-        title = title,
-        genres = genres,
-        mintingStatus = mintingStatus,
-        marketplaceStatus = marketplaceStatus,
-        coverArtUrl = coverArtUrl,
-        tempSourceId = assetId
+    ): NFTTrack = NFTTrack(
+        songName = title,
+        imageUrl = coverArtUrl,
+        songSrc = "https://ipfs.poolpm.nftcdn.io/ipfs/QmW6zkt82o4BbPh87uYYUSNbSSfmy6wbLCd2NE7VQk83Vn?tk=UmgSevoPuMvI0Hd6xQdzs_DA7ExwXGwSp7Yr_5xTUOU",
+        artist = listOf("{insert artist name}")
     )
-
-    private fun pickRandomSong(): MockSongModel {
-        return savedSongModels.random()
-    }
 }
 
 val savedSongModels = listOf(
