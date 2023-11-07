@@ -5,4 +5,6 @@ sealed interface PlaybackUiEvent {
     data object Pause : PlaybackUiEvent
     data object Next : PlaybackUiEvent
     data object Previous : PlaybackUiEvent
+
+    data class Seek(val position: Long): PlaybackUiEvent
 }

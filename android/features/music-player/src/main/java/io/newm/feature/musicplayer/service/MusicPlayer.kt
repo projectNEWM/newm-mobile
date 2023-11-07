@@ -7,10 +7,13 @@ import androidx.media3.common.Player
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Playlist
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 interface MusicPlayer {
     val playbackStatus: StateFlow<PlaybackStatus>
@@ -25,6 +28,7 @@ interface MusicPlayer {
 
 class MusicPlayerImpl(
     private val player: Player,
+    scope: CoroutineScope
 ) : MusicPlayer {
     private val _playbackStatus = MutableStateFlow(PlaybackStatus.EMPTY)
 
@@ -45,6 +49,14 @@ class MusicPlayerImpl(
                 updatePlaybackStatus()
             }
         })
+        scope.launch {
+            while (true) {
+                if (player.currentPosition != _playbackStatus.value.position) {
+                    updatePlaybackStatus()
+                }
+                delay(500)
+            }
+        }
     }
 
     private fun updatePlaybackStatus() {

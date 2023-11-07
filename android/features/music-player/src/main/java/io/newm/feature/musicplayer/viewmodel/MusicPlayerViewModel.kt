@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import org.koin.core.context.GlobalContext
 
 class MusicPlayerViewModel(
     private val musicPlayer: MusicPlayer,
@@ -47,6 +48,7 @@ class MusicPlayerViewModel(
             started = SharingStarted.WhileSubscribed(),
             initialValue = MusicPlayerState.Loading
         )
+
     }
 
     val state: StateFlow<MusicPlayerState>
@@ -63,6 +65,7 @@ class MusicPlayerViewModel(
             PlaybackUiEvent.Pause -> musicPlayer.pause()
             PlaybackUiEvent.Play -> musicPlayer.play()
             PlaybackUiEvent.Previous -> musicPlayer.previous()
+            is PlaybackUiEvent.Seek -> musicPlayer.seekTo(playbackUiEvent.position)
         }
     }
 }
