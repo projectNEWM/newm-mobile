@@ -17,20 +17,19 @@ import io.newm.screens.library.LibraryScreen
 import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.edit.ProfileRoute
 import io.newm.screens.profile.view.ProfileViewScreen
-import io.newm.shared.models.Song
+import io.newm.shared.public.models.NFTTrack
 
 @Composable
 fun Navigation(
     navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
 ) {
-    val onConnectWalletClick = { navController.navigate(Screen.BarcodeScanner.route) }
     val onEditProfileClick = { navController.navigate(Screen.Profile.route) }
     NavHost(
         navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
         addNFTLibraryTree(
             onPlaySong = { songId ->
-                navController.navigate(Screen.MusicPlayer.routeOf(songId.id))
+                navController.navigate(Screen.MusicPlayer.routeOf(songId.name))
             },
             goToProfile = { navController.navigate(Screen.ProfileViewRoot.route) }
         )
@@ -58,10 +57,6 @@ private fun NavGraphBuilder.addHomeTree(
                 onMusicViewDetails = {  }, //TODO: Implement Music Details screen
             )
         }
-
-//        composable(Screen.NowPlayingScreen.route) {
-//            MusicPlayerScreen()
-//        }
         composable(Screen.Profile.route) {
             ProfileRoute(
                 isBottomBarVisible = isBottomBarVisible,
@@ -102,7 +97,7 @@ private fun NavGraphBuilder.addProfileViewTree(
 }
 
 private fun NavGraphBuilder.addNFTLibraryTree(
-    onPlaySong: (Song) -> Unit, goToProfile: () -> Unit
+    onPlaySong: (NFTTrack) -> Unit, goToProfile: () -> Unit
 ) {
     navigation(
         route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import io.newm.Logout
-import io.newm.shared.models.User
-import io.newm.shared.usecases.UserProfileUseCase
+import io.newm.shared.public.models.User
+import io.newm.shared.public.usecases.UserProfileUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

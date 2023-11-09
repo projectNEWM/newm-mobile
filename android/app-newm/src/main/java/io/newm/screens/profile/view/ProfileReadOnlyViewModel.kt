@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import io.newm.Logout
-import io.newm.shared.models.User
-import io.newm.shared.usecases.UserProfileUseCase
-import io.newm.shared.usecases.WalletConnectUseCase
+import io.newm.shared.public.models.User
+import io.newm.shared.public.usecases.UserProfileUseCase
+import io.newm.shared.public.usecases.ConnectWalletUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class ProfileReadOnlyViewModel(
     private val userProviderUserCase: UserProfileUseCase,
-    private val walletConnectUseCase: WalletConnectUseCase,
+    private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class ProfileReadOnlyViewModel(
             _state.value = ProfileViewState
                 .Content(
                     profile = user,
-                    isWalletConnected = walletConnectUseCase.isConnected()
+                    isWalletConnected = connectWalletUseCase.isConnected()
                 )
         }
     }
@@ -45,7 +45,7 @@ class ProfileReadOnlyViewModel(
 
     fun disconnectWallet() {
         viewModelScope.launch(Dispatchers.IO) {
-            walletConnectUseCase.disconnect()
+            connectWalletUseCase.disconnect()
             _state.value = ProfileViewState
                 .Content(
                     profile = (state.value as ProfileViewState.Content).profile,
@@ -56,7 +56,7 @@ class ProfileReadOnlyViewModel(
 
     fun connectWallet(xpubKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            walletConnectUseCase.connect(xpubKey)
+            connectWalletUseCase.connect(xpubKey)
             _state.value = ProfileViewState
                 .Content(
                     profile = (state.value as ProfileViewState.Content).profile,

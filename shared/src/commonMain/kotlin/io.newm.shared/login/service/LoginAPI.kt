@@ -20,7 +20,7 @@ import io.newm.shared.login.models.LogInUser
 import io.newm.shared.login.models.LoginResponse
 import io.newm.shared.login.models.NewUser
 import io.newm.shared.login.models.RegisterException
-import io.newm.shared.login.repository.KMMException
+import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 

@@ -28,7 +28,7 @@ import io.newm.core.ui.text.formTextFieldStyle
 import io.newm.core.ui.text.formTitleStyle
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.profile.ProfileBanner
-import io.newm.shared.models.User
+import io.newm.shared.public.models.User
 import org.koin.compose.koinInject
 
 internal const val TAG_PROFILE_VIEW_SCREEN = "TAG_PROFILE_VIEW_SCREEN"

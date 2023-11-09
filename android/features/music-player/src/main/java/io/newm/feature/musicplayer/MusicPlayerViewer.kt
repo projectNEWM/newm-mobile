@@ -41,7 +41,7 @@ import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.shared.models.Song
+import io.newm.shared.public.models.NFTTrack
 
 private val playbackTimeStyle = TextStyle(
     fontSize = 12.sp,
@@ -54,14 +54,14 @@ private val LibraryIconGradient = iconGradient(DarkViolet, DarkPink)
 
 @Composable
 internal fun MusicPlayerViewer(
-    song: Song,
+    song: NFTTrack,
     onNavigateUp: () -> Unit,
     playbackStatus: PlaybackStatus,
     onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     Box {
         AsyncImage(
-            model = song.coverArtUrl,
+            model = song.imageUrl,
             modifier = Modifier
                 .fillMaxSize(),
             contentScale = ContentScale.Crop,
@@ -83,7 +83,7 @@ internal fun MusicPlayerViewer(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = song.title,
+                text = song.name,
                 color = White,
                 fontFamily = inter,
                 fontWeight = FontWeight.Bold,

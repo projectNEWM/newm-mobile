@@ -20,9 +20,8 @@ import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
-import io.newm.shared.login.repository.KMMException
-import io.newm.shared.login.repository.OAuthData
-import io.newm.shared.usecases.LoginUseCase
+import io.newm.shared.public.models.error.KMMException
+import io.newm.shared.public.usecases.LoginUseCase
 
 class WelcomeScreenPresenter(
     private val navigator: Navigator,

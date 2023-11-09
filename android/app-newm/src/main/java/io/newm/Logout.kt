@@ -3,12 +3,12 @@ package io.newm
 import android.content.Context
 import co.touchlab.kermit.Logger
 import com.jakewharton.processphoenix.ProcessPhoenix
-import io.newm.shared.login.UserSession
+import io.newm.shared.public.usecases.UserSessionUseCase
 import org.koin.core.component.KoinComponent
 import java.util.concurrent.Callable
 
 class Logout(
-    private val userSession: UserSession,
+    private val userSession: UserSessionUseCase,
     private val restartApp: RestartApp,
 ) : KoinComponent, Callable<Int> {
 
