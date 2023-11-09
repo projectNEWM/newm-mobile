@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.feature.musicplayer.service.MusicPlayer
-import io.newm.shared.repositories.NFTTrack
-import io.newm.shared.usecases.WalletNFTSongsUseCase
+import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.public.usecases.WalletNFTSongsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import org.koin.core.context.GlobalContext
 
 class MusicPlayerViewModel(
     private val musicPlayer: MusicPlayer,
@@ -28,7 +27,7 @@ class MusicPlayerViewModel(
     private val _state: StateFlow<MusicPlayerState> by lazy {
         val songFlow = songIdFlow.flatMapLatest { songId ->
             useCase.getAllWalletNFTSongs().map { songs ->
-                val songMap: Map<String, NFTTrack> = songs.associateBy { song -> song.songName }
+                val songMap: Map<String, NFTTrack> = songs.associateBy { song -> song.name }
                 val songToPlay = songMap[songId]
                 songToPlay ?: songs.first()
             }

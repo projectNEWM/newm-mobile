@@ -14,7 +14,7 @@ import io.newm.core.theme.Gray600
 import io.newm.core.resources.R
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
-import io.newm.shared.models.User
+import io.newm.shared.public.models.User
 
 @Composable
 fun ProfileForm(

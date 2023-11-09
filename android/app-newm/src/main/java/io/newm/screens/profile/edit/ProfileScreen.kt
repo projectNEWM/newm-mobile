@@ -19,8 +19,7 @@ import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.screens.profile.ProfileBanner
 import io.newm.screens.profile.ProfileBottomSheet
 import io.newm.screens.profile.ProfileForm
-import io.newm.screens.profile.view.ProfileReadOnlyViewModel
-import io.newm.shared.models.User
+import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 

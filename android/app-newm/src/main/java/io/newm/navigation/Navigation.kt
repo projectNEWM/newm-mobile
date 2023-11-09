@@ -17,7 +17,7 @@ import io.newm.screens.library.LibraryScreen
 import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.edit.ProfileRoute
 import io.newm.screens.profile.view.ProfileViewScreen
-import io.newm.shared.repositories.NFTTrack
+import io.newm.shared.public.models.NFTTrack
 
 @Composable
 fun Navigation(
@@ -29,7 +29,7 @@ fun Navigation(
     ) {
         addNFTLibraryTree(
             onPlaySong = { songId ->
-                navController.navigate(Screen.MusicPlayer.routeOf(songId.songName))
+                navController.navigate(Screen.MusicPlayer.routeOf(songId.name))
             },
             goToProfile = { navController.navigate(Screen.ProfileViewRoot.route) }
         )

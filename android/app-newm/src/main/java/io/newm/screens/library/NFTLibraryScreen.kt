@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -35,7 +34,7 @@ import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
-import io.newm.shared.repositories.NFTTrack
+import io.newm.shared.public.models.NFTTrack
 import org.koin.compose.koinInject
 
 internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
@@ -47,7 +46,6 @@ fun NFTLibraryScreen(
     goToProfile: () -> Unit,
     viewModel: NFTLibraryViewModel = koinInject(),
 ) {
-    val context = LocalContext.current
     val state by viewModel.state.collectAsState()
     Column(
         modifier = Modifier
@@ -154,14 +152,14 @@ private fun RowSongItem(
         ) {
             Text(
                 modifier = Modifier.padding(top = 8.dp),
-                text = song.songName,
+                text = song.name,
                 fontFamily = inter,
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp,
                 color = White
             )
             Text(
-                text = song.artist.joinToString(separator = ", "),
+                text = song.artists.joinToString(separator = ", "),
                 fontFamily = inter,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,

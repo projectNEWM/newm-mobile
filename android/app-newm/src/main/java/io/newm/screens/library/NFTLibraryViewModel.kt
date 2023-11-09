@@ -2,15 +2,15 @@ package io.newm.screens.library
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.newm.shared.login.repository.KMMException
-import io.newm.shared.repositories.NFTTrack
-import io.newm.shared.usecases.WalletConnectUseCase
-import io.newm.shared.usecases.WalletNFTSongsUseCase
+import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.public.models.error.KMMException
+import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.WalletNFTSongsUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NFTLibraryViewModel(
-    private val walletConnectUseCase: WalletConnectUseCase,
+    private val connectWalletUseCase: ConnectWalletUseCase,
     private val walletNFTSongsUseCase: WalletNFTSongsUseCase
 ) : ViewModel() {
 
@@ -23,7 +23,7 @@ class NFTLibraryViewModel(
 
     private fun fetchNFTLibraryContent() = viewModelScope.launch {
         _nftLibraryState.value = NFTLibraryState.Loading
-        if (walletConnectUseCase.isConnected()) {
+        if (connectWalletUseCase.isConnected()) {
             try {
                 val nftSongs = walletNFTSongsUseCase.getWalletNFTs()
                 _nftLibraryState.value = NFTLibraryState.Content(nftSongs)
@@ -41,8 +41,8 @@ class NFTLibraryViewModel(
 }
 
 sealed interface NFTLibraryState {
-    object Loading : NFTLibraryState
-    object NoWalletFound : NFTLibraryState
+    data object Loading : NFTLibraryState
+    data object NoWalletFound : NFTLibraryState
     data class Content(val songs: List<NFTTrack>) : NFTLibraryState
     data class Error(val message: String) : NFTLibraryState
 }

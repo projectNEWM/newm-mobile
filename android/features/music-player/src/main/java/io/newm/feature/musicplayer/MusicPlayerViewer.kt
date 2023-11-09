@@ -41,8 +41,7 @@ import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.shared.models.Song
-import io.newm.shared.repositories.NFTTrack
+import io.newm.shared.public.models.NFTTrack
 
 private val playbackTimeStyle = TextStyle(
     fontSize = 12.sp,
@@ -84,7 +83,7 @@ internal fun MusicPlayerViewer(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = song.songName,
+                text = song.name,
                 color = White,
                 fontFamily = inter,
                 fontWeight = FontWeight.Bold,
