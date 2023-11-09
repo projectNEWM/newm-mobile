@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.Uri
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
-import io.newm.shared.repositories.testdata.MockSongModel
-import io.newm.shared.repositories.testdata.savedSongModels
 import io.newm.feature.musicplayer.R
+import io.newm.shared.internal.repositories.testdata.MockSongModel
+import io.newm.shared.internal.repositories.testdata.savedSongModels
 
 interface MusicRepository {
     // TODO make suspended

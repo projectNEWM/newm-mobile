@@ -1,6 +1,6 @@
 package io.newm.shared.login.models
 
-import io.newm.shared.login.repository.KMMException
+import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.Serializable
 
 @Serializable

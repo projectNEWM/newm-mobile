@@ -199,7 +199,6 @@ class BarcodeScannerActivity : ComponentActivity() {
                     if (barcodes.size > 0) {
                         barcodes.forEach {
                             if (it.rawValue?.startsWith("xpub") == true) {
-                                Log.d("DEBUG cje466", "Barcode found: ${it.rawValue}")
                                 onValidScan(it.rawValue.toString())
                             }
                         }

@@ -12,8 +12,8 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import io.newm.shared.HttpRoutes
-import io.newm.shared.TokenManager
+import io.newm.shared.internal.HttpRoutes
+import io.newm.shared.internal.TokenManager
 import io.newm.shared.login.models.LoginResponse
 import kotlinx.serialization.json.Json
 

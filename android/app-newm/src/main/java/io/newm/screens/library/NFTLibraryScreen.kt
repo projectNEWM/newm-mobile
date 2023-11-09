@@ -1,6 +1,5 @@
 package io.newm.screens.library
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,9 +32,9 @@ import io.newm.core.resources.R
 import io.newm.core.theme.*
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.text.SearchBar
+import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
-import io.newm.shared.models.Song
+import io.newm.shared.public.models.NFTTrack
 import org.koin.compose.koinInject
 
 internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
@@ -43,7 +42,7 @@ internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun NFTLibraryScreen(
-    onPlaySong: (Song) -> Unit,
+    onPlaySong: (NFTTrack) -> Unit,
     goToProfile: () -> Unit,
     viewModel: NFTLibraryViewModel = koinInject(),
 ) {
@@ -67,6 +66,7 @@ fun NFTLibraryScreen(
         when (state) {
             NFTLibraryState.Loading -> LoadingScreen()
             NFTLibraryState.NoWalletFound -> EmptyNFTListScreen(goToProfile)
+            is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
             is NFTLibraryState.Content -> {
                 SongList(
                     songs = (state as NFTLibraryState.Content).songs,
@@ -105,7 +105,7 @@ fun EmptyNFTListScreen(goToProfile: () -> Unit) {
 }
 
 @Composable
-fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit) {
+fun SongList(songs: List<NFTTrack>, onPlaySong: (NFTTrack) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -129,8 +129,8 @@ fun SongList(songs: List<Song>, onPlaySong: (Song) -> Unit) {
 
 @Composable
 private fun RowSongItem(
-    song: Song,
-    onClick: (Song) -> Unit
+    song: NFTTrack,
+    onClick: (NFTTrack) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -139,7 +139,7 @@ private fun RowSongItem(
             .clickable(onClick = { onClick(song) })
     ) {
         AsyncImage(
-            model = song.coverArtUrl,
+            model = song.imageUrl,
             modifier = Modifier
                 .size(60.dp)
                 .clip(RoundedCornerShape(4.dp)),
@@ -152,14 +152,14 @@ private fun RowSongItem(
         ) {
             Text(
                 modifier = Modifier.padding(top = 8.dp),
-                text = song.title,
+                text = song.name,
                 fontFamily = inter,
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp,
                 color = White
             )
             Text(
-                text = song.ownerId,
+                text = song.artists.joinToString(separator = ", "),
                 fontFamily = inter,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
