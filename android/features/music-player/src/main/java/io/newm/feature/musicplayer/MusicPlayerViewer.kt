@@ -12,13 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -36,7 +35,7 @@ import io.newm.core.theme.Gray500
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
-import io.newm.core.ui.utils.iconGradient
+import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
@@ -50,7 +49,8 @@ private val playbackTimeStyle = TextStyle(
     color = GraySuit
 )
 
-private val LibraryIconGradient = iconGradient(DarkViolet, DarkPink)
+
+internal val MusicPlayerBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink))
 
 @Composable
 internal fun MusicPlayerViewer(
@@ -90,9 +90,8 @@ internal fun MusicPlayerViewer(
                 fontSize = 24.sp,
             )
             Text(
-                //text = song., //artist??
+                text = song.artists.first(),
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                text = "Artist Name",
                 color = White,
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
@@ -103,17 +102,16 @@ internal fun MusicPlayerViewer(
                     playbackStatus = playbackStatus,
                     onEvent = onEvent
                 )
-                Slider(
-                    value = playbackStatus.position.toFloat()/playbackStatus.duration.toFloat(),
+                MusicPlayerSlider(
+                    value = playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
                     onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
                     colors = SliderDefaults.colors(
                         thumbColor = White,
-                        activeTrackColor = DarkPink,
                         inactiveTrackColor = Gray500
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = 12.dp)
                         .height(4.dp)
 
                 )
@@ -137,8 +135,6 @@ fun PlaybackControlPanel(
             .padding()
             .clip(
                 shape = RoundedCornerShape(
-                    topStart = 2.dp,
-                    topEnd = 2.dp,
                     bottomEnd = 8.dp,
                     bottomStart = 8.dp
                 )
@@ -232,7 +228,7 @@ private fun PlayButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.ic_play),
             contentDescription = "Play",
-            tint = DarkPink
+            modifier = Modifier.drawWithBrush(MusicPlayerBrush)
         )
     }
 }
@@ -243,7 +239,7 @@ fun PauseButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.ic_pause),
             contentDescription = "Pause",
-            tint = DarkPink
+            modifier = Modifier.drawWithBrush(MusicPlayerBrush)
         )
     }
 }
