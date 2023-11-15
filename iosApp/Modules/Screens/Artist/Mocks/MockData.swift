@@ -14,13 +14,16 @@ class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
 		ArtistViewUIModel(
 			title: artist.name,
 			headerImageUrl: artist.image,
-			profileImage: URL(string: MockData.url(for: Asset.MockAssets.artist0))!,
+			profileImage: URL(string: "" /*MockData.url(for: Asset.MockAssets.artist0)*/)!,
 			followSection: SupportButton.followButton(),
 			supportSection: SupportButton.supportButton(),
-			trackSection: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1, onTap: { id in
-				actionHandler.songTapped(id: id)
-			}), title: "LATEST TRACKS"),
-			topSongs: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 2, onTap: { id in actionHandler.songTapped(id: id) }), title: "TOP SONGS"),
+			trackSection: CellsSectionModel(cells: [],
+//											MockData.bigSongCells_shuffled(seed: 1, onTap: { id in
+//				actionHandler.songTapped(id: id)
+//			})
+											title: "LATEST TRACKS"
+										   ),
+			topSongs: CellsSectionModel(cells: [] /*MockData.bigSongCells_shuffled(seed: 2, onTap: { id in actionHandler.songTapped(id: id) })*/, title: "TOP SONGS"),
 			albumSection: CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 3, onTap: { album in
 				//TODO
 			}), title: "ALBUMS")

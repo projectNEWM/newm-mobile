@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "facebook-ios-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/facebook/facebook-ios-sdk",
-      "state" : {
-        "revision" : "ebfaa5eb867c9ad3e0b54ef8b03883f024cfc18a",
-        "version" : "16.2.1"
-      }
-    },
-    {
       "identity" : "googlesignin-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleSignIn-iOS",

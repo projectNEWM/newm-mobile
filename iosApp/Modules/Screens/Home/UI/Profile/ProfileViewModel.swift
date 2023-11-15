@@ -8,9 +8,9 @@ import shared
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-//	@Injected private var userRepo: any UserManaging
+	@Injected private var getCurrentUser: GetCurrentUserUseCase
 	
-//	var user: User? { userRepo.currentUser }
+	var user: User?
 	
 	@Published var firstName: String = ""
 	@Published var lastName: String = ""
@@ -62,7 +62,7 @@ final class ProfileViewModel: ObservableObject {
 	func loadUser() async {
 //		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
-			try await userRepo.fetchCurrentUser()
+			user = try await getCurrentUser.execute()
 			updateUserFields()
 		} catch {
 			self.error = error.localizedDescription
@@ -88,9 +88,9 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	private func updateUserFields() {
-//		guard let user = user else { return }
-//		firstName = user.firstName.emptyIfNil
-//		lastName = user.lastName.emptyIfNil
-//		email = user.email.emptyIfNil
+		guard let user = user else { return }
+		firstName = user.firstName.emptyIfNil
+		lastName = user.lastName.emptyIfNil
+		email = user.email.emptyIfNil
 	}
 }

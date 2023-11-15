@@ -1,4 +1,5 @@
 import SwiftUI
+import Colors
 
 public struct TabBar: View {
 	let tabProviders: [TabViewProvider]
@@ -15,12 +16,13 @@ public struct TabBar: View {
 				tabProvider.viewProvider()
 					.tabBarItem(
 						image: tabProvider.image,
-						tabName: ""
+						tabName: tabProvider.tabName
 					)
 					.tag(tabProvider.tabName)
 					.padding(.bottom, bottomPadding)
 			}
 		}
+		.tint(try! Color(hex: "DC3CAA"))
 	}
 }
 

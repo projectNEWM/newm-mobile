@@ -72,9 +72,9 @@ struct BigCell_Previews: PreviewProvider {
 	static var previews: some View {
 		ScrollView(.horizontal) {
 			HStack {
-				ForEach(MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}).reversed(), id: \.id) { model in
-					BigCell(model: model)
-				}
+//				ForEach(MockData.bigArtistCells_shuffled(seed: 1, onTap: {_ in}).reversed(), id: \.id) { model in
+//					BigCell(model: model)
+//				}
 			}
 			.preferredColorScheme(.dark)
 		}

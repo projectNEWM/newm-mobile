@@ -3,7 +3,7 @@ import SharedUI
 import Fonts
 import Colors
 import Resolver
-import AudioPlayer
+import AppAudioPlayer
 
 struct PortfolioView: View {
 	let model: PortfolioSectionModel

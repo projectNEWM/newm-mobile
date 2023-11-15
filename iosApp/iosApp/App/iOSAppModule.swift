@@ -3,19 +3,19 @@ import Resolver
 import ModuleLinker
 import Main
 //import Wallet
-import Home
+//import Home
 import SharedUI
 import SwiftUI
 import Fonts
 import Login
 import NowPlaying
-import PlaylistList
-import Tips
-import Artist
+//import PlaylistList
+//import Tips
+//import Artist
 import Library
 import AudioPlayer
 //import Marketplace
-import Data
+//import Data
 
 struct iOSAppModule: Module {
 	static var shared = iOSAppModule()
@@ -23,19 +23,19 @@ struct iOSAppModule: Module {
 	let modules: [Module] = {
 		[
 //			WalletModule.shared,
-			HomeModule.shared,
+//			HomeModule.shared,
             LibraryModule.shared,
 			SharedUIModule.shared,
 			MainModule.shared,
 			FontsModule.shared,
 			LoginModule.shared,
 			NowPlayingModule.shared,
-			PlaylistModule.shared,
-			TipsModule.shared,
-			ArtistModule.shared,
+//			PlaylistModule.shared,
+//			TipsModule.shared,
+//			ArtistModule.shared,
 			AudioPlayerModule.shared,
 //			MarketplaceModule.shared
-			DataModule.shared
+//			DataModule.shared
 		]
 	}()
 }

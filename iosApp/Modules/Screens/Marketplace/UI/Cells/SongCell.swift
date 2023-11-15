@@ -3,7 +3,7 @@ import SharedUI
 import Colors
 import ModuleLinker
 import Resolver
-import AudioPlayer
+import AppAudioPlayer
 import SharedUI
 
 struct SongCell: View {

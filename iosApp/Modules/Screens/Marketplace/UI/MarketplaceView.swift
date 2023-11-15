@@ -3,7 +3,7 @@ import SharedUI
 import Resolver
 import Colors
 import ModuleLinker
-import AudioPlayer
+import AppAudioPlayer
 
 struct MarketplaceView: View {
 	@StateObject private var viewModel = MarketplaceViewModel()

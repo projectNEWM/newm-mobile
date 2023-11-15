@@ -11,10 +11,10 @@ public final class MainModule: Module {
 		// Internal
 		Resolver.register {
 			[
-				TabViewProvider(image: Image(MainViewModelTab.home), tabName: MainViewModelTab.home.description) {
-					@Injected var homeViewProvider: HomeViewProviding
-					return Resolver.resolve(HomeViewProviding.self).homeView()
-				},
+//				TabViewProvider(image: Image(MainViewModelTab.home), tabName: MainViewModelTab.home.description) {
+//					@Injected var homeViewProvider: HomeViewProviding
+//					return Resolver.resolve(HomeViewProviding.self).homeView()
+//				},
                 TabViewProvider(image: Image(MainViewModelTab.library), tabName: MainViewModelTab.library.description) {
 					@Injected var libraryViewProvider: LibraryViewProviding
 					return libraryViewProvider.libraryView()

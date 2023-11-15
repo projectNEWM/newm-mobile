@@ -53,6 +53,7 @@ public enum Asset {
     public static let arrowSmallDown = ImageAsset(name: "arrow-small-down")
     public static let backArrow = ImageAsset(name: "back-arrow")
     public static let checkmark = ImageAsset(name: "checkmark")
+    public static let download = ImageAsset(name: "download")
     public static let logo = ImageAsset(name: "logo")
     public static let placeholder = ImageAsset(name: "placeholder")
     public static let playMiniFill = ImageAsset(name: "play-mini-fill")

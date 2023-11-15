@@ -12,8 +12,9 @@ public struct MainView: View {
 	@Injected private var loginViewProvider: LoginViewProviding
 	@Injected private var miniPlayerViewProvider: MiniNowPlayingViewProviding
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
-	@InjectedObject private var audioPlayer: AudioPlayerImpl
-	
+	@Injected private var audioPlayer: AudioPlayer
+	@InjectedObject private var audioPlayerPublisher: AudioPlayerPublisher
+		
 	@State var route: MainViewRoute?
 	
 	public var body: some View {
@@ -23,14 +24,15 @@ public struct MainView: View {
 			} else {
 				TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
 					.preferredColorScheme(.dark)
-					.sheet(isPresented: .constant(route != nil), onDismiss: { route = nil }) {
+					.sheet(isPresented: isPresent($route), onDismiss: { route = nil }) {
 						sheetView
 					}
 					.overlay {
+						Spacer()
 						miniPlayerView
 							.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
 							.transition(.move(edge: .bottom))
-							.animation(.easeInOut, value: audioPlayer.song)
+							.animation(.easeInOut, value: audioPlayer.currentItem)
 					}
 					.transition(.move(edge: .bottom))
 			}
@@ -40,7 +42,7 @@ public struct MainView: View {
 	
 	@ViewBuilder
 	private var miniPlayerView: some View {
-		if audioPlayer.song == nil {
+		if audioPlayer.currentItem == nil {
 			EmptyView()
 		} else {
 			VStack {
@@ -49,12 +51,13 @@ public struct MainView: View {
 					.onTapGesture {
 						route = .nowPlaying
 					}
+					.padding(.bottom)
 			}
 		}
 	}
 	
 	private var miniPlayerHeight: CGFloat {
-		audioPlayer.song == nil ? 0 : 60
+		audioPlayer.currentItem == nil ? 0 : 50
 	}
 	
 	@ViewBuilder
@@ -68,10 +71,33 @@ public struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
 	static var previews: some View {
-		MainView()
+		MainModule.shared.registerAllServices()
+		AudioPlayerModule.shared.registerAllServices()
+		return MainView()
 	}
 }
 
 extension MainViewRoute: Identifiable {
 	var id: Self { self }
+}
+
+//private extension AudioTrack {
+//	init(nftTrack: ModuleLinker.NFTTrack) {
+//		self = AudioTrack(
+//			title: nftTrack.title,
+//			artistName: nftTrack.artistName,
+//			url: nftTrack.url,
+//			image: nftTrack.image
+//		)
+//	}
+//}
+
+func url(for testImage: ImageAsset) -> URL {
+	guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {
+		fatalError()
+	}
+	
+	let pngData = testImage.image.pngData()
+	do { try pngData?.write(to: imageURL) } catch { }
+	return imageURL
 }

@@ -2,8 +2,6 @@ import Foundation
 import Combine
 import ModuleLinker
 import Resolver
-import Data
-import API
 import shared
 
 @MainActor

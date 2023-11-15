@@ -24,11 +24,11 @@ public struct TrackSection: View {
 	}
 }
 
-struct TrackSection_Previews: PreviewProvider {
-	static var previews: some View {
-		ScrollView {
-			TrackSection(CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1) {_ in}, title: "TOP SONGS"))
-		}
-		.preferredColorScheme(.dark)
-	}
-}
+//struct TrackSection_Previews: PreviewProvider {
+//	static var previews: some View {
+//		ScrollView {
+//			TrackSection(CellsSectionModel(cells: MockData.bigSongCells_shuffled(seed: 1) {_ in}, title: "TOP SONGS"))
+//		}
+//		.preferredColorScheme(.dark)
+//	}
+//}

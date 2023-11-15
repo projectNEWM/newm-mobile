@@ -1,8 +1,8 @@
 import SwiftUI
 import Resolver
 import ModuleLinker
-import FacebookCore
-import Data
+//import FacebookCore
+//import Data
 import UIKit
 import shared
 
@@ -18,7 +18,7 @@ struct iOSApp: App {
 		mainViewProvider = Resolver.resolve()
 		
 		setUpAppearance()
-		configureFacebook()
+//		configureFacebook()
 	}
 	
 	var body: some Scene {
@@ -27,23 +27,23 @@ struct iOSApp: App {
 				mainViewProvider.mainView()
 			}
 			.preferredColorScheme(.dark)
-			.onOpenURL { url in
-				ApplicationDelegate.shared.application(
-							UIApplication.shared,
-							open: url,
-							sourceApplication: nil,
-							annotation: [UIApplication.OpenURLOptionsKey.annotation]
-						)
-			}
+//			.onOpenURL { url in
+//				ApplicationDelegate.shared.application(
+//							UIApplication.shared,
+//							open: url,
+//							sourceApplication: nil,
+//							annotation: [UIApplication.OpenURLOptionsKey.annotation]
+//						)
+//			}
 		}
 	}
 	
-	private func configureFacebook() {
-		ApplicationDelegate.shared.application(
-			UIApplication.shared,
-			didFinishLaunchingWithOptions: [:]
-		)
-	}
+//	private func configureFacebook() {
+//		ApplicationDelegate.shared.application(
+//			UIApplication.shared,
+//			didFinishLaunchingWithOptions: [:]
+//		)
+//	}
 	
 	private func setUpAppearance() {
 		UINavigationBar.appearance().tintColor = .white

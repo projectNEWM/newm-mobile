@@ -1,7 +1,7 @@
 import XCTest
 @testable import Home
 import Resolver
-import AudioPlayer
+import AppAudioPlayer
 
 @MainActor
 class HomeViewModelTests: XCTestCase {

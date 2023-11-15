@@ -1,8 +1,7 @@
 import Foundation
 import Resolver
-import Data
 import GoogleSignIn
-import FacebookLogin
+//import FacebookLogin
 import AuthenticationServices
 import ModuleLinker
 import shared
@@ -127,32 +126,32 @@ class LandingViewModel: ObservableObject {
 		navPath = []
 	}
 		
-	func handleFacebookLogin(result: Result<LoginManagerLoginResult, Error>) {
-		switch result {
-		case .success(let loginResult):
-			guard let token = loginResult.token?.tokenString else {
-				//TODO: localize
-				self.error = "Failed to log in with Facebook"
-				return
-			}
-			isLoading = true
-			Task {
-				do {
-					try await logInUseCase.logInWithFacebook(accessToken: token)
-				} catch {
-					self.error = error.localizedDescription
-				}
-				isLoading = false
-			}
-		case .failure(let error):
-			handleError(error)
-		}
-	}
+//	func handleFacebookLogin(result: Result<LoginManagerLoginResult, Error>) {
+//		switch result {
+//		case .success(let loginResult):
+//			guard let token = loginResult.token?.tokenString else {
+//				//TODO: localize
+//				self.error = "Failed to log in with Facebook"
+//				return
+//			}
+//			isLoading = true
+//			Task {
+//				do {
+//					try await logInUseCase.logInWithFacebook(accessToken: token)
+//				} catch {
+//					self.error = error.localizedDescription
+//				}
+//				isLoading = false
+//			}
+//		case .failure(let error):
+//			handleError(error)
+//		}
+//	}
 	
-	func handleFacebookLogout() {
-		logInUseCase.logOut()
-	}
-	
+//	func handleFacebookLogout() {
+//		logInUseCase.logOut()
+//	}
+//	
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
 		guard let idToken = result?.user.accessToken.tokenString else {
 			//TODO: localize
