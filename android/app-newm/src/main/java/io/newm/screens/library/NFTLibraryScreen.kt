@@ -32,12 +32,13 @@ import io.newm.core.resources.R
 import io.newm.core.theme.*
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
 import io.newm.shared.public.models.NFTTrack
 import org.koin.compose.koinInject
 
-internal const val TAG_NFTLIBRARY_SCREEN = "TAG_LIBRARY_SCREEN"
+internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -51,7 +52,7 @@ fun NFTLibraryScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
-            .testTag(TAG_NFTLIBRARY_SCREEN)
+            .testTag(TAG_NFT_LIBRARY_SCREEN)
     ) {
         Text(
             text = stringResource(id = R.string.title_nft_library),
@@ -69,7 +70,7 @@ fun NFTLibraryScreen(
             is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
             is NFTLibraryState.Content -> {
                 SongList(
-                    songs = (state as NFTLibraryState.Content).songs,
+                    songs = (state as NFTLibraryState.Content).nftTracks,
                     onPlaySong = onPlaySong
                 )
             }
@@ -84,7 +85,7 @@ fun EmptyNFTListScreen(goToProfile: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .testTag(TAG_NFTLIBRARY_SCREEN),
+            .testTag(TAG_NFT_LIBRARY_SCREEN),
         contentAlignment = Alignment.Center // This centers the content both horizontally and vertically
     ) {
         Column(
@@ -110,15 +111,14 @@ fun SongList(songs: List<NFTTrack>, onPlaySong: (NFTTrack) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state = rememberScrollState())
-            .testTag(TAG_NFTLIBRARY_SCREEN)
+            .testTag(TAG_NFT_LIBRARY_SCREEN)
     ) {
-//        TODO: Implement Search
-//        SearchBar(
-//            placeholderResId = R.string.library_search,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(vertical = 16.dp),
-//        )
+        SearchBar(
+            placeholderResId = R.string.library_search,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+        )
         if (songs.isNotEmpty()) {
             songs.forEach { song ->
                 RowSongItem(song = song, onClick = onPlaySong)
