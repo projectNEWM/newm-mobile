@@ -59,22 +59,21 @@ fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(logger: Logger): NFTTr
                     } != null
 
                     if (isThereAudioFiles) {
-                        files.children.forEach { file ->
-                            if (file.key == "src") {
-                                src = file.value
-                            }
+                        files.children.first { file ->
+                            file.key == "src"
+                        }.let { file ->
+                            src = file.value
                         }
                     }
-
                 }
             }
 
             "artists" -> {
                 metadata.children.forEach { artist ->
-                    artist.children.forEach { detail ->
-                        if (detail.key == "name") {
-                            artists = artists.plus(detail.value)
-                        }
+                    artist.children.first { detail ->
+                        detail.key == "name"
+                    }.let { detail ->
+                        artists = artists.plus(detail.value)
                     }
                 }
             }
