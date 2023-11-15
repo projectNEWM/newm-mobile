@@ -6,6 +6,7 @@ import io.newm.shared.internal.services.LedgerAssetMetadata
 import io.newm.shared.public.models.NFTTrack
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration
 
 
 internal class CardanoWalletRepository : KoinComponent {
@@ -17,8 +18,8 @@ internal class CardanoWalletRepository : KoinComponent {
         val walletNFTs = service.getWalletNFTs(xpub)
         val tracks = walletNFTs.mapNotNull {
             when (it.getMusicMetadataVersion()) {
-                1 -> it.getTrackFromMusicMetadataV1()
-                2 -> it.getTrackFromMusicMetadataV2()
+                1 -> it.getTrackFromMusicMetadataV1(logger)
+                2 -> it.getTrackFromMusicMetadataV2(logger)
                 else -> {
                     logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
                     null
@@ -34,59 +35,197 @@ fun List<LedgerAssetMetadata>.getMusicMetadataVersion(): Int? {
     return this.find { it.key == "music_metadata_version" }?.value?.toInt() ?: return null
 }
 
+fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(logger: Logger): NFTTrack? {
+    var imageId: String? = null
+    var name: String? = null
+    var src: String? = null
+    var duration: String? = null
+    var artists: List<String> = mutableListOf()
 
-data class File(
-    val name: String,
-    val mediaType: String,
-    val src: String
-)
-
-fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(): NFTTrack? {
-    val imageId = this.find { it.key == "image" }?.value ?: return null
-    val artistNames = this.find { it.key == "artists" }
-        ?.children
-        ?.flatMap { artist ->
-            artist.children.mapNotNull { detail ->
-                if (detail.key == "name") detail.value else null
+    this.forEach { metadata ->
+        when (metadata.key) {
+            "image" -> {
+                imageId = metadata.value
             }
-        }.orEmpty()
 
-    val songSrcId = this.find { it.key == "image" }?.value ?: return null
+            "song_title" -> {
+                name = metadata.value
+            }
 
+            "files" -> {
+                metadata.children.forEach { files ->
+                    val isThereAudioFiles = files.children.find { file ->
+                        file.key == "mediaType" && file.value.contains("audio")
+                    } != null
+
+                    if (isThereAudioFiles) {
+                        files.children.forEach { file ->
+                            if (file.key == "src") {
+                                src = file.value
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            "artists" -> {
+                metadata.children.forEach { artist ->
+                    artist.children.forEach { detail ->
+                        if (detail.key == "name") {
+                            artists = artists.plus(detail.value)
+                        }
+                    }
+                }
+            }
+
+            "song_duration" -> {
+                duration = Duration.parseIsoString(metadata.value).toString()
+            }
+        }
+    }
+    if (src == null || name == null || imageId == null || duration == null) {
+        logger.d { "SKIPPED SONG with" }
+        when {
+            src == null -> logger.d { "src is null" }
+            name == null -> logger.d { "name is null" }
+            imageId == null -> logger.d { "imageId is null" }
+            duration == null -> logger.d { "duration is null" }
+        }
+        return null
+    }
     return NFTTrack(
-        name = find { it.key == "song_title" }?.value ?: return null,
-        imageUrl = "https://arweave.net/${imageId.replace("ar://", "")}",
-        songUrl =
-        "https://arweave.net/${
-            songSrcId.replace(
-                "ar://",
-                ""
-            )
-        }",
-        artists = artistNames,
+        id = src!!.toId(logger),
+        name = name!!,
+        imageUrl = imageId!!.toResourceUri(logger),
+        songUrl = src!!.toResourceUri(logger),
+        duration = duration!!,
+        artists = artists,
     )
 }
 
+private fun String.toResourceUri(logger: Logger): String {
+    return when {
+        this.startsWith("ipfs://") -> {
+            val ipfs = "https://bcsh.mypinata.cloud/ipfs/"
+            "$ipfs${this.replace("ipfs://", "")}"
+        }
 
-fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(): NFTTrack? {
-    val name = this.find { it.key == "name" }?.value ?: return null
-    val image = this.find { it.key == "image" }?.value ?: return null
+        this.startsWith("ar://") -> {
+            val arweave = "https://arweave.net/"
+            "$arweave${this.replace("ar://", "")}"
+        }
 
-    var source = ""
-    this.find { it.key == "files" }?.children?.mapNotNull {
-        val fileName =
-            it.children.find { child -> child.key == "name" }?.value ?: return@mapNotNull null
-        val fileMediaType =
-            it.children.find { child -> child.key == "mediaType" }?.value ?: return@mapNotNull null
-        source =
-            it.children.find { child -> child.key == "src" }?.value ?: return@mapNotNull null
-        File(fileName, fileMediaType, source)
-    }.orEmpty()
+        else -> {
+            logger.e { "Unsupported resource type: $this" }
+            this
+        }
+    }
+}
+
+private fun String.toId(logger: Logger): String {
+    return when {
+        this.startsWith("ipfs://") -> {
+            this.replace("ipfs://", "")
+        }
+
+        this.startsWith("ar://") -> {
+            this.replace("ar://", "")
+        }
+
+        else -> {
+            logger.e { "Unsupported resource type: $this" }
+            this
+        }
+    }
+}
+
+
+fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(logger: Logger): NFTTrack? {
+    var image: String? = null
+    var name: String? = null
+    var source: String? = null
+    var duration: String? = null
+    val artistSet = mutableSetOf<String>()
+
+    this.forEach { metadata ->
+        when (metadata.key) {
+            "image" -> {
+                image = metadata.value
+            }
+
+            "files" -> {
+                metadata.children.forEach { files ->
+                    val isThereAudioFiles = files.children.find { file ->
+                        file.key == "mediaType" && file.value.contains("audio")
+                    } != null
+
+                    if (isThereAudioFiles) {
+                        files.children.forEach { file ->
+                            when (file.key) {
+                                "src" -> {
+                                    source = file.value
+                                }
+
+                                "song" -> {
+                                    file.children.forEach { song ->
+                                        when (song.key) {
+                                            "song_title" -> {
+                                                name = song.value
+                                            }
+
+                                            "song_duration" -> {
+                                                duration =
+                                                    Duration.parseIsoString(song.value).toString()
+                                            }
+
+                                            "artists" -> {
+                                                song.children.forEach { listArtist ->
+                                                    when (listArtist.key) {
+                                                        "artists" -> {
+                                                            listArtist.children.forEach { artist ->
+                                                                when (artist.key) {
+                                                                    "name" -> {
+                                                                        artistSet.add(artist.value)
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    if (source == null || name == null || image == null || duration == null) {
+        logger.d { "SKIPPED SONG with" }
+        when {
+            source == null -> logger.d { "src is null" }
+            name == null -> logger.d { "name is null" }
+            image == null -> logger.d { "imageId is null" }
+            duration == null -> logger.d { "duration is null" }
+        }
+        return null
+    }
 
     return NFTTrack(
-        name = name,
-        imageUrl = "https://arweave.net/${image.replace("ar://", "")}",
-        songUrl = "https://arweave.net/${source.replace("ar://", "")}",
-        artists = listOf("{artistsNames}"),
+        id = source!!.toId(logger),
+        name = name!!,
+        imageUrl = image!!.toResourceUri(logger),
+        songUrl = source!!.toResourceUri(logger),
+        artists = artistSet.toList(),
+        duration = duration!!,
     )
 }

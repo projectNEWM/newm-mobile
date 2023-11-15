@@ -47,6 +47,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Kotlin.coroutinesCore)
+                implementation(Kotlin.stdlib)
                 implementation(SqlDelight.runtime)
                 api(Koin.core)
                 api(Log.kermit)

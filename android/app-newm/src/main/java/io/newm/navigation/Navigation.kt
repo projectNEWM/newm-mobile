@@ -29,7 +29,7 @@ fun Navigation(
     ) {
         addNFTLibraryTree(
             onPlaySong = { songId ->
-                navController.navigate(Screen.MusicPlayer.routeOf(songId.name))
+                navController.navigate(Screen.MusicPlayer.routeOf(songId.id))
             },
             goToProfile = { navController.navigate(Screen.ProfileViewRoot.route) }
         )
