@@ -8,27 +8,31 @@ internal object MockSongs {
 
     fun getSongsFlow(): Flow<List<NFTTrack>> = flow {
         emit(
-            savedSongModels.mapIndexed { _, mockSongModel ->
-                mockSongModel.toMockSong()
+            savedSongModels.mapIndexed { index, mockSongModel ->
+                mockSongModel.toMockSong(index.toString())
             }
         )
     }
 
-    private fun MockSongModel.toMockSong(): NFTTrack {
+    private fun MockSongModel.toMockSong(index: String): NFTTrack {
         return createSong(
+            id = index,
             title = title,
             coverArtUrl = imageUrl,
         )
     }
 
     private fun createSong(
+        id: String,
         title: String,
         coverArtUrl: String,
     ): NFTTrack = NFTTrack(
+        id = id,
         name = title,
         imageUrl = coverArtUrl,
         songUrl = "https://ipfs.poolpm.nftcdn.io/ipfs/QmW6zkt82o4BbPh87uYYUSNbSSfmy6wbLCd2NE7VQk83Vn?tk=UmgSevoPuMvI0Hd6xQdzs_DA7ExwXGwSp7Yr_5xTUOU",
-        artists = listOf("{insert artist name}")
+        artists = listOf("{insert artist name}"),
+        duration = "3:00",
     )
 }
 

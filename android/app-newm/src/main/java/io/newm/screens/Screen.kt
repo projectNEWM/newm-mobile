@@ -5,20 +5,20 @@ import com.slack.circuit.runtime.Screen as CircuitScreen
 
 sealed class Screen(val route: String) {
     //High Navigation Roots
-    object HomeRoot : Screen("home-root")
-    object HomeLanding : Screen("home-landing")
+    data object HomeRoot : Screen("home-root")
+    data object HomeLanding : Screen("home-landing")
 
-    object ProfileViewRoot : Screen("profile-view-root")
+    data object ProfileViewRoot : Screen("profile-view-root")
 
-    object ProfileViewLanding : Screen("profile-view-landing")
+    data object ProfileViewLanding : Screen("profile-view-landing")
 
-    object LibraryRoot : Screen("library-root")
+    data object LibraryRoot : Screen("library-root")
 
-    object LibraryLanding : Screen("library-landing")
+    data object LibraryLanding : Screen("library-landing")
 
-    object NFTLibraryRoot : Screen("nft-library-root")
+    data object NFTLibraryRoot : Screen("nft-library-root")
 
-    object NFTLibraryLanding : Screen("nft-library-landing")
+    data object NFTLibraryLanding : Screen("nft-library-landing")
 
     //Single Screens
     @Parcelize
@@ -26,11 +26,11 @@ sealed class Screen(val route: String) {
 
     @Parcelize
     object LoginScreen : Screen("login"), CircuitScreen
-    object Signup : Screen("signup")
-    object Profile : Screen("profile")
-    object BarcodeScanner : Screen("barcode-scanner")
+    data object Signup : Screen("signup")
+    data object Profile : Screen("profile")
+    data object BarcodeScanner : Screen("barcode-scanner")
 
-    object MusicPlayer : Screen("music-player/{songId}") {
+    data object MusicPlayer : Screen("music-player/{songId}") {
         fun routeOf(songId: String) = "music-player/$songId"
     }
 }

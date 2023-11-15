@@ -4,6 +4,7 @@ object Google {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.androidxAppCompat}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
+    const val composeUiUtil = "androidx.compose.ui:ui-util:${Versions.compose}"
     const val composeUiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"

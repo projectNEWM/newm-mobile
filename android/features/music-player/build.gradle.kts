@@ -40,6 +40,7 @@ dependencies {
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
     implementation(Google.composeUi)
+    implementation(Google.composeUiUtil)
     implementation(Google.composeUiToolingPreview)
     implementation(Google.playServicesAuth)
     implementation(Google.material)

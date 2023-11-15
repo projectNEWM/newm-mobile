@@ -43,6 +43,6 @@ class NFTLibraryViewModel(
 sealed interface NFTLibraryState {
     data object Loading : NFTLibraryState
     data object NoWalletFound : NFTLibraryState
-    data class Content(val songs: List<NFTTrack>) : NFTLibraryState
+    data class Content(val nftTracks: List<NFTTrack>) : NFTLibraryState
     data class Error(val message: String) : NFTLibraryState
 }
