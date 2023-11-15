@@ -32,7 +32,7 @@ internal object MockSongs {
         imageUrl = coverArtUrl,
         songUrl = "https://ipfs.poolpm.nftcdn.io/ipfs/QmW6zkt82o4BbPh87uYYUSNbSSfmy6wbLCd2NE7VQk83Vn?tk=UmgSevoPuMvI0Hd6xQdzs_DA7ExwXGwSp7Yr_5xTUOU",
         artists = listOf("{insert artist name}"),
-        duration = "3:00",
+        duration = 2L,
     )
 }
 

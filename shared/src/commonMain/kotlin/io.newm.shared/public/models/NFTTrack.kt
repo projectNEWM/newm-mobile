@@ -6,6 +6,6 @@ data class NFTTrack(
     val name: String,
     val imageUrl: String,
     val songUrl: String,
-    val duration: String,
+    val duration: Long,
     val artists: List<String> = emptyList(),
 )

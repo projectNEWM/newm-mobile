@@ -39,7 +39,7 @@ fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(logger: Logger): NFTTr
     var imageId: String? = null
     var name: String? = null
     var src: String? = null
-    var duration: String? = null
+    var duration: Long? = null
     var artists: List<String> = mutableListOf()
 
     this.forEach { metadata ->
@@ -80,7 +80,7 @@ fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(logger: Logger): NFTTr
             }
 
             "song_duration" -> {
-                duration = Duration.parseIsoString(metadata.value).toString()
+                duration = Duration.parse(metadata.value).inWholeSeconds
             }
         }
     }
@@ -145,7 +145,7 @@ fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(logger: Logger): NFTTr
     var image: String? = null
     var name: String? = null
     var source: String? = null
-    var duration: String? = null
+    var duration: Long? = null
     val artistSet = mutableSetOf<String>()
 
     this.forEach { metadata ->
@@ -176,7 +176,7 @@ fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(logger: Logger): NFTTr
 
                                             "song_duration" -> {
                                                 duration =
-                                                    Duration.parseIsoString(song.value).toString()
+                                                    Duration.parseIsoString(song.value).inWholeSeconds
                                             }
 
                                             "artists" -> {
