@@ -65,6 +65,7 @@ class MusicPlayerViewModel(
             PlaybackUiEvent.Pause -> musicPlayer.pause()
             PlaybackUiEvent.Play -> musicPlayer.play()
             PlaybackUiEvent.Previous -> musicPlayer.previous()
+            PlaybackUiEvent.Repeat -> musicPlayer.repeat()
             is PlaybackUiEvent.Seek -> musicPlayer.seekTo(playbackUiEvent.position)
         }
     }
