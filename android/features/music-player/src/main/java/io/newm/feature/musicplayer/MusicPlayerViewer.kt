@@ -37,6 +37,7 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
+import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
@@ -75,7 +76,7 @@ internal fun MusicPlayerViewer(
             Row(modifier = Modifier.fillMaxWidth()) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
-                        painter = painterResource(id = R.drawable.music_player_back),
+                        painter = painterResource(id = R.drawable.ic_music_player_back),
                         contentDescription = "Back",
                         tint = White
                     )
@@ -162,7 +163,9 @@ fun PlaybackControlPanel(
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.padding(12.dp)) {
-                RepeatButton(onClick = {})
+                RepeatButton(
+                    playbackStatus.repeatMode,
+                    onClick = { onEvent(PlaybackUiEvent.Repeat) })
                 Spacer(modifier = Modifier.weight(1f))
                 PreviousTrackButton(
                     modifier = Modifier.padding(horizontal = 12.dp),
@@ -267,12 +270,21 @@ fun ShareButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun RepeatButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun RepeatButton(
+    repeatMode: PlaybackRepeatMode,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val imageRes = when (repeatMode) {
+        PlaybackRepeatMode.REPEAT_OFF -> R.drawable.ic_repeat_off
+        PlaybackRepeatMode.REPEAT_ONE -> R.drawable.ic_music_player_repeat_one
+        PlaybackRepeatMode.REPEAT_ALL -> R.drawable.ic_music_player_repeat_all
+    }
     IconButton(modifier = modifier, onClick = onClick) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_repeat_default),
+            painter = painterResource(id = imageRes),
             contentDescription = "Repeat",
-            tint = Gray23
+            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) Gray23 else White
         )
     }
 }
