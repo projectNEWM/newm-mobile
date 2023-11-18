@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileEditViewModel(
-    private val userProviderUserCase: UserDetailsUseCase,
+    private val userDetailsUseCase: UserDetailsUseCase,
     private val logout: Logout
 ) : ViewModel() {
 
@@ -25,7 +25,7 @@ class ProfileEditViewModel(
     init {
         println("NewmAndroid - ProfileViewModel")
         viewModelScope.launch {
-            val user = userProviderUserCase.fetchLoggedInUserDetails()
+            val user = userDetailsUseCase.fetchLoggedInUserDetails()
             Logger.d { "NewmAndroid - ProfileViewModel user: $user" }
             _state.value = ProfileState.Content(profile = user)
         }

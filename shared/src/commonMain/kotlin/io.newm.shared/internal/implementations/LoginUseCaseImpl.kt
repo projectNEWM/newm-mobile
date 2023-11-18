@@ -31,11 +31,4 @@ internal class LoginUseCaseImpl(private val repository: LogInRepository) : Login
     override suspend fun logInWithApple(idToken: String) {
         return repository.oAuthLogin(OAuthData.Apple(idToken))
     }
-
-    override fun logOut() {
-        repository.logOut()
-    }
-
-    override val userIsLoggedIn: Boolean
-        get() = repository.userIsLoggedIn()
 }

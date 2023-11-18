@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileReadOnlyViewModel(
-    private val userProviderUserCase: UserDetailsUseCase,
+    private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout
 ) : ViewModel() {
@@ -27,7 +27,7 @@ class ProfileReadOnlyViewModel(
     init {
         println("NewmAndroid - ProfileViewModel")
         viewModelScope.launch {
-            val user = userProviderUserCase.fetchLoggedInUserDetails()
+            val user = userDetailsUseCase.fetchLoggedInUserDetails()
             Logger.d { "NewmAndroid - ProfileViewModel user: $user" }
             _state.value = ProfileViewState
                 .Content(

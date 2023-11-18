@@ -65,19 +65,6 @@ interface LoginUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logInWithApple(idToken: String)
-
-    /**
-     * Logs out the currently authenticated user and resets the app state.
-     */
-    fun logOut()
-
-    /**
-     * Indicates whether a user is currently logged in.
-     *
-     * @deprecated This property is deprecated. Use [UserSessionUseCase] to manage user session information.
-     */
-    @Deprecated("Use UserSessionUseCase instead.")
-    val userIsLoggedIn: Boolean
 }
 
 

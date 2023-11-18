@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-
+import shared.Notification
+import shared.postNotification
 
 
 internal class UserSessionUseCaseImpl : KoinComponent, UserSessionUseCase {
@@ -30,5 +31,6 @@ internal class UserSessionUseCaseImpl : KoinComponent, UserSessionUseCase {
     override fun logout() {
         tokenManager.clearToken()
         connectWalletManager.disconnect()
+        postNotification(Notification.loginStateChanged)
     }
 }
