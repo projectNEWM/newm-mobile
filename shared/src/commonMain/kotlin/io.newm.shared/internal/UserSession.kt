@@ -16,14 +16,14 @@ internal class UserSessionUseCaseImpl : KoinComponent, UserSessionUseCase {
     private val connectWalletManager: ConnectWalletManager by inject()
 
     init {
-        _mutableUserLoginState.value = userLoginStateValue()
+        _mutableUserLoginState.value = isLoggedIn()
     }
 
-    override fun userLoginStateValue(): Boolean {
+    override fun isLoggedIn(): Boolean {
         return tokenManager.getAccessToken().isNullOrEmpty().not()
     }
 
-    override fun userLoginState(): Flow<Boolean> {
+    override fun isLoggedInFlow(): Flow<Boolean> {
         return _mutableUserLoginState
     }
 

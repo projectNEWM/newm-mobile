@@ -12,7 +12,6 @@ android {
 
     defaultConfig {
         minSdk = Versions.androidMinSdk
-        targetSdk = Versions.androidTargetSdk
         resourcePrefix = "login"
     }
 
@@ -35,35 +34,31 @@ android {
 }
 
 dependencies {
-
-    implementation(project(Modules.coreTheme))
-    implementation(project(Modules.shared))
-    implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.coreResources))
-
     implementation(Circuit.foundation)
     implementation(Circuit.retained)
-
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
     implementation(Google.composeUi)
     implementation(Google.composeUiToolingPreview)
-    implementation(Google.playServicesAuth)
     implementation(Google.material)
-    implementation(Google.navigationCompose)
     implementation(Google.materialIconsExtended)
-
+    implementation(Google.navigationCompose)
+    implementation(Google.playServicesAuth)
     implementation(Koin.android)
     implementation(Koin.androidCompose)
+    implementation(project(Modules.coreResources))
+    implementation(project(Modules.coreTheme))
+    implementation(project(Modules.coreUiUtils))
+    implementation(project(Modules.shared))
 
-    debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)
+    debugImplementation(Google.composeUiTooling)
 
-    testImplementation(project(Modules.testUtils))
     testImplementation(Circuit.test)
-    testImplementation(JUnit.jUnit)
     testImplementation(Google.testParameterInjector)
+    testImplementation(JUnit.jUnit)
+    testImplementation(project(Modules.testUtils))
 
-    androidTestImplementation(JUnit.androidxJUnit)
     androidTestImplementation(Google.espressoTest)
+    androidTestImplementation(JUnit.androidxJUnit)
 }

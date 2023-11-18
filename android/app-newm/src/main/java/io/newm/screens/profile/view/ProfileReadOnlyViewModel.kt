@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import io.newm.Logout
 import io.newm.shared.public.models.User
-import io.newm.shared.public.usecases.UserProfileUseCase
+import io.newm.shared.public.usecases.UserDetailsUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileReadOnlyViewModel(
-    private val userProviderUserCase: UserProfileUseCase,
+    private val userProviderUserCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout
 ) : ViewModel() {
@@ -27,7 +27,7 @@ class ProfileReadOnlyViewModel(
     init {
         println("NewmAndroid - ProfileViewModel")
         viewModelScope.launch {
-            val user = userProviderUserCase.getCurrentUser()
+            val user = userProviderUserCase.fetchLoggedInUserDetails()
             Logger.d { "NewmAndroid - ProfileViewModel user: $user" }
             _state.value = ProfileViewState
                 .Content(

@@ -17,13 +17,13 @@ import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
-import io.newm.shared.public.usecases.UserProfileUseCase
+import io.newm.shared.public.usecases.UserDetailsUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.WalletNFTSongsUseCase
+import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
 import io.newm.shared.internal.implementations.LoginUseCaseImpl
 import io.newm.shared.internal.implementations.SignupUseCaseImpl
-import io.newm.shared.internal.implementations.UserProfileUseCaseImpl
+import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
 import io.newm.shared.public.usecases.UserSessionUseCase
@@ -67,9 +67,9 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     // External Use Cases to be consumed outside of KMM
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
-    single<UserProfileUseCase> { UserProfileUseCaseImpl(get()) }
+    single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTSongsUseCase> { WalletNFTSongsUseCaseImpl(get(), get()) }
+    single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get(), get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl() }
 }

@@ -1,10 +1,10 @@
 package io.newm.shared.public.usecases
 
-import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.models.Genre
+import io.newm.shared.public.models.error.KMMException
+import kotlin.coroutines.cancellation.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.coroutines.cancellation.CancellationException
 
 interface GetGenresUseCase {
     @Throws(KMMException::class, CancellationException::class)

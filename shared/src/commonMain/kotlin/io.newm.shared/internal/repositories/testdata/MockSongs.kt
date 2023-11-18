@@ -1,41 +1,5 @@
 package io.newm.shared.internal.repositories.testdata
 
-import io.newm.shared.public.models.NFTTrack
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-
-internal object MockSongs {
-
-    fun getSongsFlow(): Flow<List<NFTTrack>> = flow {
-        emit(
-            savedSongModels.mapIndexed { index, mockSongModel ->
-                mockSongModel.toMockSong(index.toString())
-            }
-        )
-    }
-
-    private fun MockSongModel.toMockSong(index: String): NFTTrack {
-        return createSong(
-            id = index,
-            title = title,
-            coverArtUrl = imageUrl,
-        )
-    }
-
-    private fun createSong(
-        id: String,
-        title: String,
-        coverArtUrl: String,
-    ): NFTTrack = NFTTrack(
-        id = id,
-        name = title,
-        imageUrl = coverArtUrl,
-        songUrl = "https://ipfs.poolpm.nftcdn.io/ipfs/QmW6zkt82o4BbPh87uYYUSNbSSfmy6wbLCd2NE7VQk83Vn?tk=UmgSevoPuMvI0Hd6xQdzs_DA7ExwXGwSp7Yr_5xTUOU",
-        artists = listOf("{insert artist name}"),
-        duration = 2L,
-    )
-}
-
 val savedSongModels = listOf(
     // Actual Fake Songs
     MockSongModel(

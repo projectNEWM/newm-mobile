@@ -31,22 +31,20 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.coreTheme))
-    implementation(project(Modules.shared))
-    implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.coreResources))
-
+    implementation("androidx.camera:camera-camera2:1.4.0-alpha02")
+    implementation("androidx.camera:camera-lifecycle:1.4.0-alpha02")
+    implementation("androidx.camera:camera-view:1.4.0-alpha02")
+    implementation("com.google.mlkit:barcode-scanning:17.2.0")
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
     implementation(Google.composeUi)
     implementation(Google.composeUiToolingPreview)
-    implementation(Google.playServicesAuth)
     implementation(Google.material)
-    implementation(Google.navigationCompose)
     implementation(Google.materialIconsExtended)
-
-    implementation("com.google.mlkit:barcode-scanning:17.2.0")
-    implementation("androidx.camera:camera-camera2:1.4.0-alpha01")
-    implementation("androidx.camera:camera-lifecycle:1.4.0-alpha01")
-    implementation("androidx.camera:camera-view:1.4.0-alpha01")
+    implementation(Google.navigationCompose)
+    implementation(Google.playServicesAuth)
+    implementation(project(Modules.coreResources))
+    implementation(project(Modules.coreTheme))
+    implementation(project(Modules.coreUiUtils))
+    implementation(project(Modules.shared))
 }

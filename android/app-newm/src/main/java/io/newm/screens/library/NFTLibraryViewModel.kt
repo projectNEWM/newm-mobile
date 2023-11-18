@@ -5,13 +5,13 @@ import androidx.lifecycle.viewModelScope
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.WalletNFTSongsUseCase
+import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NFTLibraryViewModel(
     private val connectWalletUseCase: ConnectWalletUseCase,
-    private val walletNFTSongsUseCase: WalletNFTSongsUseCase
+    private val walletNFTTracksUseCase: WalletNFTTracksUseCase
 ) : ViewModel() {
 
     private val _nftLibraryState = MutableStateFlow<NFTLibraryState>(NFTLibraryState.Loading)
@@ -25,7 +25,7 @@ class NFTLibraryViewModel(
         _nftLibraryState.value = NFTLibraryState.Loading
         if (connectWalletUseCase.isConnected()) {
             try {
-                val nftSongs = walletNFTSongsUseCase.getWalletNFTs()
+                val nftSongs = walletNFTTracksUseCase.getAllNFTTracks()
                 _nftLibraryState.value = NFTLibraryState.Content(nftSongs)
             } catch (e: KMMException) {
                 _nftLibraryState.value =

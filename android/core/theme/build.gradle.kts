@@ -37,9 +37,6 @@ android {
 
 dependencies {
 
-//    kapt(Airbnb.showkaseProcessor)
-
-//    implementation(Airbnb.showkase)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)
     implementation(Google.composeMaterial)
@@ -50,6 +47,6 @@ dependencies {
 
     testImplementation(JUnit.jUnit)
 
-    androidTestImplementation(JUnit.androidxJUnit)
     androidTestImplementation(Google.espressoTest)
+    androidTestImplementation(JUnit.androidxJUnit)
 }
