@@ -1,0 +1,30 @@
+-- NFTTrack.sq
+
+CREATE TABLE NFTTrack (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    imageUrl TEXT NOT NULL,
+    songUrl TEXT NOT NULL,
+    duration INTEGER NOT NULL, -- Duration in milliseconds
+    artists TEXT NOT NULL
+);
+
+-- Select all tracks
+selectAllTracks:
+SELECT *
+FROM NFTTrack;
+
+-- Select a specific track by its ID
+selectTrackById:
+SELECT *
+FROM NFTTrack
+WHERE id = ?;
+
+-- Insert or replace a track
+insertOrReplaceTrack:
+REPLACE INTO NFTTrack (id, name, imageUrl, songUrl, duration, artists)
+VALUES (?, ?, ?, ?, ?, ?);
+
+-- Delete all tracks
+deleteAllTracks:
+DELETE FROM NFTTrack;

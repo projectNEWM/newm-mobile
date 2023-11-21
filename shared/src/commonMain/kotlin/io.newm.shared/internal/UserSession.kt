@@ -5,16 +5,16 @@ import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import shared.Notification
 import shared.postNotification
 
 
-internal class UserSessionUseCaseImpl : KoinComponent, UserSessionUseCase {
-    private val _mutableUserLoginState = MutableStateFlow(false)
+internal class UserSessionUseCaseImpl(
+    private val connectWalletManager: ConnectWalletManager,
+    private val tokenManager: TokenManager
+    ) : KoinComponent, UserSessionUseCase {
 
-    private val tokenManager: TokenManager by inject()
-    private val connectWalletManager: ConnectWalletManager by inject()
+    private val _mutableUserLoginState = MutableStateFlow(false)
 
     init {
         _mutableUserLoginState.value = isLoggedIn()

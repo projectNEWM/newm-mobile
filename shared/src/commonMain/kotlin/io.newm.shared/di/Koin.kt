@@ -29,6 +29,7 @@ import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
 import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -62,16 +63,16 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { GenresRepository() }
     single { UserRepository() }
     single { PlaylistRepository() }
-    single { CardanoWalletRepository() }
+    single { CardanoWalletRepository(get(), get(), get(), get()) }
     single { ConnectWalletManager(get()) }
     // External Use Cases to be consumed outside of KMM
     single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get(), get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get()) }
-    single<UserSessionUseCase> { UserSessionUseCaseImpl() }
+    single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get()) }
+    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
+    single<UserSessionUseCase> { UserSessionUseCaseImpl(get(), get()) }
 }
 
 fun createJson() = Json {

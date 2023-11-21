@@ -1,20 +1,85 @@
 package io.newm.shared.internal.repositories
 
 import co.touchlab.kermit.Logger
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import io.newm.shared.db.cache.NewmDatabase
+import io.newm.shared.internal.db.NewmDatabaseWrapper
+import io.newm.shared.internal.repositories.parsers.getMusicMetadataVersion
+import io.newm.shared.internal.repositories.parsers.getTrackFromMusicMetadataV1
+import io.newm.shared.internal.repositories.parsers.getTrackFromMusicMetadataV2
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.internal.services.LedgerAssetMetadata
 import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.public.models.error.KMMException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import kotlin.time.Duration
 
 
-internal class CardanoWalletRepository : KoinComponent {
+internal class CardanoWalletRepository(
+    private val service: CardanoWalletAPI,
+    private val scope: CoroutineScope,
+    private val connectWalletManager: ConnectWalletManager,
+    dbWrapper: NewmDatabaseWrapper,
+) : KoinComponent {
 
-    private val service: CardanoWalletAPI by inject()
     private val logger = Logger.withTag("NewmKMM-CardanoWalletRepository")
+    private val database = dbWrapper.instance ?: throw KMMException("Database not initialized")
 
-    suspend fun getWalletNFTs(xpub: String): List<NFTTrack> {
+    fun getTrack(id: String): NFTTrack? =
+        database.nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->
+            NFTTrack(
+                id = track.id,
+                name = track.name,
+                imageUrl = track.imageUrl,
+                songUrl = track.songUrl,
+                duration = track.duration,
+                artists = track.artists.split(",")
+            )
+        }
+
+    fun getWalletNFTsFlow(): Flow<List<NFTTrack>> = database.nFTTrackQueries.selectAllTracks()
+        .asFlow()
+        .mapToList()
+        .onStart {
+            // Triggered when the Flow starts collecting
+            if (database.nFTTrackQueries.selectAllTracks().executeAsList().isEmpty()) {
+                logger.d { "No tracks found in DB, fetching from network" }
+                scope.launch {
+                    getWalletNFTs()
+                }
+            }
+
+        }
+        .map { tracksFromDb ->
+            tracksFromDb.map { track ->
+                NFTTrack(
+                    id = track.id,
+                    name = track.name,
+                    imageUrl = track.imageUrl,
+                    songUrl = track.songUrl,
+                    duration = track.duration,
+                    artists = track.artists.split(",").filterNot { it.isBlank() }
+                )
+            }
+        }
+
+
+    suspend fun getWalletNFTs(): List<NFTTrack> {
+        val xpub = connectWalletManager.getXpub() ?: throw KMMException("No xpub found")
+        val tracks = fetchNFTTracksFromNetwork(xpub)
+        cacheNFTTracks(tracks)
+        logger.d { "Result Size: ${tracks.size}" }
+        return tracks
+    }
+
+    private suspend fun fetchNFTTracksFromNetwork(xpub: String): List<NFTTrack> {
         val walletNFTs = service.getWalletNFTs(xpub)
         val tracks = walletNFTs.mapNotNull {
             when (it.getMusicMetadataVersion()) {
@@ -26,205 +91,27 @@ internal class CardanoWalletRepository : KoinComponent {
                 }
             }
         }
-        logger.d { "Result Size: ${tracks.size}" }
         return tracks
     }
-}
 
-fun List<LedgerAssetMetadata>.getMusicMetadataVersion(): Int? {
-    return this.find { it.key == "music_metadata_version" }?.value?.toInt() ?: return null
-}
-
-fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(logger: Logger): NFTTrack? {
-    var imageId: String? = null
-    var name: String? = null
-    var src: String? = null
-    var duration: Long? = null
-    var artists: List<String> = mutableListOf()
-
-    this.forEach { metadata ->
-        when (metadata.key) {
-            "image" -> {
-                imageId = metadata.value
-            }
-
-            "song_title" -> {
-                name = metadata.value
-            }
-
-            "files" -> {
-                metadata.children.forEach { files ->
-                    val isThereAudioFiles = files.children.find { file ->
-                        file.key == "mediaType" && file.value.contains("audio")
-                    } != null
-
-                    if (isThereAudioFiles) {
-                        files.children.first { file ->
-                            file.key == "src"
-                        }.let { file ->
-                            src = file.value
-                        }
-                    }
-                }
-            }
-
-            "artists" -> {
-                metadata.children.forEach { artist ->
-                    artist.children.first { detail ->
-                        detail.key == "name"
-                    }.let { detail ->
-                        artists = artists.plus(detail.value)
-                    }
-                }
-            }
-
-            "song_duration" -> {
-                duration = Duration.parse(metadata.value).inWholeSeconds
+    private fun cacheNFTTracks(nftTracks: List<NFTTrack>) {
+        database.transaction {
+            nftTracks.forEach { track ->
+                database.nFTTrackQueries.insertOrReplaceTrack(
+                    id = track.id,
+                    name = track.name,
+                    imageUrl = track.imageUrl,
+                    songUrl = track.songUrl,
+                    duration = track.duration,
+                    artists = track.artists.joinToString(separator = ","),
+                )
             }
         }
     }
-    if (src == null || name == null || imageId == null || duration == null) {
-        logger.d { "SKIPPED SONG with" }
-        when {
-            src == null -> logger.d { "src is null" }
-            name == null -> logger.d { "name is null" }
-            imageId == null -> logger.d { "imageId is null" }
-            duration == null -> logger.d { "duration is null" }
-        }
-        return null
-    }
-    return NFTTrack(
-        id = src!!.toId(logger),
-        name = name!!,
-        imageUrl = imageId!!.toResourceUri(logger),
-        songUrl = src!!.toResourceUri(logger),
-        duration = duration!!,
-        artists = artists,
-    )
-}
 
-private fun String.toResourceUri(logger: Logger): String {
-    return when {
-        this.startsWith("ipfs://") -> {
-            val ipfs = "https://bcsh.mypinata.cloud/ipfs/"
-            "$ipfs${this.replace("ipfs://", "")}"
-        }
-
-        this.startsWith("ar://") -> {
-            val arweave = "https://arweave.net/"
-            "$arweave${this.replace("ar://", "")}"
-        }
-
-        else -> {
-            logger.e { "Unsupported resource type: $this" }
-            this
+    fun deleteAllNFTs() {
+        database.transaction {
+            database.nFTTrackQueries.deleteAllTracks()
         }
     }
-}
-
-private fun String.toId(logger: Logger): String {
-    return when {
-        this.startsWith("ipfs://") -> {
-            this.replace("ipfs://", "")
-        }
-
-        this.startsWith("ar://") -> {
-            this.replace("ar://", "")
-        }
-
-        else -> {
-            logger.e { "Unsupported resource type: $this" }
-            this
-        }
-    }
-}
-
-
-fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(logger: Logger): NFTTrack? {
-    var image: String? = null
-    var name: String? = null
-    var source: String? = null
-    var duration: Long? = null
-    val artistSet = mutableSetOf<String>()
-
-    this.forEach { metadata ->
-        when (metadata.key) {
-            "image" -> {
-                image = metadata.value
-            }
-
-            "files" -> {
-                metadata.children.forEach { files ->
-                    val isThereAudioFiles = files.children.find { file ->
-                        file.key == "mediaType" && file.value.contains("audio")
-                    } != null
-
-                    if (isThereAudioFiles) {
-                        files.children.forEach { file ->
-                            when (file.key) {
-                                "src" -> {
-                                    source = file.value
-                                }
-
-                                "song" -> {
-                                    file.children.forEach { song ->
-                                        when (song.key) {
-                                            "song_title" -> {
-                                                name = song.value
-                                            }
-
-                                            "song_duration" -> {
-                                                duration =
-                                                    Duration.parseIsoString(song.value).inWholeSeconds
-                                            }
-
-                                            "artists" -> {
-                                                song.children.forEach { listArtist ->
-                                                    when (listArtist.key) {
-                                                        "artists" -> {
-                                                            listArtist.children.forEach { artist ->
-                                                                when (artist.key) {
-                                                                    "name" -> {
-                                                                        artistSet.add(artist.value)
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-
-    }
-
-    if (source == null || name == null || image == null || duration == null) {
-        logger.d { "SKIPPED SONG with" }
-        when {
-            source == null -> logger.d { "src is null" }
-            name == null -> logger.d { "name is null" }
-            image == null -> logger.d { "imageId is null" }
-            duration == null -> logger.d { "duration is null" }
-        }
-        return null
-    }
-
-    return NFTTrack(
-        id = source!!.toId(logger),
-        name = name!!,
-        imageUrl = image!!.toResourceUri(logger),
-        songUrl = source!!.toResourceUri(logger),
-        artists = artistSet.toList(),
-        duration = duration!!,
-    )
 }

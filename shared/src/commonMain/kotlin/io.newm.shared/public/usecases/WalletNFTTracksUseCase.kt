@@ -38,6 +38,19 @@ interface WalletNFTTracksUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     suspend fun getAllNFTTracks(): List<NFTTrack>
+
+    /**
+     * Retrieves the details of a specific Non-Fungible Token (NFT) track by its unique identifier.
+     *
+     * This method provides access to the data of a single NFT track, including its metadata
+     * such as the track's name, image URL, song URL, duration, and associated artists.
+     * It is particularly useful for cases where details of a specific track are needed,
+     * rather than the entire list of tracks associated with the wallet. (E.g. when displaying a track's details)
+     *
+     * @param id The unique identifier of the NFT track to be retrieved.
+     * @return NFTTrack? - The NFT track with the specified ID, or `null` if no such track is found.
+     */
+    fun getNFTTrack(id: String): NFTTrack?
 }
 
 class WalletNFTSongsUseCaseProvider(): KoinComponent {

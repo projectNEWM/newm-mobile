@@ -1,5 +1,6 @@
 package io.newm.shared.public.usecases
 
+import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -33,6 +34,16 @@ interface ConnectWalletUseCase {
      * @return Boolean - Returns `true` if a wallet is currently connected, `false` otherwise.
      */
     fun isConnected(): Boolean
+
+    /**
+     * Provides a continuous stream (Flow) of the current connection status of the wallet.
+     *
+     * This method is useful for observing changes in the connection status of the wallet in a reactive manner.
+     * It ensures that any updates to the connection status are reflected in real-time.
+     *
+     * @return Flow<Boolean> - A flow emitting the current connection status of the wallet.
+     */
+    fun isConnectedFlow(): Flow<Boolean>
 }
 
 class ConnectWalletUseCaseProvider(): KoinComponent {
