@@ -7,7 +7,7 @@ import io.ktor.http.*
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.models.User
-import io.newm.shared.public.models.UserCount
+import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -66,3 +66,8 @@ internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
         contentType(ContentType.Application.Json)
     }
 }
+
+@Serializable
+internal data class UserCount(
+    val count: Int
+)
