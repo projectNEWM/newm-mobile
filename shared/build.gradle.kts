@@ -49,6 +49,7 @@ kotlin {
                 implementation(Kotlin.coroutinesCore)
                 implementation(Kotlin.stdlib)
                 implementation(SqlDelight.runtime)
+                implementation(SqlDelight.coroutinesExtensions)
                 api(Koin.core)
                 api(Log.kermit)
                 implementation(Ktor.clientLogging)
@@ -116,7 +117,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 sqldelight {
     database("NewmDatabase") {
         packageName = "io.newm.shared.db.cache"
-//        sourceFolders = listOf("sqldelight")
+        sourceFolders = listOf("sqldelight")
+        version = 1
     }
 }
 

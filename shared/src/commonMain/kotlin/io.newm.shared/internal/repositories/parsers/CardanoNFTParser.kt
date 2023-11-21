@@ -1,0 +1,199 @@
+package io.newm.shared.internal.repositories.parsers
+
+import co.touchlab.kermit.Logger
+import io.newm.shared.internal.services.LedgerAssetMetadata
+import io.newm.shared.public.models.NFTTrack
+import kotlin.time.Duration
+
+fun List<LedgerAssetMetadata>.getMusicMetadataVersion(): Int? {
+    return this.find { it.key == "music_metadata_version" }?.value?.toInt() ?: return null
+}
+
+fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV1(logger: Logger): NFTTrack? {
+    var imageId: String? = null
+    var name: String? = null
+    var src: String? = null
+    var duration: Long? = null
+    var artists: List<String> = mutableListOf()
+
+    this.forEach { metadata ->
+        when (metadata.key) {
+            "image" -> {
+                imageId = metadata.value
+            }
+
+            "song_title" -> {
+                name = metadata.value
+            }
+
+            "files" -> {
+                metadata.children.forEach { files ->
+                    val isThereAudioFiles = files.children.find { file ->
+                        file.key == "mediaType" && file.value.contains("audio")
+                    } != null
+
+                    if (isThereAudioFiles) {
+                        files.children.first { file ->
+                            file.key == "src"
+                        }.let { file ->
+                            src = file.value
+                        }
+                    }
+                }
+            }
+
+            "artists" -> {
+                metadata.children.forEach { artist ->
+                    artist.children.first { detail ->
+                        detail.key == "name"
+                    }.let { detail ->
+                        artists = artists.plus(detail.value)
+                    }
+                }
+            }
+
+            "song_duration" -> {
+                duration = Duration.parse(metadata.value).inWholeSeconds
+            }
+        }
+    }
+    if (src == null || name == null || imageId == null || duration == null) {
+        logger.d { "SKIPPED SONG with" }
+        when {
+            src == null -> logger.d { "src is null" }
+            name == null -> logger.d { "name is null" }
+            imageId == null -> logger.d { "imageId is null" }
+            duration == null -> logger.d { "duration is null" }
+        }
+        return null
+    }
+    return NFTTrack(
+        id = src!!.toId(logger),
+        name = name!!,
+        imageUrl = imageId!!.toResourceUri(logger),
+        songUrl = src!!.toResourceUri(logger),
+        duration = duration!!,
+        artists = artists,
+    )
+}
+
+private fun String.toResourceUri(logger: Logger): String {
+    return when {
+        this.startsWith("ipfs://") -> {
+            val ipfs = "https://bcsh.mypinata.cloud/ipfs/"
+            "$ipfs${this.replace("ipfs://", "")}"
+        }
+
+        this.startsWith("ar://") -> {
+            val arweave = "https://arweave.net/"
+            "$arweave${this.replace("ar://", "")}"
+        }
+
+        else -> {
+            logger.e { "Unsupported resource type: $this" }
+            this
+        }
+    }
+}
+
+private fun String.toId(logger: Logger): String {
+    return when {
+        this.contains("://") -> {
+            "trackId:"+ this.replace("://", "")
+        }
+        else -> {
+            logger.e { "Unsupported resource type: $this" }
+            this
+        }
+    }
+}
+
+
+fun List<LedgerAssetMetadata>.getTrackFromMusicMetadataV2(logger: Logger): NFTTrack? {
+    var image: String? = null
+    var name: String? = null
+    var source: String? = null
+    var duration: Long? = null
+    val artistSet = mutableSetOf<String>()
+
+    this.forEach { metadata ->
+        when (metadata.key) {
+            "image" -> {
+                image = metadata.value
+            }
+
+            "files" -> {
+                metadata.children.forEach { files ->
+                    val isThereAudioFiles = files.children.find { file ->
+                        file.key == "mediaType" && file.value.contains("audio")
+                    } != null
+
+                    if (isThereAudioFiles) {
+                        files.children.forEach { file ->
+                            when (file.key) {
+                                "src" -> {
+                                    source = file.value
+                                }
+
+                                "song" -> {
+                                    file.children.forEach { song ->
+                                        when (song.key) {
+                                            "song_title" -> {
+                                                name = song.value
+                                            }
+
+                                            "song_duration" -> {
+                                                duration =
+                                                    Duration.parseIsoString(song.value).inWholeSeconds
+                                            }
+
+                                            "artists" -> {
+                                                song.children.forEach { listArtist ->
+                                                    when (listArtist.key) {
+                                                        "artists" -> {
+                                                            listArtist.children.forEach { artist ->
+                                                                when (artist.key) {
+                                                                    "name" -> {
+                                                                        artistSet.add(artist.value)
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    if (source == null || name == null || image == null || duration == null) {
+        logger.d { "SKIPPED SONG with" }
+        when {
+            source == null -> logger.d { "src is null" }
+            name == null -> logger.d { "name is null" }
+            image == null -> logger.d { "imageId is null" }
+            duration == null -> logger.d { "duration is null" }
+        }
+        return null
+    }
+
+    return NFTTrack(
+        id = source!!.toId(logger),
+        name = name!!,
+        imageUrl = image!!.toResourceUri(logger),
+        songUrl = source!!.toResourceUri(logger),
+        artists = artistSet.toList(),
+        duration = duration!!,
+    )
+}
