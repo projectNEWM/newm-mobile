@@ -25,7 +25,7 @@ jobs:
         run: echo $GOOGLE_SERVICES_JSON | base64 -di > ./android/app-newm/google-services.json
 
       - name: build android app
-        run: ./gradlew :android:app-newm:assembleRelease
+        run: ./gradlew :android:app-newm:assembleProductionRelease
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK

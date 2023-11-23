@@ -104,7 +104,7 @@ internal fun MusicPlayerViewer(
                     onEvent = onEvent
                 )
                 MusicPlayerSlider(
-                    value = playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
+                    value = if(playbackStatus.duration == 0L) 0f else playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
                     onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
                     colors = SliderDefaults.colors(
                         thumbColor = White,
