@@ -3,6 +3,8 @@ package io.newm.feature.musicplayer.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.newm.feature.musicplayer.models.PlaybackStatus
+import io.newm.feature.musicplayer.models.Playlist
+import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
@@ -13,9 +15,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
@@ -34,7 +36,21 @@ class MusicPlayerViewModel(
         }
         combine(
             musicPlayer.playbackStatus,
-            songFlow.mapNotNull { it }
+            songFlow.mapNotNull { it }.onEach {
+                musicPlayer.setPlaylist(
+                    Playlist(
+                        listOf(
+                            Track(
+                                id = it.id,
+                                title = it.name,
+                                url = it.songUrl,
+                                artist = it.artists.firstOrNull().orEmpty()
+                            )
+                        )
+                    ),
+                    initialTrackIndex = 0,
+                )
+            }
         ) { playbackStatus, song ->
             songIdFlow.update { playbackStatus.track?.id }
 
@@ -52,11 +68,6 @@ class MusicPlayerViewModel(
 
     val state: StateFlow<MusicPlayerState>
         get() = _state
-
-    init {
-        musicPlayer.setPlaylist(musicRepository.fetchPlaylist("test"), songId.toIntOrNull() ?: 0)
-        onEvent(PlaybackUiEvent.Play)
-    }
 
     fun onEvent(playbackUiEvent: PlaybackUiEvent) {
         when (playbackUiEvent) {

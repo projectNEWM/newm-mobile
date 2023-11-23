@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -35,6 +36,7 @@ import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
+import io.newm.feature.musicplayer.MusicPlayerControls
 import io.newm.shared.public.models.NFTTrack
 import org.koin.compose.koinInject
 
@@ -107,23 +109,27 @@ fun EmptyNFTListScreen(goToProfile: () -> Unit) {
 
 @Composable
 fun SongList(songs: List<NFTTrack>, onPlaySong: (NFTTrack) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(state = rememberScrollState())
-            .testTag(TAG_NFT_LIBRARY_SCREEN)
-    ) {
-        SearchBar(
-            placeholderResId = R.string.library_search,
+    Column {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        )
-        if (songs.isNotEmpty()) {
-            songs.forEach { song ->
-                RowSongItem(song = song, onClick = onPlaySong)
+                .weight(1f)
+                .verticalScroll(state = rememberScrollState())
+                .testTag(TAG_NFT_LIBRARY_SCREEN)
+        ) {
+            SearchBar(
+                placeholderResId = R.string.library_search,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+            )
+            if (songs.isNotEmpty()) {
+                songs.forEach { song ->
+                    RowSongItem(song = song, onClick = onPlaySong)
+                }
             }
         }
+        // TODO replace with minimal player
+        MusicPlayerControls()
     }
 }
 

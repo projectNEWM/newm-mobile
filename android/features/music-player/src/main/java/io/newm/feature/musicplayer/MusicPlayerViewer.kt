@@ -14,6 +14,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +42,7 @@ import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
+import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import io.newm.shared.public.models.NFTTrack
 
@@ -98,27 +101,55 @@ internal fun MusicPlayerViewer(
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
             )
-            Box {
-                PlaybackControlPanel(
-                    playbackStatus = playbackStatus,
-                    onEvent = onEvent
-                )
-                MusicPlayerSlider(
-                    value = playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
-                    onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
-                    colors = SliderDefaults.colors(
-                        thumbColor = White,
-                        inactiveTrackColor = Gray500
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .height(4.dp)
-
-                )
-            }
+            MusicPlayerControls(playbackStatus, onEvent)
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+@Composable
+fun MusicPlayerControls(
+    mediaPlayer: MusicPlayer? = rememberMediaPlayer(),
+) {
+    mediaPlayer ?: return
+
+    val playbackStatus by mediaPlayer.playbackStatus.collectAsState()
+
+    MusicPlayerControls(playbackStatus, onEvent = { playbackUiEvent ->
+        when (playbackUiEvent) {
+            PlaybackUiEvent.Next -> mediaPlayer.next()
+            PlaybackUiEvent.Pause -> mediaPlayer.pause()
+            PlaybackUiEvent.Play -> mediaPlayer.play()
+            PlaybackUiEvent.Previous -> mediaPlayer.previous()
+            PlaybackUiEvent.Repeat -> mediaPlayer.repeat()
+            is PlaybackUiEvent.Seek -> mediaPlayer.seekTo(playbackUiEvent.position)
+        }
+    })
+}
+
+@Composable
+private fun MusicPlayerControls(
+    playbackStatus: PlaybackStatus,
+    onEvent: (PlaybackUiEvent) -> Unit
+) {
+    Box {
+        PlaybackControlPanel(
+            playbackStatus = playbackStatus,
+            onEvent = onEvent
+        )
+        MusicPlayerSlider(
+            value = if (playbackStatus.duration == 0L) 0f else playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
+            onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
+            colors = SliderDefaults.colors(
+                thumbColor = White,
+                inactiveTrackColor = Gray500
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp)
+                .height(4.dp)
+
+        )
     }
 }
 
