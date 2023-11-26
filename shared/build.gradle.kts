@@ -6,8 +6,8 @@ plugins {
     id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
-    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
-    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-18"
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
+    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-21"
 
 }
 
