@@ -17,7 +17,7 @@ class AppLaunchGhostActivity : ComponentActivity() {
             setKeepOnScreenCondition { true }
         }
 
-        if (userSession.userLoginStateValue()) {
+        if (userSession.isLoggedIn()) {
             launchHomeActivity()
         } else {
             launchLoginActivity()

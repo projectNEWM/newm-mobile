@@ -14,6 +14,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,8 +39,10 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
+import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
+import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import io.newm.shared.public.models.NFTTrack
 
@@ -75,7 +79,7 @@ internal fun MusicPlayerViewer(
             Row(modifier = Modifier.fillMaxWidth()) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
-                        painter = painterResource(id = R.drawable.music_player_back),
+                        painter = painterResource(id = R.drawable.ic_music_player_back),
                         contentDescription = "Back",
                         tint = White
                     )
@@ -97,27 +101,55 @@ internal fun MusicPlayerViewer(
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
             )
-            Box {
-                PlaybackControlPanel(
-                    playbackStatus = playbackStatus,
-                    onEvent = onEvent
-                )
-                MusicPlayerSlider(
-                    value = playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
-                    onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
-                    colors = SliderDefaults.colors(
-                        thumbColor = White,
-                        inactiveTrackColor = Gray500
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .height(4.dp)
-
-                )
-            }
+            MusicPlayerControls(playbackStatus, onEvent)
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+@Composable
+fun MusicPlayerControls(
+    mediaPlayer: MusicPlayer? = rememberMediaPlayer(),
+) {
+    mediaPlayer ?: return
+
+    val playbackStatus by mediaPlayer.playbackStatus.collectAsState()
+
+    MusicPlayerControls(playbackStatus, onEvent = { playbackUiEvent ->
+        when (playbackUiEvent) {
+            PlaybackUiEvent.Next -> mediaPlayer.next()
+            PlaybackUiEvent.Pause -> mediaPlayer.pause()
+            PlaybackUiEvent.Play -> mediaPlayer.play()
+            PlaybackUiEvent.Previous -> mediaPlayer.previous()
+            PlaybackUiEvent.Repeat -> mediaPlayer.repeat()
+            is PlaybackUiEvent.Seek -> mediaPlayer.seekTo(playbackUiEvent.position)
+        }
+    })
+}
+
+@Composable
+private fun MusicPlayerControls(
+    playbackStatus: PlaybackStatus,
+    onEvent: (PlaybackUiEvent) -> Unit
+) {
+    Box {
+        PlaybackControlPanel(
+            playbackStatus = playbackStatus,
+            onEvent = onEvent
+        )
+        MusicPlayerSlider(
+            value = if (playbackStatus.duration == 0L) 0f else playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
+            onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
+            colors = SliderDefaults.colors(
+                thumbColor = White,
+                inactiveTrackColor = Gray500
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp)
+                .height(4.dp)
+
+        )
     }
 }
 
@@ -162,7 +194,9 @@ fun PlaybackControlPanel(
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.padding(12.dp)) {
-                RepeatButton(onClick = {})
+                RepeatButton(
+                    playbackStatus.repeatMode,
+                    onClick = { onEvent(PlaybackUiEvent.Repeat) })
                 Spacer(modifier = Modifier.weight(1f))
                 PreviousTrackButton(
                     modifier = Modifier.padding(horizontal = 12.dp),
@@ -267,12 +301,21 @@ fun ShareButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun RepeatButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun RepeatButton(
+    repeatMode: PlaybackRepeatMode,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val imageRes = when (repeatMode) {
+        PlaybackRepeatMode.REPEAT_OFF -> R.drawable.ic_repeat_off
+        PlaybackRepeatMode.REPEAT_ONE -> R.drawable.ic_music_player_repeat_one
+        PlaybackRepeatMode.REPEAT_ALL -> R.drawable.ic_music_player_repeat_all
+    }
     IconButton(modifier = modifier, onClick = onClick) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_repeat_default),
+            painter = painterResource(id = imageRes),
             contentDescription = "Repeat",
-            tint = Gray23
+            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) Gray23 else White
         )
     }
 }

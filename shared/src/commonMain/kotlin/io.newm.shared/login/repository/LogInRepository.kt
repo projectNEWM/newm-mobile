@@ -36,15 +36,6 @@ internal class LogInRepository : KoinComponent {
         return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
     }
 
-    fun logOut() {
-        tokenManager.clearToken()
-        postNotification(Notification.loginStateChanged)
-    }
-
-    fun userIsLoggedIn(): Boolean {
-        return tokenManager.getAccessToken() != null
-    }
-
     @Throws(KMMException::class, CancellationException::class)
     suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
         logger.d { "logIn: oAuth" }

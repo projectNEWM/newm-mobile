@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
+import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Playlist
@@ -23,6 +24,7 @@ interface MusicPlayer {
     fun next()
     fun previous()
     fun seekTo(position: Long)
+    fun repeat()
     fun setPlaylist(playlist: Playlist, initialTrackIndex: Int)
 }
 
@@ -66,6 +68,11 @@ class MusicPlayerImpl(
                 Player.STATE_READY -> if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
                 else -> PlaybackState.STOPPED
             }
+            val repeatMode = when(player.repeatMode) {
+                Player.REPEAT_MODE_ALL -> PlaybackRepeatMode.REPEAT_ALL
+                Player.REPEAT_MODE_ONE -> PlaybackRepeatMode.REPEAT_ONE
+                else -> PlaybackRepeatMode.REPEAT_OFF
+            }
 
             Log.d("MusicPlayer", "Updating playback status")
             PlaybackStatus(
@@ -73,6 +80,7 @@ class MusicPlayerImpl(
                 position = player.currentPosition,
                 duration = player.duration,
                 track = playlist?.tracks?.get(player.currentMediaItemIndex),
+                repeatMode = repeatMode
             )
         }
     }
@@ -101,6 +109,16 @@ class MusicPlayerImpl(
         Log.d("MusicPlayer", "Previous")
         player.seekToPrevious()
         play()
+    }
+
+    override fun repeat() {
+        Log.d("MusicPlayer", "Repeat")
+        player.repeatMode = when(player.repeatMode) {
+            Player.REPEAT_MODE_OFF -> Player.REPEAT_MODE_ALL
+            Player.REPEAT_MODE_ALL -> Player.REPEAT_MODE_ONE
+            else -> Player.REPEAT_MODE_OFF
+        }
+        updatePlaybackStatus()
     }
 
     override fun seekTo(position: Long) {

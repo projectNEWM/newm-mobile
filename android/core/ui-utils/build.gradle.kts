@@ -34,12 +34,10 @@ android {
 
 dependencies {
     api(project(Modules.coreResources))
-
-    implementation(project(Modules.coreTheme))
-
+    implementation("androidx.activity:activity-compose:1.8.1")
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
     implementation(Google.material)
     implementation(Google.materialIconsExtended)
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation(project(Modules.coreTheme))
 }

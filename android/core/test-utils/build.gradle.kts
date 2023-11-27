@@ -33,14 +33,14 @@ android {
 }
 
 dependencies {
-    implementation(project(Modules.coreTheme))
-    implementation(Google.composeUi)
     implementation("app.cash.paparazzi:paparazzi:${Versions.paparazzi}")
+    implementation(Google.composeUi)
+    implementation(project(Modules.coreTheme))
 
     testImplementation(Circuit.test)
-    testImplementation(JUnit.jUnit)
     testImplementation(Google.testParameterInjector)
+    testImplementation(JUnit.jUnit)
 
-    androidTestImplementation(JUnit.androidxJUnit)
     androidTestImplementation(Google.espressoTest)
+    androidTestImplementation(JUnit.androidxJUnit)
 }

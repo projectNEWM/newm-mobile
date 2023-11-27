@@ -5,38 +5,34 @@ import androidx.lifecycle.viewModelScope
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.WalletNFTSongsUseCase
+import io.newm.shared.public.usecases.WalletNFTTracksUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NFTLibraryViewModel(
     private val connectWalletUseCase: ConnectWalletUseCase,
-    private val walletNFTSongsUseCase: WalletNFTSongsUseCase
+    private val walletNFTTracksUseCase: WalletNFTTracksUseCase
 ) : ViewModel() {
 
-    private val _nftLibraryState = MutableStateFlow<NFTLibraryState>(NFTLibraryState.Loading)
-    val state: StateFlow<NFTLibraryState> by this::_nftLibraryState
+    val state: StateFlow<NFTLibraryState> by lazy {
+        connectWalletUseCase.isConnectedFlow().flatMapLatest { isConnected ->
+            if (isConnected) {
+                try {
+                    walletNFTTracksUseCase.getAllNFTTracksFlow().map { nftTracks ->
+                        NFTLibraryState.Content(nftTracks)
+                    }
+                } catch (e: KMMException) {
+                    flowOf(NFTLibraryState.Error(message = e.message ?: "An error occurred"))
+                } catch (e: Exception) {
+                    flowOf(NFTLibraryState.Error(e.localizedMessage ?: "An unexpected error occurred"))
+                }
 
-    init {
-        fetchNFTLibraryContent()
-    }
-
-    private fun fetchNFTLibraryContent() = viewModelScope.launch {
-        _nftLibraryState.value = NFTLibraryState.Loading
-        if (connectWalletUseCase.isConnected()) {
-            try {
-                val nftSongs = walletNFTSongsUseCase.getWalletNFTs()
-                _nftLibraryState.value = NFTLibraryState.Content(nftSongs)
-            } catch (e: KMMException) {
-                _nftLibraryState.value =
-                    NFTLibraryState.Error(message = e.message ?: "An error occurred")
-            } catch (e: Exception) {
-                _nftLibraryState.value =
-                    NFTLibraryState.Error(e.localizedMessage ?: "An unexpected error occurred")
+            } else {
+                flowOf(NFTLibraryState.NoWalletFound)
             }
-        } else {
-            _nftLibraryState.value = NFTLibraryState.NoWalletFound
-        }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), NFTLibraryState.Loading)
     }
 }
 

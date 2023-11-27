@@ -31,32 +31,29 @@ android {
 }
 
 dependencies {
-
-    implementation(project(Modules.coreTheme))
-    implementation(project(Modules.shared))
-    implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.coreResources))
-
+    implementation(Coil.compose)
     implementation(Google.androidxCore)
     implementation(Google.composeMaterial)
     implementation(Google.composeUi)
-    implementation(Google.composeUiUtil)
     implementation(Google.composeUiToolingPreview)
-    implementation(Google.playServicesAuth)
+    implementation(Google.composeUiUtil)
     implementation(Google.material)
-    implementation(Google.media3Exoplayer)
-    implementation(Google.media3ui)
-    implementation(Google.media3Session)
-    implementation(Google.media3Common)
-    implementation(Google.navigationCompose)
     implementation(Google.materialIconsExtended)
-    implementation(Coil.compose)
-
+    implementation(Google.media3Common)
+    implementation(Google.media3Exoplayer)
+    implementation(Google.media3Session)
+    implementation(Google.media3ui)
+    implementation(Google.navigationCompose)
+    implementation(Google.playServicesAuth)
     implementation(Koin.android)
     implementation(Koin.androidCompose)
+    implementation(project(Modules.coreResources))
+    implementation(project(Modules.coreTheme))
+    implementation(project(Modules.coreUiUtils))
+    implementation(project(Modules.shared))
 
-    debugImplementation(Google.composeUiTooling)
     debugImplementation(Google.composeUiTestManifest)
+    debugImplementation(Google.composeUiTooling)
 
     testImplementation(project(Modules.testUtils))
 }

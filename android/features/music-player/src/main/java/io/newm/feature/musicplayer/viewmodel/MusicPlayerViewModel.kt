@@ -3,16 +3,21 @@ package io.newm.feature.musicplayer.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.newm.feature.musicplayer.models.PlaybackStatus
+import io.newm.feature.musicplayer.models.Playlist
+import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
-import io.newm.shared.public.usecases.WalletNFTSongsUseCase
+import io.newm.shared.public.usecases.WalletNFTTracksUseCase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
@@ -20,22 +25,32 @@ class MusicPlayerViewModel(
     private val musicPlayer: MusicPlayer,
     songId: String,
     musicRepository: MusicRepository,
-    private val useCase: WalletNFTSongsUseCase
+    private val useCase: WalletNFTTracksUseCase
 ) : ViewModel() {
     private val songIdFlow: MutableStateFlow<String?> = MutableStateFlow(songId)
 
     private val _state: StateFlow<MusicPlayerState> by lazy {
-        val songFlow = songIdFlow.flatMapLatest { songId ->
-            useCase.getAllWalletNFTSongs().map { songs ->
-                val songMap: Map<String, NFTTrack> = songs.associateBy { song -> song.name }
-                val songToPlay = songMap[songId]
-                songToPlay ?: songs.first()
-            }
 
+        val songFlow: Flow<NFTTrack?> = songIdFlow.filterNotNull().map { trackId ->
+            useCase.getNFTTrack(trackId)
         }
         combine(
             musicPlayer.playbackStatus,
-            songFlow
+            songFlow.mapNotNull { it }.onEach {
+                musicPlayer.setPlaylist(
+                    Playlist(
+                        listOf(
+                            Track(
+                                id = it.id,
+                                title = it.name,
+                                url = it.songUrl,
+                                artist = it.artists.firstOrNull().orEmpty()
+                            )
+                        )
+                    ),
+                    initialTrackIndex = 0,
+                )
+            }
         ) { playbackStatus, song ->
             songIdFlow.update { playbackStatus.track?.id }
 
@@ -54,17 +69,13 @@ class MusicPlayerViewModel(
     val state: StateFlow<MusicPlayerState>
         get() = _state
 
-    init {
-        musicPlayer.setPlaylist(musicRepository.fetchPlaylist("test"), songId.toIntOrNull() ?: 0)
-        onEvent(PlaybackUiEvent.Play)
-    }
-
     fun onEvent(playbackUiEvent: PlaybackUiEvent) {
         when (playbackUiEvent) {
             PlaybackUiEvent.Next -> musicPlayer.next()
             PlaybackUiEvent.Pause -> musicPlayer.pause()
             PlaybackUiEvent.Play -> musicPlayer.play()
             PlaybackUiEvent.Previous -> musicPlayer.previous()
+            PlaybackUiEvent.Repeat -> musicPlayer.repeat()
             is PlaybackUiEvent.Seek -> musicPlayer.seekTo(playbackUiEvent.position)
         }
     }
