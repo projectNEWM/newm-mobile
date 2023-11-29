@@ -1,6 +1,6 @@
 package io.newm.feature.login.screen
 
-import com.slack.circuit.runtime.Screen
+import com.slack.circuit.runtime.screen.Screen
 import kotlinx.parcelize.Parcelize
 
 // TODO move screens to a common module
