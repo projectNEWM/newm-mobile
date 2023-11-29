@@ -77,6 +77,9 @@
 		7650E1342B16056400D686B8 /* libFiles.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 764838BD2B0C8CAF00D6905B /* libFiles.a */; };
 		7650E1372B1667AB00D686B8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7650E1362B1667AB00D686B8 /* Kingfisher */; };
 		7650E1392B166A5700D686B8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7650E1382B166A5700D686B8 /* Kingfisher */; };
+		7650E13E2B1798AA00D686B8 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7650E13D2B1798AA00D686B8 /* QRCodeScannerView.swift */; };
+		7650E1412B1798E400D686B8 /* QRCodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 7650E1402B1798E400D686B8 /* QRCodeReader */; };
+		7650E1432B1799E800D686B8 /* ConnectWalletAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7650E1422B1799E800D686B8 /* ConnectWalletAlertView.swift */; };
 		7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7651D6D327DFA33100FF41B3 /* iOSApp.swift */; };
 		7656251F284BEF68004B6E4B /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; };
 		76562525284BEF6C004B6E4B /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76562524284BEF6C004B6E4B /* Resolver */; };
@@ -717,6 +720,8 @@
 		7648DE11292C69EF006F7259 /* ArtistViewUIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtistViewUIModel.swift; sourceTree = "<group>"; };
 		7650E12F2B15106E00D686B8 /* FormattedTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedTimeString.swift; sourceTree = "<group>"; };
 		7650E1322B15ECE400D686B8 /* FileManagerService+NFTTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagerService+NFTTrack.swift"; sourceTree = "<group>"; };
+		7650E13D2B1798AA00D686B8 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
+		7650E1422B1799E800D686B8 /* ConnectWalletAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectWalletAlertView.swift; sourceTree = "<group>"; };
 		7651D6D327DFA33100FF41B3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		76562514284BEF30004B6E4B /* Library.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Library.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76562526284BEFB7004B6E4B /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
@@ -908,6 +913,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76DC3A46281A0E9D004D5021 /* Resolver in Frameworks */,
+				7650E1412B1798E400D686B8 /* QRCodeReader in Frameworks */,
 				7603003A2836FCB800BBF78C /* Fonts.framework in Frameworks */,
 				76C963532A002C7C00E6B612 /* libModels.a in Frameworks */,
 				766E8FA228562CF200F18779 /* Colors.framework in Frameworks */,
@@ -1545,6 +1551,7 @@
 				765A362729E918CF00B939BD /* CellsSectionModel.swift */,
 				765A364229E918CF00B939BD /* Circular.swift */,
 				765A364029E918CF00B939BD /* CompactCell.swift */,
+				7650E1422B1799E800D686B8 /* ConnectWalletAlertView.swift */,
 				7650E12F2B15106E00D686B8 /* FormattedTimeString.swift */,
 				765A363F29E918CF00B939BD /* GradientTag.swift */,
 				7648DE04292C69EF006F7259 /* HeaderImageSection.swift */,
@@ -1557,6 +1564,7 @@
 				765A362829E918CF00B939BD /* PickerButton.swift */,
 				765A363229E918CF00B939BD /* PickerSheet.swift */,
 				765A364329E918CF00B939BD /* Placeholder.swift */,
+				7650E13D2B1798AA00D686B8 /* QRCodeScannerView.swift */,
 				765A363629E918CF00B939BD /* RadioButton.swift */,
 				765A362F29E918CF00B939BD /* RadioPicker.swift */,
 				765A364529E918CF00B939BD /* SegmentedButton.swift */,
@@ -2165,6 +2173,7 @@
 			name = SharedUI;
 			packageProductDependencies = (
 				76DC3A45281A0E9D004D5021 /* Resolver */,
+				7650E1402B1798E400D686B8 /* QRCodeReader */,
 			);
 			productName = SharedUI;
 			productReference = 7618FCCD28164C5C007573B4 /* SharedUI.framework */;
@@ -2592,6 +2601,7 @@
 				76C9631929FFC13A00E6B612 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				769F4B592B04C34F009D23C6 /* XCRemoteSwiftPackageReference "vlckit-spm" */,
 				7650E1352B1667AB00D686B8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				7650E13F2B1798E400D686B8 /* XCRemoteSwiftPackageReference "QRCodeReader" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -2843,11 +2853,13 @@
 				765A365D29E918CF00B939BD /* ThisWeekSection.swift in Sources */,
 				765A366029E918CF00B939BD /* LoadingToast.swift in Sources */,
 				765A366429E918CF00B939BD /* SegmentedButton.swift in Sources */,
+				7650E1432B1799E800D686B8 /* ConnectWalletAlertView.swift in Sources */,
 				765A366329E918CF00B939BD /* TitleSection.swift in Sources */,
 				76362DA22A11EECD00E78799 /* NEWMTextField.swift in Sources */,
 				765A365C29E918CF00B939BD /* ThisWeekCellModel.swift in Sources */,
 				765A365B29E918CF00B939BD /* ThisWeekCell.swift in Sources */,
 				765A365E29E918CF00B939BD /* GradientTag.swift in Sources */,
+				7650E13E2B1798AA00D686B8 /* QRCodeScannerView.swift in Sources */,
 				765A364A29E918CF00B939BD /* PickerButton.swift in Sources */,
 				765A364F29E918CF00B939BD /* HorizontalScroller.swift in Sources */,
 				765A365929E918CF00B939BD /* BigCell.swift in Sources */,
@@ -4706,6 +4718,14 @@
 				minimumVersion = 7.10.0;
 			};
 		};
+		7650E13F2B1798E400D686B8 /* XCRemoteSwiftPackageReference "QRCodeReader" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yannickl/QRCodeReader.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.1.1;
+			};
+		};
 		769F4B592B04C34F009D23C6 /* XCRemoteSwiftPackageReference "vlckit-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tylerjonesio/vlckit-spm";
@@ -4762,6 +4782,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7650E1352B1667AB00D686B8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		7650E1402B1798E400D686B8 /* QRCodeReader */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7650E13F2B1798E400D686B8 /* XCRemoteSwiftPackageReference "QRCodeReader" */;
+			productName = QRCodeReader;
 		};
 		76562524284BEF6C004B6E4B /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
