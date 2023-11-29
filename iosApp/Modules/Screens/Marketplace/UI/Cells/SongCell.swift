@@ -7,7 +7,7 @@ import AppAudioPlayer
 import SharedUI
 
 struct SongCell: View {
-	@Injected private var audioPlayer: AudioPlayerImpl
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	let model: SongCellModel
 	
 	var body: some View {

@@ -9,10 +9,10 @@ public final class ModuleLinkerModule: Module {
 	}
 }
 
-#if DEBUG
+//#if DEBUG
 extension ModuleLinkerModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		
 	}
 }
-#endif
+//#endif

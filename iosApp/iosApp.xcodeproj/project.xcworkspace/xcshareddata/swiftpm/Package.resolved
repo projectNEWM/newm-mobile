@@ -46,12 +46,30 @@
       }
     },
     {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher",
+      "state" : {
+        "revision" : "277f1ab2c6664b19b4a412e32b094b201e2d5757",
+        "version" : "7.10.0"
+      }
+    },
+    {
       "identity" : "resolver",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hmlongco/Resolver",
       "state" : {
         "branch" : "master",
         "revision" : "c1c5ce3f7b567d3f813ca341087658cf13795918"
+      }
+    },
+    {
+      "identity" : "vlckit-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tylerjonesio/vlckit-spm",
+      "state" : {
+        "revision" : "d9006002f372c5bcf72a5ef24ebd02f89ef9f4fe",
+        "version" : "3.5.1"
       }
     }
   ],

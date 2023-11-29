@@ -1,23 +1,14 @@
 import Foundation
 import ModuleLinker
 import Resolver
+import VLCKitSPM
 
 public final class AudioPlayerModule: Module {
 	public static var shared = AudioPlayerModule()
 	
 	public func registerAllServices() {
 		Resolver.register { resolver in
-			let audioPlayer = AudioPlayer()
-			audioPlayer.delegate = resolver.resolve(AudioPlayerDelegate.self)
-			return audioPlayer
-		}.scope(.application)
-		
-		Resolver.register {
-			AudioPlayerPublisher()
-		}.scope(.application)
-		
-		Resolver.register { resolver in
-			resolver.resolve(AudioPlayerPublisher.self) as AudioPlayerDelegate
+			VLCAudioPlayer.shared
 		}.scope(.application)
 	}
 	

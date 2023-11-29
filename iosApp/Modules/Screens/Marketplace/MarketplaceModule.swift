@@ -18,7 +18,7 @@ public final class MarketplaceModule: Module {
 	}
 }
 
-#if DEBUG
+//#if DEBUG
 extension MarketplaceModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		Resolver.register {
@@ -26,4 +26,4 @@ extension MarketplaceModule {
 		}
 	}
 }
-#endif
+//#endif

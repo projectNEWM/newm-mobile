@@ -12,9 +12,8 @@ public struct MainView: View {
 	@Injected private var loginViewProvider: LoginViewProviding
 	@Injected private var miniPlayerViewProvider: MiniNowPlayingViewProviding
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
-	@Injected private var audioPlayer: AudioPlayer
-	@InjectedObject private var audioPlayerPublisher: AudioPlayerPublisher
-		
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
+	
 	@State var route: MainViewRoute?
 	
 	public var body: some View {
@@ -30,9 +29,8 @@ public struct MainView: View {
 					.overlay {
 						Spacer()
 						miniPlayerView
-							.offset(x: 0, y: -geometry.safeAreaInsets.bottom)
+							.offset(x: 0, y: -geometry.safeAreaInsets.bottom+1)
 							.transition(.move(edge: .bottom))
-							.animation(.easeInOut, value: audioPlayer.currentItem)
 					}
 					.transition(.move(edge: .bottom))
 			}
@@ -42,9 +40,7 @@ public struct MainView: View {
 	
 	@ViewBuilder
 	private var miniPlayerView: some View {
-		if audioPlayer.currentItem == nil {
-			EmptyView()
-		} else {
+		if showAudioPlayer {
 			VStack {
 				Spacer()
 				miniPlayerViewProvider.miniNowPlayingView()
@@ -57,7 +53,16 @@ public struct MainView: View {
 	}
 	
 	private var miniPlayerHeight: CGFloat {
-		audioPlayer.currentItem == nil ? 0 : 50
+		return audioPlayer.isPlaying ? 42 : 0
+	}
+	
+	private var showAudioPlayer: Bool {
+		switch audioPlayer.state {
+		case .buffering, .ended, .playing, .paused, .opening:
+			return true
+		default:
+			return false
+		}
 	}
 	
 	@ViewBuilder
@@ -69,28 +74,20 @@ public struct MainView: View {
 	}
 }
 
+//#if DEBUG
 struct MainView_Previews: PreviewProvider {
 	static var previews: some View {
+		Resolver.root = Resolver.mock
 		MainModule.shared.registerAllServices()
 		AudioPlayerModule.shared.registerAllServices()
 		return MainView()
 	}
 }
+//#endif
 
 extension MainViewRoute: Identifiable {
 	var id: Self { self }
 }
-
-//private extension AudioTrack {
-//	init(nftTrack: ModuleLinker.NFTTrack) {
-//		self = AudioTrack(
-//			title: nftTrack.title,
-//			artistName: nftTrack.artistName,
-//			url: nftTrack.url,
-//			image: nftTrack.image
-//		)
-//	}
-//}
 
 func url(for testImage: ImageAsset) -> URL {
 	guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {

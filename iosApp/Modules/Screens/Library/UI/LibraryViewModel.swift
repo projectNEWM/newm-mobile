@@ -8,5 +8,5 @@ import AudioPlayer
 @MainActor
 class LibraryViewModel: ObservableObject {
 	@Published var route: LibraryRoute?
-	@Injected private var audioPlayer: AudioPlayer
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 }

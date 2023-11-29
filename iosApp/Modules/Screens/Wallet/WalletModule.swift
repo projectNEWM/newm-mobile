@@ -18,7 +18,7 @@ extension WalletModule: WalletViewProviding {
 	}
 }
 
-#if DEBUG
+//#if DEBUG
 extension WalletModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
@@ -79,4 +79,4 @@ extension WalletModule {
 		}
 	}
 }
-#endif
+//#endif

@@ -12,11 +12,11 @@ public final class TipsModule: Module {
 		}
 	}
 	
-#if DEBUG
+//#if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		
 	}
-#endif
+//#endif
 }
 
 extension TipsModule: TipViewProviding {

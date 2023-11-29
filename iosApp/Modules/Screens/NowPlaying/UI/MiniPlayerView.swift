@@ -4,16 +4,16 @@ import AudioPlayer
 import Resolver
 import ModuleLinker
 import Colors
+import Kingfisher
 
 struct MiniPlayerView: View {
-	@Injected private var audioPlayer: AudioPlayer
-	@InjectedObject private var audioPlayerPublisher: AudioPlayerPublisher
-		
-	private let iconSize: CGFloat = 32
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
+	
+	private let iconSize: CGFloat = 28
 	
 	var body: some View {
 		VStack(alignment: .leading, spacing: 0) {
-			progress.frame(height: 1)
+			progress.frame(height: 2)
 			HStack(alignment: .center) {
 				image.fixedSize()
 				songInfo
@@ -29,52 +29,49 @@ struct MiniPlayerView: View {
 	private var progress: some View {
 		GeometryReader { geometry in
 			LinearGradient(colors: [
-//				NEWMColor.yellow(),
-//				NEWMColor.orange(),
-//				NEWMColor.red(),
-//				NEWMColor.pink(),
-//				NEWMColor.purple(),
-//				NEWMColor.blue()
 				try! Color(hex: "DC3CAA")
 			],
 						   startPoint: .leading,
-						   endPoint: UnitPoint(x: (geometry.size.width / CGFloat(audioPlayerPublisher.percentPlayed ?? 0)) / geometry.size.width, y: 0.5))
-			.frame(width: geometry.size.width * CGFloat(audioPlayerPublisher.percentPlayed ?? 0), height: 1)
+						   endPoint: UnitPoint(x: (geometry.size.width / CGFloat(audioPlayer.percentPlayed ?? 0)) / geometry.size.width, y: 0.5))
+			.frame(width: geometry.size.width * CGFloat(audioPlayer.percentPlayed ?? 0))
 		}
 	}
 	
+	@ViewBuilder
 	private var songInfo: some View {
 		VStack(alignment: .leading) {
-			Text(audioPlayer.currentItem?.title ?? "")
+			Text(audioPlayer.title ?? "")
 				.font(.inter(ofSize: 14).bold())
-			Text(audioPlayer.currentItem?.artist ?? "")
+			Text(audioPlayer.artist ?? "")
 				.font(.inter(ofSize: 12))
 		}
 	}
 	
 	@ViewBuilder
 	private var image: some View {
-		if let image = audioPlayer.currentItem?.artwork?.image(at: CGSize(width: iconSize, height: iconSize)) {
-//			AsyncImage(
-//				url: imageUrl) { image in
-//					image.circleImage(size: iconSize)
-//				} placeholder: {
-//					Image.placeholder.circleImage(size: iconSize)
-//				}
-//				.padding(.trailing, 8)
-			Image(uiImage: image)
+		if let image = audioPlayer.artworkUrl {
+			KFImage(image)
+				.setProcessor(DownsamplingImageProcessor(size: CGSize(width: iconSize, height: iconSize)))
+				.appendProcessor(RoundCornerImageProcessor(radius: Radius.point(4)))
+				.placeholder {
+					Image.placeholder
+						.resizable()
+						.frame(width: iconSize, height: iconSize)
+						.clipShape(RoundedRectangle(cornerRadius: 4))
+				}
 				.padding(.trailing, 8)
 		}
 	}
 }
 
+import shared
+
 struct MiniPlayerView_Previews: PreviewProvider {
-	@Injected static private var audioPlayer: AudioPlayer
-	
 	static var previews: some View {
-//		audioPlayer.song = MockData.songs.first!
+		AudioPlayerModule.shared.registerAllServices()
+		VLCAudioPlayer.shared.setPlayQueue([NFTTrack.mockTracks.first!])
 		return ZStack {
-			Color.white.erased
+			Color.white
 			MiniPlayerView()
 				.preferredColorScheme(.dark)
 		}

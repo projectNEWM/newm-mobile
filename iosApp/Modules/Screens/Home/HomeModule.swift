@@ -18,7 +18,7 @@ public final class HomeModule: Module {
 	}
 }
 
-#if DEBUG
+//#if DEBUG
 extension HomeModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
@@ -26,4 +26,4 @@ extension HomeModule {
 		}
 	}
 }
-#endif
+//#endif

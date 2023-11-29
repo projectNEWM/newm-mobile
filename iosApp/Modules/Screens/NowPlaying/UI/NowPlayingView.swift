@@ -6,14 +6,14 @@ import Fonts
 import AudioPlayer
 import Models
 import shared
+import Kingfisher
+import Colors
 
 public struct NowPlayingView: View {
 	typealias Seconds = Int
 	
-	@Injected private var audioPlayer: AudioPlayer
-	
-	var track: AudioItem! { audioPlayer.currentItem }
-	
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
+		
 	@State var error: Error?
 	
 	public var body: some View {
@@ -34,39 +34,33 @@ public struct NowPlayingView: View {
 extension NowPlayingView {
 	@ViewBuilder
 	private var background: some View {
-		if let image = track.artworkImage {
-			Image(uiImage: image)
-				.resizable(resizingMode: .stretch)
-				.scaledToFill()
-		} else {
-			Image.placeholder
-				.resizable(resizingMode: .stretch)
-				.scaledToFill()
-		}
+		KFImage(audioPlayer.artworkUrl)
+			.resizable(resizingMode: .stretch)
+			.scaledToFill()
 	}
 	
 	private var title: some View {
 		VStack(alignment: .center) {
-			Text(track.title ?? "--")
+			Text(audioPlayer.title ?? "--")
 				.font(Font.ralewayExtraBold(ofSize: 24))
-			Text(track.artist ?? "--")
+			Text(audioPlayer.artist ?? "--")
 				.font(Font.interMedium(ofSize: 14))
 		}
 	}
 	
 	private var playbackTimeBinding: Binding<Float> {
 		Binding<Float>(get: {
-			Float(audioPlayer.currentItemProgression ?? 0)
+			Float(audioPlayer.currentTime ?? 0)
 		}, set: { playbackTime in
-			audioPlayer.seek(to: Double(playbackTime))
+			audioPlayer.seek(toTime: Double(playbackTime))
 		})
 	}
 	
 	fileprivate var controls: some View {
 		VStack(spacing: 0) {
-			if let duration = audioPlayer.currentItemDuration, duration > 0 {
+			if let duration = audioPlayer.duration, duration > 0 {
 				Slider(value: playbackTimeBinding, in: 0.0...Float(duration))
-				//					.tint(try! Color(hex: "161618"))
+					.tint(Gradients.loginGradient.gradient)
 					.padding(.bottom, -13)
 					.zIndex(1)
 			}
@@ -74,26 +68,21 @@ extension NowPlayingView {
 			VStack {
 				VStack {
 					HStack {
-						Text("\(audioPlayer.currentItemProgression.playbackTimeString)")
+						Text("\(audioPlayer.currentTime.playbackTimeString)")
 						Spacer()
-						Text("\(audioPlayer.currentItemDuration.playbackTimeString)")
+						Text("\(audioPlayer.duration.playbackTimeString)")
 					}
 					.foregroundStyle(try! Color(hex: "8F8F91"))
 					.font(Font.inter(ofSize: 12))
 					Spacer()
 					HStack {
 						repeatButton
-							.frame(width: 40, height: 40)
 						Spacer()
-						prevButton.padding(.trailing)
-							.frame(width: 40, height: 40)
+						prevButton
 						PlayButton().padding([.trailing, .leading])
-							.frame(width: 40, height: 40)
-						nextButton.padding(.leading)
-							.frame(width: 40, height: 40)
+						nextButton
 						Spacer()
-						shareButton
-							.frame(width: 40, height: 40)
+						shuffleButton
 					}
 				}
 			}
@@ -104,21 +93,22 @@ extension NowPlayingView {
 		}
 	}
 	
-	//	private var shuffleButton: some View {
-	//		Button {
-	//			audioPlayer.playbackInfo.shuffle.toggle()
-	//		} label: {
-	//			if audioPlayer.playbackInfo.shuffle == true {
-	//				Asset.Media.PlayerIcons.shuffleSelected()
-	//			} else {
-	//				Asset.Media.PlayerIcons.shuffle()
-	//			}
-	//		}
-	//	}
+	private var shuffleButton: some View {
+		Button {
+			audioPlayer.shuffle.toggle()
+		} label: {
+			if audioPlayer.shuffle {
+				Asset.Media.PlayerIcons.shuffleSelected()
+			} else {
+				Asset.Media.PlayerIcons.shuffle()
+			}
+		}
+		.tint(audioPlayer.shuffle ? NEWMColor.pink() : .white)
+	}
 	
 	private var prevButton: some View {
 		Button {
-//			audioPlayer.prev()
+			audioPlayer.prev()
 		} label: {
 			Asset.Media.PlayerIcons.previous()
 		}
@@ -161,57 +151,17 @@ private extension NowPlayingView {
 	nonisolated static var playbackTimePlaceholder: String { "--:--" }
 }
 
-extension Int {
-	private static let formatter = DateComponentsFormatter()
-	
-	var playbackTimeString: String {
-		Int.formatter.allowedUnits = self > 3600 ? [.hour, .minute, .second] : [.minute, .second]
-		Int.formatter.zeroFormattingBehavior = .pad
-		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
-			//TODO:MU: Uncomment when KMM module added back
-			return NowPlayingView.playbackTimePlaceholder
-		}
-		
-		return playbackTime
+struct NowPlayingView_Previews: PreviewProvider {
+	static var previews: some View {
+		AudioPlayerModule.shared.registerAllServices()
+		@InjectedObject var audioPlayer: VLCAudioPlayer
+		return Group {
+			NowPlayingView()
+				.preferredColorScheme(.dark)
+			NowPlayingView().controls
+		}.padding()
 	}
 }
-
-extension Optional<Int> {
-	var playbackTimeString: String {
-		(self ?? 0).playbackTimeString
-	}
-}
-
-extension Float {
-	var playbackTimeString: String {
-		Int(self).playbackTimeString
-	}
-}
-
-extension Double {
-	var playbackTimeString: String {
-		Int(self).playbackTimeString
-	}
-}
-
-extension Optional<Double> {
-	var playbackTimeString: String {
-		Int(self ?? 0).playbackTimeString
-	}
-}
-
-//struct NowPlayingView_Previews: PreviewProvider {
-//	static var previews: some View {
-//		AudioPlayerModule.shared.registerAllServices()
-//		@InjectedObject var audioPlayer: AudioPlayerImpl
-//		audioPlayer.track = AudioTrack(nftTrack: NFTTrack(title: "Blowin it", artistName: "Joe Blow", url: Bundle(for: AudioPlayerModule.self).url(forResource: "getSchwifty", withExtension: "mp3")!, image: url(for: Asset.MockAssets.artist0)))
-//		return Group {
-//			NowPlayingView()
-//				.preferredColorScheme(.dark)
-//			NowPlayingView().controls
-//		}.padding()
-//	}
-//}
 
 //private extension AudioTrack {
 //	init(nftTrack: ModuleLinker.NFTTrack) {
