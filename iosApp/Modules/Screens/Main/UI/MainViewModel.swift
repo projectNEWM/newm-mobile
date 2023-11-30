@@ -6,7 +6,7 @@ import shared
 
 @MainActor
 class MainViewModel: ObservableObject {
-	@Published var selectedTab: MainViewModelTab = .home
+	@Published var selectedTab: MainViewModelTab = .library
 	//This value isn't used, it's just for triggering a view refresh.
 	@Published var updateLoginState: Bool = false
 	@Injected private var loginUseCase: UserSessionUseCase

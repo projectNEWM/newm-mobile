@@ -10,6 +10,7 @@ import NowPlaying
 import Library
 import AudioPlayer
 import Files
+import shared
 
 struct iOSAppModule: Module {
 	static var shared = iOSAppModule()
@@ -31,21 +32,24 @@ struct iOSAppModule: Module {
 extension Resolver: ResolverRegistering {
 	public static func registerAllServices() {
 		iOSAppModule.shared.registerAllServices()
-//#if DEBUG
+#if DEBUG
 		Resolver.root.add(child: .mock)
 		iOSAppModule.shared.registerAllMockedServices(mockResolver: .mock)
-//#endif
+#endif
 	}
 }
 
 extension iOSAppModule {
 	func registerAllServices() {
+		Resolver.register {
+			UserDetailsUseCaseProvider().get() as UserDetailsUseCase
+		}
 		modules.forEach { $0.registerAllServices() }
 	}
 
-//#if DEBUG
+#if DEBUG
 	func registerAllMockedServices(mockResolver: Resolver) {
 		modules.forEach { $0.registerAllMockedServices(mockResolver: .mock) }
 	}
-//#endif
+#endif
 }

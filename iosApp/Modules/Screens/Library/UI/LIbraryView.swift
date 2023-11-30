@@ -15,6 +15,7 @@ struct LibraryView: View {
 	@State private var searchText: String = ""
 	@State private var error: String?
 	@State private var showLoading: Bool = true
+	@State private var showXPubScanner: Bool = false
 	
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
@@ -31,7 +32,9 @@ struct LibraryView: View {
 	
 	public var body: some View {
 		Group {
-			if showLoading {
+			if connectWalletXPubUseCase.isConnected() == false {
+				walletDisconnectedMessage
+			} else if showLoading {
 				loadingView
 			} else if let error {
 				errorView(error)
@@ -43,9 +46,43 @@ struct LibraryView: View {
 			try? await refresh()
 		}
 		.task {
-			connectWalletXPubUseCase.connect(xpub: "")
 			try? await refresh()
 			showLoading = false
+		}
+		.sheet(isPresented: $showXPubScanner) {
+			XPubScannerView {
+				showXPubScanner = false
+				Task {
+					try! await refresh()
+				}
+			}
+		}
+	}
+	
+	@ViewBuilder
+	private var walletDisconnectedMessage: some View {
+		VStack {
+			Spacer()
+			Text("Your library is empty.")
+				.font(
+					Font.custom("Inter", size: 24)
+						.weight(.bold)
+				)
+				.multilineTextAlignment(.center)
+				.foregroundColor(.white)
+				.frame(width: 358, alignment: .top)
+			Text("Time to rescue it with your epic music stash! 🎶")
+				.font(
+					Font.custom("Inter", size: 14)
+						.weight(.medium)
+				)
+				.multilineTextAlignment(.center)
+				.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
+				.frame(width: 358, alignment: .top)
+			Spacer()
+			ConnectWalletAlertView {
+				showXPubScanner = true
+			}
 		}
 	}
 	
@@ -113,17 +150,13 @@ struct LibraryView: View {
 				Spacer()
 				
 				progressView(for: track)
-				
-				Text(track.duration.playbackTimeString)
-					.font(Font.inter(ofSize: 12))
-					.foregroundStyle(try! Color(hex: "8F8F91"))
 			}
 			.foregroundStyle(.white)
 			.tag(track.id)
 		}
 //		.swipeActions {
 //			Button(action: {
-//				
+//
 //			}, label: {
 //				VStack(alignment: .center) {
 //					Asset.Media.download.swiftUIImage

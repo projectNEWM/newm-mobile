@@ -1,19 +1,20 @@
 import SwiftUI
 import SharedUI
-import Models
 import ModuleLinker
 import Resolver
-import SharedUI
 import Colors
+import Kingfisher
 
-struct ProfileView: View {
+public struct ProfileView: View {
 	@StateObject private var viewModel = ProfileViewModel()
 	private let userImageSize: CGFloat = 128
 	private let sectionSpacing: CGFloat = 12
 	@State private var keyboardObserver = KeyboardObserver()
 	@State private var showMore = false
 	
-	var body: some View {
+	public init() {}
+	
+	public var body: some View {
 		mainView
 			.navigationBarItems(trailing: saveButton)
 			.autocorrectionDisabled(true)
@@ -25,7 +26,7 @@ struct ProfileView: View {
 		ZStack {
 			ScrollView {
 				VStack(alignment: .leading) {
-//					HeaderImageSection(viewModel.user?.bannerUrl?.absoluteString)
+					HeaderImageSection(viewModel.user?.bannerUrl)
 					artistImage
 					bottomSection
 						.addSidePadding()
@@ -40,10 +41,10 @@ struct ProfileView: View {
 			}
 			.loadingToast(isLoading: $viewModel.isLoading)
 		}
-		.sheet(isPresented: $showMore) {
-			ProfileMoreView()
-				.presentationDetents([.medium])
-		}
+//		.sheet(isPresented: $showMore) {
+//			ProfileMoreView()
+//				.presentationDetents([.medium])
+//		}
 	}
 	
 	@ViewBuilder
@@ -84,11 +85,8 @@ struct ProfileView: View {
 	private var bottomSection: some View {
 		VStack(alignment: .leading, spacing: 20) {
 			bottomSectionHeader("YOUR PROFILE").padding(.top, 40)
-			NEWMTextField(title: "FIRST NAME", prompt: "", isSecure: false, text: $viewModel.firstName)
-				.textContentType(.givenName)
-				.keyboardType(.asciiCapable)
-			NEWMTextField(title: "LAST NAME", prompt: "", isSecure: false, text: $viewModel.lastName)
-				.textContentType(.familyName)
+			NEWMTextField(title: "NICKNAME", prompt: "", isSecure: false, text: .constant(viewModel.nickName), disabled: true)
+				.textContentType(.name)
 				.keyboardType(.asciiCapable)
 			NEWMTextField(title: "EMAIL", prompt: "", isSecure: false, text: .constant(viewModel.email), disabled: true).padding(.bottom)
 				.textContentType(.emailAddress)

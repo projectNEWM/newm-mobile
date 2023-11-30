@@ -11,7 +11,7 @@ public class VLCAudioPlayer: ObservableObject {
 		case all
 		case one
 	}
-	public static let shared = VLCAudioPlayer()
+	static let shared = VLCAudioPlayer()
 	
 	private var mediaPlayer: VLCMediaPlayer
 	private var playQueue: [NFTTrack] = [] {

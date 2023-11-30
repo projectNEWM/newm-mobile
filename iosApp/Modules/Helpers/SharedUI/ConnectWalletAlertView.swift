@@ -1,11 +1,17 @@
 import Foundation
 import SwiftUI
 
-struct ConnectWalletAlertView: View {
-	var body: some View {
+public struct ConnectWalletAlertView: View {
+	let buttonTapped: () -> ()
+	
+	public init(buttonTapped: @escaping () -> Void) {
+		self.buttonTapped = buttonTapped
+	}
+	
+	public var body: some View {
 		VStack(alignment: .center, spacing: 16) {
 			VStack(alignment: .leading, spacing: 0) {
-				Text("You don’t have a wallet connected")
+				Text("You don't have a wallet connected")
 					.font(Font.custom("Inter", size: 14))
 					.foregroundColor(.white)
 				Text("Connect to access all your songs")
@@ -15,9 +21,7 @@ struct ConnectWalletAlertView: View {
 			.padding(0)
 			.frame(maxWidth: .infinity, alignment: .topLeading)
 			
-			Button(action: {
-				
-			}, label: {
+			Button(action: buttonTapped) {
 				Text("Connect wallet")
 				  .font(
 					Font.custom("Inter", size: 14)
@@ -39,7 +43,7 @@ struct ConnectWalletAlertView: View {
 					  )
 				  )
 				  .cornerRadius(8)
-			})
+			}
 		}
 		.padding(16)
 		.frame(width: 358, alignment: .center)
@@ -49,5 +53,5 @@ struct ConnectWalletAlertView: View {
 }
 
 #Preview {
-	ConnectWalletAlertView()
+	ConnectWalletAlertView { }
 }

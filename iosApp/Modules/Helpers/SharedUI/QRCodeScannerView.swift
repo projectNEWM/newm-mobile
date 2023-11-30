@@ -12,18 +12,18 @@ public struct QRCodeScannerView: UIViewControllerRepresentable {
 		}
 
 		public func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-			parent.scannedCode = result.value
+			parent.completion(.success(result.value))
 		}
 
 		public func readerDidCancel(_ reader: QRCodeReaderViewController) {
-			parent.scannedCode = nil
+			parent.completion(.failure(CancellationError()))
 		}
 	}
 	
-	@Binding var scannedCode: String?
+	let completion: (Result<String, Error>) -> ()
 	
-	public init(scannedCode: Binding<String?>) {
-		_scannedCode = scannedCode
+	public init(completion: @escaping (Result<String, Error>) -> ()) {
+		self.completion = completion
 	}
 
 	public func makeCoordinator() -> Coordinator {
@@ -33,6 +33,8 @@ public struct QRCodeScannerView: UIViewControllerRepresentable {
 	public func makeUIViewController(context: Context) -> QRCodeReaderViewController {
 		let reader = QRCodeReaderViewController(builder: QRCodeReaderViewControllerBuilder {
 			$0.reader = QRCodeReader(metadataObjectTypes: [AVMetadataObject.ObjectType.qr])
+			$0.showCancelButton = false
+			$0.showTorchButton = true
 		})
 		reader.delegate = context.coordinator
 		return reader
@@ -49,7 +51,14 @@ private struct ContentView: View {
 			if let scannedCode = scannedCode {
 				Text("Scanned code is: \(scannedCode)")
 			} else {
-				QRCodeScannerView(scannedCode: $scannedCode)
+				QRCodeScannerView {
+					switch $0 {
+					case .success(let qrCode):
+						scannedCode = qrCode
+					case .failure:
+						fatalError()
+					}
+				}
 			}
 		}
 	}

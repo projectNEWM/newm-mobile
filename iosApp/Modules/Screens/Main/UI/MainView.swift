@@ -4,11 +4,12 @@ import ModuleLinker
 import TabBar
 import AudioPlayer
 import SharedUI
+import Profile
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
 	
-	@Injected private var tabProviders: [TabViewProvider]
+	@Injected private var libraryViewProvider: LibraryViewProviding
 	@Injected private var loginViewProvider: LoginViewProviding
 	@Injected private var miniPlayerViewProvider: MiniNowPlayingViewProviding
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
@@ -71,6 +72,17 @@ public struct MainView: View {
 		case .nowPlaying: nowPlayingViewProvider.nowPlayingView()
 		default: EmptyView()
 		}
+	}
+	
+	private var tabProviders: [TabViewProvider] {
+		[
+			TabViewProvider(image: Image(MainViewModelTab.library), tabName: MainViewModelTab.library.description) {
+				libraryViewProvider.libraryView()
+			},
+			TabViewProvider(image: Image(MainViewModelTab.profile), tabName: MainViewModelTab.profile.description) {
+				ProfileView().erased
+			}
+		]
 	}
 }
 

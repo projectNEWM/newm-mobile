@@ -1,5 +1,4 @@
 import Foundation
-import Data
 import Resolver
 import Models
 import ModuleLinker
@@ -8,13 +7,12 @@ import shared
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-	@Injected private var getCurrentUser: GetCurrentUserUseCase
+	@Injected private var getCurrentUser: UserDetailsUseCase
 	
-	var user: User?
+	@Published var user: User?
 	
-	@Published var firstName: String = ""
-	@Published var lastName: String = ""
-	var email: String = ""
+	var nickName: String { (user?.nickname).emptyIfNil }
+	var email: String { (user?.email).emptyIfNil }
 	@Published var currentPassword: String = ""
 	@Published var newPassword: String = ""
 	@Published var confirmPassword: String = ""
@@ -62,8 +60,7 @@ final class ProfileViewModel: ObservableObject {
 	func loadUser() async {
 //		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
-			user = try await getCurrentUser.execute()
-			updateUserFields()
+			user = try await getCurrentUser.fetchLoggedInUserDetails()
 		} catch {
 			self.error = error.localizedDescription
 		}
@@ -85,12 +82,5 @@ final class ProfileViewModel: ObservableObject {
 //			}
 			isLoading = false
 		}
-	}
-	
-	private func updateUserFields() {
-		guard let user = user else { return }
-		firstName = user.firstName.emptyIfNil
-		lastName = user.lastName.emptyIfNil
-		email = user.email.emptyIfNil
 	}
 }
