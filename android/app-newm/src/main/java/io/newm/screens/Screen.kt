@@ -1,7 +1,7 @@
 package io.newm.screens
 
 import kotlinx.parcelize.Parcelize
-import com.slack.circuit.runtime.Screen as CircuitScreen
+import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
 sealed class Screen(val route: String) {
     //High Navigation Roots
