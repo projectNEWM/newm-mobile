@@ -16,13 +16,13 @@ public final class PlaylistModule: Module {
 		}
 	}
 	
-//#if DEBUG
+#if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
 			MockPlaylistListUseCase()
 		}
 	}
-//#endif
+#endif
 }
 
 extension PlaylistModule: PlaylistListViewProviding {

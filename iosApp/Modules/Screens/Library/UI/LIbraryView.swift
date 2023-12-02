@@ -174,7 +174,7 @@ struct LibraryView: View {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 struct LibraryView_Previews: PreviewProvider {
 	static var previews: some View {
 		Resolver.root = Resolver.mock
@@ -190,4 +190,4 @@ struct LibraryView_Previews: PreviewProvider {
 		.tint(.white)
 	}
 }
-//#endif
+#endif

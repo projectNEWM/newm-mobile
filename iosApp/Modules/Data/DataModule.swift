@@ -10,9 +10,9 @@ public final class DataModule: Module {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 extension DataModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {		
 	}
 }
-//#endif
+#endif

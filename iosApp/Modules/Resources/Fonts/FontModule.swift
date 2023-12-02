@@ -9,10 +9,10 @@ public final class FontsModule: Module {
 	public func registerAllServices() {}
 }
 
-//#if DEBUG
+#if DEBUG
 extension FontsModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		
 	}
 }
-//#endif
+#endif

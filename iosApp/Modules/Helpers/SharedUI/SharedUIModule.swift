@@ -29,9 +29,9 @@ extension SharedUIModule: CircularProviding {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 extension SharedUIModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 	}
 }
-//#endif
+#endif

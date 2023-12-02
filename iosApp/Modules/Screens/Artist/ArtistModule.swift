@@ -13,7 +13,7 @@ public final class ArtistModule: Module {
 		}
 	}
 	
-//#if DEBUG
+#if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
 			MockArtistViewUIModelProviding() as ArtistViewUIModelProviding
@@ -23,7 +23,7 @@ public final class ArtistModule: Module {
 			MockArtistRepo() as ArtistRepo
 		}
 	}
-//#endif
+#endif
 }
 
 extension Song: Identifiable {}

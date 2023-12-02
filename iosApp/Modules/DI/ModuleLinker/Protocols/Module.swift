@@ -5,7 +5,7 @@ import Resolver
 public protocol Module {
 	static var shared: Self { get }
 	func registerAllServices()
-//#if DEBUG
+#if DEBUG
 	func registerAllMockedServices(mockResolver: Resolver)
-//#endif
+#endif
 }

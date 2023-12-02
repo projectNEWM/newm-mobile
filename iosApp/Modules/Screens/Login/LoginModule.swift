@@ -22,9 +22,9 @@ public final class LoginModule: Module {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 	}
 }
-//#endif
+#endif

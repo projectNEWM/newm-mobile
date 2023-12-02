@@ -85,7 +85,7 @@ public struct MainView: View {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 struct MainView_Previews: PreviewProvider {
 	static var previews: some View {
 		Resolver.root = Resolver.mock
@@ -94,7 +94,7 @@ struct MainView_Previews: PreviewProvider {
 		return MainView()
 	}
 }
-//#endif
+#endif
 
 extension MainViewRoute: Identifiable {
 	var id: Self { self }

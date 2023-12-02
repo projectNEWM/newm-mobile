@@ -25,7 +25,7 @@ extension MainModule: MainViewProviding {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 extension MainModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
@@ -50,4 +50,4 @@ extension MainModule {
 		}
 	}
 }
-//#endif
+#endif

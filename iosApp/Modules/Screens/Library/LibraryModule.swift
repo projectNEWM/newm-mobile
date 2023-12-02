@@ -21,7 +21,7 @@ public final class LibraryModule: Module {
     }
 }
 
-//#if DEBUG
+#if DEBUG
 extension LibraryModule {
     public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
@@ -69,4 +69,4 @@ extension LibraryModule {
 //		}
 	}
 }
-//#endif
+#endif

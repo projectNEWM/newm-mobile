@@ -29,9 +29,9 @@ extension NowPlayingModule: MiniNowPlayingViewProviding {
 	}
 }
 
-//#if DEBUG
+#if DEBUG
 extension NowPlayingModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 	}
 }
-//#endif
+#endif
