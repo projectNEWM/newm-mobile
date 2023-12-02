@@ -1,20 +1,12 @@
 import Foundation
 import Combine
 
-//class DownloadOperation: Operation {
-//	override func main() {
-//		super.main()
-//		
-//	}
-//}
-
 class DownloadManager: NSObject, ObservableObject {
 	@Published private(set) var downloads: [URL: URLSessionDownloadTask] = [:]
 	private var progressHandlers: [URL: (Double) -> Void] = [:]
 	
 	private var urlSession: URLSession!
 	private var downloadCompletionHandlers: [URL: (Result<URL, Error>) -> Void] = [:]
-//	private let downloadQueue = OperationQueue()
 	
 	override init() {
 		super.init()

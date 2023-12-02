@@ -4,7 +4,7 @@ import Combine
 import Resolver
 import ModuleLinker
 import SharedUI
-import AppAudioPlayer
+import AudioPlayer
 import Models
 
 protocol ArtistRepo {

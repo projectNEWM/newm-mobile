@@ -175,17 +175,6 @@ struct NowPlayingView_Previews: PreviewProvider {
 	}
 }
 
-//private extension AudioTrack {
-//	init(nftTrack: ModuleLinker.NFTTrack) {
-//		self = AudioTrack(
-//			title: nftTrack.title,
-//			artistName: nftTrack.artistName,
-//			url: nftTrack.url,
-//			image: nftTrack.image
-//		)
-//	}
-//}
-
 func url(for testImage: ImageAsset) -> URL {
 	guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {
 		fatalError()

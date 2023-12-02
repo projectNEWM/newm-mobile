@@ -73,14 +73,14 @@ class LandingViewModel: ObservableObject {
 	}
 	
 	func resetPassword() {
-//		Task {
-//			do {
-//				try await userRepo.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
-//				try await logInUseCase.logIn(email: email, password: password)
-//			} catch {
-//		handleError(error)
-//			}
-//		}
+		Task {
+			do {
+				try await userRepo.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
+				try await logInUseCase.logIn(email: email, password: password)
+			} catch {
+				handleError(error)
+			}
+		}
 	}
 	
 	func createAccount() {
@@ -126,32 +126,6 @@ class LandingViewModel: ObservableObject {
 		navPath = []
 	}
 		
-//	func handleFacebookLogin(result: Result<LoginManagerLoginResult, Error>) {
-//		switch result {
-//		case .success(let loginResult):
-//			guard let token = loginResult.token?.tokenString else {
-//				//TODO: localize
-//				self.error = "Failed to log in with Facebook"
-//				return
-//			}
-//			isLoading = true
-//			Task {
-//				do {
-//					try await logInUseCase.logInWithFacebook(accessToken: token)
-//				} catch {
-//					self.error = error.localizedDescription
-//				}
-//				isLoading = false
-//			}
-//		case .failure(let error):
-//			handleError(error)
-//		}
-//	}
-	
-//	func handleFacebookLogout() {
-//		logInUseCase.logOut()
-//	}
-//	
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
 		guard let idToken = result?.user.accessToken.tokenString else {
 			//TODO: localize

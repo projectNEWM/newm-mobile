@@ -3,7 +3,7 @@ import Combine
 import Resolver
 import ModuleLinker
 import SharedUI
-import AppAudioPlayer
+import AudioPlayer
 
 @MainActor
 class HomeViewModel: ObservableObject {
