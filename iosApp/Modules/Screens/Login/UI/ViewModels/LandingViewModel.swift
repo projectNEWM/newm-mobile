@@ -73,14 +73,14 @@ class LandingViewModel: ObservableObject {
 	}
 	
 	func resetPassword() {
-		Task {
-			do {
-				try await userRepo.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
-				try await logInUseCase.logIn(email: email, password: password)
-			} catch {
-				handleError(error)
-			}
-		}
+//		Task {
+//			do {
+//				try await userRepo.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
+//				try await logInUseCase.logIn(email: email, password: password)
+//			} catch {
+//				handleError(error)
+//			}
+//		}
 	}
 	
 	func createAccount() {
