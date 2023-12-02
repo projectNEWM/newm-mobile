@@ -17,11 +17,16 @@ public struct PlayButton: View {
 			}
 		} label: {
 			if audioPlayer.isPlaying {
-				Asset.Media.PlayerIcons.pause().resizable()
+				Image(systemName: "pause.fill")
 			} else {
-				Asset.Media.PlayerIcons.play().resizable()
+				Image(systemName: "play.fill")
 			}
 		}
-		.aspectRatio(contentMode: .fit)
+		.tint(.white)
 	}
+}
+
+#Preview {
+	PlayButton()
+		.preferredColorScheme(.dark)
 }

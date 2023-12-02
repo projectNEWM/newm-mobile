@@ -1,28 +1,29 @@
 import SwiftUI
 import Colors
 
-public struct TabBar: View {
+struct TabBar: View {
 	let tabProviders: [TabViewProvider]
 	let bottomPadding: CGFloat
 	
-	public init(tabProviders: [TabViewProvider], bottomPadding: CGFloat) {
+	init(tabProviders: [TabViewProvider], bottomPadding: CGFloat) {
 		self.tabProviders = tabProviders
 		self.bottomPadding = bottomPadding
 	}
 	
-	public var body: some View {
+	var body: some View {
 		TabView {
-			ForEach(tabProviders, id: \.tabName) { tabProvider in
+			ForEach(tabProviders, id: \.tab) { tabProvider in
 				tabProvider.viewProvider()
-					.tabBarItem(
-						image: tabProvider.image,
-						tabName: tabProvider.tabName
-					)
-					.tag(tabProvider.tabName)
+					.tabItem {
+						VStack {
+							tabProvider.image
+							Text(tabProvider.tab.description)
+						}
+					}
+					.tag(tabProvider.tab)
 					.padding(.bottom, bottomPadding)
 			}
 		}
-		.tint(try! Color(hex: "DC3CAA"))
 	}
 }
 
@@ -31,12 +32,14 @@ struct ContentView_Previews: PreviewProvider {
 		TabBar(tabProviders: [
 			.init(
 				image: Image("heart.circle.fill"),
-				tabName: "First",
+				tab: .library,
+				tint: .pink,
 				viewProvider: { return AnyView(Text("First Tab")) }
 			),
 			.init(
 				image: Image("heart.fill"),
-				tabName: "Second",
+				tab: .profile,
+				tint: .pink,
 				viewProvider: { return AnyView(Text("Second Tab")) }
 			),
 		], bottomPadding: 50).preferredColorScheme(.dark)

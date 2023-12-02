@@ -1,7 +1,6 @@
 import SwiftUI
 import Resolver
 import ModuleLinker
-import TabBar
 import AudioPlayer
 import SharedUI
 import Profile
@@ -76,10 +75,10 @@ public struct MainView: View {
 	
 	private var tabProviders: [TabViewProvider] {
 		[
-			TabViewProvider(image: Image(MainViewModelTab.library), tabName: MainViewModelTab.library.description) {
+			TabViewProvider(image: Image(MainViewModelTab.library), tab: MainViewModelTab.library, tint: try! Color(hex: "DC3CAA")) {
 				libraryViewProvider.libraryView()
 			},
-			TabViewProvider(image: Image(MainViewModelTab.profile), tabName: MainViewModelTab.profile.description) {
+			TabViewProvider(image: Image(MainViewModelTab.profile), tab: MainViewModelTab.profile, tint: try! Color(hex: "FF9637")) {
 				ProfileView().erased
 			}
 		]

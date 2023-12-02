@@ -155,6 +155,19 @@ public class VLCAudioPlayer: ObservableObject {
 		fileManager.fileExists(for: URL(string: track.songUrl)!)
 	}
 	
+	public func cycleRepeatMode() {
+		repeatMode = {
+			switch repeatMode {
+			case .all:
+				return .one
+			case .one:
+				return nil
+			case nil:
+				return .all
+			}
+		}()
+	}
+	
 	fileprivate func updateData(_ aNotification: Foundation.Notification) {
 		guard let player = aNotification.vlcPlayer else { return }
 		if player.state == .ended {

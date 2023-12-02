@@ -8,6 +8,7 @@ import shared
 @MainActor
 final class ProfileViewModel: ObservableObject {
 	@Injected private var getCurrentUser: UserDetailsUseCase
+	@Injected private var connectWalletUseCase: ConnectWalletUseCase
 	
 	@Published var user: User?
 	
@@ -19,6 +20,7 @@ final class ProfileViewModel: ObservableObject {
 	
 	@Published var error: String?
 	@Published var isLoading: Bool = false
+	@Published var isWalletConnected: Bool = false
 	
 	private var cancels = Set<AnyCancellable>()
 	
@@ -50,6 +52,12 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	init() {
+		isWalletConnected = connectWalletUseCase.isConnected()
+		NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged)
+			.sink { [weak self] _ in
+				self?.isWalletConnected = self?.connectWalletUseCase.isConnected() == true
+			}
+			.store(in: &cancels)
 		Task {
 			isLoading = true
 			await loadUser()
@@ -82,5 +90,9 @@ final class ProfileViewModel: ObservableObject {
 //			}
 			isLoading = false
 		}
+	}
+	
+	func disconnectWallet() {
+		connectWalletUseCase.disconnect()
 	}
 }

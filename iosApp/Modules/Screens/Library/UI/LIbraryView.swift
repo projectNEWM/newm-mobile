@@ -11,77 +11,66 @@ import AVFoundation
 import Kingfisher
 
 struct LibraryView: View {
-	@State private var tracks: [NFTTrack] = []
-	@State private var searchText: String = ""
-	@State private var error: String?
-	@State private var showLoading: Bool = true
-	@State private var showXPubScanner: Bool = false
-	
+	@StateObject private var viewModel = LibraryViewModel()
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
-	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
-	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
-	
-	private var filteredNFTTracks: [NFTTrack] {
-		guard searchText.isEmpty == false else {
-			return tracks
-		}
-		return tracks.filter {
-			$0.name.localizedCaseInsensitiveContains(searchText)
-		}
-	}
 	
 	public var body: some View {
 		Group {
-			if connectWalletXPubUseCase.isConnected() == false {
-				walletDisconnectedMessage
-			} else if showLoading {
+			if viewModel.showLoading {
 				loadingView
-			} else if let error {
+			} else if viewModel.tracks.isEmpty {
+				noSongsMessage
+			} else if let error = viewModel.error {
 				errorView(error)
 			} else {
 				loadedView
 			}
 		}
 		.refreshable {
-			try? await refresh()
+			await viewModel.refresh()
 		}
 		.task {
-			try? await refresh()
-			showLoading = false
+			await viewModel.refresh()
 		}
-		.sheet(isPresented: $showXPubScanner) {
+		.sheet(isPresented: .constant(viewModel.showXPubScanner)) {
 			XPubScannerView {
-				showXPubScanner = false
-				Task {
-					try! await refresh()
-				}
+				viewModel.xPubScanned()
 			}
 		}
 	}
 	
 	@ViewBuilder
-	private var walletDisconnectedMessage: some View {
-		VStack {
-			Spacer()
-			Text("Your library is empty.")
-				.font(
-					Font.custom("Inter", size: 24)
-						.weight(.bold)
-				)
-				.multilineTextAlignment(.center)
-				.foregroundColor(.white)
-				.frame(width: 358, alignment: .top)
-			Text("Time to rescue it with your epic music stash! 🎶")
-				.font(
-					Font.custom("Inter", size: 14)
-						.weight(.medium)
-				)
-				.multilineTextAlignment(.center)
-				.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
-				.frame(width: 358, alignment: .top)
-			Spacer()
-			ConnectWalletAlertView {
-				showXPubScanner = true
+	private var noSongsMessage: some View {
+		ZStack {
+			ScrollView {}
+				.background {
+					VStack {
+						Text("Your library is empty.")
+							.font(
+								Font.custom("Inter", size: 24)
+									.weight(.bold)
+							)
+							.multilineTextAlignment(.center)
+							.foregroundColor(.white)
+							.frame(width: 358, alignment: .top)
+						
+						Text("Time to rescue it with your epic music stash! 🎶")
+							.font(
+								Font.custom("Inter", size: 14)
+									.weight(.medium)
+							)
+							.multilineTextAlignment(.center)
+							.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
+							.frame(width: 358, alignment: .top)
+					}
+				}
+			if viewModel.walletIsConnected == false {
+				VStack {
+					Spacer()
+					ConnectWalletAlertView {
+						viewModel.connectWallet()
+					}
+				}
 			}
 		}
 	}
@@ -94,14 +83,20 @@ struct LibraryView: View {
 	
 	@ViewBuilder
 	private func errorView(_ error: String) -> some View {
-		Text(error)
+		ScrollView {
+			VStack {
+				Spacer()
+				Text(error)
+				Spacer()
+			}
+		}
 	}
 	
 	@ViewBuilder
 	private var loadedView: some View {
 		NavigationView {
 			List {
-				ForEach(filteredNFTTracks, id: \.id) { audioTrack in
+				ForEach(viewModel.filteredNFTTracks, id: \.id) { audioTrack in
 					row(for: audioTrack)
 						.frame(height: 40)
 						.padding(.leading, -6)
@@ -110,14 +105,14 @@ struct LibraryView: View {
 				.listRowSeparator(.hidden)
 			}
 		}
-		.searchable(text: $searchText, prompt: "Search")
+		.searchable(text: $viewModel.searchText, prompt: "Search")
 	}
 	
 	@ViewBuilder
 	fileprivate func row(for track: NFTTrack) -> some View {
 		Button(action: {
 			if audioPlayer.playQueueIsEmpty {
-				audioPlayer.setPlayQueue(tracks, playFirstTrack: false)
+				audioPlayer.setPlayQueue(viewModel.tracks, playFirstTrack: false)
 			}
 			audioPlayer.seek(toTrack: track)
 		}) {
@@ -154,32 +149,28 @@ struct LibraryView: View {
 			.foregroundStyle(.white)
 			.tag(track.id)
 		}
-//		.swipeActions {
-//			Button(action: {
-//
-//			}, label: {
-//				VStack(alignment: .center) {
-//					Asset.Media.download.swiftUIImage
-//					Text("Download")
-//						.font(Font.interMedium(ofSize: 12))
-//						.foregroundStyle(Color.white)
-//				}
-//				.padding()
-//			})
-//		}
+		//		.swipeActions {
+		//			Button(action: {
+		//
+		//			}, label: {
+		//				VStack(alignment: .center) {
+		//					Asset.Media.download.swiftUIImage
+		//					Text("Download")
+		//						.font(Font.interMedium(ofSize: 12))
+		//						.foregroundStyle(Color.white)
+		//				}
+		//				.padding()
+		//			})
+		//		}
 	}
 	
+	@ViewBuilder
 	private func progressView(for track: NFTTrack) -> some View {
 		guard let progress = audioPlayer.loadingProgress[track] else { return EmptyView().erased }
 		return Gauge(value: progress, in: 0...1) { }
 			.gaugeStyle(.accessoryCircularCapacity)
 			.scaleEffect(0.5)
 			.erased
-	}
-	
-	@MainActor
-	private func refresh() async throws {
-		tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 	}
 }
 

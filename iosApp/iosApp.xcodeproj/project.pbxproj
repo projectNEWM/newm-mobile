@@ -36,9 +36,6 @@
 		7618FCD428164C5C007573B4 /* SharedUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7618FCF428164C86007573B4 /* TabBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCEE28164C86007573B4 /* TabBar.framework */; };
 		7618FCF528164C86007573B4 /* TabBar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCEE28164C86007573B4 /* TabBar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7618FCFD28164C92007573B4 /* TabBarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCFC28164C92007573B4 /* TabBarProvider.swift */; };
-		7618FCFE28164C92007573B4 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCFB28164C92007573B4 /* TabBarItem.swift */; };
-		7618FCFF28164C92007573B4 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCF928164C92007573B4 /* TabBar.swift */; };
 		7618FD1D28164CBD007573B4 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
 		7618FD1E28164CBD007573B4 /* Colors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; };
@@ -236,6 +233,11 @@
 		76D01DA528164B2100305605 /* ModuleLinker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76D01DC128164B6E00305605 /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; };
 		76D09EFC27FAC4B800E2BAD3 /* iOSAppModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D09EFB27FAC4B700E2BAD3 /* iOSAppModule.swift */; };
+		76D99EC92B19EF11002FB4B2 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
+		76D99ECA2B19EF11002FB4B2 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76D99ECB2B1B0D24002FB4B2 /* TabBarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCFC28164C92007573B4 /* TabBarProvider.swift */; };
+		76D99ECC2B1B0D24002FB4B2 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCF928164C92007573B4 /* TabBar.swift */; };
+		76D99ECD2B1B0D24002FB4B2 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7618FCFB28164C92007573B4 /* TabBarItem.swift */; };
 		76D9F1F92A1714E300C93E1C /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B1EC62A15C74B0083DE3E /* KeyboardObserver.swift */; };
 		76DB3B942A1311F5001AF2AD /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DB3B932A1311F5001AF2AD /* ActionButton.swift */; };
 		76DB3B982A13252F001AF2AD /* String+NilIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DB3B972A13252F001AF2AD /* String+NilIfEmpty.swift */; };
@@ -654,6 +656,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				76D99ECA2B19EF11002FB4B2 /* shared.xcframework in Embed Frameworks */,
 				7650E1692B17C69A00D686B8 /* SharedUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -944,6 +947,8 @@
 		76D01D9728164B0400305605 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		76D01D9E28164B2100305605 /* ModuleLinker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModuleLinker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D09EFB27FAC4B700E2BAD3 /* iOSAppModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAppModule.swift; sourceTree = "<group>"; };
+		76D99EC72B1934CC002FB4B2 /* commonMain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = commonMain; path = ../shared/src/commonMain; sourceTree = "<group>"; };
+		76D99EC82B1934CC002FB4B2 /* iosMain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iosMain; path = ../shared/src/iosMain; sourceTree = "<group>"; };
 		76DB3B932A1311F5001AF2AD /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		76DB3B972A13252F001AF2AD /* String+NilIfEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NilIfEmpty.swift"; sourceTree = "<group>"; };
 		76DC3A2828169995004D5021 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -1079,6 +1084,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7650E1672B17BA5400D686B8 /* Kingfisher in Frameworks */,
+				76D99EC92B19EF11002FB4B2 /* shared.xcframework in Frameworks */,
 				7650E15F2B17B46800D686B8 /* Resolver in Frameworks */,
 				7650E1592B17B44E00D686B8 /* ModuleLinker.framework in Frameworks */,
 				7650E1682B17C69A00D686B8 /* SharedUI.framework in Frameworks */,
@@ -1177,6 +1183,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				76D99EC62B1934AD002FB4B2 /* Kotlin */,
 				761ADD3A2AE734AA001B56CF /* shared.xcframework */,
 				76EAFC5C2A0AE33E00ACD862 /* Secrets.xcconfig */,
 				76B990BB2835203300F818E4 /* Fonts-Info.plist */,
@@ -1447,7 +1454,6 @@
 				76C76133291F445B0054D2F3 /* AudioPlayer */,
 				764838BE2B0C8CAF00D6905B /* Files */,
 				765A362529E918CF00B939BD /* SharedUI */,
-				7618FCEF28164C86007573B4 /* TabBar */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1759,6 +1765,7 @@
 		76764AEC281A303B0095BEF9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				7618FCEF28164C86007573B4 /* TabBar */,
 				76D01D8D28164AFC00305605 /* MainView.swift */,
 				76D01D8E28164AFC00305605 /* MainViewModel.swift */,
 				76D01D8F28164AFC00305605 /* TabEnums.swift */,
@@ -2107,6 +2114,15 @@
 				766E8FF22856418A00F18779 /* HomeViewUIModel.swift */,
 			);
 			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		76D99EC62B1934AD002FB4B2 /* Kotlin */ = {
+			isa = PBXGroup;
+			children = (
+				76D99EC72B1934CC002FB4B2 /* commonMain */,
+				76D99EC82B1934CC002FB4B2 /* iosMain */,
+			);
+			name = Kotlin;
 			sourceTree = "<group>";
 		};
 		76EAFC532A0907FB00ACD862 /* DM_Serif_Text */ = {
@@ -3020,9 +3036,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7618FCFF28164C92007573B4 /* TabBar.swift in Sources */,
-				7618FCFE28164C92007573B4 /* TabBarItem.swift in Sources */,
-				7618FCFD28164C92007573B4 /* TabBarProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3186,6 +3199,9 @@
 				76D01D9328164AFC00305605 /* TabEnums.swift in Sources */,
 				76D01D9428164AFC00305605 /* MainView.swift in Sources */,
 				76D01D9128164AFC00305605 /* MainModule.swift in Sources */,
+				76D99ECD2B1B0D24002FB4B2 /* TabBarItem.swift in Sources */,
+				76D99ECC2B1B0D24002FB4B2 /* TabBar.swift in Sources */,
+				76D99ECB2B1B0D24002FB4B2 /* TabBarProvider.swift in Sources */,
 				76C7616529206DD00054D2F3 /* Routes.swift in Sources */,
 				76D01D9528164AFC00305605 /* Utilities.swift in Sources */,
 				76D01D9228164AFC00305605 /* MainViewModel.swift in Sources */,

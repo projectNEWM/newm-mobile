@@ -1,5 +1,6 @@
-package io.newm.shared.internal
+package io.newm.shared.internal.implementations
 
+import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.coroutines.flow.Flow

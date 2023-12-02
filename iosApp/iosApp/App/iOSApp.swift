@@ -9,7 +9,7 @@ struct iOSApp: App {
 	let mainViewProvider: MainViewProviding
 	
 	init() {
-		KoinKt.doInitKoin()
+		KoinKt.doInitKoin(enableNetworkLogs: true)
 #if DEBUG
 		UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 #endif

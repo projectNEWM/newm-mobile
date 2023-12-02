@@ -5,6 +5,8 @@ import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import shared.Notification
+import shared.postNotification
 
 internal class ConnectWalletUseCaseImpl(
     private val connectWalletManager: ConnectWalletManager,
@@ -12,11 +14,13 @@ internal class ConnectWalletUseCaseImpl(
 ) : ConnectWalletUseCase {
     override fun connect(xpub: String) {
         connectWalletManager.connect(xpub)
+        postNotification(Notification.walletConnectionStateChanged)
     }
 
     override fun disconnect() {
         connectWalletManager.disconnect()
         cardanoWalletRepository.deleteAllNFTs()
+        postNotification(Notification.walletConnectionStateChanged)
     }
 
     override fun isConnected(): Boolean {

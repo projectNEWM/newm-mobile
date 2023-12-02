@@ -2,7 +2,6 @@ import Foundation
 import Resolver
 import SwiftUI
 import ModuleLinker
-import TabBar
 import shared
 
 public final class MainModule: Module {

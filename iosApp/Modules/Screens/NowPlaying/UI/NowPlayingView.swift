@@ -39,6 +39,7 @@ extension NowPlayingView {
 			.scaledToFill()
 	}
 	
+	@ViewBuilder
 	private var title: some View {
 		VStack(alignment: .center) {
 			Text(audioPlayer.title ?? "--")
@@ -56,35 +57,35 @@ extension NowPlayingView {
 		})
 	}
 	
+	@ViewBuilder
 	fileprivate var controls: some View {
 		VStack(spacing: 0) {
-			if let duration = audioPlayer.duration, duration > 0 {
-				Slider(value: playbackTimeBinding, in: 0.0...Float(duration))
-					.tint(Gradients.loginGradient.gradient)
-					.padding(.bottom, -13)
-					.zIndex(1)
-			}
+			Slider(value: playbackTimeBinding, in: 0.0...Float(audioPlayer.duration ?? 300))
+				.tint(Gradients.loginGradient.gradient)
+				.padding(.bottom, -13)
+				.zIndex(1)
 			
 			VStack {
-				VStack {
-					HStack {
-						Text("\(audioPlayer.currentTime.playbackTimeString)")
-						Spacer()
-						Text("\(audioPlayer.duration.playbackTimeString)")
-					}
-					.foregroundStyle(try! Color(hex: "8F8F91"))
-					.font(Font.inter(ofSize: 12))
+				HStack {
+					Text("\(audioPlayer.currentTime.playbackTimeString)")
 					Spacer()
-					HStack {
-						repeatButton
-						Spacer()
-						prevButton
-						PlayButton().padding([.trailing, .leading])
-						nextButton
-						Spacer()
-						shuffleButton
-					}
+					Text("\(audioPlayer.duration.playbackTimeString)")
 				}
+				.foregroundStyle(try! Color(hex: "8F8F91"))
+				.font(Font.inter(ofSize: 12))
+				
+				Spacer()
+				
+				HStack {
+					repeatButton
+					Spacer()
+					prevButton
+					playButton
+					nextButton
+					Spacer()
+					shuffleButton
+				}
+				.padding()
 			}
 			.padding()
 			.background(Color.black)
@@ -93,57 +94,68 @@ extension NowPlayingView {
 		}
 	}
 	
+	@ViewBuilder
+	private var playButton: some View {
+		PlayButton().padding([.trailing, .leading], 26)
+			.scaleEffect(CGSize(width: 1.5, height: 1.5))
+	}
+	
+	@ViewBuilder
 	private var shuffleButton: some View {
 		Button {
 			audioPlayer.shuffle.toggle()
 		} label: {
 			if audioPlayer.shuffle {
-				Asset.Media.PlayerIcons.shuffleSelected()
+				Image(systemName: "shuffle")
+					.foregroundStyle(Gradients.primaryPrimary)
 			} else {
-				Asset.Media.PlayerIcons.shuffle()
+				Image(systemName: "shuffle")
 			}
 		}
 		.tint(audioPlayer.shuffle ? NEWMColor.pink() : .white)
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 	
+	@ViewBuilder
 	private var prevButton: some View {
 		Button {
 			audioPlayer.prev()
 		} label: {
-			Asset.Media.PlayerIcons.previous()
+			Image(systemName: "backward.end.fill")
+				.tint(.white)
 		}
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 	
+	@ViewBuilder
 	private var nextButton: some View {
 		Button {
 			audioPlayer.next()
 		} label: {
-			Asset.Media.PlayerIcons.next()
+			Image(systemName: "forward.end.fill")
+				.tint(.white)
 		}
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 	
+	@ViewBuilder
 	private var repeatButton: some View {
 		Button {
-//			audioPlayer.cycleRepeatMode()
+			audioPlayer.cycleRepeatMode()
 		} label: {
-//			switch audioPlayer.playbackInfo.repeatMode {
-//			case .all:
-//				Asset.Media.PlayerIcons.Repeat.repeatFill()
-//			case .one:
-//				Asset.Media.PlayerIcons.Repeat.repeatOneFill()
-//			case .none:
-//				Asset.Media.PlayerIcons.Repeat.repeat()
-//			}
+			switch audioPlayer.repeatMode {
+			case .all:
+				Image(systemName: "repeat")
+					.tint(Gradients.primaryPrimary)
+			case .one:
+				Image(systemName: "repeat.1")
+					.tint(Gradients.primaryPrimary)
+			case .none:
+				Image(systemName: "repeat")
+					.tint(.white)
+			}
 		}
-		.frame(width: 48, height: 48)
-	}
-	
-	private var shareButton: some View {
-		Button {
-			//TODO:
-		} label: {
-			Asset.Media.PlayerIcons.share()
-		}
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 }
 
@@ -157,7 +169,7 @@ struct NowPlayingView_Previews: PreviewProvider {
 		@InjectedObject var audioPlayer: VLCAudioPlayer
 		return Group {
 			NowPlayingView()
-				.preferredColorScheme(.dark)
+//				.preferredColorScheme(.dark)
 			NowPlayingView().controls
 		}.padding()
 	}

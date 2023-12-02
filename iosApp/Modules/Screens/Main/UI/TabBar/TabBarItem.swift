@@ -2,12 +2,12 @@ import SwiftUI
 
 struct TabBarItem: View {
 	let image: Image
-	let tabName: String
+	let tab: MainViewModelTab
 	
 	var body: some View {
 		VStack {
 			image
-			Text(tabName)
+			Text(tab.description)
 		}
 	}
 }
@@ -15,12 +15,12 @@ struct TabBarItem: View {
 extension View {
 	func tabBarItem(
 		image: Image,
-		tabName: String
+		tab: MainViewModelTab
 	) -> some View {
 		tabItem {
 			TabBarItem(
 				image: image,
-				tabName: tabName
+				tab: tab
 			)
 		}
 	}
@@ -28,6 +28,6 @@ extension View {
 
 struct TabBarItem_Previews: PreviewProvider {
 	static var previews: some View {
-		TabBarItem(image: Image("pc"), tabName: "a tab")
+		TabBarItem(image: Image("pc"), tab: .library)
 	}
 }

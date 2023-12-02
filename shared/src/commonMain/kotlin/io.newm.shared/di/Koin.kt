@@ -2,34 +2,33 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.UserSessionUseCaseImpl
-import io.newm.shared.login.repository.LogInRepository
-import io.newm.shared.login.service.LoginAPI
-import io.newm.shared.internal.repositories.CardanoWalletRepository
-import io.newm.shared.internal.repositories.GenresRepository
-import io.newm.shared.internal.repositories.PlaylistRepository
-import io.newm.shared.internal.repositories.UserRepository
-import io.newm.shared.internal.repositories.ConnectWalletManager
-import io.newm.shared.internal.services.GenresAPI
-import io.newm.shared.internal.services.PlaylistAPI
-import io.newm.shared.internal.services.UserAPI
-import io.newm.shared.internal.services.CardanoWalletAPI
-import io.newm.shared.public.usecases.GetGenresUseCase
-import io.newm.shared.public.usecases.LoginUseCase
-import io.newm.shared.public.usecases.SignupUseCase
-import io.newm.shared.public.usecases.UserDetailsUseCase
-import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.WalletNFTTracksUseCase
+import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
 import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
 import io.newm.shared.internal.implementations.LoginUseCaseImpl
 import io.newm.shared.internal.implementations.SignupUseCaseImpl
 import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
-import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
+import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
+import io.newm.shared.internal.repositories.CardanoWalletRepository
+import io.newm.shared.internal.repositories.ConnectWalletManager
+import io.newm.shared.internal.repositories.GenresRepository
+import io.newm.shared.internal.repositories.PlaylistRepository
+import io.newm.shared.internal.repositories.UserRepository
+import io.newm.shared.internal.services.CardanoWalletAPI
+import io.newm.shared.internal.services.GenresAPI
+import io.newm.shared.internal.services.PlaylistAPI
+import io.newm.shared.internal.services.UserAPI
+import io.newm.shared.login.repository.LogInRepository
+import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.GetGenresUseCase
+import io.newm.shared.public.usecases.LoginUseCase
+import io.newm.shared.public.usecases.SignupUseCase
+import io.newm.shared.public.usecases.UserDetailsUseCase
 import io.newm.shared.public.usecases.UserSessionUseCase
+import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -45,11 +44,11 @@ fun initKoin(enableNetworkLogs: Boolean = true, appDeclaration: KoinAppDeclarati
 
 // called by iOS etc
 //https://johnoreilly.dev/posts/kotlinmultiplatform-koin/
-fun initKoin() = initKoin(enableNetworkLogs = true) {}
+fun initKoin(enableNetworkLogs: Boolean) = initKoin(enableNetworkLogs = enableNetworkLogs) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
-    single { createHttpClient(get(), get(), get(), enableNetworkLogs = enableNetworkLogs) }
+    single { createHttpClient(get(), get(), get(), get(), enableNetworkLogs = enableNetworkLogs) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal API Services
     single { LoginAPI(get()) }
@@ -84,7 +83,8 @@ fun createJson() = Json {
 internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
     json: Json,
+    logOutUseCase: UserSessionUseCase,
     tokenManager: TokenManager,
     enableNetworkLogs: Boolean,
 ): NetworkClientFactory =
-    NetworkClientFactory(httpClientEngine, json, tokenManager, enableNetworkLogs)
+    NetworkClientFactory(httpClientEngine, json, logOutUseCase, tokenManager, enableNetworkLogs)
