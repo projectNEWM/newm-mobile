@@ -16,7 +16,7 @@ import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
 import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.edit.ProfileRoute
-import io.newm.screens.profile.view.ProfileViewScreen
+import io.newm.screens.account.UserAccountScreen
 import io.newm.shared.public.models.NFTTrack
 
 @Composable
@@ -31,7 +31,7 @@ fun Navigation(
             onPlaySong = { songId ->
                 navController.navigate(Screen.MusicPlayer.routeOf(songId.id))
             },
-            goToProfile = { navController.navigate(Screen.ProfileViewRoot.route) }
+            goToProfile = { navController.navigate(Screen.UserAccountViewRoot.route) }
         )
         addHomeTree(navController, isBottomBarVisible)
         addProfileViewTree(onEditProfileClick)
@@ -86,10 +86,10 @@ private fun NavGraphBuilder.addProfileViewTree(
     onEditProfileClick: () -> Unit
 ) {
     navigation(
-        route = Screen.ProfileViewRoot.route, startDestination = Screen.ProfileViewLanding.route
+        route = Screen.UserAccountViewRoot.route, startDestination = Screen.UserAccountViewLanding.route
     ) {
-        composable(Screen.ProfileViewLanding.route) {
-            ProfileViewScreen(
+        composable(Screen.UserAccountViewLanding.route) {
+            UserAccountScreen(
                 onEditProfileClick = onEditProfileClick
             )
         }

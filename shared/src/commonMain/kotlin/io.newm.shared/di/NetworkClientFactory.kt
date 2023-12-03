@@ -15,6 +15,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.newm.shared.internal.HttpRoutes
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.login.models.LoginResponse
+import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.serialization.json.Json
 
 internal class NetworkClientFactory(
@@ -45,7 +46,7 @@ internal class NetworkClientFactory(
     private fun createHttpClient(): HttpClient {
         return HttpClient(httpClientEngine) {
             defaultRequest {
-                url(HttpRoutes.HOST)
+                url(HttpRoutes.getHost())
             }
             install(ContentNegotiation) {
                 json(json)
@@ -72,7 +73,7 @@ internal class NetworkClientFactory(
         logger.d { "NewmKMM - createAuthHttpClient" }
         return HttpClient(httpClientEngine) {
             defaultRequest {
-                url(HttpRoutes.HOST)
+                url(HttpRoutes.getHost())
             }
 
             install(ContentNegotiation) {
