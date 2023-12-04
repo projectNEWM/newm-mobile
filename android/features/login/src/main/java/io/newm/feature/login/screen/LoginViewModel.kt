@@ -35,20 +35,24 @@ class LoginViewModel(private val useCase: LoginUseCase) : ViewModel() {
                         errorMessage = null
                     )
                     Logger.d { "NewmAndroid - LoginViewModel LoginStatus Success" }
-                } catch (e: LoginException.WrongPassword) {
-                    _state.value = _state.value.copy(
-                        wrongPassword = true,
-                        errorMessage = "invalid Password"
-                    )
-                    Logger.d { "NewmAndroid - LoginViewModel LoginStatus invalid Password" }
-                } catch (e: LoginException.UserNotFound) {
-                    _state.value = _state.value.copy(
-                        emailNotFound = true,
-                        errorMessage = "An account for: $email Doesn't exist! Please sign up first!"
-                    )
-                    Logger.d { "NewmAndroid - LoginViewModel LoginStatus UserNotFound" }
-                } catch (e: KMMException) {
-                    Logger.d { "NewmAndroid - LoginViewModel LoginStatus UnknownError" }
+                } catch (e: LoginException) {
+                    when (e) {
+                        is LoginException.UserNotFound -> {
+                            _state.value = _state.value.copy(
+                                emailNotFound = true,
+                                errorMessage = "An account for: $email Doesn't exist! Please sign up first!"
+                            )
+                            Logger.d { "NewmAndroid - LoginViewModel LoginStatus UserNotFound" }
+                        }
+
+                        is LoginException.WrongPassword -> {
+                            _state.value = _state.value.copy(
+                                wrongPassword = true,
+                                errorMessage = "invalid Password"
+                            )
+                            Logger.d { "NewmAndroid - LoginViewModel LoginStatus invalid Password" }
+                        }
+                    }
                 }
             }
         }
