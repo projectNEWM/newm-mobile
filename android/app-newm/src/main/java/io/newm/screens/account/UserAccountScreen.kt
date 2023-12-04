@@ -1,4 +1,4 @@
-package io.newm.screens.profile.view
+package io.newm.screens.account
 
 import android.app.Activity
 import android.content.Intent
@@ -31,20 +31,20 @@ import io.newm.screens.profile.ProfileBanner
 import io.newm.shared.public.models.User
 import org.koin.compose.koinInject
 
-internal const val TAG_PROFILE_VIEW_SCREEN = "TAG_PROFILE_VIEW_SCREEN"
+internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
 
 @Composable
-fun ProfileViewScreen(
+fun UserAccountScreen(
     onEditProfileClick: () -> Unit,
-    viewModel: ProfileReadOnlyViewModel = koinInject()
+    viewModel: UserAccountViewModel = koinInject()
 ) {
     val state by viewModel.state.collectAsState()
     when (state) {
-        ProfileViewState.Loading -> LoadingScreen()
-        is ProfileViewState.Content -> {
-            ProfileViewContent(
-                user = (state as ProfileViewState.Content).profile,
-                isWalletConnected = (state as ProfileViewState.Content).isWalletConnected,
+        UserAccountState.Loading -> LoadingScreen()
+        is UserAccountState.Content -> {
+            UserAccountContent(
+                user = (state as UserAccountState.Content).profile,
+                isWalletConnected = (state as UserAccountState.Content).isWalletConnected,
                 onConnectWalletClick = { xpubKey -> viewModel.connectWallet(xpubKey) },
                 onEditProfileClick = onEditProfileClick,
                 disconnectWallet = { viewModel.disconnectWallet() },
@@ -55,7 +55,7 @@ fun ProfileViewScreen(
 }
 
 @Composable
-fun ProfileViewContent(
+fun UserAccountContent(
     user: User,
     isWalletConnected: Boolean,
     onConnectWalletClick: (String) -> Unit,
@@ -85,7 +85,7 @@ fun ProfileViewContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .testTag(TAG_PROFILE_VIEW_SCREEN),
+            .testTag(TAG_USER_ACCOUNT_VIEW_SCREEN),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ProfileBanner(

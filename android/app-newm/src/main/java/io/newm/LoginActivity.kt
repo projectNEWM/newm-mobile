@@ -12,14 +12,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
-import com.slack.circuit.foundation.CircuitConfig
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavigableCircuitContent
-import com.slack.circuit.foundation.push
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.retained.LocalRetainedStateRegistry
 import com.slack.circuit.retained.continuityRetainedStateRegistry
+import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.LoginScreenUi
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
@@ -38,15 +39,22 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : ComponentActivity() {
 
     // TODO inject
-    private val circuitConfig: CircuitConfig = CircuitConfig.Builder()
-        .addPresenterFactory { screen, navigator, _ ->
+    private val circuit: Circuit = Circuit.Builder()
+        .addPresenterFactory(buildPresenterFactory())
+        .addUiFactory(buildUiFactory())
+        .build()
+
+    private fun buildPresenterFactory(): Presenter.Factory =
+        Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
                 is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
                 else -> null
             }
         }
-        .addUiFactory { screen, _ ->
+
+    private fun buildUiFactory(): Ui.Factory =
+        Ui.Factory { screen, _ ->
             when (screen) {
                 is CreateAccountScreen -> ui<CreateAccountUiState> { state, modifier ->
                     CreateAccountUi(state, modifier)
@@ -58,7 +66,7 @@ class LoginActivity : ComponentActivity() {
 
                 else -> null
             }
-        }.build()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +84,7 @@ class LoginActivity : ComponentActivity() {
     private fun CircuitDependencies(
         content: @Composable () -> Unit
     ) {
-        CircuitCompositionLocals(circuitConfig) {
+        CircuitCompositionLocals(circuit) {
             CompositionLocalProvider(LocalRetainedStateRegistry provides continuityRetainedStateRegistry()) {
                 content()
             }
@@ -98,7 +106,8 @@ fun WelcomeToNewm(
         composable(LoginLandingScreen.route) {
             val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
             val circuitNavigator = rememberCircuitNavigator(backstack)
-            val newmNavigator = rememberNewmNavigator(circuitNavigator, navController, onStartHomeActivity)
+            val newmNavigator =
+                rememberNewmNavigator(circuitNavigator, navController, onStartHomeActivity)
             NavigableCircuitContent(newmNavigator, backstack)
         }
         composable(Screen.LoginScreen.route) {

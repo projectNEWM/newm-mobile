@@ -153,12 +153,12 @@ internal fun NewmBottomNavigation(
                     onClick = { onNavigationSelected(Screen.NFTLibraryRoot) },
                 )
                 HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.ProfileViewRoot,
+                    selected = currentRootScreen == Screen.UserAccountViewRoot,
                     iconResId = R.drawable.ic_profile,
-                    labelResId = R.string.profile,
+                    labelResId = R.string.account,
                     selectedIconBrush = LibraryIconGradient,
                     selectedLabelColor = DarkPink,
-                    onClick = { onNavigationSelected(Screen.ProfileViewRoot) },
+                    onClick = { onNavigationSelected(Screen.UserAccountViewRoot) },
                 )
                 HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.HomeRoot,
