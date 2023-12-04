@@ -18,9 +18,9 @@ class MockArtistViewUIModelProviding: ArtistViewUIModelProviding {
 			followSection: SupportButton.followButton(),
 			supportSection: SupportButton.supportButton(),
 			trackSection: CellsSectionModel(cells: [],
-//											MockData.bigSongCells_shuffled(seed: 1, onTap: { id in
-//				actionHandler.songTapped(id: id)
-//			})
+											MockData.bigSongCells_shuffled(seed: 1, onTap: { id in
+				actionHandler.songTapped(id: id)
+			})
 											title: "LATEST TRACKS"
 										   ),
 			topSongs: CellsSectionModel(cells: [] /*MockData.bigSongCells_shuffled(seed: 2, onTap: { id in actionHandler.songTapped(id: id) })*/, title: "TOP SONGS"),

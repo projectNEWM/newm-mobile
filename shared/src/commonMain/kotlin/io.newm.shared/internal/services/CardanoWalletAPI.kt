@@ -6,7 +6,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.serialization.JsonConvertException
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.SerialName
@@ -20,15 +19,10 @@ internal class CardanoWalletAPI(networkClient: NetworkClientFactory) : KoinCompo
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun getWalletNFTs(xpub: String): List<List<LedgerAssetMetadata>> =
-        try {
-            authClient.get("/v1/cardano/nfts") {
-                contentType(ContentType.Application.Json)
-                parameter("xpub", xpub)
-            }.body()
-        } catch(e: JsonConvertException) {
-            print("Error fetching wallet NFTs: ${e.message}")
-            emptyList()
-        }
+        authClient.get("/v1/cardano/nfts") {
+            contentType(ContentType.Application.Json)
+            parameter("xpub", xpub)
+        }.body()
 }
 
 

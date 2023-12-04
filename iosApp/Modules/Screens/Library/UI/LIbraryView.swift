@@ -149,19 +149,6 @@ struct LibraryView: View {
 			.foregroundStyle(.white)
 			.tag(track.id)
 		}
-		//		.swipeActions {
-		//			Button(action: {
-		//
-		//			}, label: {
-		//				VStack(alignment: .center) {
-		//					Asset.Media.download.swiftUIImage
-		//					Text("Download")
-		//						.font(Font.interMedium(ofSize: 12))
-		//						.foregroundStyle(Color.white)
-		//				}
-		//				.padding()
-		//			})
-		//		}
 	}
 	
 	@ViewBuilder
