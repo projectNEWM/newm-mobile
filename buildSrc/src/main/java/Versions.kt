@@ -2,18 +2,18 @@ object Versions {
     const val androidCompileSdk = 34
     const val androidMinSdk = 30
     const val androidTargetSdk = 34
-    const val androidGradlePlugin = "8.1.1"
+    const val androidGradlePlugin = "8.1.4"
 
     const val androidxActivity = "1.5.1"
     const val androidxAppCompat = "1.5.0"
     const val androidxConstraintLayout = "2.1.4"
-    const val androidxCore = "1.9.0"
+    const val androidxCore = "1.12.0"
     const val androidxJUnit = "1.1.3"
     const val androidxLifecycle = "2.5.1"
-    const val androidxNavigation = "2.5.1"
+    const val androidxNavigation = "2.7.5"
     const val androidxSplashScreen = "1.0.1"
-    const val circuit = "0.9.1"
-    const val composeCompiler = "1.5.4"
+    const val circuit = "0.17.0"
+    const val composeCompiler = "1.5.5"
     const val compose = "1.5.4"
     const val media3 = "1.2.0"
     const val composeMaterialIcons = "1.3.0-beta01"

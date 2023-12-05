@@ -1,4 +1,4 @@
-package io.newm.screens.profile.view
+package io.newm.screens.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,15 +13,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ProfileReadOnlyViewModel(
+class UserAccountViewModel(
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow<ProfileViewState>(ProfileViewState.Loading)
+    private var _state = MutableStateFlow<UserAccountState>(UserAccountState.Loading)
 
-    val state: StateFlow<ProfileViewState>
+    val state: StateFlow<UserAccountState>
         get() = _state.asStateFlow()
 
     init {
@@ -29,11 +29,10 @@ class ProfileReadOnlyViewModel(
         viewModelScope.launch {
             val user = userDetailsUseCase.fetchLoggedInUserDetails()
             Logger.d { "NewmAndroid - ProfileViewModel user: $user" }
-            _state.value = ProfileViewState
-                .Content(
-                    profile = user,
-                    isWalletConnected = connectWalletUseCase.isConnected()
-                )
+            _state.value = UserAccountState.Content(
+                profile = user,
+                isWalletConnected = connectWalletUseCase.isConnected()
+            )
         }
     }
 
@@ -46,27 +45,25 @@ class ProfileReadOnlyViewModel(
     fun disconnectWallet() {
         viewModelScope.launch(Dispatchers.IO) {
             connectWalletUseCase.disconnect()
-            _state.value = ProfileViewState
-                .Content(
-                    profile = (state.value as ProfileViewState.Content).profile,
-                    isWalletConnected = false
-                )
+            _state.value = UserAccountState.Content(
+                profile = (state.value as UserAccountState.Content).profile,
+                isWalletConnected = false
+            )
         }
     }
 
     fun connectWallet(xpubKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
             connectWalletUseCase.connect(xpubKey)
-            _state.value = ProfileViewState
-                .Content(
-                    profile = (state.value as ProfileViewState.Content).profile,
-                    isWalletConnected = true
-                )
+            _state.value = UserAccountState.Content(
+                profile = (state.value as UserAccountState.Content).profile,
+                isWalletConnected = true
+            )
         }
     }
 }
 
-sealed class ProfileViewState {
-    object Loading : ProfileViewState()
-    data class Content(val profile: User, val isWalletConnected: Boolean) : ProfileViewState()
+sealed class UserAccountState {
+    data object Loading : UserAccountState()
+    data class Content(val profile: User, val isWalletConnected: Boolean) : UserAccountState()
 }

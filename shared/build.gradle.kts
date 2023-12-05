@@ -6,8 +6,9 @@ plugins {
     id(Plugins.kotlinxSerialization)
     id(Plugins.androidLibrary)
     id(Plugins.sqlDelight)
-    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
-    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-21"
+    id("com.google.devtools.ksp") version "1.9.21-1.0.15"
+    id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-22"
+    id("co.touchlab.skie") version "0.5.6"
 
 }
 
@@ -104,6 +105,24 @@ kotlin {
 //            iosX64Test.dependsOn(this)
 //            iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
+        }
+
+        all {
+            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+        }
+    }
+}
+
+skie {
+    features {
+        group {
+            co.touchlab.skie.configuration.SealedInterop.Enabled(true)
+            // Rename the onEnum() function
+            co.touchlab.skie.configuration.SealedInterop.Function.Name("onEnum")
+            // Change the external argument name for the onEnum() function
+            co.touchlab.skie.configuration.SealedInterop.Function.ArgumentLabel("of")
+            // Change the internal parameter name for the onEnum() function
+            co.touchlab.skie.configuration.SealedInterop.Function.ParameterName("sealed")
         }
     }
 }

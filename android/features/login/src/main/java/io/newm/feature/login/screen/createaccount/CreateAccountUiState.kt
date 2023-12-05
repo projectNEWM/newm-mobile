@@ -5,7 +5,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import io.newm.feature.login.screen.TextFieldState
 
 sealed interface CreateAccountUiState : CircuitUiState {
-    object Loading : CreateAccountUiState
+    data object Loading : CreateAccountUiState
 
     data class EmailAndPasswordUiState(
         val passwordConfirmationState: TextFieldState,
@@ -31,9 +31,9 @@ interface SetNameUiEvent : CircuitUiEvent {
 }
 
 sealed interface EmailVerificationUiEvent : CircuitUiEvent {
-    object Next : EmailVerificationUiEvent
+    data object Next : EmailVerificationUiEvent
 }
 
 sealed interface SignupFormUiEvent : CircuitUiEvent {
-    object Next : SignupFormUiEvent
+    data object Next : SignupFormUiEvent
 }
