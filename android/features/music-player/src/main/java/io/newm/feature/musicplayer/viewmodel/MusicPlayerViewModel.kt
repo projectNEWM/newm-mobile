@@ -44,7 +44,8 @@ class MusicPlayerViewModel(
                                 id = it.id,
                                 title = it.name,
                                 url = it.songUrl,
-                                artist = it.artists.firstOrNull().orEmpty()
+                                artist = it.artists.firstOrNull().orEmpty(),
+                                artworkUri = it.imageUrl,
                             )
                         )
                     ),
