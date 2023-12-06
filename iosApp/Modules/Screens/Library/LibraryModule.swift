@@ -26,7 +26,15 @@ extension LibraryModule {
     public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
 			return MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
-			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
+			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {				
+				func __getAllNFTTracks() async throws -> [NFTTrack] {
+					fatalError()
+				}
+				
+				func getAllNFTTracksFlow() -> shared.SkieSwiftFlow<[NFTTrack]> {
+					fatalError()
+				}
+				
 				func getAllNFTTracks(completionHandler: @escaping ([NFTTrack]?, Error?) -> Void) {
 					completionHandler(NFTTrack.mockTracks, nil)
 				}
@@ -48,6 +56,10 @@ extension LibraryModule {
 		mockResolver.register {
 			return MockConnectWalletUseCase() as ConnectWalletUseCase
 			class MockConnectWalletUseCase: ConnectWalletUseCase {
+				func isConnectedFlow() -> shared.SkieSwiftFlow<KotlinBoolean> {
+					fatalError()
+				}
+				
 				var _isConnected: Bool = false
 				func connect(xpub: String) {
 					ConnectWalletUseCaseProvider().get().connect(xpub: "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl")

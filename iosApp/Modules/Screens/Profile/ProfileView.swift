@@ -45,10 +45,6 @@ public struct ProfileView: View {
 			}
 			.loadingToast(isLoading: $viewModel.isLoading)
 		}
-		//		.sheet(isPresented: $showMore) {
-		//			ProfileMoreView()
-		//				.presentationDetents([.medium])
-		//		}
 		.sheet(isPresented: $showXPubScanner) {
 			XPubScannerView {
 				showXPubScanner = false
@@ -82,14 +78,6 @@ public struct ProfileView: View {
 			Button("Save", action: viewModel.save)
 				.foregroundStyle(Gradients.loginGradient.gradient)
 				.erased
-		} else {
-//			Button {
-//				showMore = true
-//			} label: {
-//				Image(systemName: "ellipsis")
-//					.rotationEffect(.degrees(90))
-//					.foregroundColor(.white)
-//			}
 		}
 	}
 	

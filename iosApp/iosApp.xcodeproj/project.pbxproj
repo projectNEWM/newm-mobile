@@ -56,6 +56,8 @@
 		761ADD442AEA0746001B56CF /* Error+KMMException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761ADD432AEA0746001B56CF /* Error+KMMException.swift */; };
 		761ADD472AEA0ECF001B56CF /* LandingViewModel+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761ADD452AEA0EAA001B56CF /* LandingViewModel+ErrorHandling.swift */; };
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
+		762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
+		762EF9AA2B1F90C7009E08D8 /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
 		76362DA22A11EECD00E78799 /* NEWMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765A35EE29E9052E00B939BD /* NEWMTextField.swift */; };
 		7639E6732AEB347F00254D71 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6722AEB347F00254D71 /* GoogleSignInSwift */; };
@@ -82,8 +84,6 @@
 		7650E15F2B17B46800D686B8 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 7650E15E2B17B46800D686B8 /* Resolver */; };
 		7650E1612B17B51300D686B8 /* ProfileModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7650E1602B17B51300D686B8 /* ProfileModule.swift */; };
 		7650E1622B17B5CC00D686B8 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAFC752A1165D900ACD862 /* ProfileViewModel.swift */; };
-		7650E1632B17B5CC00D686B8 /* ProfileMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A24DF82A402C6A00559460 /* ProfileMoreView.swift */; };
-		7650E1642B17B5CC00D686B8 /* ProfileMoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A24DFA2A402C8B00559460 /* ProfileMoreViewModel.swift */; };
 		7650E1652B17B5CC00D686B8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAFC722A11652000ACD862 /* ProfileView.swift */; };
 		7650E1672B17BA5400D686B8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7650E1662B17BA5400D686B8 /* Kingfisher */; };
 		7650E1682B17C69A00D686B8 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; };
@@ -329,6 +329,13 @@
 			remoteGlobalIDString = 76D01D9D28164B2100305605;
 			remoteInfo = ModuleLinker;
 		};
+		762EF9AB2B1F90C7009E08D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76C76131291F445B0054D2F3;
+			remoteInfo = AudioPlayer;
+		};
 		76325CD828A13BED003836C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -549,6 +556,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		762EF9AD2B1F90C7009E08D8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				762EF9AA2B1F90C7009E08D8 /* AudioPlayer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		764838BB2B0C8CAF00D6905B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -760,8 +778,6 @@
 		76A24DE42A3FE75500559460 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		76A24DE62A3FE76900559460 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		76A24DF42A4026A000559460 /* MockUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserManager.swift; sourceTree = "<group>"; };
-		76A24DF82A402C6A00559460 /* ProfileMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMoreView.swift; sourceTree = "<group>"; };
-		76A24DFA2A402C8B00559460 /* ProfileMoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMoreViewModel.swift; sourceTree = "<group>"; };
 		76AA88E32A37B56600F25113 /* UserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		76AA88E42A37B56600F25113 /* LoginAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
 		76AA88E62A37B56600F25113 /* AuthToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
@@ -975,6 +991,7 @@
 			files = (
 				76DC3A48281A0EA2004D5021 /* Resolver in Frameworks */,
 				76D01DC128164B6E00305605 /* ModuleLinker.framework in Frameworks */,
+				762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,8 +1396,6 @@
 		7650E14C2B17B3FA00D686B8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				76A24DF82A402C6A00559460 /* ProfileMoreView.swift */,
-				76A24DFA2A402C8B00559460 /* ProfileMoreViewModel.swift */,
 				76EAFC722A11652000ACD862 /* ProfileView.swift */,
 				76EAFC752A1165D900ACD862 /* ProfileViewModel.swift */,
 				7650E1602B17B51300D686B8 /* ProfileModule.swift */,
@@ -2255,11 +2270,13 @@
 				76D01D7528164AE700305605 /* Sources */,
 				76D01D7628164AE700305605 /* Frameworks */,
 				76D01D7728164AE700305605 /* Resources */,
+				762EF9AD2B1F90C7009E08D8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				76D01DC428164B6E00305605 /* PBXTargetDependency */,
+				762EF9AC2B1F90C7009E08D8 /* PBXTargetDependency */,
 			);
 			name = Main;
 			packageProductDependencies = (
@@ -2689,9 +2706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7650E1622B17B5CC00D686B8 /* ProfileViewModel.swift in Sources */,
-				7650E1642B17B5CC00D686B8 /* ProfileMoreViewModel.swift in Sources */,
 				7650E1652B17B5CC00D686B8 /* ProfileView.swift in Sources */,
-				7650E1632B17B5CC00D686B8 /* ProfileMoreView.swift in Sources */,
 				7650E1612B17B51300D686B8 /* ProfileModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2838,6 +2853,11 @@
 			platformFilter = ios;
 			target = 76D01D9D28164B2100305605 /* ModuleLinker */;
 			targetProxy = 7618FE2128164E83007573B4 /* PBXContainerItemProxy */;
+		};
+		762EF9AC2B1F90C7009E08D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76C76131291F445B0054D2F3 /* AudioPlayer */;
+			targetProxy = 762EF9AB2B1F90C7009E08D8 /* PBXContainerItemProxy */;
 		};
 		76325CD928A13BED003836C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

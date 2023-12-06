@@ -26,15 +26,9 @@ class DownloadManager: NSObject, ObservableObject {
 	func download(url: URL, progressHandler: @escaping (Double) -> Void) async throws -> URL {
 		try await withCheckedThrowingContinuation { [weak self] continuation in
 			guard let self else { fatalError() }
-			download(url: url) { result in
+			download(url: url, completion: { result in
 				continuation.resume(with: result)
-			} progressHandler: { progress in
-//				print("\n\n\nCANCELLED\n\n\n")
-//				self.downloads[url]?.cancel()
-//				self.handleDownloadCompletion(remoteUrl: url, tmpLocalUrl: nil, error: CancellationError())
-//				return
-				progressHandler(progress)
-			}
+			}, progressHandler: progressHandler)
 		}
 	}
 	
