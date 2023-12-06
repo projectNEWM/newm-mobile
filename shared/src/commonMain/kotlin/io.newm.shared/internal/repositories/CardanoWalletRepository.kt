@@ -1,16 +1,13 @@
 package io.newm.shared.internal.repositories
 
 import co.touchlab.kermit.Logger
-import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.internal.db.NewmDatabaseWrapper
 import io.newm.shared.internal.repositories.parsers.getMusicMetadataVersion
 import io.newm.shared.internal.repositories.parsers.getTrackFromMusicMetadataV1
 import io.newm.shared.internal.repositories.parsers.getTrackFromMusicMetadataV2
 import io.newm.shared.internal.services.CardanoWalletAPI
-import io.newm.shared.internal.services.LedgerAssetMetadata
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
@@ -19,8 +16,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import kotlin.time.Duration
-
 
 internal class CardanoWalletRepository(
     private val service: CardanoWalletAPI,
@@ -80,18 +75,27 @@ internal class CardanoWalletRepository(
     }
 
     private suspend fun fetchNFTTracksFromNetwork(xpub: String): List<NFTTrack> {
-        val walletNFTs = service.getWalletNFTs(xpub)
-        val tracks = walletNFTs.mapNotNull {
-            when (it.getMusicMetadataVersion()) {
-                1 -> it.getTrackFromMusicMetadataV1(logger)
-                2 -> it.getTrackFromMusicMetadataV2(logger)
-                else -> {
-                    logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
+        try {
+            val walletNFTs = service.getWalletNFTs(xpub).toSet()
+            val tracks = walletNFTs.mapNotNull {
+                if (it.isNotEmpty()) {
+                    when (it.getMusicMetadataVersion()) {
+                        1 -> it.getTrackFromMusicMetadataV1(logger)
+                        2 -> it.getTrackFromMusicMetadataV2(logger)
+                        else -> {
+                            logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
+                            null
+                        }
+                    }
+                } else {
                     null
                 }
             }
+            return tracks
+        } catch (e: Exception) {
+            logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
+            throw e
         }
-        return tracks
     }
 
     private fun cacheNFTTracks(nftTracks: List<NFTTrack>) {
