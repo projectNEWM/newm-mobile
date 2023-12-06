@@ -1,6 +1,7 @@
 package io.newm.feature.musicplayer.service
 
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
@@ -8,6 +9,7 @@ import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Playlist
+import io.newm.feature.musicplayer.models.Track
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,8 +38,6 @@ class MusicPlayerImpl(
 
     override val playbackStatus: StateFlow<PlaybackStatus>
         get() = _playbackStatus.asStateFlow()
-
-    private var playlist: Playlist? = null
 
     init {
         player.addListener(object : Player.Listener {
@@ -79,7 +79,7 @@ class MusicPlayerImpl(
                 state = state,
                 position = player.currentPosition,
                 duration = player.duration,
-                track = playlist?.tracks?.get(player.currentMediaItemIndex),
+                track = player.currentMediaItem?.toTrack(),
                 repeatMode = repeatMode
             )
         }
@@ -128,8 +128,6 @@ class MusicPlayerImpl(
 
     override fun setPlaylist(playlist: Playlist, initialTrackIndex: Int) {
         Log.d("MusicPlayer", "Setting playlist with ${playlist.tracks.size} tracks")
-        this.playlist = playlist
-
         player.setMediaItems(playlist.tracks.map { track ->
             MediaItem.Builder()
                 .setUri(track.url)
@@ -138,6 +136,7 @@ class MusicPlayerImpl(
                     MediaMetadata.Builder()
                         .setTitle(track.title)
                         .setArtist(track.artist)
+                        .setArtworkUri(track.artworkUri?.toUri())
                         .build()
                 )
                 .build()
@@ -147,4 +146,14 @@ class MusicPlayerImpl(
     }
 
 
+}
+
+private fun MediaItem.toTrack(): Track {
+    return Track(
+        id = mediaId,
+        title = mediaMetadata.title.toString(),
+        artist = mediaMetadata.artist.toString(),
+        url = requestMetadata.mediaUri.toString(),
+        artworkUri = mediaMetadata.artworkUri?.toString()
+    )
 }

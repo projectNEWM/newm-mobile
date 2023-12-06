@@ -1,18 +1,21 @@
 package io.newm.screens.library
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,13 +33,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import io.newm.core.resources.R
-import io.newm.core.theme.*
+import io.newm.core.theme.CerisePink
+import io.newm.core.theme.Gray100
+import io.newm.core.theme.SteelPink
+import io.newm.core.theme.White
+import io.newm.core.theme.inter
+import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
-import io.newm.feature.musicplayer.MusicPlayerControls
+import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.shared.public.models.NFTTrack
 import org.koin.compose.koinInject
 
@@ -53,7 +61,6 @@ fun NFTLibraryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
             .testTag(TAG_NFT_LIBRARY_SCREEN)
     ) {
         Text(
@@ -67,7 +74,7 @@ fun NFTLibraryScreen(
             )
         )
         when (state) {
-            NFTLibraryState.Loading -> LoadingScreen()
+            NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
             NFTLibraryState.NoWalletFound -> EmptyNFTListScreen(goToProfile)
             is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
             is NFTLibraryState.Content -> {
@@ -87,6 +94,7 @@ fun EmptyNFTListScreen(goToProfile: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 16.dp)
             .testTag(TAG_NFT_LIBRARY_SCREEN),
         contentAlignment = Alignment.Center // This centers the content both horizontally and vertically
     ) {
@@ -113,6 +121,7 @@ fun SongList(songs: List<NFTTrack>, onPlaySong: (NFTTrack) -> Unit) {
         Column(
             modifier = Modifier
                 .weight(1f)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(state = rememberScrollState())
                 .testTag(TAG_NFT_LIBRARY_SCREEN)
         ) {
@@ -128,8 +137,11 @@ fun SongList(songs: List<NFTTrack>, onPlaySong: (NFTTrack) -> Unit) {
                 }
             }
         }
-        // TODO replace with minimal player
-        MusicPlayerControls()
+        MiniPlayer()
+        Spacer(modifier = Modifier
+            .height(2.dp)
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.surface))
     }
 }
 
