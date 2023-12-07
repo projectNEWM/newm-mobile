@@ -21,7 +21,7 @@ class MockArtistRepo: ArtistRepo {
 class ArtistViewModel: ObservableObject {
 	@Published var state: ViewState<(ArtistViewUIModel, ArtistViewActionHandling)> = .loading
 	@Published var route: ArtistRoute?
-	@Injected private var audioPlayer: AudioPlayerImpl
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	@Injected private var artistRepo: ArtistRepo
 	private let artistId: String
 	

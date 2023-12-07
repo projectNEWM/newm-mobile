@@ -4,18 +4,29 @@ import Resolver
 import ModuleLinker
 
 public struct PlayButton: View {
-	@InjectedObject private var audioPlayer: AudioPlayerImpl
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
 	public init() {}
 	
 	public var body: some View {
 		Button {
-			audioPlayer.playbackInfo.isPlaying.toggle()
+			if audioPlayer.isPlaying {
+				audioPlayer.pause()
+			} else {
+				audioPlayer.play()
+			}
 		} label: {
-			audioPlayer.playbackInfo.isPlaying ?
-			Asset.Media.PlayerIcons.pause().resizable() :
-			Asset.Media.PlayerIcons.play().resizable()
+			if audioPlayer.isPlaying {
+				Image(systemName: "pause.fill")
+			} else {
+				Image(systemName: "play.fill")
+			}
 		}
-		.aspectRatio(contentMode: .fit)
+		.tint(.white)
 	}
+}
+
+#Preview {
+	PlayButton()
+		.preferredColorScheme(.dark)
 }

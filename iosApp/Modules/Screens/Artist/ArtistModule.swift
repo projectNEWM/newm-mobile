@@ -4,7 +4,7 @@ import Resolver
 import SwiftUI
 import Models
 
-public final class ArtistModule: ModuleProtocol {
+public final class ArtistModule: Module {
 	public static var shared = ArtistModule()
 	
 	public func registerAllServices() {

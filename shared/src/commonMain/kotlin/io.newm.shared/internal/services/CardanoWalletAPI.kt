@@ -8,11 +8,10 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.public.models.error.KMMException
-import org.koin.core.component.KoinComponent
-import kotlin.coroutines.cancellation.CancellationException
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.koin.core.component.KoinComponent
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class CardanoWalletAPI(networkClient: NetworkClientFactory) : KoinComponent {
 

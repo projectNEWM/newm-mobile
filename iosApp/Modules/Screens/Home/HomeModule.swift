@@ -2,13 +2,18 @@ import Foundation
 import Resolver
 import ModuleLinker
 import SwiftUI
+import shared
 
-public final class HomeModule: ModuleProtocol {
+public final class HomeModule: Module {
 	public static let shared = HomeModule()
 	
 	public func registerAllServices() {
 		Resolver.register {
 			self as HomeViewProviding
+		}
+		
+		Resolver.register {
+			GetCurrentUserUseCaseProvider().get() as GetCurrentUserUseCase
 		}
 	}
 }

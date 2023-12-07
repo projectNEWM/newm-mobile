@@ -3,7 +3,7 @@ import ModuleLinker
 import Resolver
 import SwiftUI
 
-public final class PlaylistModule: ModuleProtocol {
+public final class PlaylistModule: Module {
 	public static var shared = PlaylistModule()
 	
 	public func registerAllServices() {

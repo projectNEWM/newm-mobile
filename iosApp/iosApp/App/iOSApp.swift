@@ -1,8 +1,6 @@
 import SwiftUI
 import Resolver
 import ModuleLinker
-import FacebookCore
-import Data
 import UIKit
 import shared
 
@@ -11,14 +9,13 @@ struct iOSApp: App {
 	let mainViewProvider: MainViewProviding
 	
 	init() {
-		KoinKt.doInitKoin()
+		KoinKt.doInitKoin(enableNetworkLogs: true)
 #if DEBUG
 		UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 #endif
 		mainViewProvider = Resolver.resolve()
 		
 		setUpAppearance()
-		configureFacebook()
 	}
 	
 	var body: some Scene {
@@ -27,22 +24,7 @@ struct iOSApp: App {
 				mainViewProvider.mainView()
 			}
 			.preferredColorScheme(.dark)
-			.onOpenURL { url in
-				ApplicationDelegate.shared.application(
-							UIApplication.shared,
-							open: url,
-							sourceApplication: nil,
-							annotation: [UIApplication.OpenURLOptionsKey.annotation]
-						)
-			}
 		}
-	}
-	
-	private func configureFacebook() {
-		ApplicationDelegate.shared.application(
-			UIApplication.shared,
-			didFinishLaunchingWithOptions: [:]
-		)
 	}
 	
 	private func setUpAppearance() {

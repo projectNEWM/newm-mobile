@@ -167,7 +167,7 @@ extension MarketplaceView {
 }
 
 struct NFTCell: View {
-	@InjectedObject private var audioPlayer: AudioPlayerImpl
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	let model: NFTCellModel
 	
 	var body: some View {

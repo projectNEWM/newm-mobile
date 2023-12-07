@@ -1,8 +1,7 @@
 import Foundation
 import Resolver
-import Data
 import GoogleSignIn
-import FacebookLogin
+//import FacebookLogin
 import AuthenticationServices
 import ModuleLinker
 import shared
@@ -22,7 +21,6 @@ class LandingViewModel: ObservableObject {
 			
 	@Injected private var logInUseCase: any LoginUseCase
 	@Injected private var signUpUseCase: any SignupUseCase
-//	@Injected private var userRepo: any UserManaging
 	private let loginFieldValidator = shared.LoginFieldValidator()
 
 	var nicknameIsValid: Bool {
@@ -74,14 +72,7 @@ class LandingViewModel: ObservableObject {
 	}
 	
 	func resetPassword() {
-//		Task {
-//			do {
-//				try await userRepo.resetPassword(email: email, password: password, confirmPassword: confirmPassword, authCode: confirmationCode)
-//				try await logInUseCase.logIn(email: email, password: password)
-//			} catch {
-//		handleError(error)
-//			}
-//		}
+		//TODO:
 	}
 	
 	func createAccount() {
@@ -127,32 +118,6 @@ class LandingViewModel: ObservableObject {
 		navPath = []
 	}
 		
-	func handleFacebookLogin(result: Result<LoginManagerLoginResult, Error>) {
-		switch result {
-		case .success(let loginResult):
-			guard let token = loginResult.token?.tokenString else {
-				//TODO: localize
-				self.error = "Failed to log in with Facebook"
-				return
-			}
-			isLoading = true
-			Task {
-				do {
-					try await logInUseCase.logInWithFacebook(accessToken: token)
-				} catch {
-					self.error = error.localizedDescription
-				}
-				isLoading = false
-			}
-		case .failure(let error):
-			handleError(error)
-		}
-	}
-	
-	func handleFacebookLogout() {
-		logInUseCase.logOut()
-	}
-	
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
 		guard let idToken = result?.user.accessToken.tokenString else {
 			//TODO: localize

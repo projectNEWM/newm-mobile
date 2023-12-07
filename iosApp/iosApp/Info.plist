@@ -30,12 +30,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>FacebookAppID</key>
-	<string>4171461756290307</string>
-	<key>FacebookClientToken</key>
-	<string>$(FACEBOOK_CLIENT_TOKEN)</string>
-	<key>FacebookDisplayName</key>
-	<string>NEWM</string>
 	<key>GIDClientID</key>
 	<string>489785482974-hvron45nt22d0nb54qrplksne6202e19.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -44,6 +38,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow camera access to scan your xPub QR code.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>DMSerifText-Italic.ttf</string>

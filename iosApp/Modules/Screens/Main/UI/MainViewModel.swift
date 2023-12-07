@@ -2,21 +2,19 @@ import Foundation
 import Combine
 import ModuleLinker
 import Resolver
-import Data
-import API
 import shared
 
 @MainActor
 class MainViewModel: ObservableObject {
-	@Published var selectedTab: MainViewModelTab = .home
+	@Published var selectedTab: MainViewModelTab = .library
 	//This value isn't used, it's just for triggering a view refresh.
 	@Published var updateLoginState: Bool = false
-	@Injected private var loginUseCase: LoginUseCase
+	@Injected private var loginUseCase: UserSessionUseCase
 	
 	private var cancels = Set<AnyCancellable>()
 
 	var shouldShowLogin: Bool {
-		loginUseCase.userIsLoggedIn == false
+		loginUseCase.isLoggedIn() == false
 	}
 	
 	public init() {

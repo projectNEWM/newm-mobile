@@ -5,7 +5,7 @@ import AudioPlayer
 
 @MainActor
 class HomeViewModelTests: XCTestCase {
-	@Injected var audioPlayer: AudioPlayerImpl
+	@InjectedObject var audioPlayer: VLCAudioPlayer
 	
 	func testHomeViewModel() {
 		let vm = HomeViewModel()

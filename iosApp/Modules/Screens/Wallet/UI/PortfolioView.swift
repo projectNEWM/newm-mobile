@@ -7,7 +7,7 @@ import AudioPlayer
 
 struct PortfolioView: View {
 	let model: PortfolioSectionModel
-	@InjectedObject private var audioPlayer: AudioPlayerImpl
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
 	var body: some View {
 		LazyVStack(alignment: .trailing) {

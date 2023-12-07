@@ -4,155 +4,157 @@ import Resolver
 import SharedUI
 import Fonts
 import AudioPlayer
-import Models
+import shared
+import Kingfisher
+import Colors
 
 public struct NowPlayingView: View {
 	typealias Seconds = Int
 	
-	@Injected private var tipViewProvider: TipViewProviding
-	@InjectedObject private var audioPlayer: AudioPlayerImpl
-	
-	var song: Song! { audioPlayer.song }
-	
-	@State var lyricsOffsetPercentage: Float = 0
-	@State var showTipping: Bool = false
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
+		
 	@State var error: Error?
 	
 	public var body: some View {
-		VStack {
-			titleView
-			Spacer()
-			playbackCounter
-			controlStrip
-			tipButton.frame(width: 40, height: 40).padding(.top, 30)
-		}
-		.padding()
-		.overlay {
-			if showTipping {
-				tippingOverlay
+		ZStack {
+			VStack {
+				Spacer()
+				title
+				controls
 			}
+			.padding()
 		}
-		.navigationTitle(String.nowPlayingTitle)
+		.background(background)
 		.backButton()
 	}
 }
 
 //MARK: Subviews
 extension NowPlayingView {
-	private var playbackCounter: some View {
-		PlaybackCounter(
-			currentTime: audioPlayer.playbackInfo.currentTime.playbackTimeString,
-			totalTime: audioPlayer.playbackInfo.totalTime.playbackTimeString,
-			percentComplete: audioPlayer.playbackInfo.percentPlayed,
-			artistImageUrl: song.artist.image
-		).aspectRatio(1, contentMode: .fit)
+	@ViewBuilder
+	private var background: some View {
+		KFImage(audioPlayer.artworkUrl)
+			.resizable(resizingMode: .stretch)
+			.scaledToFill()
 	}
 	
-	private var titleView: some View {
-		HStack {
-			favoriteButton
-			Spacer()
-			VStack(alignment: .center) {
-				Text(song.title).font(.newmTitle1).padding(.bottom, 4)
-				Text(song.artist.name)
-			}.multilineTextAlignment(.center)
-			Spacer()
-			shareButton
+	@ViewBuilder
+	private var title: some View {
+		VStack(alignment: .center) {
+			Text(audioPlayer.title ?? "--")
+				.font(Font.ralewayExtraBold(ofSize: 24))
+			Text(audioPlayer.artist ?? "--")
+				.font(Font.interMedium(ofSize: 14))
 		}
 	}
 	
-	private var controlStrip: some View {
-		HStack(alignment: .top) {
-			shuffleButton
-			Spacer()
-			prevButton.padding(.top, 50)
-			Spacer()
-			PlayButton().frame(width: 80, height: 80).padding(.top, 50)
-			Spacer()
-			actionButton.padding(.top, 50)
-			Spacer()
-			repeatButton
+	private var playbackTimeBinding: Binding<Float> {
+		Binding<Float>(get: {
+			Float(audioPlayer.currentTime ?? 0)
+		}, set: { playbackTime in
+			audioPlayer.seek(toTime: Double(playbackTime))
+		})
+	}
+	
+	@ViewBuilder
+	fileprivate var controls: some View {
+		VStack(spacing: 0) {
+			Slider(value: playbackTimeBinding, in: 0.0...Float(audioPlayer.duration ?? 300))
+				.tint(Gradients.loginGradient.gradient)
+				.padding(.bottom, -13)
+				.zIndex(1)
+			
+			VStack {
+				HStack {
+					Text("\(audioPlayer.currentTime.playbackTimeString)")
+					Spacer()
+					Text("\(audioPlayer.duration.playbackTimeString)")
+				}
+				.foregroundStyle(try! Color(hex: "8F8F91"))
+				.font(Font.inter(ofSize: 12))
+				
+				Spacer()
+				
+				HStack {
+					repeatButton
+					Spacer()
+					prevButton
+					playButton
+					nextButton
+					Spacer()
+					shuffleButton
+				}
+				.padding()
+			}
+			.padding()
+			.background(Color.black)
+			.clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 8, bottomTrailing: 8), style: .continuous))
+			.frame(height: 108)
 		}
 	}
 	
+	@ViewBuilder
+	private var playButton: some View {
+		PlayButton().padding([.trailing, .leading], 26)
+			.scaleEffect(CGSize(width: 1.5, height: 1.5))
+	}
+	
+	@ViewBuilder
 	private var shuffleButton: some View {
 		Button {
-			audioPlayer.playbackInfo.shuffle.toggle()
+			audioPlayer.shuffle.toggle()
 		} label: {
-			if audioPlayer.playbackInfo.shuffle == true {
-				Asset.Media.PlayerIcons.shuffleSelected()
+			if audioPlayer.shuffle {
+				Image(systemName: "shuffle")
+					.foregroundStyle(Gradients.primaryPrimary)
 			} else {
-				Asset.Media.PlayerIcons.shuffle()
+				Image(systemName: "shuffle")
 			}
 		}
+		.tint(audioPlayer.shuffle ? NEWMColor.pink() : .white)
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 	
+	@ViewBuilder
 	private var prevButton: some View {
 		Button {
 			audioPlayer.prev()
 		} label: {
-			Asset.Media.PlayerIcons.previous()
+			Image(systemName: "backward.end.fill")
+				.tint(.white)
 		}
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 	
-	private var actionButton: some View {
+	@ViewBuilder
+	private var nextButton: some View {
 		Button {
 			audioPlayer.next()
 		} label: {
-			Asset.Media.PlayerIcons.next()
+			Image(systemName: "forward.end.fill")
+				.tint(.white)
 		}
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 	
+	@ViewBuilder
 	private var repeatButton: some View {
 		Button {
 			audioPlayer.cycleRepeatMode()
 		} label: {
-			switch audioPlayer.playbackInfo.repeatMode {
+			switch audioPlayer.repeatMode {
 			case .all:
-				Asset.Media.PlayerIcons.Repeat.repeatFill()
+				Image(systemName: "repeat")
+					.tint(Gradients.primaryPrimary)
 			case .one:
-				Asset.Media.PlayerIcons.Repeat.repeatOneFill()
+				Image(systemName: "repeat.1")
+					.tint(Gradients.primaryPrimary)
 			case .none:
-				Asset.Media.PlayerIcons.Repeat.repeat()
+				Image(systemName: "repeat")
+					.tint(.white)
 			}
 		}
-		.frame(width: 48, height: 48)
-	}
-	
-	private var favoriteButton: some View {
-		Button {
-			audioPlayer.song?.favorited.toggle()
-		} label: {
-			if song.favorited {
-				Asset.Media.PlayerIcons.heartSelected()
-			} else {
-				Asset.Media.PlayerIcons.heart()
-			}
-		}
-	}
-	
-	private var shareButton: some View {
-		Button {
-			//TODO:
-		} label: {
-			Asset.Media.PlayerIcons.share()
-		}
-	}
-	
-	private var tipButton: some View {
-		Button {
-			showTipping = true
-		} label: {
-			Asset.Media.PlayerIcons.heartAdd().resizable()
-		}
-	}
-	
-	private var tippingOverlay: some View {
-		tipViewProvider.tipView { tip in
-			withAnimation {
-				showTipping = false
-			}
-		}
+		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 }
 
@@ -160,24 +162,24 @@ private extension NowPlayingView {
 	nonisolated static var playbackTimePlaceholder: String { "--:--" }
 }
 
-extension Int {
-	private static let formatter = DateComponentsFormatter()
-	
-	var playbackTimeString: String {
-		Int.formatter.allowedUnits = self > 3600 ? [.hour, .minute, .second] : [.minute, .second]
-		Int.formatter.zeroFormattingBehavior = .pad
-		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
-			//TODO:MU: Uncomment when KMM module added back
-			return NowPlayingView.playbackTimePlaceholder
-		}
-		
-		return playbackTime
+struct NowPlayingView_Previews: PreviewProvider {
+	static var previews: some View {
+		AudioPlayerModule.shared.registerAllServices()
+		@InjectedObject var audioPlayer: VLCAudioPlayer
+		return Group {
+			NowPlayingView()
+//				.preferredColorScheme(.dark)
+			NowPlayingView().controls
+		}.padding()
 	}
 }
 
-struct NowPlayingView_Previews: PreviewProvider {
-	static var previews: some View {
-		NowPlayingView()
-			.preferredColorScheme(.dark)
+func url(for testImage: ImageAsset) -> URL {
+	guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {
+		fatalError()
 	}
+	
+	let pngData = testImage.image.pngData()
+	do { try pngData?.write(to: imageURL) } catch { }
+	return imageURL
 }

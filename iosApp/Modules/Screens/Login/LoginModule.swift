@@ -4,7 +4,7 @@ import Resolver
 import SwiftUI
 import shared
 
-public final class LoginModule: ModuleProtocol {
+public final class LoginModule: Module {
 	public static var shared = LoginModule()
 	
 	public func registerAllServices() {

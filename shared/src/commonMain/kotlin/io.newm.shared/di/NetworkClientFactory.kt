@@ -1,26 +1,35 @@
 package io.newm.shared.di
 
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.engine.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.api.*
-import io.ktor.client.plugins.auth.*
-import io.ktor.client.plugins.auth.providers.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.plugins.api.createClientPlugin
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.get
+import io.ktor.http.HttpHeaders
+import io.ktor.http.encodedPath
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.CancellationException
 import io.newm.shared.internal.HttpRoutes
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.login.models.LoginResponse
+import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.serialization.json.Json
 
 internal class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
+    //TODO: Remove this use case, it shouldn't be referenced from the network layer.
+    private val logOutUseCase: UserSessionUseCase,
     private val tokenManager: TokenManager,
     private val enableNetworkLogs: Boolean,
 ) {
@@ -69,6 +78,7 @@ internal class NetworkClientFactory(
         }
     }
 
+    @Throws(KMMException::class, CancellationException::class)
     private fun createAuthHttpClient(): HttpClient {
         logger.d { "NewmKMM - createAuthHttpClient" }
         return HttpClient(httpClientEngine) {
@@ -95,7 +105,6 @@ internal class NetworkClientFactory(
                         )
                     }
 
-
                     refreshTokens {
                         try {
                             val renewTokens = client.get( "/v1/auth/refresh") {
@@ -111,12 +120,14 @@ internal class NetworkClientFactory(
                                     refreshToken = tokenManager.getRefreshToken()!!
                                 )
                             } else {
+                                logOutUseCase.logout()
                                 logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
-                                throw Exception("Invalid Token response")
+                                throw KMMException("Invalid Token response")
                             }
                         } catch (e: Exception) {
+                            logOutUseCase.logout()
                             logger.d { "NewmKMM - refreshTokens: Exception: $e" }
-                            null
+                            throw KMMException("Refresh token failed: $e")
                         }
                     }
                 }

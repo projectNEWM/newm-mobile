@@ -12,7 +12,7 @@ class HomeViewModel: ObservableObject {
 	@Published var shouldShowGreeting: Bool = true
 	
 	private var uiModelProvider: HomeViewUIModelProviding { MockHomeViewUIModelProvider(actionHandler: self) }
-	@Injected private var audioPlayer: AudioPlayerImpl
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 
 	init() {
 		Task {

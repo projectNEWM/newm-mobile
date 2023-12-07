@@ -3,7 +3,7 @@ import ModuleLinker
 import Resolver
 import SwiftUI
 
-public final class NowPlayingModule: ModuleProtocol {
+public final class NowPlayingModule: Module {
 	public static var shared = NowPlayingModule()
 	
 	public func registerAllServices() {
