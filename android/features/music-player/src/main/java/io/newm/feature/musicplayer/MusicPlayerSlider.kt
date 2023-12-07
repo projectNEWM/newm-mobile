@@ -166,7 +166,8 @@ fun MusicPlayerSlider(
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    colors: SliderColors = SliderDefaults.colors()
+    colors: SliderColors = SliderDefaults.colors(),
+    allowScrub : Boolean = true,
 ) {
     require(steps >= 0) { "steps should be >= 0" }
     val onValueChangeState = rememberUpdatedState(onValueChange)
@@ -261,7 +262,8 @@ fun MusicPlayerSlider(
             colors,
             maxPx - minPx,
             interactionSource,
-            modifier = press.then(drag)
+            modifier = press.then(drag),
+            showThumb = allowScrub,
         )
     }
 }
@@ -406,7 +408,8 @@ private fun SliderImpl(
     colors: SliderColors,
     width: Float,
     interactionSource: MutableInteractionSource,
-    modifier: Modifier
+    modifier: Modifier,
+    showThumb: Boolean
 ) {
     Box(modifier.then(DefaultSliderConstraints)) {
         val trackStrokeWidth: Float
@@ -414,7 +417,7 @@ private fun SliderImpl(
         val widthDp: Dp
         with(LocalDensity.current) {
             trackStrokeWidth = TrackHeight.toPx()
-            thumbPx = ThumbRadius.toPx()
+            thumbPx = if(showThumb) ThumbRadius.toPx() else 0f
             widthDp = width.toDp()
         }
 
@@ -431,7 +434,10 @@ private fun SliderImpl(
             thumbPx,
             trackStrokeWidth
         )
-        SliderThumb(Modifier, offset, interactionSource, colors, enabled, thumbSize)
+
+        if(showThumb) {
+            SliderThumb(Modifier, offset, interactionSource, colors, enabled, thumbSize)
+        }
     }
 }
 

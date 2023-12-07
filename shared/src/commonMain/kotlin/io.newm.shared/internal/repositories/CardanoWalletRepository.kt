@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
-
 internal class CardanoWalletRepository(
     private val service: CardanoWalletAPI,
     private val scope: CoroutineScope,
@@ -76,18 +75,27 @@ internal class CardanoWalletRepository(
     }
 
     private suspend fun fetchNFTTracksFromNetwork(xpub: String): List<NFTTrack> {
-        val walletNFTs = service.getWalletNFTs(xpub)
-        val tracks = walletNFTs.mapNotNull {
-            when (it.getMusicMetadataVersion()) {
-                1 -> it.getTrackFromMusicMetadataV1(logger)
-                2 -> it.getTrackFromMusicMetadataV2(logger)
-                else -> {
-                    logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
+        try {
+            val walletNFTs = service.getWalletNFTs(xpub).toSet()
+            val tracks = walletNFTs.mapNotNull {
+                if (it.isNotEmpty()) {
+                    when (it.getMusicMetadataVersion()) {
+                        1 -> it.getTrackFromMusicMetadataV1(logger)
+                        2 -> it.getTrackFromMusicMetadataV2(logger)
+                        else -> {
+                            logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
+                            null
+                        }
+                    }
+                } else {
                     null
                 }
             }
+            return tracks
+        } catch (e: Exception) {
+            logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
+            throw e
         }
-        return tracks
     }
 
     private fun cacheNFTTracks(nftTracks: List<NFTTrack>) {
