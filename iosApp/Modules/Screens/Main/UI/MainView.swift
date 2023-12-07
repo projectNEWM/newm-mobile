@@ -15,6 +15,7 @@ public struct MainView: View {
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
 	@State var route: MainViewRoute?
+	@State var showDebugView: Bool = false
 	
 	public var body: some View {
 		GeometryReader { geometry in
@@ -36,6 +37,9 @@ public struct MainView: View {
 			}
 		}
 		.animation(.easeInOut, value: viewModel.shouldShowLogin)
+		.onShake {
+			route = .debug
+		}
 	}
 	
 	@ViewBuilder
@@ -69,6 +73,7 @@ public struct MainView: View {
 	private var sheetView: some View {
 		switch route {
 		case .nowPlaying: nowPlayingViewProvider.nowPlayingView()
+		case .debug: DebugView()
 		default: EmptyView()
 		}
 	}
