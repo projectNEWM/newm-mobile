@@ -4,6 +4,7 @@ import ModuleLinker
 import AudioPlayer
 import SharedUI
 import Profile
+import SentrySwiftUI
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
@@ -81,10 +82,10 @@ public struct MainView: View {
 	private var tabProviders: [TabViewProvider] {
 		[
 			TabViewProvider(image: Image(MainViewModelTab.library), tab: MainViewModelTab.library, tint: try! Color(hex: "DC3CAA")) {
-				libraryViewProvider.libraryView()
+				libraryViewProvider.libraryView().sentryTrace("LibraryView").erased
 			},
 			TabViewProvider(image: Image(MainViewModelTab.profile), tab: MainViewModelTab.profile, tint: try! Color(hex: "FF9637")) {
-				ProfileView().erased
+				ProfileView().sentryTrace("ProfileView").erased
 			}
 		]
 	}

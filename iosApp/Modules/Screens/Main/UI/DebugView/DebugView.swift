@@ -2,15 +2,14 @@ import Foundation
 import SwiftUI
 import shared
 import Resolver
+import ModuleLinker
 
 //TODO: remove from app store builds
 struct DebugView: View {
-	@Injected private var logOutUseCase: UserSessionUseCase
-	
 	var body: some View {
 		List {
 			Button {
-				logOutUseCase.logout()
+				Resolver.resolve(UserSessionUseCase.self).logout()
 			} label: {
 				Text("Log out")
 			}
@@ -21,9 +20,15 @@ struct DebugView: View {
 			
 			Button {
 				fatalError("Debug view crash")
-			}, label: {
+			} label: {
 				Text("Crash")
-			})
+			}
+			
+			Button {
+				Resolver.resolve(ErrorReporting.self).logError("Test error")
+			} label: {
+				Text("Send test sentry error")
+			}
 		}
 	}
 }
