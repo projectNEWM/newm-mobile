@@ -4,7 +4,6 @@ import ModuleLinker
 import shared
 
 public class FileManagerService: ObservableObject {
-	public typealias CompletionHandler = (Result<URL, Error>) -> Void
 	public typealias ProgressHandler = (Double) -> Void
 
 	private let downloadManager = DownloadManager()

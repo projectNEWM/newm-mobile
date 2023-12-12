@@ -12,8 +12,6 @@ public struct NowPlayingView: View {
 	typealias Seconds = Int
 	
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
-		
-	@State var error: Error?
 	
 	public var body: some View {
 		ZStack {

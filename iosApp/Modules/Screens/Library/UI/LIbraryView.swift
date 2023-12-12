@@ -153,11 +153,13 @@ struct LibraryView: View {
 	
 	@ViewBuilder
 	private func progressView(for track: NFTTrack) -> some View {
-		guard let progress = audioPlayer.loadingProgress[track] else { return EmptyView().erased }
-		return Gauge(value: progress, in: 0...1) { }
-			.gaugeStyle(.accessoryCircularCapacity)
-			.scaleEffect(0.5)
-			.erased
+		if let progress = audioPlayer.loadingProgress[track] {
+			Gauge(value: progress, in: 0...1) { }
+				.gaugeStyle(.accessoryCircularCapacity)
+				.scaleEffect(0.5)
+		} else {
+			EmptyView()
+		}
 	}
 }
 

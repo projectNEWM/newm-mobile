@@ -1,5 +1,7 @@
 import Foundation
 import Combine
+import ModuleLinker
+import Resolver
 
 class DownloadManager: NSObject, ObservableObject {
 	@Published private(set) var downloads: [URL: URLSessionDownloadTask] = [:]
@@ -7,6 +9,8 @@ class DownloadManager: NSObject, ObservableObject {
 	
 	private var urlSession: URLSession!
 	private var downloadCompletionHandlers: [URL: (Result<URL, Error>) -> Void] = [:]
+	
+	@Injected private var logger: any ErrorReporting
 	
 	override init() {
 		super.init()
@@ -39,12 +43,15 @@ class DownloadManager: NSObject, ObservableObject {
 		}
 		
 		if let error = error {
+			logger.logError(error)
 			downloadCompletionHandlers[remoteUrl]?(.failure(error))
 			return
 		}
 		
 		guard let tmpLocalUrl else {
-			downloadCompletionHandlers[remoteUrl]?(.failure(URLError(.cannotCreateFile)))
+			let error = URLError(.cannotCreateFile)
+			logger.logError(error)
+			downloadCompletionHandlers[remoteUrl]?(.failure(error))
 			return
 		}
 		
@@ -53,6 +60,7 @@ class DownloadManager: NSObject, ObservableObject {
 			try FileManager.default.moveItem(at: tmpLocalUrl, to: persistentUrl)
 			downloadCompletionHandlers[remoteUrl]?(.success(persistentUrl))
 		} catch {
+			logger.logError(error)
 			downloadCompletionHandlers[remoteUrl]?(.failure(error))
 		}
 	}
@@ -67,6 +75,6 @@ extension DownloadManager: URLSessionDownloadDelegate {
 	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
 		guard let url = downloadTask.originalRequest?.url else { return }
 		let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
-		self.progressHandlers[url]?(progress)
+		progressHandlers[url]?(progress)
 	}
 }

@@ -19,6 +19,8 @@
 		760808C62B279E980015A2ED /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		760808CC2B279F8D0015A2ED /* ErrorReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808CB2B279F8D0015A2ED /* ErrorReporting.swift */; };
 		760808CE2B279FD10015A2ED /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760808CD2B279FD10015A2ED /* Resolver */; };
+		760808CF2B27A6550015A2ED /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
+		760808D02B27A6550015A2ED /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		760C2C4E281653C00030ACF4 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760C2C4D281653C00030ACF4 /* Resolver */; };
 		760C2C6B281658DD0030ACF4 /* FontModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C2C62281657AF0030ACF4 /* FontModule.swift */; };
 		760C2C6C281658DD0030ACF4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7618FD3F28164CED007573B4 /* LICENSE.txt */; };
@@ -560,6 +562,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		760808D12B27A6550015A2ED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				760808D02B27A6550015A2ED /* shared.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -905,6 +918,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760808CF2B27A6550015A2ED /* shared.xcframework in Frameworks */,
 				760808CE2B279FD10015A2ED /* Resolver in Frameworks */,
 				760808B82B279D5B0015A2ED /* Sentry-Dynamic in Frameworks */,
 				760808C62B279E980015A2ED /* ModuleLinker.framework in Frameworks */,
@@ -2098,6 +2112,7 @@
 				760808A52B2799D20015A2ED /* Sources */,
 				760808A62B2799D20015A2ED /* Frameworks */,
 				760808A72B2799D20015A2ED /* Resources */,
+				760808D12B27A6550015A2ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
