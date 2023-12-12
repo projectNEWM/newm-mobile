@@ -7,7 +7,11 @@ public struct XPubScannerView: View {
 	private let completion: () -> ()
 	@State private var manuallyEnteredXPub: String = ""
 	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
-	@State private var error: Error?
+	@State private var error: Error? {
+		didSet {
+			error.flatMap(Resolver.resolve(ErrorReporting.self).logError)
+		}
+	}
 	
 	public init(completion: @escaping () -> Void) {
 		self.completion = completion

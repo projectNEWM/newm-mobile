@@ -4,6 +4,7 @@ import ModuleLinker
 import AudioPlayer
 import SharedUI
 import Profile
+import SentrySwiftUI
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
@@ -15,6 +16,7 @@ public struct MainView: View {
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
 	@State var route: MainViewRoute?
+	@State var showDebugView: Bool = false
 	
 	public var body: some View {
 		GeometryReader { geometry in
@@ -36,6 +38,9 @@ public struct MainView: View {
 			}
 		}
 		.animation(.easeInOut, value: viewModel.shouldShowLogin)
+		.onShake {
+			route = .debug
+		}
 	}
 	
 	@ViewBuilder
@@ -69,6 +74,7 @@ public struct MainView: View {
 	private var sheetView: some View {
 		switch route {
 		case .nowPlaying: nowPlayingViewProvider.nowPlayingView()
+		case .debug: DebugView()
 		default: EmptyView()
 		}
 	}
@@ -76,10 +82,10 @@ public struct MainView: View {
 	private var tabProviders: [TabViewProvider] {
 		[
 			TabViewProvider(image: Image(MainViewModelTab.library), tab: MainViewModelTab.library, tint: try! Color(hex: "DC3CAA")) {
-				libraryViewProvider.libraryView()
+				libraryViewProvider.libraryView().sentryTrace("LibraryView").erased
 			},
 			TabViewProvider(image: Image(MainViewModelTab.profile), tab: MainViewModelTab.profile, tint: try! Color(hex: "FF9637")) {
-				ProfileView().erased
+				ProfileView().sentryTrace("ProfileView").erased
 			}
 		]
 	}

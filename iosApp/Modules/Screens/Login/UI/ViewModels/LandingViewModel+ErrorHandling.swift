@@ -1,8 +1,11 @@
 import Foundation
 import shared
+import ModuleLinker
+import Resolver
 
 extension LandingViewModel {
 	func handleError(_ error: Error) {
+		Resolver.resolve(ErrorReporting.self).logError(error)
 		if let error = error.kmmException {
 			handleKotlinError(error)
 		} else {
