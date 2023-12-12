@@ -3,6 +3,7 @@ import Resolver
 import ModuleLinker
 import Combine
 import shared
+import AudioPlayer
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
@@ -11,7 +12,8 @@ final class ProfileViewModel: ObservableObject {
 	
 	@Published var user: User?
 	
-	var nickName: String { (user?.nickname).emptyIfNil }
+	var fullName: String { "\((user?.firstName).emptyIfNil) \((user?.lastName).emptyIfNil)"  }
+	var nickname: String { "@\((user?.nickname).emptyIfNil)" }
 	var email: String { (user?.email).emptyIfNil }
 	@Published var currentPassword: String = ""
 	@Published var newPassword: String = ""
@@ -65,7 +67,7 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	func loadUser() async {
-//		// don't set loading state here, since this might be called from the view's "refreshable"
+		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
 			user = try await getCurrentUser.fetchLoggedInUserDetails()
 		} catch {
@@ -93,5 +95,8 @@ final class ProfileViewModel: ObservableObject {
 	
 	func disconnectWallet() {
 		connectWalletUseCase.disconnect()
+		let audioPlayer = Resolver.resolve(VLCAudioPlayer.self)
+		audioPlayer.setPlayQueue([])
+		audioPlayer.removeDownloadedSongs()
 	}
 }

@@ -19,6 +19,11 @@ public class VLCAudioPlayer: ObservableObject {
 			if shuffle {
 				shuffledPlayQueue = playQueue.shuffled()
 			}
+			if playQueueIsEmpty {
+				mediaPlayer.stop()
+				mediaPlayer.media = nil
+				currentQueueIndex = nil
+			}
 		}
 	}
 	private var shuffledPlayQueue: [NFTTrack] = []
@@ -166,6 +171,10 @@ public class VLCAudioPlayer: ObservableObject {
 				return .all
 			}
 		}()
+	}
+	
+	public func removeDownloadedSongs() {
+		fileManager.clearFiles()
 	}
 	
 	fileprivate func updateData(_ aNotification: Foundation.Notification) {

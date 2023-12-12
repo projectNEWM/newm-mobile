@@ -4,6 +4,7 @@ import Resolver
 import ModuleLinker
 import SharedUI
 import shared
+import AudioPlayer
 
 @MainActor
 class LibraryViewModel: ObservableObject {
@@ -19,7 +20,8 @@ class LibraryViewModel: ObservableObject {
 	
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
 	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
-	
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
+
 	init() {
 		walletIsConnected = connectWalletXPubUseCase.isConnected()
 		
@@ -36,6 +38,12 @@ class LibraryViewModel: ObservableObject {
 				}
 			}
 			.store(in: &cancels)
+		
+		audioPlayer.bind(to: self, storedIn: &cancels)
+		
+		Task {
+			await refresh()
+		}
 	}
 	
 	var filteredNFTTracks: [NFTTrack] {
@@ -47,8 +55,15 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	
+	var showNoSongsMessage: Bool {
+		tracks.isEmpty || walletIsConnected == false
+	}
+	
 	func refresh() async {
 		self.error = nil
+		
+		guard walletIsConnected else { return }
+		
 		do {
 			let tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 			self.tracks = tracks
@@ -70,5 +85,24 @@ class LibraryViewModel: ObservableObject {
 	
 	func connectWallet() {
 		showXPubScanner = true
+	}
+	
+	func trackTapped(_ track: NFTTrack) {
+		if audioPlayer.playQueueIsEmpty {
+			audioPlayer.setPlayQueue(tracks, playFirstTrack: false)
+		}
+		audioPlayer.seek(toTrack: track)
+	}
+	
+	func loadingProgress(for track: NFTTrack) -> Double? {
+		audioPlayer.loadingProgress[track]
+	}
+	
+	func trackIsPlaying(_ track: NFTTrack) -> Bool {
+		audioPlayer.trackIsPlaying(track)
+	}
+	
+	func trackIsDownloaded(_ track: NFTTrack) -> Bool {
+		audioPlayer.trackIsDownloaded(track)
 	}
 }

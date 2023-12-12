@@ -4,6 +4,7 @@ import ModuleLinker
 import AudioPlayer
 import SharedUI
 import Profile
+import Colors
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
@@ -14,7 +15,9 @@ public struct MainView: View {
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
-	@State var route: MainViewRoute?
+	@State private var route: MainViewRoute?
+	@State private var showDebugView: Bool = false
+	@State private var tab: MainViewModelTab = .library
 	
 	public var body: some View {
 		GeometryReader { geometry in
@@ -33,6 +36,7 @@ public struct MainView: View {
 							.transition(.move(edge: .bottom))
 					}
 					.transition(.move(edge: .bottom))
+					.tint(tabTint)
 			}
 		}
 		.animation(.easeInOut, value: viewModel.shouldShowLogin)
@@ -77,11 +81,24 @@ public struct MainView: View {
 		[
 			TabViewProvider(image: Image(MainViewModelTab.library), tab: MainViewModelTab.library, tint: try! Color(hex: "DC3CAA")) {
 				libraryViewProvider.libraryView()
+					.onAppear() {
+						tab = .library
+					}.erased
 			},
 			TabViewProvider(image: Image(MainViewModelTab.profile), tab: MainViewModelTab.profile, tint: try! Color(hex: "FF9637")) {
-				ProfileView().erased
+				ProfileView()
+					.onAppear() {
+						tab = .profile
+					}.erased
 			}
 		]
+	}
+	
+	private var tabTint: Color {
+		switch tab {
+		case .library: return try! Color(hex: "DC3CAA")
+		case .profile: return try! Color(hex: "FF9637")
+		}
 	}
 }
 
