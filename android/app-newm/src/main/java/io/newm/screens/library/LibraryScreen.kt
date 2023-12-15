@@ -56,6 +56,7 @@ fun LibraryScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp),
+                onQueryChange = { /*TODO*/ }
             )
         }
         SavedSongList(savedSongModels, onSongPlay)

@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 
 class ProfileEditViewModel(
     private val userDetailsUseCase: UserDetailsUseCase,
-    private val logout: Logout
 ) : ViewModel() {
 
     private var _state = MutableStateFlow<ProfileState>(ProfileState.Loading)
@@ -30,16 +29,9 @@ class ProfileEditViewModel(
             _state.value = ProfileState.Content(profile = user)
         }
     }
-
-    fun logout() {
-        viewModelScope.launch(Dispatchers.IO) {
-            logout.call()
-        }
-    }
-
 }
 
 sealed class ProfileState {
-    object Loading : ProfileState()
+    data object Loading : ProfileState()
     data class Content(val profile: User) : ProfileState()
 }

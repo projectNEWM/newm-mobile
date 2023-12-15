@@ -5,11 +5,13 @@ import co.touchlab.kermit.Logger
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
 import io.newm.shared.di.initKoin
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 
 
-//@ShowkaseRoot
-open class NewmApplication : Application() { //}, ShowkaseRootModule {
+open class NewmApplication : Application() {
+
+    private val logout: Logout by inject()
 
     override fun onCreate() {
         Logger.d { "NewmAndroid - NewmApplication" }
@@ -19,5 +21,7 @@ open class NewmApplication : Application() { //}, ShowkaseRootModule {
             androidContext(this@NewmApplication)
             modules(viewModule, androidModules)
         }
+
+        logout.register()
     }
 }

@@ -38,7 +38,7 @@ class UserAccountViewModel(
 
     fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
-            logout.call()
+            logout.signOutUser()
         }
     }
 

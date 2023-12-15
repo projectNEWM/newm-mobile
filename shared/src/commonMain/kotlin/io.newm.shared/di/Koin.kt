@@ -71,7 +71,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<UserSessionUseCase> { UserSessionUseCaseImpl(get(), get()) }
+    single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {
@@ -83,8 +83,8 @@ fun createJson() = Json {
 internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
     json: Json,
-    logOutUseCase: UserSessionUseCase,
+    repository: LogInRepository,
     tokenManager: TokenManager,
     enableNetworkLogs: Boolean,
 ): NetworkClientFactory =
-    NetworkClientFactory(httpClientEngine, json, logOutUseCase, tokenManager, enableNetworkLogs)
+    NetworkClientFactory(httpClientEngine, json, repository, tokenManager, enableNetworkLogs)

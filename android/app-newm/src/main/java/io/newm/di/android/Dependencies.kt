@@ -62,6 +62,6 @@ val viewModule = module {
 }
 
 val androidModules = module {
-    single { Logout(get(), get()) }
+    single { Logout(get(), get(), get()) }
     single { RestartApp(get()) }
 }

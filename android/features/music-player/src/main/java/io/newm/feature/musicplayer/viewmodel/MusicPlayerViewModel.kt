@@ -42,8 +42,8 @@ class MusicPlayerViewModel(
                         listOf(
                             Track(
                                 id = it.id,
-                                title = it.name,
-                                url = it.songUrl,
+                                title = it.title,
+                                url = it.audioUrl,
                                 artist = it.artists.firstOrNull().orEmpty(),
                                 artworkUri = it.imageUrl,
                             )
