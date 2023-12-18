@@ -87,7 +87,7 @@ internal fun MusicPlayerViewer(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = song.name,
+                text = song.title,
                 color = White,
                 fontFamily = inter,
                 fontWeight = FontWeight.Bold,

@@ -82,8 +82,6 @@ class BarcodeScannerActivity : ComponentActivity() {
                             }
                         },
                     )
-                    SecondaryButton(text = stringResource(id = R.string.barcode_scanner_use_test_xpub_key),
-                        onClick = { onValidXpubKey(TEST_XPUB_KEY) })
                 }
 
             }
@@ -214,7 +212,5 @@ class BarcodeScannerActivity : ComponentActivity() {
 
     companion object {
         const val XPUB_KEY = "XPUB_SCAN_RESULT_KEY"
-        private val TEST_XPUB_KEY =
-            "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl"
     }
 }

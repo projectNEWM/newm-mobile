@@ -21,6 +21,7 @@ import io.ktor.utils.io.CancellationException
 import io.newm.shared.internal.HttpRoutes
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.login.models.LoginResponse
+import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.serialization.json.Json
@@ -28,8 +29,7 @@ import kotlinx.serialization.json.Json
 internal class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
-    //TODO: Remove this use case, it shouldn't be referenced from the network layer.
-    private val logOutUseCase: UserSessionUseCase,
+    private val repository: LogInRepository,
     private val tokenManager: TokenManager,
     private val enableNetworkLogs: Boolean,
 ) {
@@ -120,12 +120,12 @@ internal class NetworkClientFactory(
                                     refreshToken = tokenManager.getRefreshToken()!!
                                 )
                             } else {
-                                logOutUseCase.logout()
+                                repository.logout()
                                 logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
                                 throw KMMException("Invalid Token response")
                             }
                         } catch (e: Exception) {
-                            logOutUseCase.logout()
+                            repository.logout()
                             logger.d { "NewmKMM - refreshTokens: Exception: $e" }
                             throw KMMException("Refresh token failed: $e")
                         }

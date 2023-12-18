@@ -1,0 +1,17 @@
+-- Drop existing tables
+DROP TABLE IF EXISTS NFTTrack;
+
+-- Recreate tables (repeat for each table in your schema)
+CREATE TABLE NFTTrack (
+    id TEXT PRIMARY KEY,
+    policyId TEXT NOT NULL,
+    title TEXT NOT NULL,
+    assetName TEXT NOT NULL,
+    amount INTEGER NOT NULL,
+    imageUrl TEXT NOT NULL,
+    audioUrl TEXT NOT NULL,
+    duration INTEGER NOT NULL, -- Duration in seconds
+    artists TEXT NOT NULL,
+    genres TEXT NOT NULL,
+    moods TEXT NOT NULL
+);
