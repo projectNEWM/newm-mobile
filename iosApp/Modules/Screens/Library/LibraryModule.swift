@@ -36,11 +36,11 @@ extension LibraryModule {
 				}
 				
 				func getAllNFTTracks(completionHandler: @escaping ([NFTTrack]?, Error?) -> Void) {
-					completionHandler(NFTTrack.mockTracks, nil)
+					completionHandler(NFTTrackMocksKt.mockTracks, nil)
 				}
 				
 				func getNFTTrack(id: String) -> NFTTrack? {
-					NFTTrack.mockTracks.first { $0.id == id }!
+					NFTTrackMocksKt.mockTracks.first { $0.id == id }!
 				}
 				
 				func getAllNFTTracksFlow() -> Kotlinx_coroutines_coreFlow {
@@ -48,7 +48,7 @@ extension LibraryModule {
 				}
 
 				func getWalletNFTs() async throws -> [NFTTrack] {
-					NFTTrack.mockTracks
+					NFTTrackMocksKt.mockTracks
 				}
 			}
 		}

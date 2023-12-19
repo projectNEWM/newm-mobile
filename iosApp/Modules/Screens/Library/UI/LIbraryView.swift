@@ -163,7 +163,7 @@ struct LibraryView_Previews: PreviewProvider {
 		return Group {
 			LibraryView()
 			LibraryView()
-				.row(for: NFTTrack.mockTracks.first!)
+				.row(for: NFTTrackMocksKt.mockTracks.first!)
 				.padding()
 				.previewDisplayName("Row")
 		}
