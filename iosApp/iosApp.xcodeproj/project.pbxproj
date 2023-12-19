@@ -68,7 +68,6 @@
 		76362DA22A11EECD00E78799 /* NEWMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765A35EE29E9052E00B939BD /* NEWMTextField.swift */; };
 		7639E6732AEB347F00254D71 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6722AEB347F00254D71 /* GoogleSignInSwift */; };
 		7639E6752AEB348800254D71 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6742AEB348800254D71 /* GoogleSignIn */; };
-		763B987D2B28644B00E6F492 /* ObservableObject+BindChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763B987C2B28644B00E6F492 /* ObservableObject+BindChanges.swift */; };
 		7642EB722B17CE8F009C8999 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 7642EB712B17CE8F009C8999 /* VLCKitSPM */; };
 		764838C02B0C8CAF00D6905B /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764838BF2B0C8CAF00D6905B /* FileManagerService.swift */; };
 		764838C52B0C8D0900D6905B /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764838C42B0C8D0900D6905B /* DownloadManager.swift */; };
@@ -171,10 +170,12 @@
 		768B49972903B89F0099911D /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B498A2903B89F0099911D /* Strings.swift */; };
 		768B49982903B89F0099911D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 768B498B2903B89F0099911D /* Localizable.strings */; };
 		768B499A2903B89F0099911D /* LibraryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B498D2903B89F0099911D /* LibraryModule.swift */; };
-		7699C7172AEB5B9E00C30464 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
-		7699C7182AEB5B9E00C30464 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		769F4B5B2B04C34F009D23C6 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 769F4B5A2B04C34F009D23C6 /* VLCKitSPM */; };
 		76A223FE281FB43900F7188A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A223FD281FB43900F7188A /* MockData.swift */; };
+		76AB881D2B2AC6D100D8612A /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
+		76AB881E2B2AC6D100D8612A /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76AB88202B2ACB7400D8612A /* Profile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7650E14B2B17B3FA00D686B8 /* Profile.framework */; };
+		76AB88212B2ACB7400D8612A /* Profile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7650E14B2B17B3FA00D686B8 /* Profile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		76B990CC2835204A00F818E4 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B990BF2835204A00F818E4 /* Inter-Medium.ttf */; };
@@ -497,6 +498,13 @@
 			remoteGlobalIDString = 7618FCCC28164C5C007573B4;
 			remoteInfo = SharedUI;
 		};
+		76AB88222B2ACB7400D8612A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7650E14A2B17B3FA00D686B8;
+			remoteInfo = Profile;
+		};
 		76C76144291F4D340054D2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -591,6 +599,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				76AB88212B2ACB7400D8612A /* Profile.framework in Embed Frameworks */,
 				762EF9AA2B1F90C7009E08D8 /* AudioPlayer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -618,13 +627,13 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7699C7192AEB5B9E00C30464 /* Embed Frameworks */ = {
+		76AB881F2B2AC6D100D8612A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7699C7182AEB5B9E00C30464 /* shared.xcframework in Embed Frameworks */,
+				76AB881E2B2AC6D100D8612A /* shared.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -705,7 +714,6 @@
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1512942B0740033C669 /* LibraryRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryRoutes.swift; sourceTree = "<group>"; };
 		7627329128295EA5009D3C8A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		763B987C2B28644B00E6F492 /* ObservableObject+BindChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableObject+BindChanges.swift"; sourceTree = "<group>"; };
 		764838BD2B0C8CAF00D6905B /* libFiles.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFiles.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		764838BF2B0C8CAF00D6905B /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		764838C42B0C8D0900D6905B /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
@@ -1020,8 +1028,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7650E1342B16056400D686B8 /* libFiles.a in Frameworks */,
-				7699C7172AEB5B9E00C30464 /* shared.xcframework in Frameworks */,
 				76C76159291F5FC70054D2F3 /* SharedUI.framework in Frameworks */,
+				76AB881D2B2AC6D100D8612A /* shared.xcframework in Frameworks */,
 				769F4B5B2B04C34F009D23C6 /* VLCKitSPM in Frameworks */,
 				76C7614E291F56DF0054D2F3 /* Resolver in Frameworks */,
 				76C7614F291F56F30054D2F3 /* ModuleLinker.framework in Frameworks */,
@@ -1034,6 +1042,7 @@
 			files = (
 				76DC3A48281A0EA2004D5021 /* Resolver in Frameworks */,
 				76D01DC128164B6E00305605 /* ModuleLinker.framework in Frameworks */,
+				76AB88202B2ACB7400D8612A /* Profile.framework in Frameworks */,
 				762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1128,7 +1137,6 @@
 			children = (
 				761ADD432AEA0746001B56CF /* Error+KMMException.swift */,
 				761ADD412AE88A56001B56CF /* Notification+KMM.swift */,
-				763B987C2B28644B00E6F492 /* ObservableObject+BindChanges.swift */,
 				76DB3B972A13252F001AF2AD /* String+NilIfEmpty.swift */,
 				760C2C7228165DE80030ACF4 /* SwiftUIView+Erased.swift */,
 				7618FCDC28164C6B007573B4 /* UIImage+Extensions.swift */,
@@ -2313,7 +2321,7 @@
 				76C7612E291F445B0054D2F3 /* Sources */,
 				76C7612F291F445B0054D2F3 /* Frameworks */,
 				76C76130291F445B0054D2F3 /* Resources */,
-				7699C7192AEB5B9E00C30464 /* Embed Frameworks */,
+				76AB881F2B2AC6D100D8612A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2345,6 +2353,7 @@
 			dependencies = (
 				76D01DC428164B6E00305605 /* PBXTargetDependency */,
 				762EF9AC2B1F90C7009E08D8 /* PBXTargetDependency */,
+				76AB88232B2ACB7400D8612A /* PBXTargetDependency */,
 			);
 			name = Main;
 			packageProductDependencies = (
@@ -2850,7 +2859,6 @@
 				76DC3A2928169995004D5021 /* Login.swift in Sources */,
 				7618FCC428164BB5007573B4 /* Main.swift in Sources */,
 				7618FCC328164BB5007573B4 /* Home.swift in Sources */,
-				763B987D2B28644B00E6F492 /* ObservableObject+BindChanges.swift in Sources */,
 				7618FCC528164BB5007573B4 /* SharedUI.swift in Sources */,
 				7618FCC228164BB5007573B4 /* Module.swift in Sources */,
 				76CE046729EE3F30002AF94B /* Binding.swift in Sources */,
@@ -3071,6 +3079,11 @@
 			platformFilter = ios;
 			target = 7618FCCC28164C5C007573B4 /* SharedUI */;
 			targetProxy = 766E8FE528562FDC00F18779 /* PBXContainerItemProxy */;
+		};
+		76AB88232B2ACB7400D8612A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7650E14A2B17B3FA00D686B8 /* Profile */;
+			targetProxy = 76AB88222B2ACB7400D8612A /* PBXContainerItemProxy */;
 		};
 		76C76145291F4D340054D2F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
