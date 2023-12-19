@@ -621,7 +621,6 @@
 			files = (
 				76D99ECA2B19EF11002FB4B2 /* shared.xcframework in Embed Frameworks */,
 				7650E1692B17C69A00D686B8 /* SharedUI.framework in Embed Frameworks */,
-				762EF9B92B21BCD3009E08D8 /* AudioPlayer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1011,7 +1010,6 @@
 			files = (
 				7650E1672B17BA5400D686B8 /* Kingfisher in Frameworks */,
 				76D99EC92B19EF11002FB4B2 /* shared.xcframework in Frameworks */,
-				762EF9B82B21BCD3009E08D8 /* AudioPlayer.framework in Frameworks */,
 				7650E15F2B17B46800D686B8 /* Resolver in Frameworks */,
 				7650E1592B17B44E00D686B8 /* ModuleLinker.framework in Frameworks */,
 				7650E1682B17C69A00D686B8 /* SharedUI.framework in Frameworks */,
