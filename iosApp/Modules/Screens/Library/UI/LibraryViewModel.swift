@@ -39,8 +39,12 @@ class LibraryViewModel: ObservableObject {
 			}
 			.store(in: &cancels)
 		
-		audioPlayer.bind(to: self, storedIn: &cancels)
-		
+		audioPlayer.objectWillChange
+			.sink { [weak self] _ in
+				self?.objectWillChange.send()
+			}
+			.store(in: &cancels)
+
 		Task {
 			await refresh()
 		}
