@@ -163,12 +163,12 @@ import shared
 
 
 public extension NFTTrack {
-	static let mockTracks = [
+	static let mockTracks: [NFTTrack] = [
 		NFTTrack(
 			id: "0",
-			name: "Dripdropz",
+			title: "Dripdropz",
 			imageUrl: "https://arweave.net/zBVmedCDTGBH06tTEA5u0aYFWkXPkr9w1GxGefxJIms",
-			songUrl: "https://arweave.net/tWDP3Lr4U3vMy_iYwm-FPBa6ad0aaMNdwHa7MUAFjuo",
+			audioUrl: "https://arweave.net/tWDP3Lr4U3vMy_iYwm-FPBa6ad0aaMNdwHa7MUAFjuo",
 			duration: 30,
 			artists: ["Esco"]
 		),

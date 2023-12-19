@@ -71,6 +71,7 @@ final class ProfileViewModel: ObservableObject {
 		do {
 			user = try await getCurrentUser.fetchLoggedInUserDetails()
 		} catch {
+			Resolver.resolve(ErrorReporting.self).logError(error)
 			self.error = error.localizedDescription
 		}
 	}

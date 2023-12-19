@@ -73,7 +73,7 @@ public class VLCAudioPlayer: ObservableObject {
 			}
 			let fileUrl = try await fileManager.getFile(forTrack: currentTrack) { [weak self] progress in
 				guard let self else { return }
-				print("progress for [\(currentTrack.name)]: \(progress)")
+				print("progress for [\(currentTrack.title)]: \(progress)")
 				DispatchQueue.main.async {
 					self.loadingProgress[currentTrack] = progress
 				}
@@ -157,7 +157,7 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func trackIsDownloaded(_ track: NFTTrack) -> Bool {
-		fileManager.fileExists(for: URL(string: track.songUrl)!)
+		fileManager.fileExists(for: URL(string: track.audioUrl)!)
 	}
 	
 	public func cycleRepeatMode() {
@@ -218,7 +218,7 @@ private extension NFTTrack {
 	func vlcMedia(fileUrl: URL) -> VLCMedia {
 		let media = VLCMedia(url: fileUrl)
 		media.metaData.artist = artists.joined(separator: ", ")
-		media.metaData.title = name
+		media.metaData.title = title
 		media.metaData.artworkURL = URL(string: imageUrl)!
 		return media
 	}

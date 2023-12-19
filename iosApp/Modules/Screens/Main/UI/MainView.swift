@@ -5,6 +5,7 @@ import AudioPlayer
 import SharedUI
 import Profile
 import Colors
+import SentrySwiftUI
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
@@ -40,6 +41,9 @@ public struct MainView: View {
 			}
 		}
 		.animation(.easeInOut, value: viewModel.shouldShowLogin)
+		.onShake {
+			route = .debug
+		}
 	}
 	
 	@ViewBuilder
@@ -73,6 +77,7 @@ public struct MainView: View {
 	private var sheetView: some View {
 		switch route {
 		case .nowPlaying: nowPlayingViewProvider.nowPlayingView()
+		case .debug: DebugView()
 		default: EmptyView()
 		}
 	}
@@ -80,13 +85,13 @@ public struct MainView: View {
 	private var tabProviders: [TabViewProvider] {
 		[
 			TabViewProvider(image: Image(MainViewModelTab.library), tab: MainViewModelTab.library, tint: try! Color(hex: "DC3CAA")) {
-				libraryViewProvider.libraryView()
+				libraryViewProvider.libraryView().sentryTrace("LibraryView")
 					.onAppear() {
 						tab = .library
 					}.erased
 			},
 			TabViewProvider(image: Image(MainViewModelTab.profile), tab: MainViewModelTab.profile, tint: try! Color(hex: "FF9637")) {
-				ProfileView()
+				ProfileView().sentryTrace("ProfileView")
 					.onAppear() {
 						tab = .profile
 					}.erased

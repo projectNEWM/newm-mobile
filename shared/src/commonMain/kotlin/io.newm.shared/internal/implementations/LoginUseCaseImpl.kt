@@ -4,9 +4,12 @@ import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.login.repository.OAuthData
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.LoginUseCase
+import shared.Notification
+import shared.postNotification
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class LoginUseCaseImpl(private val repository: LogInRepository) : LoginUseCase {
+internal class LoginUseCaseImpl(
+    private val repository: LogInRepository) : LoginUseCase {
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun logIn(email: String, password: String) {
         return repository.logIn(email = email, password = password)
@@ -30,5 +33,9 @@ internal class LoginUseCaseImpl(private val repository: LogInRepository) : Login
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun logInWithApple(idToken: String) {
         return repository.oAuthLogin(OAuthData.Apple(idToken))
+    }
+
+    override fun logout() {
+        repository.logout()
     }
 }

@@ -40,7 +40,7 @@ fun ProfileRoute(
                 isBottomBarVisible = isBottomBarVisible,
                 onNavigateUp = onNavigateUp,
                 user = (state as ProfileState.Content).profile,
-                onLogout = viewModel::logout,
+                onLogout = {},
                 onShowTermsAndConditions = {}, //TODO: Link the appropriate page
                 onShowPrivacyPolicy = {}, //TODO: Link the appropriate page
                 onShowDocuments = {}, //TODO: Link the appropriate page

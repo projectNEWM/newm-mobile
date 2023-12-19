@@ -4,13 +4,13 @@ import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import io.newm.shared.internal.db.NewmDatabaseWrapper
-import io.newm.shared.internal.repositories.parsers.getMusicMetadataVersion
-import io.newm.shared.internal.repositories.parsers.getTrackFromMusicMetadataV1
-import io.newm.shared.internal.repositories.parsers.getTrackFromMusicMetadataV2
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -31,11 +31,16 @@ internal class CardanoWalletRepository(
         database.nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->
             NFTTrack(
                 id = track.id,
-                name = track.name,
+                policyId = track.policyId,
+                title = track.title,
+                assetName = track.assetName,
+                amount = track.amount,
                 imageUrl = track.imageUrl,
-                songUrl = track.songUrl,
+                audioUrl = track.audioUrl,
                 duration = track.duration,
-                artists = track.artists.split(",")
+                artists = track.artists.split(","),
+                genres = track.genres.split(","),
+                moods = track.moods.split(","),
             )
         }
 
@@ -56,11 +61,16 @@ internal class CardanoWalletRepository(
             tracksFromDb.map { track ->
                 NFTTrack(
                     id = track.id,
-                    name = track.name,
+                    policyId = track.policyId,
+                    title = track.title,
+                    assetName = track.assetName,
+                    amount = track.amount,
                     imageUrl = track.imageUrl,
-                    songUrl = track.songUrl,
+                    audioUrl = track.audioUrl,
                     duration = track.duration,
-                    artists = track.artists.split(",").filterNot { it.isBlank() }
+                    artists = track.artists.split(","),
+                    genres = track.genres.split(","),
+                    moods = track.genres.split(",")
                 )
             }
         }
@@ -69,29 +79,16 @@ internal class CardanoWalletRepository(
     suspend fun getWalletNFTs(): List<NFTTrack> {
         val xpub = connectWalletManager.getXpub() ?: throw KMMException("No xpub found")
         val tracks = fetchNFTTracksFromNetwork(xpub)
-        cacheNFTTracks(tracks)
+//        cacheNFTTracks(tracks)
         logger.d { "Result Size: ${tracks.size}" }
         return tracks
     }
 
     private suspend fun fetchNFTTracksFromNetwork(xpub: String): List<NFTTrack> {
         try {
-            val walletNFTs = service.getWalletNFTs(xpub).toSet()
-            val tracks = walletNFTs.mapNotNull {
-                if (it.isNotEmpty()) {
-                    when (it.getMusicMetadataVersion()) {
-                        1 -> it.getTrackFromMusicMetadataV1(logger)
-                        2 -> it.getTrackFromMusicMetadataV2(logger)
-                        else -> {
-                            logger.d { "Unsupported music metadata version: ${it.getMusicMetadataVersion()}" }
-                            null
-                        }
-                    }
-                } else {
-                    null
-                }
-            }
-            return tracks
+            val walletNFTs = service.getWalletNFTs(xpub)
+            cacheNFTTracks(walletNFTs)
+            return walletNFTs
         } catch (e: Exception) {
             logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
             throw e
@@ -103,11 +100,16 @@ internal class CardanoWalletRepository(
             nftTracks.forEach { track ->
                 database.nFTTrackQueries.insertOrReplaceTrack(
                     id = track.id,
-                    name = track.name,
+                    policyId = track.policyId,
+                    title = track.title,
+                    assetName = track.assetName,
+                    amount = track.amount,
                     imageUrl = track.imageUrl,
-                    songUrl = track.songUrl,
+                    audioUrl = track.audioUrl,
                     duration = track.duration,
-                    artists = track.artists.joinToString(separator = ","),
+                    artists = track.artists.joinToString(","),
+                    genres = track.genres.joinToString(","),
+                    moods = track.moods.joinToString(",")
                 )
             }
         }

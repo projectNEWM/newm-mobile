@@ -120,7 +120,7 @@ struct LibraryView: View {
 					.clipShape(RoundedRectangle(cornerRadius: 4))
 				
 				VStack(alignment: .leading, spacing: 3) {
-					Text(track.name)
+					Text(track.title)
 						.font(Font.interMedium(ofSize: 14))
 						.foregroundStyle(viewModel.trackIsPlaying(track) ? NEWMColor.pink() : .white)
 					HStack(alignment: .center, spacing: 4) {

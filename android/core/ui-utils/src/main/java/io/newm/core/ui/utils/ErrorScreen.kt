@@ -30,5 +30,4 @@ fun ErrorScreen(errorMessage: String) {
             )
         }
     }
-
 }

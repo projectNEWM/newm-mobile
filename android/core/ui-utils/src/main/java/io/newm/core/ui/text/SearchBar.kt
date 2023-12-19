@@ -26,14 +26,17 @@ import io.newm.core.theme.inter
 fun SearchBar(
     placeholderResId: Int,
     iconResId: Int = R.drawable.ic_search,
-    modifier: Modifier = Modifier
-
+    onQueryChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var text by remember { mutableStateOf("") }
+    val (text, onValueChange) = remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = text,
-        onValueChange = { text = it },
+        onValueChange = { query ->
+            onValueChange(query)
+            onQueryChange(query)
+        },
         modifier = modifier,
         textStyle = TextStyle(
             fontSize = 16.sp,

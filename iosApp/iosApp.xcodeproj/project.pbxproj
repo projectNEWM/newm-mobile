@@ -12,8 +12,15 @@
 		7603003A2836FCB800BBF78C /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		760808AF2B2799D20015A2ED /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; };
 		760808B02B2799D20015A2ED /* Logging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		760808B42B2799DF0015A2ED /* LoggingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808A32B2799C00015A2ED /* LoggingModule.swift */; };
+		760808B52B2799DF0015A2ED /* SentryErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808A22B2799C00015A2ED /* SentryErrorReporter.swift */; };
+		760808B82B279D5B0015A2ED /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 760808B72B279D5B0015A2ED /* Sentry-Dynamic */; };
+		760808C02B279E490015A2ED /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 760808BF2B279E490015A2ED /* SentrySwiftUI */; };
 		760808C62B279E980015A2ED /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
+		760808CC2B279F8D0015A2ED /* ErrorReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808CB2B279F8D0015A2ED /* ErrorReporting.swift */; };
 		760808CE2B279FD10015A2ED /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760808CD2B279FD10015A2ED /* Resolver */; };
+		760808CF2B27A6550015A2ED /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
+		760808D02B27A6550015A2ED /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		760C2C4E281653C00030ACF4 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760C2C4D281653C00030ACF4 /* Resolver */; };
 		760C2C6B281658DD0030ACF4 /* FontModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C2C62281657AF0030ACF4 /* FontModule.swift */; };
 		760C2C6C281658DD0030ACF4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7618FD3F28164CED007573B4 /* LICENSE.txt */; };
@@ -62,8 +69,8 @@
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
 		762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		762EF9AA2B1F90C7009E08D8 /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		762EF9B82B21BCD3009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
-		762EF9B92B21BCD3009E08D8 /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		762EF9B52B21B30C009E08D8 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EF9B42B21B30C009E08D8 /* DebugView.swift */; };
+		762EF9B72B21B412009E08D8 /* ShakeResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EF9B62B21B412009E08D8 /* ShakeResponder.swift */; };
 		76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
 		76362DA22A11EECD00E78799 /* NEWMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765A35EE29E9052E00B939BD /* NEWMTextField.swift */; };
 		7639E6732AEB347F00254D71 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6722AEB347F00254D71 /* GoogleSignInSwift */; };
@@ -571,6 +578,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		760808D12B27A6550015A2ED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				760808D02B27A6550015A2ED /* shared.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -655,7 +673,10 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		760808A22B2799C00015A2ED /* SentryErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryErrorReporter.swift; sourceTree = "<group>"; };
+		760808A32B2799C00015A2ED /* LoggingModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingModule.swift; sourceTree = "<group>"; };
 		760808A92B2799D20015A2ED /* Logging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Logging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		760808CB2B279F8D0015A2ED /* ErrorReporting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorReporting.swift; sourceTree = "<group>"; };
 		760C2C5E281656340030ACF4 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		760C2C62281657AF0030ACF4 /* FontModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontModule.swift; sourceTree = "<group>"; };
 		760C2C7228165DE80030ACF4 /* SwiftUIView+Erased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUIView+Erased.swift"; sourceTree = "<group>"; };
@@ -714,6 +735,8 @@
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1512942B0740033C669 /* LibraryRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryRoutes.swift; sourceTree = "<group>"; };
 		7627329128295EA5009D3C8A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		762EF9B42B21B30C009E08D8 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		762EF9B62B21B412009E08D8 /* ShakeResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeResponder.swift; sourceTree = "<group>"; };
 		764838BD2B0C8CAF00D6905B /* libFiles.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFiles.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		764838BF2B0C8CAF00D6905B /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		764838C42B0C8D0900D6905B /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
@@ -913,7 +936,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760808CF2B27A6550015A2ED /* shared.xcframework in Frameworks */,
 				760808CE2B279FD10015A2ED /* Resolver in Frameworks */,
+				760808B82B279D5B0015A2ED /* Sentry-Dynamic in Frameworks */,
 				760808C62B279E980015A2ED /* ModuleLinker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1041,6 +1066,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76DC3A48281A0EA2004D5021 /* Resolver in Frameworks */,
+				760808C02B279E490015A2ED /* SentrySwiftUI in Frameworks */,
 				76D01DC128164B6E00305605 /* ModuleLinker.framework in Frameworks */,
 				76AB88202B2ACB7400D8612A /* Profile.framework in Frameworks */,
 				762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */,
@@ -1124,6 +1150,15 @@
 			path = Raleway;
 			sourceTree = "<group>";
 		};
+		760808A12B2799C00015A2ED /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				760808A32B2799C00015A2ED /* LoggingModule.swift */,
+				760808A22B2799C00015A2ED /* SentryErrorReporter.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
 		760C2C5D281656290030ACF4 /* Property Wrappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1161,6 +1196,7 @@
 			children = (
 				761837AA294A706F0033250B /* Artist.swift */,
 				761837AC294A7A900033250B /* Currency.swift */,
+				760808CB2B279F8D0015A2ED /* ErrorReporting.swift */,
 				7618FCBD28164BB5007573B4 /* Home.swift */,
 				76562526284BEFB7004B6E4B /* Library.swift */,
 				76DC3A2828169995004D5021 /* Login.swift */,
@@ -1344,6 +1380,15 @@
 				76D01D9F28164B2100305605 /* ModuleLinker */,
 			);
 			path = DI;
+			sourceTree = "<group>";
+		};
+		762EF9B32B21B2FA009E08D8 /* DebugView */ = {
+			isa = PBXGroup;
+			children = (
+				762EF9B42B21B30C009E08D8 /* DebugView.swift */,
+				762EF9B62B21B412009E08D8 /* ShakeResponder.swift */,
+			);
+			path = DebugView;
 			sourceTree = "<group>";
 		};
 		763FEAB027C30B4500232093 /* Resources */ = {
@@ -1619,6 +1664,7 @@
 		76764AEC281A303B0095BEF9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				762EF9B32B21B2FA009E08D8 /* DebugView */,
 				7618FCEF28164C86007573B4 /* TabBar */,
 				76D01D8D28164AFC00305605 /* MainView.swift */,
 				76D01D8E28164AFC00305605 /* MainViewModel.swift */,
@@ -1833,6 +1879,7 @@
 			children = (
 				7627EA6027FA7F3800C0F7DA /* DI */,
 				7627EA3827FA685E00C0F7DA /* Helpers */,
+				760808A12B2799C00015A2ED /* Logging */,
 				7627EA2727FA65AC00C0F7DA /* Resources */,
 				7627EA2E27FA673E00C0F7DA /* Screens */,
 			);
@@ -2077,6 +2124,7 @@
 				760808A52B2799D20015A2ED /* Sources */,
 				760808A62B2799D20015A2ED /* Frameworks */,
 				760808A72B2799D20015A2ED /* Resources */,
+				760808D12B27A6550015A2ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2085,6 +2133,7 @@
 			);
 			name = Logging;
 			packageProductDependencies = (
+				760808B72B279D5B0015A2ED /* Sentry-Dynamic */,
 				760808CD2B279FD10015A2ED /* Resolver */,
 			);
 			productName = Logging;
@@ -2358,6 +2407,7 @@
 			name = Main;
 			packageProductDependencies = (
 				76DC3A47281A0EA2004D5021 /* Resolver */,
+				760808BF2B279E490015A2ED /* SentrySwiftUI */,
 			);
 			productName = Main;
 			productReference = 76D01D7928164AE700305605 /* Main.framework */;
@@ -2458,6 +2508,7 @@
 				769F4B592B04C34F009D23C6 /* XCRemoteSwiftPackageReference "vlckit-spm" */,
 				7650E1352B1667AB00D686B8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7650E13F2B1798E400D686B8 /* XCRemoteSwiftPackageReference "QRCodeReader" */,
+				760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -2676,6 +2727,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760808B52B2799DF0015A2ED /* SentryErrorReporter.swift in Sources */,
+				760808B42B2799DF0015A2ED /* LoggingModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2839,8 +2892,10 @@
 				76D99ECD2B1B0D24002FB4B2 /* TabBarItem.swift in Sources */,
 				76D99ECC2B1B0D24002FB4B2 /* TabBar.swift in Sources */,
 				76D99ECB2B1B0D24002FB4B2 /* TabBarProvider.swift in Sources */,
+				762EF9B52B21B30C009E08D8 /* DebugView.swift in Sources */,
 				76C7616529206DD00054D2F3 /* Routes.swift in Sources */,
 				76D01D9528164AFC00305605 /* Utilities.swift in Sources */,
+				762EF9B72B21B412009E08D8 /* ShakeResponder.swift in Sources */,
 				76D01D9228164AFC00305605 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2866,6 +2921,7 @@
 				76DC3A1928167276004D5021 /* UIImage+Extensions.swift in Sources */,
 				761837AB294A706F0033250B /* Artist.swift in Sources */,
 				760C2C7328165DE80030ACF4 /* SwiftUIView+Erased.swift in Sources */,
+				760808CC2B279F8D0015A2ED /* ErrorReporting.swift in Sources */,
 				761837AD294A7A900033250B /* Currency.swift in Sources */,
 				76DC3A4B281A0EE2004D5021 /* Localizable.swift in Sources */,
 				76DB3B982A13252F001AF2AD /* String+NilIfEmpty.swift in Sources */,
@@ -4426,6 +4482,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.17.1;
+			};
+		};
 		760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Resolver";
@@ -4469,6 +4533,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		760808B72B279D5B0015A2ED /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
+		};
+		760808BF2B279E490015A2ED /* SentrySwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = SentrySwiftUI;
+		};
 		760808CD2B279FD10015A2ED /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;

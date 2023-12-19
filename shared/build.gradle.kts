@@ -44,7 +44,9 @@ kotlin {
         }
     }
 
+
     sourceSets {
+
         val commonMain by getting {
             dependencies {
                 implementation(Kotlin.coroutinesCore)
@@ -111,6 +113,7 @@ kotlin {
             languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
         }
     }
+
 }
 
 skie {
@@ -137,7 +140,7 @@ sqldelight {
     database("NewmDatabase") {
         packageName = "io.newm.shared.db.cache"
         sourceFolders = listOf("sqldelight")
-        version = 1
+        version = 2
     }
 }
 

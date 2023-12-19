@@ -21,7 +21,8 @@ class LibraryViewModel: ObservableObject {
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
 	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
-
+	@Injected private var logger: any ErrorReporting
+	
 	init() {
 		walletIsConnected = connectWalletXPubUseCase.isConnected()
 		
@@ -55,7 +56,7 @@ class LibraryViewModel: ObservableObject {
 			return tracks
 		}
 		return tracks.filter {
-			$0.name.localizedCaseInsensitiveContains(searchText)
+			$0.title.localizedCaseInsensitiveContains(searchText)
 		}
 	}
 	
@@ -72,6 +73,7 @@ class LibraryViewModel: ObservableObject {
 			let tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 			self.tracks = tracks
 		} catch {
+			logger.logError(error)
 			print("ERROR: \(error.kmmException)")
 			self.error = "An error occured.  Please try again."
 		}

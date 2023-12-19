@@ -3,6 +3,7 @@ package io.newm.shared.login.repository
 import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.*
 import io.newm.shared.internal.TokenManager
+import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.login.models.*
 import io.newm.shared.login.models.LoginException.*
 import io.newm.shared.login.service.LoginAPI
@@ -16,6 +17,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class LogInRepository : KoinComponent {
     private val service: LoginAPI by inject()
     private val tokenManager: TokenManager by inject()
+    private val connectWalletManager: ConnectWalletManager by inject()
 
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
@@ -115,5 +117,10 @@ internal class LogInRepository : KoinComponent {
             logger.d { "logIn: Fail to login: $response" }
             throw Exception("Response is not valid: $response")
         }
+    }
+
+    fun logout() {
+        tokenManager.clearToken()
+        connectWalletManager.disconnect()
     }
 }
