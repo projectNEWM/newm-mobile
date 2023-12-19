@@ -61,7 +61,7 @@ public struct MainView: View {
 	}
 	
 	private var miniPlayerHeight: CGFloat {
-		return audioPlayer.isPlaying ? 42 : 0
+		return showAudioPlayer ? 42 : 0
 	}
 	
 	private var showAudioPlayer: Bool {

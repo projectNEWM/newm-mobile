@@ -65,6 +65,10 @@ class LibraryViewModel: ObservableObject {
 	}
 	
 	func refresh() async {
+		defer {
+			showLoading = false
+		}
+		
 		self.error = nil
 		
 		guard walletIsConnected else { return }
@@ -74,10 +78,8 @@ class LibraryViewModel: ObservableObject {
 			self.tracks = tracks
 		} catch {
 			logger.logError(error)
-			print("ERROR: \(error.kmmException)")
 			self.error = "An error occured.  Please try again."
 		}
-		showLoading = false
 	}
 	
 	func xPubScanned() {
