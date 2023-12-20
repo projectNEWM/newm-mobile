@@ -55,7 +55,7 @@ public struct ProfileView: View {
 	@ViewBuilder
 	private var artistName: some View {
 		VStack {
-			Text("Meredith Stout")
+			Text(viewModel.fullName)
 				.font(
 					Font.custom("Inter", size: 24)
 						.weight(.bold)
@@ -63,7 +63,7 @@ public struct ProfileView: View {
 				.multilineTextAlignment(.center)
 				.foregroundColor(.white)
 			
-			Text("@meredith.stout.90")
+			Text(viewModel.nickname)
 			  .font(Font.custom("Inter", size: 14))
 			  .multilineTextAlignment(.center)
 			  .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.58))
@@ -102,7 +102,7 @@ public struct ProfileView: View {
 	@ViewBuilder
 	private var bottomSection: some View {
 		VStack(alignment: .leading, spacing: 20) {
-			NEWMTextField(title: "NICKNAME", prompt: "", isSecure: false, text: .constant(viewModel.nickName), disabled: true)
+			NEWMTextField(title: "NICKNAME", prompt: "", isSecure: false, text: .constant(viewModel.nickname), disabled: true)
 				.textContentType(.name)
 				.keyboardType(.asciiCapable)
 			NEWMTextField(title: "EMAIL", prompt: "", isSecure: false, text: .constant(viewModel.email), disabled: true).padding(.bottom)

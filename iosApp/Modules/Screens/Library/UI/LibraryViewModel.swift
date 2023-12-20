@@ -4,6 +4,7 @@ import Resolver
 import ModuleLinker
 import SharedUI
 import shared
+import AudioPlayer
 
 @MainActor
 class LibraryViewModel: ObservableObject {
@@ -19,6 +20,7 @@ class LibraryViewModel: ObservableObject {
 	
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
 	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
+	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	@Injected private var logger: any ErrorReporting
 	
 	init() {
@@ -37,6 +39,16 @@ class LibraryViewModel: ObservableObject {
 				}
 			}
 			.store(in: &cancels)
+		
+		audioPlayer.objectWillChange
+			.sink { [weak self] _ in
+				self?.objectWillChange.send()
+			}
+			.store(in: &cancels)
+
+		Task {
+			await refresh()
+		}
 	}
 	
 	var filteredNFTTracks: [NFTTrack] {
@@ -44,21 +56,30 @@ class LibraryViewModel: ObservableObject {
 			return tracks
 		}
 		return tracks.filter {
-			$0.name.localizedCaseInsensitiveContains(searchText)
+			$0.title.localizedCaseInsensitiveContains(searchText)
 		}
 	}
 	
+	var showNoSongsMessage: Bool {
+		tracks.isEmpty || walletIsConnected == false
+	}
+	
 	func refresh() async {
+		defer {
+			showLoading = false
+		}
+		
 		self.error = nil
+		
+		guard walletIsConnected else { return }
+		
 		do {
 			let tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 			self.tracks = tracks
 		} catch {
 			logger.logError(error)
-			print("ERROR: \(error.kmmException)")
 			self.error = "An error occured.  Please try again."
 		}
-		showLoading = false
 	}
 	
 	func xPubScanned() {
@@ -72,5 +93,24 @@ class LibraryViewModel: ObservableObject {
 	
 	func connectWallet() {
 		showXPubScanner = true
+	}
+	
+	func trackTapped(_ track: NFTTrack) {
+		if audioPlayer.playQueueIsEmpty {
+			audioPlayer.setPlayQueue(tracks, playFirstTrack: false)
+		}
+		audioPlayer.seek(toTrack: track)
+	}
+	
+	func loadingProgress(for track: NFTTrack) -> Double? {
+		audioPlayer.loadingProgress[track]
+	}
+	
+	func trackIsPlaying(_ track: NFTTrack) -> Bool {
+		audioPlayer.trackIsPlaying(track)
+	}
+	
+	func trackIsDownloaded(_ track: NFTTrack) -> Bool {
+		audioPlayer.trackIsDownloaded(track)
 	}
 }

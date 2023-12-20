@@ -20,14 +20,31 @@ public class FileManagerService: ObservableObject {
 	}
 	
 	public func fileExists(for url: URL) -> Bool {
-		return FileManager.default.fileExists(atPath: fileURL(forDownloadURL: url).path)
+		FileManager.default.fileExists(atPath: fileURL(forDownloadURL: url).path)
+	}
+	
+	public func clearFiles() {
+		let fileManager = FileManager.default
+		guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+
+		do {
+			let fileURLs = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
+
+			for fileURL in fileURLs {
+				try fileManager.removeItem(at: fileURL)
+			}
+		} catch {
+			print("Error clearing documents directory: \(error)")
+		}
 	}
 }
 
 func fileURL(forDownloadURL downloadURL: URL) -> URL {
-	getDocumentsDirectory().appendingPathComponent(downloadURL.lastPathComponent)
+	FileManager.default.documentsDirectory.appendingPathComponent(downloadURL.lastPathComponent)
 }
 
-func getDocumentsDirectory() -> URL {
-	return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+extension FileManager {
+	var documentsDirectory: URL {
+		return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+	}
 }

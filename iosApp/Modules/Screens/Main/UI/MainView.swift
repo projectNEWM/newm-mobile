@@ -4,6 +4,7 @@ import ModuleLinker
 import AudioPlayer
 import SharedUI
 import Profile
+import Colors
 import SentrySwiftUI
 
 public struct MainView: View {
@@ -15,8 +16,9 @@ public struct MainView: View {
 	@Injected private var nowPlayingViewProvider: NowPlayingViewProviding
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
-	@State var route: MainViewRoute?
-	@State var showDebugView: Bool = false
+	@State private var route: MainViewRoute?
+	@State private var showDebugView: Bool = false
+	@State private var tab: MainViewModelTab = .library
 	
 	public var body: some View {
 		GeometryReader { geometry in
@@ -35,6 +37,7 @@ public struct MainView: View {
 							.transition(.move(edge: .bottom))
 					}
 					.transition(.move(edge: .bottom))
+					.tint(tabTint)
 			}
 		}
 		.animation(.easeInOut, value: viewModel.shouldShowLogin)
@@ -58,7 +61,7 @@ public struct MainView: View {
 	}
 	
 	private var miniPlayerHeight: CGFloat {
-		return audioPlayer.isPlaying ? 42 : 0
+		return showAudioPlayer ? 42 : 0
 	}
 	
 	private var showAudioPlayer: Bool {
@@ -82,12 +85,25 @@ public struct MainView: View {
 	private var tabProviders: [TabViewProvider] {
 		[
 			TabViewProvider(image: Image(MainViewModelTab.library), tab: MainViewModelTab.library, tint: try! Color(hex: "DC3CAA")) {
-				libraryViewProvider.libraryView().sentryTrace("LibraryView").erased
+				libraryViewProvider.libraryView().sentryTrace("LibraryView")
+					.onAppear() {
+						tab = .library
+					}.erased
 			},
 			TabViewProvider(image: Image(MainViewModelTab.profile), tab: MainViewModelTab.profile, tint: try! Color(hex: "FF9637")) {
-				ProfileView().sentryTrace("ProfileView").erased
+				ProfileView().sentryTrace("ProfileView")
+					.onAppear() {
+						tab = .profile
+					}.erased
 			}
 		]
+	}
+	
+	private var tabTint: Color {
+		switch tab {
+		case .library: return try! Color(hex: "DC3CAA")
+		case .profile: return try! Color(hex: "FF9637")
+		}
 	}
 }
 

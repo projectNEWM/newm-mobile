@@ -9,7 +9,7 @@ struct DebugView: View {
 	var body: some View {
 		List {
 			Button {
-				Resolver.resolve(UserSessionUseCase.self).logout()
+				Resolver.resolve(LoginUseCase.self).logout()
 			} label: {
 				Text("Log out")
 			}

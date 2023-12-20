@@ -5,10 +5,12 @@ import shared
 
 class SentryErrorReporter: ErrorReporting {
 	func logError(_ error: String) {
-		SentrySDK.capture(error: error.kmmException ?? error)
+		print("ERROR: \(error)")
+		SentrySDK.capture(error: error)
 	}
 	
 	func logError(_ error: Error) {
+		print("ERROR: \(error.kmmException?.description() ?? error)")
 		SentrySDK.capture(error: error.kmmException ?? error)
 	}
 }

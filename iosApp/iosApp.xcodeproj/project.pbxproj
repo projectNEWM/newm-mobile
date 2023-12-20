@@ -14,13 +14,11 @@
 		760808B02B2799D20015A2ED /* Logging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		760808B42B2799DF0015A2ED /* LoggingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808A32B2799C00015A2ED /* LoggingModule.swift */; };
 		760808B52B2799DF0015A2ED /* SentryErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808A22B2799C00015A2ED /* SentryErrorReporter.swift */; };
-		760808B82B279D5B0015A2ED /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 760808B72B279D5B0015A2ED /* Sentry-Dynamic */; };
 		760808C02B279E490015A2ED /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 760808BF2B279E490015A2ED /* SentrySwiftUI */; };
 		760808C62B279E980015A2ED /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; platformFilter = ios; };
 		760808CC2B279F8D0015A2ED /* ErrorReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760808CB2B279F8D0015A2ED /* ErrorReporting.swift */; };
 		760808CE2B279FD10015A2ED /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760808CD2B279FD10015A2ED /* Resolver */; };
 		760808CF2B27A6550015A2ED /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
-		760808D02B27A6550015A2ED /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		760C2C4E281653C00030ACF4 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 760C2C4D281653C00030ACF4 /* Resolver */; };
 		760C2C6B281658DD0030ACF4 /* FontModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C2C62281657AF0030ACF4 /* FontModule.swift */; };
 		760C2C6C281658DD0030ACF4 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7618FD3F28164CED007573B4 /* LICENSE.txt */; };
@@ -68,7 +66,6 @@
 		761ADD472AEA0ECF001B56CF /* LandingViewModel+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761ADD452AEA0EAA001B56CF /* LandingViewModel+ErrorHandling.swift */; };
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
 		762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
-		762EF9AA2B1F90C7009E08D8 /* AudioPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		762EF9B52B21B30C009E08D8 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EF9B42B21B30C009E08D8 /* DebugView.swift */; };
 		762EF9B72B21B412009E08D8 /* ShakeResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EF9B62B21B412009E08D8 /* ShakeResponder.swift */; };
 		76325CD628A13BED003836C7 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FCCD28164C5C007573B4 /* SharedUI.framework */; platformFilter = ios; };
@@ -155,6 +152,8 @@
 		765A366629E918CF00B939BD /* SharedUIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765A364729E918CF00B939BD /* SharedUIModule.swift */; };
 		765D1615293EF8F70021FEC7 /* Gradients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765D1614293EF8F70021FEC7 /* Gradients.swift */; };
 		765D1616293EFAE70021FEC7 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
+		765E35242B32458400AB3AF1 /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35232B32458400AB3AF1 /* SentrySwiftUI */; };
+		765E35262B3245C000AB3AF1 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35252B3245C000AB3AF1 /* Sentry */; };
 		766E8FA228562CF200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FAC28562EBF00F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
@@ -177,10 +176,11 @@
 		768B49972903B89F0099911D /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B498A2903B89F0099911D /* Strings.swift */; };
 		768B49982903B89F0099911D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 768B498B2903B89F0099911D /* Localizable.strings */; };
 		768B499A2903B89F0099911D /* LibraryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B498D2903B89F0099911D /* LibraryModule.swift */; };
-		7699C7172AEB5B9E00C30464 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
-		7699C7182AEB5B9E00C30464 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		769F4B5B2B04C34F009D23C6 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 769F4B5A2B04C34F009D23C6 /* VLCKitSPM */; };
 		76A223FE281FB43900F7188A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A223FD281FB43900F7188A /* MockData.swift */; };
+		76AB881D2B2AC6D100D8612A /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
+		76AB881E2B2AC6D100D8612A /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76AB88202B2ACB7400D8612A /* Profile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7650E14B2B17B3FA00D686B8 /* Profile.framework */; };
 		76B43C6627D875E900F21076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		76B43C6727D875E900F21076 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		76B990CC2835204A00F818E4 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B990BF2835204A00F818E4 /* Inter-Medium.ttf */; };
@@ -363,6 +363,13 @@
 			remoteGlobalIDString = 76C76131291F445B0054D2F3;
 			remoteInfo = AudioPlayer;
 		};
+		762EF9BA2B21BCD4009E08D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76C76131291F445B0054D2F3;
+			remoteInfo = AudioPlayer;
+		};
 		76325CD828A13BED003836C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -496,6 +503,13 @@
 			remoteGlobalIDString = 7618FCCC28164C5C007573B4;
 			remoteInfo = SharedUI;
 		};
+		76AB88222B2ACB7400D8612A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7650E14A2B17B3FA00D686B8;
+			remoteInfo = Profile;
+		};
 		76C76144291F4D340054D2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -562,17 +576,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		760808D12B27A6550015A2ED /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				760808D02B27A6550015A2ED /* shared.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -591,17 +594,6 @@
 				76D01DA528164B2100305605 /* ModuleLinker.framework in Embed Frameworks */,
 				7650E1522B17B3FA00D686B8 /* Profile.framework in Embed Frameworks */,
 				76D01D8028164AE700305605 /* Main.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		762EF9AD2B1F90C7009E08D8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				762EF9AA2B1F90C7009E08D8 /* AudioPlayer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,13 +619,13 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7699C7192AEB5B9E00C30464 /* Embed Frameworks */ = {
+		76AB881F2B2AC6D100D8612A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7699C7182AEB5B9E00C30464 /* shared.xcframework in Embed Frameworks */,
+				76AB881E2B2AC6D100D8612A /* shared.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -907,6 +899,7 @@
 				76C8502C2AEB37E200C2C388 /* Library.framework in Frameworks */,
 				7650E1762B17CB3600D686B8 /* QRCodeReader in Frameworks */,
 				76D01D7F28164AE700305605 /* Main.framework in Frameworks */,
+				765E35242B32458400AB3AF1 /* SentrySwiftUI in Frameworks */,
 				76CBA3A92B14CE2D0088334F /* libFiles.a in Frameworks */,
 				7618FCD328164C5C007573B4 /* SharedUI.framework in Frameworks */,
 				7618FD1D28164CBD007573B4 /* Colors.framework in Frameworks */,
@@ -918,9 +911,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				765E35262B3245C000AB3AF1 /* Sentry in Frameworks */,
 				760808CF2B27A6550015A2ED /* shared.xcframework in Frameworks */,
 				760808CE2B279FD10015A2ED /* Resolver in Frameworks */,
-				760808B82B279D5B0015A2ED /* Sentry-Dynamic in Frameworks */,
 				760808C62B279E980015A2ED /* ModuleLinker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1034,8 +1027,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7650E1342B16056400D686B8 /* libFiles.a in Frameworks */,
-				7699C7172AEB5B9E00C30464 /* shared.xcframework in Frameworks */,
 				76C76159291F5FC70054D2F3 /* SharedUI.framework in Frameworks */,
+				76AB881D2B2AC6D100D8612A /* shared.xcframework in Frameworks */,
 				769F4B5B2B04C34F009D23C6 /* VLCKitSPM in Frameworks */,
 				76C7614E291F56DF0054D2F3 /* Resolver in Frameworks */,
 				76C7614F291F56F30054D2F3 /* ModuleLinker.framework in Frameworks */,
@@ -1049,6 +1042,7 @@
 				76DC3A48281A0EA2004D5021 /* Resolver in Frameworks */,
 				760808C02B279E490015A2ED /* SentrySwiftUI in Frameworks */,
 				76D01DC128164B6E00305605 /* ModuleLinker.framework in Frameworks */,
+				76AB88202B2ACB7400D8612A /* Profile.framework in Frameworks */,
 				762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1668,19 +1662,11 @@
 			isa = PBXGroup;
 			children = (
 				768B498D2903B89F0099911D /* LibraryModule.swift */,
-				768B497F2903B89F0099911D /* Mocks */,
 				7625D14F2942B0740033C669 /* Navigation */,
 				768B49892903B89F0099911D /* Resources */,
 				768B49812903B89F0099911D /* UI */,
 			);
 			path = Library;
-			sourceTree = "<group>";
-		};
-		768B497F2903B89F0099911D /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Mocks;
 			sourceTree = "<group>";
 		};
 		768B49812903B89F0099911D /* UI */ = {
@@ -2099,6 +2085,7 @@
 				7650E1732B17CB2A00D686B8 /* Kingfisher */,
 				7650E1752B17CB3600D686B8 /* QRCodeReader */,
 				7642EB712B17CE8F009C8999 /* VLCKitSPM */,
+				765E35232B32458400AB3AF1 /* SentrySwiftUI */,
 			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
@@ -2112,7 +2099,6 @@
 				760808A52B2799D20015A2ED /* Sources */,
 				760808A62B2799D20015A2ED /* Frameworks */,
 				760808A72B2799D20015A2ED /* Resources */,
-				760808D12B27A6550015A2ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2121,8 +2107,8 @@
 			);
 			name = Logging;
 			packageProductDependencies = (
-				760808B72B279D5B0015A2ED /* Sentry-Dynamic */,
 				760808CD2B279FD10015A2ED /* Resolver */,
+				765E35252B3245C000AB3AF1 /* Sentry */,
 			);
 			productName = Logging;
 			productReference = 760808A92B2799D20015A2ED /* Logging.framework */;
@@ -2310,6 +2296,7 @@
 			dependencies = (
 				7650E15C2B17B44E00D686B8 /* PBXTargetDependency */,
 				7650E16B2B17C69A00D686B8 /* PBXTargetDependency */,
+				762EF9BB2B21BCD4009E08D8 /* PBXTargetDependency */,
 			);
 			name = Profile;
 			packageProductDependencies = (
@@ -2357,7 +2344,7 @@
 				76C7612E291F445B0054D2F3 /* Sources */,
 				76C7612F291F445B0054D2F3 /* Frameworks */,
 				76C76130291F445B0054D2F3 /* Resources */,
-				7699C7192AEB5B9E00C30464 /* Embed Frameworks */,
+				76AB881F2B2AC6D100D8612A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2382,13 +2369,13 @@
 				76D01D7528164AE700305605 /* Sources */,
 				76D01D7628164AE700305605 /* Frameworks */,
 				76D01D7728164AE700305605 /* Resources */,
-				762EF9AD2B1F90C7009E08D8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				76D01DC428164B6E00305605 /* PBXTargetDependency */,
 				762EF9AC2B1F90C7009E08D8 /* PBXTargetDependency */,
+				76AB88232B2ACB7400D8612A /* PBXTargetDependency */,
 			);
 			name = Main;
 			packageProductDependencies = (
@@ -3006,6 +2993,11 @@
 			target = 76C76131291F445B0054D2F3 /* AudioPlayer */;
 			targetProxy = 762EF9AB2B1F90C7009E08D8 /* PBXContainerItemProxy */;
 		};
+		762EF9BB2B21BCD4009E08D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76C76131291F445B0054D2F3 /* AudioPlayer */;
+			targetProxy = 762EF9BA2B21BCD4009E08D8 /* PBXContainerItemProxy */;
+		};
 		76325CD928A13BED003836C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -3116,6 +3108,11 @@
 			platformFilter = ios;
 			target = 7618FCCC28164C5C007573B4 /* SharedUI */;
 			targetProxy = 766E8FE528562FDC00F18779 /* PBXContainerItemProxy */;
+		};
+		76AB88232B2ACB7400D8612A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7650E14A2B17B3FA00D686B8 /* Profile */;
+			targetProxy = 76AB88222B2ACB7400D8612A /* PBXContainerItemProxy */;
 		};
 		76C76145291F4D340054D2F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4509,11 +4506,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		760808B72B279D5B0015A2ED /* Sentry-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
-			productName = "Sentry-Dynamic";
-		};
 		760808BF2B279E490015A2ED /* SentrySwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
@@ -4588,6 +4580,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		765E35232B32458400AB3AF1 /* SentrySwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = SentrySwiftUI;
+		};
+		765E35252B3245C000AB3AF1 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 		769F4B5A2B04C34F009D23C6 /* VLCKitSPM */ = {
 			isa = XCSwiftPackageProductDependency;

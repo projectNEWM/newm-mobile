@@ -5,20 +5,18 @@ import SharedUI
 import shared
 import Fonts
 import Colors
-import AudioPlayer
 import ModuleLinker
 import AVFoundation
 import Kingfisher
 
 struct LibraryView: View {
 	@StateObject private var viewModel = LibraryViewModel()
-	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	
 	public var body: some View {
 		Group {
 			if viewModel.showLoading {
 				loadingView
-			} else if viewModel.tracks.isEmpty {
+			} else if viewModel.showNoSongsMessage {
 				noSongsMessage
 			} else if let error = viewModel.error {
 				errorView(error)
@@ -27,9 +25,6 @@ struct LibraryView: View {
 			}
 		}
 		.refreshable {
-			await viewModel.refresh()
-		}
-		.task {
 			await viewModel.refresh()
 		}
 		.sheet(isPresented: .constant(viewModel.showXPubScanner)) {
@@ -111,10 +106,7 @@ struct LibraryView: View {
 	@ViewBuilder
 	fileprivate func row(for track: NFTTrack) -> some View {
 		Button(action: {
-			if audioPlayer.playQueueIsEmpty {
-				audioPlayer.setPlayQueue(viewModel.tracks, playFirstTrack: false)
-			}
-			audioPlayer.seek(toTrack: track)
+			viewModel.trackTapped(track)
 		}) {
 			HStack {
 				KFImage(URL(string: track.imageUrl))
@@ -128,11 +120,11 @@ struct LibraryView: View {
 					.clipShape(RoundedRectangle(cornerRadius: 4))
 				
 				VStack(alignment: .leading, spacing: 3) {
-					Text(track.name)
+					Text(track.title)
 						.font(Font.interMedium(ofSize: 14))
-						.foregroundStyle(audioPlayer.trackIsPlaying(track) ? NEWMColor.pink() : .white)
+						.foregroundStyle(viewModel.trackIsPlaying(track) ? NEWMColor.pink() : .white)
 					HStack(alignment: .center, spacing: 4) {
-						if audioPlayer.trackIsDownloaded(track) {
+						if viewModel.trackIsDownloaded(track) {
 							Asset.Media.checkboxCircleFill.swiftUIImage
 						}
 						Text(track.artists.first ?? "")
@@ -153,7 +145,7 @@ struct LibraryView: View {
 	
 	@ViewBuilder
 	private func progressView(for track: NFTTrack) -> some View {
-		if let progress = audioPlayer.loadingProgress[track] {
+		if let progress = viewModel.loadingProgress(for: track) {
 			Gauge(value: progress, in: 0...1) { }
 				.gaugeStyle(.accessoryCircularCapacity)
 				.scaleEffect(0.5)
@@ -167,11 +159,11 @@ struct LibraryView: View {
 struct LibraryView_Previews: PreviewProvider {
 	static var previews: some View {
 		Resolver.root = Resolver.mock
-		AudioPlayerModule.shared.registerAllServices()
+//		AudioPlayerModule.shared.registerAllServices()
 		return Group {
 			LibraryView()
 			LibraryView()
-				.row(for: NFTTrack.mockTracks.first!)
+				.row(for: NFTTrackMocksKt.mockTracks.first!)
 				.padding()
 				.previewDisplayName("Row")
 		}

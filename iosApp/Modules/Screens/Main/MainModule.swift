@@ -40,11 +40,11 @@ extension MainModule {
 				}
 				
 				func getNFTTrack(id: String) -> NFTTrack? {
-					NFTTrack.mockTracks.first { $0.id == id }!
+					NFTTrackMocksKt.mockTracks.first { $0.id == id }!
 				}
 
 				func getWalletNFTs() async throws -> [NFTTrack] {
-					NFTTrack.mockTracks
+					NFTTrackMocksKt.mockTracks
 				}
 			}
 		}
