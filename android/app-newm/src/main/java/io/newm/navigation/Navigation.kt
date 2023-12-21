@@ -75,8 +75,6 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
                 onSongPlay = { songId ->
                     navController.navigate(Screen.MusicPlayer.routeOf(songId))
                 },
-                onArtistViewDetails = {},//TODO: Implement on artist view
-                onAlbumViewDetails = {}//TODO: Implement on album view
             )
         }
     }

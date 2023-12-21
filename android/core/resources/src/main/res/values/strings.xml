@@ -61,10 +61,11 @@
     <string name="title_nft_library">NFT Library</string>
     <string name="title_library">Library</string>
     <string name="title_saved_song_list">SAVED SONGS</string>
-    <string name="library_empty_state_label">Nothing here yet!</string>
+    <string name="library_empty_content_title">Your library is empty.</string>
+    <string name="library_empty_content_subtitle">Time to rescue it with your epic music stash! 🎶</string>
     <string name="library_artists">YOUR ARTISTS</string>
     <string name="library_albums">YOUR ALBUMS</string>
-    <string name="library_search">Search</string>
+    <string name="library_search">Hint</string>
     <string name="barcode_scanner_connect_wallet">Connect Wallet</string>
     <string name="barcode_scanner_paste_xpub_key">OR USE THE XPUB KEY</string>
     <string name="barcode_scanner_use_test_xpub_key">Connect Test XPUB Key</string>

@@ -9,3 +9,5 @@ private val minutesSecondsFormatter = SimpleDateFormat("m:ss").apply {
 }
 
 fun Long.millisToMinutesSecondsString(): String = minutesSecondsFormatter.format(Date(this))
+
+fun Long.secondsToMinutesSecondsString(): String = (this * 1000).millisToMinutesSecondsString()
