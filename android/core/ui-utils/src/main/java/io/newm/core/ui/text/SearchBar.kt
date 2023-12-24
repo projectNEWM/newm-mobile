@@ -17,9 +17,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
+import io.newm.core.theme.Gray23
 import io.newm.core.theme.Gray300
 import io.newm.core.theme.Gray500
 import io.newm.core.theme.Gray600
+import io.newm.core.theme.GraySuit
 import io.newm.core.theme.inter
 
 @Composable
@@ -51,13 +53,13 @@ fun SearchBar(
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), //This is to remove the underline when typing
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Gray500,
-            unfocusedBorderColor = Gray500,
-            backgroundColor = Gray600,
-            placeholderColor = Gray300,
-            textColor = Color.White
+            focusedBorderColor = Gray23,
+            unfocusedBorderColor = Gray23,
+            backgroundColor = Gray23,
+            placeholderColor = GraySuit,
+            textColor = GraySuit
         )
     )
 }
