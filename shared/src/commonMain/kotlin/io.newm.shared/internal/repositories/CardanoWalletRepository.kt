@@ -5,13 +5,12 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import io.newm.shared.internal.db.NewmDatabaseWrapper
 import io.newm.shared.internal.services.CardanoWalletAPI
+import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -21,6 +20,7 @@ internal class CardanoWalletRepository(
     private val service: CardanoWalletAPI,
     private val scope: CoroutineScope,
     private val connectWalletManager: ConnectWalletManager,
+    private val policyIdsRepository: NewmPolicyIdsRepository,
     dbWrapper: NewmDatabaseWrapper,
 ) : KoinComponent {
 
@@ -44,7 +44,33 @@ internal class CardanoWalletRepository(
             )
         }
 
-    fun getWalletNFTsFlow(): Flow<List<NFTTrack>> = database.nFTTrackQueries.selectAllTracks()
+
+    fun getWalletCollectableTracks(): Flow<List<NFTTrack>> =
+        combine(
+            getWalletNFTs(),
+            policyIdsRepository.getPolicyIds()
+        ) { walletNFTs, policyIds ->
+            walletNFTs.filter { track ->
+                track.policyId !in policyIds
+            }
+        }
+
+    fun getWalletStreamTokens(): Flow<List<NFTTrack>> = combine(
+        getWalletNFTs(),
+        policyIdsRepository.getPolicyIds()
+    ) { walletNFTs, policyIds ->
+        walletNFTs.filter { track ->
+            track.policyId in policyIds
+        }
+    }
+
+    fun deleteAllNFTs() {
+        database.transaction {
+            database.nFTTrackQueries.deleteAllTracks()
+        }
+    }
+
+    private fun getWalletNFTs(): Flow<List<NFTTrack>> = database.nFTTrackQueries.selectAllTracks()
         .asFlow()
         .mapToList()
         .onStart {
@@ -52,10 +78,9 @@ internal class CardanoWalletRepository(
             if (database.nFTTrackQueries.selectAllTracks().executeAsList().isEmpty()) {
                 logger.d { "No tracks found in DB, fetching from network" }
                 scope.launch {
-                    getWalletNFTs()
+                    fetchNFTTracksFromNetwork()
                 }
             }
-
         }
         .map { tracksFromDb ->
             tracksFromDb.map { track ->
@@ -75,17 +100,9 @@ internal class CardanoWalletRepository(
             }
         }
 
-
-    suspend fun getWalletNFTs(): List<NFTTrack> {
-        val xpub = connectWalletManager.getXpub() ?: throw KMMException("No xpub found")
-        val tracks = fetchNFTTracksFromNetwork(xpub)
-//        cacheNFTTracks(tracks)
-        logger.d { "Result Size: ${tracks.size}" }
-        return tracks
-    }
-
-    private suspend fun fetchNFTTracksFromNetwork(xpub: String): List<NFTTrack> {
+    private suspend fun fetchNFTTracksFromNetwork(): List<NFTTrack> {
         try {
+            val xpub = connectWalletManager.getXpub() ?: throw KMMException("No xpub found")
             val walletNFTs = service.getWalletNFTs(xpub)
             cacheNFTTracks(walletNFTs)
             return walletNFTs
@@ -112,12 +129,6 @@ internal class CardanoWalletRepository(
                     moods = track.moods.joinToString(",")
                 )
             }
-        }
-    }
-
-    fun deleteAllNFTs() {
-        database.transaction {
-            database.nFTTrackQueries.deleteAllTracks()
         }
     }
 }

@@ -17,7 +17,8 @@ import org.koin.core.component.inject
 interface WalletNFTTracksUseCase {
 
     /**
-     * Provides a continuous stream (Flow) of all NFT tracks associated with the wallet.
+     * Provides a continuous stream (Flow) of all NFT tracks associated with the wallet
+     * that are not stream tokens.
      *
      * This method is useful for observing changes in the list of NFT tracks in a reactive manner.
      * It ensures that any updates to the NFT tracks are reflected in real-time.
@@ -26,18 +27,17 @@ interface WalletNFTTracksUseCase {
      */
     fun getAllNFTTracksFlow(): Flow<List<NFTTrack>>
 
+
     /**
-     * Fetches the complete list of NFT tracks associated with the wallet as a single operation.
+     * Provides a continuous stream (Flow) of all NFT tracks associated with the wallet
+     * that ARE stream tokens. Stream tokens are NFTs minted through newm studio or newm sample sales.
      *
-     * This suspending function provides a snapshot of all NFT tracks at the time of the call,
-     * suitable for use cases where a continuous stream is not necessary.
+     * This method is useful for observing changes in the list of NFT tracks in a reactive manner.
+     * It ensures that any updates to the NFT tracks are reflected in real-time.
      *
-     * @return List<NFTTrack> - A list of NFT tracks associated with the wallet.
-     * @throws KMMException if there is an issue in the process of fetching the NFT tracks.
-     * @throws CancellationException if the operation is cancelled during execution.
+     * @return Flow<List<NFTTrack>> - A flow emitting the list of NFT tracks associated with the wallet.
      */
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun getAllNFTTracks(): List<NFTTrack>
+    fun getAllStreamTokens(): Flow<List<NFTTrack>>
 
     /**
      * Retrieves the details of a specific Non-Fungible Token (NFT) track by its unique identifier.
