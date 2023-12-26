@@ -16,7 +16,7 @@ internal class NewmPolicyIdsRepository(
 
     ) : KoinComponent {
 
-    val initialPolicyList = listOf(
+    private val initialPolicyIdList = listOf(
         "46e607b3046a34c95e7c29e47047618dbf5e10de777ba56c590cfd5c",
         "3333c8022c24d2014f02236c082105ebceb73c46c45f94eb99136f92"
     )
@@ -27,7 +27,7 @@ internal class NewmPolicyIdsRepository(
     fun getPolicyIds(): Flow<List<String>> = flow {
         // Emit the locally stored IDs if available
         val storedIds = storage.string(POLICY_IDS_KEY)
-            ?: initialPolicyList.joinToString(",")
+            ?: initialPolicyIdList.joinToString(",")
         if (storedIds.isNotEmpty()) {
             emit(storedIds.split(","))
         }
