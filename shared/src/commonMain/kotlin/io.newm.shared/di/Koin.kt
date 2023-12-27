@@ -12,10 +12,12 @@ import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.internal.repositories.GenresRepository
+import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
 import io.newm.shared.internal.repositories.PlaylistRepository
 import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.internal.services.GenresAPI
+import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import io.newm.shared.internal.services.PlaylistAPI
 import io.newm.shared.internal.services.UserAPI
 import io.newm.shared.login.repository.LogInRepository
@@ -56,13 +58,15 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { UserAPI(get()) }
     single { PlaylistAPI(get()) }
     single { CardanoWalletAPI(get()) }
+    single { NewmPolicyIdsAPI(get()) }
     // Internal Repositories
     single { TokenManager() }
     single { LogInRepository() }
     single { GenresRepository() }
     single { UserRepository() }
     single { PlaylistRepository() }
-    single { CardanoWalletRepository(get(), get(), get(), get()) }
+    single { NewmPolicyIdsRepository(get(), get(), get()) }
+    single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
     single { ConnectWalletManager(get()) }
     // External Use Cases to be consumed outside of KMM
     single<LoginUseCase> { LoginUseCaseImpl(get()) }

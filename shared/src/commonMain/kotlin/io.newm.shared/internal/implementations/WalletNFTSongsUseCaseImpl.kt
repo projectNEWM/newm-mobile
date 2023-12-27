@@ -10,11 +10,11 @@ internal class WalletNFTSongsUseCaseImpl(
 ) : WalletNFTTracksUseCase {
 
     override fun getAllNFTTracksFlow(): Flow<List<NFTTrack>> {
-        return cardanoRepository.getWalletNFTsFlow()
+        return cardanoRepository.getWalletCollectableTracks()
     }
 
-    override suspend fun getAllNFTTracks(): List<NFTTrack> {
-        return cardanoRepository.getWalletNFTs()
+    override fun getAllStreamTokens(): Flow<List<NFTTrack>> {
+        return cardanoRepository.getWalletStreamTokens()
     }
 
     override fun getNFTTrack(id: String): NFTTrack? {
