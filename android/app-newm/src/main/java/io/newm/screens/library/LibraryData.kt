@@ -6,7 +6,8 @@ data class SongModel(
     val artist: String,
     val imageUrl: String,
     val streamUrl: String,
-    val duration: Long
+    val duration: Long,
+    val isDownloaded: Boolean
 )
 
 val savedSongModels = listOf(
@@ -16,7 +17,8 @@ val savedSongModels = listOf(
         artist = "Jules May",
         imageUrl = "https://i.redd.it/o676ax0heme71.png",
         streamUrl = "TBD",
-        duration = 160
+        duration = 160,
+        isDownloaded = true
     ),
     SongModel(
         id = "2",
@@ -24,7 +26,8 @@ val savedSongModels = listOf(
         artist = "Myan Mia",
         imageUrl = "https://static-cse.canva.com/blob/1078769/1600w-fxYFTKLArdY.jpg",
         streamUrl = "TBD",
-        duration = 165
+        duration = 165,
+        isDownloaded = false
     ),
     SongModel(
         id = "3",
@@ -32,7 +35,8 @@ val savedSongModels = listOf(
         artist = "Zac Forland",
         imageUrl = "https://static-cse.canva.com/blob/1078773/1600w-1Nr6gsUndKw.jpg",
         streamUrl = "TBD",
-        duration = 210
+        duration = 210,
+        isDownloaded = true
     ),
     SongModel(
         id = "4",
@@ -40,7 +44,8 @@ val savedSongModels = listOf(
         artist = "Disali Merry",
         imageUrl = "https://i.guim.co.uk/img/media/a561b92bd05b3caf63e0a592d2c9d0b25710bad5/0_302_3200_1920/master/3200.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=7c9b5827f44d8134f6433b9a3241fc69",
         streamUrl = "TBD",
-        duration = 187
+        duration = 187,
+        isDownloaded = false
     ),
     SongModel(
         id = "5",
@@ -48,7 +53,8 @@ val savedSongModels = listOf(
         artist = "Lopesiada",
         imageUrl = "https://i.redd.it/o676ax0heme71.png",
         streamUrl = "TBD",
-        duration = 169
+        duration = 169,
+        isDownloaded = true
     ),
     SongModel(
         id = "6",
@@ -56,7 +62,8 @@ val savedSongModels = listOf(
         artist = "The Arquitect",
         imageUrl = "https://hips.hearstapps.com/hmg-prod/images/soothing-decorating-ideas-dobbies-1648154916.jpg",
         streamUrl = "TBD",
-        duration = 148
+        duration = 148,
+        isDownloaded = true
     ),
     SongModel(
         id = "7",
@@ -64,7 +71,8 @@ val savedSongModels = listOf(
         artist = "Abstract",
         imageUrl = "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?cs=srgb&dl=pexels-fauxels-3183150.jpg&fm=jpg",
         streamUrl = "TBD",
-        duration = 162
+        duration = 162,
+        isDownloaded = true
     ),
     SongModel(
         id = "8",
@@ -72,7 +80,8 @@ val savedSongModels = listOf(
         artist = "Mewmouth",
         imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOf0OWS3dkZael9oZqn7Dx-jii9eLjLzP3Jw&usqp=CAU",
         streamUrl = "TBD",
-        duration = 174
+        duration = 174,
+        isDownloaded = false
     ),
     SongModel(
         id = "9",
@@ -80,7 +89,8 @@ val savedSongModels = listOf(
         artist = "Jules May",
         imageUrl = "https://i.redd.it/o676ax0heme71.png",
         streamUrl = "TBD",
-        duration = 196
+        duration = 196,
+        isDownloaded = true
     ),
     SongModel(
         id = "10",
@@ -88,7 +98,8 @@ val savedSongModels = listOf(
         artist = "Myan Mia",
         imageUrl = "https://static-cse.canva.com/blob/1078769/1600w-fxYFTKLArdY.jpg",
         streamUrl = "TBD",
-        duration = 166
+        duration = 166,
+        isDownloaded = false
     ),
     SongModel(
         id = "11",
@@ -96,7 +107,8 @@ val savedSongModels = listOf(
         artist = "Zac Forland",
         imageUrl = "https://static-cse.canva.com/blob/1078773/1600w-1Nr6gsUndKw.jpg",
         streamUrl = "TBD",
-        duration = 161
+        duration = 161,
+        isDownloaded = false
     ),
     SongModel(
         id = "12",
@@ -104,7 +116,8 @@ val savedSongModels = listOf(
         artist = "Disali Merry",
         imageUrl = "https://i.guim.co.uk/img/media/a561b92bd05b3caf63e0a592d2c9d0b25710bad5/0_302_3200_1920/master/3200.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=7c9b5827f44d8134f6433b9a3241fc69",
         streamUrl = "TBD",
-        duration = 157
+        duration = 157,
+        isDownloaded = false
     ),
     SongModel(
         id = "13",
@@ -112,7 +125,8 @@ val savedSongModels = listOf(
         artist = "Lopesiada",
         imageUrl = "https://i.redd.it/o676ax0heme71.png",
         streamUrl = "TBD",
-        duration = 196
+        duration = 196,
+        isDownloaded = true
     ),
     SongModel(
         id = "14",
@@ -120,7 +134,8 @@ val savedSongModels = listOf(
         artist = "The Arquitect",
         imageUrl = "https://hips.hearstapps.com/hmg-prod/images/soothing-decorating-ideas-dobbies-1648154916.jpg",
         streamUrl = "TBD",
-        duration = 148
+        duration = 148,
+        isDownloaded = true
     ),
     SongModel(
         id = "15",
@@ -128,7 +143,8 @@ val savedSongModels = listOf(
         artist = "Abstract",
         imageUrl = "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?cs=srgb&dl=pexels-fauxels-3183150.jpg&fm=jpg",
         streamUrl = "TBD",
-        duration = 195
+        duration = 195,
+        isDownloaded = false
     ),
     SongModel(
         id = "16",
@@ -136,6 +152,7 @@ val savedSongModels = listOf(
         artist = "Mewmouth",
         imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOf0OWS3dkZael9oZqn7Dx-jii9eLjLzP3Jw&usqp=CAU",
         streamUrl = "TBD",
-        duration = 206
+        duration = 206,
+        isDownloaded = true
     )
 )

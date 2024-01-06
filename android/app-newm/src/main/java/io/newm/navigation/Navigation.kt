@@ -50,11 +50,11 @@ private fun NavGraphBuilder.addHomeTree(
         composable(route = Screen.HomeLanding.route) {
             HomeScreen(
                 onShowProfile = { navController.navigate(Screen.Profile.route) },
-                onThisWeekViewAll = {  }, //TODO: Implement View All screen
+                onThisWeekViewAll = { }, //TODO: Implement View All screen
                 onRecentlyPlayedViewAll = { }, //TODO: Implement View All screen
-                onArtistListViewMore = {  }, //TODO: Implement View More screen
+                onArtistListViewMore = { }, //TODO: Implement View More screen
                 onArtistViewDetails = { }, //TODO: Implement Artist Details screen
-                onMusicViewDetails = {  }, //TODO: Implement Music Details screen
+                onMusicViewDetails = { }, //TODO: Implement Music Details screen
             )
         }
         composable(Screen.Profile.route) {
@@ -72,9 +72,10 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
     ) {
         composable(Screen.LibraryLanding.route) {
             LibraryScreen(
-                onSongPlay = { songId ->
+                onPlaySong = { songId ->
                     navController.navigate(Screen.MusicPlayer.routeOf(songId))
                 },
+                onDownloadSong = {/*TODO*/ }
             )
         }
     }
@@ -84,7 +85,8 @@ private fun NavGraphBuilder.addProfileViewTree(
     onEditProfileClick: () -> Unit
 ) {
     navigation(
-        route = Screen.UserAccountViewRoot.route, startDestination = Screen.UserAccountViewLanding.route
+        route = Screen.UserAccountViewRoot.route,
+        startDestination = Screen.UserAccountViewLanding.route
     ) {
         composable(Screen.UserAccountViewLanding.route) {
             UserAccountScreen(
