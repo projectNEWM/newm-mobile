@@ -27,7 +27,5 @@ internal class ConnectWalletUseCaseImpl(
         return connectWalletManager.isConnected()
     }
 
-    override fun isConnectedFlow(): Flow<Boolean> = flow {
-        emit(connectWalletManager.isConnected())
-    }
+    override fun isConnectedFlow(): Flow<Boolean> = connectWalletManager.connectionState
 }

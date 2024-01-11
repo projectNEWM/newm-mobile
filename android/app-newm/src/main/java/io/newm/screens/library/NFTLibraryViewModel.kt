@@ -9,8 +9,10 @@ import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
+@FlowPreview
 class NFTLibraryViewModel(
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase
@@ -23,21 +25,21 @@ class NFTLibraryViewModel(
             if (isConnected) {
                 combine(
                     queryFlow.debounce(300),
+                    walletNFTTracksUseCase.getAllStreamTokens(),
                     walletNFTTracksUseCase.getAllNFTTracksFlow()
-                ) { query, nftTracks ->
+                ) { query, streamTokenTracks, nftTracks ->
                     when {
-                        nftTracks.isEmpty() -> {
+                        nftTracks.isEmpty() && streamTokenTracks.isEmpty() -> {
                             NFTLibraryState.EmptyWallet
                         }
 
                         else -> {
                             NFTLibraryState.Content(
                                 nftTracks = nftTracks.filter { it.matches(query) },
-                                showZeroResultFound = query.isNotEmpty() && nftTracks.none {
-                                    it.matches(
-                                        query
-                                    )
-                                }
+                                streamTokenTracks = streamTokenTracks.filter { it.matches(query) },
+                                showZeroResultFound = query.isNotEmpty()
+                                        && nftTracks.none { it.matches(query) }
+                                        && streamTokenTracks.none { it.matches(query) }
                             )
                         }
                     }
@@ -63,6 +65,7 @@ sealed interface NFTLibraryState {
     data object EmptyWallet : NFTLibraryState
     data class Content(
         val nftTracks: List<NFTTrack>,
+        val streamTokenTracks: List<NFTTrack>,
         val showZeroResultFound: Boolean
     ) : NFTLibraryState
 
