@@ -50,10 +50,6 @@ class UserAccountViewModel(
     fun connectWallet(xpubKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
             connectWalletUseCase.connect(xpubKey)
-//            _state.value = UserAccountState.Content(
-//                profile = (state.value as UserAccountState.Content).profile,
-//                isWalletConnected = true
-//            )
         }
     }
 }
