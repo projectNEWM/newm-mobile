@@ -65,6 +65,7 @@
     <string name="library_empty_content_subtitle">Time to rescue it with your epic music stash! 🎶</string>
     <string name="library_artists">YOUR ARTISTS</string>
     <string name="library_albums">YOUR ALBUMS</string>
+    <string name="library_download">Download</string>
     <string name="library_search">Hint</string>
     <string name="barcode_scanner_connect_wallet">Connect Wallet</string>
     <string name="barcode_scanner_paste_xpub_key">OR USE THE XPUB KEY</string>
