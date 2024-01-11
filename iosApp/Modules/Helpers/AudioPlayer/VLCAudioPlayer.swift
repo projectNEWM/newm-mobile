@@ -28,7 +28,8 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	private var shuffledPlayQueue: [NFTTrack] = []
 	private var activePlayQueue: [NFTTrack] { shuffle ? shuffledPlayQueue : playQueue }
-	private let fileManager = FileManagerService()
+	@Injected private var nftAudioDownloader: DownloadAudioFromNFTTrackUseCase
+	@Injected private var audioDownloadChecker: AudioHasBeenDownloadedUseCase
 	lazy private var delegate: VLCAudioPlayerDelegate = VLCAudioPlayerDelegate(updateData: { [weak self] in self?.updateData($0) })
 	private var downloadTask: Task<Void, Error>?
 	
@@ -71,7 +72,7 @@ public class VLCAudioPlayer: ObservableObject {
 			guard let currentTrack else {
 				return
 			}
-			let fileUrl = try await fileManager.getFile(forTrack: currentTrack) { [weak self] progress in
+			let fileUrl = try await nftAudioDownloader.getFile(forTrack: currentTrack) { [weak self] progress in
 				guard let self else { return }
 				print("progress for [\(currentTrack.title)]: \(progress)")
 				DispatchQueue.main.async {
@@ -157,7 +158,7 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func trackIsDownloaded(_ track: NFTTrack) -> Bool {
-		fileManager.fileExists(for: URL(string: track.audioUrl)!)
+		audioDownloadChecker.fileExistsForTrack(track: track)
 	}
 	
 	public func cycleRepeatMode() {
@@ -171,10 +172,6 @@ public class VLCAudioPlayer: ObservableObject {
 				return .all
 			}
 		}()
-	}
-	
-	public func removeDownloadedSongs() {
-		fileManager.clearFiles()
 	}
 	
 	fileprivate func updateData(_ aNotification: Foundation.Notification) {

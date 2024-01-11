@@ -2,8 +2,10 @@ import Foundation
 import shared
 import ModuleLinker
 
-public extension FileManagerService {
-	func getFile(forTrack track: NFTTrack, progress: @escaping ProgressHandler) async throws -> URL {
-		try await getFile(for: URL(string: track.audioUrl)!, progress: progress)
+public extension DownloadAudioFromNFTTrackUseCase {
+	func getFile(forTrack track: NFTTrack, progress: @escaping (Double) -> ()) async throws -> URL {
+		try await URL(string: downloadAudioFromNFTTrack(nftTrackId: track.id) {
+			progress($0.doubleValue)
+		})!
 	}
 }

@@ -20,6 +20,7 @@ class LibraryViewModel: ObservableObject {
 	
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
 	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
+	@Injected private var audioFileChecker: any AudioHasBeenDownloadedUseCase
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	@Injected private var logger: any ErrorReporting
 	
@@ -111,6 +112,6 @@ class LibraryViewModel: ObservableObject {
 	}
 	
 	func trackIsDownloaded(_ track: NFTTrack) -> Bool {
-		audioPlayer.trackIsDownloaded(track)
+		audioFileChecker.fileExistsForTrack(track: track)
 	}
 }

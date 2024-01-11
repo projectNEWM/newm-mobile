@@ -98,6 +98,6 @@ final class ProfileViewModel: ObservableObject {
 		connectWalletUseCase.disconnect()
 		let audioPlayer = Resolver.resolve(VLCAudioPlayer.self)
 		audioPlayer.setPlayQueue([])
-		audioPlayer.removeDownloadedSongs()
+//		audioPlayer.removeDownloadedSongs()
 	}
 }

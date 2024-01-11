@@ -2,7 +2,9 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.internal.TokenManager
+import io.newm.shared.internal.implementations.AudioHasBeenDownloadedUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
+import io.newm.shared.internal.implementations.DownloadAudioFromNFTTrackUseCaseImpl
 import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
 import io.newm.shared.internal.implementations.LoginUseCaseImpl
 import io.newm.shared.internal.implementations.SignupUseCaseImpl
@@ -11,6 +13,7 @@ import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.repositories.ConnectWalletManager
+import io.newm.shared.internal.repositories.FileRepository
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.PlaylistRepository
 import io.newm.shared.internal.repositories.UserRepository
@@ -20,7 +23,9 @@ import io.newm.shared.internal.services.PlaylistAPI
 import io.newm.shared.internal.services.UserAPI
 import io.newm.shared.login.repository.LogInRepository
 import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.public.usecases.AudioHasBeenDownloadedUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.DownloadAudioFromNFTTrackUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
@@ -70,8 +75,11 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
+    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
+    single<FileRepository> { FileRepository() }
+    single<DownloadAudioFromNFTTrackUseCase> { DownloadAudioFromNFTTrackUseCaseImpl() }
+    single<AudioHasBeenDownloadedUseCase> { AudioHasBeenDownloadedUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

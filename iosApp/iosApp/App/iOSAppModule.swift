@@ -46,6 +46,15 @@ extension iOSAppModule {
 		Resolver.register {
 			UserDetailsUseCaseProvider().get() as UserDetailsUseCase
 		}
+		
+		Resolver.register {
+			DownloadAudioFromNFTTrackUseCaseProvider().get() as DownloadAudioFromNFTTrackUseCase
+		}
+
+		Resolver.register {
+			AudioHasBeenDownloadedUseCaseProvider().get() as AudioHasBeenDownloadedUseCase
+		}
+		
 		modules.forEach { $0.registerAllServices() }
 	}
 
