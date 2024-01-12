@@ -2,6 +2,7 @@ package io.newm.shared.public.usecases
 
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.error.KMMException
+import kotlinx.coroutines.flow.Flow
 import kotlin.coroutines.cancellation.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -26,9 +27,22 @@ interface UserDetailsUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     suspend fun fetchLoggedInUserDetails(): User
+
+    /**
+     * Fetches the details of the currently logged-in user.
+     *
+     * This method is responsible for retrieving comprehensive information about the user who is currently
+     * authenticated in the application. It returns a [User] object containing the user details.
+     *
+     * @return User - An object containing details of the currently authenticated user.
+     * @throws KMMException if there is an issue in the process of fetching user details, such as network errors.
+     * @throws CancellationException if the operation is cancelled during execution.
+     */
+    @Throws(KMMException::class, CancellationException::class)
+    fun fetchLoggedInUserDetailsFlow(): Flow<User?>
 }
 
-class UserDetailsUseCaseProvider(): KoinComponent {
+class UserDetailsUseCaseProvider() : KoinComponent {
     private val userDetailsUseCase: UserDetailsUseCase by inject()
 
     fun get(): UserDetailsUseCase {

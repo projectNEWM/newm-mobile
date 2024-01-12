@@ -1,3 +1,5 @@
+@file:OptIn(FlowPreview::class)
+
 package io.newm.screens.library
 
 import androidx.compose.foundation.background
@@ -52,6 +54,7 @@ import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.public.models.NFTTrack
+import kotlinx.coroutines.FlowPreview
 import org.koin.compose.koinInject
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
@@ -87,7 +90,8 @@ fun NFTLibraryScreen(
             is NFTLibraryState.Content -> {
                 val content = state as NFTLibraryState.Content
                 NFTTracks(
-                    tracks = content.nftTracks,
+                    nftTracks = content.nftTracks,
+                    streamTokenTracks = content.streamTokenTracks,
                     showZeroResultsFound = content.showZeroResultFound,
                     onQueryChange = viewModel::onQueryChange,
                     onPlaySong = onPlaySong
@@ -103,7 +107,8 @@ fun NFTLibraryScreen(
 
 @Composable
 fun NFTTracks(
-    tracks: List<NFTTrack>,
+    nftTracks: List<NFTTrack>,
+    streamTokenTracks: List<NFTTrack>,
     showZeroResultsFound: Boolean,
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit
@@ -143,7 +148,17 @@ fun NFTTracks(
             }
             when {
                 showZeroResultsFound -> ZeroSearchResults()
-                tracks.isNotEmpty() -> {
+                nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
+                    Text(
+                        text = "Stream Tokens",
+                        modifier = Modifier.padding(vertical = 16.dp),
+                        style = TextStyle(
+                            fontFamily = inter,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = White
+                        )
+                    )
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
@@ -153,12 +168,37 @@ fun NFTTracks(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) {
-                            tracks.forEach { song ->
+                            streamTokenTracks.forEach { song ->
+                                RowSongItem(song = song, onClick = onPlaySong)
+                            }
+                        }
+                    }
+                    Text(
+                        text = "NFT Tracks",
+                        modifier = Modifier.padding(vertical = 16.dp),
+                        style = TextStyle(
+                            fontFamily = inter,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = White
+                        )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Gray16)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        ) {
+                            nftTracks.forEach { song ->
                                 RowSongItem(song = song, onClick = onPlaySong)
                             }
                         }
                     }
                 }
+
             }
         }
         MiniPlayer()
@@ -211,11 +251,12 @@ private fun RowSongItem(
         }
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = song.duration.secondsToMinutesSecondsString(),
+            text = "x${song.amount}",
             fontFamily = inter,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
-            color = GraySuit
+            color = GraySuit,
+            minLines = 1,
         )
     }
 }

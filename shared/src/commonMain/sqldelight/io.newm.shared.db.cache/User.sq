@@ -1,0 +1,67 @@
+CREATE TABLE User (
+    id TEXT NOT NULL PRIMARY KEY,
+    createdAt TEXT NOT NULL,
+    oauthType TEXT,
+    oauthId TEXT,
+    firstName TEXT,
+    lastName TEXT,
+    nickname TEXT,
+    pictureUrl TEXT,
+    bannerUrl TEXT,
+    websiteUrl TEXT,
+    twitterUrl TEXT,
+    instagramUrl TEXT,
+    location TEXT,
+    role TEXT,
+    genre TEXT,
+    biography TEXT,
+    walletAddress TEXT,
+    email TEXT,
+    companyName TEXT,
+    companyLogoUrl TEXT,
+    companyIpRights TEXT,
+    verificationStatus TEXT,
+    currentPassword TEXT,
+    newPassword TEXT,
+    confirmPassword TEXT
+);
+
+getUserById:
+SELECT *
+FROM User
+WHERE id = ?;
+
+getAllUsers:
+SELECT *
+FROM User;
+
+getAnyUser:
+SELECT *
+FROM User
+LIMIT 1;
+
+insertUser:
+INSERT INTO User (
+    id,
+    createdAt,
+    oauthType,
+    oauthId,
+    firstName,
+    lastName,
+    nickname,
+    pictureUrl,
+    bannerUrl,
+    websiteUrl,
+    twitterUrl,
+    instagramUrl,
+    location,
+    role,
+    genre,
+    biography,
+    walletAddress,
+    email,
+    companyName,
+    companyLogoUrl,
+    companyIpRights,
+    verificationStatus
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

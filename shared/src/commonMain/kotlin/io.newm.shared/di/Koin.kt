@@ -63,7 +63,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { TokenManager() }
     single { LogInRepository() }
     single { GenresRepository() }
-    single { UserRepository() }
+    single { UserRepository(get(), get()) }
     single { PlaylistRepository() }
     single { NewmPolicyIdsRepository(get(), get(), get()) }
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
