@@ -169,6 +169,11 @@
 		76764AE7281A28C60095BEF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7618FD2A28164CD5007573B4 /* Assets.xcassets */; };
 		76764AEB281A2DBC0095BEF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76D01D9628164B0400305605 /* Assets.xcassets */; };
 		76764AF2281CF4F60095BEF9 /* PlaylistListModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76764AF0281CF4EA0095BEF9 /* PlaylistListModule.swift */; };
+		76829E1A2B54EB30007BCED5 /* NEWMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76829E192B54EB30007BCED5 /* NEWMError.swift */; };
+		76829E1D2B5773FA007BCED5 /* VLCAudioPlayer+MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76829E1C2B5773FA007BCED5 /* VLCAudioPlayer+MediaPlayer.swift */; };
+		76829E1F2B5774A0007BCED5 /* Notification+VLCMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76829E1E2B5774A0007BCED5 /* Notification+VLCMedia.swift */; };
+		76829E212B5774C0007BCED5 /* NFTTrack+VLCMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76829E202B5774C0007BCED5 /* NFTTrack+VLCMedia.swift */; };
+		76829E232B5775D7007BCED5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 76829E222B5775D7007BCED5 /* Kingfisher */; };
 		7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */; };
 		768B49912903B89F0099911D /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B49822903B89F0099911D /* LibraryViewModel.swift */; };
 		768B49932903B89F0099911D /* LibraryViewActionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B49852903B89F0099911D /* LibraryViewActionHandling.swift */; };
@@ -800,6 +805,10 @@
 		766E8FF22856418A00F18779 /* HomeViewUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewUIModel.swift; sourceTree = "<group>"; };
 		76764AE1281A19720095BEF9 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		76764AF0281CF4EA0095BEF9 /* PlaylistListModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListModule.swift; sourceTree = "<group>"; };
+		76829E192B54EB30007BCED5 /* NEWMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEWMError.swift; sourceTree = "<group>"; };
+		76829E1C2B5773FA007BCED5 /* VLCAudioPlayer+MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VLCAudioPlayer+MediaPlayer.swift"; sourceTree = "<group>"; };
+		76829E1E2B5774A0007BCED5 /* Notification+VLCMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+VLCMedia.swift"; sourceTree = "<group>"; };
+		76829E202B5774C0007BCED5 /* NFTTrack+VLCMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTTrack+VLCMedia.swift"; sourceTree = "<group>"; };
 		7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		768B49822903B89F0099911D /* LibraryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
 		768B49852903B89F0099911D /* LibraryViewActionHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewActionHandling.swift; sourceTree = "<group>"; };
@@ -1029,6 +1038,7 @@
 			files = (
 				7650E1342B16056400D686B8 /* libFiles.a in Frameworks */,
 				76C76159291F5FC70054D2F3 /* SharedUI.framework in Frameworks */,
+				76829E232B5775D7007BCED5 /* Kingfisher in Frameworks */,
 				76AB881D2B2AC6D100D8612A /* shared.xcframework in Frameworks */,
 				769F4B5B2B04C34F009D23C6 /* VLCKitSPM in Frameworks */,
 				76C7614E291F56DF0054D2F3 /* Resolver in Frameworks */,
@@ -1660,6 +1670,24 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		76829E162B54972C007BCED5 /* VLCAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				7669071229088D2A00D9F989 /* VLCAudioPlayer.swift */,
+			);
+			path = VLCAudioPlayer;
+			sourceTree = "<group>";
+		};
+		76829E1B2B576F4F007BCED5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				76829E202B5774C0007BCED5 /* NFTTrack+VLCMedia.swift */,
+				76829E1E2B5774A0007BCED5 /* Notification+VLCMedia.swift */,
+				76829E1C2B5773FA007BCED5 /* VLCAudioPlayer+MediaPlayer.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		768B497E2903B89F0099911D /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -1800,10 +1828,11 @@
 		76C76133291F445B0054D2F3 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				76C76156291F5F400054D2F3 /* PlayButton.swift */,
-				7669071229088D2A00D9F989 /* VLCAudioPlayer.swift */,
 				76C7614B291F56AA0054D2F3 /* AudioPlayerModule.swift */,
+				76C76156291F5F400054D2F3 /* PlayButton.swift */,
+				76829E1B2B576F4F007BCED5 /* Extensions */,
 				76C76148291F55F20054D2F3 /* MockData */,
+				76829E162B54972C007BCED5 /* VLCAudioPlayer */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -1829,6 +1858,7 @@
 			children = (
 				76CE046629EE3F30002AF94B /* Binding.swift */,
 				766B1EC62A15C74B0083DE3E /* KeyboardObserver.swift */,
+				76829E192B54EB30007BCED5 /* NEWMError.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2358,6 +2388,7 @@
 			packageProductDependencies = (
 				76C7614D291F56DF0054D2F3 /* Resolver */,
 				769F4B5A2B04C34F009D23C6 /* VLCKitSPM */,
+				76829E222B5775D7007BCED5 /* Kingfisher */,
 			);
 			productName = AudioPlayer;
 			productReference = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */;
@@ -2852,8 +2883,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				76C7613D291F447C0054D2F3 /* VLCAudioPlayer.swift in Sources */,
+				76829E212B5774C0007BCED5 /* NFTTrack+VLCMedia.swift in Sources */,
 				76C7614C291F56AA0054D2F3 /* AudioPlayerModule.swift in Sources */,
+				76829E1D2B5773FA007BCED5 /* VLCAudioPlayer+MediaPlayer.swift in Sources */,
 				76C76158291F5FAB0054D2F3 /* PlayButton.swift in Sources */,
+				76829E1F2B5774A0007BCED5 /* Notification+VLCMedia.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2895,6 +2929,7 @@
 				76CE046729EE3F30002AF94B /* Binding.swift in Sources */,
 				760C2C7528165F450030ACF4 /* NowPlaying.swift in Sources */,
 				76DC3A1928167276004D5021 /* UIImage+Extensions.swift in Sources */,
+				76829E1A2B54EB30007BCED5 /* NEWMError.swift in Sources */,
 				761837AB294A706F0033250B /* Artist.swift in Sources */,
 				760C2C7328165DE80030ACF4 /* SwiftUIView+Erased.swift in Sources */,
 				760808CC2B279F8D0015A2ED /* ErrorReporting.swift in Sources */,
@@ -4593,6 +4628,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 760808B62B279D5B0015A2ED /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
+		};
+		76829E222B5775D7007BCED5 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7650E1352B1667AB00D686B8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		769F4B5A2B04C34F009D23C6 /* VLCKitSPM */ = {
 			isa = XCSwiftPackageProductDependency;

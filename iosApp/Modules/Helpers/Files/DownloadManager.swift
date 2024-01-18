@@ -3,9 +3,13 @@ import Combine
 import ModuleLinker
 import Resolver
 
+enum DownloadManagerError: Error {
+	case canceledUnknownURL(URL)
+}
+
 class DownloadManager: NSObject, ObservableObject {
 	@Published private(set) var downloads: [URL: URLSessionDownloadTask] = [:]
-	private var progressHandlers: [URL: (Double) -> Void] = [:]
+	@Published private(set) var progressHandlers: [URL: (Double) -> Void] = [:]
 	
 	private var urlSession: URLSession!
 	private var downloadCompletionHandlers: [URL: (Result<URL, Error>) -> Void] = [:]
@@ -27,23 +31,44 @@ class DownloadManager: NSObject, ObservableObject {
 		task.resume()
 	}
 	
+	@discardableResult
 	func download(url: URL, progressHandler: @escaping (Double) -> Void) async throws -> URL {
 		try await withCheckedThrowingContinuation { [weak self] continuation in
 			guard let self else { fatalError() }
-			download(url: url, completion: { result in
+			download(url: url, completion: { [weak self] result in
 				continuation.resume(with: result)
+				self?.objectWillChange.send()
 			}, progressHandler: progressHandler)
 		}
 	}
 	
+	func cancelDownload(url: URL) {
+		print(#function)
+		guard let download = downloads[url] else {
+			logger.logError(DownloadManagerError.canceledUnknownURL(url))
+			return
+		}
+		download.cancel()
+		objectWillChange.send()
+	}
+	
+	private func cleanUpDownload(url: URL) {
+		downloadCompletionHandlers.removeValue(forKey: url)
+		progressHandlers.removeValue(forKey: url)
+		downloads.removeValue(forKey: url)
+		objectWillChange.send()
+	}
+	
 	private func handleDownloadCompletion(remoteUrl: URL, tmpLocalUrl: URL?, error: Error?) {
 		defer {
-			downloadCompletionHandlers.removeValue(forKey: remoteUrl)
-			downloads.removeValue(forKey: remoteUrl)
+			cleanUpDownload(url: remoteUrl)
 		}
-		
-		if let error = error {
-			logger.logError(error)
+
+		if let error {
+			let userDidCancelCode = -999
+			if (error as NSError).code != userDidCancelCode {
+				logger.logError(error)
+			}
 			downloadCompletionHandlers[remoteUrl]?(.failure(error))
 			return
 		}
@@ -75,6 +100,18 @@ extension DownloadManager: URLSessionDownloadDelegate {
 	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
 		guard let url = downloadTask.originalRequest?.url else { return }
 		let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
+		print("BYTES WRITTEN: \t\(totalBytesWritten) out of \(totalBytesExpectedToWrite)\n")
 		progressHandlers[url]?(progress)
+	}
+	
+	func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+		guard let url = task.originalRequest?.url else { return }
+		/// If there's no error, then urlSession(session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) will call handleDownloadCompletion above.
+		if let error {
+			handleDownloadCompletion(remoteUrl: url, tmpLocalUrl: nil, error: error)
+		} else {
+			/// This gets called in handleDownloadCompletion if there's an error.
+			objectWillChange.send()
+		}
 	}
 }

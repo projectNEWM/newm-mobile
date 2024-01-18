@@ -3,7 +3,15 @@ import shared
 import ModuleLinker
 
 public extension FileManagerService {
-	func getFile(forTrack track: NFTTrack, progress: @escaping ProgressHandler) async throws -> URL {
-		try await getFile(for: URL(string: track.audioUrl)!, progress: progress)
+	func getPlaybackURL(forTrack track: NFTTrack) async throws -> URL {
+		getPlaybackURL(for: URL(string: track.audioUrl)!)
+	}
+	
+	func download(track: NFTTrack, progressHandler: @escaping (Double) -> Void) async throws {
+		try await download(url: URL(string: track.audioUrl)!, progressHandler: progressHandler)
+	}
+	
+	func cancelDownload(track: NFTTrack) {
+		cancelDownload(url: URL(string: track.audioUrl)!)
 	}
 }

@@ -9,17 +9,23 @@ public struct PlayButton: View {
 	public init() {}
 	
 	public var body: some View {
-		Button {
-			if audioPlayer.isPlaying {
-				audioPlayer.pause()
+		Group {
+			if audioPlayer.state == .buffering, audioPlayer.isPlaying == false {
+				ProgressView()
 			} else {
-				audioPlayer.play()
-			}
-		} label: {
-			if audioPlayer.isPlaying {
-				Image(systemName: "pause.fill")
-			} else {
-				Image(systemName: "play.fill")
+				Button {
+					if audioPlayer.isPlaying {
+						audioPlayer.pause()
+					} else {
+						audioPlayer.play()
+					}
+				} label: {
+					if audioPlayer.isPlaying {
+						Image(systemName: "pause.fill")
+					} else {
+						Image(systemName: "play.fill")
+					}
+				}
 			}
 		}
 		.tint(.white)

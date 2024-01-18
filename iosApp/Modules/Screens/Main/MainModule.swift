@@ -31,20 +31,16 @@ extension MainModule {
 		mockResolver.register {
 			return MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
 			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
-				func __getAllNFTTracks(completionHandler: @escaping ([NFTTrack]?, Error?) -> Void) {
-					fatalError()
-				}
-
-				func getAllNFTTracksFlow() -> shared.SkieSwiftFlow<[NFTTrack]> {
-					fatalError()
+				func getNFTTrack(id: String) -> NFTTrack? {
+					NFTTrackMocksKt.mockTracks.first { $0.id == id }
 				}
 				
-				func getNFTTrack(id: String) -> NFTTrack? {
-					NFTTrackMocksKt.mockTracks.first { $0.id == id }!
-				}
-
-				func getWalletNFTs() async throws -> [NFTTrack] {
+				func getAllNFTTracks() async throws -> [NFTTrack] {
 					NFTTrackMocksKt.mockTracks
+				}
+				
+				func getAllNFTTracksFlow() -> Kotlinx_coroutines_coreFlow {
+					fatalError()
 				}
 			}
 		}
