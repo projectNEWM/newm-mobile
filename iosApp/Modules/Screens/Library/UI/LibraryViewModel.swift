@@ -77,7 +77,7 @@ class LibraryViewModel: ObservableObject {
 			self.tracks = tracks
 		} catch {
 			logger.logError(error)
-			self.errors.append(error: NEWMError(errorDescription: "An error occured.  Please try again."))
+			self.errors.append(NEWMError(errorDescription: "An error occured.  Please try again."))
 		}
 	}
 	
@@ -101,7 +101,7 @@ class LibraryViewModel: ObservableObject {
 			} catch {
 				let userDidCancelCode = -999
 				if (error as NSError).code != userDidCancelCode {
-					self.errors.append(error: NEWMError(errorDescription: "Could not download \"\(track.title)\".  Please try again later."))
+					self.errors.append(NEWMError(errorDescription: "Could not download \"\(track.title)\".  Please try again later."))
 				}
 			}
 		}

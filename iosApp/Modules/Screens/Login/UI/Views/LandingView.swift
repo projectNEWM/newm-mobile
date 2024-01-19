@@ -5,12 +5,14 @@ import ModuleLinker
 import GoogleSignInSwift
 import GoogleSignIn
 import AuthenticationServices
+import Resolver
 
 public struct LandingView: View {
 	@StateObject var viewModel = LandingViewModel()
 	@FocusState var isTextFieldFocused: Bool
 	
 	private let socialSignInButtonHeight: CGFloat = 40
+	@Injected private var logger: ErrorReporting
 		
 	public var body: some View {
 		ZStack {
@@ -36,9 +38,15 @@ public struct LandingView: View {
 						}
 					}
 			}
-			.alert(String.error, isPresented: isPresent($viewModel.error), actions: {}) {
-				Text(viewModel.error ?? .unknownError)
-			}
+			.alert(String.error, isPresented: .constant(viewModel.errors.hasError), presenting: viewModel.errors.currentError, actions: { error in
+				Button {
+					viewModel.errors.popFirstError()
+				} label: {
+					Text("Ok")
+				}
+			}, message: { error in
+				Text(error.errorDescription ?? error.localizedDescription)
+			})
 			
 			if viewModel.isLoading {
 				LoadingToast()
@@ -58,7 +66,6 @@ extension LandingView {
 			Group {
 				loginButton
 				createAccountButton
-//				facebookLoginButton
 				googleSignInButton
 				signInWithAppleButton
 			}
@@ -92,16 +99,6 @@ extension LandingView {
 		.borderOverlay(color: NEWMColor.grey500(), radius: 4, width: 2)
 	}
 	
-//	@ViewBuilder
-//	private var facebookLoginButton: some View {
-//		FacebookLoginButton(logInCompletionHandler: viewModel.handleFacebookLogin, logOutCompletionHandler: viewModel.handleFacebookLogout)
-//			.frame(height: socialSignInButtonHeight)
-//			.addSidePadding()
-//			.background(Color(red: 24 / 255, green: 119 / 255, blue: 242 / 255))
-//			.cornerRadius(4)
-//			.padding(.top)
-//	}
-	
 	@ViewBuilder
 	private var signInWithAppleButton: some View {
 		SignInWithAppleButton(.signIn) { request in
@@ -115,7 +112,7 @@ extension LandingView {
 	
 	private var rootViewController: UIViewController? {
 		guard let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
-			//TODO: log error
+			logger.logError("\(#file) could not get root view controller for SwiftUI")
 			return nil
 		}
 		return rootVC
@@ -123,20 +120,24 @@ extension LandingView {
 	
 	@ViewBuilder
 	private var googleSignInButton: some View {
-		if let rootVC = rootViewController {
-			GoogleSignInButton {
+		GoogleSignInButton {
+			if let rootVC = rootViewController {
 				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC, completion: viewModel.handleGoogleSignIn)
 			}
-			.frame(height: socialSignInButtonHeight)
-		} else {
-			EmptyView()
 		}
+		.frame(height: socialSignInButtonHeight)
 	}
 }
 
 struct LandingView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView()
-			.preferredColorScheme(.dark)
+		let vm = LandingViewModel()
+		vm.errors.append(NEWMError(errorDescription: "You fucked up big time."))
+		return Group {
+			LandingView()
+			LandingView(viewModel: vm)
+				.previewDisplayName("Error")
+		}
+		.preferredColorScheme(.dark)
 	}
 }

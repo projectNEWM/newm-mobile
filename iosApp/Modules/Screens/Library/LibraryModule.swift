@@ -12,7 +12,7 @@ public final class LibraryModule: Module {
 		}
 		
 		Resolver.register {
-			WalletNFTSongsUseCaseProvider().get() as WalletNFTTracksUseCase
+			WalletNFTTracksUseCaseProvider().get() as WalletNFTTracksUseCase
 		}
 		
 		Resolver.register {
@@ -26,25 +26,25 @@ extension LibraryModule {
     public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
 			return MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
-			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {				
-				func __getAllNFTTracks() async throws -> [NFTTrack] {
-					fatalError()
-				}
-				
-				func getAllNFTTracks(completionHandler: @escaping ([NFTTrack]?, Error?) -> Void) {
-					completionHandler(NFTTrackMocksKt.mockTracks, nil)
-				}
-				
-				func getNFTTrack(id: String) -> NFTTrack? {
-					NFTTrackMocksKt.mockTracks.first { $0.id == id }!
-				}
-				
+			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 				func getAllNFTTracksFlow() -> Kotlinx_coroutines_coreFlow {
 					fatalError()
 				}
-
-				func getWalletNFTs() async throws -> [NFTTrack] {
+				
+				func getAllNFTTracks() async throws -> [NFTTrack] {
 					NFTTrackMocksKt.mockTracks
+				}
+				
+				func getAllStreamTokensFlow() -> Kotlinx_coroutines_coreFlow {
+					fatalError()
+				}
+				
+				func getAllStreamTokens() async throws -> [NFTTrack] {
+					NFTTrackMocksKt.mockTracks
+				}
+								
+				func getNFTTrack(id: String) -> NFTTrack? {
+					NFTTrackMocksKt.mockTracks.first { $0.id == id }!
 				}
 			}
 		}

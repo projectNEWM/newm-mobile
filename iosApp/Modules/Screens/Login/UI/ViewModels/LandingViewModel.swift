@@ -10,7 +10,7 @@ import shared
 class LandingViewModel: ObservableObject {
 	@Published var navPath = [LandingRoute]()
 	
-	@Published var error: String?
+	@Published var errors = ErrorSet()
 	@Published var isLoading: Bool = false
 	
 	@Published var confirmationCode = ""
@@ -146,7 +146,7 @@ class LandingViewModel: ObservableObject {
 				let identityToken = (authResults.credential as? ASAuthorizationAppleIDCredential)?.identityToken,
 				let token = String(data: identityToken, encoding: .utf8)
 			else {
-				self.error = "Could not sign in with Apple"
+				self.errors.append(NEWMError(errorDescription: "Could not sign in with Apple"))
 				return
 			}
 			isLoading = true

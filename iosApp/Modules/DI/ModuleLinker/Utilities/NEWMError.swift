@@ -1,28 +1,35 @@
 import Foundation
+import shared
 
 public struct NEWMError: LocalizedError {
 	public var errorDescription: String?
 	public var failureReason: String?
-	public var helpAnchor: String?
 	public var recoverySuggestion: String?
+	public var underlyingError: Error?
 	
-	public init(errorDescription: String? = nil, failureReason: String? = nil, helpAnchor: String? = nil, recoverySuggestion: String? = nil) {
+	public init(errorDescription: String? = nil, failureReason: String? = nil, recoverySuggestion: String? = nil, underlyingError: Error? = nil) {
 		self.errorDescription = errorDescription
 		self.failureReason = failureReason
-		self.helpAnchor = helpAnchor
 		self.recoverySuggestion = recoverySuggestion
+		self.underlyingError = underlyingError
 	}
 }
 
 public extension Error {
 	var newmError: NEWMError {
-		NEWMError(errorDescription: localizedDescription)
+		NEWMError(errorDescription: localizedDescription, underlyingError: self)
 	}
 }
 
 public extension String {
 	var newmError: NEWMError {
 		NEWMError(errorDescription: self)
+	}
+}
+
+public extension KMMException {
+	var newmError: NEWMError {
+		NEWMError(errorDescription: message, underlyingError: self as? Error)
 	}
 }
 
@@ -33,10 +40,14 @@ public struct ErrorSet {
 		errors.first
 	}
 	
+	public var hasError: Bool {
+		currentError != nil
+	}
+	
 	public init() {}
 		
 	mutating
-	public func append(error: NEWMError) {
+	public func append(_ error: NEWMError) {
 		errors.append(error)
 	}
 	

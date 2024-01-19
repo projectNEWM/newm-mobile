@@ -9,7 +9,7 @@ extension LandingViewModel {
 		if let error = error.kmmException {
 			handleKotlinError(error)
 		} else {
-			self.error = error.localizedDescription
+			self.errors.append(error.newmError)
 		}
 	}
 	
@@ -22,7 +22,7 @@ extension LandingViewModel {
 		default:
 			break
 		}
-		self.error = kmmException.message
+		errors.append(kmmException.newmError)
 	}
 	
 	private func handleRegisterException(_ exception: RegisterException) {
