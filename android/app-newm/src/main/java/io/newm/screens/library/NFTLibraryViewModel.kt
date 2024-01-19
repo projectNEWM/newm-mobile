@@ -25,7 +25,7 @@ class NFTLibraryViewModel(
             if (isConnected) {
                 combine(
                     queryFlow.debounce(300),
-                    walletNFTTracksUseCase.getAllStreamTokens(),
+                    walletNFTTracksUseCase.getAllStreamTokensFlow(),
                     walletNFTTracksUseCase.getAllNFTTracksFlow()
                 ) { query, streamTokenTracks, nftTracks ->
                     when {
