@@ -13,23 +13,39 @@ struct LibraryView: View {
 	@StateObject private var viewModel = LibraryViewModel()
 	
 	public var body: some View {
-		Group {
-			if viewModel.showLoading {
-				loadingView
-			} else if viewModel.showNoSongsMessage {
-				noSongsMessage
-			} else if let error = viewModel.error {
-				errorView(error)
-			} else {
-				loadedView
+		NavigationView {
+			Group {
+				if viewModel.showLoading {
+					loadingView
+				} else if viewModel.showNoSongsMessage {
+					noSongsMessage
+				} else {
+					loadedView
+				}
 			}
-		}
-		.refreshable {
-			await viewModel.refresh()
-		}
-		.sheet(isPresented: .constant(viewModel.showXPubScanner)) {
-			XPubScannerView {
-				viewModel.xPubScanned()
+			.refreshable {
+				await viewModel.refresh()
+			}
+			.sheet(isPresented: .constant(viewModel.showXPubScanner)) {
+				XPubScannerView {
+					viewModel.xPubScanned()
+				}
+			}
+			.alert(isPresented: .constant(viewModel.errors.currentError != nil), error: viewModel.errors.currentError) {
+				Button {
+					viewModel.errors.popFirstError()
+				} label: {
+					Text("Ok")
+				}
+			}
+			.navigationBarTitleDisplayMode(.inline)
+			.toolbar {
+				ToolbarItem(placement: .navigation) {
+					Text(String.library)
+						.font(.newmTitle1)
+						.foregroundStyle(Gradients.libraryGradient.gradient)
+						.padding(.bottom, -100)
+				}
 			}
 		}
 	}
@@ -77,17 +93,6 @@ struct LibraryView: View {
 	}
 	
 	@ViewBuilder
-	private func errorView(_ error: String) -> some View {
-		ScrollView {
-			VStack {
-				Spacer()
-				Text(error)
-				Spacer()
-			}
-		}
-	}
-	
-	@ViewBuilder
 	private var loadedView: some View {
 		NavigationView {
 			List {
@@ -96,6 +101,13 @@ struct LibraryView: View {
 						.frame(height: 40)
 						.padding(.leading, -6)
 						.padding([.bottom, .top], -1)
+						.swipeActions(allowsFullSwipe: false) {
+							Button {
+								viewModel.swipeAction(for: audioTrack)
+							} label: {
+								Text(viewModel.swipeText(for: audioTrack))
+							}
+						}
 				}
 				.listRowSeparator(.hidden)
 			}
@@ -146,9 +158,13 @@ struct LibraryView: View {
 	@ViewBuilder
 	private func progressView(for track: NFTTrack) -> some View {
 		if let progress = viewModel.loadingProgress(for: track) {
-			Gauge(value: progress, in: 0...1) { }
-				.gaugeStyle(.accessoryCircularCapacity)
-				.scaleEffect(0.5)
+			if 0 < progress, progress < 1 {
+				Gauge(value: progress, in: 0...1) { }
+					.gaugeStyle(.accessoryCircularCapacity)
+					.scaleEffect(0.5)
+			} else {
+				ProgressView()
+			}
 		} else {
 			EmptyView()
 		}
@@ -159,7 +175,6 @@ struct LibraryView: View {
 struct LibraryView_Previews: PreviewProvider {
 	static var previews: some View {
 		Resolver.root = Resolver.mock
-//		AudioPlayerModule.shared.registerAllServices()
 		return Group {
 			LibraryView()
 			LibraryView()

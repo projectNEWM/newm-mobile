@@ -2,20 +2,26 @@ import Foundation
 import Combine
 import ModuleLinker
 import shared
+import Resolver
 
 public class FileManagerService: ObservableObject {
 	public typealias ProgressHandler = (Double) -> Void
 
-	private let downloadManager = DownloadManager()
+	let downloadManager = DownloadManager()
 	
-	public init() {}
+	@Injected private var errorLogger: ErrorReporting
+	private var cancels: Set<AnyCancellable> = []
 	
-	public func getFile(for downloadURL: URL, progress: @escaping ProgressHandler) async throws -> URL {
-		if fileExists(for: downloadURL) {
-			return fileURL(forDownloadURL: downloadURL)
+	public init() {
+		downloadManager.objectWillChange.sink { [weak self] in self?.objectWillChange.send() }.store(in: &cancels)
+	}
+	
+	/// Returns the downloaded URL if available, otherwise the remote URL.
+	public func getPlaybackURL(for downloadURL: URL) -> URL {
+		return if fileExists(for: downloadURL) {
+			fileURL(forDownloadURL: downloadURL)
 		} else {
-			progress(0)
-			return try await downloadManager.download(url: downloadURL, progressHandler: progress)
+			downloadURL
 		}
 	}
 	
@@ -34,8 +40,26 @@ public class FileManagerService: ObservableObject {
 				try fileManager.removeItem(at: fileURL)
 			}
 		} catch {
-			print("Error clearing documents directory: \(error)")
+			errorLogger.logError("Error clearing documents directory: \(error)")
 		}
+	}
+	
+	public func clearFile(at url: URL) {
+		do {
+			try FileManager.default.removeItem(at: fileURL(forDownloadURL: url))
+			objectWillChange.send()
+		} catch {
+			errorLogger.logError("Error clearing documents directory: \(error)")
+		}
+	}
+	
+	public func download(url: URL, progressHandler: @escaping ProgressHandler) async throws {
+		progressHandler(0)
+		try await downloadManager.download(url: url, progressHandler: progressHandler)
+	}
+	
+	public func cancelDownload(url: URL) {
+		downloadManager.cancelDownload(url: url)
 	}
 }
 

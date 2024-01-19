@@ -8,7 +8,6 @@ plugins {
     id(Plugins.sqlDelight)
     id("com.google.devtools.ksp") version "1.9.21-1.0.15"
     id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-22"
-    id("co.touchlab.skie") version "0.5.6"
 
 }
 
@@ -35,7 +34,7 @@ kotlin {
     val xcf = XCFramework()
     listOf(
 //        iosX64(),
-//        iosArm64(),
+        iosArm64(),
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
@@ -87,12 +86,12 @@ kotlin {
         }
 
 //        val iosX64Main by getting
-//        val iosArm64Main by getting
+        val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
 //            iosX64Main.dependsOn(this)
-//            iosArm64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(Ktor.iosDarwin)
@@ -114,20 +113,6 @@ kotlin {
         }
     }
 
-}
-
-skie {
-    features {
-        group {
-            co.touchlab.skie.configuration.SealedInterop.Enabled(true)
-            // Rename the onEnum() function
-            co.touchlab.skie.configuration.SealedInterop.Function.Name("onEnum")
-            // Change the external argument name for the onEnum() function
-            co.touchlab.skie.configuration.SealedInterop.Function.ArgumentLabel("of")
-            // Change the internal parameter name for the onEnum() function
-            co.touchlab.skie.configuration.SealedInterop.Function.ParameterName("sealed")
-        }
-    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
