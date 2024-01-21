@@ -72,7 +72,7 @@
 		76362DA22A11EECD00E78799 /* NEWMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765A35EE29E9052E00B939BD /* NEWMTextField.swift */; };
 		7639E6732AEB347F00254D71 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6722AEB347F00254D71 /* GoogleSignInSwift */; };
 		7639E6752AEB348800254D71 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6742AEB348800254D71 /* GoogleSignIn */; };
-		763B987D2B28644B00E6F492 /* ObservableObject+BindChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763B987C2B28644B00E6F492 /* ObservableObject+BindChanges.swift */; };
+		763B987D2B28644B00E6F492 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7642EB722B17CE8F009C8999 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 7642EB712B17CE8F009C8999 /* VLCKitSPM */; };
 		764838C02B0C8CAF00D6905B /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764838BF2B0C8CAF00D6905B /* FileManagerService.swift */; };
 		764838C52B0C8D0900D6905B /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764838C42B0C8D0900D6905B /* DownloadManager.swift */; };
@@ -1157,7 +1157,6 @@
 			children = (
 				761ADD432AEA0746001B56CF /* Error+KMMException.swift */,
 				761ADD412AE88A56001B56CF /* Notification+KMM.swift */,
-				763B987C2B28644B00E6F492 /* ObservableObject+BindChanges.swift */,
 				76DB3B972A13252F001AF2AD /* String+NilIfEmpty.swift */,
 				760C2C7228165DE80030ACF4 /* SwiftUIView+Erased.swift */,
 				7618FCDC28164C6B007573B4 /* UIImage+Extensions.swift */,
@@ -2923,7 +2922,7 @@
 				76DC3A2928169995004D5021 /* Login.swift in Sources */,
 				7618FCC428164BB5007573B4 /* Main.swift in Sources */,
 				7618FCC328164BB5007573B4 /* Home.swift in Sources */,
-				763B987D2B28644B00E6F492 /* ObservableObject+BindChanges.swift in Sources */,
+				763B987D2B28644B00E6F492 /* (null) in Sources */,
 				7618FCC528164BB5007573B4 /* SharedUI.swift in Sources */,
 				7618FCC228164BB5007573B4 /* Module.swift in Sources */,
 				76CE046729EE3F30002AF94B /* Binding.swift in Sources */,

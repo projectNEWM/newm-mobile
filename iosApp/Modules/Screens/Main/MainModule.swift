@@ -31,6 +31,18 @@ extension MainModule {
 		mockResolver.register {
 			return MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
 			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
+				func getAllStreamTokensFlow() -> Kotlinx_coroutines_coreFlow {
+					fatalError()
+				}
+				
+				func getAllStreamTokens() async throws -> [NFTTrack] {
+					NFTTrackMocksKt.mockTracks
+				}
+				
+				func getAllStreamTokens() -> Kotlinx_coroutines_coreFlow {
+					fatalError()
+				}
+				
 				func getNFTTrack(id: String) -> NFTTrack? {
 					NFTTrackMocksKt.mockTracks.first { $0.id == id }
 				}
