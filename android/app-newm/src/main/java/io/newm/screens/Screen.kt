@@ -27,7 +27,7 @@ sealed class Screen(val route: String) {
     @Parcelize
     object LoginScreen : Screen("login"), CircuitScreen
     data object Signup : Screen("signup")
-    data object Profile : Screen("profile")
+    data object EditProfile : Screen("edit-profile")
     data object BarcodeScanner : Screen("barcode-scanner")
 
     data object MusicPlayer : Screen("music-player/{songId}") {

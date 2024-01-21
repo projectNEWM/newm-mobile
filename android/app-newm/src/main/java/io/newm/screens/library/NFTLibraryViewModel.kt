@@ -2,6 +2,7 @@
 
 package io.newm.screens.library
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.newm.shared.public.models.NFTTrack
@@ -56,6 +57,10 @@ class NFTLibraryViewModel(
 
     internal fun onQueryChange(newQuery: String) {
         queryFlow.update { newQuery }
+    }
+
+    fun onDownloadSong(tackId: String) {
+        Log.e("NFTLibraryViewModel", "onDownloadSong: $tackId")
     }
 }
 

@@ -20,7 +20,7 @@ import io.newm.core.resources.R
 fun WelcomeBar(
     name: String,
     avatarUrl: String,
-    onAvatarClick: () -> Unit,
+    onAvatarClick: (() -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier
@@ -34,7 +34,7 @@ fun WelcomeBar(
             modifier = Modifier
                 .size(44.dp)
                 .clip(CircleShape)
-                .clickable { onAvatarClick() },
+                .clickable { onAvatarClick?.invoke() },
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
