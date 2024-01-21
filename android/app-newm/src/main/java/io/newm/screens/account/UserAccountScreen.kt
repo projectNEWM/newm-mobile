@@ -86,26 +86,9 @@ fun UserAccountContent(
     logout: () -> Unit,
 ) {
     val context = LocalContext.current
-    // Setup the launcher with the contract and the callback
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // Handle the returned result here
-            val data = result.data
-            // Do something with the data
-            val xpubKey = data?.getStringExtra(BarcodeScannerActivity.XPUB_KEY).orEmpty()
-            Toast.makeText(context, "Wallet connected $xpubKey", Toast.LENGTH_SHORT).show()
-            onConnectWalletClick(xpubKey)
-        }
-    }
-
-    val requestPermission = rememberRequestPermissionIntent(
-        onGranted = { /*TODO*/ },
-        onDismiss = { /*TODO*/ })
-
     val scrollState = rememberScrollState()
-    val openDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val openLogoutDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -149,35 +132,13 @@ fun UserAccountContent(
             borderColor = Gray500
         )
 
-        if (isWalletConnected) {
-            SecondaryButton(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                text = "Disconnect Wallet",
-                borderColor = Gray500,
-                onClick = {
-                    disconnectWallet()
-                    Toast.makeText(context, "Wallet has been disconnected.", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            )
-        } else {
-            PrimaryButton(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                text = "Connect Wallet",
-                onClick = {
-                    context.run {
-                        doWithPermission(
-                            onGranted = {
-                                val intent = Intent(this, BarcodeScannerActivity::class.java)
-                                launcher.launch(intent)
-                            },
-                            requestPermissionLauncher = requestPermission,
-                            appPermission = AppPermission.CAMERA
-                        )
-                    }
-                }
-            )
-        }
+        WalletButton(
+            openWalletDialog = openWalletDialog,
+            isWalletConnected = isWalletConnected,
+            disconnectWallet = disconnectWallet,
+            onConnectWalletClick = onConnectWalletClick
+        )
+
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -214,14 +175,86 @@ fun UserAccountContent(
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_GUIDELINES)))
             }
         )
-        LogoutButtonWithConfirmation(name = user.firstName ?: user.nickname ?: stringResource(id = R.string.buddy) , openDialog = openDialog, logout = logout)
+        LogoutButtonWithConfirmation(
+            name = user.firstName ?: user.nickname ?: stringResource(id = R.string.buddy),
+            openDialog = openLogoutDialog,
+            logout = logout
+        )
     }
 
 }
 
 @Composable
+fun WalletButton(
+    openWalletDialog: MutableState<Boolean>,
+    isWalletConnected: Boolean,
+    disconnectWallet: () -> Unit,
+    onConnectWalletClick: (String) -> Unit
+) {
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Handle the returned result here
+            val data = result.data
+            // Do something with the data
+            val xpubKey = data?.getStringExtra(BarcodeScannerActivity.XPUB_KEY).orEmpty()
+            Toast.makeText(context, "Wallet connected $xpubKey", Toast.LENGTH_SHORT).show()
+            onConnectWalletClick(xpubKey)
+        }
+    }
+
+    val requestPermission = rememberRequestPermissionIntent(
+        onGranted = { /*TODO*/ },
+        onDismiss = { /*TODO*/ })
+
+
+    if (isWalletConnected) {
+        SecondaryButton(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            text = "Disconnect Wallet",
+            borderColor = Gray500,
+            onClick = {
+                openWalletDialog.value = true
+            }
+        )
+        ConfirmationDialog(
+            title = "Unlink Wallet",
+            message = "Are you sure you want to disconnect your wallet?",
+            isOpen = openWalletDialog,
+            onConfirm = {
+                disconnectWallet()
+            },
+            onDismiss = {
+                // Handle the cancellation of logout here
+                openWalletDialog.value = false
+            }
+        )
+    } else {
+        PrimaryButton(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            text = "Connect Wallet",
+            onClick = {
+                context.run {
+                    doWithPermission(
+                        onGranted = {
+                            val intent = Intent(this, BarcodeScannerActivity::class.java)
+                            launcher.launch(intent)
+                        },
+                        requestPermissionLauncher = requestPermission,
+                        appPermission = AppPermission.CAMERA
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
 fun LogoutButtonWithConfirmation(
-    name: String ,
+    name: String,
     openDialog: MutableState<Boolean>,
     logout: () -> Unit,
 ) {
