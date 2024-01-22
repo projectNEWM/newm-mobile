@@ -9,13 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import io.newm.core.resources.R
 
 internal const val TAG_HOME_SCREEN = "TAG_HOME_SCREEN"
 
 @Composable
 fun HomeScreen(
-    onShowProfile: () -> Unit,
     onThisWeekViewAll: () -> Unit,
     onRecentlyPlayedViewAll: () -> Unit,
     onMusicViewDetails: (MusicModel) -> Unit,
@@ -32,7 +32,6 @@ fun HomeScreen(
         WelcomeBar(
             name = "Abel", //TODO: Replace Hardcoded values with values from ViewModel
             avatarUrl = "https://cdns-images.dzcdn.net/images/artist/033d460f704896c9caca89a1d753a137/200x200.jpg",
-            onAvatarClick = onShowProfile
         )
         ThisWeekCarousel(
             followers = 12, //TODO: Replace Hardcoded values with values from ViewModel
@@ -68,4 +67,16 @@ fun HomeScreen(
             onViewMore = onArtistListViewMore
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HomeScreenPreview() {
+    HomeScreen(
+        onThisWeekViewAll = {},
+        onRecentlyPlayedViewAll = {},
+        onMusicViewDetails = {},
+        onArtistViewDetails = {},
+        onArtistListViewMore = {}
+    )
 }

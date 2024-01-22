@@ -27,7 +27,6 @@ internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 
 @Composable
 fun ProfileRoute(
-    isBottomBarVisible: MutableState<Boolean>,
     onNavigateUp: () -> Unit,
     viewModel: ProfileEditViewModel = koinInject()
 ) {
@@ -37,7 +36,6 @@ fun ProfileRoute(
         ProfileState.Loading -> LoadingScreen()
         is ProfileState.Content -> {
             ProfileScreen(
-                isBottomBarVisible = isBottomBarVisible,
                 onNavigateUp = onNavigateUp,
                 user = (state as ProfileState.Content).profile,
                 onLogout = {},
@@ -54,7 +52,6 @@ fun ProfileRoute(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen(
-    isBottomBarVisible: MutableState<Boolean>,
     onNavigateUp: () -> Unit,
     user: User,
     onLogout: () -> Unit,
@@ -68,7 +65,6 @@ fun ProfileScreen(
     val isModified = user != updatedProfile
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
-    isBottomBarVisible.value = !sheetState.isVisible
 
     Scaffold(
         topBar = {

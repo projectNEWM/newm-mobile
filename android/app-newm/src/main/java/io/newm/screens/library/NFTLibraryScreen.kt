@@ -1,9 +1,10 @@
-@file:OptIn(FlowPreview::class)
+@file:OptIn(FlowPreview::class, ExperimentalMaterialApi::class)
 
 package io.newm.screens.library
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,51 +12,74 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.rememberSwipeableState
+import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import io.newm.core.resources.R
+import io.newm.core.theme.Black90
 import io.newm.core.theme.CerisePink
+import io.newm.core.theme.Gray100
 import io.newm.core.theme.Gray16
+import io.newm.core.theme.Gray400
+import io.newm.core.theme.Gray500
 import io.newm.core.theme.GraySuit
+import io.newm.core.theme.StatusGreen
 import io.newm.core.theme.SteelPink
+import io.newm.core.theme.SystemRed
 import io.newm.core.theme.White
+import io.newm.core.theme.White50
 import io.newm.core.theme.inter
 import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
+import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
-import io.newm.core.ui.utils.secondsToMinutesSecondsString
 import io.newm.core.ui.utils.textGradient
 import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
+import io.newm.screens.profile.ProfileBottomSheet
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
@@ -94,11 +118,10 @@ fun NFTLibraryScreen(
                     streamTokenTracks = content.streamTokenTracks,
                     showZeroResultsFound = content.showZeroResultFound,
                     onQueryChange = viewModel::onQueryChange,
-                    onPlaySong = onPlaySong
+                    onPlaySong = onPlaySong,
+                    onDownloadSong = viewModel::onDownloadSong
                 )
             }
-
-
         }
     }
 
@@ -111,8 +134,13 @@ fun NFTTracks(
     streamTokenTracks: List<NFTTrack>,
     showZeroResultsFound: Boolean,
     onQueryChange: (String) -> Unit,
-    onPlaySong: (NFTTrack) -> Unit
+    onPlaySong: (NFTTrack) -> Unit,
+    onDownloadSong: (String) -> Unit
 ) {
+    val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
+
+
     Column {
         Column(
             modifier = Modifier
@@ -134,15 +162,15 @@ fun NFTTracks(
                     onQueryChange = onQueryChange
                 )
                 IconButton(
-                    modifier = Modifier
-                        .padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
-                    onClick = {/*TODO*/ }) {
+                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
+                    onClick = { scope.launch { sheetState.show() } }
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_library_filter),
                         contentDescription = "Filter",
                         modifier = Modifier
+                            .clickable { scope.launch { sheetState.show() } }
                             .drawWithBrush(LibraryBrush)
-
                     )
                 }
             }
@@ -168,8 +196,12 @@ fun NFTTracks(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) {
-                            streamTokenTracks.forEach { song ->
-                                RowSongItem(song = song, onClick = onPlaySong)
+                            streamTokenTracks.forEach { track ->
+                                TrackRowItemWrapper(
+                                    track = track,
+                                    onPlaySong = onPlaySong,
+                                    onDownloadSong = { onDownloadSong(track.id) }
+                                )
                             }
                         }
                     }
@@ -192,8 +224,12 @@ fun NFTTracks(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) {
-                            nftTracks.forEach { song ->
-                                RowSongItem(song = song, onClick = onPlaySong)
+                            nftTracks.forEach { track ->
+                                TrackRowItemWrapper(
+                                    track = track,
+                                    onPlaySong = onPlaySong,
+                                    onDownloadSong = { onDownloadSong(track.id) }
+                                )
                             }
                         }
                     }
@@ -209,21 +245,66 @@ fun NFTTracks(
                 .background(MaterialTheme.colors.surface)
         )
     }
+
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun TrackRowItemWrapper(
+    track: NFTTrack,
+    onPlaySong: (NFTTrack) -> Unit,
+    onDownloadSong: () -> Unit
+) {
+    val swipeableState = rememberSwipeableState(initialValue = false)
+    val deltaX = with(LocalDensity.current) { 82.dp.toPx() }
+    Box(
+        Modifier
+            .height(56.dp)
+            .padding(vertical = 4.dp)
+            .fillMaxWidth()
+            .swipeable(
+                state = swipeableState,
+                orientation = Orientation.Horizontal,
+                enabled = !track.isDownloaded,
+                reverseDirection = true,
+                anchors = mapOf(
+                    0f to false,
+                    deltaX to true,
+                )
+            )
+    ) {
+        if (!track.isDownloaded) {
+            RevealedPanel(onDownloadSong)
+        }
+        TrackRowItem(
+            track = track,
+            onClick = onPlaySong,
+            modifier = Modifier.offset {
+                IntOffset(
+                    x = -swipeableState.offset.value.roundToInt(),
+                    y = 0
+                )
+            }
+        )
+    }
 }
 
 @Composable
-private fun RowSongItem(
-    song: NFTTrack,
-    onClick: (NFTTrack) -> Unit
+private fun TrackRowItem(
+    track: NFTTrack,
+    onClick: (NFTTrack) -> Unit,
+    modifier: Modifier,
 ) {
     Row(
-        modifier = Modifier
-            .padding(vertical = 8.dp)
-            .fillMaxWidth()
-            .clickable(onClick = { onClick(song) })
+        modifier = modifier
+            .background(color = Gray16)
+            .clickable(onClick = { onClick(track) })
+            .fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically
+
     ) {
         AsyncImage(
-            model = song.imageUrl,
+            model = track.imageUrl,
             modifier = Modifier
                 .size(40.dp)
                 .clip(RoundedCornerShape(4.dp)),
@@ -235,23 +316,33 @@ private fun RowSongItem(
                 .padding(start = 12.dp)
         ) {
             Text(
-                text = song.title,
+                text = track.title,
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
                 color = White
             )
-            Text(
-                text = song.artists.joinToString(","),
-                fontFamily = inter,
-                fontWeight = FontWeight.Normal,
-                fontSize = 12.sp,
-                color = GraySuit
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (track.isDownloaded) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_downloaded),
+                        contentDescription = "Downloaded",
+                        tint = StatusGreen
+                    )
+                    Spacer(modifier = Modifier.size(4.dp))
+                }
+                Text(
+                    text = track.artists.joinToString(","),
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                    color = GraySuit
+                )
+            }
         }
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "x${song.amount}",
+            text = "x${track.amount}",
             fontFamily = inter,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
@@ -260,6 +351,3 @@ private fun RowSongItem(
         )
     }
 }
-
-
-

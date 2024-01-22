@@ -170,7 +170,7 @@ private fun LibraryItem(songModel: SongModel, onPlaySong: () -> Unit, onDownload
 }
 
 @Composable
-private fun RevealedPanel(onDownloadClick: () -> Unit) {
+fun RevealedPanel(onDownloadClick: () -> Unit) {
     Row(
         modifier = Modifier
             .background(Purple)
