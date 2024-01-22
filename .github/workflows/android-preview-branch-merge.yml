@@ -32,7 +32,7 @@ jobs:
         # ID used to access action output
         id: sign_app
         with:
-          releaseDirectory: ${{ secrets.RELEASE_APK_PATH }}
+          releaseDirectory:  android/app-newm/build/outputs/apk/production/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}

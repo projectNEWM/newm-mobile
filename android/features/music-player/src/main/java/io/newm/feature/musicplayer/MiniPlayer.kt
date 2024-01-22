@@ -1,6 +1,5 @@
 package io.newm.feature.musicplayer
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -72,12 +71,12 @@ fun MiniPlayer(
     playStatus: PlaybackStatus,
     modifier: Modifier = Modifier
 ) {
-    val artistName = playStatus.track?.title.orEmpty()
-    val songTitle = playStatus.track?.artist.orEmpty()
+    val artistName = playStatus.track?.artist.orEmpty()
+    val songTitle = playStatus.track?.title.orEmpty()
     val artworkUrl = playStatus.track?.artworkUri
 
     AnimatedVisibility(
-        visible = playStatus.track != null,
+        visible = playStatus.state != PlaybackState.STOPPED,
         enter = slideInVertically(),
         exit = slideOutVertically()
     ) {
@@ -131,29 +130,23 @@ fun MiniPlayer(
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     IconButton(onClick = { onPlayPauseClicked() }) {
-                        AnimatedContent(
-                            targetState = playStatus.state,
-                            label = "PlayPauseButton"
-                        ) { state ->
-                            when (state) {
-                                PlaybackState.PAUSED,
-                                PlaybackState.STOPPED -> {
-                                    Icon(
-                                        Icons.Default.PlayArrow,
-                                        contentDescription = "Play",
-                                    )
-                                }
+                        when (playStatus.state) {
+                            PlaybackState.PAUSED,
+                            PlaybackState.STOPPED -> {
+                                Icon(
+                                    Icons.Default.PlayArrow,
+                                    contentDescription = "Play",
+                                )
+                            }
 
-                                PlaybackState.PLAYING,
-                                PlaybackState.BUFFERING -> {
-                                    Icon(
-                                        Icons.Default.Pause,
-                                        contentDescription = "Pause",
-                                    )
-                                }
+                            PlaybackState.PLAYING,
+                            PlaybackState.BUFFERING -> {
+                                Icon(
+                                    Icons.Default.Pause,
+                                    contentDescription = "Pause",
+                                )
                             }
                         }
-
                     }
                 }
             }

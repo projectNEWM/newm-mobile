@@ -26,6 +26,7 @@ interface MusicPlayer {
     fun next()
     fun previous()
     fun seekTo(position: Long)
+    fun seekTo(index: Int, position: Long)
     fun repeat()
     fun setPlaylist(playlist: Playlist, initialTrackIndex: Int)
 }
@@ -126,6 +127,11 @@ class MusicPlayerImpl(
         player.seekTo(position)
     }
 
+    override fun seekTo(index: Int, position: Long) {
+        Log.d("MusicPlayer", "Seek to $index, $position")
+        player.seekTo(index, position)
+    }
+
     override fun setPlaylist(playlist: Playlist, initialTrackIndex: Int) {
         Log.d("MusicPlayer", "Setting playlist with ${playlist.tracks.size} tracks")
         player.setMediaItems(playlist.tracks.map { track ->
@@ -142,10 +148,7 @@ class MusicPlayerImpl(
                 .build()
         })
         player.seekTo(initialTrackIndex, 0)
-        player.prepare()
     }
-
-
 }
 
 private fun MediaItem.toTrack(): Track {

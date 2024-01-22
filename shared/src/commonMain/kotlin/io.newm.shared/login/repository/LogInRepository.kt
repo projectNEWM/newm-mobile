@@ -75,7 +75,7 @@ internal class LogInRepository : KoinComponent {
                 }
             }
         } catch (e: Exception) {
-            logger.d { "logIn: LoginStatus 2- UnknownError: $e" }
+            logger.e { "logIn: LoginStatus 2- UnknownError: $e" }
             throw KMMException("UnknownErrorException")
         }
     }

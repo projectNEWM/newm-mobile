@@ -75,21 +75,32 @@ import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.screens.profile.ProfileBottomSheet
+import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
 @Composable
 fun NFTLibraryScreen(
-    onPlaySong: (NFTTrack) -> Unit,
+    onPlayerClicked: (NFTTrack) -> Unit, // TODO open full player screen
     goToProfile: () -> Unit,
-    viewModel: NFTLibraryViewModel = koinInject(),
 ) {
+    val mediaPlayer = rememberMediaPlayer()
+
+    mediaPlayer ?: return
+
+    val viewModel : NFTLibraryViewModel = getViewModel {
+        parametersOf(mediaPlayer)
+    }
+
     val state by viewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -118,8 +129,9 @@ fun NFTLibraryScreen(
                     streamTokenTracks = content.streamTokenTracks,
                     showZeroResultsFound = content.showZeroResultFound,
                     onQueryChange = viewModel::onQueryChange,
-                    onPlaySong = onPlaySong,
-                    onDownloadSong = viewModel::onDownloadSong
+                    onPlaySong = { viewModel.playSong(it) },
+                    onDownloadSong = viewModel::onDownloadSong,
+                    onPlayerClicked = onPlayerClicked
                 )
             }
         }
@@ -135,7 +147,8 @@ fun NFTTracks(
     showZeroResultsFound: Boolean,
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
-    onDownloadSong: (String) -> Unit
+    onDownloadSong: (String) -> Unit,
+    onPlayerClicked: (NFTTrack) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
