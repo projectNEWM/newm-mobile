@@ -56,5 +56,5 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-          groups: dev-team
+          groups: newm-team
           file: ${{steps.sign_app.outputs.signedReleaseFile}}

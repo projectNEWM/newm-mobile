@@ -16,7 +16,7 @@ android {
         applicationId = "io.newm"
         minSdk = Versions.androidMinSdk
         targetSdk = Versions.androidTargetSdk
-        versionCode = 1
+        versionCode = 3
         versionName = "0.1"
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
