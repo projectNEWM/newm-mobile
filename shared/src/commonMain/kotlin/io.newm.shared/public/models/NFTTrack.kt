@@ -45,4 +45,5 @@ data class NFTTrack(
     val genres: List<String>,
     @SerialName("moods")
     val moods: List<String> = emptyList(),
+    val isDownloaded: Boolean = false,
 )

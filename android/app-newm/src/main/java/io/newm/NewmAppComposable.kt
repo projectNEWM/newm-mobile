@@ -57,6 +57,7 @@ import io.newm.screens.Screen
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
 private val HomeIconGradient = iconGradient(LightSkyBlue, DarkViolet)
+private val AccountIconGradient = iconGradient(LightSkyBlue, DarkViolet)
 private val LibraryIconGradient = iconGradient(DarkViolet, DarkPink)
 private val SearchIconGradient = iconGradient(DarkPink, BrightOrange)
 private val WalletIconGradient = iconGradient(OceanGreen, LightSkyBlue)
@@ -100,29 +101,7 @@ internal fun NewmApp(
         Box(modifier = Modifier.padding(padding)) {
             Navigation(navController, isBottomNavBarVisible)
         }
-
-//        if (BuildConfig.DEBUG) {
-//            DebugMenuButton()
-//        }
     }
-}
-
-@Composable
-private fun DebugMenuButton() {
-//    val context = LocalContext.current
-//    Box(modifier = Modifier.fillMaxSize()) {
-//        IconButton(
-//            modifier = Modifier.align(Alignment.TopStart),
-//            onClick = {
-//                context.startActivity(Showkase.getBrowserIntent(context))
-//            }) {
-//            Icon(
-//                imageVector = Icons.Default.Build,
-//                contentDescription = "Debug",
-//                tint = MaterialTheme.colors.onPrimary
-//            )
-//        }
-//    }
 }
 
 @Composable
@@ -156,25 +135,9 @@ internal fun NewmBottomNavigation(
                     selected = currentRootScreen == Screen.UserAccountViewRoot,
                     iconResId = R.drawable.ic_profile,
                     labelResId = R.string.account,
-                    selectedIconBrush = LibraryIconGradient,
+                    selectedIconBrush = AccountIconGradient,
                     selectedLabelColor = DarkPink,
                     onClick = { onNavigationSelected(Screen.UserAccountViewRoot) },
-                )
-                HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.HomeRoot,
-                    iconResId = R.drawable.ic_home,
-                    labelResId = R.string.home,
-                    selectedIconBrush = HomeIconGradient,
-                    selectedLabelColor = DarkViolet,
-                    onClick = { onNavigationSelected(Screen.HomeRoot) },
-                )
-                HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.LibraryRoot,
-                    iconResId = R.drawable.ic_library,
-                    labelResId = R.string.library,
-                    selectedIconBrush = LibraryIconGradient,
-                    selectedLabelColor = DarkPink,
-                    onClick = { onNavigationSelected(Screen.LibraryRoot) },
                 )
             }
         }
@@ -239,11 +202,12 @@ private fun NavController.currentRootScreenAsState(): State<Screen> {
     return currentRootScreen
 }
 
+
 val allScreens: List<Screen>
     get() = Screen::class.sealedSubclasses.map { it.objectInstance as Screen }
 
 val routesWithoutBottomNavBar: List<String> by lazy {
     listOf(
-        Screen.Profile.route
+        Screen.EditProfile.route
     )
 }

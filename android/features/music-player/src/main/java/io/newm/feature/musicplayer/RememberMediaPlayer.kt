@@ -1,6 +1,7 @@
 package io.newm.feature.musicplayer
 
 import android.content.ComponentName
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -52,5 +53,9 @@ fun rememberMediaPlayer(): MusicPlayer? {
         })
     }
 
-    return mediaPlayer.value?.let { MusicPlayerImpl(it, lifecycleOwner.lifecycleScope) }
+    return remember(mediaPlayer.value, lifecycleOwner.lifecycleScope) {
+        mediaPlayer.value?.let {
+            MusicPlayerImpl(it, lifecycleOwner.lifecycleScope)
+        }
+    }
 }

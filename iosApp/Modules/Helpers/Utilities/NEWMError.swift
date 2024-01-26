@@ -1,4 +1,5 @@
 import Foundation
+import shared
 
 public struct NEWMError: LocalizedError {
 	public var errorDescription: String?
@@ -23,6 +24,12 @@ public extension Error {
 public extension String {
 	var newmError: NEWMError {
 		NEWMError(errorDescription: self)
+	}
+}
+
+public extension KMMException {
+	var newmError: NEWMError {
+		NEWMError(errorDescription: message, underlyingError: self as? Error)
 	}
 }
 

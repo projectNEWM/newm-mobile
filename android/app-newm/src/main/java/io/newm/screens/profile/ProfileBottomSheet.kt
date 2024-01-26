@@ -93,7 +93,7 @@ fun ProfileBottomSheet(
                     )
                     Spacer(modifier = Modifier.height(28.dp))
                     SecondaryButton(
-                        text = stringResource(R.string.profile_logout),
+                        text = stringResource(R.string.user_account_logout),
                         textColor = SystemRed,
                         borderColor = SystemRed,
                         onClick = onLogout

@@ -2,8 +2,12 @@
 
 package io.newm.screens.library
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.newm.feature.musicplayer.models.Playlist
+import io.newm.feature.musicplayer.models.Track
+import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
@@ -11,12 +15,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 
 @FlowPreview
 class NFTLibraryViewModel(
     private val connectWalletUseCase: ConnectWalletUseCase,
-    private val walletNFTTracksUseCase: WalletNFTTracksUseCase
+    private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
+    private val musicPlayer: MusicPlayer,
 ) : ViewModel() {
+    private var playlist: Playlist = Playlist(emptyList())
 
     private val queryFlow = MutableStateFlow("")
 
@@ -28,6 +35,7 @@ class NFTLibraryViewModel(
                     walletNFTTracksUseCase.getAllStreamTokensFlow(),
                     walletNFTTracksUseCase.getAllNFTTracksFlow()
                 ) { query, streamTokenTracks, nftTracks ->
+                    setPlaylist(nftTracks)
                     when {
                         nftTracks.isEmpty() && streamTokenTracks.isEmpty() -> {
                             NFTLibraryState.EmptyWallet
@@ -56,6 +64,39 @@ class NFTLibraryViewModel(
 
     internal fun onQueryChange(newQuery: String) {
         queryFlow.update { newQuery }
+    }
+
+    fun onDownloadSong(tackId: String) {
+        Log.e("NFTLibraryViewModel", "onDownloadSong: $tackId")
+    }
+
+    private suspend fun setPlaylist(nftTracks: List<NFTTrack>) = withContext(Dispatchers.Main) {
+        requireNotNull(musicPlayer) { "Music player not initialized" }
+        val playlistTracks = nftTracks.map { nftTrack ->
+            Track(
+                id = nftTrack.id,
+                title = nftTrack.title,
+                url = nftTrack.audioUrl,
+                artist = nftTrack.artists.firstOrNull() ?: "",
+                artworkUri = nftTrack.imageUrl,
+            )
+        }
+
+        playlist = Playlist(playlistTracks)
+        musicPlayer.setPlaylist(playlist, 0)
+    }
+
+    fun playSong(track: NFTTrack) {
+        requireNotNull(musicPlayer) { "Music player not initialized" }
+
+        Log.d("@@@", "playSong on mediaplayer $musicPlayer")
+        val trackIndex = playlist.tracks.indexOfFirst { it.id == track.id }
+        require(trackIndex >= 0) { "Track not found in playlist" }
+
+        musicPlayer.apply {
+            seekTo(trackIndex, 0)
+            play()
+        }
     }
 }
 

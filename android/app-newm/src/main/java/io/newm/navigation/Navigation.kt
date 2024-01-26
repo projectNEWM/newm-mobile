@@ -23,7 +23,7 @@ import io.newm.shared.public.models.NFTTrack
 fun Navigation(
     navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
 ) {
-    val onEditProfileClick = { navController.navigate(Screen.Profile.route) }
+    val onEditProfileClick = { navController.navigate(Screen.EditProfile.route) }
     NavHost(
         navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
@@ -34,7 +34,7 @@ fun Navigation(
             goToProfile = { navController.navigate(Screen.UserAccountViewRoot.route) }
         )
         addHomeTree(navController, isBottomBarVisible)
-        addProfileViewTree(onEditProfileClick)
+        addUserAccountTree(onEditProfileClick)
         addLibraryTree(navController)
         addMusicPlayerTree()
         addBarcodeScannerTree()
@@ -49,7 +49,6 @@ private fun NavGraphBuilder.addHomeTree(
     ) {
         composable(route = Screen.HomeLanding.route) {
             HomeScreen(
-                onShowProfile = { navController.navigate(Screen.Profile.route) },
                 onThisWeekViewAll = { }, //TODO: Implement View All screen
                 onRecentlyPlayedViewAll = { }, //TODO: Implement View All screen
                 onArtistListViewMore = { }, //TODO: Implement View More screen
@@ -57,9 +56,8 @@ private fun NavGraphBuilder.addHomeTree(
                 onMusicViewDetails = { }, //TODO: Implement Music Details screen
             )
         }
-        composable(Screen.Profile.route) {
+        composable(Screen.EditProfile.route) {
             ProfileRoute(
-                isBottomBarVisible = isBottomBarVisible,
                 onNavigateUp = { navController.navigateUp() },
             )
         }
@@ -81,7 +79,7 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
     }
 }
 
-private fun NavGraphBuilder.addProfileViewTree(
+private fun NavGraphBuilder.addUserAccountTree(
     onEditProfileClick: () -> Unit
 ) {
     navigation(

@@ -33,7 +33,7 @@ kotlin {
 
     val xcf = XCFramework()
     listOf(
-//        iosX64(),
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
@@ -43,81 +43,59 @@ kotlin {
         }
     }
 
-
     sourceSets {
-
-        val commonMain by getting {
-            dependencies {
-                implementation(Kotlin.coroutinesCore)
-                implementation(Kotlin.stdlib)
-                implementation(SqlDelight.runtime)
-                implementation(SqlDelight.coroutinesExtensions)
-                api(Koin.core)
-                api(Log.kermit)
-                implementation(Ktor.clientLogging)
-                implementation(Ktor.ktorClientCore)
-                implementation(Ktor.ktorClientCIO)
-                implementation(Ktor.clientContentNegotiation)
-                implementation(Ktor.kotlinXJson)
-                implementation(Ktor.clientAuth)
-                implementation("com.liftric:kvault:1.12.0")
-            }
+        commonMain.dependencies {
+            implementation(Kotlin.coroutinesCore)
+            implementation(Kotlin.stdlib)
+            implementation(SqlDelight.runtime)
+            implementation(SqlDelight.coroutinesExtensions)
+            api(Koin.core)
+            api(Log.kermit)
+            implementation(Ktor.clientLogging)
+            implementation(Ktor.ktorClientCore)
+            implementation(Ktor.ktorClientCIO)
+            implementation(Ktor.clientContentNegotiation)
+            implementation(Ktor.kotlinXJson)
+            implementation(Ktor.clientAuth)
+            implementation("com.liftric:kvault:1.12.0")
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(Koin.test)
-                implementation(Kotlin.coroutinesTest)
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                implementation(SqlDelight.androidDriver)
-                implementation(Ktor.clientAndroid)
-            }
+        commonTest.dependencies {
+            implementation(Koin.test)
+            implementation(Kotlin.coroutinesTest)
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
         }
 
-        named("androidUnitTest") {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-            }
+        androidMain.dependencies {
+            implementation(SqlDelight.androidDriver)
+            implementation(Ktor.clientAndroid)
         }
 
-//        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-//            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(Ktor.iosDarwin)
-                implementation(SqlDelight.nativeDriver)
-            }
+        androidNativeTest.dependencies {
+            implementation(kotlin("test-junit"))
+            implementation("junit:junit:4.13.2")
         }
-//        val iosX64Test by getting
-//        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-//            iosX64Test.dependsOn(this)
-//            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+
+        iosMain.dependencies {
+            implementation(Ktor.iosDarwin)
+            implementation(SqlDelight.nativeDriver)
+        }
+
+        iosTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
         }
 
         all {
             languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
         }
     }
-
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
