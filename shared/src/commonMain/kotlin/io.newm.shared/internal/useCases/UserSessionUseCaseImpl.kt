@@ -1,4 +1,4 @@
-package io.newm.shared.internal.implementations
+package io.newm.shared.internal.useCases
 
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.public.usecases.UserSessionUseCase
@@ -9,7 +9,6 @@ import org.koin.core.component.KoinComponent
 internal class UserSessionUseCaseImpl(
     private val tokenManager: TokenManager
     ) : KoinComponent, UserSessionUseCase {
-
 
     override fun isLoggedIn(): Boolean {
         return tokenManager.getAccessToken().isNullOrEmpty().not()

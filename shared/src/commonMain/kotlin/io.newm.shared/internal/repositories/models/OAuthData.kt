@@ -1,4 +1,4 @@
-package io.newm.shared.login.repository
+package io.newm.shared.internal.repositories.models
 
 sealed interface OAuthData {
     data class Google(val idToken: String) : OAuthData

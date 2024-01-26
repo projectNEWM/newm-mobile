@@ -6,8 +6,8 @@ import shared
 
 @main
 struct iOSApp: App {
-	let mainViewProvider: MainViewProviding
-	
+	private let mainViewProvider: MainViewProviding
+
 	init() {
 		KoinKt.doInitKoin(enableNetworkLogs: true)
 #if DEBUG

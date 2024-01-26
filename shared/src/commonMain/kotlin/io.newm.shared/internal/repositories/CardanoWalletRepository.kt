@@ -99,12 +99,11 @@ internal class CardanoWalletRepository(
             }
         }
 
-    private suspend fun fetchNFTTracksFromNetwork(): List<NFTTrack> {
+    internal suspend fun fetchNFTTracksFromNetwork() {
         try {
             val xpub = connectWalletManager.getXPub() ?: throw KMMException("No xpub found")
             val walletNFTs = service.getWalletNFTs(xpub)
             cacheNFTTracks(walletNFTs)
-            return walletNFTs
         } catch (e: Exception) {
             logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
             throw e

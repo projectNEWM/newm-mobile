@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "B7FA390A-2CDA-4199-B40F-A4E519CBE3BF",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "768C697D2B5CC3CF001A1B1A",
+        "name" : "ProfileTests"
+      }
+    }
+  ],
+  "version" : 1
+}

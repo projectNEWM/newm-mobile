@@ -12,6 +12,7 @@ import AudioPlayer
 import Files
 import shared
 import Logging
+import Profile
 
 struct iOSAppModule: Module {
 	static var shared = iOSAppModule()
@@ -26,7 +27,8 @@ struct iOSAppModule: Module {
 			NowPlayingModule.shared,
 			AudioPlayerModule.shared,
 			FilesModule.shared,
-			LoggingModule.shared
+			LoggingModule.shared,
+			ProfileModule.shared
 		]
 	}()
 }

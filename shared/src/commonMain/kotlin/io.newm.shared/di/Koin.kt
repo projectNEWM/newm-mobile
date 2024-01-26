@@ -2,26 +2,28 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
-import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
-import io.newm.shared.internal.implementations.LoginUseCaseImpl
-import io.newm.shared.internal.implementations.SignupUseCaseImpl
-import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
-import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
-import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.internal.repositories.GenresRepository
+import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
 import io.newm.shared.internal.repositories.PlaylistRepository
 import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.internal.services.GenresAPI
+import io.newm.shared.internal.services.LoginAPI
 import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import io.newm.shared.internal.services.PlaylistAPI
 import io.newm.shared.internal.services.UserAPI
-import io.newm.shared.login.repository.LogInRepository
-import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.internal.useCases.ChangePasswordUseCaseImpl
+import io.newm.shared.internal.useCases.ConnectWalletUseCaseImpl
+import io.newm.shared.internal.useCases.GetGenresUseCaseImpl
+import io.newm.shared.internal.useCases.LoginUseCaseImpl
+import io.newm.shared.internal.useCases.SignupUseCaseImpl
+import io.newm.shared.internal.useCases.UserDetailsUseCaseImpl
+import io.newm.shared.internal.useCases.UserSessionUseCaseImpl
+import io.newm.shared.internal.useCases.WalletNFTTracksUseCaseImpl
+import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.LoginUseCase
@@ -73,9 +75,10 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get()) }
+    single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
+    single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

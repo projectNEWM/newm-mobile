@@ -3,6 +3,7 @@ package io.newm.shared.di
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.plugins.HttpClientPlugin
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
@@ -14,16 +15,16 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.client.statement.HttpReceivePipeline
 import io.ktor.http.HttpHeaders
 import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.utils.io.CancellationException
+import io.ktor.util.AttributeKey
 import io.newm.shared.internal.HttpRoutes
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.login.models.LoginResponse
-import io.newm.shared.login.repository.LogInRepository
+import io.newm.shared.internal.repositories.LogInRepository
+import io.newm.shared.internal.services.models.LoginResponse
 import io.newm.shared.public.models.error.KMMException
-import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.serialization.json.Json
 
 internal class NetworkClientFactory(
@@ -35,38 +36,13 @@ internal class NetworkClientFactory(
 ) {
     private val logger = co.touchlab.kermit.Logger.withTag("NewmKMM-NetworkClientFactory")
 
-    private lateinit var _authHttpClient: HttpClient
     private lateinit var _httpClient: HttpClient
-
-    fun authHttpClient(): HttpClient {
-        if (!::_authHttpClient.isInitialized) {
-            _authHttpClient = createAuthHttpClient()
-        }
-        return _authHttpClient
-    }
 
     fun httpClient(): HttpClient {
         if (!::_httpClient.isInitialized) {
             _httpClient = createHttpClient()
         }
         return _httpClient
-    }
-
-    private fun createHttpClient(): HttpClient {
-        return HttpClient(httpClientEngine) {
-            defaultRequest {
-                url(HttpRoutes.getHost())
-            }
-            install(ContentNegotiation) {
-                json(json)
-            }
-            if (enableNetworkLogs) {
-                install(Logging) {
-                    logger = Logger.DEFAULT
-                    level = LogLevel.ALL
-                }
-            }
-        }
     }
 
     private val refreshTokenPlugin = createClientPlugin("RefreshTokenPlugin") {
@@ -78,10 +54,10 @@ internal class NetworkClientFactory(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
-    private fun createAuthHttpClient(): HttpClient {
-        logger.d { "NewmKMM - createAuthHttpClient" }
+    private fun createHttpClient(): HttpClient {
+        logger.d { "NewmKMM - createhttpClient" }
         return HttpClient(httpClientEngine) {
+            this.expectSuccess = true
             defaultRequest {
                 url(HttpRoutes.getHost())
             }
@@ -95,44 +71,66 @@ internal class NetworkClientFactory(
                     level = LogLevel.ALL
                 }
             }
-            install(Auth) {
-                bearer {
-                    loadTokens {
-                        logger.d { "KMM - loadTokens" }
-                        BearerTokens(
-                            accessToken = tokenManager.getAccessToken().orEmpty(),
-                            refreshToken = tokenManager.getRefreshToken().orEmpty()
-                        )
-                    }
+            install(CustomExceptionHandlingPlugin)
+            if (tokenManager.hasTokens()) {
+                install(Auth) {
+                    bearer {
+                        loadTokens {
+                            logger.d { "KMM - loadTokens" }
+                            BearerTokens(
+                                accessToken = tokenManager.getAccessToken().orEmpty(),
+                                refreshToken = tokenManager.getRefreshToken().orEmpty()
+                            )
+                        }
 
-                    refreshTokens {
-                        try {
-                            val renewTokens = client.get( "/v1/auth/refresh") {
-                                markAsRefreshTokenRequest()
-                            }.body<LoginResponse>()
-                            if(renewTokens.accessToken != null && renewTokens.refreshToken != null) {
-                                tokenManager.setAuthTokens(
-                                    renewTokens.accessToken,
-                                    renewTokens.refreshToken
-                                )
-                                BearerTokens(
-                                    accessToken = tokenManager.getAccessToken()!!,
-                                    refreshToken = tokenManager.getRefreshToken()!!
-                                )
-                            } else {
+                        refreshTokens {
+                            try {
+                                val renewTokens = client.get("/v1/auth/refresh") {
+                                    markAsRefreshTokenRequest()
+                                }.body<LoginResponse>()
+                                if (renewTokens.accessToken != null && renewTokens.refreshToken != null) {
+                                    tokenManager.setAuthTokens(
+                                        renewTokens.accessToken,
+                                        renewTokens.refreshToken
+                                    )
+                                    BearerTokens(
+                                        accessToken = tokenManager.getAccessToken()!!,
+                                        refreshToken = tokenManager.getRefreshToken()!!
+                                    )
+                                } else {
+                                    repository.logout()
+                                    logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
+                                    throw KMMException("Invalid Token response")
+                                }
+                            } catch (e: Exception) {
                                 repository.logout()
-                                logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
-                                throw KMMException("Invalid Token response")
+                                logger.d { "NewmKMM - refreshTokens: Exception: $e" }
+                                throw KMMException("Refresh token failed: $e")
                             }
-                        } catch (e: Exception) {
-                            repository.logout()
-                            logger.d { "NewmKMM - refreshTokens: Exception: $e" }
-                            throw KMMException("Refresh token failed: $e")
                         }
                     }
                 }
+                install(refreshTokenPlugin)
             }
-            install(refreshTokenPlugin)
         }
     }
 }
+
+object CustomExceptionHandlingPlugin : HttpClientPlugin<Unit, CustomExceptionHandlingPlugin> {
+    override val key: AttributeKey<CustomExceptionHandlingPlugin> = AttributeKey("CustomExceptionHandlingPlugin")
+
+    override fun prepare(block: Unit.() -> Unit): CustomExceptionHandlingPlugin {
+        return this
+    }
+
+    override fun install(plugin: CustomExceptionHandlingPlugin, scope: HttpClient) {
+        scope.receivePipeline.intercept(HttpReceivePipeline.After) {
+            try {
+                proceedWith(subject)
+            } catch (e: Throwable) {
+                throw KMMException("There was an error making the network call", e)
+            }
+        }
+    }
+}
+

@@ -1,18 +1,25 @@
-package io.newm.shared.login.repository
+package io.newm.shared.internal.repositories
 
 import co.touchlab.kermit.Logger
-import io.ktor.client.plugins.*
+import io.ktor.client.plugins.ClientRequestException
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.repositories.ConnectWalletManager
-import io.newm.shared.login.models.*
-import io.newm.shared.login.models.LoginException.*
-import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.internal.repositories.models.OAuthData
+import io.newm.shared.internal.services.LoginAPI
+import io.newm.shared.internal.services.models.AppleSignInRequest
+import io.newm.shared.internal.services.models.FacebookSignInRequest
+import io.newm.shared.internal.services.models.GoogleSignInRequest
+import io.newm.shared.internal.services.models.LinkedInSignInRequest
+import io.newm.shared.internal.services.models.LogInUser
+import io.newm.shared.internal.services.models.LoginException.UserNotFound
+import io.newm.shared.internal.services.models.LoginException.WrongPassword
+import io.newm.shared.internal.services.models.LoginResponse
+import io.newm.shared.internal.services.models.NewUser
+import io.newm.shared.internal.services.models.isValid
 import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import shared.Notification
 import shared.postNotification
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class LogInRepository : KoinComponent {
     private val service: LoginAPI by inject()
@@ -21,7 +28,6 @@ internal class LogInRepository : KoinComponent {
 
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
-    @Throws(Exception::class)
     suspend fun requestEmailConfirmationCode(email: String) {
         logger.d { "requestEmailConfirmationCode: email $email" }
         return service.requestEmailConfirmationCode(email)
@@ -32,13 +38,11 @@ internal class LogInRepository : KoinComponent {
         return service.register(user)
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(email: String, password: String) {
         logger.d { "logIn: email $email" }
         return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
         logger.d { "logIn: oAuth" }
         when (oAuthData) {
@@ -49,7 +53,6 @@ internal class LogInRepository : KoinComponent {
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class, WrongPassword::class)
     private suspend fun handleLoginResponse(request: suspend () -> LoginResponse) {
         try {
             storeAccessToken(request())
@@ -59,13 +62,13 @@ internal class LogInRepository : KoinComponent {
                 404 -> {
                     logger.d { "logIn: LoginStatus UserNotFound (404)" }
                     //404 NOT FOUND If no registered user with 'email' is found
-                    throw UserNotFound("UserNotFoundException")
+                    throw UserNotFound("Invalid login.  Please try again.")
                 }
 
                 401 -> {
                     logger.d { "logIn: LoginStatus WrongPassword (401): $e" }
                     //401 UNAUTHORIZED if 'password' is invalid.
-                    throw WrongPassword("WrongPasswordException")
+                    throw WrongPassword("Invalid login.  Please try again.")
                 }
 
                 else -> {
@@ -80,7 +83,6 @@ internal class LogInRepository : KoinComponent {
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun registerUser(
         firstName: String,
         lastName: String,

@@ -4,52 +4,52 @@ import ModuleLinker
 import Combine
 import shared
 import AudioPlayer
+import SharedExtensions
+import Utilities
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
 	@Injected private var getCurrentUser: UserDetailsUseCase
 	@Injected private var connectWalletUseCase: ConnectWalletUseCase
+	@Injected private var changePasswordUseCase: ChangePasswordUseCase
 	
-	@Published var user: User?
+	@Injected private var logger: ErrorReporting
+	
+	@Published private var user: User?
 	
 	var fullName: String { "\((user?.firstName).emptyIfNil) \((user?.lastName).emptyIfNil)"  }
-	var nickname: String { "@\((user?.nickname).emptyIfNil)" }
+	var nickname: String { (user?.nickname.flatMap { "@\($0)" }).emptyIfNil }
 	var email: String { (user?.email).emptyIfNil }
+	var bannerURL: URL? { user?.bannerUrl.flatMap(URL.init) }
+	var pictureURL: URL? { user?.pictureUrl.flatMap(URL.init) }
+	
 	@Published var currentPassword: String = ""
 	@Published var newPassword: String = ""
 	@Published var confirmPassword: String = ""
-	
-	@Published var error: String?
-	@Published var isLoading: Bool = false
+	@Published private var errors = ErrorSet()
+	@Published var showLoadingToast: Bool = false
+	@Published var showCompletionToast: Bool = false
 	@Published var isWalletConnected: Bool = false
+	var errorAlert: String? { errors.currentError?.errorDescription }
 	
 	private var cancels = Set<AnyCancellable>()
 	
-	var ptrOffset: CGFloat = 0
+	var enableSaveButon: Bool {
+		let hasNewPassword = {
+			currentPassword.isEmpty == false &&
+			newPassword.isEmpty == false &&
+			confirmPassword.isEmpty == false
+		}()
+		
+		let newPasswordsMatch = newPassword == confirmPassword
+		
+		return hasNewPassword && newPasswordsMatch
+	}
 	
 	var showSaveButton: Bool {
-//		guard let user = user else { return false }
-//		
-//		func hasNewPassword() -> Bool {
-//			currentPassword.isEmpty == false &&
-//			newPassword.isEmpty == false &&
-//			confirmPassword.isEmpty == false
-//		}
-//		
-//		func infoFieldsAreEmpty() -> Bool {
-//			firstName.isEmpty &&
-//			lastName.isEmpty &&
-//			currentPassword.isEmpty
-//		}
-//		
-//		func hasNewInfo() -> Bool {
-//			firstName != user.firstName ||
-//			lastName != user.lastName ||
-//			email != user.email
-//		}
-//		
-//		return hasNewPassword() || (infoFieldsAreEmpty() == false && hasNewInfo())
-		false
+		currentPassword.isEmpty == false ||
+		newPassword.isEmpty == false ||
+		confirmPassword.isEmpty == false
 	}
 	
 	init() {
@@ -59,11 +59,14 @@ final class ProfileViewModel: ObservableObject {
 				self?.isWalletConnected = self?.connectWalletUseCase.isConnected() == true
 			}
 			.store(in: &cancels)
-		Task {
-			isLoading = true
-			await loadUser()
-			isLoading = false
-		}
+		
+		Task { await setUp() }
+	}
+	
+	private func setUp() async {
+		showLoadingToast = true
+		await loadUser()
+		showLoadingToast = false
 	}
 	
 	func loadUser() async {
@@ -71,33 +74,41 @@ final class ProfileViewModel: ObservableObject {
 		do {
 			user = try await getCurrentUser.fetchLoggedInUserDetails()
 		} catch {
-			Resolver.resolve(ErrorReporting.self).logError(error)
-			self.error = error.localizedDescription
+			logger.logError(error)
+			errors.append(error.newmError)
 		}
 	}
 	
-	func save() {
-		Task {
-			isLoading = true
-//			do {
-////				try await userRepo.updateUserInfo(
-////					firstName: firstName,
-////					lastName: lastName,
-////					currentPassword: currentPassword,
-////					newPassword: newPassword,
-////					confirmNewPassword: confirmPassword
-////				)
-//			} catch {
-//				self.error = error.localizedDescription
-//			}
-			isLoading = false
+	func save() async {
+		defer {
+			currentPassword = ""
+			newPassword = ""
+			confirmPassword = ""
+		}
+		
+		showLoadingToast = true
+		do {
+			try await changePasswordUseCase.changePassword(
+				oldPassword: currentPassword,
+				newPassword: newPassword,
+				confirmPassword: confirmPassword
+			)
+			showLoadingToast = false
+			showCompletionToast = true
+			try? await Task.sleep(for: .seconds(1))
+			showCompletionToast = false
+		} catch {
+			showLoadingToast = false
+			logger.logError(error)
+			errors.append(error.newmError)
 		}
 	}
 	
 	func disconnectWallet() {
 		connectWalletUseCase.disconnect()
-		let audioPlayer = Resolver.resolve(VLCAudioPlayer.self)
-		audioPlayer.setPlayQueue([])
-		audioPlayer.removeDownloadedSongs()
+	}
+	
+	func alertDismissed() {
+		errors.popFirstError()
 	}
 }

@@ -1,8 +1,7 @@
 import io.newm.shared.di.commonModule
 import io.newm.shared.login.models.LoginStatus
 import io.newm.shared.login.models.RequestEmailStatus
-import io.newm.shared.login.repository.LogInRepository
-import shared.platformModule
+import io.newm.shared.internal.repositories.LogInRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest

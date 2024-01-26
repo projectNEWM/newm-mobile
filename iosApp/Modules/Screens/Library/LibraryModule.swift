@@ -25,51 +25,11 @@ public final class LibraryModule: Module {
 extension LibraryModule {
     public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
-			return MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
-			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
-				func getAllNFTTracksFlow() -> Kotlinx_coroutines_coreFlow {
-					fatalError()
-				}
-				
-				func getAllNFTTracks() async throws -> [NFTTrack] {
-					NFTTrackMocksKt.mockTracks
-				}
-				
-				func getAllStreamTokensFlow() -> Kotlinx_coroutines_coreFlow {
-					fatalError()
-				}
-				
-				func getAllStreamTokens() async throws -> [NFTTrack] {
-					NFTTrackMocksKt.mockTracks
-				}
-								
-				func getNFTTrack(id: String) -> NFTTrack? {
-					NFTTrackMocksKt.mockTracks.first { $0.id == id }!
-				}
-			}
+			MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
 		}
 		
 		mockResolver.register {
-			return MockConnectWalletUseCase() as ConnectWalletUseCase
-			class MockConnectWalletUseCase: ConnectWalletUseCase {				
-				var _isConnected: Bool = false
-				func connect(xpub: String) {
-					ConnectWalletUseCaseProvider().get().connect(xpub: "xpub1j6l5sgu597d72mu6tnzmrlt3mfv8d8qru2ys5gy4hf09g2v97ct8gslwcvkjyd8jkpefj226ccyw6al76af5hcf328myun6pwjl7wcgshjjxl")
-					_isConnected = true
-				}
-				
-				func disconnect() {
-					_isConnected = false
-				}
-				
-				func isConnected() -> Bool {
-					return _isConnected
-				}
-				
-				func isConnectedFlow() -> Kotlinx_coroutines_coreFlow {
-					fatalError()
-				}
-			}
+			MockConnectWalletUseCase() as ConnectWalletUseCase
 		}
 	}
 }

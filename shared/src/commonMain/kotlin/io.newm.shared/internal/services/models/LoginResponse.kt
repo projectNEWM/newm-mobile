@@ -1,10 +1,12 @@
-package io.newm.shared.login.models
+package io.newm.shared.internal.services.models
 
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.Serializable
 
+//TODO: this should all be internal
+
 @Serializable
-data class LoginResponse(
+internal data class LoginResponse(
     val accessToken: String? = null,
     val refreshToken: String? = null
 )
@@ -14,7 +16,7 @@ sealed class LoginException(message: String): KMMException(message) {
     data class UserNotFound(override val message: String) : LoginException(message)
 }
 
-fun LoginResponse.isValid(): Boolean {
+internal fun LoginResponse.isValid(): Boolean {
     return accessToken?.isNotBlank() == true && refreshToken?.isNotBlank() == true
 }
 

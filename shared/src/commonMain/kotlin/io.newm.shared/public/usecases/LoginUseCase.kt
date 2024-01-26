@@ -1,9 +1,9 @@
 package io.newm.shared.public.usecases
 
 import io.newm.shared.public.models.error.KMMException
-import kotlin.coroutines.cancellation.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * `LoginUseCase` defines the contract for handling user authentication in the Newm mobile application.
@@ -13,7 +13,9 @@ import org.koin.core.component.inject
  * It also offers functionality to log out.
  */
 interface LoginUseCase {
-
+    sealed class LoginException() {
+        data class invalidLogin(override val message: String) : KMMException(message)
+    }
     /**
      * Authenticates a user using their email and password.
      *

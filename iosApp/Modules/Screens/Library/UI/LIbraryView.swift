@@ -26,7 +26,9 @@ struct LibraryView: View {
 			.refreshable {
 				await viewModel.refresh()
 			}
-			.sheet(isPresented: .constant(viewModel.showXPubScanner)) {
+			.sheet(isPresented: .constant(viewModel.showXPubScanner), onDismiss: {
+				viewModel.scannerDismissed()
+			}) {
 				XPubScannerView {
 					viewModel.xPubScanned()
 				}

@@ -35,6 +35,7 @@ public struct QRCodeScannerView: UIViewControllerRepresentable {
 			$0.reader = QRCodeReader(metadataObjectTypes: [AVMetadataObject.ObjectType.qr])
 			$0.showCancelButton = false
 			$0.showTorchButton = true
+			$0.showSwitchCameraButton = false
 		})
 		reader.delegate = context.coordinator
 		return reader

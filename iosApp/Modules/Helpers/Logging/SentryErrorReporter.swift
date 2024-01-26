@@ -17,3 +17,7 @@ class SentryErrorReporter: ErrorReporting {
 
 extension String: Error {}
 extension KMMException: Error {}
+
+extension Error {
+	var kmmException: KMMException? { (self as NSError).kotlinException as? KMMException }
+}

@@ -6,6 +6,7 @@ import SharedUI
 import Profile
 import Colors
 import SentrySwiftUI
+import Utilities
 
 public struct MainView: View {
 	@StateObject var viewModel = MainViewModel()
@@ -44,8 +45,13 @@ public struct MainView: View {
 		.onShake {
 			route = .debug
 		}
+		.alert("", isPresented: isPresent($viewModel.alertMessage), presenting: viewModel.alertMessage) { alertMessage in
+			Text(alertMessage)
+		}
 	}
-	
+}
+
+extension MainView {
 	@ViewBuilder
 	private var miniPlayerView: some View {
 		if showAudioPlayer {
