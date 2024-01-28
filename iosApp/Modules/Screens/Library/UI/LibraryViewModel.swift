@@ -76,6 +76,7 @@ class LibraryViewModel: ObservableObject {
 		
 		do {
 			try await walletNFTTracksUseCase.refresh()
+			// TODO: split these up.
 			tracks = try await walletNFTTracksUseCase.getAllNFTTracks() + walletNFTTracksUseCase.getAllStreamTokens()
 		} catch {
 			logger.logError(error)

@@ -76,7 +76,6 @@
 		76452A4F2B5A37D50001F47E /* SharedExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A482B5A37D50001F47E /* SharedExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76452A532B5A37E10001F47E /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 761ADD3A2AE734AA001B56CF /* shared.xcframework */; };
 		76452A572B5A38720001F47E /* Error+KMMException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76452A562B5A38720001F47E /* Error+KMMException.swift */; };
-		76452A592B5A38EF0001F47E /* KMMException+NEWMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76452A582B5A38EF0001F47E /* KMMException+NEWMError.swift */; };
 		76452A652B5A395A0001F47E /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A5F2B5A395A0001F47E /* Utilities.framework */; };
 		76452A662B5A395A0001F47E /* Utilities.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A5F2B5A395A0001F47E /* Utilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76452A6A2B5A39690001F47E /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CE046629EE3F30002AF94B /* Binding.swift */; };
@@ -911,7 +910,6 @@
 		76452A402B5A34710001F47E /* String+EmptyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EmptyTests.swift"; sourceTree = "<group>"; };
 		76452A482B5A37D50001F47E /* SharedExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76452A562B5A38720001F47E /* Error+KMMException.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+KMMException.swift"; sourceTree = "<group>"; };
-		76452A582B5A38EF0001F47E /* KMMException+NEWMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KMMException+NEWMError.swift"; sourceTree = "<group>"; };
 		76452A5F2B5A395A0001F47E /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76452A842B5A3AB90001F47E /* UtilitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76452A942B5A3D600001F47E /* Utilities.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Utilities.xctestplan; sourceTree = "<group>"; };
@@ -1654,7 +1652,6 @@
 			isa = PBXGroup;
 			children = (
 				76452A562B5A38720001F47E /* Error+KMMException.swift */,
-				76452A582B5A38EF0001F47E /* KMMException+NEWMError.swift */,
 				761ADD412AE88A56001B56CF /* Notification+KMM.swift */,
 			);
 			path = SharedExtensions;
@@ -3379,7 +3376,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				76452A572B5A38720001F47E /* Error+KMMException.swift in Sources */,
-				76452A592B5A38EF0001F47E /* KMMException+NEWMError.swift in Sources */,
 				76452A8E2B5A3B260001F47E /* Notification+KMM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
