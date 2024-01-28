@@ -38,15 +38,9 @@ public struct LandingView: View {
 					}
 				}
 		}
-		.alert(String.error, isPresented: .constant(viewModel.errors.hasError), presenting: viewModel.errors.currentError, actions: { error in
-			Button {
-				viewModel.errors.popFirstError()
-			} label: {
-				Text("Ok")
-			}
-		}, message: { error in
-			Text(error.errorDescription ?? error.localizedDescription)
-		})
+		.errorAlert(message: viewModel.errors.currentError?.errorDescription) {
+			viewModel.errors.popFirstError()
+		}
 		.toast(shouldShow: $viewModel.isLoading, type: .loading)
 	}
 }
