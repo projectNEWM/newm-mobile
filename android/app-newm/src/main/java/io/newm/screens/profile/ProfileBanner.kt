@@ -17,13 +17,13 @@ fun ProfileBanner(
 ) {
     Box(
         modifier = Modifier
-            .height(241.dp)
+            .height(230.dp)
             .fillMaxWidth(),
     ) {
         AsyncImage(
             model = bannerUrl,
             modifier = Modifier
-                .height(177.dp)
+                .height(160.dp)
                 .fillMaxWidth(),
             contentScale = ContentScale.Crop,
             contentDescription = null,
@@ -31,7 +31,7 @@ fun ProfileBanner(
         AsyncImage(
             model = avatarUrl,
             modifier = Modifier
-                .size(128.dp)
+                .size(140.dp)
                 .align(Alignment.BottomCenter)
                 .clip(CircleShape),
             contentScale = ContentScale.Crop,

@@ -37,11 +37,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.theme.Gray100
+import io.newm.core.theme.Gray23
 import io.newm.core.theme.Gray500
 import io.newm.core.theme.inter
 
 val formTitleStyle = TextStyle(
-    fontSize = 16.sp,
+    fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Bold,
     color = White
@@ -58,6 +59,20 @@ val formTextFieldStyle = TextStyle(
     fontSize = 16.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Normal,
+)
+
+val formNameStyle = TextStyle(
+    fontSize = 24.sp,
+    fontFamily = inter,
+    fontWeight = FontWeight.Bold,
+    color = White
+)
+
+val formEmailStyle = TextStyle(
+    fontSize = 14.sp,
+    fontFamily = inter,
+    fontWeight = FontWeight.Normal,
+    color = Gray100
 )
 
 object TextFieldWithLabelDefaults {
@@ -93,6 +108,7 @@ fun TextFieldWithLabel(
     keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     helperText: String? = null,
+    textfieldBackgroundColor: Color = MaterialTheme.colors.surface
 ) {
     val isInputMasked = remember { mutableStateOf(isPassword) }
     Column(
@@ -112,7 +128,7 @@ fun TextFieldWithLabel(
             )
 
         val backgroundColor =
-            if (enabled) MaterialTheme.colors.surface else MaterialTheme.colors.surface.copy(alpha = 0.5f)
+            if (enabled) textfieldBackgroundColor else textfieldBackgroundColor.copy(alpha = 0.5f)
 
         OutlinedTextField(
             value = updatedValue,
@@ -129,7 +145,7 @@ fun TextFieldWithLabel(
                 textColor = textColor,
             ),
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(4.dp),
+            shape = RoundedCornerShape(8.dp),
             enabled = enabled,
             placeholder = placeholderResId?.let { { Text(text = stringResource(id = it)) } },
             isError = isError,
