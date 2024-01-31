@@ -83,6 +83,7 @@ struct LibraryView: View {
 					ConnectWalletAlertView {
 						viewModel.connectWallet()
 					}
+					.padding()
 				}
 			}
 		}

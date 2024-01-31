@@ -71,7 +71,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
     single { ConnectWalletManager(get()) }
     // External Use Cases to be consumed outside of KMM
-    single<LoginUseCase> { LoginUseCaseImpl(get()) }
+    single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }

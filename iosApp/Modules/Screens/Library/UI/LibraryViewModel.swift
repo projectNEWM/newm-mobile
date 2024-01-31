@@ -44,6 +44,7 @@ class LibraryViewModel: ObservableObject {
 			.store(in: &cancels)
 		
 		audioPlayer.objectWillChange
+			.receive(on: DispatchQueue.main)
 			.sink { [weak self] _ in
 				self?.objectWillChange.send()
 			}

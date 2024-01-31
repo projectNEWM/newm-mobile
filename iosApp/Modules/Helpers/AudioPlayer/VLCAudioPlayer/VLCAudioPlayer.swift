@@ -67,13 +67,18 @@ public class VLCAudioPlayer: ObservableObject {
 		}.store(in: &cancels)
 		
 		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged)).sink { [weak self] _ in
-			self?.setPlayQueue([])
-			self?.removeDownloadedSongs()
+			self?.handleWalletDisconnect()
 		}.store(in: &cancels)
 	}
 	
 	public func play() {
 		mediaPlayer.play()
+	}
+	
+	private func handleWalletDisconnect() {
+		stop()
+		setPlayQueue([])
+		removeDownloadedSongs()
 	}
 	
 	private func playCurrentIndexInQueue() {

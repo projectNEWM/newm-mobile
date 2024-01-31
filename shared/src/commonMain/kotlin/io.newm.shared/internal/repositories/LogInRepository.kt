@@ -123,6 +123,5 @@ internal class LogInRepository : KoinComponent {
 
     fun logout() {
         tokenManager.clearToken()
-        connectWalletManager.disconnect()
     }
 }
