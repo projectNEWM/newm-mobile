@@ -898,6 +898,7 @@
 		761ADD3A2AE734AA001B56CF /* shared.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = shared.xcframework; path = ../shared/build/XCFrameworks/debug/shared.xcframework; sourceTree = "<group>"; };
 		761ADD412AE88A56001B56CF /* Notification+KMM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+KMM.swift"; sourceTree = "<group>"; };
 		761ADD452AEA0EAA001B56CF /* LandingViewModel+ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LandingViewModel+ErrorHandling.swift"; sourceTree = "<group>"; };
+		761E96FE2B6A60A300FDFC5E /* build.gradle.kts */ = {isa = PBXFileReference; lastKnownFileType = text; name = build.gradle.kts; path = ../shared/build.gradle.kts; sourceTree = "<group>"; };
 		7625CE2E294088110033C669 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1512942B0740033C669 /* LibraryRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryRoutes.swift; sourceTree = "<group>"; };
@@ -2272,6 +2273,7 @@
 		76D99EC62B1934AD002FB4B2 /* Kotlin */ = {
 			isa = PBXGroup;
 			children = (
+				761E96FE2B6A60A300FDFC5E /* build.gradle.kts */,
 				76D99EC72B1934CC002FB4B2 /* commonMain */,
 				76D99EC82B1934CC002FB4B2 /* iosMain */,
 			);
