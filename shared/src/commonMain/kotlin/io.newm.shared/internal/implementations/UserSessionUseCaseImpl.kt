@@ -1,4 +1,4 @@
-package io.newm.shared.internal.useCases
+package io.newm.shared.internal.implementations
 
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.public.usecases.UserSessionUseCase

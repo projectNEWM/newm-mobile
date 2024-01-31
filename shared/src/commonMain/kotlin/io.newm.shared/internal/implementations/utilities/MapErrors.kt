@@ -1,4 +1,4 @@
-package io.newm.shared.internal.useCases.utilities
+package io.newm.shared.internal.implementations.utilities
 
 import io.newm.shared.public.models.error.KMMException
 import kotlin.coroutines.cancellation.CancellationException

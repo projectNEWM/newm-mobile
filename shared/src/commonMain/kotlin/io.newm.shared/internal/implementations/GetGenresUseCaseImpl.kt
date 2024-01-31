@@ -1,7 +1,7 @@
-package io.newm.shared.internal.useCases
+package io.newm.shared.internal.implementations
 
 import io.newm.shared.internal.repositories.GenresRepository
-import io.newm.shared.internal.useCases.utilities.mapErrorsSuspend
+import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
 import io.newm.shared.public.models.Genre
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.GetGenresUseCase

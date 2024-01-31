@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import Colors
 import SharedUI
+import Resolver
 
 extension LandingView {
 	@ViewBuilder
@@ -10,6 +11,7 @@ extension LandingView {
 			Text(verbatim: .whatShouldWeCallYou)
 				.font(.ralewayExtraBold(ofSize: 40))
 				.multilineTextAlignment(.center)
+				.fixedSize(horizontal: false, vertical: true)
 
 			TextEditor(text: $viewModel.nickname)
 				.foregroundStyle(Gradients.loginGradient.gradient)
@@ -39,7 +41,9 @@ extension LandingView {
 
 struct UsernameView_Previews: PreviewProvider {
 	static var previews: some View {
-		LandingView()
+		LoginModule.shared.registerAllMockedServices(mockResolver: .mock)
+		Resolver.root = .mock
+		return LandingView()
 			.nicknameView
 			.preferredColorScheme(.dark)
 	}

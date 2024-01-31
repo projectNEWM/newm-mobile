@@ -21,7 +21,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class PlaylistAPI(networkClient: NetworkClientFactory) : KoinComponent {
 
-    private val authClient: HttpClient  = networkClient.httpClient()
+    private val authClient: HttpClient  = networkClient.authHttpClient()
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun createPlaylist(playlistName: String): String =

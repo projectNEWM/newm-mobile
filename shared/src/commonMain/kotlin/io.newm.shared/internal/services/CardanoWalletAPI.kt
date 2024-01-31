@@ -12,7 +12,7 @@ import org.koin.core.component.KoinComponent
 
 internal class CardanoWalletAPI(networkClient: NetworkClientFactory) : KoinComponent {
 
-    private val authClient: HttpClient = networkClient.httpClient()
+    private val authClient: HttpClient = networkClient.authHttpClient()
 
     suspend fun getWalletNFTs(xpub: String): List<NFTTrack> =
         authClient.get("/v1/cardano/nft/songs") {

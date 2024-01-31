@@ -1,8 +1,8 @@
-package io.newm.shared.internal.useCases
+package io.newm.shared.internal.implementations
 
 import io.newm.shared.internal.repositories.CardanoWalletRepository
-import io.newm.shared.internal.useCases.utilities.mapErrors
-import io.newm.shared.internal.useCases.utilities.mapErrorsSuspend
+import io.newm.shared.internal.implementations.utilities.mapErrors
+import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase

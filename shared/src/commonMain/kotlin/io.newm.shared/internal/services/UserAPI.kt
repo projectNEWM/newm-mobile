@@ -19,13 +19,13 @@ import org.koin.core.component.KoinComponent
 
 internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
 
-    private val httpClient: HttpClient  = networkClient.httpClient()
+    private val authHttpClient: HttpClient  = networkClient.authHttpClient()
 
-    suspend fun getCurrentUser(): User = httpClient.get("/v1/users/me") {
+    suspend fun getCurrentUser(): User = authHttpClient.get("/v1/users/me") {
         contentType(ContentType.Application.Json)
     }.body()
 
-    suspend fun getUserById(userId: String): User = httpClient.get("/v1/users/$userId") {
+    suspend fun getUserById(userId: String): User = authHttpClient.get("/v1/users/$userId") {
         contentType(ContentType.Application.Json)
     }.body()
 
@@ -37,7 +37,7 @@ internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
         genres: String? = null,
         olderThan: String? = null,
         newerThan: String? = null
-    ): List<User> = httpClient.get("/v1/users") {
+    ): List<User> = authHttpClient.get("/v1/users") {
         contentType(ContentType.Application.Json)
         parameter("offset", offset)
         parameter("limit", limit)
@@ -54,7 +54,7 @@ internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
         genres: String? = null,
         olderThan: String? = null,
         newerThan: String? = null
-    ): UserCount = httpClient.get("/v1/users/count") {
+    ): UserCount = authHttpClient.get("/v1/users/count") {
         contentType(ContentType.Application.Json)
         parameter("ids", ids)
         parameter("roles", roles)
@@ -63,13 +63,13 @@ internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
         parameter("newerThan", newerThan)
     }.body()
 
-    suspend fun deleteCurrentUser() = httpClient.delete("/v1/users/me") {
+    suspend fun deleteCurrentUser() = authHttpClient.delete("/v1/users/me") {
         contentType(ContentType.Application.Json)
     }
 
     suspend fun updateUserProfile(userProfileUpdateRequest: UserProfileUpdateRequest) {
         try {
-            httpClient.patch("/v1/users/me") {
+            authHttpClient.patch("/v1/users/me") {
                 contentType(ContentType.Application.Json)
                 setBody(userProfileUpdateRequest)
             }
