@@ -65,6 +65,13 @@
 		761E97002B6A79D000FDFC5E /* Mocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		761E97122B6A7C0500FDFC5E /* MockLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E97112B6A7C0500FDFC5E /* MockLoginUseCase.swift */; };
 		761E97142B6A7CAA00FDFC5E /* MockSignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */; };
+		761E97152B6A88B600FDFC5E /* SharedExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A482B5A37D50001F47E /* SharedExtensions.framework */; };
+		761E97162B6A88B600FDFC5E /* SharedExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A482B5A37D50001F47E /* SharedExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		761E971B2B6A8EDA00FDFC5E /* MocksModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E971A2B6A8EDA00FDFC5E /* MocksModule.swift */; };
+		761E971D2B6A906900FDFC5E /* Mocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; };
+		761E971E2B6A906900FDFC5E /* Mocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		761E97222B6A908400FDFC5E /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 761E97212B6A908400FDFC5E /* Resolver */; };
+		761E97252B6A947100FDFC5E /* MockUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E97242B6A947100FDFC5E /* MockUsers.swift */; };
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
 		762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		762EF9B52B21B30C009E08D8 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EF9B42B21B30C009E08D8 /* DebugView.swift */; };
@@ -408,6 +415,20 @@
 			remoteGlobalIDString = 768C69AB2B5CD971001A1B1A;
 			remoteInfo = Mocks;
 		};
+		761E97172B6A88B600FDFC5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76452A472B5A37D50001F47E;
+			remoteInfo = SharedExtensions;
+		};
+		761E971F2B6A906900FDFC5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 768C69AB2B5CD971001A1B1A;
+			remoteInfo = Mocks;
+		};
 		762EF9AB2B1F90C7009E08D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -733,6 +754,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		761E97192B6A88B700FDFC5E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				761E971E2B6A906900FDFC5E /* Mocks.framework in Embed Frameworks */,
+				761E97162B6A88B600FDFC5E /* SharedExtensions.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7628EBD227E550140077ECFD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -913,6 +946,8 @@
 		761E96FE2B6A60A300FDFC5E /* build.gradle.kts */ = {isa = PBXFileReference; lastKnownFileType = text; name = build.gradle.kts; path = ../shared/build.gradle.kts; sourceTree = "<group>"; };
 		761E97112B6A7C0500FDFC5E /* MockLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoginUseCase.swift; sourceTree = "<group>"; };
 		761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSignUpUseCase.swift; sourceTree = "<group>"; };
+		761E971A2B6A8EDA00FDFC5E /* MocksModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksModule.swift; sourceTree = "<group>"; };
+		761E97242B6A947100FDFC5E /* MockUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUsers.swift; sourceTree = "<group>"; };
 		7625CE2E294088110033C669 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1512942B0740033C669 /* LibraryRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryRoutes.swift; sourceTree = "<group>"; };
@@ -1267,6 +1302,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7650E1672B17BA5400D686B8 /* Kingfisher in Frameworks */,
+				761E971D2B6A906900FDFC5E /* Mocks.framework in Frameworks */,
+				761E97152B6A88B600FDFC5E /* SharedExtensions.framework in Frameworks */,
 				76D99EC92B19EF11002FB4B2 /* shared.xcframework in Frameworks */,
 				7650E15F2B17B46800D686B8 /* Resolver in Frameworks */,
 				7650E1592B17B44E00D686B8 /* ModuleLinker.framework in Frameworks */,
@@ -1307,6 +1344,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761E97222B6A908400FDFC5E /* Resolver in Frameworks */,
 				768C69B32B5CD983001A1B1A /* shared.xcframework in Frameworks */,
 				768C69B62B5CD98E001A1B1A /* ModuleLinker.framework in Frameworks */,
 			);
@@ -1569,6 +1607,25 @@
 				7618FDDB28164E23007573B4 /* Strings.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		761E971C2B6A8FF500FDFC5E /* Use Cases */ = {
+			isa = PBXGroup;
+			children = (
+				769BB6872B5E0B85007CA421 /* MockChangePasswordUseCase.swift */,
+				761E97112B6A7C0500FDFC5E /* MockLoginUseCase.swift */,
+				761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */,
+				768C69C22B5CDA30001A1B1A /* MockUserDetailsUseCase.swift */,
+			);
+			path = "Use Cases";
+			sourceTree = "<group>";
+		};
+		761E97232B6A946000FDFC5E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				761E97242B6A947100FDFC5E /* MockUsers.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7625CE302940881E0033C669 /* Cells */ = {
@@ -2030,11 +2087,10 @@
 		768C69AD2B5CD971001A1B1A /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				769BB6872B5E0B85007CA421 /* MockChangePasswordUseCase.swift */,
 				768C69BA2B5CD9CE001A1B1A /* MockErrorLogger.swift */,
-				761E97112B6A7C0500FDFC5E /* MockLoginUseCase.swift */,
-				768C69C22B5CDA30001A1B1A /* MockUserDetailsUseCase.swift */,
-				761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */,
+				761E971A2B6A8EDA00FDFC5E /* MocksModule.swift */,
+				761E97232B6A946000FDFC5E /* Models */,
+				761E971C2B6A8FF500FDFC5E /* Use Cases */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2748,6 +2804,7 @@
 				7650E1472B17B3FA00D686B8 /* Sources */,
 				7650E1482B17B3FA00D686B8 /* Frameworks */,
 				7650E1492B17B3FA00D686B8 /* Resources */,
+				761E97192B6A88B700FDFC5E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2755,6 +2812,8 @@
 				7650E15C2B17B44E00D686B8 /* PBXTargetDependency */,
 				7650E16B2B17C69A00D686B8 /* PBXTargetDependency */,
 				762EF9BB2B21BCD4009E08D8 /* PBXTargetDependency */,
+				761E97182B6A88B600FDFC5E /* PBXTargetDependency */,
+				761E97202B6A906900FDFC5E /* PBXTargetDependency */,
 			);
 			name = Profile;
 			packageProductDependencies = (
@@ -2835,6 +2894,9 @@
 				768C69B92B5CD98E001A1B1A /* PBXTargetDependency */,
 			);
 			name = Mocks;
+			packageProductDependencies = (
+				761E97212B6A908400FDFC5E /* Resolver */,
+			);
 			productName = Mocks;
 			productReference = 768C69AC2B5CD971001A1B1A /* Mocks.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3476,6 +3538,8 @@
 				761E97122B6A7C0500FDFC5E /* MockLoginUseCase.swift in Sources */,
 				768C69C32B5CDA30001A1B1A /* MockUserDetailsUseCase.swift in Sources */,
 				769BB6882B5E0B85007CA421 /* MockChangePasswordUseCase.swift in Sources */,
+				761E971B2B6A8EDA00FDFC5E /* MocksModule.swift in Sources */,
+				761E97252B6A947100FDFC5E /* MockUsers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3622,6 +3686,16 @@
 			isa = PBXTargetDependency;
 			target = 768C69AB2B5CD971001A1B1A /* Mocks */;
 			targetProxy = 761E97012B6A79D000FDFC5E /* PBXContainerItemProxy */;
+		};
+		761E97182B6A88B600FDFC5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76452A472B5A37D50001F47E /* SharedExtensions */;
+			targetProxy = 761E97172B6A88B600FDFC5E /* PBXContainerItemProxy */;
+		};
+		761E97202B6A906900FDFC5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 768C69AB2B5CD971001A1B1A /* Mocks */;
+			targetProxy = 761E971F2B6A906900FDFC5E /* PBXContainerItemProxy */;
 		};
 		762EF9AC2B1F90C7009E08D8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5667,6 +5741,11 @@
 			productName = Resolver;
 		};
 		760C2C4D281653C00030ACF4 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+		761E97212B6A908400FDFC5E /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;

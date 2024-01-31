@@ -18,7 +18,7 @@ final class ProfileViewModel: ObservableObject {
 	@Published private var user: User?
 	
 	var fullName: String { "\((user?.firstName).emptyIfNil) \((user?.lastName).emptyIfNil)" }
-	var nickname: String { (user?.nickname.flatMap { "@\($0)" }).emptyIfNil }
+	var nickname: String { (user?.nickname?.nilIfEmpty.flatMap { "@\($0)" }).emptyIfNil }
 	var email: String { (user?.email).emptyIfNil }
 	var bannerURL: URL? { user?.bannerUrl.flatMap(URL.init) }
 	var pictureURL: URL? { user?.pictureUrl.flatMap(URL.init) }

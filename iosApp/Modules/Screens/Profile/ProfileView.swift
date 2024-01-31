@@ -1,4 +1,5 @@
 import SwiftUI
+import Mocks
 import SharedUI
 import ModuleLinker
 import Resolver
@@ -36,14 +37,16 @@ public struct ProfileView: View {
 		ZStack {
 			ScrollView {
 				VStack(alignment: .center) {
-					HeaderImageSection(viewModel.bannerURL?.absoluteString)
+					if let bannerURL = viewModel.bannerURL {
+						HeaderImageSection(bannerURL.absoluteString)
+							.padding(.top, 177)
+					}
 					artistImage
 					artistName
 					walletView.padding(.bottom)
 					bottomSection
 						.addSidePadding()
 				}
-				.padding(.top, 177)
 			}
 			.refreshable {
 				await viewModel.loadUser()
@@ -151,10 +154,30 @@ public struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
+		MocksModule.shared.registerAllMockedServices()
 		Resolver.root = .mock
-		return NavigationView {
-			NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+		return Group {
+			NavigationView {
+				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+			}
 		}
 		.preferredColorScheme(.dark)
+	}
+}
+
+struct ProfileView_Previews_2: PreviewProvider {
+	static var previews: some View {
+		MocksModule.shared.registerAllMockedServices()
+		Resolver.root = .mock
+		Resolver.mock.register {
+			MockUserDetailsUseCase(mockUser: .bannerlessUser) as UserDetailsUseCase
+		}
+		return Group {
+			NavigationView {
+				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+			}
+		}
+		.preferredColorScheme(.dark)
+		.previewDisplayName("no banner")
 	}
 }

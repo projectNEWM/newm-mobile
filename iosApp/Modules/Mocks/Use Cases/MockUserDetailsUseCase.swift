@@ -5,16 +5,16 @@ import shared
 public class MockUserDetailsUseCase: UserDetailsUseCase {
 	private let mockUser: User
 	public var errorToThrow: Error?
-	public let fetchTimeout: UInt64
+	public let fetchLatency: Double
 	
-	public init(mockUser: User, errorToThrow: Error? = nil, fetchTimeout: UInt64) {
+	public init(mockUser: User = UserMocksKt.mockUsers.first!, errorToThrow: Error? = nil, fetchLatency: Double = 0.1) {
 		self.mockUser = mockUser
 		self.errorToThrow = errorToThrow
-		self.fetchTimeout = fetchTimeout
+		self.fetchLatency = fetchLatency
 	}
 	
 	public func fetchLoggedInUserDetails() async throws -> User {
-		try await Task.sleep(nanoseconds: 1_000_000_000 * fetchTimeout)
+		try await Task.sleep(for: .seconds(fetchLatency))
 		
 		if let errorToThrow {
 			throw errorToThrow

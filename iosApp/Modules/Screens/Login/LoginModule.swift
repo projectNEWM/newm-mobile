@@ -26,9 +26,17 @@ public final class LoginModule: Module {
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
-		mockResolver.register { MockErrorLogger() as ErrorReporting }
-		mockResolver.register { MockLoginUseCase() as LoginUseCase }
-		mockResolver.register { MockSignupUseCase() as SignupUseCase }
+		mockResolver.register { 
+			MockErrorLogger() as ErrorReporting
+		}
+		
+		mockResolver.register {
+			MockLoginUseCase() as LoginUseCase
+		}
+		
+		mockResolver.register {
+			MockSignupUseCase() as SignupUseCase
+		}
 	}
 }
 #endif

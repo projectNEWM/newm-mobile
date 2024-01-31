@@ -10,7 +10,7 @@ import Combine
 
 let mockUser = UserMocksKt.mockUsers.first!
 let currentPassword = "currentPassword"
-let fetchTimeout: UInt64 = 1
+let fetchLatency: Double = 0.1
 
 @MainActor
 final class ProfileViewModelTests: XCTestCase {
@@ -24,7 +24,7 @@ final class ProfileViewModelTests: XCTestCase {
 	override func setUp() async throws {
 		try await super.setUp()
 		
-		userDetailsUseCase = MockUserDetailsUseCase(mockUser: mockUser, fetchTimeout: fetchTimeout)
+		userDetailsUseCase = MockUserDetailsUseCase(mockUser: mockUser, fetchLatency: fetchLatency)
 		connectWalletUseCase = MockConnectWalletUseCase()
 		changePasswordUseCase = MockChangePasswordUseCase()
 		errorLogger = MockErrorLogger()
