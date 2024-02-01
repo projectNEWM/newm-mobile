@@ -43,7 +43,7 @@ final class ProfileViewModel: ObservableObject {
 		
 		let newPasswordsMatch = newPassword == confirmPassword
 		
-		return hasNewPassword && newPasswordsMatch
+		return hasNewPassword && newPasswordsMatch && showLoadingToast == false && showCompletionToast == false
 	}
 	
 	var showSaveButton: Bool {
