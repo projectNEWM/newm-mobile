@@ -2,6 +2,7 @@ import SwiftUI
 import shared
 import Resolver
 import ModuleLinker
+import Utilities
 
 public struct XPubScannerView: View {
 	private let completion: () -> ()

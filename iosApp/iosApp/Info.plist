@@ -21,9 +21,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb4171461756290307</string>
 				<string>com.googleusercontent.apps.489785482974-hvron45nt22d0nb54qrplksne6202e19</string>
 			</array>
 		</dict>
@@ -32,12 +33,13 @@
 	<string>1</string>
 	<key>GIDClientID</key>
 	<string>489785482974-hvron45nt22d0nb54qrplksne6202e19.apps.googleusercontent.com</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow camera access to scan your xPub QR code.</string>
 	<key>UIAppFonts</key>

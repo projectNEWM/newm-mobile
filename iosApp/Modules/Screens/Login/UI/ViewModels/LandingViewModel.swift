@@ -1,10 +1,10 @@
 import Foundation
 import Resolver
 import GoogleSignIn
-//import FacebookLogin
 import AuthenticationServices
 import ModuleLinker
 import shared
+import Utilities
 
 @MainActor
 class LandingViewModel: ObservableObject {
@@ -21,7 +21,7 @@ class LandingViewModel: ObservableObject {
 			
 	@Injected private var logInUseCase: any LoginUseCase
 	@Injected private var signUpUseCase: any SignupUseCase
-	private let loginFieldValidator = shared.LoginFieldValidator()
+	private let loginFieldValidator = LoginFieldValidator()
 
 	var nicknameIsValid: Bool {
 		nickname.count > 0

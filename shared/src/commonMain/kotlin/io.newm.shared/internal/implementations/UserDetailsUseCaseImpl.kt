@@ -1,7 +1,8 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.public.models.User
 import io.newm.shared.internal.repositories.UserRepository
+import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
+import io.newm.shared.public.models.User
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.flow.Flow
@@ -13,10 +14,11 @@ internal class UserDetailsUseCaseImpl(
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun fetchLoggedInUserDetails(): User {
-        return userRepository.fetchLoggedInUserDetails()
+        return mapErrorsSuspend {
+            return@mapErrorsSuspend userRepository.fetchLoggedInUserDetails()
+        }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     override fun fetchLoggedInUserDetailsFlow(): Flow<User?> {
         return userRepository.fetchUserDetailsFlow()
     }

@@ -13,4 +13,4 @@ package io.newm.shared.public.models.error
  * @constructor Creates a new instance of `KMMException` with the specified error message.
  * @param message The message describing the specific error that occurred.
  */
-open class KMMException(message: String, val wrappedException: Exception? = null) : Throwable(message)
+open class KMMException(message: String, val wrappedException: Throwable? = null) : Throwable(message)

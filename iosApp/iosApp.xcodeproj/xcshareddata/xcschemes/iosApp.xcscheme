@@ -20,6 +20,20 @@
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "768C697D2B5CC3CF001A1B1A"
+               BuildableName = "ProfileTests.xctest"
+               BlueprintName = "ProfileTests"
+               ReferencedContainer = "container:iosApp.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -30,24 +44,12 @@
       codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
-            skipped = "YES"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76B770EA27C5F2070009A58E"
-               BuildableName = "iosAppUITests.xctest"
-               BlueprintName = "iosAppUITests"
-               ReferencedContainer = "container:iosApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76ADDCE328980F61008AA39A"
-               BuildableName = "HomeTests.xctest"
-               BlueprintName = "HomeTests"
+               BlueprintIdentifier = "76452A832B5A3AB90001F47E"
+               BuildableName = "UtilitiesTests.xctest"
+               BlueprintName = "UtilitiesTests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -55,21 +57,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76CB88CC28A273DB00878D8C"
-               BuildableName = "SharedExtensionsTests.xctest"
-               BlueprintName = "SharedExtensionsTests"
-               ReferencedContainer = "container:iosApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76AA88F72A38D3F900F25113"
-               BuildableName = "APITests.xctest"
-               BlueprintName = "APITests"
+               BlueprintIdentifier = "768C697D2B5CC3CF001A1B1A"
+               BuildableName = "ProfileTests.xctest"
+               BlueprintName = "ProfileTests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -10,7 +10,6 @@ internal class UserSessionUseCaseImpl(
     private val tokenManager: TokenManager
     ) : KoinComponent, UserSessionUseCase {
 
-
     override fun isLoggedIn(): Boolean {
         return tokenManager.getAccessToken().isNullOrEmpty().not()
     }

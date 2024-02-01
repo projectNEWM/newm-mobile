@@ -8,8 +8,13 @@ extension LandingView {
 		ZStack {
 			VStack {
 				Asset.Media.logo.swiftUIImage.resizable().frame(width: 112, height: 112).padding(30)
-				NEWMTextField(title: .email, prompt: .emailPrompt, isSecure: false, text: $viewModel.email).padding(.bottom)
-				NEWMTextField(title: .password, prompt: .yourPassword, isSecure: true, text: $viewModel.password).padding(.bottom)
+				NEWMTextField(title: .email, prompt: .emailPrompt, isSecure: false, text: $viewModel.email)
+					.padding(.bottom)
+					.keyboardType(.emailAddress)
+					.autocorrectionDisabled()
+					.textInputAutocapitalization(.never)
+				NEWMTextField(title: .password, prompt: .yourPassword, isSecure: true, text: $viewModel.password)
+					.padding(.bottom)
 				actionButton(title: .next) {
 					viewModel.login()
 				}

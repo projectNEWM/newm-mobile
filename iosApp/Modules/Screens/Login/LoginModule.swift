@@ -3,6 +3,7 @@ import ModuleLinker
 import Resolver
 import SwiftUI
 import shared
+import Mocks
 
 public final class LoginModule: Module {
 	public static var shared = LoginModule()
@@ -25,6 +26,17 @@ public final class LoginModule: Module {
 #if DEBUG
 extension LoginModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
+		mockResolver.register { 
+			MockErrorLogger() as ErrorReporting
+		}
+		
+		mockResolver.register {
+			MockLoginUseCase() as LoginUseCase
+		}
+		
+		mockResolver.register {
+			MockSignupUseCase() as SignupUseCase
+		}
 	}
 }
 #endif

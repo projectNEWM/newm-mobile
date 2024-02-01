@@ -8,7 +8,7 @@ public final class AudioPlayerModule: Module {
 	
 	public func registerAllServices() {
 		Resolver.register { resolver in
-			VLCAudioPlayer.shared
+			VLCAudioPlayer.sharedPlayer
 		}.scope(.application)
 	}
 	

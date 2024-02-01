@@ -2,26 +2,28 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.internal.TokenManager
+import io.newm.shared.internal.repositories.CardanoWalletRepository
+import io.newm.shared.internal.repositories.ConnectWalletManager
+import io.newm.shared.internal.repositories.GenresRepository
+import io.newm.shared.internal.repositories.LogInRepository
+import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
+import io.newm.shared.internal.repositories.PlaylistRepository
+import io.newm.shared.internal.repositories.UserRepository
+import io.newm.shared.internal.services.CardanoWalletAPI
+import io.newm.shared.internal.services.GenresAPI
+import io.newm.shared.internal.services.LoginAPI
+import io.newm.shared.internal.services.NewmPolicyIdsAPI
+import io.newm.shared.internal.services.PlaylistAPI
+import io.newm.shared.internal.services.UserAPI
+import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
 import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
 import io.newm.shared.internal.implementations.LoginUseCaseImpl
 import io.newm.shared.internal.implementations.SignupUseCaseImpl
 import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
-import io.newm.shared.internal.implementations.WalletNFTSongsUseCaseImpl
-import io.newm.shared.internal.repositories.CardanoWalletRepository
-import io.newm.shared.internal.repositories.ConnectWalletManager
-import io.newm.shared.internal.repositories.GenresRepository
-import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
-import io.newm.shared.internal.repositories.PlaylistRepository
-import io.newm.shared.internal.repositories.UserRepository
-import io.newm.shared.internal.services.CardanoWalletAPI
-import io.newm.shared.internal.services.GenresAPI
-import io.newm.shared.internal.services.NewmPolicyIdsAPI
-import io.newm.shared.internal.services.PlaylistAPI
-import io.newm.shared.internal.services.UserAPI
-import io.newm.shared.login.repository.LogInRepository
-import io.newm.shared.login.service.LoginAPI
+import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
+import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.LoginUseCase
@@ -69,13 +71,14 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
     single { ConnectWalletManager(get()) }
     // External Use Cases to be consumed outside of KMM
-    single<LoginUseCase> { LoginUseCaseImpl(get()) }
+    single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTTracksUseCase> { WalletNFTSongsUseCaseImpl(get()) }
+    single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
+    single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

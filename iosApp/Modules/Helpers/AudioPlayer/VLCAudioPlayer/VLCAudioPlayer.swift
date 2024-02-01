@@ -12,7 +12,7 @@ public class VLCAudioPlayer: ObservableObject {
 		case all
 		case one
 	}
-	static let shared = VLCAudioPlayer()
+	static let sharedPlayer = VLCAudioPlayer()
 	
 	private var mediaPlayer: VLCMediaPlayer
 	private var playQueue: [NFTTrack] = [] {
@@ -65,10 +65,20 @@ public class VLCAudioPlayer: ObservableObject {
 			.sink { [weak self] in
 			self?.objectWillChange.send()
 		}.store(in: &cancels)
+		
+		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged)).sink { [weak self] _ in
+			self?.handleWalletDisconnect()
+		}.store(in: &cancels)
 	}
 	
 	public func play() {
 		mediaPlayer.play()
+	}
+	
+	private func handleWalletDisconnect() {
+		stop()
+		setPlayQueue([])
+		removeDownloadedSongs()
 	}
 	
 	private func playCurrentIndexInQueue() {

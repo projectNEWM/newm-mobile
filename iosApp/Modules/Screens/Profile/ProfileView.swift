@@ -1,4 +1,5 @@
 import SwiftUI
+import Mocks
 import SharedUI
 import ModuleLinker
 import Resolver
@@ -6,6 +7,7 @@ import Colors
 import Kingfisher
 import shared
 import Combine
+import Utilities
 
 public struct ProfileView: View {
 	@StateObject private var viewModel = ProfileViewModel()
@@ -17,10 +19,17 @@ public struct ProfileView: View {
 	public init() {}
 	
 	public var body: some View {
+		NavigationView {
 		mainView
-			.navigationBarItems(trailing: saveButton)
+			.toolbar {
+				ToolbarItem(placement: .topBarTrailing) {
+					saveButton
+				}
+			}
+			.toolbar(.visible, for: .navigationBar)
 			.autocorrectionDisabled(true)
 			.scrollDismissesKeyboard(.immediately)
+		}
 	}
 	
 	@ViewBuilder
@@ -28,24 +37,29 @@ public struct ProfileView: View {
 		ZStack {
 			ScrollView {
 				VStack(alignment: .center) {
-					HeaderImageSection(viewModel.user?.bannerUrl)
+					if let bannerURL = viewModel.bannerURL {
+						HeaderImageSection(bannerURL.absoluteString)
+							.padding(.top, 177)
+					}
 					artistImage
 					artistName
 					walletView.padding(.bottom)
 					bottomSection
 						.addSidePadding()
 				}
-				.padding(.top, 177)
-			}
-			.alert("Error", isPresented: isPresent($viewModel.error), actions: {}) {
-				Text(viewModel.error ?? "Unknown error")
 			}
 			.refreshable {
 				await viewModel.loadUser()
 			}
-			.loadingToast(isLoading: $viewModel.isLoading)
+			.errorAlert(message: viewModel.errorAlert) {
+				viewModel.alertDismissed()
+			}
+			.toast(shouldShow: $viewModel.showLoadingToast, type: .loading)
+			.toast(shouldShow: $viewModel.showCompletionToast, type: .complete)
 		}
-		.sheet(isPresented: $showXPubScanner) {
+		.sheet(isPresented: $showXPubScanner, onDismiss: {
+			showXPubScanner = false
+		}) {
 			XPubScannerView {
 				showXPubScanner = false
 			}
@@ -75,25 +89,15 @@ public struct ProfileView: View {
 	@ViewBuilder
 	private var saveButton: some View {
 		if viewModel.showSaveButton {
-			Button("Save", action: viewModel.save)
-				.foregroundStyle(Gradients.loginGradient.gradient)
-				.erased
+			Button("Save", action: { Task { await viewModel.save() } })
+				.tint(Gradients.loginGradient.gradient)
+				.disabled(viewModel.enableSaveButon == false)
 		}
 	}
-	
-	//	@ViewBuilder
-	//	private var saveButton: some View {
-	//		VStack {
-	//			Spacer()
-	//			if viewModel.showSaveButton {
-	//				actionButton(title: "Save", action: viewModel.save).addSidePadding()
-	//			}
-	//		}
-	//	}
-	
+		
 	@ViewBuilder
 	private var artistImage: some View {
-		KFImage(viewModel.user?.pictureUrl.flatMap(URL.init))
+		KFImage(viewModel.pictureURL)
 			.setProcessor(DownsamplingImageProcessor(size: CGSize(width: userImageSize, height: userImageSize)))
 			.clipShape(RoundedRectangle(cornerRadius: userImageSize/2.0))
 			.padding(.top, -(sectionSpacing+userImageSize/2))
@@ -114,8 +118,9 @@ public struct ProfileView: View {
 				.textContentType(.password)
 			NEWMTextField(title: "NEW PASSWORD", prompt: "New password", isSecure: true, text: $viewModel.newPassword)
 				.textContentType(.newPassword)
-			NEWMTextField(title: "CONFIRM NEW PASSWORD", prompt: "New password", isSecure: true, text: $viewModel.confirmPassword).padding(.bottom)
+			NEWMTextField(title: "CONFIRM NEW PASSWORD", prompt: "New password", isSecure: true, text: $viewModel.confirmPassword)
 				.textContentType(.newPassword)
+				.padding(.bottom)
 		}
 	}
 	
@@ -149,10 +154,30 @@ public struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
+		MocksModule.shared.registerAllMockedServices()
 		Resolver.root = .mock
-		return NavigationView {
-			NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+		return Group {
+			NavigationView {
+				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+			}
 		}
 		.preferredColorScheme(.dark)
+	}
+}
+
+struct ProfileView_Previews_2: PreviewProvider {
+	static var previews: some View {
+		MocksModule.shared.registerAllMockedServices()
+		Resolver.root = .mock
+		Resolver.mock.register {
+			MockUserDetailsUseCase(mockUser: .bannerlessUser) as UserDetailsUseCase
+		}
+		return Group {
+			NavigationView {
+				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+			}
+		}
+		.preferredColorScheme(.dark)
+		.previewDisplayName("no banner")
 	}
 }

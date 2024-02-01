@@ -1,4 +1,6 @@
-package io.newm.shared.public.models
+package io.newm.shared.public.models.mocks
+
+import io.newm.shared.public.models.NFTTrack
 
 
 val mockTracks: List<NFTTrack> = listOf(

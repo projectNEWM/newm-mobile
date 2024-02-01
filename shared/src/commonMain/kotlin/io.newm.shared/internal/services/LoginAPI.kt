@@ -1,4 +1,4 @@
-package io.newm.shared.login.service
+package io.newm.shared.internal.services
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -12,14 +12,14 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory
-import io.newm.shared.login.models.AppleSignInRequest
-import io.newm.shared.login.models.FacebookSignInRequest
-import io.newm.shared.login.models.GoogleSignInRequest
-import io.newm.shared.login.models.LinkedInSignInRequest
-import io.newm.shared.login.models.LogInUser
-import io.newm.shared.login.models.LoginResponse
-import io.newm.shared.login.models.NewUser
-import io.newm.shared.login.models.RegisterException
+import io.newm.shared.internal.services.models.AppleSignInRequest
+import io.newm.shared.internal.services.models.FacebookSignInRequest
+import io.newm.shared.internal.services.models.GoogleSignInRequest
+import io.newm.shared.internal.services.models.LinkedInSignInRequest
+import io.newm.shared.internal.services.models.LogInUser
+import io.newm.shared.internal.services.models.LoginResponse
+import io.newm.shared.internal.services.models.NewUser
+import io.newm.shared.internal.services.models.RegisterException
 import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
@@ -31,7 +31,6 @@ internal class LoginAPI(
 
     private val httpClient: HttpClient = networkClient.httpClient()
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun requestEmailConfirmationCode(email: String) {
         val response = httpClient.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
@@ -47,7 +46,6 @@ internal class LoginAPI(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun register(user: NewUser) {
         val response = httpClient.post("/v1/users") {
             contentType(ContentType.Application.Json)
@@ -56,7 +54,7 @@ internal class LoginAPI(
         when (response.status) {
             HttpStatusCode.OK -> {}
             HttpStatusCode.Conflict -> {
-                throw RegisterException.UserAlreadyExists("User already Exists")
+                throw RegisterException.UserAlreadyExists("User already exists")
             }
             HttpStatusCode.Forbidden -> {
                 throw RegisterException.TwoFactorAuthenticationFailed("TwoFactorAuthenticationFailed")
@@ -67,13 +65,11 @@ internal class LoginAPI(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun logIn(user: LogInUser) = httpClient.post("/v1/auth/login") {
         contentType(ContentType.Application.Json)
         setBody(user)
     }.body<LoginResponse>()
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun loginWithGoogle(request: GoogleSignInRequest): LoginResponse {
         val response = httpClient.post("/v1/auth/login/google") {
             contentType(ContentType.Application.Json)
@@ -88,7 +84,6 @@ internal class LoginAPI(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun loginWithApple(request: AppleSignInRequest): LoginResponse {
         val response = httpClient.post("/v1/auth/login/apple") {
             contentType(ContentType.Application.Json)
@@ -103,7 +98,6 @@ internal class LoginAPI(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun loginWithFacebook(request: FacebookSignInRequest): LoginResponse {
         val response = httpClient.post("/v1/auth/login/facebook") {
             contentType(ContentType.Application.Json)
@@ -118,7 +112,6 @@ internal class LoginAPI(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun loginWithLinkedIn(request: LinkedInSignInRequest): LoginResponse {
         val response = httpClient.post("/v1/auth/login/linkedin") {
             contentType(ContentType.Application.Json)
@@ -133,7 +126,6 @@ internal class LoginAPI(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun resetPassword(
         email: String,
         newPassword: String,

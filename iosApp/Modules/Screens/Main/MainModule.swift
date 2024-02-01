@@ -29,32 +29,7 @@ extension MainModule: MainViewProviding {
 extension MainModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
-			return MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
-			class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
-				func getAllStreamTokensFlow() -> Kotlinx_coroutines_coreFlow {
-					fatalError()
-				}
-				
-				func getAllStreamTokens() async throws -> [NFTTrack] {
-					NFTTrackMocksKt.mockTracks
-				}
-				
-				func getAllStreamTokens() -> Kotlinx_coroutines_coreFlow {
-					fatalError()
-				}
-				
-				func getNFTTrack(id: String) -> NFTTrack? {
-					NFTTrackMocksKt.mockTracks.first { $0.id == id }
-				}
-				
-				func getAllNFTTracks() async throws -> [NFTTrack] {
-					NFTTrackMocksKt.mockTracks
-				}
-				
-				func getAllNFTTracksFlow() -> Kotlinx_coroutines_coreFlow {
-					fatalError()
-				}
-			}
+			MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
 		}
 	}
 }

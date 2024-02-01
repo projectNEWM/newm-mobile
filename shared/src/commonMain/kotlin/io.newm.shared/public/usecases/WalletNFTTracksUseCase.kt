@@ -1,9 +1,11 @@
 package io.newm.shared.public.usecases
 
 import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.coroutines.cancellation.CancellationException
 
 
 /**
@@ -24,6 +26,8 @@ interface WalletNFTTracksUseCase {
      * @return Flow<List<NFTTrack>> - A flow emitting the list of NFT tracks associated with the wallet.
      */
     fun getAllNFTTracksFlow(): Flow<List<NFTTrack>>
+
+    @Throws(KMMException::class, CancellationException::class)
     suspend fun getAllNFTTracks(): List<NFTTrack>
 
     /**
@@ -36,6 +40,8 @@ interface WalletNFTTracksUseCase {
      * @return Flow<List<NFTTrack>> - A flow emitting the list of NFT tracks associated with the wallet.
      */
     fun getAllStreamTokensFlow(): Flow<List<NFTTrack>>
+
+    @Throws(KMMException::class, CancellationException::class)
     suspend fun getAllStreamTokens(): List<NFTTrack>
 
     /**
@@ -49,7 +55,11 @@ interface WalletNFTTracksUseCase {
      * @param id The unique identifier of the NFT track to be retrieved.
      * @return NFTTrack? - The NFT track with the specified ID, or `null` if no such track is found.
      */
+    @Throws(KMMException::class, CancellationException::class)
     fun getNFTTrack(id: String): NFTTrack?
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun refresh()
 }
 
 class WalletNFTTracksUseCaseProvider(): KoinComponent {

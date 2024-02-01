@@ -5,6 +5,8 @@ import ModuleLinker
 import SharedUI
 import shared
 import AudioPlayer
+import Utilities
+import SharedExtensions
 
 @MainActor
 class LibraryViewModel: ObservableObject {
@@ -42,6 +44,7 @@ class LibraryViewModel: ObservableObject {
 			.store(in: &cancels)
 		
 		audioPlayer.objectWillChange
+			.receive(on: DispatchQueue.main)
 			.sink { [weak self] _ in
 				self?.objectWillChange.send()
 			}
@@ -73,11 +76,12 @@ class LibraryViewModel: ObservableObject {
 		guard walletIsConnected else { return }
 		
 		do {
-			let tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
-			self.tracks = tracks
+			try await walletNFTTracksUseCase.refresh()
+			// TODO: split these up.
+			tracks = try await walletNFTTracksUseCase.getAllNFTTracks() + walletNFTTracksUseCase.getAllStreamTokens()
 		} catch {
 			logger.logError(error)
-			self.errors.append(NEWMError(errorDescription: "An error occured.  Please try again."))
+			errors.append(NEWMError(errorDescription: "Unable to fetch songs.  Please try again."))
 		}
 	}
 	
@@ -88,6 +92,10 @@ class LibraryViewModel: ObservableObject {
 			await refresh()
 			showLoading = false
 		}
+	}
+	
+	func scannerDismissed() {
+		showXPubScanner = false
 	}
 	
 	func connectWallet() {

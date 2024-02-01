@@ -1,5 +1,6 @@
 import Foundation
 import ModuleLinker
+import Utilities
 
 extension String {
 	@Localizable(LibraryModule.self) static var library = "LIBRARY"

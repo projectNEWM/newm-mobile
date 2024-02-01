@@ -3,14 +3,14 @@ package io.newm.shared.login.util
 object LoginFieldValidator {
 
     fun validate(email: String, password: String): Boolean {
-        return isValidEmail(email) && isValidPassword(password)
+        return isEmailValid(email) && isPasswordValid(password)
     }
 
-    fun isEmailValid(email: String): Boolean = isValidEmail(email)
+    fun isPasswordValid(password: String): Boolean {
+        return password.isNotBlank() && password.length > 3
+    }
 
-    fun isPasswordValid(password: String): Boolean = isValidPassword(password)
-
-    private fun isValidEmail(email: String): Boolean {
+    fun isEmailValid(email: String): Boolean {
         val emailAddressRegex = Regex(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                     "\\@" +
@@ -21,9 +21,5 @@ object LoginFieldValidator {
                     ")+"
         )
         return email.matches(emailAddressRegex)
-    }
-
-    private fun isValidPassword(password: String): Boolean {
-        return password.isNotBlank() && password.length > 3
     }
 }

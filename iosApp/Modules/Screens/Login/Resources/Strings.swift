@@ -1,5 +1,5 @@
 import Foundation
-import ModuleLinker
+import Utilities
 
 extension String {
 	@Localizable(LoginModule.self) static var welcomeToNewm = "WELCOME_TO_NEWM"

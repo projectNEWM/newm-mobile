@@ -17,13 +17,11 @@ import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.utils.io.CancellationException
 import io.newm.shared.internal.HttpRoutes
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.login.models.LoginResponse
-import io.newm.shared.login.repository.LogInRepository
+import io.newm.shared.internal.repositories.LogInRepository
+import io.newm.shared.internal.services.models.LoginResponse
 import io.newm.shared.public.models.error.KMMException
-import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.serialization.json.Json
 
 internal class NetworkClientFactory(
@@ -54,6 +52,7 @@ internal class NetworkClientFactory(
 
     private fun createHttpClient(): HttpClient {
         return HttpClient(httpClientEngine) {
+            this.expectSuccess = true
             defaultRequest {
                 url(HttpRoutes.getHost())
             }
@@ -78,10 +77,10 @@ internal class NetworkClientFactory(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     private fun createAuthHttpClient(): HttpClient {
         logger.d { "NewmKMM - createAuthHttpClient" }
         return HttpClient(httpClientEngine) {
+            this.expectSuccess = true
             defaultRequest {
                 url(HttpRoutes.getHost())
             }

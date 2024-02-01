@@ -6,6 +6,7 @@ import GoogleSignInSwift
 import GoogleSignIn
 import AuthenticationServices
 import Resolver
+import Utilities
 
 public struct LandingView: View {
 	@StateObject var viewModel = LandingViewModel()
@@ -13,45 +14,34 @@ public struct LandingView: View {
 	
 	private let socialSignInButtonHeight: CGFloat = 40
 	@Injected private var logger: ErrorReporting
-		
+	
 	public var body: some View {
-		ZStack {
-			NavigationStack(path: $viewModel.navPath) {
-				landingView
-					.padding()
-					.navigationDestination(for: LandingRoute.self) { route in
-						switch route {
-						case .createAccount:
-							createAccountView.backButton()
-						case .codeConfirmation:
-							codeConfirmationView.backButton()
-						case .nickname:
-							nicknameView.backButton()
-						case .done:
-							doneView
-						case .login:
-							loginView.backButton()
-						case .forgotPassword:
-							forgotPasswordView.backButton()
-						case .enterNewPassword:
-							enterNewPasswordView.backButton()
-						}
+		NavigationStack(path: $viewModel.navPath) {
+			landingView
+				.padding()
+				.navigationDestination(for: LandingRoute.self) { route in
+					switch route {
+					case .createAccount:
+						createAccountView.backButton()
+					case .codeConfirmation:
+						codeConfirmationView.backButton()
+					case .nickname:
+						nicknameView.backButton()
+					case .done:
+						doneView
+					case .login:
+						loginView.backButton()
+					case .forgotPassword:
+						forgotPasswordView.backButton()
+					case .enterNewPassword:
+						enterNewPasswordView.backButton()
 					}
-			}
-			.alert(String.error, isPresented: .constant(viewModel.errors.hasError), presenting: viewModel.errors.currentError, actions: { error in
-				Button {
-					viewModel.errors.popFirstError()
-				} label: {
-					Text("Ok")
 				}
-			}, message: { error in
-				Text(error.errorDescription ?? error.localizedDescription)
-			})
-			
-			if viewModel.isLoading {
-				LoadingToast()
-			}
 		}
+		.errorAlert(message: viewModel.errors.currentError?.errorDescription) {
+			viewModel.errors.popFirstError()
+		}
+		.toast(shouldShow: $viewModel.isLoading, type: .loading)
 	}
 }
 

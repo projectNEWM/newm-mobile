@@ -4,8 +4,9 @@ import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import io.newm.shared.internal.db.NewmDatabaseWrapper
-import io.newm.shared.public.models.User
 import io.newm.shared.internal.services.UserAPI
+import io.newm.shared.internal.services.models.UserProfileUpdateRequest
+import io.newm.shared.public.models.User
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
@@ -120,5 +121,20 @@ internal class UserRepository(
     suspend fun deleteCurrentUser(): Boolean {
         logger.d { "deleteCurrentUser" }
         return service.deleteCurrentUser().status.value == 204
+    }
+
+    suspend fun changePassword(
+        currentPassword: String,
+        newPassword: String,
+        confirmNewPassword: String
+    ) {
+        logger.d { "changePassword" }
+        service.updateUserProfile(
+            UserProfileUpdateRequest(
+                currentPassword = currentPassword,
+                newPassword = newPassword,
+                confirmPassword = confirmNewPassword
+            )
+        )
     }
 }
