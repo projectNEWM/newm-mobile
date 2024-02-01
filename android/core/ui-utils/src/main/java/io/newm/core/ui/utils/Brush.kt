@@ -18,6 +18,17 @@ fun HotPinkBrush(): Brush {
 }
 
 @Composable
+fun DisabledHotPinkBrush(): Brush {
+    return Brush.horizontalGradient(
+        colors = listOf(
+            colorResource(id = R.color.purple_artist_ring_1),
+            colorResource(id = R.color.purple_artist_ring_1),
+            colorResource(id = R.color.purple_artist_ring_1)
+        )
+    )
+}
+
+@Composable
 fun SongRingBrush(): Brush {
     return Brush.horizontalGradient(
         colors = listOf(

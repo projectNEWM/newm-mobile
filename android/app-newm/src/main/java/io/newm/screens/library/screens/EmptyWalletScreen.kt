@@ -44,11 +44,12 @@ fun EmptyWalletScreen() {
             )
 
             PrimaryButton(
-                text = "Visit the Record Store",
                 modifier = Modifier.padding(all = 16.dp),
+                text = "Visit the Record Store",
                 onClick = {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(RECORD_STORE_URL)))
-                })
+                },
+            )
         }
     }
 }

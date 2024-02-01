@@ -69,9 +69,9 @@ internal fun EmailVerificationUi(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-            PrimaryButton(text = "Continue") {
+            PrimaryButton(text = "Continue", onClick = {
                 onEvent(EmailVerificationUiEvent.Next)
-            }
+            })
         }
     }
 }

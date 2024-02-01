@@ -22,11 +22,14 @@ import com.slack.circuit.retained.continuityRetainedStateRegistry
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
+import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.LoginScreenUi
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState
+import io.newm.feature.login.screen.login.LoginScreenPresenter
+import io.newm.feature.login.screen.login.LoginScreenUiState
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
@@ -49,6 +52,7 @@ class LoginActivity : ComponentActivity() {
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
                 is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
+                is LoginScreen -> inject<LoginScreenPresenter> { parametersOf(navigator) } .value
                 else -> null
             }
         }
@@ -62,6 +66,10 @@ class LoginActivity : ComponentActivity() {
 
                 is LoginLandingScreen -> ui<WelcomeScreenUiState> { state, modifier ->
                     WelcomeScreenUi(modifier, state)
+                }
+
+                is LoginScreen -> ui<LoginScreenUiState> { state, modifier ->
+                    LoginScreenUi().Content(state, modifier)
                 }
 
                 else -> null
@@ -109,9 +117,6 @@ fun WelcomeToNewm(
             val newmNavigator =
                 rememberNewmNavigator(circuitNavigator, navController, onStartHomeActivity)
             NavigableCircuitContent(newmNavigator, backstack)
-        }
-        composable(Screen.LoginScreen.route) {
-            LoginScreenUi(onUserLoggedIn = onStartHomeActivity)
         }
         composable(Screen.Signup.route) {
             CircuitContent(screen = CreateAccountScreen)
