@@ -13,5 +13,5 @@ actual fun platformModule() = module {
         NewmDatabaseWrapper(NewmDatabase(driver))
     }
     single { Android.create() }
-    single { KVault(get()) }
+    single { KVault(get(), fileName = "newm-encrypted-prefs") }
 }
