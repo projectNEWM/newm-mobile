@@ -39,6 +39,7 @@ extension LandingView {
 	}
 }
 
+#if DEBUG
 struct UsernameView_Previews: PreviewProvider {
 	static var previews: some View {
 		LoginModule.shared.registerAllMockedServices(mockResolver: .mock)
@@ -48,3 +49,4 @@ struct UsernameView_Previews: PreviewProvider {
 			.preferredColorScheme(.dark)
 	}
 }
+#endif

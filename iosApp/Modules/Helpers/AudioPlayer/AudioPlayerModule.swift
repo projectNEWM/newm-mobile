@@ -11,8 +11,9 @@ public final class AudioPlayerModule: Module {
 			VLCAudioPlayer.sharedPlayer
 		}.scope(.application)
 	}
-	
+#if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		
 	}
+#endif
 }

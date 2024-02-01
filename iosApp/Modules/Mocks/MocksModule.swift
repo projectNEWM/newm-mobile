@@ -9,7 +9,7 @@ final public class MocksModule: Module {
 	public func registerAllServices() {
 		//Intentionally empty.
 	}
-	
+#if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver = .mock) {
 		mockResolver.register {
 			MockUserDetailsUseCase() as UserDetailsUseCase
@@ -27,4 +27,5 @@ final public class MocksModule: Module {
 			MockErrorLogger() as ErrorReporting
 		}
 	}
+#endif
 }

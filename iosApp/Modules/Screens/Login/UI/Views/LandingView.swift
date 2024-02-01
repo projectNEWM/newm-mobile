@@ -119,10 +119,11 @@ extension LandingView {
 	}
 }
 
+#if DEBUG
 struct LandingView_Previews: PreviewProvider {
 	static var previews: some View {
 		let vm = LandingViewModel()
-		vm.errors.append(NEWMError(errorDescription: "You fucked up big time."))
+		vm.errors.append(NEWMError(errorDescription: "You messed up big time."))
 		return Group {
 			LandingView()
 			LandingView(viewModel: vm)
@@ -131,3 +132,4 @@ struct LandingView_Previews: PreviewProvider {
 		.preferredColorScheme(.dark)
 	}
 }
+#endif

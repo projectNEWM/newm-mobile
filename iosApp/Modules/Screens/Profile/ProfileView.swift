@@ -152,6 +152,7 @@ public struct ProfileView: View {
 	}
 }
 
+#if DEBUG
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
 		MocksModule.shared.registerAllMockedServices()
@@ -164,7 +165,9 @@ struct ProfileView_Previews: PreviewProvider {
 		.preferredColorScheme(.dark)
 	}
 }
+#endif
 
+#if DEBUG
 struct ProfileView_Previews_2: PreviewProvider {
 	static var previews: some View {
 		MocksModule.shared.registerAllMockedServices()
@@ -181,3 +184,4 @@ struct ProfileView_Previews_2: PreviewProvider {
 		.previewDisplayName("no banner")
 	}
 }
+#endif
