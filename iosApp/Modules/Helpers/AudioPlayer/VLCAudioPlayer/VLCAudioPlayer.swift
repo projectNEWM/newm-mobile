@@ -43,6 +43,7 @@ public class VLCAudioPlayer: ObservableObject {
 	public var title: String? { mediaPlayer.media?.metaData.title }
 	public var artist: String? { mediaPlayer.media?.metaData.artist }
 	public var artworkUrl: URL? { mediaPlayer.media?.metaData.artworkURL }
+	public var willPlay: Bool { mediaPlayer.willPlay }
 	@Published private var currentQueueIndex: Int?
 	@Published public var shuffle: Bool = false {
 		willSet {
