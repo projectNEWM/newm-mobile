@@ -26,7 +26,6 @@ private class NewmNavigator(
     override fun goTo(screen: Screen) {
         when (screen) {
             is io.newm.screens.Screen -> navController.navigate(screen.route)
-            is LoginScreen -> navController.navigate(io.newm.screens.Screen.LoginScreen.route)
             is HomeScreen -> startHomeActivity()
             else -> circuitNavigator.goTo(screen)
         }

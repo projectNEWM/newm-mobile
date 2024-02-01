@@ -19,27 +19,31 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import io.newm.core.ui.utils.DisabledHotPinkBrush
 import io.newm.core.ui.utils.HotPinkBrush
 
 @Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick: () -> Unit) {
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+) {
     Box(
         modifier = modifier
             .height(40.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
-            .background(brush = HotPinkBrush())
-            .clickable {
-                onClick.invoke()
-            },
-        contentAlignment = Alignment.Center
+            .background(brush = if (enabled) HotPinkBrush() else DisabledHotPinkBrush())
+            .then(
+                if (enabled) Modifier.clickable { onClick.invoke() }
+                else Modifier
+            ),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text,
-            color = MaterialTheme.colors.onPrimary,
+            color = if(enabled) MaterialTheme.colors.onPrimary else Color.Gray,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.Bold,
         )

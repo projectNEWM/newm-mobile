@@ -23,9 +23,7 @@ sealed class Screen(val route: String) {
     //Single Screens
     @Parcelize
     object LoginLandingScreen : Screen("login-landing"), CircuitScreen
-
-    @Parcelize
-    object LoginScreen : Screen("login"), CircuitScreen
+    
     data object Signup : Screen("signup")
     data object EditProfile : Screen("edit-profile")
     data object BarcodeScanner : Screen("barcode-scanner")

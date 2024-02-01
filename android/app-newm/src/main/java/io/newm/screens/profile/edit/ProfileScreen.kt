@@ -19,8 +19,6 @@ import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.formEmailStyle
 import io.newm.core.ui.text.formNameStyle
-import io.newm.core.ui.text.formTextFieldStyle
-import io.newm.core.ui.text.formTitleStyle
 import io.newm.screens.profile.ProfileBanner
 import io.newm.screens.profile.ProfileBottomSheet
 import io.newm.screens.profile.ProfileForm

@@ -11,6 +11,7 @@ import io.newm.feature.login.screen.LoginViewModel
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncherImpl
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
+import io.newm.feature.login.screen.login.LoginScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.musicplayer.repository.MockMusicRepository
 import io.newm.feature.musicplayer.repository.MusicRepository
@@ -38,6 +39,7 @@ val viewModule = module {
     viewModel { params -> MusicPlayerViewModel(params.get(), params.get(), get(), get()) }
 
     factory { params -> CreateAccountScreenPresenter(params.get(), get()) }
+    factory { params -> LoginScreenPresenter(params.get(), get()) }
     single<GoogleSignInLauncher> {
         GoogleSignInLauncherImpl(
             GoogleSignIn.getClient(
