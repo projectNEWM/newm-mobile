@@ -52,7 +52,10 @@ fun WelcomeScreenUi(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 SignInWithGoogleButton(onEvent)
-                PrimaryButton(text = "Login", onClick = { onEvent(LoginClicked) })
+                PrimaryButton(
+                    text = "Login",
+                    onClick = { onEvent(LoginClicked) },
+                )
                 SecondaryButton(
                     text = "Create new account",
                     onClick = { onEvent(CreateAccountClicked) }

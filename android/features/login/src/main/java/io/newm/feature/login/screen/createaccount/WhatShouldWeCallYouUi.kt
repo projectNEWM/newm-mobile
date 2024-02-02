@@ -42,11 +42,14 @@ internal fun WhatShouldWeCallYouUi(
                 onValueChange = state.name::text::set,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            PrimaryButton(text = "Next") {
-                if (state.name.text.isNotEmpty()) {
-                    onEvent(SetNameUiEvent.Next)
+            PrimaryButton(
+                text = "Next",
+                onClick = {
+                    if (state.name.text.isNotEmpty()) {
+                        onEvent(SetNameUiEvent.Next)
+                    }
                 }
-            }
+            )
         }
     }
 }
