@@ -3,10 +3,13 @@ import Resolver
 import ModuleLinker
 import UIKit
 import shared
+import Kingfisher
+import Utilities
 
 @main
 struct iOSApp: App {
 	private let mainViewProvider: MainViewProviding
+	private var imageErrorPlugin = KingfisherErrorHandler()
 
 	init() {
 		KoinKt.doInitKoin(enableNetworkLogs: true)
@@ -16,6 +19,7 @@ struct iOSApp: App {
 		mainViewProvider = Resolver.resolve()
 		
 		setUpAppearance()
+		setUpKingfisherErrorHandling()
 	}
 	
 	var body: some Scene {
@@ -32,5 +36,11 @@ struct iOSApp: App {
 		let barAppearance = UIBarAppearance()
 		barAppearance.configureWithOpaqueBackground()
 		UITabBar.appearance().standardAppearance = UITabBarAppearance(barAppearance: barAppearance)
+	}
+}
+
+extension iOSApp {
+	func setUpKingfisherErrorHandling() {
+		KingfisherManager.shared.downloader.delegate = imageErrorPlugin
 	}
 }

@@ -33,7 +33,7 @@ public struct ProfileView: View {
 	}
 }
 
-extension {
+extension ProfileView {
 	@ViewBuilder
 	private var mainView: some View {
 		ZStack {

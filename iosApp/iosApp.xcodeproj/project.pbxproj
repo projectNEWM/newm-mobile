@@ -69,6 +69,10 @@
 		761E971D2B6A906900FDFC5E /* Mocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; };
 		761E97222B6A908400FDFC5E /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 761E97212B6A908400FDFC5E /* Resolver */; };
 		761E97252B6A947100FDFC5E /* MockUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E97242B6A947100FDFC5E /* MockUsers.swift */; };
+		761E973C2B6BC3B100FDFC5E /* Mocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; };
+		761E973D2B6BC3B100FDFC5E /* Mocks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		761E97432B6BCCA600FDFC5E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 761E97422B6BCCA600FDFC5E /* Kingfisher */; };
+		761E97452B6BD8E200FDFC5E /* KingfisherErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761E97402B6BCC8F00FDFC5E /* KingfisherErrorHandler.swift */; };
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
 		762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
 		762EF9B52B21B30C009E08D8 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762EF9B42B21B30C009E08D8 /* DebugView.swift */; };
@@ -416,6 +420,13 @@
 			remoteGlobalIDString = 768C69AB2B5CD971001A1B1A;
 			remoteInfo = Mocks;
 		};
+		761E973E2B6BC3B100FDFC5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 768C69AB2B5CD971001A1B1A;
+			remoteInfo = Mocks;
+		};
 		762EF9AB2B1F90C7009E08D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -755,6 +766,7 @@
 				7618FD7828164DA2007573B4 /* Login.framework in Embed Frameworks */,
 				76C8502D2AEB37E200C2C388 /* Library.framework in Embed Frameworks */,
 				7618FD3828164CE2007573B4 /* Fonts.framework in Embed Frameworks */,
+				761E973D2B6BC3B100FDFC5E /* Mocks.framework in Embed Frameworks */,
 				7618FD1E28164CBD007573B4 /* Colors.framework in Embed Frameworks */,
 				7650E1702B17CB0A00D686B8 /* AudioPlayer.framework in Embed Frameworks */,
 				760808B02B2799D20015A2ED /* Logging.framework in Embed Frameworks */,
@@ -842,6 +854,7 @@
 		761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSignUpUseCase.swift; sourceTree = "<group>"; };
 		761E971A2B6A8EDA00FDFC5E /* MocksModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MocksModule.swift; sourceTree = "<group>"; };
 		761E97242B6A947100FDFC5E /* MockUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUsers.swift; sourceTree = "<group>"; };
+		761E97402B6BCC8F00FDFC5E /* KingfisherErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherErrorHandler.swift; sourceTree = "<group>"; };
 		7625CE2E294088110033C669 /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 		7625D14D29429CCC0033C669 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		7625D1512942B0740033C669 /* LibraryRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryRoutes.swift; sourceTree = "<group>"; };
@@ -1053,6 +1066,7 @@
 				76D01DA428164B2100305605 /* ModuleLinker.framework in Frameworks */,
 				7650E1512B17B3FA00D686B8 /* Profile.framework in Frameworks */,
 				760808AF2B2799D20015A2ED /* Logging.framework in Frameworks */,
+				761E973C2B6BC3B100FDFC5E /* Mocks.framework in Frameworks */,
 				76452A652B5A395A0001F47E /* Utilities.framework in Frameworks */,
 				7618FD7728164DA2007573B4 /* Login.framework in Frameworks */,
 				7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */,
@@ -1172,6 +1186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761E97432B6BCCA600FDFC5E /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1340,6 +1355,7 @@
 				76B52D8029F9227300EB6357 /* iosApp.entitlements */,
 				7698BA1C29F783A300A47BDD /* Info.plist */,
 				7651D6D527DFA35100FF41B3 /* App */,
+				761E97442B6BD8CC00FDFC5E /* Plugins */,
 				763FEAB027C30B4500232093 /* Resources */,
 			);
 			path = iosApp;
@@ -1520,6 +1536,14 @@
 				761E97242B6A947100FDFC5E /* MockUsers.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		761E97442B6BD8CC00FDFC5E /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				761E97402B6BCC8F00FDFC5E /* KingfisherErrorHandler.swift */,
+			);
+			path = Plugins;
 			sourceTree = "<group>";
 		};
 		7625CE302940881E0033C669 /* Cells */ = {
@@ -2157,9 +2181,9 @@
 		76CF98B927DEFD7100AC185E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				768C69AD2B5CD971001A1B1A /* Mocks */,
 				7627EA6027FA7F3800C0F7DA /* DI */,
 				7627EA3827FA685E00C0F7DA /* Helpers */,
+				768C69AD2B5CD971001A1B1A /* Mocks */,
 				7627EA2727FA65AC00C0F7DA /* Resources */,
 				7627EA2E27FA673E00C0F7DA /* Screens */,
 				76452A492B5A37D50001F47E /* SharedExtensions */,
@@ -2383,6 +2407,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
+				761E97462B6BE15200FDFC5E /* ShellScript */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
@@ -2406,6 +2431,7 @@
 				760808AE2B2799D20015A2ED /* PBXTargetDependency */,
 				76452A4D2B5A37D50001F47E /* PBXTargetDependency */,
 				76452A642B5A395A0001F47E /* PBXTargetDependency */,
+				761E973F2B6BC3B100FDFC5E /* PBXTargetDependency */,
 			);
 			name = iosApp;
 			packageProductDependencies = (
@@ -2646,6 +2672,9 @@
 			dependencies = (
 			);
 			name = Utilities;
+			packageProductDependencies = (
+				761E97422B6BCCA600FDFC5E /* Kingfisher */,
+			);
 			productName = Utilities;
 			productReference = 76452A5F2B5A395A0001F47E /* Utilities.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3205,6 +3234,23 @@
 			shellPath = /bin/bash;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:assembleXCFramework\n";
 		};
+		761E97462B6BE15200FDFC5E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which sentry-cli >/dev/null; then\nexport SENTRY_ORG=project-newm\nexport SENTRY_PROJECT=newm-ios\nexport SENTRY_AUTH_TOKEN=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\nERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3212,6 +3258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				761E97452B6BD8E200FDFC5E /* KingfisherErrorHandler.swift in Sources */,
 				76D09EFC27FAC4B800E2BAD3 /* iOSAppModule.swift in Sources */,
 				7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */,
 			);
@@ -3582,6 +3629,11 @@
 			isa = PBXTargetDependency;
 			target = 768C69AB2B5CD971001A1B1A /* Mocks */;
 			targetProxy = 761E971F2B6A906900FDFC5E /* PBXContainerItemProxy */;
+		};
+		761E973F2B6BC3B100FDFC5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 768C69AB2B5CD971001A1B1A /* Mocks */;
+			targetProxy = 761E973E2B6BC3B100FDFC5E /* PBXContainerItemProxy */;
 		};
 		762EF9AC2B1F90C7009E08D8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3996,7 +4048,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -4034,7 +4086,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -5641,6 +5693,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 760C2C46281653B50030ACF4 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		761E97422B6BCCA600FDFC5E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7650E1352B1667AB00D686B8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		7639E6722AEB347F00254D71 /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
