@@ -8,7 +8,9 @@ final public class FilesModule: Module {
 	public func registerAllServices() {
 	}
 	
+#if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
 		
 	}
+#endif
 }

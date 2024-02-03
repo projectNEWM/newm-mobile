@@ -10,21 +10,17 @@ public struct PlayButton: View {
 	
 	public var body: some View {
 		Group {
-			if audioPlayer.state == .buffering, audioPlayer.isPlaying == false {
-				ProgressView()
-			} else {
-				Button {
-					if audioPlayer.isPlaying {
-						audioPlayer.pause()
-					} else {
-						audioPlayer.play()
-					}
-				} label: {
-					if audioPlayer.isPlaying {
-						Image(systemName: "pause.fill")
-					} else {
-						Image(systemName: "play.fill")
-					}
+			Button {
+				if audioPlayer.isPlaying {
+					audioPlayer.pause()
+				} else {
+					audioPlayer.play()
+				}
+			} label: {
+				if audioPlayer.isPlaying {
+					Image(systemName: "pause.fill")
+				} else {
+					Image(systemName: "play.fill")
 				}
 			}
 		}

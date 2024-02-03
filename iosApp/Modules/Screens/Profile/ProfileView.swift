@@ -20,18 +20,20 @@ public struct ProfileView: View {
 	
 	public var body: some View {
 		NavigationView {
-		mainView
-			.toolbar {
-				ToolbarItem(placement: .topBarTrailing) {
-					saveButton
+			mainView
+				.toolbar {
+					ToolbarItem(placement: .topBarTrailing) {
+						saveButton
+					}
 				}
-			}
-			.toolbar(.visible, for: .navigationBar)
-			.autocorrectionDisabled(true)
-			.scrollDismissesKeyboard(.immediately)
+				.toolbar(.visible, for: .navigationBar)
+				.autocorrectionDisabled(true)
+				.scrollDismissesKeyboard(.immediately)
 		}
 	}
-	
+}
+
+extension ProfileView {
 	@ViewBuilder
 	private var mainView: some View {
 		ZStack {
@@ -78,9 +80,9 @@ public struct ProfileView: View {
 				.foregroundColor(.white)
 			
 			Text(viewModel.nickname)
-			  .font(Font.custom("Inter", size: 14))
-			  .multilineTextAlignment(.center)
-			  .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.58))
+				.font(Font.custom("Inter", size: 14))
+				.multilineTextAlignment(.center)
+				.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.58))
 		}
 		.padding(.bottom, 30)
 		.padding(.top, 10)
@@ -94,7 +96,7 @@ public struct ProfileView: View {
 				.disabled(viewModel.enableSaveButon == false)
 		}
 	}
-		
+	
 	@ViewBuilder
 	private var artistImage: some View {
 		KFImage(viewModel.pictureURL)
@@ -152,6 +154,7 @@ public struct ProfileView: View {
 	}
 }
 
+#if DEBUG
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
 		MocksModule.shared.registerAllMockedServices()
@@ -164,7 +167,9 @@ struct ProfileView_Previews: PreviewProvider {
 		.preferredColorScheme(.dark)
 	}
 }
+#endif
 
+#if DEBUG
 struct ProfileView_Previews_2: PreviewProvider {
 	static var previews: some View {
 		MocksModule.shared.registerAllMockedServices()
@@ -181,3 +186,4 @@ struct ProfileView_Previews_2: PreviewProvider {
 		.previewDisplayName("no banner")
 	}
 }
+#endif
