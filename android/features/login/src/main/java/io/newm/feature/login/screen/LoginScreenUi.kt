@@ -7,14 +7,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -23,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
+import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
-import io.newm.core.ui.utils.shortToast
 import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.login.LoginScreenUiState
 import io.newm.feature.login.screen.login.LoginUiEvent.OnLoginClick
@@ -49,12 +47,7 @@ internal fun LoginScreenContent(
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val context = LocalContext.current
-    LaunchedEffect(state.errorMessage) {
-        if (!state.errorMessage.isNullOrBlank()) {
-            context.shortToast(state.errorMessage)
-        }
-    }
+    ToastSideEffect(state.errorMessage)
 
     PreLoginArtistBackgroundContentTemplate(
         isLoading = state.isLoading
@@ -76,7 +69,9 @@ internal fun LoginScreenContent(
             keyboardActions = KeyboardActions(
                 onGo = {
                     keyboardController?.hide()
-                    eventSink(OnLoginClick)
+                    if (state.submitButtonEnabled) {
+                        eventSink(OnLoginClick)
+                    }
                 }
             ),
         )

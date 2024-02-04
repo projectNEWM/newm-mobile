@@ -51,14 +51,12 @@ fun ProfileBottomSheet(
                     SecondaryButton(
                         text = stringResource(R.string.profile_faq),
                         textColor = White,
-                        borderColor = Gray500,
                         onClick = onShowFaq
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
                         text = stringResource(R.string.profile_ask_the_community),
                         textColor = White,
-                        borderColor = Gray500,
                         onClick = onShowAskTheCommunity
                     )
                     Spacer(modifier = Modifier.height(28.dp))
@@ -73,7 +71,6 @@ fun ProfileBottomSheet(
                     SecondaryButton(
                         text = stringResource(R.string.profile_documents),
                         textColor = White,
-                        borderColor = Gray500,
                         onClick = onShowDocuments,
 
                         )
@@ -81,21 +78,18 @@ fun ProfileBottomSheet(
                     SecondaryButton(
                         text = stringResource(R.string.profile_privacy_policy),
                         textColor = White,
-                        borderColor = Gray500,
                         onClick = onShowPrivacyPolicy
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SecondaryButton(
                         text = stringResource(R.string.profile_terms_and_condition),
                         textColor = White,
-                        borderColor = Gray500,
                         onClick = onShowTermsAndConditions
                     )
                     Spacer(modifier = Modifier.height(28.dp))
                     SecondaryButton(
                         text = stringResource(R.string.user_account_logout),
                         textColor = SystemRed,
-                        borderColor = SystemRed,
                         onClick = onLogout
                     )
                     Spacer(modifier = Modifier.height(48.dp))

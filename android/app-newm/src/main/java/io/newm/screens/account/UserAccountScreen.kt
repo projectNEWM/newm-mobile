@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray100
-import io.newm.core.theme.Gray500
 import io.newm.core.theme.SystemRed
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
@@ -128,8 +127,7 @@ fun UserAccountContent(
         SecondaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Edit Profile",
-            onClick = { onEditProfileClick() },
-            borderColor = Gray500
+            onClick = { onEditProfileClick() }
         )
 
         WalletButton(
@@ -152,7 +150,6 @@ fun UserAccountContent(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = stringResource(R.string.profile_terms_and_condition),
             textColor = White,
-            borderColor = Gray500,
             onClick = {}
         )
 
@@ -160,7 +157,6 @@ fun UserAccountContent(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = stringResource(R.string.profile_privacy_policy),
             textColor = White,
-            borderColor = Gray500,
             onClick = {
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY)))
             }
@@ -170,7 +166,6 @@ fun UserAccountContent(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = stringResource(R.string.user_account_guidelines),
             textColor = White,
-            borderColor = Gray500,
             onClick = {
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_GUIDELINES)))
             }
@@ -215,7 +210,6 @@ fun WalletButton(
         SecondaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Disconnect Wallet",
-            borderColor = Gray500,
             onClick = {
                 openWalletDialog.value = true
             }
@@ -262,7 +256,6 @@ fun LogoutButtonWithConfirmation(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
         text = stringResource(R.string.user_account_logout),
         textColor = SystemRed,
-        borderColor = SystemRed,
         onClick = { openDialog.value = true }
     )
     ConfirmationDialog(
