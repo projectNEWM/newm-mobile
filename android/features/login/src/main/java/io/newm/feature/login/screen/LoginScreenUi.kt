@@ -26,10 +26,9 @@ import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.core.ui.utils.shortToast
-import io.newm.feature.login.screen.createaccount.SignupFormUiEvent
 import io.newm.feature.login.screen.email.Email
-import io.newm.feature.login.screen.login.LoginUiEvent.OnLoginClick
 import io.newm.feature.login.screen.login.LoginScreenUiState
+import io.newm.feature.login.screen.login.LoginUiEvent.OnLoginClick
 import io.newm.feature.login.screen.password.Password
 
 internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
@@ -51,13 +50,15 @@ internal fun LoginScreenContent(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val context = LocalContext.current
-    PreLoginArtistBackgroundContentTemplate {
-        LaunchedEffect(state.errorMessage) {
-            if (!state.errorMessage.isNullOrBlank()) {
-                context.shortToast(state.errorMessage)
-            }
+    LaunchedEffect(state.errorMessage) {
+        if (!state.errorMessage.isNullOrBlank()) {
+            context.shortToast(state.errorMessage)
         }
+    }
 
+    PreLoginArtistBackgroundContentTemplate(
+        isLoading = state.isLoading
+    ) {
         Email(
             modifier = Modifier.focusRequester(focusRequester),
             emailState = state.emailState,
@@ -103,11 +104,20 @@ fun LoginPageMainImage(@DrawableRes mainImage: Int) {
     )
 }
 
-@Preview
 @Composable
+@Preview(showBackground = true)
 private fun DefaultLightLoginScreenPreview() {
     NewmTheme(darkTheme = false) {
-        LoginScreenUi()
+        LoginScreenContent(
+            state = LoginScreenUiState(
+                emailState = TextFieldState(),
+                passwordState = TextFieldState(),
+                submitButtonEnabled = true,
+                errorMessage = null,
+                isLoading = true,
+                eventSink = {}
+            ),
+        )
     }
 }
 

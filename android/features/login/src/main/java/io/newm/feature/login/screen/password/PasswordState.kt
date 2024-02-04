@@ -27,7 +27,7 @@ private fun isPasswordValid(password: String): Boolean {
 }
 
 private fun passwordValidationError(password: String): String {
-    return "Invalid password"
+    return "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number."
 }
 
 private fun passwordConfirmationError(): String {
