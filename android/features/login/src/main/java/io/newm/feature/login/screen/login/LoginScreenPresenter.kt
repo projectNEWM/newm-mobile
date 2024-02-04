@@ -27,14 +27,16 @@ class LoginScreenPresenter(
             email.isValid && password.isValid
         }
         var errorMessage by remember { mutableStateOf<String?>(null) }
+        var isLoading by remember { mutableStateOf(false) }
 
         val coroutineScope = rememberCoroutineScope()
 
         return LoginScreenUiState(
             emailState = email,
             passwordState = password,
-            submitButtonEnabled = isFormValid,
+            submitButtonEnabled = isFormValid && isLoading.not(),
             errorMessage = errorMessage,
+            isLoading = isLoading,
             eventSink = { event ->
                 when (event) {
                     LoginUiEvent.OnLoginClick -> {
@@ -42,13 +44,16 @@ class LoginScreenPresenter(
                             errorMessage = null
 
                             if(!isFormValid){
-                                errorMessage = "Invalid form"
+                                errorMessage = "Invalid form" // todo update with proper error message
                                 return@launch
                             }
+
+                            isLoading = true
                             try {
                                 loginUseCase.logIn(email.text, password.text)
                                 navigator.goTo(HomeScreen)
                             } catch (e: Throwable) {
+                                isLoading = false
                                 errorMessage = e.message
                             }
                         }

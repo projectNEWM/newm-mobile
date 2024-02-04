@@ -7,6 +7,7 @@ data class LoginScreenUiState(
     val emailState: TextFieldState,
     val passwordState: TextFieldState,
     val submitButtonEnabled: Boolean,
-    val eventSink: (LoginUiEvent) -> Unit,
     val errorMessage: String?,
+    val isLoading: Boolean,
+    val eventSink: (LoginUiEvent) -> Unit,
 ) : CircuitUiState
