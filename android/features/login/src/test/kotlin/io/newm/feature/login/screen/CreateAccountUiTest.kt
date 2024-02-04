@@ -32,6 +32,8 @@ enum class TestCase(
             passwordConfirmationState = TextFieldState(),
             passwordState = TextFieldState(),
             emailState = TextFieldState(),
+            submitButtonEnabled = true,
+            errorMessage = null,
             eventSink = {},
         )
     ),
@@ -39,12 +41,14 @@ enum class TestCase(
         state = CreateAccountUiState.EmailVerificationUiState(
             verificationCode = TextFieldState(),
             errorMessage = null,
+            nextButtonEnabled = true,
             eventSink = {},
         )
     ),
     WHAT_SHOULD_WE_CALL_YOU(
         state = CreateAccountUiState.SetNameUiState(
             name = TextFieldState(),
+            nextButtonEnabled = true,
             eventSink = {},
         )
     ),
