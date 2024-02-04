@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import io.newm.core.theme.Gray500
 import io.newm.core.ui.utils.DisabledHotPinkBrush
 import io.newm.core.ui.utils.HotPinkBrush
 
@@ -64,16 +63,13 @@ fun SecondaryButton(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.fillMaxWidth().height(40.dp),
-        border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Gray500)),
+        border = ButtonDefaults.outlinedBorder.copy(brush = SolidColor(Gray)),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = textColor,
             backgroundColor = Color.Transparent,
             disabledContentColor = Gray,
         ),
     ) {
-        Text(
-            text = text,
-            fontWeight = FontWeight.Bold,
-        )
+        Text(text)
     }
 }

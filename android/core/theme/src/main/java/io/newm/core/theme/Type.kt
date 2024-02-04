@@ -48,6 +48,12 @@ val body2 = TextStyle(
     fontSize = 14.sp
 )
 
+val button = TextStyle(
+    fontFamily = montserrat,
+    fontWeight = FontWeight.Bold,
+    fontSize = 16.sp
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     h1 = h1,
@@ -55,5 +61,6 @@ val Typography = Typography(
     h3 = h3,
     h4 = h4,
     body1 = body1,
-    body2 = body2
+    body2 = body2,
+    button = button,
 )
