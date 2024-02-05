@@ -3,6 +3,7 @@ package io.newm.shared.internal.repositories
 import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.ClientRequestException
 import io.newm.shared.internal.TokenManager
+import io.newm.shared.internal.db.NewmDatabaseWrapper
 import io.newm.shared.internal.repositories.models.OAuthData
 import io.newm.shared.internal.services.LoginAPI
 import io.newm.shared.internal.services.models.AppleSignInRequest
@@ -24,9 +25,9 @@ import shared.postNotification
 internal class LogInRepository : KoinComponent {
     private val service: LoginAPI by inject()
     private val tokenManager: TokenManager by inject()
-    private val connectWalletManager: ConnectWalletManager by inject()
-
+    private val databaseRepository: DatabaseRepository by inject()
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
+
 
     suspend fun requestEmailConfirmationCode(email: String) {
         logger.d { "requestEmailConfirmationCode: email $email" }
@@ -123,5 +124,6 @@ internal class LogInRepository : KoinComponent {
 
     fun logout() {
         tokenManager.clearToken()
+        databaseRepository.clear()
     }
 }

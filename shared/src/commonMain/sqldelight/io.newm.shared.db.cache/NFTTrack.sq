@@ -31,5 +31,5 @@ REPLACE INTO NFTTrack (id, policyId,  title, assetName, amount, imageUrl, audioU
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 -- Delete all tracks
-deleteAllTracks:
+deleteAll:
 DELETE FROM NFTTrack;
