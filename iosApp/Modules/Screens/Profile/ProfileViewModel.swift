@@ -27,7 +27,7 @@ final class ProfileViewModel: ObservableObject {
 	@Published var newPassword: String = ""
 	@Published var confirmPassword: String = ""
 	@Published private var errors = ErrorSet()
-	@Published var showLoadingToast: Bool = false
+	@Published var showLoadingToast: Bool = true
 	@Published var showCompletionToast: Bool = false
 	@Published var isWalletConnected: Bool = false
 	var errorAlert: String? { errors.currentError?.errorDescription }
@@ -35,11 +35,10 @@ final class ProfileViewModel: ObservableObject {
 	private var cancels = Set<AnyCancellable>()
 	
 	var enableSaveButon: Bool {
-		let hasNewPassword = {
+		let hasNewPassword =
 			currentPassword.isEmpty == false &&
 			newPassword.isEmpty == false &&
 			confirmPassword.isEmpty == false
-		}()
 		
 		let newPasswordsMatch = newPassword == confirmPassword
 		
@@ -60,15 +59,12 @@ final class ProfileViewModel: ObservableObject {
 			}
 			.store(in: &cancels)
 		
-		Task { await setUp() }
+		Task {
+			await loadUser()
+			showLoadingToast = false
+		}
 	}
-	
-	private func setUp() async {
-		showLoadingToast = true
-		await loadUser()
-		showLoadingToast = false
-	}
-	
+		
 	func loadUser() async {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {

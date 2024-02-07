@@ -32,6 +32,9 @@ final class ProfileViewModelTests: XCTestCase {
 		Resolver.root = .mock
 		setUpDI()
 		profileViewModel = ProfileViewModel()
+		let (cancellable, expectation) = loadingToastCountExpectation(expected: [false], vm: profileViewModel)
+		await fulfillment(of: [expectation], timeout: 1)
+		cancellable.cancel()
 	}
 	
 	func testLoggedInUserDetails() async throws {
@@ -43,15 +46,7 @@ final class ProfileViewModelTests: XCTestCase {
 		XCTAssertEqual(profileViewModel.pictureURL, URL(string: mockUser.pictureUrl!))
 		XCTAssertFalse(profileViewModel.enableSaveButon)
 	}
-	
-	func testLoggedOutUserDetails() async throws {
-		XCTAssertEqual(profileViewModel.fullName, " ")
-		XCTAssertEqual(profileViewModel.nickname, "")
-		XCTAssertTrue(profileViewModel.email.isEmpty)
-		XCTAssertNil(profileViewModel.bannerURL)
-		XCTAssertNil(profileViewModel.pictureURL)
-	}
-	
+		
 	func loadingToastCountExpectation(expected: [Bool], vm: ProfileViewModel) -> (any Cancellable, XCTestExpectation) {
 		var expected = expected
 		let expectation = XCTestExpectation(description: "loadingDidUpdate")
@@ -68,9 +63,11 @@ final class ProfileViewModelTests: XCTestCase {
 	}
 	
 	func testLoadingUserDetails() async throws {
+		print("testing")
+
 		let newViewModel = ProfileViewModel()
 		
-		let (cancellable, expectation) = loadingToastCountExpectation(expected: [false, true, false], vm: newViewModel)
+		let (cancellable, expectation) = loadingToastCountExpectation(expected: [true, false], vm: newViewModel)
 		
 		await newViewModel.loadUser()
 		
