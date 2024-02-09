@@ -35,7 +35,7 @@ class NFTLibraryViewModel(
                     walletNFTTracksUseCase.getAllStreamTokensFlow(),
                     walletNFTTracksUseCase.getAllNFTTracksFlow()
                 ) { query, streamTokenTracks, nftTracks ->
-                    setPlaylist(nftTracks)
+                    setPlaylist(nftTracks + streamTokenTracks)
                     when {
                         nftTracks.isEmpty() && streamTokenTracks.isEmpty() -> {
                             NFTLibraryState.EmptyWallet
