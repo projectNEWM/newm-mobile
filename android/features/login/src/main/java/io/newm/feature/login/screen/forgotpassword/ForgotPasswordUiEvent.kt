@@ -7,6 +7,9 @@ sealed interface ForgotPasswordUiEvent : CircuitUiEvent{
         data object OnSubmit : EnterEmailUiEvent
     }
 
-    sealed interface EnterVerificationCodeUiEvent: ForgotPasswordUiEvent
+    sealed interface EnterVerificationCodeUiEvent: ForgotPasswordUiEvent {
+        data object OnSubmit : EnterVerificationCodeUiEvent
+    }
+
     sealed interface SetNewPasswordUiEvent: ForgotPasswordUiEvent
 }

@@ -20,6 +20,7 @@ sealed interface ForgotPasswordScreenUiState : CircuitUiState {
 
     data class EnterVerificationCode(
         val code: TextFieldState,
+        val submitButtonEnabled: Boolean,
         override val isLoading: Boolean,
         override val errorMessage: String?,
         val eventSink: (EnterVerificationCodeUiEvent) -> Unit

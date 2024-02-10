@@ -29,4 +29,19 @@ class ForgotPasswordScreenTest(
             )
         }
     }
+
+    @Test
+    fun `enter code`() {
+        snapshot {
+            ForgotPasswordScreenContent(
+                state = ForgotPasswordScreenUiState.EnterVerificationCode(
+                    code = TextFieldState(),
+                    errorMessage = null,
+                    isLoading = false,
+                    submitButtonEnabled = true,
+                    eventSink = {},
+                )
+            )
+        }
+    }
 }
