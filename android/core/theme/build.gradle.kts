@@ -4,6 +4,8 @@ plugins {
     kotlin(Plugins.kapt)
 }
 
+apply(from = "../../../gradle_include/compose.gradle")
+
 android {
     compileSdk = Versions.androidCompileSdk
 
@@ -11,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = Versions.androidMinSdk
-        targetSdk = Versions.androidTargetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -20,14 +21,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
 
     kotlinOptions {
@@ -39,9 +32,6 @@ dependencies {
 
     implementation(Google.androidxCore)
     implementation(Google.appCompat)
-    implementation(Google.composeMaterial)
-    implementation(Google.composeUi)
-    implementation(Google.composeUiToolingPreview)
     implementation(Google.constraintLayout)
     implementation(Google.material)
 

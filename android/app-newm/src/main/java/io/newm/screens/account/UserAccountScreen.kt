@@ -16,13 +16,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +36,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.walletconnect.web3.modal.ui.Web3ModalTheme
+import com.walletconnect.web3.modal.ui.components.internal.Web3ModalComponent
+import io.newm.BuildConfig
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray100
 import io.newm.core.theme.SystemRed
@@ -48,6 +56,7 @@ import io.newm.core.ui.text.formTitleStyle
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.profile.ProfileBanner
 import io.newm.shared.public.models.User
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
@@ -57,6 +66,7 @@ private const val COMMUNITY_GUIDELINES = "https://newm.io/guidelines/"
 @Composable
 fun UserAccountScreen(
     onEditProfileClick: () -> Unit,
+    onWalletConnectClick: () -> Unit,
     viewModel: UserAccountViewModel = koinInject()
 ) {
     val state by viewModel.state.collectAsState()
@@ -69,10 +79,55 @@ fun UserAccountScreen(
                 onConnectWalletClick = { xpubKey -> viewModel.connectWallet(xpubKey) },
                 onEditProfileClick = onEditProfileClick,
                 disconnectWallet = { viewModel.disconnectWallet() },
+                onWalletConnectProtocolClick = {
+                    onWalletConnectClick()
+                },
                 logout = { viewModel.logout() }
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun WalletConnect() {
+    Web3ModalTheme(
+        mode = Web3ModalTheme.Mode.DARK,
+    ) {
+        /* any Web3Modal component or graph */
+        val modalSheetState = rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
+        val coroutineScope = rememberCoroutineScope()
+
+        ModalBottomSheetLayout(
+            sheetContent = {
+                Web3ModalComponent(
+                    shouldOpenChooseNetwork = true,
+                    closeModal = {
+                        coroutineScope.launch { modalSheetState.hide() }
+                    }
+                )
+            },
+            sheetState = modalSheetState
+        ) {
+            Column {
+                SecondaryButton(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    text = "Wallet Connect",
+                    textColor = White,
+                    onClick = {
+                        coroutineScope.launch {
+                            modalSheetState.show() // This line opens the modal bottom sheet
+                        }
+                    }
+                )
+            }
+        }
+
+    }
+
 }
 
 @Composable
@@ -82,6 +137,7 @@ fun UserAccountContent(
     onConnectWalletClick: (String) -> Unit,
     onEditProfileClick: () -> Unit,
     disconnectWallet: () -> Unit,
+    onWalletConnectProtocolClick: () -> Unit,
     logout: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -134,7 +190,8 @@ fun UserAccountContent(
             openWalletDialog = openWalletDialog,
             isWalletConnected = isWalletConnected,
             disconnectWallet = disconnectWallet,
-            onConnectWalletClick = onConnectWalletClick
+            onConnectWalletClick = onConnectWalletClick,
+            onWalletConnectProtocolClick = onWalletConnectProtocolClick
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -167,7 +224,12 @@ fun UserAccountContent(
             text = stringResource(R.string.user_account_guidelines),
             textColor = White,
             onClick = {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_GUIDELINES)))
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(COMMUNITY_GUIDELINES)
+                    )
+                )
             }
         )
         LogoutButtonWithConfirmation(
@@ -184,7 +246,8 @@ fun WalletButton(
     openWalletDialog: MutableState<Boolean>,
     isWalletConnected: Boolean,
     disconnectWallet: () -> Unit,
-    onConnectWalletClick: (String) -> Unit
+    onConnectWalletClick: (String) -> Unit,
+    onWalletConnectProtocolClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -215,7 +278,7 @@ fun WalletButton(
             }
         )
         ConfirmationDialog(
-            title = "Unlink Wallet",
+            title = "Unlink Cardano Wallet",
             message = "Are you sure you want to disconnect your wallet?",
             isOpen = openWalletDialog,
             onConfirm = {
@@ -229,7 +292,7 @@ fun WalletButton(
     } else {
         PrimaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            text = "Connect Wallet",
+            text = "Connect Cardano Wallet",
             onClick = {
                 context.run {
                     doWithPermission(
@@ -241,6 +304,16 @@ fun WalletButton(
                         appPermission = AppPermission.CAMERA
                     )
                 }
+            }
+        )
+    }
+
+    if(BuildConfig.DEBUG) {
+        PrimaryButton(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            text = "Wallet Connect",
+            onClick = {
+                onWalletConnectProtocolClick()
             }
         )
     }

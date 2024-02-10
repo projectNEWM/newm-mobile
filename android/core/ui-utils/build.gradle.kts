@@ -3,6 +3,8 @@ plugins {
     kotlin(Plugins.android)
 }
 
+apply(from = "../../../gradle_include/compose.gradle")
+
 android {
     compileSdk = Versions.androidCompileSdk
 
@@ -10,21 +12,12 @@ android {
 
     defaultConfig {
         minSdk = Versions.androidMinSdk
-        targetSdk = Versions.androidTargetSdk
         resourcePrefix = "core_ui_utils"
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
 
     kotlinOptions {
@@ -34,9 +27,7 @@ android {
 
 dependencies {
     api(project(Modules.coreResources))
-    implementation("androidx.activity:activity-compose:1.8.1")
     implementation(Google.androidxCore)
-    implementation(Google.composeMaterial)
     implementation(Google.material)
     implementation(Google.materialIconsExtended)
     implementation(project(Modules.coreTheme))

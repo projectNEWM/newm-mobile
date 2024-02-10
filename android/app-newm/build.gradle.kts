@@ -1,3 +1,11 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.konan.properties.Properties
+
+apply(from = "../../gradle_include/compose.gradle")
+apply(from = "../../gradle_include/circuit.gradle")
+apply(from = "../../gradle_include/flipper.gradle")
+apply(from = "../../gradle_include/wallet-connect.gradle")
+
 plugins {
     id(Plugins.androidApplication)
     id(Plugins.crashlytics)
@@ -6,6 +14,8 @@ plugins {
     kotlin(Plugins.android)
     kotlin(Plugins.kapt)
 }
+
+val properties: Properties = gradleLocalProperties(rootDir)
 
 android {
     compileSdk = Versions.androidCompileSdk
@@ -20,6 +30,8 @@ android {
         versionName = "0.2"
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
+
+        buildConfigField("String", "WALLET_CONNECT_PROJECT_ID", properties.getProperty("WALLET_CONNECT_PROJECT_ID").orEmpty())
     }
 
     buildTypes {
@@ -38,7 +50,7 @@ android {
             isMinifyEnabled = false
         }
     }
-
+    buildFeatures.buildConfig = true
     flavorDimensions += "version"
 
     productFlavors {
@@ -65,48 +77,25 @@ android {
         jvmTarget = "11"
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
-    }
-
     kapt {
         correctErrorTypes = true
-    }
-
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
 dependencies {
 
     implementation("com.jakewharton:process-phoenix:2.1.2")
-    implementation(Circuit.foundation)
-    implementation(Circuit.retained)
-    implementation(Coil.compose)
-    implementation(Google.activityCompose)
     implementation(Google.androidxCore)
     implementation(Google.appCompat)
-    implementation(Google.composeMaterial)
-    implementation(Google.composeUi)
-    implementation(Google.composeUiToolingPreview)
     implementation(Google.constraintLayout)
     implementation(Google.firebaseAnalytics)
     implementation(Google.firebaseCrashlytics)
     implementation(Google.lifecycle)
     implementation(Google.material)
-    implementation(Google.navigationCompose)
     implementation(Google.navigationUiKtx)
     implementation(Google.playServicesAuth)
     implementation(Google.splashScreen)
     implementation(Koin.android)
-    implementation(Koin.androidCompose)
     implementation(Kotlin.reflect)
     implementation(platform(Google.firebase))
     implementation(project(Modules.barcodeScanner))
@@ -117,19 +106,10 @@ dependencies {
     implementation(project(Modules.musicPlayer))
     implementation(project(Modules.shared))
 
-    debugImplementation(Facebook.flipper)
-    debugImplementation(Facebook.soloader)
-    releaseImplementation(Facebook.flipperNoop)
-
-    debugImplementation(Google.composeUiTooling)
-    debugImplementation(Google.composeUiTestManifest)
-
     testImplementation(JUnit.jUnit)
     testImplementation(Mockk.mockk)
 
-    androidTestImplementation(Google.Test.composeUiTestJUnit)
     androidTestImplementation(Google.espressoTest)
-    androidTestImplementation(JUnit.androidxComposeJUnit)
     androidTestImplementation(JUnit.androidxJUnit)
     androidTestImplementation(Mockk.android)
 }

@@ -1,0 +1,5 @@
+dependencies {
+    implementation(Circuit.foundation)
+    implementation(Circuit.retained)
+    testImplementation(Circuit.test)
+}

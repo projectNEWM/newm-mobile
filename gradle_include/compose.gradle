@@ -1,0 +1,27 @@
+android {
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+ }
+
+dependencies {
+    androidTestImplementation(JUnit.androidxComposeJUnit)
+
+    debugImplementation(Google.composeUiTestManifest)
+    debugImplementation(Google.composeUiTestManifest)
+    debugImplementation(Google.composeUiTooling)
+    debugImplementation(Google.composeUiTooling)
+
+    implementation(Coil.compose)
+    implementation(Google.activityCompose)
+    implementation(Google.composeMaterial)
+    implementation(Google.composeUi)
+    implementation(Google.composeUiToolingPreview)
+    implementation(Google.composeUiUtil)
+    implementation(Google.navigationCompose)
+    implementation(Koin.androidCompose)
+}

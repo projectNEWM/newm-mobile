@@ -1,0 +1,5 @@
+dependencies {
+    debugImplementation(Facebook.flipper)
+    debugImplementation(Facebook.soloader)
+    releaseImplementation(Facebook.flipperNoop)
+}
