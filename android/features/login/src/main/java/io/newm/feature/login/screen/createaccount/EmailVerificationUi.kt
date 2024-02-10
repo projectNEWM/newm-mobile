@@ -24,6 +24,7 @@ import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.feature.login.R
+import io.newm.feature.login.screen.TextFieldState
 
 @Composable
 internal fun EmailVerificationUi(
@@ -32,7 +33,24 @@ internal fun EmailVerificationUi(
 ) {
     val onEvent = state.eventSink
 
-    ToastSideEffect(state.errorMessage)
+    EmailVerificationContent(
+        modifier = modifier,
+        verificationCode = state.verificationCode,
+        errorMessage = state.errorMessage,
+        nextButtonEnabled = state.nextButtonEnabled,
+        onNextClicked = { onEvent(EmailVerificationUiEvent.Next) },
+    )
+}
+
+@Composable
+internal fun EmailVerificationContent(
+    verificationCode: TextFieldState,
+    errorMessage: String?,
+    nextButtonEnabled: Boolean,
+    onNextClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ToastSideEffect(errorMessage)
 
     Box(
         modifier = modifier
@@ -68,13 +86,13 @@ internal fun EmailVerificationUi(
 
             TextFieldWithLabel(
                 labelResId = R.string.loginEnter_verification_code,
-                value = state.verificationCode.text,
-                onValueChange = state.verificationCode::text::set,
+                value = verificationCode.text,
+                onValueChange = verificationCode::text::set,
                 keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.Digits.copy(imeAction = ImeAction.Go),
                 keyboardActions = KeyboardActions(
                     onGo = {
-                        if (state.nextButtonEnabled) {
-                            onEvent(EmailVerificationUiEvent.Next)
+                        if (nextButtonEnabled) {
+                            onNextClicked()
                         }
                     }
                 ),
@@ -83,9 +101,9 @@ internal fun EmailVerificationUi(
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(
                 text = "Continue",
-                enabled = state.nextButtonEnabled,
+                enabled = nextButtonEnabled,
                 onClick = {
-                    onEvent(EmailVerificationUiEvent.Next)
+                    onNextClicked()
                 }
             )
         }

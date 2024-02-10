@@ -28,14 +28,18 @@ import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
+import io.newm.feature.login.R
 import io.newm.feature.login.screen.TextFieldState
+import io.newm.feature.login.screen.createaccount.EmailVerificationContent
 import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterEmail
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterVerificationCode
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.SetNewPassword
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterEmailUiEvent
+import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.feature.login.screen.password.PasswordState
 
 class ForgotPasswordScreenUi : Ui<ForgotPasswordScreenUiState> {
@@ -75,7 +79,11 @@ private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) 
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text("Forgot your password?", textAlign = TextAlign.Center, style = MaterialTheme.typography.h1)
+        Text(
+            "Forgot your password?",
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.h1
+        )
         Text(
             "Enter your email to receive reset instructions.",
             style = MaterialTheme.typography.h2,
@@ -113,7 +121,14 @@ private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) 
 @Composable
 private fun EnterCodeContent(state: EnterVerificationCode, modifier: Modifier) {
     val eventSink = state.eventSink
-    // TODO
+
+    EmailVerificationContent(
+        modifier = modifier,
+        verificationCode = state.code,
+        errorMessage = state.errorMessage,
+        nextButtonEnabled = state.submitButtonEnabled,
+        onNextClicked = { eventSink(EnterVerificationCodeUiEvent.OnSubmit) },
+    )
 }
 
 @Composable
@@ -149,6 +164,7 @@ private fun PreviewVerificationCode() {
                 code = TextFieldState(),
                 errorMessage = null,
                 isLoading = false,
+                submitButtonEnabled = true,
                 eventSink = {},
             ),
         )
