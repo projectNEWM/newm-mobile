@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -26,6 +29,8 @@ import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.login.LoginScreenUiState
+import io.newm.feature.login.screen.login.LoginUiEvent
+import io.newm.feature.login.screen.login.LoginUiEvent.ForgotPasswordClick
 import io.newm.feature.login.screen.login.LoginUiEvent.OnLoginClick
 import io.newm.feature.login.screen.password.Password
 
@@ -50,7 +55,14 @@ internal fun LoginScreenContent(
     ToastSideEffect(state.errorMessage)
 
     PreLoginArtistBackgroundContentTemplate(
-        isLoading = state.isLoading
+        isLoading = state.isLoading,
+        header = {
+            TextButton(
+                modifier = Modifier.align(Alignment.End),
+                onClick = { eventSink(ForgotPasswordClick) }) {
+                Text("Forgot your password?")
+            }
+        }
     ) {
         Email(
             modifier = Modifier.focusRequester(focusRequester),
@@ -120,6 +132,15 @@ private fun DefaultLightLoginScreenPreview() {
 @Composable
 private fun DefaultDarkLoginScreenPreview() {
     NewmTheme(darkTheme = true) {
-        LoginScreenUi()
+        LoginScreenContent(
+            state = LoginScreenUiState(
+                emailState = TextFieldState(),
+                passwordState = TextFieldState(),
+                submitButtonEnabled = true,
+                errorMessage = null,
+                isLoading = true,
+                eventSink = {}
+            ),
+        )
     }
 }

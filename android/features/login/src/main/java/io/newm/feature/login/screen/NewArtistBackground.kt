@@ -16,10 +16,10 @@ import io.newm.core.resources.R
 fun PreLoginArtistBackgroundContentTemplate(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    content: @Composable () -> Unit
+    header: @Composable ColumnScope.() -> Unit = {},
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
@@ -27,6 +27,7 @@ fun PreLoginArtistBackgroundContentTemplate(
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
     ) {
+        header()
         Spacer(modifier = Modifier.height(70.dp))
         LoginPageMainImage(R.drawable.ic_newm_logo)
         Spacer(modifier = Modifier.height(16.dp))

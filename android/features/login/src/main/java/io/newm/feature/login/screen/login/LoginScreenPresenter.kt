@@ -58,6 +58,8 @@ class LoginScreenPresenter(
                             }
                         }
                     }
+
+                    LoginUiEvent.ForgotPasswordClick -> TODO()
                 }
             }
         )
