@@ -1,4 +1,4 @@
-package io.newm.feature.login.screen.forgotpassword
+package io.newm.feature.login.screen.resetpassword
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -35,37 +35,37 @@ import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.createaccount.EmailVerificationContent
 import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.email.EmailState
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterEmail
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterVerificationCode
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.SetNewPassword
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterEmailUiEvent
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterVerificationCodeUiEvent
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.SetNewPasswordUiEvent
 import io.newm.feature.login.screen.password.Password
 import io.newm.feature.login.screen.password.PasswordState
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterEmail
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterNewPassword
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterVerificationCode
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 
-class ForgotPasswordScreenUi : Ui<ForgotPasswordScreenUiState> {
+class ResetPasswordScreenUi : Ui<ResetPasswordScreenUiState> {
     @Composable
-    override fun Content(state: ForgotPasswordScreenUiState, modifier: Modifier) {
-        ForgotPasswordScreenContent(modifier = modifier, state = state)
+    override fun Content(state: ResetPasswordScreenUiState, modifier: Modifier) {
+        ResetPasswordScreenContent(modifier = modifier, state = state)
     }
 }
 
 @Composable
-internal fun ForgotPasswordScreenContent(
-    state: ForgotPasswordScreenUiState,
+internal fun ResetPasswordScreenContent(
+    state: ResetPasswordScreenUiState,
     modifier: Modifier = Modifier,
 ) {
     ToastSideEffect(message = state.errorMessage)
 
-    Surface(modifier = modifier.fillMaxSize()) {
+    Scaffold(modifier = modifier.fillMaxSize()) { padding ->
         when (state) {
-            is EnterEmail -> EnterEmailContent(state, Modifier.padding(16.dp))
-            is EnterVerificationCode -> EnterCodeContent(state, Modifier.padding(16.dp))
-            is SetNewPassword -> SetNewPasswordContent(state, Modifier.padding(16.dp))
+            is EnterEmail -> EnterEmailContent(state, modifier = Modifier.padding(padding))
+            is EnterVerificationCode -> EnterCodeContent(state, modifier = Modifier.padding(padding))
+            is EnterNewPassword -> SetNewPasswordContent(state, modifier = Modifier.padding(padding))
         }
         if (state.isLoading) {
-            LinearProgressIndicator()
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         }
     }
 }
@@ -111,7 +111,7 @@ private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) 
         Spacer(modifier = Modifier.height(16.dp))
 
         PrimaryButton(
-            text = "Reset Password",
+            text = "Continue",
             onClick = { eventSink(EnterEmailUiEvent.OnSubmit) },
             enabled = state.submitButtonEnabled,
         )
@@ -135,7 +135,7 @@ private fun EnterCodeContent(state: EnterVerificationCode, modifier: Modifier) {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun SetNewPasswordContent(state: SetNewPassword, modifier: Modifier) {
+private fun SetNewPasswordContent(state: EnterNewPassword, modifier: Modifier = Modifier) {
     val onEvent = state.eventSink
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -169,7 +169,7 @@ private fun SetNewPasswordContent(state: SetNewPassword, modifier: Modifier) {
                 onGo = {
                     keyboardController?.hide()
                     if (state.submitButtonEnabled) {
-                        onEvent(SetNewPasswordUiEvent.OnSubmit)
+                        onEvent(EnterNewPasswordUiEvent.OnSubmit)
                     }
                 }
             ),
@@ -181,7 +181,7 @@ private fun SetNewPasswordContent(state: SetNewPassword, modifier: Modifier) {
             modifier = Modifier.fillMaxWidth(),
             text = "Confirm",
             onClick = {
-                onEvent(SetNewPasswordUiEvent.OnSubmit)
+                onEvent(EnterNewPasswordUiEvent.OnSubmit)
             },
             enabled = state.submitButtonEnabled
         )
@@ -193,7 +193,7 @@ private fun SetNewPasswordContent(state: SetNewPassword, modifier: Modifier) {
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 private fun PreviewEnterEmail() {
     NewmTheme {
-        ForgotPasswordScreenContent(
+        ResetPasswordScreenContent(
             EnterEmail(
                 email = EmailState(),
                 errorMessage = null,
@@ -210,7 +210,7 @@ private fun PreviewEnterEmail() {
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 private fun PreviewVerificationCode() {
     NewmTheme {
-        ForgotPasswordScreenContent(
+        ResetPasswordScreenContent(
             EnterVerificationCode(
                 code = TextFieldState(),
                 errorMessage = null,
@@ -227,12 +227,30 @@ private fun PreviewVerificationCode() {
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 private fun PreviewSetNewPassword() {
     NewmTheme {
-        ForgotPasswordScreenContent(
-            SetNewPassword(
+        ResetPasswordScreenContent(
+            EnterNewPassword(
                 password = PasswordState(),
                 confirmPasswordState = PasswordState(),
                 errorMessage = null,
                 isLoading = false,
+                submitButtonEnabled = true,
+                eventSink = {},
+            )
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+private fun PreviewLoading() {
+    NewmTheme {
+        ResetPasswordScreenContent(
+            EnterNewPassword(
+                password = PasswordState(),
+                confirmPasswordState = PasswordState(),
+                errorMessage = null,
+                isLoading = true,
                 submitButtonEnabled = true,
                 eventSink = {},
             )

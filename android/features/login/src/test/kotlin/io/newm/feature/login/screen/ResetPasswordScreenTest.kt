@@ -5,23 +5,22 @@ import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.newm.core.test.utils.SnapshotTest
 import io.newm.core.test.utils.SnapshotTestConfiguration
 import io.newm.feature.login.screen.email.EmailState
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenContent
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterEmail
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterVerificationCode
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.SetNewPassword
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenContent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterEmail
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterVerificationCode
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterNewPassword
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class ForgotPasswordScreenTest(
+class ResetPasswordScreenTest(
     @TestParameter private val testConfiguration: SnapshotTestConfiguration,
 ) : SnapshotTest(testConfiguration) {
 
     @Test
     fun `enter email`() {
         snapshot {
-            ForgotPasswordScreenContent(
+            ResetPasswordScreenContent(
                 state = EnterEmail(
                     email = EmailState(),
                     errorMessage = null,
@@ -36,7 +35,7 @@ class ForgotPasswordScreenTest(
     @Test
     fun `enter code`() {
         snapshot {
-            ForgotPasswordScreenContent(
+            ResetPasswordScreenContent(
                 state = EnterVerificationCode(
                     code = TextFieldState(),
                     errorMessage = null,
@@ -51,8 +50,8 @@ class ForgotPasswordScreenTest(
     @Test
     fun `enter new password`() {
         snapshot {
-            ForgotPasswordScreenContent(
-                state = SetNewPassword(
+            ResetPasswordScreenContent(
+                state = EnterNewPassword(
                     password = TextFieldState(),
                     confirmPasswordState = TextFieldState(),
                     errorMessage = null,
