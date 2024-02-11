@@ -17,7 +17,7 @@ import Profile
 struct iOSAppModule: Module {
 	static var shared = iOSAppModule()
 	
-	let modules: [Module] = {
+	private let modules: [Module] = {
 		[
             LibraryModule.shared,
 			SharedUIModule.shared,
