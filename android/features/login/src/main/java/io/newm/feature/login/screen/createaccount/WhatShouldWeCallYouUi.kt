@@ -31,7 +31,7 @@ internal fun WhatShouldWeCallYouUi(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "What should we \ncall you?",
+                text = "What should we call\u00A0you?",
                 color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.h1
             )
@@ -44,6 +44,7 @@ internal fun WhatShouldWeCallYouUi(
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(
                 text = "Next",
+                enabled = state.nextButtonEnabled,
                 onClick = {
                     if (state.name.text.isNotEmpty()) {
                         onEvent(SetNameUiEvent.Next)

@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import io.newm.feature.login.screen.ForgotPasswordScreen
 import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
@@ -27,14 +28,16 @@ class LoginScreenPresenter(
             email.isValid && password.isValid
         }
         var errorMessage by remember { mutableStateOf<String?>(null) }
+        var isLoading by remember { mutableStateOf(false) }
 
         val coroutineScope = rememberCoroutineScope()
 
         return LoginScreenUiState(
             emailState = email,
             passwordState = password,
-            submitButtonEnabled = isFormValid,
+            submitButtonEnabled = isFormValid && isLoading.not(),
             errorMessage = errorMessage,
+            isLoading = isLoading,
             eventSink = { event ->
                 when (event) {
                     LoginUiEvent.OnLoginClick -> {
@@ -42,17 +45,22 @@ class LoginScreenPresenter(
                             errorMessage = null
 
                             if(!isFormValid){
-                                errorMessage = "Invalid form"
+                                errorMessage = "Invalid form" // todo update with proper error message
                                 return@launch
                             }
+
+                            isLoading = true
                             try {
                                 loginUseCase.logIn(email.text, password.text)
                                 navigator.goTo(HomeScreen)
                             } catch (e: Throwable) {
+                                isLoading = false
                                 errorMessage = e.message
                             }
                         }
                     }
+
+                    LoginUiEvent.ForgotPasswordClick -> navigator.goTo(ForgotPasswordScreen(email.text))
                 }
             }
         )

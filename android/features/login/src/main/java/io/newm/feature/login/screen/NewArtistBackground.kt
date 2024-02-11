@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,10 +15,11 @@ import io.newm.core.resources.R
 @Composable
 fun PreLoginArtistBackgroundContentTemplate(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    isLoading: Boolean = false,
+    header: @Composable ColumnScope.() -> Unit = {},
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
@@ -25,9 +27,14 @@ fun PreLoginArtistBackgroundContentTemplate(
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
     ) {
+        header()
         Spacer(modifier = Modifier.height(70.dp))
         LoginPageMainImage(R.drawable.ic_newm_logo)
         Spacer(modifier = Modifier.height(16.dp))
         content()
+    }
+
+    if (isLoading) {
+        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
     }
 }

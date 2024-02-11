@@ -37,7 +37,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.theme.Gray100
-import io.newm.core.theme.Gray23
 import io.newm.core.theme.Gray500
 import io.newm.core.theme.inter
 
@@ -92,6 +91,9 @@ object TextFieldWithLabelDefaults {
 
         @Stable
         val NON_UNDERLINED = KeyboardOptions(keyboardType = KeyboardType.Password)
+
+        @Stable
+        val Digits = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, autoCorrect = false)
     }
 }
 

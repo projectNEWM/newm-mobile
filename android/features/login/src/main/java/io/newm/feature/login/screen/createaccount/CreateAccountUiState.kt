@@ -11,17 +11,21 @@ sealed interface CreateAccountUiState : CircuitUiState {
         val passwordConfirmationState: TextFieldState,
         val passwordState: TextFieldState,
         val emailState: TextFieldState,
+        val submitButtonEnabled: Boolean,
+        val errorMessage: String?,
         val eventSink: (SignupFormUiEvent) -> Unit,
     ) : CreateAccountUiState
 
     data class EmailVerificationUiState(
         val verificationCode: TextFieldState,
-        val errorMessage: String? = null,
+        val errorMessage: String?,
+        val nextButtonEnabled: Boolean,
         val eventSink: (EmailVerificationUiEvent) -> Unit,
     ) : CreateAccountUiState
 
     data class SetNameUiState(
         val name: TextFieldState,
+        val nextButtonEnabled: Boolean,
         val eventSink: (SetNameUiEvent) -> Unit,
     ) : CreateAccountUiState
 }

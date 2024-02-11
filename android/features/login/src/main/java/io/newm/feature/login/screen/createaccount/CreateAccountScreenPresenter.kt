@@ -18,35 +18,55 @@ import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
 
+private const val MINIMUM_VERIFICATION_CODE_LENGTH = 6
+
 class CreateAccountScreenPresenter constructor(
     private val navigateHome: () -> Unit,
     private val signupUseCase: SignupUseCase,
 ) : Presenter<CreateAccountUiState> {
+
     @Composable
     override fun present(): CreateAccountUiState {
         var step by rememberRetained { mutableStateOf(Step.EmailAndPassword) }
         val userEmail = rememberRetained { EmailState() }
         val password = rememberRetained { PasswordState() }
         val passwordConfirmation = rememberRetained { ConfirmPasswordState(password) }
-        val name = rememberRetained { TextFieldState() }
-        val verificationCode = rememberRetained { TextFieldState() }
+        val name = rememberRetained {
+            TextFieldState(
+                validator = { it.length >= 3 },
+                errorFor = { "Name must be at least 3 characters" },
+            )
+        }
+        val verificationCode = rememberRetained {
+            TextFieldState(
+                validator = { it.length >= MINIMUM_VERIFICATION_CODE_LENGTH },
+                errorFor = { "Verification code must be at least $MINIMUM_VERIFICATION_CODE_LENGTH characters" },
+            )
+        }
 
         val coroutineScope = rememberCoroutineScope()
 
-        val emailAndPasswordValid = remember(userEmail.isValid, password.isValid, passwordConfirmation.isValid) {
-            userEmail.isValid && password.isValid && passwordConfirmation.isValid
-        }
+        val emailAndPasswordValid =
+            remember(userEmail.isValid, password.isValid, passwordConfirmation.isValid) {
+                userEmail.isValid && password.isValid && passwordConfirmation.isValid
+            }
+
+        var errorMessage by remember { mutableStateOf<String?>(null) }
 
         return when (step) {
             Step.EmailAndPassword -> {
                 EmailAndPasswordUiState(
                     emailState = userEmail,
                     passwordState = password,
+                    submitButtonEnabled = emailAndPasswordValid,
                     passwordConfirmationState = passwordConfirmation,
+                    errorMessage = errorMessage,
                 ) { event ->
                     when (event) {
                         SignupFormUiEvent.Next -> {
-                            if (!emailAndPasswordValid) return@EmailAndPasswordUiState // TODO handle error
+                            require(emailAndPasswordValid) {
+                                "Email and password - next button should not be enabled if any of the fields are invalid"
+                            }
 
                             coroutineScope.launch {
                                 step = Step.Loading
@@ -56,7 +76,7 @@ class CreateAccountScreenPresenter constructor(
                                     )
                                     Step.SetName
                                 } catch (e: Throwable) {
-                                    // TODO handle error
+                                    errorMessage = e.message
                                     Step.EmailAndPassword
                                 }
                             }
@@ -66,16 +86,16 @@ class CreateAccountScreenPresenter constructor(
             }
 
             Step.EmailVerification -> {
-                val nextEnabled = remember(emailAndPasswordValid, verificationCode.isValid, name.isValid) {
-                    emailAndPasswordValid && verificationCode.isValid && name.isValid
-                }
-
                 EmailVerificationUiState(
                     verificationCode = verificationCode,
+                    nextButtonEnabled = verificationCode.isValid,
+                    errorMessage = errorMessage,
                 ) { event ->
                     when (event) {
                         is EmailVerificationUiEvent.Next -> {
-                            if (!nextEnabled) return@EmailVerificationUiState // TODO handle error
+                            require(emailAndPasswordValid && verificationCode.isValid && name.isValid) {
+                                "Email verification - next button should not be enabled if any of the fields are invalid"
+                            }
 
                             coroutineScope.launch {
                                 step = Step.Loading
@@ -90,9 +110,8 @@ class CreateAccountScreenPresenter constructor(
                                     navigateHome()
 
                                 } catch (e: Throwable) {
+                                    errorMessage = e.message
                                     step = Step.EmailVerification
-                                    // TODO handle error
-                                    e.printStackTrace()
                                 }
                             }
                         }
@@ -102,11 +121,13 @@ class CreateAccountScreenPresenter constructor(
 
             Step.SetName -> SetNameUiState(
                 name = name,
+                nextButtonEnabled = name.isValid,
             ) { event ->
                 when (event) {
                     SetNameUiEvent.Next -> {
-                        if (!name.isValid) return@SetNameUiState // TODO handle error
-
+                        require(name.isValid) {
+                            "Name - next button should not be enabled if the name is invalid"
+                        }
                         step = Step.EmailVerification
                     }
                 }

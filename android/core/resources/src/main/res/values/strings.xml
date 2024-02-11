@@ -30,6 +30,7 @@
     <string name="next">Next</string>
     <string name="nft_library">NFT Library</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="previous">Previous</string>
     <string name="profile">Profile</string>
     <string name="profile_ask_the_community">Ask the community</string>

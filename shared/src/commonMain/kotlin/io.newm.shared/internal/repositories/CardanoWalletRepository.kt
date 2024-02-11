@@ -65,7 +65,7 @@ internal class CardanoWalletRepository(
 
     fun deleteAllNFTs() {
         database.transaction {
-            database.nFTTrackQueries.deleteAllTracks()
+            database.nFTTrackQueries.deleteAll()
         }
     }
 

@@ -1,6 +1,6 @@
 object Versions {
     const val androidCompileSdk = 34
-    const val androidMinSdk = 30
+    const val androidMinSdk = 28
     const val androidTargetSdk = 34
     const val androidGradlePlugin = "8.1.4"
 
