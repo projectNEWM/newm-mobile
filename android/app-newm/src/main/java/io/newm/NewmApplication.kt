@@ -5,9 +5,9 @@ import co.touchlab.kermit.Logger
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
 import io.newm.shared.di.initKoin
+import io.newm.wallet.connect.WalletConnectInitializer
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
-
 
 open class NewmApplication : Application() {
 
@@ -21,7 +21,7 @@ open class NewmApplication : Application() {
             androidContext(this@NewmApplication)
             modules(viewModule, androidModules)
         }
-
         logout.register()
+        WalletConnectInitializer(this).initialize()
     }
 }

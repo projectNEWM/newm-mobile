@@ -17,6 +17,7 @@ import io.newm.screens.library.LibraryScreen
 import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.edit.ProfileRoute
 import io.newm.screens.account.UserAccountScreen
+import io.newm.screens.account.WalletConnect
 import io.newm.shared.public.models.NFTTrack
 
 @Composable
@@ -24,6 +25,7 @@ fun Navigation(
     navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
 ) {
     val onEditProfileClick = { navController.navigate(Screen.EditProfile.route) }
+    val onWalletConnect = { navController.navigate(Screen.WalletConnect.route) }
     NavHost(
         navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
@@ -34,7 +36,7 @@ fun Navigation(
             goToProfile = { navController.navigate(Screen.UserAccountViewRoot.route) }
         )
         addHomeTree(navController, isBottomBarVisible)
-        addUserAccountTree(onEditProfileClick)
+        addUserAccountTree(onEditProfileClick, onWalletConnect)
         addLibraryTree(navController)
         addMusicPlayerTree()
         addBarcodeScannerTree()
@@ -61,12 +63,17 @@ private fun NavGraphBuilder.addHomeTree(
                 onNavigateUp = { navController.navigateUp() },
             )
         }
+        composable(Screen.WalletConnect.route) {
+            WalletConnect()
+        }
+
     }
 }
 
 private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
     navigation(
-        route = Screen.LibraryRoot.route, startDestination = Screen.LibraryLanding.route
+        route = Screen.LibraryRoot.route,
+        startDestination = Screen.LibraryLanding.route
     ) {
         composable(Screen.LibraryLanding.route) {
             LibraryScreen(
@@ -80,7 +87,8 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
 }
 
 private fun NavGraphBuilder.addUserAccountTree(
-    onEditProfileClick: () -> Unit
+    onEditProfileClick: () -> Unit,
+    onWalletConnect: () -> Unit,
 ) {
     navigation(
         route = Screen.UserAccountViewRoot.route,
@@ -88,7 +96,8 @@ private fun NavGraphBuilder.addUserAccountTree(
     ) {
         composable(Screen.UserAccountViewLanding.route) {
             UserAccountScreen(
-                onEditProfileClick = onEditProfileClick
+                onEditProfileClick = onEditProfileClick,
+                onWalletConnectClick = onWalletConnect,
             )
         }
     }

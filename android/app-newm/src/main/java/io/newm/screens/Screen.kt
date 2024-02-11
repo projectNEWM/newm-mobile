@@ -26,6 +26,9 @@ sealed class Screen(val route: String) {
     
     data object Signup : Screen("signup")
     data object EditProfile : Screen("edit-profile")
+
+    data object WalletConnect : Screen("wallet-connect")
+
     data object BarcodeScanner : Screen("barcode-scanner")
 
     data object MusicPlayer : Screen("music-player/{songId}") {
