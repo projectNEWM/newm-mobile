@@ -13,8 +13,10 @@ extension LandingView {
 					.keyboardType(.emailAddress)
 					.autocorrectionDisabled()
 					.textInputAutocapitalization(.never)
+					.textContentType(.emailAddress)
 				NEWMTextField(title: .password, prompt: .yourPassword, isSecure: true, text: $viewModel.password)
 					.padding(.bottom)
+					.textContentType(.password)
 				actionButton(title: .next) {
 					viewModel.login()
 				}
