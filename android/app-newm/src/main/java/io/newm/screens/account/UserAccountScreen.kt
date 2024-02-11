@@ -104,7 +104,7 @@ fun WalletConnect() {
         ModalBottomSheetLayout(
             sheetContent = {
                 Web3ModalComponent(
-                    shouldOpenChooseNetwork = true,
+                    shouldOpenChooseNetwork = false,
                     closeModal = {
                         coroutineScope.launch { modalSheetState.hide() }
                     }
@@ -115,7 +115,7 @@ fun WalletConnect() {
             Column {
                 SecondaryButton(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    text = "Wallet Connect",
+                    text = "WalletConnect",
                     textColor = White,
                     onClick = {
                         coroutineScope.launch {

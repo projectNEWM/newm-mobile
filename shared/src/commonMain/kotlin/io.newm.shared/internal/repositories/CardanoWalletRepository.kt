@@ -20,14 +20,13 @@ internal class CardanoWalletRepository(
     private val scope: CoroutineScope,
     private val connectWalletManager: ConnectWalletManager,
     private val policyIdsRepository: NewmPolicyIdsRepository,
-    dbWrapper: NewmDatabaseWrapper,
+    private val db: NewmDatabaseWrapper,
 ) : KoinComponent {
 
     private val logger = Logger.withTag("NewmKMM-CardanoWalletRepository")
-    private val database = dbWrapper.instance ?: throw KMMException("Database not initialized")
 
     fun getTrack(id: String): NFTTrack? =
-        database.nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->
+        db().nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->
             NFTTrack(
                 id = track.id,
                 policyId = track.policyId,
@@ -64,17 +63,17 @@ internal class CardanoWalletRepository(
     }
 
     fun deleteAllNFTs() {
-        database.transaction {
-            database.nFTTrackQueries.deleteAll()
+        db().transaction {
+            db().nFTTrackQueries.deleteAll()
         }
     }
 
-    private fun getWalletNFTs(): Flow<List<NFTTrack>> = database.nFTTrackQueries.selectAllTracks()
+    private fun getWalletNFTs(): Flow<List<NFTTrack>> = db().nFTTrackQueries.selectAllTracks()
         .asFlow()
         .mapToList()
         .onStart {
             // Triggered when the Flow starts collecting
-            if (database.nFTTrackQueries.selectAllTracks().executeAsList().isEmpty()) {
+            if (db().nFTTrackQueries.selectAllTracks().executeAsList().isEmpty()) {
                 logger.d { "No tracks found in DB, fetching from network" }
                 scope.launch {
                     fetchNFTTracksFromNetwork()
@@ -111,9 +110,9 @@ internal class CardanoWalletRepository(
     }
 
     private fun cacheNFTTracks(nftTracks: List<NFTTrack>) {
-        database.transaction {
+        db().transaction {
             nftTracks.forEach { track ->
-                database.nFTTrackQueries.insertOrReplaceTrack(
+                db().nFTTrackQueries.insertOrReplaceTrack(
                     id = track.id,
                     policyId = track.policyId,
                     title = track.title,

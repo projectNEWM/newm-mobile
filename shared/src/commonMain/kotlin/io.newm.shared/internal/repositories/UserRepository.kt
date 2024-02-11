@@ -17,13 +17,12 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserRepository(
-    dbWrapper: NewmDatabaseWrapper,
+    private val dbWrapper: NewmDatabaseWrapper,
     private val scope: CoroutineScope,
 ) : KoinComponent {
 
     private val service: UserAPI by inject()
     private val logger = Logger.withTag("NewmKMM-UserRepository")
-    private val database = dbWrapper.instance ?: throw KMMException("Database not initialized")
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun fetchLoggedInUserDetails(): User {
@@ -32,15 +31,15 @@ internal class UserRepository(
     }
 
 
-    fun fetchUserDetailsFlow() = database.userQueries.getAnyUser()
+    fun fetchUserDetailsFlow() = dbWrapper().userQueries.getAnyUser()
         .asFlow()
         .mapToOneOrNull() // This will emit either one user or null
         .onStart {
-            if (database.userQueries.getAnyUser().executeAsOneOrNull() == null ) {
+            if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null ) {
                 logger.d { "No Users found in DB, fetching from network" }
                 scope.launch {
                     val user = fetchLoggedInUserDetails()
-                    database.userQueries.insertUser(
+                    dbWrapper().userQueries.insertUser(
                         id = user.id,
                         createdAt = user.createdAt,
                         oauthType = user.oauthType,
