@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -25,12 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.ui.Ui
+import io.newm.core.resources.R.string
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
-import io.newm.feature.login.R
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.createaccount.EmailVerificationContent
 import io.newm.feature.login.screen.email.Email
@@ -40,6 +40,8 @@ import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.E
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.SetNewPassword
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterEmailUiEvent
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterVerificationCodeUiEvent
+import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.SetNewPasswordUiEvent
+import io.newm.feature.login.screen.password.Password
 import io.newm.feature.login.screen.password.PasswordState
 
 class ForgotPasswordScreenUi : Ui<ForgotPasswordScreenUiState> {
@@ -131,10 +133,59 @@ private fun EnterCodeContent(state: EnterVerificationCode, modifier: Modifier) {
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SetNewPasswordContent(state: SetNewPassword, modifier: Modifier) {
-    val eventSink = state.eventSink
-    // TODO
+    val onEvent = state.eventSink
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    ToastSideEffect(message = state.errorMessage)
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "Enter your new password",
+            style = MaterialTheme.typography.h1,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Password(
+            modifier = Modifier.focusRequester(focusRequester),
+            label = string.reset_password_new_password,
+            passwordState = state.password,
+            keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(imeAction = ImeAction.Next),
+        )
+
+        Password(
+            label = string.reset_password_confirm_new_password,
+            passwordState = state.confirmPasswordState,
+            keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(
+                imeAction = ImeAction.Go,
+            ),
+            keyboardActions = KeyboardActions(
+                onGo = {
+                    keyboardController?.hide()
+                    if (state.submitButtonEnabled) {
+                        onEvent(SetNewPasswordUiEvent.OnSubmit)
+                    }
+                }
+            ),
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        PrimaryButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Confirm",
+            onClick = {
+                onEvent(SetNewPasswordUiEvent.OnSubmit)
+            },
+            enabled = state.submitButtonEnabled
+        )
+    }
 }
 
 @Composable
@@ -182,6 +233,7 @@ private fun PreviewSetNewPassword() {
                 confirmPasswordState = PasswordState(),
                 errorMessage = null,
                 isLoading = false,
+                submitButtonEnabled = true,
                 eventSink = {},
             )
         )

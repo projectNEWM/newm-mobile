@@ -7,6 +7,9 @@ import io.newm.core.test.utils.SnapshotTestConfiguration
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenContent
 import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState
+import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterEmail
+import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.EnterVerificationCode
+import io.newm.feature.login.screen.forgotpassword.ForgotPasswordScreenUiState.SetNewPassword
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -19,7 +22,7 @@ class ForgotPasswordScreenTest(
     fun `enter email`() {
         snapshot {
             ForgotPasswordScreenContent(
-                state = ForgotPasswordScreenUiState.EnterEmail(
+                state = EnterEmail(
                     email = EmailState(),
                     errorMessage = null,
                     isLoading = false,
@@ -34,8 +37,24 @@ class ForgotPasswordScreenTest(
     fun `enter code`() {
         snapshot {
             ForgotPasswordScreenContent(
-                state = ForgotPasswordScreenUiState.EnterVerificationCode(
+                state = EnterVerificationCode(
                     code = TextFieldState(),
+                    errorMessage = null,
+                    isLoading = false,
+                    submitButtonEnabled = true,
+                    eventSink = {},
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `enter new password`() {
+        snapshot {
+            ForgotPasswordScreenContent(
+                state = SetNewPassword(
+                    password = TextFieldState(),
+                    confirmPasswordState = TextFieldState(),
                     errorMessage = null,
                     isLoading = false,
                     submitButtonEnabled = true,

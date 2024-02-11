@@ -29,6 +29,7 @@ sealed interface ForgotPasswordScreenUiState : CircuitUiState {
     data class SetNewPassword(
         val password: TextFieldState,
         val confirmPasswordState: TextFieldState,
+        val submitButtonEnabled: Boolean,
         override val isLoading: Boolean,
         override val errorMessage: String?,
         val eventSink: (SetNewPasswordUiEvent) -> Unit
