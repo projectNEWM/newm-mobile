@@ -26,7 +26,7 @@ class WalletConnectInitializer(private val application: Application) {
             name = "NEWM",
             description = "Link your wallet to NEWM",
             url = "https://newm.io/",
-            icons = listOf("https://developers.cardano.org/img/devblog/newm.png"),
+            icons = listOf("https://newm.io/wp-content/uploads/2022/06/NEWM_Logo-1536x1536.png"),
             redirect = "kotlin-web3modal://request"
         )
 
