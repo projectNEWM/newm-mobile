@@ -2,6 +2,7 @@ package io.newm.shared.internal.services
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -20,9 +21,10 @@ import io.newm.shared.internal.services.models.LogInUser
 import io.newm.shared.internal.services.models.LoginResponse
 import io.newm.shared.internal.services.models.NewUser
 import io.newm.shared.internal.services.models.RegisterException
+import io.newm.shared.internal.services.models.ResetPasswordException
+import io.newm.shared.internal.services.models.ResetPasswordRequest
 import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
-import kotlin.coroutines.cancellation.CancellationException
 
 
 internal class LoginAPI(
@@ -126,16 +128,30 @@ internal class LoginAPI(
         }
     }
 
-    suspend fun resetPassword(
-        email: String,
-        newPassword: String,
-        confirmPassword: String,
-        authCode: String
-    ) = httpClient.put("/v1/users/password") {
-        contentType(ContentType.Application.Json)
-        parameter("email", email)
-        parameter("newPassword", newPassword)
-        parameter("confirmPassword", confirmPassword)
-        parameter("authCode", authCode)
+    suspend fun resetPassword(request: ResetPasswordRequest) {
+        try {
+            httpClient.put("/v1/users/password") {
+                contentType(ContentType.Application.Json)
+                setBody(request)
+            }
+        } catch (e: ClientRequestException) {
+            throw when (e.response.status.value) {
+                400 -> {
+                    ResetPasswordException.MissingField("Missing field")
+                }
+                403 -> {
+                    ResetPasswordException.InvalidAuthCode("Invalid auth code")
+                }
+                422 -> {
+                    ResetPasswordException.InvalidContent("Invalid content")
+                }
+                404 -> {
+                    ResetPasswordException.EmailNotFound("Email not found: ${request.email}")
+                }
+                else -> {
+                    e
+                }
+            }
+        }
     }
 }

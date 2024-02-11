@@ -30,6 +30,7 @@ extension LandingView {
 
 				NEWMTextField(title: nil, prompt: .verificationCode, isSecure: false, text: $viewModel.confirmationCode)
 					.padding(.bottom)
+					.textContentType(.oneTimeCode)
 				
 				Button {
 					viewModel.requestNickname()

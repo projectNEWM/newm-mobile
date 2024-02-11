@@ -24,3 +24,10 @@ sealed class RegisterException(message: String): KMMException(message) {
     data class UserAlreadyExists(override val message: String) : RegisterException(message)
     data class TwoFactorAuthenticationFailed(override val message: String) : RegisterException(message)
 }
+
+sealed class ResetPasswordException(message: String): KMMException(message) {
+    data class MissingField(override val message: String) : ResetPasswordException(message)
+    data class InvalidAuthCode(override val message: String) : ResetPasswordException(message)
+    data class InvalidContent(override val message: String) : ResetPasswordException(message)
+    data class EmailNotFound(override val message: String) : ResetPasswordException(message)
+}

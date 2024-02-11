@@ -15,6 +15,7 @@ import io.newm.shared.internal.services.models.LoginException.UserNotFound
 import io.newm.shared.internal.services.models.LoginException.WrongPassword
 import io.newm.shared.internal.services.models.LoginResponse
 import io.newm.shared.internal.services.models.NewUser
+import io.newm.shared.internal.services.models.ResetPasswordRequest
 import io.newm.shared.internal.services.models.isValid
 import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
@@ -125,5 +126,15 @@ internal class LogInRepository : KoinComponent {
     fun logout() {
         tokenManager.clearToken()
         db.clear()
+    }
+
+    suspend fun resetPassword(email: String, newPassword: String, confirmPassword: String, authCode: String) {
+        logger.d { "resetPassword" }
+        service.resetPassword(ResetPasswordRequest(
+            email,
+            newPassword,
+            confirmPassword,
+            authCode,
+        ))
     }
 }
