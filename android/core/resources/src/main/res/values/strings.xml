@@ -29,6 +29,8 @@
     <string name="marketplace">Market</string>
     <string name="next">Next</string>
     <string name="nft_library">NFT Library</string>
+    <string name="reset_password_new_password">Your new password</string>
+    <string name="reset_password_confirm_new_password">Confirm new password</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="previous">Previous</string>
