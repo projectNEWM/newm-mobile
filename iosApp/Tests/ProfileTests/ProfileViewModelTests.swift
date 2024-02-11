@@ -32,7 +32,7 @@ final class ProfileViewModelTests: XCTestCase {
 		Resolver.root = .mock
 		setUpDI()
 		profileViewModel = ProfileViewModel()
-		let (cancellable, expectation) = loadingToastCountExpectation(expected: [false], vm: profileViewModel)
+		let (cancellable, expectation) = loadingToastCountExpectation(expected: [true, false], vm: profileViewModel)
 		await fulfillment(of: [expectation], timeout: 1)
 		cancellable.cancel()
 	}
@@ -46,15 +46,14 @@ final class ProfileViewModelTests: XCTestCase {
 		XCTAssertEqual(profileViewModel.pictureURL, URL(string: mockUser.pictureUrl!))
 		XCTAssertFalse(profileViewModel.enableSaveButon)
 	}
-		
+	
 	func loadingToastCountExpectation(expected: [Bool], vm: ProfileViewModel) -> (any Cancellable, XCTestExpectation) {
 		var expected = expected
 		let expectation = XCTestExpectation(description: "loadingDidUpdate")
 		let cancellable = vm.$showLoadingToast
 			.sink { value in
-				if expected.first == value {
-					expected.removeFirst()
-				}
+				XCTAssertEqual(expected.first, value)
+				expected.removeFirst()
 				if expected.isEmpty {
 					expectation.fulfill()
 				}
@@ -62,22 +61,8 @@ final class ProfileViewModelTests: XCTestCase {
 		return (cancellable, expectation)
 	}
 	
-	func testLoadingUserDetails() async throws {
-		print("testing")
-
-		let newViewModel = ProfileViewModel()
-		
-		let (cancellable, expectation) = loadingToastCountExpectation(expected: [true, false], vm: newViewModel)
-		
-		await newViewModel.loadUser()
-		
-		await fulfillment(of: [expectation], timeout: 0.1)
-		
-		cancellable.cancel()
-	}
-	
 	func testChangePassword() async throws {
-		let (cancellable, expectation) = loadingToastCountExpectation(expected: [true, false], vm: profileViewModel)
+		let (cancellable, expectation) = loadingToastCountExpectation(expected: [false, true, false], vm: profileViewModel)
 		XCTAssertFalse(profileViewModel.enableSaveButon)
 		XCTAssertFalse(profileViewModel.showSaveButton)
 		profileViewModel.newPassword = "newPassword"
@@ -89,7 +74,7 @@ final class ProfileViewModelTests: XCTestCase {
 		profileViewModel.currentPassword = currentPassword
 		XCTAssertTrue(profileViewModel.enableSaveButon)
 		XCTAssertTrue(profileViewModel.showSaveButton)
-
+		
 		await profileViewModel.save()
 		XCTAssertTrue(changePasswordUseCase.changePasswordCalled)
 		await fulfillment(of: [expectation], timeout: 0.1)

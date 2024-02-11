@@ -14,11 +14,12 @@ public final class LoginModule: Module {
 		}
 		
 		Resolver.register {
-			LoginUseCaseProvider().get() as LoginUseCase
+			LoginUseCaseProvider().get()
 		}
 		
 		Resolver.register {
-			SignupUseCaseProvider().get() as SignupUseCase
+			SignupUseCaseProvider().get()
+		}
 		}
 	}
 }

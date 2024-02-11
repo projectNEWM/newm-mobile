@@ -36,9 +36,9 @@ final class ProfileViewModel: ObservableObject {
 	
 	var enableSaveButon: Bool {
 		let hasNewPassword =
-			currentPassword.isEmpty == false &&
-			newPassword.isEmpty == false &&
-			confirmPassword.isEmpty == false
+		currentPassword.isEmpty == false &&
+		newPassword.isEmpty == false &&
+		confirmPassword.isEmpty == false
 		
 		let newPasswordsMatch = newPassword == confirmPassword
 		
@@ -64,7 +64,7 @@ final class ProfileViewModel: ObservableObject {
 			showLoadingToast = false
 		}
 	}
-		
+	
 	func loadUser() async {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
