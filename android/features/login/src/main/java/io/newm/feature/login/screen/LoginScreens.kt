@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize object LoginScreen : Screen
 @Parcelize object HomeScreen : Screen
 
-@Parcelize data class ForgotPasswordScreen(val email: String) : Screen
+@Parcelize data class ResetPasswordScreen(val email: String) : Screen

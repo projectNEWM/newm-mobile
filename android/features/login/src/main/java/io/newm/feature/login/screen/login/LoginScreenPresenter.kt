@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.feature.login.screen.ForgotPasswordScreen
+import io.newm.feature.login.screen.ResetPasswordScreen
 import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
@@ -60,7 +60,7 @@ class LoginScreenPresenter(
                         }
                     }
 
-                    LoginUiEvent.ForgotPasswordClick -> navigator.goTo(ForgotPasswordScreen(email.text))
+                    LoginUiEvent.ForgotPasswordClick -> navigator.goTo(ResetPasswordScreen(email.text))
                 }
             }
         )

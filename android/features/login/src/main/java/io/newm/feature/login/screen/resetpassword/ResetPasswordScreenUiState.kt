@@ -1,12 +1,12 @@
-package io.newm.feature.login.screen.forgotpassword
+package io.newm.feature.login.screen.resetpassword
 
 import com.slack.circuit.runtime.CircuitUiState
 import io.newm.feature.login.screen.TextFieldState
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterEmailUiEvent
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.EnterVerificationCodeUiEvent
-import io.newm.feature.login.screen.forgotpassword.ForgotPasswordUiEvent.SetNewPasswordUiEvent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 
-sealed interface ForgotPasswordScreenUiState : CircuitUiState {
+sealed interface ResetPasswordScreenUiState : CircuitUiState {
     val isLoading: Boolean
     val errorMessage: String?
 
@@ -16,7 +16,7 @@ sealed interface ForgotPasswordScreenUiState : CircuitUiState {
         override val errorMessage: String?,
         val submitButtonEnabled: Boolean,
         val eventSink: (EnterEmailUiEvent) -> Unit
-    ) : ForgotPasswordScreenUiState
+    ) : ResetPasswordScreenUiState
 
     data class EnterVerificationCode(
         val code: TextFieldState,
@@ -24,14 +24,14 @@ sealed interface ForgotPasswordScreenUiState : CircuitUiState {
         override val isLoading: Boolean,
         override val errorMessage: String?,
         val eventSink: (EnterVerificationCodeUiEvent) -> Unit
-    ) : ForgotPasswordScreenUiState
+    ) : ResetPasswordScreenUiState
 
-    data class SetNewPassword(
+    data class EnterNewPassword(
         val password: TextFieldState,
         val confirmPasswordState: TextFieldState,
         val submitButtonEnabled: Boolean,
         override val isLoading: Boolean,
         override val errorMessage: String?,
-        val eventSink: (SetNewPasswordUiEvent) -> Unit
-    ) : ForgotPasswordScreenUiState
+        val eventSink: (EnterNewPasswordUiEvent) -> Unit
+    ) : ResetPasswordScreenUiState
 }
