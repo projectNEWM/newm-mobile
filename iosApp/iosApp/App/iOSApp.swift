@@ -31,6 +31,7 @@ struct iOSApp: App {
 		}
 	}
 	
+	@MainActor
 	private func setUpAppearance() {
 		UINavigationBar.appearance().tintColor = .white
 		let barAppearance = UIBarAppearance()

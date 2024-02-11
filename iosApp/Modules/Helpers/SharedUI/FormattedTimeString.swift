@@ -7,7 +7,6 @@ public extension Int {
 		Int.formatter.allowedUnits = self > 3600 ? [.hour, .minute, .second] : [.minute, .second]
 		Int.formatter.zeroFormattingBehavior = .pad
 		guard let playbackTime = Int.formatter.string(from: TimeInterval(self)) else {
-			//TODO:MU: Uncomment when KMM module added back
 			return Int?.playbackTimePlaceholder
 		}
 		

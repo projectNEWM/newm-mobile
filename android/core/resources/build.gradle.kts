@@ -11,8 +11,3 @@ android {
         minSdk = Versions.androidMinSdk
     }
 }
-
-dependencies {
-    implementation(Google.appCompat)
-    implementation(Google.composeMaterial)
-}

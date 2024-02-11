@@ -26,7 +26,7 @@ import shared.postNotification
 internal class LogInRepository : KoinComponent {
     private val service: LoginAPI by inject()
     private val tokenManager: TokenManager by inject()
-    private val databaseRepository: DatabaseRepository by inject()
+    private val db: NewmDatabaseWrapper by inject()
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
 
@@ -125,7 +125,7 @@ internal class LogInRepository : KoinComponent {
 
     fun logout() {
         tokenManager.clearToken()
-        databaseRepository.clear()
+        db.clear()
     }
 
     suspend fun resetPassword(email: String, newPassword: String, confirmPassword: String, authCode: String) {

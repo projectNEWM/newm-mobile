@@ -27,7 +27,7 @@ final class ProfileViewModel: ObservableObject {
 	@Published var newPassword: String = ""
 	@Published var confirmPassword: String = ""
 	@Published private var errors = ErrorSet()
-	@Published var showLoadingToast: Bool = false
+	@Published var showLoadingToast: Bool = true
 	@Published var showCompletionToast: Bool = false
 	@Published var isWalletConnected: Bool = false
 	var errorAlert: String? { errors.currentError?.errorDescription }
@@ -35,11 +35,10 @@ final class ProfileViewModel: ObservableObject {
 	private var cancels = Set<AnyCancellable>()
 	
 	var enableSaveButon: Bool {
-		let hasNewPassword = {
-			currentPassword.isEmpty == false &&
-			newPassword.isEmpty == false &&
-			confirmPassword.isEmpty == false
-		}()
+		let hasNewPassword =
+		currentPassword.isEmpty == false &&
+		newPassword.isEmpty == false &&
+		confirmPassword.isEmpty == false
 		
 		let newPasswordsMatch = newPassword == confirmPassword
 		
@@ -60,13 +59,10 @@ final class ProfileViewModel: ObservableObject {
 			}
 			.store(in: &cancels)
 		
-		Task { await setUp() }
-	}
-	
-	private func setUp() async {
-		showLoadingToast = true
-		await loadUser()
-		showLoadingToast = false
+		Task {
+			await loadUser()
+			showLoadingToast = false
+		}
 	}
 	
 	func loadUser() async {

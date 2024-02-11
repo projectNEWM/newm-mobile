@@ -13,7 +13,6 @@ import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.repositories.ConnectWalletManager
-import io.newm.shared.internal.repositories.DatabaseRepository
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
@@ -65,7 +64,6 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CardanoWalletAPI(get()) }
     single { NewmPolicyIdsAPI(get()) }
     // Internal Repositories
-    single { DatabaseRepository(get(), get())}
     single { TokenManager() }
     single { LogInRepository() }
     single { GenresRepository() }
