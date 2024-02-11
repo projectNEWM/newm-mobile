@@ -20,6 +20,10 @@ public final class LoginModule: Module {
 		Resolver.register {
 			SignupUseCaseProvider().get() as SignupUseCase
 		}
+		
+		Resolver.register {
+			ResetPasswordUseCaseProvider().get() as ResetPasswordUseCase
+		}
 	}
 }
 

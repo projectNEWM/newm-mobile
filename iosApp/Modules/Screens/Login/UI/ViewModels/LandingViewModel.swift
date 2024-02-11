@@ -21,6 +21,8 @@ class LandingViewModel: ObservableObject {
 			
 	@Injected private var logInUseCase: any LoginUseCase
 	@Injected private var signUpUseCase: any SignupUseCase
+	@Injected private var resetPasswordUseCase: any ResetPasswordUseCase
+	
 	private let loginFieldValidator = LoginFieldValidator()
 
 	var nicknameIsValid: Bool {
@@ -72,7 +74,16 @@ class LandingViewModel: ObservableObject {
 	}
 	
 	func resetPassword() {
-		//TODO:
+		isLoading = true
+		Task {
+			do {
+				try await resetPasswordUseCase.resetPassword(email: email, code: confirmationCode, newPassword: password, confirmPassword: confirmPassword)
+				try await logInUseCase.logIn(email: email, password: password)
+			} catch {
+				handleError(error)
+			}
+			isLoading = false
+		}
 	}
 	
 	func createAccount() {

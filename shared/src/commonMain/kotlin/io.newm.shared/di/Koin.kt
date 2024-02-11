@@ -2,8 +2,18 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.internal.TokenManager
+import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
+import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
+import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
+import io.newm.shared.internal.implementations.LoginUseCaseImpl
+import io.newm.shared.internal.implementations.ResetPasswordUseCaseImpl
+import io.newm.shared.internal.implementations.SignupUseCaseImpl
+import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
+import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
+import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.repositories.ConnectWalletManager
+import io.newm.shared.internal.repositories.DatabaseRepository
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
@@ -15,19 +25,11 @@ import io.newm.shared.internal.services.LoginAPI
 import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import io.newm.shared.internal.services.PlaylistAPI
 import io.newm.shared.internal.services.UserAPI
-import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
-import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
-import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
-import io.newm.shared.internal.implementations.LoginUseCaseImpl
-import io.newm.shared.internal.implementations.SignupUseCaseImpl
-import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
-import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
-import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
-import io.newm.shared.internal.repositories.DatabaseRepository
 import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.LoginUseCase
+import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import io.newm.shared.public.usecases.UserSessionUseCase
@@ -81,6 +83,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
+    single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

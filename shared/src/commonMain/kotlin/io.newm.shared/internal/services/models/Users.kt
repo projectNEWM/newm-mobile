@@ -60,3 +60,11 @@ internal data class UserProfileUpdateRequest(
     val currentPassword: String? = null,
     val authCode: String? = null
 )
+
+@Serializable
+internal data class ResetPasswordRequest(
+    val email: String,
+    val newPassword: String,
+    val confirmPassword: String,
+    val authCode: String
+)
