@@ -24,12 +24,16 @@ import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.LoginScreenUi
+import io.newm.feature.login.screen.ResetPasswordScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState
 import io.newm.feature.login.screen.login.LoginScreenPresenter
 import io.newm.feature.login.screen.login.LoginScreenUiState
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUi
+import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
@@ -52,7 +56,8 @@ class LoginActivity : ComponentActivity() {
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
                 is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
-                is LoginScreen -> inject<LoginScreenPresenter> { parametersOf(navigator) } .value
+                is LoginScreen -> inject<LoginScreenPresenter> { parametersOf(navigator) }.value
+                is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> { parametersOf(navigator) }.value
                 else -> null
             }
         }
@@ -70,6 +75,10 @@ class LoginActivity : ComponentActivity() {
 
                 is LoginScreen -> ui<LoginScreenUiState> { state, modifier ->
                     LoginScreenUi().Content(state, modifier)
+                }
+
+                is ResetPasswordScreen -> ui<ResetPasswordScreenUiState> { state, modifier ->
+                    ResetPasswordScreenUi().Content(state = state, modifier = modifier)
                 }
 
                 else -> null
