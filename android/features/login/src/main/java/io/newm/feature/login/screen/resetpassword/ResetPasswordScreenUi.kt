@@ -78,7 +78,7 @@ private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) 
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -116,7 +116,7 @@ private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) 
             enabled = state.submitButtonEnabled,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.weight(1f))
     }
 }
 
@@ -143,7 +143,7 @@ private fun SetNewPasswordContent(state: EnterNewPassword, modifier: Modifier = 
     ToastSideEffect(message = state.errorMessage)
 
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -185,6 +185,7 @@ private fun SetNewPasswordContent(state: EnterNewPassword, modifier: Modifier = 
             },
             enabled = state.submitButtonEnabled
         )
+        Spacer(modifier = Modifier.weight(1f))
     }
 }
 
