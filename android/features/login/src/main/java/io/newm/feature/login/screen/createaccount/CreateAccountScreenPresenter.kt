@@ -14,11 +14,10 @@ import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVeri
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SetNameUiState
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
+import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
-
-private const val MINIMUM_VERIFICATION_CODE_LENGTH = 6
 
 class CreateAccountScreenPresenter constructor(
     private val navigateHome: () -> Unit,
@@ -37,12 +36,7 @@ class CreateAccountScreenPresenter constructor(
                 errorFor = { "Name must be at least 3 characters" },
             )
         }
-        val verificationCode = rememberRetained {
-            TextFieldState(
-                validator = { it.length >= MINIMUM_VERIFICATION_CODE_LENGTH },
-                errorFor = { "Verification code must be at least $MINIMUM_VERIFICATION_CODE_LENGTH characters" },
-            )
-        }
+        val verificationCode = rememberRetained { VerificationCodeState() }
 
         val coroutineScope = rememberCoroutineScope()
 
