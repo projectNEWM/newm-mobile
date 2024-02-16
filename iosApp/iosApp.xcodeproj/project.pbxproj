@@ -3248,7 +3248,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=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\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4078,6 +4078,7 @@
 		};
 		7555FFA7242A565B00829871 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76EAFC5C2A0AE33E00ACD862 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
