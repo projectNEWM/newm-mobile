@@ -1,9 +1,9 @@
 package io.newm.shared.public.usecases
 
 import io.newm.shared.public.models.error.KMMException
-import kotlin.coroutines.cancellation.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * `SignupUseCase` defines the contract for handling user registration.
@@ -22,7 +22,7 @@ interface SignupUseCase {
      * @throws CancellationException if the request process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun requestEmailConfirmationCode(email: String)
+    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String)
 
     /**
      * Registers a new user with the provided details.
@@ -42,7 +42,8 @@ interface SignupUseCase {
         email: String,
         password: String,
         passwordConfirmation: String,
-        verificationCode: String
+        verificationCode: String,
+        humanVerificationCode: String
     )
 }
 

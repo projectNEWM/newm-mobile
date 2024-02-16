@@ -3,6 +3,7 @@ package io.newm.shared.internal.services
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -33,10 +34,11 @@ internal class LoginAPI(
 
     private val httpClient: HttpClient = networkClient.httpClient()
 
-    suspend fun requestEmailConfirmationCode(email: String) {
+    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String) {
         val response = httpClient.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
             parameter("email", email)
+            addHumanVerificationCodeToHeader(humanVerificationCode)
         }
 
         return when (response.status) {
@@ -48,10 +50,11 @@ internal class LoginAPI(
         }
     }
 
-    suspend fun register(user: NewUser) {
+    suspend fun register(user: NewUser, humanVerificationCode: String) {
         val response = httpClient.post("/v1/users") {
             contentType(ContentType.Application.Json)
             setBody(user)
+            addHumanVerificationCodeToHeader(humanVerificationCode)
         }
         when (response.status) {
             HttpStatusCode.OK -> {}
@@ -67,15 +70,17 @@ internal class LoginAPI(
         }
     }
 
-    suspend fun logIn(user: LogInUser) = httpClient.post("/v1/auth/login") {
+    suspend fun logIn(user: LogInUser, humanVerificationCode: String) = httpClient.post("/v1/auth/login") {
         contentType(ContentType.Application.Json)
         setBody(user)
+        addHumanVerificationCodeToHeader(humanVerificationCode)
     }.body<LoginResponse>()
 
-    suspend fun loginWithGoogle(request: GoogleSignInRequest): LoginResponse {
+    suspend fun loginWithGoogle(request: GoogleSignInRequest, humanVerificationCode: String): LoginResponse {
         val response = httpClient.post("/v1/auth/login/google") {
             contentType(ContentType.Application.Json)
             setBody(request)
+            addHumanVerificationCodeToHeader(humanVerificationCode)
         }
 
         return when (response.status) {
@@ -86,10 +91,11 @@ internal class LoginAPI(
         }
     }
 
-    suspend fun loginWithApple(request: AppleSignInRequest): LoginResponse {
+    suspend fun loginWithApple(request: AppleSignInRequest, humanVerificationCode: String): LoginResponse {
         val response = httpClient.post("/v1/auth/login/apple") {
             contentType(ContentType.Application.Json)
             setBody(request)
+            addHumanVerificationCodeToHeader(humanVerificationCode)
         }
 
         return when (response.status) {
@@ -128,11 +134,12 @@ internal class LoginAPI(
         }
     }
 
-    suspend fun resetPassword(request: ResetPasswordRequest) {
+    suspend fun resetPassword(request: ResetPasswordRequest, humanVerificationCode: String) {
         try {
             httpClient.put("/v1/users/password") {
                 contentType(ContentType.Application.Json)
                 setBody(request)
+                addHumanVerificationCodeToHeader(humanVerificationCode)
             }
         } catch (e: ClientRequestException) {
             throw when (e.response.status.value) {
@@ -154,4 +161,9 @@ internal class LoginAPI(
             }
         }
     }
+}
+
+public inline fun HttpRequestBuilder.addHumanVerificationCodeToHeader(humanVerificationCode: String) {
+    this.headers.append("g-recaptcha-token", humanVerificationCode)
+    this.headers.append("g-recaptcha-platform", "iOS")
 }

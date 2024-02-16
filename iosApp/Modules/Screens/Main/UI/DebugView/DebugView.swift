@@ -14,8 +14,8 @@ struct DebugView: View {
 				Text("Log out")
 			}
 			
-			if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-				Text("App version: \(appVersion)")
+			if let appVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+				Text("Build number: \(appVersion)")
 			}
 			
 			Button {
