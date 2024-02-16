@@ -3,7 +3,7 @@ package io.newm.feature.login.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import io.newm.shared.internal.services.models.LoginException
+import io.newm.shared.internal.api.models.LoginException
 import io.newm.shared.public.usecases.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

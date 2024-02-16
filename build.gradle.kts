@@ -12,6 +12,7 @@ buildscript {
         classpath(Plugins.benManesVersionsClasspath)
         classpath(SqlDelight.gradlePlugin)
         classpath(Plugins.paparazziClassPath)
+//        classpath(Plugins.recaptcha)
     }
 }
 

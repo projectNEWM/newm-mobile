@@ -3,8 +3,8 @@ package shared
 import com.liftric.kvault.KVault
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.ktor.client.engine.android.Android
-import io.newm.shared.internal.db.NewmDatabaseWrapper
 import io.newm.shared.db.cache.NewmDatabase
+import io.newm.shared.internal.db.NewmDatabaseWrapper
 import org.koin.dsl.module
 
 actual fun platformModule() = module {
@@ -14,4 +14,7 @@ actual fun platformModule() = module {
     }
     single { Android.create() }
     single { KVault(get(), fileName = "newm-encrypted-prefs") }
+//    single {
+//        RecaptchaVerificationService()
+//    }
 }

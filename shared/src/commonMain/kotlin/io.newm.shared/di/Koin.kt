@@ -2,15 +2,14 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
-import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
-import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
-import io.newm.shared.internal.implementations.LoginUseCaseImpl
-import io.newm.shared.internal.implementations.ResetPasswordUseCaseImpl
-import io.newm.shared.internal.implementations.SignupUseCaseImpl
-import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
-import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
-import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
+import io.newm.shared.internal.api.CardanoWalletAPI
+import io.newm.shared.internal.api.GenresAPI
+import io.newm.shared.internal.api.LoginAPI
+import io.newm.shared.internal.api.NewmPolicyIdsAPI
+import io.newm.shared.internal.api.PlaylistAPI
+import io.newm.shared.internal.api.UserAPI
+import io.newm.shared.internal.domainservices.HumanVerificationService
+import io.newm.shared.internal.domainservices.Mocks.MockHumanVerificationService
 import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.internal.repositories.GenresRepository
@@ -18,17 +17,22 @@ import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
 import io.newm.shared.internal.repositories.PlaylistRepository
 import io.newm.shared.internal.repositories.UserRepository
-import io.newm.shared.internal.services.CardanoWalletAPI
-import io.newm.shared.internal.services.GenresAPI
-import io.newm.shared.internal.services.LoginAPI
-import io.newm.shared.internal.services.NewmPolicyIdsAPI
-import io.newm.shared.internal.services.PlaylistAPI
-import io.newm.shared.internal.services.UserAPI
+import io.newm.shared.internal.usecases.ChangePasswordUseCaseImpl
+import io.newm.shared.internal.usecases.ConnectWalletUseCaseImpl
+import io.newm.shared.internal.usecases.GetGenresUseCaseImpl
+import io.newm.shared.internal.usecases.LoginUseCaseImpl
+import io.newm.shared.internal.usecases.ResetPasswordUseCaseImpl
+import io.newm.shared.internal.usecases.SetUpHumanVerificationUseCaseImpl
+import io.newm.shared.internal.usecases.SignupUseCaseImpl
+import io.newm.shared.internal.usecases.UserDetailsUseCaseImpl
+import io.newm.shared.internal.usecases.UserSessionUseCaseImpl
+import io.newm.shared.internal.usecases.WalletNFTTracksUseCaseImpl
 import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
+import io.newm.shared.public.usecases.SetUpHumanVerificationUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import io.newm.shared.public.usecases.UserSessionUseCase
@@ -72,16 +76,18 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { NewmPolicyIdsRepository(get(), get(), get()) }
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
     single { ConnectWalletManager(get()) }
+    single<HumanVerificationService> { MockHumanVerificationService() }
     // External Use Cases to be consumed outside of KMM
-    single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
-    single<SignupUseCase> { SignupUseCaseImpl(get()) }
+    single<LoginUseCase> { LoginUseCaseImpl(get(), get(), get()) }
+    single<SignupUseCase> { SignupUseCaseImpl(get(), get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
-    single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
+    single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get(), get()) }
+    single<SetUpHumanVerificationUseCase> { SetUpHumanVerificationUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

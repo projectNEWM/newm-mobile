@@ -1,0 +1,8 @@
+language = Objective-C
+modules = RecaptchaEnterprise
+compilerOpts = -framework RecaptchaEnterprise
+linkerOpts = -framework RecaptchaEnterprise
+
+---
+# SPM Fragment
+import: package:RecaptchaEnterprise

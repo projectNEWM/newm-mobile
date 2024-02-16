@@ -4,7 +4,7 @@ import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import io.newm.shared.internal.db.NewmDatabaseWrapper
-import io.newm.shared.internal.services.CardanoWalletAPI
+import io.newm.shared.internal.api.CardanoWalletAPI
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope

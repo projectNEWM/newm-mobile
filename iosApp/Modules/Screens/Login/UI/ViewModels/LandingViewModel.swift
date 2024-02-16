@@ -22,8 +22,15 @@ class LandingViewModel: ObservableObject {
 	@Injected private var logInUseCase: any LoginUseCase
 	@Injected private var signUpUseCase: any SignupUseCase
 	@Injected private var resetPasswordUseCase: any ResetPasswordUseCase
+	@Injected private var setUpHumanVerification: any SetUpHumanVerificationUseCase
 	
 	private let loginFieldValidator = LoginFieldValidator()
+	
+	init() {
+		Task {
+			try await setUpHumanVerification.invoke()
+		}
+	}
 
 	var nicknameIsValid: Bool {
 		nickname.count > 0
@@ -46,16 +53,16 @@ class LandingViewModel: ObservableObject {
 		navPath.append(.login)
 	}
 	
-	func login() {
+	func login() async {
 		isLoading = true
-		Task {
+//		Task {
 			do {
 				try await logInUseCase.logIn(email: email, password: password)
 			} catch {
 				handleError(error)
 			}
 			isLoading = false
-		}
+//		}
 	}
 	
 	func forgotPassword() {

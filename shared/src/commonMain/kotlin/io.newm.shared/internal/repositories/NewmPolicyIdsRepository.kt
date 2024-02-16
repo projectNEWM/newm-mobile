@@ -1,7 +1,7 @@
 package io.newm.shared.internal.repositories
 
 import com.liftric.kvault.KVault
-import io.newm.shared.internal.services.NewmPolicyIdsAPI
+import io.newm.shared.internal.api.NewmPolicyIdsAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

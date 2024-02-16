@@ -33,7 +33,7 @@ extension LandingView {
 			.font(.interMedium(ofSize: 14))
 
 			actionButton(title: .enterNewm) {
-				viewModel.login()
+				Task { await viewModel.login() }
 			}
 		}
 		.navigationBarBackButtonHidden()

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "38DE2D14-EB42-4506-BB3A-C61C6F1FB351",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "76CD61552B7FE0E500A28320",
+        "name" : "LoginTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -20,7 +20,7 @@ import io.ktor.serialization.kotlinx.json.json
 import io.newm.shared.internal.HttpRoutes
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.repositories.LogInRepository
-import io.newm.shared.internal.services.models.LoginResponse
+import io.newm.shared.internal.api.models.LoginResponse
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.json.Json
 

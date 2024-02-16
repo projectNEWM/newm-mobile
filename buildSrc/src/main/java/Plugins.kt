@@ -12,6 +12,7 @@ object Plugins {
     const val paparazzi = "app.cash.paparazzi"
     const val paparazziClassPath = "app.cash.paparazzi:paparazzi-gradle-plugin:${Versions.paparazzi}"
     const val parcelize = "kotlin-parcelize"
+    const val recaptcha = "com.google.android.recaptcha:recaptcha:18.4.0"
     const val serialization = "plugin.serialization"
     const val sqlDelight = "com.squareup.sqldelight"
 }

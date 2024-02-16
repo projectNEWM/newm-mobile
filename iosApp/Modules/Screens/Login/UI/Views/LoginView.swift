@@ -18,7 +18,7 @@ extension LandingView {
 					.padding(.bottom)
 					.textContentType(.password)
 				actionButton(title: .next) {
-					viewModel.login()
+					Task { await viewModel.login() }
 				}
 				.disabled(!viewModel.loginFieldsAreValid)
 				Spacer()

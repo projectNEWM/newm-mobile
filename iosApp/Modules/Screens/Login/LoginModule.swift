@@ -24,6 +24,10 @@ public final class LoginModule: Module {
 		Resolver.register {
 			ResetPasswordUseCaseProvider().get() as ResetPasswordUseCase
 		}
+		
+		Resolver.register {
+			SetUpHumanVerificationUseCaseProvider().get() as SetUpHumanVerificationUseCase
+		}
 	}
 }
 
@@ -34,13 +38,13 @@ extension LoginModule {
 			MockErrorLogger() as ErrorReporting
 		}
 		
-		mockResolver.register {
-			MockLoginUseCase() as LoginUseCase
-		}
-		
-		mockResolver.register {
-			MockSignupUseCase() as SignupUseCase
-		}
+//		mockResolver.register {
+//			MockLoginUseCase() as LoginUseCase
+//		}
+//		
+//		mockResolver.register {
+//			MockSignupUseCase() as SignupUseCase
+//		}
 	}
 }
 #endif
