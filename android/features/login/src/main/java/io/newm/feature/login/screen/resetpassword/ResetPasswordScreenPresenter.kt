@@ -1,15 +1,18 @@
 package io.newm.feature.login.screen.resetpassword
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.LoginScreen
+import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
@@ -28,9 +31,10 @@ private enum class ResetPasswordStep {
 }
 
 class ResetPasswordScreenPresenter(
-    val navigator: Navigator,
-    val signupUseCase: SignupUseCase,
-    val resetPasswordUseCase: ResetPasswordUseCase,
+    private val navigator: Navigator,
+    private val signupUseCase: SignupUseCase,
+    private val resetPasswordUseCase: ResetPasswordUseCase,
+    private val recaptchaClientProvider: RecaptchaClientProvider
 ) : Presenter<ResetPasswordScreenUiState> {
     @Composable
     override fun present(): ResetPasswordScreenUiState {
@@ -56,8 +60,12 @@ class ResetPasswordScreenPresenter(
                             isLoading = true
                             coroutineScope.launch {
                                 try {
-                                    signupUseCase.requestEmailConfirmationCode(email.text)
-                                    step = ResetPasswordStep.EnterVerificationCode
+                                    recaptchaClientProvider.get().execute(RecaptchaAction.custom("RequestCode")).onSuccess { token ->
+                                        signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = "")
+                                        step = ResetPasswordStep.EnterVerificationCode
+                                    }.onFailure {
+                                        Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
+                                    }
                                 } catch (e: Throwable) {
                                     errorMessage = e.message
                                 }
@@ -104,6 +112,7 @@ class ResetPasswordScreenPresenter(
                                             code = authCode.text,
                                             newPassword = password.text,
                                             confirmPassword = passwordConfirmation.text,
+                                            humanVerificationCode = ""
                                         )
                                         errorMessage = "Password reset successfully"
                                         navigator.goTo(LoginScreen)

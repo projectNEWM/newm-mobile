@@ -1,6 +1,7 @@
 package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
@@ -56,6 +57,10 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(get(), get(), get(), get(), enableNetworkLogs = enableNetworkLogs) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
+    // Internal Configurations
+    single { NewmSharedBuildConfig }
+    single { ConnectWalletManager(get()) }
+    single { TokenManager(get()) }
     // Internal API Services
     single { LoginAPI(get()) }
     single { GenresAPI(get()) }
@@ -64,14 +69,12 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CardanoWalletAPI(get()) }
     single { NewmPolicyIdsAPI(get()) }
     // Internal Repositories
-    single { TokenManager() }
     single { LogInRepository() }
     single { GenresRepository() }
     single { UserRepository(get(), get()) }
     single { PlaylistRepository() }
     single { NewmPolicyIdsRepository(get(), get(), get()) }
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
-    single { ConnectWalletManager(get()) }
     // External Use Cases to be consumed outside of KMM
     single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }

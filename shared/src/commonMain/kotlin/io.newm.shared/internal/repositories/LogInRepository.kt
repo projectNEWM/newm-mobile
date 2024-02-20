@@ -77,7 +77,7 @@ internal class LogInRepository : KoinComponent {
                 403 -> {
                     logger.d { "logIn: LoginStatus TwoFactorAuthenticationFailed (403): $e" }
                     //403 FORBIDDEN if recaptcha fails.
-                    throw HumanVerificationFailed("Humanity could not be verified.  Please try again.")
+                    throw HumanVerificationFailed("Humanity could not be verified. Please try again.")
                 }
 
                 else -> {

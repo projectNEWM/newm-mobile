@@ -15,3 +15,5 @@ actual fun platformModule() = module {
     single { Android.create() }
     single { KVault(get(), fileName = "newm-encrypted-prefs") }
 }
+
+actual fun getPlatformName(): String = "Android"

@@ -6,9 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.google.android.recaptcha.RecaptchaAction
+import com.google.android.recaptcha.RecaptchaClient
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.TextFieldState
+import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVerificationUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SetNameUiState
@@ -19,9 +22,10 @@ import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
 
-class CreateAccountScreenPresenter constructor(
+class CreateAccountScreenPresenter(
     private val navigateHome: () -> Unit,
     private val signupUseCase: SignupUseCase,
+    private val recaptchaClientProvider: RecaptchaClientProvider
 ) : Presenter<CreateAccountUiState> {
 
     @Composable
@@ -65,9 +69,14 @@ class CreateAccountScreenPresenter constructor(
                             coroutineScope.launch {
                                 step = Step.Loading
                                 step = try {
-                                    signupUseCase.requestEmailConfirmationCode(
-                                        email = userEmail.text,
-                                    )
+                                    recaptchaClientProvider.get().execute(RecaptchaAction.SIGNUP).onSuccess { token ->
+                                        signupUseCase.requestEmailConfirmationCode(
+                                            email = userEmail.text,
+                                            humanVerificationCode = token
+                                        )
+                                    }.onFailure {
+                                        errorMessage = "Are you even a human?"
+                                    }
                                     Step.SetName
                                 } catch (e: Throwable) {
                                     errorMessage = e.message
@@ -94,15 +103,19 @@ class CreateAccountScreenPresenter constructor(
                             coroutineScope.launch {
                                 step = Step.Loading
                                 try {
-                                    signupUseCase.registerUser(
-                                        email = userEmail.text,
-                                        verificationCode = verificationCode.text,
-                                        password = password.text,
-                                        passwordConfirmation = passwordConfirmation.text,
-                                        nickname = name.text,
-                                    )
-                                    navigateHome()
-
+                                    recaptchaClientProvider.get().execute(RecaptchaAction.SIGNUP).onSuccess { token ->
+                                        signupUseCase.registerUser(
+                                            email = userEmail.text,
+                                            verificationCode = verificationCode.text,
+                                            password = password.text,
+                                            passwordConfirmation = passwordConfirmation.text,
+                                            nickname = name.text,
+                                            humanVerificationCode = token,
+                                        )
+                                        navigateHome()
+                                    }.onFailure {
+                                      errorMessage = "Are you even a human?"
+                                    }
                                 } catch (e: Throwable) {
                                     errorMessage = e.message
                                     step = Step.EmailVerification

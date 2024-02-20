@@ -26,6 +26,7 @@ import io.newm.shared.internal.services.models.ResetPasswordException
 import io.newm.shared.internal.services.models.ResetPasswordRequest
 import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
+import shared.getPlatformName
 
 
 internal class LoginAPI(
@@ -163,7 +164,7 @@ internal class LoginAPI(
     }
 }
 
-public inline fun HttpRequestBuilder.addHumanVerificationCodeToHeader(humanVerificationCode: String) {
+private fun HttpRequestBuilder.addHumanVerificationCodeToHeader(humanVerificationCode: String) {
     this.headers.append("g-recaptcha-token", humanVerificationCode)
-    this.headers.append("g-recaptcha-platform", "iOS")
+    this.headers.append("g-recaptcha-platform", getPlatformName())
 }

@@ -1,6 +1,7 @@
 package io.newm.feature.login.screen.welcome
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContract
@@ -14,10 +15,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.LoginScreen
+import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.public.models.error.KMMException
@@ -28,7 +31,9 @@ class WelcomeScreenPresenter(
     private val loginUseCase: LoginUseCase,
     private val googleSignInLauncher: GoogleSignInLauncher,
     private val activityResultContract: ActivityResultContract<Intent, ActivityResult>,
-) : Presenter<WelcomeScreenUiState> {
+    private val recaptchaClientProvider: RecaptchaClientProvider,
+    ) : Presenter<WelcomeScreenUiState> {
+
 
     @Composable
     override fun present(): WelcomeScreenUiState {
@@ -54,13 +59,20 @@ class WelcomeScreenPresenter(
                     val idToken = account.idToken
                     idToken ?: throw IllegalStateException("Google sign in failed. idToken is null")
 
-                    loginUseCase.logInWithGoogle(idToken)
-                    navigator.goTo(HomeScreen)
+                    recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess {
+                        isHumanProof ->
+                        loginUseCase.logInWithGoogle(idToken, humanVerificationCode = isHumanProof)
+                        navigator.goTo(HomeScreen)
+                    }.onFailure {
+                        Log.e("WelcomeScreenPresenter", "Recaptcha failed", it)
+                    }
                 } catch (e: ApiException) {
                     // The ApiException status code indicates the detailed failure reason.
                     // Please refer to the GoogleSignInStatusCodes class reference for more information.
+                    Log.d("WelcomeScreenPresenter", "Google sign in failed: ${task.result}")
                     e.printStackTrace()
                 } catch (kmmException: KMMException) {
+                    Log.d("WelcomeScreenPresenter", "Google sign in failed kmmException: $kmmException")
                     kmmException.printStackTrace()
                 }
             }

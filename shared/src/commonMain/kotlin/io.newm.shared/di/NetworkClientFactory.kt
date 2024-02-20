@@ -17,7 +17,7 @@ import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
-import io.newm.shared.internal.HttpRoutes
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.services.models.LoginResponse
@@ -54,7 +54,7 @@ internal class NetworkClientFactory(
         return HttpClient(httpClientEngine) {
             this.expectSuccess = true
             defaultRequest {
-                url(HttpRoutes.getHost())
+                url(NewmSharedBuildConfig.baseUrl)
             }
             install(ContentNegotiation) {
                 json(json)
@@ -82,7 +82,7 @@ internal class NetworkClientFactory(
         return HttpClient(httpClientEngine) {
             this.expectSuccess = true
             defaultRequest {
-                url(HttpRoutes.getHost())
+                url(NewmSharedBuildConfig.baseUrl)
             }
 
             install(ContentNegotiation) {
