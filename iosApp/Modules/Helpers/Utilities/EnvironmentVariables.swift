@@ -3,7 +3,6 @@ import ModuleLinker
 import Resolver
 
 public enum EnvironmentVariable: String {
-	case sentryKey = "SENTRY_AUTH_TOKEN"
 	case recaptchaKey = "RECAPTCHA_KEY_ID"
 
 	public var value: String {
