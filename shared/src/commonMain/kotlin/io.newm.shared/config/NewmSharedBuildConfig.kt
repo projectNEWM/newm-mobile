@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 // Enum to represent the mode in which the app is running
 enum class Mode {
     PRODUCTION,
-    DEVELOPMENT
+    STAGING
 }
 
 // BuildConfiguration class to manage app configurations based on the mode
@@ -35,7 +35,7 @@ object NewmSharedBuildConfig: KoinComponent {
 
     val baseUrl: String
         get() = when (mode) {
-            Mode.DEVELOPMENT -> SharedBuildConfig.DEVELOPMENT_URL
+            Mode.STAGING -> SharedBuildConfig.STAGING_URL
             Mode.PRODUCTION -> SharedBuildConfig.PRODUCTION_URL
         }
 
@@ -51,7 +51,7 @@ object NewmSharedBuildConfig: KoinComponent {
     val recaptchaSiteKey: String
         get() = SharedBuildConfig.RECAPTCHA_SITE_KEY
 
-    val isDevMode: Boolean
-        get() = mode == Mode.DEVELOPMENT
+    val isStagingMode: Boolean
+        get() = mode == Mode.STAGING
 }
 

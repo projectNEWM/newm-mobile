@@ -308,7 +308,7 @@ fun WalletButton(
         )
     }
 
-    if(NewmSharedBuildConfig.isDevMode) {
+    if(NewmSharedBuildConfig.isStagingMode) {
         PrimaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Wallet Connect",
