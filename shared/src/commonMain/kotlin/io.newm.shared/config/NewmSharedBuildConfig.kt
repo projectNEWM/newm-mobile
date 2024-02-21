@@ -1,7 +1,7 @@
 package io.newm.shared.config
 
 import com.liftric.kvault.KVault
-import io.newm.shared.generated.SharedBuildConfig
+import newm_mobile.shared.BuildConfig
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -35,21 +35,21 @@ object NewmSharedBuildConfig: KoinComponent {
 
     val baseUrl: String
         get() = when (mode) {
-            Mode.STAGING -> SharedBuildConfig.STAGING_URL
-            Mode.PRODUCTION -> SharedBuildConfig.PRODUCTION_URL
+            Mode.STAGING -> BuildConfig.STAGING_URL
+            Mode.PRODUCTION -> BuildConfig.PRODUCTION_URL
         }
 
     val sentryAuthToken: String
-        get() = SharedBuildConfig.SENTRY_AUTH_TOKEN
+        get() = BuildConfig.SENTRY_AUTH_TOKEN
 
     val googleAuthClientId: String
-        get() = SharedBuildConfig.GOOGLE_AUTH_CLIENT_ID
+        get() = BuildConfig.GOOGLE_AUTH_CLIENT_ID
 
     val walletConnectProjectId: String
-        get() = SharedBuildConfig.WALLET_CONNECT_PROJECT_ID
+        get() = BuildConfig.WALLET_CONNECT_PROJECT_ID
 
     val recaptchaSiteKey: String
-        get() = SharedBuildConfig.RECAPTCHA_SITE_KEY
+        get() = BuildConfig.RECAPTCHA_SITE_KEY
 
     val isStagingMode: Boolean
         get() = mode == Mode.STAGING

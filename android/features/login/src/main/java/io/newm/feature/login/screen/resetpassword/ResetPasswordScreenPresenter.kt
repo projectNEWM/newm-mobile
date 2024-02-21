@@ -61,7 +61,7 @@ class ResetPasswordScreenPresenter(
                             coroutineScope.launch {
                                 try {
                                     recaptchaClientProvider.get().execute(RecaptchaAction.custom("RequestCode")).onSuccess { token ->
-                                        signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = "")
+                                        signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = token)
                                         step = ResetPasswordStep.EnterVerificationCode
                                     }.onFailure {
                                         Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
@@ -107,15 +107,19 @@ class ResetPasswordScreenPresenter(
                                 isLoading = true
                                 coroutineScope.launch {
                                     try {
-                                        resetPasswordUseCase.resetPassword(
-                                            email = email.text,
-                                            code = authCode.text,
-                                            newPassword = password.text,
-                                            confirmPassword = passwordConfirmation.text,
-                                            humanVerificationCode = ""
-                                        )
-                                        errorMessage = "Password reset successfully"
-                                        navigator.goTo(LoginScreen)
+                                        recaptchaClientProvider.get().execute(RecaptchaAction.custom("ResetPassword")).onSuccess { token ->
+                                            resetPasswordUseCase.resetPassword(
+                                                email = email.text,
+                                                code = authCode.text,
+                                                newPassword = password.text,
+                                                confirmPassword = passwordConfirmation.text,
+                                                humanVerificationCode = token
+                                            )
+                                            errorMessage = "Password reset successfully"
+                                            navigator.goTo(LoginScreen)
+                                        }.onFailure {
+                                            Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
+                                        }
                                     } catch (e: Throwable) {
                                         errorMessage = e.message
                                     }

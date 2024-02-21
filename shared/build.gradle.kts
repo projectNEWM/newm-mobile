@@ -1,7 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-import java.util.Locale
 
 plugins {
 	kotlin(Plugins.multiplatform)
@@ -11,8 +10,8 @@ plugins {
 	id(Plugins.sqlDelight)
 	id("com.google.devtools.ksp") version "1.9.21-1.0.15"
 	id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-22"
+	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
-val properties: Properties = gradleLocalProperties(rootDir)
 
 android {
 	compileSdk = Versions.androidCompileSdk
@@ -46,19 +45,8 @@ kotlin {
 		}
 	}
 
-
 	sourceSets {
-
 		val commonMain by getting {
-			val packageName = "io.newm.shared.generated"
-			val localProperties = project.getLocalProperties()
-			val configDirectory = File(project.buildDir, "main/kotlin/generated")
-
-			generateBuildConfig(localProperties, packageName, configDirectory)
-
-			kotlin.srcDir(configDirectory)
-
-
 			dependencies {
 				implementation(Kotlin.coroutinesCore)
 				implementation(Kotlin.stdlib)
@@ -118,8 +106,18 @@ kotlin {
 			languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 		}
 	}
-
 }
+
+buildConfig {
+	val properties: Properties = gradleLocalProperties(rootDir)
+	buildConfigField<String>("STAGING_URL", properties.getProperty("STAGING_URL"))
+	buildConfigField<String>("PRODUCTION_URL", properties.getProperty("PRODUCTION_URL"))
+	buildConfigField<String>("GOOGLE_AUTH_CLIENT_ID", properties.getProperty("GOOGLE_AUTH_CLIENT_ID"))
+	buildConfigField<String>("RECAPTCHA_SITE_KEY", properties.getProperty("RECAPTCHA_SITE_KEY"))
+	buildConfigField<String>("SENTRY_AUTH_TOKEN", properties.getProperty("SENTRY_AUTH_TOKEN"))
+	buildConfigField<String>("WALLET_CONNECT_PROJECT_ID", properties.getProperty("WALLET_CONNECT_PROJECT_ID"))
+}
+
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 	kotlinOptions {
@@ -137,39 +135,4 @@ sqldelight {
 
 kotlin.sourceSets.all {
 	languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-}
-
-// Generate build config for both platforms
-fun Project.getLocalProperties(): Properties {
-	val properties = Properties()
-	val localPropertiesFile = rootProject.file("local.properties")
-	if (localPropertiesFile.exists()) {
-		properties.load(localPropertiesFile.inputStream())
-	}
-	return properties
-}
-
-// TODO: turn this into a plugin
-fun generateBuildConfig(properties: Properties, packageName: String, outputDir: File) {
-	val content = buildString {
-		appendLine("package $packageName")
-		appendLine()
-		appendLine("object SharedBuildConfig {")
-		properties.forEach { key, value ->
-			// Skip the SDK.DIR property
-			if (key.toString() != "sdk.dir") {
-				// Remove extra quotes from the property value if present
-				val cleanValue = value.toString().trim().removeSurrounding("\"")
-				// Properly escape the string and surround with quotes for the Kotlin file
-				appendLine("    const val ${key.toString().replace(".", "_")
-					.uppercase(Locale.getDefault())} = \"${cleanValue.replace("\\", "\\\\")}\"")
-			}
-		}
-		appendLine("}")
-	}
-
-	outputDir.apply {
-		mkdirs()
-		resolve("SharedBuildConfig.kt").writeText(content)
-	}
 }
