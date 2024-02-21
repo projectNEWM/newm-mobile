@@ -40,7 +40,7 @@ val viewModule = module {
 
     factory { params -> CreateAccountScreenPresenter(params.get(), get(), get()) }
     factory { params -> LoginScreenPresenter(params.get(), get(), get()) }
-    factory { params -> ResetPasswordScreenPresenter(params.get(), get(), .get(), get()) }
+    factory { params -> ResetPasswordScreenPresenter(params.get(), get(), get(), get()) }
     single<GoogleSignInLauncher> {
         GoogleSignInLauncherImpl(
             GoogleSignIn.getClient(
