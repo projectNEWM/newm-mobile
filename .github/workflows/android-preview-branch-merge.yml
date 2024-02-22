@@ -25,6 +25,10 @@ jobs:
           echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
           echo Last build tool version is: $BUILD_TOOL_VERSION
 
+      - name: Setup local.properties
+        run: |
+          echo $LOCAL_PROPERTIES > ./local.properties
+
       - name: create google-services.json
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
