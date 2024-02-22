@@ -7,7 +7,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 interface ResetPasswordUseCase {
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun resetPassword(email: String, code: String, newPassword: String, confirmPassword: String)
+    suspend fun resetPassword(email: String, code: String, newPassword: String, confirmPassword: String, humanVerificationCode: String)
 }
 
 class ResetPasswordUseCaseProvider(): KoinComponent {

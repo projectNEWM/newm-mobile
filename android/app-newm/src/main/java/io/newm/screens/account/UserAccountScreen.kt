@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.walletconnect.web3.modal.ui.Web3ModalTheme
 import com.walletconnect.web3.modal.ui.components.internal.Web3ModalComponent
-import io.newm.BuildConfig
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray100
 import io.newm.core.theme.SystemRed
@@ -55,6 +54,7 @@ import io.newm.core.ui.text.formTextFieldStyle
 import io.newm.core.ui.text.formTitleStyle
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.profile.ProfileBanner
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -308,7 +308,7 @@ fun WalletButton(
         )
     }
 
-    if(BuildConfig.DEBUG) {
+    if(NewmSharedBuildConfig.isStagingMode) {
         PrimaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Wallet Connect",

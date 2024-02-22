@@ -22,7 +22,7 @@ object Versions {
     const val exoplayer = "2.19.1"
     const val firebase = "30.3.2"
     const val googleServices = "4.4.0"
-    const val googleServicesAuth = "20.7.0"
+    const val googleServicesAuth = "21.0.0"
     const val gradleVersionsPlugin = "0.42.0"
     const val jUnit = "4.13.2"
     const val kotlin = "1.9.20"

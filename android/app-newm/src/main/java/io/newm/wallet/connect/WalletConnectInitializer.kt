@@ -7,7 +7,7 @@ import com.walletconnect.android.relay.ConnectionType
 import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.client.Web3Modal
 import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
-import io.newm.BuildConfig
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.constants.WalletConnectConstants
 import timber.log.Timber
 
@@ -21,7 +21,7 @@ class WalletConnectInitializer(private val application: Application) {
     private fun initializeCoreClient() {
         val connectionType = ConnectionType.AUTOMATIC
         val relayUrl = "relay.walletconnect.com"
-        val serverUrl = "wss://$relayUrl?projectId=${BuildConfig.WALLET_CONNECT_PROJECT_ID}"
+        val serverUrl = "wss://$relayUrl?projectId=${NewmSharedBuildConfig.walletConnectProjectId}"
         val appMetaData = Core.Model.AppMetaData(
             name = "NEWM",
             description = "Link your wallet to NEWM",

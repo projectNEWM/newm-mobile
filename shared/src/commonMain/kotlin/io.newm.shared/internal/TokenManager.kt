@@ -6,8 +6,7 @@ import com.liftric.kvault.KVault
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-internal class TokenManager : KoinComponent {
-    private val storage: KVault by inject()
+internal class TokenManager(private val storage: KVault) {
     private val logger = Logger.withTag("NewmKMM-TokenManagerImpl")
 
     fun hasTokens(): Boolean {

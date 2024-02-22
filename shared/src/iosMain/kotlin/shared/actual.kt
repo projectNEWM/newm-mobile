@@ -15,3 +15,5 @@ actual fun platformModule() = module {
     single { Darwin.create() }
     single { KVault() }
 }
+
+actual fun getPlatformName(): String = "iOS"

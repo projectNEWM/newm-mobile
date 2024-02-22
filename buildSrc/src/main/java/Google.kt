@@ -30,6 +30,7 @@ object Google {
     const val media3ui = "androidx.media3:media3-ui:${Versions.media3}"
     const val media3Session = "androidx.media3:media3-session:${Versions.media3}"
     const val media3Common = "androidx.media3:media3-common:${Versions.media3}"
+    const val recaptcha = "com.google.android.recaptcha:recaptcha:18.4.0"
 
     object Test {
         const val composeUiTestJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"

@@ -30,8 +30,6 @@ android {
         versionName = "0.2"
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
-
-        buildConfigField("String", "WALLET_CONNECT_PROJECT_ID", properties.getProperty("WALLET_CONNECT_PROJECT_ID").orEmpty())
     }
 
     buildTypes {
@@ -50,7 +48,6 @@ android {
             isMinifyEnabled = false
         }
     }
-    buildFeatures.buildConfig = true
     flavorDimensions += "version"
 
     productFlavors {
@@ -94,6 +91,7 @@ dependencies {
     implementation(Google.material)
     implementation(Google.navigationUiKtx)
     implementation(Google.playServicesAuth)
+    implementation(Google.recaptcha)
     implementation(Google.splashScreen)
     implementation(Koin.android)
     implementation(Kotlin.reflect)

@@ -11,6 +11,7 @@ import io.newm.shared.internal.services.models.FacebookSignInRequest
 import io.newm.shared.internal.services.models.GoogleSignInRequest
 import io.newm.shared.internal.services.models.LinkedInSignInRequest
 import io.newm.shared.internal.services.models.LogInUser
+import io.newm.shared.internal.services.models.LoginException.HumanVerificationFailed
 import io.newm.shared.internal.services.models.LoginException.UserNotFound
 import io.newm.shared.internal.services.models.LoginException.WrongPassword
 import io.newm.shared.internal.services.models.LoginResponse
@@ -30,27 +31,27 @@ internal class LogInRepository : KoinComponent {
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
 
-    suspend fun requestEmailConfirmationCode(email: String) {
+    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String) {
         logger.d { "requestEmailConfirmationCode: email $email" }
-        return service.requestEmailConfirmationCode(email)
+        return service.requestEmailConfirmationCode(email, humanVerificationCode)
     }
 
-    suspend fun registerUser(user: NewUser) {
+    suspend fun registerUser(user: NewUser, humanVerificationCode: String) {
         logger.d { "registerUser: email $user" }
-        return service.register(user)
+        return service.register(user, humanVerificationCode)
     }
 
-    suspend fun logIn(email: String, password: String) {
+    suspend fun logIn(email: String, password: String, humanVerificationCode: String) {
         logger.d { "logIn: email $email" }
-        return handleLoginResponse { service.logIn(LogInUser(email = email, password = password)) }
+        return handleLoginResponse { service.logIn(LogInUser(email = email, password = password), humanVerificationCode) }
     }
 
-    suspend fun oAuthLogin(oAuthData: OAuthData) = handleLoginResponse {
+    suspend fun oAuthLogin(oAuthData: OAuthData, humanVerificationCode: String) = handleLoginResponse {
         logger.d { "logIn: oAuth" }
         when (oAuthData) {
             is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
-            is OAuthData.Google -> service.loginWithGoogle(GoogleSignInRequest(accessToken = oAuthData.idToken))
-            is OAuthData.Apple -> service.loginWithApple(AppleSignInRequest(idToken = oAuthData.idToken))
+            is OAuthData.Google -> service.loginWithGoogle(GoogleSignInRequest(accessToken = oAuthData.idToken), humanVerificationCode)
+            is OAuthData.Apple -> service.loginWithApple(AppleSignInRequest(idToken = oAuthData.idToken), humanVerificationCode)
             is OAuthData.LinkedIn -> service.loginWithLinkedIn(LinkedInSignInRequest(accessToken = oAuthData.accessToken))
         }
     }
@@ -73,6 +74,12 @@ internal class LogInRepository : KoinComponent {
                     throw WrongPassword("Invalid login.  Please try again.")
                 }
 
+                403 -> {
+                    logger.d { "logIn: LoginStatus TwoFactorAuthenticationFailed (403): $e" }
+                    //403 FORBIDDEN if recaptcha fails.
+                    throw HumanVerificationFailed("Humanity could not be verified. Please try again.")
+                }
+
                 else -> {
                     // No-Op
                     logger.d { "logIn: LoginStatus: ${e.response.status}" }
@@ -93,7 +100,8 @@ internal class LogInRepository : KoinComponent {
         email: String,
         newPassword: String,
         confirmPassword: String,
-        authCode: String
+        authCode: String,
+        humanVerificationCode: String
     ) {
         service.register(
             NewUser(
@@ -105,7 +113,7 @@ internal class LogInRepository : KoinComponent {
                 newPassword = newPassword,
                 confirmPassword = confirmPassword,
                 authCode = authCode
-            )
+            ), humanVerificationCode
         )
     }
 
@@ -128,13 +136,13 @@ internal class LogInRepository : KoinComponent {
         db.clear()
     }
 
-    suspend fun resetPassword(email: String, newPassword: String, confirmPassword: String, authCode: String) {
+    suspend fun resetPassword(email: String, newPassword: String, confirmPassword: String, authCode: String, humanVerificationCode: String) {
         logger.d { "resetPassword" }
         service.resetPassword(ResetPasswordRequest(
             email,
             newPassword,
             confirmPassword,
             authCode,
-        ))
+        ), humanVerificationCode)
     }
 }

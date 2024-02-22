@@ -25,7 +25,7 @@ interface LoginUseCase {
      * @throws CancellationException if the login process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logIn(email: String, password: String)
+    suspend fun logIn(email: String, password: String, humanVerificationCode: String)
 
     /**
      * Authenticates a user using their Google account.
@@ -35,7 +35,7 @@ interface LoginUseCase {
      * @throws CancellationException if the login process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logInWithGoogle(idToken: String)
+    suspend fun logInWithGoogle(idToken: String, humanVerificationCode: String)
 
     /**
      * Authenticates a user using their Facebook account with the given access token.
@@ -66,7 +66,7 @@ interface LoginUseCase {
      * @throws CancellationException if the login process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logInWithApple(idToken: String)
+    suspend fun logInWithApple(idToken: String, humanVerificationCode: String)
 
 
     /**

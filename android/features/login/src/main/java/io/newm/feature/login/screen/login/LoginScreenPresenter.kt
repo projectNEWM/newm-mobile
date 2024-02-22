@@ -1,16 +1,19 @@
 package io.newm.feature.login.screen.login
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.ResetPasswordScreen
 import io.newm.feature.login.screen.HomeScreen
+import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.public.usecases.LoginUseCase
@@ -19,6 +22,7 @@ import kotlinx.coroutines.launch
 class LoginScreenPresenter(
     private val navigator: Navigator,
     private val loginUseCase: LoginUseCase,
+    private val recaptchaClientProvider: RecaptchaClientProvider
 ) : Presenter<LoginScreenUiState> {
     @Composable
     override fun present(): LoginScreenUiState {
@@ -51,8 +55,14 @@ class LoginScreenPresenter(
 
                             isLoading = true
                             try {
-                                loginUseCase.logIn(email.text, password.text)
-                                navigator.goTo(HomeScreen)
+                                recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess { token ->
+                                    loginUseCase.logIn(email.text, password.text, humanVerificationCode = token)
+                                    navigator.goTo(HomeScreen)
+                                }.onFailure {
+                                    errorMessage = "Are you even human?"
+                                    isLoading = false
+                                }
+
                             } catch (e: Throwable) {
                                 isLoading = false
                                 errorMessage = e.message
@@ -66,3 +76,4 @@ class LoginScreenPresenter(
         )
     }
 }
+

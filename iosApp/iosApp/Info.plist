@@ -39,6 +39,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow camera access to scan your xPub QR code.</string>
+	<key>RECAPTCHA_KEY_ID</key>
+	<string>$(RECAPTCHA_KEY_ID)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>DMSerifText-Italic.ttf</string>
@@ -53,6 +55,7 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>audio</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

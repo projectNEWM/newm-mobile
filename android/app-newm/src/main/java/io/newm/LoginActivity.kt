@@ -2,15 +2,18 @@ package io.newm
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.recaptcha.Recaptcha
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -39,11 +42,16 @@ import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.Screen
 import io.newm.screens.Screen.LoginLandingScreen
+import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.utils.ui
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class LoginActivity : ComponentActivity() {
+
+    private val recaptchaClientProvider: RecaptchaClientProvider by inject()
 
     // TODO inject
     private val circuit: Circuit = Circuit.Builder()
@@ -88,6 +96,7 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        initializeRecaptchaClient()
         setContent {
             NewmTheme(darkTheme = true) {
                 CircuitDependencies {
@@ -111,6 +120,20 @@ class LoginActivity : ComponentActivity() {
     private fun launchHomeActivity() {
         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
         finish()
+    }
+
+    private fun initializeRecaptchaClient() {
+        lifecycleScope.launch {
+            Recaptcha.getClient(application, NewmSharedBuildConfig.recaptchaSiteKey, timeout = 20000L)
+                .onSuccess { client ->
+                    recaptchaClientProvider.setRecaptchaClient(client)
+                }
+                .onFailure { exception ->
+                    // Handle communication errors ...
+                    // See "Handle communication errors" section
+                    Log.e("LoginActivity", "Setup failed", exception)
+                }
+        }
     }
 }
 

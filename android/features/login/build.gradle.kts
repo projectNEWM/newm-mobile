@@ -34,12 +34,12 @@ dependencies {
     implementation(Google.material)
     implementation(Google.materialIconsExtended)
     implementation(Google.playServicesAuth)
+    implementation(Google.recaptcha)
     implementation(Koin.android)
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.shared))
-
     testImplementation(Google.testParameterInjector)
     testImplementation(JUnit.jUnit)
     testImplementation(project(Modules.testUtils))

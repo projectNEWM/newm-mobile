@@ -14,6 +14,7 @@ internal data class LoginResponse(
 sealed class LoginException(message: String): KMMException(message) {
     data class WrongPassword(override val message: String) : LoginException(message)
     data class UserNotFound(override val message: String) : LoginException(message)
+    data class HumanVerificationFailed(override val message: String) : LoginException(message)
 }
 
 internal fun LoginResponse.isValid(): Boolean {
