@@ -28,7 +28,7 @@ jobs:
 
       - name: Setup local.properties
         run: |
-          echo $LOCAL_PROPERTIES > local.properties
+          echo ${{ vars.LOCAL_PROPERTIES }} > local.properties
 
       - name: create google-services.json
         env:
