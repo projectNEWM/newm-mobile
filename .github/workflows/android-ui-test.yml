@@ -36,10 +36,10 @@ jobs:
 
       - name: Setup local.properties
         run: |
-          echo "STAGING_URL=${{ secrets.STAGING_URL }}" > local.properties
-          echo "PRODUCTION_URL=${{ secrets.PRODUCTION_URL }}" >> local.properties
-          echo "GOOGLE_AUTH_CLIENT_ID=${{ secrets.GOOGLE_AUTH_CLIENT_ID }}" >> local.properties
-          echo "WALLET_CONNECT_PROJECT_ID=${{ secrets.WALLET_CONNECT_PROJECT_ID }}" >> local.properties
+          echo "STAGING_URL=${{ env.STAGING_URL }}" > local.properties
+          echo "PRODUCTION_URL=${{ env.PRODUCTION_URL }}" >> local.properties
+          echo "GOOGLE_AUTH_CLIENT_ID=${{ env.GOOGLE_AUTH_CLIENT_ID }}" >> local.properties
+          echo "WALLET_CONNECT_PROJECT_ID=${{ env.WALLET_CONNECT_PROJECT_ID }}" >> local.properties
           
           echo "RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}" >> local.properties
           echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> local.properties
