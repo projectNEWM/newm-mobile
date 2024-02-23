@@ -1,7 +1,7 @@
 package io.newm.shared.config
 
 import com.liftric.kvault.KVault
-import newm_mobile.shared.BuildConfig
+import io.newm.shared.generated.BuildConfig
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

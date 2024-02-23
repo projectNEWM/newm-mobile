@@ -109,13 +109,15 @@ kotlin {
 }
 
 buildConfig {
+	packageName("io.newm.shared.generated")
+
 	val properties: Properties = gradleLocalProperties(rootDir)
-	buildConfigField<String>("STAGING_URL", properties.getProperty("STAGING_URL"))
-	buildConfigField<String>("PRODUCTION_URL", properties.getProperty("PRODUCTION_URL"))
-	buildConfigField<String>("GOOGLE_AUTH_CLIENT_ID", properties.getProperty("GOOGLE_AUTH_CLIENT_ID"))
-	buildConfigField<String>("RECAPTCHA_SITE_KEY", properties.getProperty("RECAPTCHA_SITE_KEY"))
-	buildConfigField<String>("SENTRY_AUTH_TOKEN", properties.getProperty("SENTRY_AUTH_TOKEN"))
-	buildConfigField<String>("WALLET_CONNECT_PROJECT_ID", properties.getProperty("WALLET_CONNECT_PROJECT_ID"))
+	buildConfigField<String>( "STAGING_URL", properties.getProperty("STAGING_URL").replace("\"", ""))
+	buildConfigField<String>("PRODUCTION_URL", properties.getProperty("PRODUCTION_URL").replace("\"", ""))
+	buildConfigField<String>("GOOGLE_AUTH_CLIENT_ID", properties.getProperty("GOOGLE_AUTH_CLIENT_ID").replace("\"", ""))
+	buildConfigField<String>("RECAPTCHA_SITE_KEY", properties.getProperty("RECAPTCHA_SITE_KEY").replace("\"", ""))
+	buildConfigField<String>("SENTRY_AUTH_TOKEN", properties.getProperty("SENTRY_AUTH_TOKEN").replace("\"", ""))
+	buildConfigField<String>("WALLET_CONNECT_PROJECT_ID", properties.getProperty("WALLET_CONNECT_PROJECT_ID").replace("\"", ""))
 }
 
 
