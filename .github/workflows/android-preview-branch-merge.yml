@@ -28,10 +28,10 @@ jobs:
 
       - name: Setup local.properties
         run: |
-          echo TEST_VALUE=${{ vars.TEST_VALUE }}
           echo ${{ vars.LOCAL_PROPERTIES }} > ./local.properties
           echo ${{ vars.LOCAL_PROPERTIES }}
-
+          echo TEST_VALUE=${{ vars.TEST_VALUE }}
+          cat local.properties
       - name: create google-services.json
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
