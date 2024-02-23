@@ -17,6 +17,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: staging
     steps:
       - name: checkout
         uses: actions/checkout@v2
