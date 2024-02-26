@@ -17,9 +17,13 @@ import io.newm.core.resources.R
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
+import io.newm.core.ui.wallet.ConnectWalletPanel
 
 @Composable
-fun EmptyLibraryContent(modifier: Modifier = Modifier) {
+fun EmptyLibraryContent(
+    modifier: Modifier = Modifier,
+    onConnectWallet: () -> Unit
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -39,6 +43,10 @@ fun EmptyLibraryContent(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             color = GraySuit
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        ConnectWalletPanel(
+            onButtonClick = onConnectWallet
         )
     }
 }

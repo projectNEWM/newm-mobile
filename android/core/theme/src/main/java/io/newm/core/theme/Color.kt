@@ -32,6 +32,8 @@ val YellowJacket = Color(0xFFFFC33C)
 val SystemRed = Color(0xFFEB5545)
 val SteelPink = Color(0xFFD841F0)
 val CerisePink = Color(0xFFF53C74)
+val GlassSmith = Color(0xFF46B5C0)
+
 
 
 
