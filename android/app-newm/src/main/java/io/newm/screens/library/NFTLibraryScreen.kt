@@ -18,13 +18,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
@@ -49,46 +46,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import io.newm.core.resources.R
-import io.newm.core.theme.Black90
 import io.newm.core.theme.CerisePink
-import io.newm.core.theme.Gray100
 import io.newm.core.theme.Gray16
-import io.newm.core.theme.Gray400
-import io.newm.core.theme.Gray500
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.StatusGreen
 import io.newm.core.theme.SteelPink
-import io.newm.core.theme.SystemRed
 import io.newm.core.theme.White
-import io.newm.core.theme.White50
 import io.newm.core.theme.inter
 import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
-import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.textGradient
 import io.newm.feature.musicplayer.MiniPlayer
+import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
-import io.newm.screens.profile.ProfileBottomSheet
-import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
-import kotlin.math.roundToInt
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
+import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
 @Composable
 fun NFTLibraryScreen(
-    onPlayerClicked: (NFTTrack) -> Unit, // TODO open full player screen
+    onPlayerClicked: () -> Unit,
     goToProfile: () -> Unit,
 ) {
     val mediaPlayer = rememberMediaPlayer()
@@ -148,7 +135,7 @@ fun NFTTracks(
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: (String) -> Unit,
-    onPlayerClicked: (NFTTrack) -> Unit,
+    onPlayerClicked: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -250,7 +237,9 @@ fun NFTTracks(
 
             }
         }
-        MiniPlayer()
+        MiniPlayer(
+            modifier = Modifier.clickable { onPlayerClicked() } // replace with current song or drop param altogether
+        )
         Spacer(
             modifier = Modifier
                 .height(2.dp)

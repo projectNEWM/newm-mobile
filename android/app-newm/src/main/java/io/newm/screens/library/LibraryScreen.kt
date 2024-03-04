@@ -61,7 +61,7 @@ internal val LibraryBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink
 
 @Composable
 fun LibraryScreen(
-    onPlaySong: (String) -> Unit,
+    onPlayerClicked: (String) -> Unit,
     onDownloadSong: (String) -> Unit,
     onConnectWallet: () -> Unit
 ) {
@@ -127,7 +127,7 @@ fun LibraryScreen(
                     for (model in savedSongModels) {
                         LibraryItem(
                             songModel = model,
-                            onPlaySong = { onPlaySong(model.id) },
+                            onPlaySong = { onPlayerClicked(model.id) },
                             onDownloadSong = { onDownloadSong(model.id) })
                     }
                 }
