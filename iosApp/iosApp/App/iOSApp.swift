@@ -20,6 +20,8 @@ struct iOSApp: App {
 		
 		setUpAppearance()
 		setUpKingfisherErrorHandling()
+		
+		Resolver.root = .mock
 	}
 	
 	var body: some Scene {

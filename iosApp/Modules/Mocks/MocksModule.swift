@@ -17,7 +17,7 @@ final public class MocksModule: Module {
 		
 		mockResolver.register {
 			MockConnectWalletUseCase() as ConnectWalletUseCase
-		}
+		}.scope(.application)
 		
 		mockResolver.register {
 			MockChangePasswordUseCase() as ChangePasswordUseCase

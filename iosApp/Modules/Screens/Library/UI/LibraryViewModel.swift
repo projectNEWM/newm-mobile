@@ -12,12 +12,28 @@ import SharedExtensions
 class LibraryViewModel: ObservableObject {
 	@Published var searchText: String = ""
 	@Published var errors = ErrorSet()
-
+	var durationFilter: Int {
+		set {
+			audioPlayer.durationFilter = newValue
+		}
+		get {
+			audioPlayer.durationFilter
+		}
+	}
+	var sort: AudioPlayerSort { 
+		set {
+			audioPlayer.sort = newValue
+		}
+		get {
+			audioPlayer.sort
+		}
+	}
+	
 	@Published private(set) var route: LibraryRoute?
 	@Published private(set) var tracks: [NFTTrack] = []
 	@Published private(set) var showLoading: Bool = true
 	@Published private(set) var showXPubScanner: Bool = false
-	@Published private(set) var walletIsConnected: Bool = false
+	var walletIsConnected: Bool { connectWalletXPubUseCase.isConnected() }
 	
 	private var cancels: Set<AnyCancellable> = []
 	
@@ -27,14 +43,11 @@ class LibraryViewModel: ObservableObject {
 	@Injected private var logger: any ErrorReporting
 	
 	init() {
-		walletIsConnected = connectWalletXPubUseCase.isConnected()
-		
 		NotificationCenter.default.publisher(for: Notification().walletConnectionStateChanged)
 			.sink { [weak self] _ in
 				Task {
 					guard let self else { return }
-					self.walletIsConnected = self.connectWalletXPubUseCase.isConnected()
-					if self.connectWalletXPubUseCase.isConnected() {
+					if self.walletIsConnected {
 						await self.refresh()
 					} else {
 						self.tracks = []
@@ -49,18 +62,9 @@ class LibraryViewModel: ObservableObject {
 				self?.objectWillChange.send()
 			}
 			.store(in: &cancels)
-
+		
 		Task {
 			await refresh()
-		}
-	}
-	
-	var filteredNFTTracks: [NFTTrack] {
-		guard searchText.isEmpty == false else {
-			return tracks
-		}
-		return tracks.filter {
-			$0.title.localizedCaseInsensitiveContains(searchText)
 		}
 	}
 	
@@ -78,7 +82,7 @@ class LibraryViewModel: ObservableObject {
 		do {
 			try await walletNFTTracksUseCase.refresh()
 			// TODO: split these up.
-			tracks = try await walletNFTTracksUseCase.getAllNFTTracks() + walletNFTTracksUseCase.getAllStreamTokens()
+			tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 		} catch {
 			logger.logError(error)
 			errors.append(NEWMError(errorDescription: "Unable to fetch songs.  Please try again."))
@@ -173,5 +177,17 @@ class LibraryViewModel: ObservableObject {
 		} else {
 			.downloading
 		}
+	}
+	
+	func cycleTitleSort() {
+		audioPlayer.cycleTitleSort()
+	}
+	
+	func cycleArtistSort() {
+		audioPlayer.cycleArtistSort()
+	}
+	
+	func cycleLengthSort() {
+		audioPlayer.cycleLengthSort()
 	}
 }

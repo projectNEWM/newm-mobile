@@ -6,11 +6,12 @@ import shared
 import Fonts
 import Colors
 import ModuleLinker
-import AVFoundation
 import Kingfisher
+import AudioPlayer
 
 struct LibraryView: View {
 	@StateObject private var viewModel = LibraryViewModel()
+	@State var showFilter = false
 	
 	public var body: some View {
 		NavigationView {
@@ -33,6 +34,10 @@ struct LibraryView: View {
 					viewModel.xPubScanned()
 				}
 			}
+			.sheet(isPresented: $showFilter) {
+				filterView
+					.presentationDetents([.medium])
+			}
 			.alert(isPresented: .constant(viewModel.errors.currentError != nil), error: viewModel.errors.currentError) {
 				Button {
 					viewModel.errors.popFirstError()
@@ -42,11 +47,21 @@ struct LibraryView: View {
 			}
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItem(placement: .navigation) {
+				ToolbarItem(placement: .topBarLeading) {
 					Text(String.library)
 						.font(.newmTitle1)
 						.foregroundStyle(Gradients.libraryGradient.gradient)
-						.padding(.bottom, -100)
+				}
+				ToolbarItem(placement: .topBarTrailing) {
+					Button(action: {
+						showFilter = true
+					}, label: {
+						Image("Filter Icon")
+							.resizable()
+							.renderingMode(.template)
+							.tint(.white)
+							.frame(width: 30, height: 30)
+					})
 				}
 			}
 		}
@@ -99,7 +114,7 @@ struct LibraryView: View {
 	private var loadedView: some View {
 		NavigationView {
 			List {
-				ForEach(viewModel.filteredNFTTracks, id: \.id) { audioTrack in
+				ForEach(viewModel.filteredSortedNFTTracks, id: \.id) { audioTrack in
 					row(for: audioTrack)
 						.frame(height: 40)
 						.padding(.leading, -6)
@@ -172,12 +187,105 @@ struct LibraryView: View {
 			EmptyView()
 		}
 	}
+	
+	@ViewBuilder
+	var filterView: some View {
+		List {
+			Group {
+				Picker(selection: Binding<Int>(get: {
+					viewModel.durationFilter
+				}, set: { value in
+					viewModel.durationFilter = value
+				})) {
+					ForEach(Array(stride(from: 5, through: 600, by: 5)), id: \.self) { value in
+						Text("\(value.playbackTimeString)").tag(value)
+					}
+				} label: {
+					Text("Filter songs under")
+				}
+				.foregroundStyle(NEWMColor.midMusic.swiftUIColor)
+				
+				Section("Sort by") {
+					Button {
+						viewModel.cycleTitleSort()
+					} label: {
+						filterRow(title: "Title") {
+							if case .title = viewModel.sort {
+								return rightView(for: viewModel.sort)
+							}
+							return EmptyView()
+						}
+					}
+					
+					Button {
+						viewModel.cycleArtistSort()
+					} label: {
+						filterRow(title: "Artist") {
+							if case .artist = viewModel.sort {
+								return rightView(for: viewModel.sort)
+							}
+							return EmptyView()
+						}
+					}
+					
+					Button {
+						viewModel.cycleLengthSort()
+					} label: {
+						filterRow(title: "Length") {
+							if case .length = viewModel.sort {
+								return rightView(for: viewModel.sort)
+							}
+							return EmptyView()
+						}
+					}
+				}
+			}
+			.listRowBackground(try! Color(hex: "#1C0707"))
+			.listRowSeparator(.hidden)
+		}
+	}
+	
+	@ViewBuilder
+	func filterRow(title: String, rightView: () -> any View = { EmptyView() }) -> some View {
+		HStack {
+			Text(title)
+			Spacer()
+			rightView().erased
+		}
+		.foregroundStyle(NEWMColor.midMusic.swiftUIColor)
+	}
+	
+	@ViewBuilder
+	private func rightView(for sort: AudioPlayerSort?) -> some View {
+		switch sort {
+		case
+				.artist(let ascending) where ascending == true,
+				.length(let ascending) where ascending == true,
+				.title(let ascending) where ascending == true:
+			Image(systemName: "chevron.up")
+		case
+				.artist(let ascending) where ascending == false,
+				.length(let ascending) where ascending == false,
+				.title(let ascending) where ascending == false:
+			Image(systemName: "chevron.down")
+		default:
+			EmptyView()
+		}
+	}
 }
 
 #if DEBUG
 struct LibraryView_Previews: PreviewProvider {
 	static var previews: some View {
+		LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
 		Resolver.root = Resolver.mock
+		let mockResolver = Resolver(child: .root)
+		mockResolver.register {
+			let useCase = Resolver.mock.resolve(ConnectWalletUseCase.self)
+			useCase.connect(xpub: "xpub3833")
+			return useCase as ConnectWalletUseCase
+		}
+		Resolver.root = mockResolver
 		return Group {
 			LibraryView()
 			LibraryView()
@@ -187,6 +295,17 @@ struct LibraryView_Previews: PreviewProvider {
 		}
 		.preferredColorScheme(.dark)
 		.tint(.white)
+	}
+}
+
+struct LibraryView_Previews2: PreviewProvider {
+	static var previews: some View {
+		LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
+		Resolver.root = Resolver.mock
+		return LibraryView(showFilter: true)
+			.preferredColorScheme(.dark)
+			.tint(.white)
+			.background(.black)
 	}
 }
 #endif

@@ -6,29 +6,24 @@ import Resolver
 import Files
 import Combine
 import ModuleLinker
+import Utilities
+import OrderedCollections
 
 public class VLCAudioPlayer: ObservableObject {
 	public enum RepeatMode {
 		case all
 		case one
 	}
+	public enum PlaybackState {
+		case playing
+		case paused
+		case stopped
+		case buffering
+	}
 	static let sharedPlayer = VLCAudioPlayer()
 	
 	private var mediaPlayer: VLCMediaPlayer
-	private var playQueue: [NFTTrack] = [] {
-		didSet {
-			if shuffle {
-				shuffledPlayQueue = playQueue.shuffled()
-			}
-			if playQueueIsEmpty {
-				mediaPlayer.stop()
-				mediaPlayer.media = nil
-				currentQueueIndex = nil
-			}
-		}
-	}
-	private var shuffledPlayQueue: [NFTTrack] = []
-	private var activePlayQueue: [NFTTrack] { shuffle ? shuffledPlayQueue : playQueue }
+	private var playQueue: PlayQueue = PlayQueue()
 	@Published private var fileManager = FileManagerService()
 	lazy private var delegate: VLCAudioPlayerDelegate = VLCAudioPlayerDelegate(updateData: { [weak self] in self?.updateData($0) })
 	private var cancels = Set<AnyCancellable>()
@@ -36,7 +31,17 @@ public class VLCAudioPlayer: ObservableObject {
 	@MainActor
 	@Published public private(set) var loadingProgress: [NFTTrack: Double] = [:]
 	
-	public var state: VLCMediaPlayerState? { mediaPlayer.state }
+	public var state: PlaybackState {
+		if mediaPlayer.isPlaying {
+			return .playing
+		} else if mediaPlayer.state == .buffering {
+			return .buffering
+		} else if mediaPlayer.state == .paused {
+			return .paused
+		} else {
+			return .stopped
+		}
+	}
 	public var duration: TimeInterval? { mediaPlayer.media?.length.seconds }
 	public var currentTime: TimeInterval? { mediaPlayer.time.seconds }
 	public var percentPlayed: Float? { mediaPlayer.position }
@@ -44,18 +49,6 @@ public class VLCAudioPlayer: ObservableObject {
 	public var artist: String? { mediaPlayer.media?.metaData.artist }
 	public var artworkUrl: URL? { mediaPlayer.media?.metaData.artworkURL }
 	public var willPlay: Bool { mediaPlayer.willPlay }
-	@Published private var currentQueueIndex: Int?
-	@Published public var shuffle: Bool = false {
-		willSet {
-			if newValue {
-				shuffledPlayQueue = playQueue.shuffled()
-				currentQueueIndex = currentTrack.flatMap(shuffledPlayQueue.firstIndex)
-			} else {
-				currentQueueIndex = currentTrack.flatMap(playQueue.firstIndex)
-			}
-		}
-	}
-	@Published public var repeatMode: RepeatMode?
 	@Injected var errorReporter: any ErrorReporting
 	
 	private init() {
@@ -64,8 +57,8 @@ public class VLCAudioPlayer: ObservableObject {
 		fileManager.objectWillChange
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] in
-			self?.objectWillChange.send()
-		}.store(in: &cancels)
+				self?.objectWillChange.send()
+			}.store(in: &cancels)
 		
 		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged)).sink { [weak self] _ in
 			self?.handleWalletDisconnect()
@@ -78,7 +71,7 @@ public class VLCAudioPlayer: ObservableObject {
 	
 	private func handleWalletDisconnect() {
 		stop()
-		setPlayQueue([])
+		playQueue.originalTracks = []
 		removeDownloadedSongs()
 	}
 	
@@ -124,27 +117,27 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func next() {
-		guard let currentQueueIndex else { return }
-		if currentQueueIndex < activePlayQueue.count-1 {
-			self.currentQueueIndex = currentQueueIndex + 1
-		} else {
-			if repeatMode == .all {
-				self.currentQueueIndex = 0
-			}
-		}
-		playCurrentIndexInQueue()
+//		guard let currentQueueIndex else { return }
+//		if currentQueueIndex < activePlayQueue.count-1 {
+//			self.currentQueueIndex = currentQueueIndex + 1
+//		} else {
+//			if repeatMode == .all {
+//				self.currentQueueIndex = 0
+//			}
+//		}
+//		playCurrentIndexInQueue()
 	}
 	
 	public func prev() {
-		guard let currentQueueIndex else { return }
-		if let currentTime, currentTime < 3 {
-			if currentQueueIndex > 0 {
-				self.currentQueueIndex = currentQueueIndex - 1
-			} else if repeatMode == .all {
-				self.currentQueueIndex = activePlayQueue.count-1
-			}
-		}
-		playCurrentIndexInQueue()
+//		guard let currentQueueIndex else { return }
+//		if let currentTime, currentTime < 3 {
+//			if currentQueueIndex > 0 {
+//				self.currentQueueIndex = currentQueueIndex - 1
+//			} else if repeatMode == .all {
+//				self.currentQueueIndex = activePlayQueue.count-1
+//			}
+//		}
+//		playCurrentIndexInQueue()
 	}
 	
 	public func seek(toTrack track: NFTTrack) {
@@ -152,7 +145,7 @@ public class VLCAudioPlayer: ObservableObject {
 			mediaPlayer.time = VLCTime(int: 0)
 			return
 		}
-		currentQueueIndex = activePlayQueue.firstIndex(of: track)
+//		currentQueueIndex = activePlayQueue.firstIndex(of: track)
 		playCurrentIndexInQueue()
 	}
 	
@@ -164,17 +157,20 @@ public class VLCAudioPlayer: ObservableObject {
 		playQueue.isEmpty
 	}
 	
-	public func setPlayQueue(_ tracks: [NFTTrack], playFirstTrack: Bool = true) {
-		playQueue = tracks
+	public func setTracks(_ tracks: Set<NFTTrack>, playFirstTrack: Bool = true) {
+		playQueue.originalTracks = tracks
+		if playFirstTrack {
+			try! playQueue.seekToFirst()
+			playCurrentIndexInQueue()
+		}
 	}
 	
 	public var isPlaying: Bool {
-		mediaPlayer.isPlaying
+		state == .playing
 	}
 	
 	var currentTrack: NFTTrack? {
-		guard let currentQueueIndex else { return nil }
-		return activePlayQueue[currentQueueIndex]
+		try! playQueue.currentTrack()
 	}
 	
 	public func trackIsPlaying(_ track: NFTTrack) -> Bool {
@@ -186,16 +182,16 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func cycleRepeatMode() {
-		repeatMode = {
-			switch repeatMode {
-			case .all:
-				return .one
-			case .one:
-				return nil
-			case nil:
-				return .all
-			}
-		}()
+//		repeatMode = {
+//			switch repeatMode {
+//			case .all:
+//				return .one
+//			case .one:
+//				return nil
+//			case nil:
+//				return .all
+//			}
+//		}()
 	}
 	
 	public func removeDownloadedSongs() {
@@ -208,14 +204,17 @@ public class VLCAudioPlayer: ObservableObject {
 	
 	fileprivate func updateData(_ aNotification: Foundation.Notification) {
 		guard let player = aNotification.vlcPlayer else { return }
-		if player.state == .ended {
-			if repeatMode == .one {
-				prev()
-			} else {
-				next()
-			}
-		}
+//		if player.state == .ended {
+//			if repeatMode == .one {
+//				prev()
+//			} else {
+//				next()
+//			}
+//		}
 		objectWillChange.send()
+		print("player state: \(VLCMediaPlayerStateToString(player.state))")
+		print("media state: \(player.media?.state.description ?? "")")
+		print("mediaplayer isplaying: \(isPlaying)")
 	}
 }
 
@@ -243,14 +242,22 @@ fileprivate class VLCAudioPlayerDelegate: NSObject, VLCMediaPlayerDelegate {
 	}
 }
 
-private extension VLCTime {
-	var seconds: Double? {
-		value.flatMap { $0.doubleValue / 1_000 }
-	}
-}
-
-extension Double {
-	var secondsToMilliseconds: Int32 {
-		Int32(self * 1000.0)
-	}
-}
+//extension VLCAudioPlayer {
+//	var filteredSortedNFTTracks: [NFTTrack] {
+//		var tracks = tracks
+//		
+//		if filterText.isEmpty == false {
+//			tracks = tracks.filter {
+//				$0.title.localizedCaseInsensitiveContains(filterText)
+//			}
+//		}
+//		
+//		if let comparator = sort.comparator {
+//			tracks = tracks.sorted(by: comparator)
+//		}
+//		
+//		tracks = tracks.filter { $0.duration < durationFilter }
+//		
+//		return tracks
+//	}
+//}

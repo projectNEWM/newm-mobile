@@ -64,14 +64,14 @@ extension VLCAudioPlayer {
 			guard let self, let event = (event as? MPChangeRepeatModeCommandEvent) else {
 				return .commandFailed
 			}
-			repeatMode = event.repeatType.repeatMode
+//			repeatMode = event.repeatType.repeatMode
 			return .success
 		}
 		commandCenter.changeShuffleModeCommand.addTarget { [weak self] event in
 			guard let self, let event = (event as? MPChangeShuffleModeCommandEvent) else {
 				return .commandFailed
 			}
-			shuffle = event.shuffleType.shuffle
+//			shuffle = event.shuffleType.shuffle
 			return .success
 		}
 		commandCenter.nextTrackCommand.addTarget { [weak self] _ in

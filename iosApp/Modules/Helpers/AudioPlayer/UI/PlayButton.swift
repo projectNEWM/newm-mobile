@@ -9,22 +9,41 @@ public struct PlayButton: View {
 	public init() {}
 	
 	public var body: some View {
-		Group {
-			Button {
-				if audioPlayer.isPlaying {
-					audioPlayer.pause()
-				} else {
-					audioPlayer.play()
-				}
-			} label: {
-				if audioPlayer.isPlaying {
-					Image(systemName: "pause.fill")
-				} else {
-					Image(systemName: "play.fill")
-				}
+		Button {
+			switch audioPlayer.state {
+			case .playing:
+				audioPlayer.pause()
+			case .paused, .stopped:
+				audioPlayer.play()
+			case .buffering:
+				break
+			}
+		} label: {
+			switch audioPlayer.state {
+			case .buffering:
+				ProgressView()
+			case .paused, .stopped:
+				playButton
+			case .playing:
+				pauseButton
 			}
 		}
 		.tint(.white)
+		.disabled(isDisabled)
+	}
+	
+	@ViewBuilder
+	private var playButton: some View {
+		Image(systemName: "play.fill")
+	}
+	
+	@ViewBuilder
+	private var pauseButton: some View {
+		Image(systemName: "pause.fill")
+	}
+	
+	private var isDisabled: Bool {
+		audioPlayer.state == .buffering
 	}
 }
 

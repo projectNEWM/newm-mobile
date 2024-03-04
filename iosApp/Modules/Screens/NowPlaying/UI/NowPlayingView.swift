@@ -7,6 +7,7 @@ import AudioPlayer
 import shared
 import Kingfisher
 import Colors
+import Mocks
 
 public struct NowPlayingView: View {
 	typealias Seconds = Int
@@ -104,7 +105,7 @@ extension NowPlayingView {
 		} label: {
 			if audioPlayer.shuffle {
 				Image(systemName: "shuffle")
-					.foregroundStyle(Gradients.primaryPrimary)
+					.foregroundStyle(Gradients.mainPrimary)
 			} else {
 				Image(systemName: "shuffle")
 			}
@@ -143,10 +144,10 @@ extension NowPlayingView {
 			switch audioPlayer.repeatMode {
 			case .all:
 				Image(systemName: "repeat")
-					.tint(Gradients.primaryPrimary)
+					.tint(Gradients.mainPrimary)
 			case .one:
 				Image(systemName: "repeat.1")
-					.tint(Gradients.primaryPrimary)
+					.tint(Gradients.mainPrimary)
 			case .none:
 				Image(systemName: "repeat")
 					.tint(.white)
@@ -156,19 +157,18 @@ extension NowPlayingView {
 	}
 }
 
-private extension NowPlayingView {
-	nonisolated static var playbackTimePlaceholder: String { "--:--" }
-}
-
 struct NowPlayingView_Previews: PreviewProvider {
 	static var previews: some View {
 		AudioPlayerModule.shared.registerAllServices()
 		@InjectedObject var audioPlayer: VLCAudioPlayer
+		let track = NFTTrack(id: "1", policyId: "", title: "Some Awesome Song", assetName: "", amount: 4, imageUrl: url(for: Asset.MockAssets.artist0).absoluteString, audioUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3", duration: 125, artists: ["Some awesome artist"], genres: [], moods: [], isDownloaded: false)
+		audioPlayer.setPlayQueue([track], playFirstTrack: true)
 		return Group {
 			NowPlayingView()
-//				.preferredColorScheme(.dark)
+				.preferredColorScheme(.dark)
 			NowPlayingView().controls
-		}.padding()
+		}
+		.padding()
 	}
 }
 
