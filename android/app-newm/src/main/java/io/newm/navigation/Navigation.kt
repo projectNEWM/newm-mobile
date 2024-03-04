@@ -80,7 +80,8 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
                 onPlaySong = { songId ->
                     navController.navigate(Screen.MusicPlayer.routeOf(songId))
                 },
-                onDownloadSong = {/*TODO*/ }
+                onDownloadSong = {/*TODO*/ },
+                onConnectWallet = {/*TODO*/ }
             )
         }
     }

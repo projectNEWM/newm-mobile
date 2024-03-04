@@ -20,16 +20,20 @@ import io.newm.core.theme.Gray16
 import io.newm.core.theme.Gray23
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
+import io.newm.core.ui.wallet.ConnectWalletPanel
 import io.newm.shared.public.models.User
 
 @Composable
 fun ProfileForm(
     profile: User,
-    onProfileUpdated: (User) -> Unit
+    onProfileUpdated: (User) -> Unit,
+    onConnectWallet: () -> Unit
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
+        ConnectWalletPanel(onButtonClick = onConnectWallet)
+        Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))

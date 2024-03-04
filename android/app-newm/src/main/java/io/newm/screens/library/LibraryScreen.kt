@@ -62,7 +62,8 @@ internal val LibraryBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink
 @Composable
 fun LibraryScreen(
     onPlaySong: (String) -> Unit,
-    onDownloadSong: (String) -> Unit
+    onDownloadSong: (String) -> Unit,
+    onConnectWallet: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -82,7 +83,10 @@ fun LibraryScreen(
             )
         )
         if (savedSongModels.isEmpty()) {
-            EmptyLibraryContent(modifier = Modifier.weight(1f))
+            EmptyLibraryContent(
+                modifier = Modifier.weight(1f),
+                onConnectWallet = onConnectWallet
+            )
         } else {
             Row(
                 modifier = Modifier
