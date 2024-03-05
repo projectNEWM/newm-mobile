@@ -110,7 +110,7 @@ private fun NavGraphBuilder.addNFTLibraryTree(
         route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
     ) {
         composable(Screen.NFTLibraryLanding.route) {
-            NFTLibraryScreen(onPlaySong, goToProfile)
+            NFTLibraryScreen(goToProfile)
         }
     }
 }
