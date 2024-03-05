@@ -12,13 +12,12 @@ import androidx.navigation.compose.navigation
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.feature.musicplayer.MusicPlayerActivity
 import io.newm.screens.Screen
+import io.newm.screens.account.UserAccountScreen
+import io.newm.screens.account.WalletConnect
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
 import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.edit.ProfileRoute
-import io.newm.screens.account.UserAccountScreen
-import io.newm.screens.account.WalletConnect
-import io.newm.shared.public.models.NFTTrack
 
 @Composable
 fun Navigation(
@@ -30,8 +29,8 @@ fun Navigation(
         navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
         addNFTLibraryTree(
-            onPlaySong = { songId ->
-                navController.navigate(Screen.MusicPlayer.routeOf(songId.id))
+            onPlaySong = {
+                navController.navigate(Screen.MusicPlayer.route)
             },
             goToProfile = { navController.navigate(Screen.UserAccountViewRoot.route) }
         )
@@ -77,8 +76,8 @@ private fun NavGraphBuilder.addLibraryTree(navController: NavHostController) {
     ) {
         composable(Screen.LibraryLanding.route) {
             LibraryScreen(
-                onPlaySong = { songId ->
-                    navController.navigate(Screen.MusicPlayer.routeOf(songId))
+                onPlayerClicked = {
+                    navController.navigate(Screen.MusicPlayer.route)
                 },
                 onDownloadSong = {/*TODO*/ },
                 onConnectWallet = {/*TODO*/ }
@@ -105,7 +104,7 @@ private fun NavGraphBuilder.addUserAccountTree(
 }
 
 private fun NavGraphBuilder.addNFTLibraryTree(
-    onPlaySong: (NFTTrack) -> Unit, goToProfile: () -> Unit
+    onPlaySong: () -> Unit, goToProfile: () -> Unit
 ) {
     navigation(
         route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
