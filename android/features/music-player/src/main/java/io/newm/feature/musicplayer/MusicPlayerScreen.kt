@@ -3,18 +3,21 @@ package io.newm.feature.musicplayer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 
 @Composable
 fun MusicPlayerScreen(
     onNavigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
     mediaPlayer: MusicPlayer? = rememberMediaPlayer(),
 ) {
     mediaPlayer ?: return
     val playbackStatus by mediaPlayer.playbackStatus.collectAsState()
 
     MusicPlayerViewer(
+        modifier = modifier,
         onNavigateUp = onNavigateUp,
         playbackStatus = playbackStatus,
         onEvent = { event ->

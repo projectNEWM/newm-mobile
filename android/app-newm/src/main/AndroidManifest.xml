@@ -31,6 +31,7 @@
             android:theme="@style/Theme.ProjectNewm.NoActionBar"
             android:enableOnBackInvokedCallback="true"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="UnusedAttribute">
 
             <intent-filter>
