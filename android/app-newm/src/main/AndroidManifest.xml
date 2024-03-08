@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,29 +11,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ProjectNewm.SplashScreen">
+        android:theme="@style/Theme.ProjectNewm.SplashScreen"
+        tools:ignore="LockedOrientationActivity">
 
         <activity
             android:name="io.newm.AppLaunchGhostActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ProjectNewm.SplashScreen.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="io.newm.HomeActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/Theme.ProjectNewm.NoActionBar"
             android:enableOnBackInvokedCallback="true"
             android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ProjectNewm.NoActionBar"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="UnusedAttribute">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -45,23 +44,18 @@
         <activity
             android:name="io.newm.LoginActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor" />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.musicplayer.MusicPlayerActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
-
         <activity
             android:name=".feature.barcode.scanner.BarcodeScannerActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
-
-
     </application>
-
     <queries>
         <package android:name="io.metamask" />
         <package android:name="com.wallet.crypto.trustapp" />

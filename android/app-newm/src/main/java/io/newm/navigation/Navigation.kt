@@ -28,12 +28,7 @@ fun Navigation(
     NavHost(
         navController = navController, startDestination = Screen.NFTLibraryRoot.route
     ) {
-        addNFTLibraryTree(
-            onPlaySong = {
-                navController.navigate(Screen.MusicPlayer.route)
-            },
-            goToProfile = { navController.navigate(Screen.UserAccountViewRoot.route) }
-        )
+        addNFTLibraryTree()
         addHomeTree(navController, isBottomBarVisible)
         addUserAccountTree(onEditProfileClick, onWalletConnect)
         addLibraryTree(navController)
@@ -43,7 +38,7 @@ fun Navigation(
 }
 
 private fun NavGraphBuilder.addHomeTree(
-    navController: NavHostController, isBottomBarVisible: MutableState<Boolean>
+    navController: NavHostController, isBottomBarVisible: MutableState<Boolean>,
 ) {
     navigation(
         route = Screen.HomeRoot.route, startDestination = Screen.HomeLanding.route
@@ -104,13 +99,12 @@ private fun NavGraphBuilder.addUserAccountTree(
 }
 
 private fun NavGraphBuilder.addNFTLibraryTree(
-    onPlaySong: () -> Unit, goToProfile: () -> Unit
 ) {
     navigation(
         route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
     ) {
         composable(Screen.NFTLibraryLanding.route) {
-            NFTLibraryScreen(goToProfile)
+            NFTLibraryScreen()
         }
     }
 }
