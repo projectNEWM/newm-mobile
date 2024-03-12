@@ -19,6 +19,7 @@ import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.HomeScreen
+import io.newm.feature.login.screen.LoginGoogle
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
@@ -59,7 +60,7 @@ class WelcomeScreenPresenter(
                     val idToken = account.idToken
                     idToken ?: throw IllegalStateException("Google sign in failed. idToken is null")
 
-                    recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess {
+                    recaptchaClientProvider.get().execute(RecaptchaAction.LoginGoogle).onSuccess {
                         isHumanProof ->
                         loginUseCase.logInWithGoogle(idToken, humanVerificationCode = isHumanProof)
                         navigator.goTo(HomeScreen)
