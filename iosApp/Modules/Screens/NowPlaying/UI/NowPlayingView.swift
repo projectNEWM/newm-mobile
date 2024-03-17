@@ -67,7 +67,6 @@ extension NowPlayingView {
 		VStack(spacing: 0) {
 			Slider(value: playbackTimeBinding, in: 0.0...Float(audioPlayer.duration ?? 300))
 				.tint(Gradients.loginGradient.gradient)
-				.padding(.bottom, -13)
 				.zIndex(1)
 			
 			VStack {
@@ -103,6 +102,7 @@ extension NowPlayingView {
 	private var playButton: some View {
 		PlayButton().padding([.trailing, .leading], 26)
 			.scaleEffect(CGSize(width: 1.5, height: 1.5))
+			.frame(width: 50, height: 50)
 	}
 	
 	@ViewBuilder

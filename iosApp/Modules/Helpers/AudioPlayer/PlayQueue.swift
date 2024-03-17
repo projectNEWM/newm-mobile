@@ -15,22 +15,21 @@ struct PlayQueue {
 	var isEmpty: Bool {
 		currentQueue.isEmpty
 	}
+	
 	var hasNextTrack: Bool {
 		indexForNextTrack(userInitiated: true) != nil || indexForNextTrack(userInitiated: false) != nil
 	}
+	
 	var hasPrevTrack: Bool {
 		indexForPrevTrack() != nil
 	}
-	@UserDefault(defaultValue: .artist(ascending: true)) var sortCriteria: AudioPlayerSort {
-		didSet {
-			applySortingToCurrentQueue()
-		}
-	}
+	
 	private var filters = Filters() {
 		didSet {
 			applyFiltersToCurrentQueue()
 		}
 	}
+	
 	var textFilter: String? {
 		get { filters.text }
 		set {
@@ -38,6 +37,7 @@ struct PlayQueue {
 			filters.text = newValue
 		}
 	}
+	
 	var durationFilter: Int? {
 		get { filters.duration }
 		set {
@@ -45,12 +45,20 @@ struct PlayQueue {
 			filters.duration = newValue
 		}
 	}
+	
+	@UserDefault(defaultValue: .artist(ascending: true)) var sortCriteria: AudioPlayerSort {
+		didSet {
+			applySortingToCurrentQueue()
+		}
+	}
+	
 	@UserDefault(defaultValue: false) var shuffle: Bool {
 		didSet {
 			guard oldValue != shuffle else { return }
 			shuffle ? shuffleCurrentQueue() : unshuffleCurrentQueue()
 		}
 	}
+	
 	@UserDefault(defaultValue: .none) var repeatMode: RepeatMode
 	
 	mutating
@@ -134,7 +142,7 @@ struct PlayQueue {
 		let newIndex: Int
 		switch repeatMode {
 		case .none, .one:
-			newIndex = oldIndex - 1
+			newIndex = max(0, oldIndex - 1)
 		case .all:
 			newIndex = (oldIndex - 1 + currentQueue.count) % currentQueue.count
 		}

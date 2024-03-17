@@ -83,8 +83,8 @@ final class PlayQueueTests: XCTestCase {
 		XCTAssertEqual(playQueue.nextTrack(), tracks[3])
 		XCTAssertEqual(playQueue.previousTrack(), tracks[1])
 		XCTAssertEqual(playQueue.previousTrack(), tracks[4])
-		XCTAssertNil(playQueue.previousTrack())
-		XCTAssertNil(try playQueue.currentTrack())
+		XCTAssertEqual(playQueue.previousTrack(), tracks[4])
+		XCTAssertEqual(try playQueue.currentTrack(), tracks[4])
 		
 		//4
 		prevTrack = try playQueue.currentTrack()
@@ -139,7 +139,7 @@ final class PlayQueueTests: XCTestCase {
 		[4, 6, 0, 2, 1, 3].forEach {
 			XCTAssertEqual(playQueue.previousTrack(), tracks[$0])
 		}
-		XCTAssertNil(playQueue.previousTrack())
+		XCTAssertEqual(playQueue.previousTrack(), tracks[3])
 	}
 	
 	func testOriginalOrderPreservedWhenTurningShuffleOff() throws {
@@ -154,6 +154,9 @@ final class PlayQueueTests: XCTestCase {
 		playQueue.shuffle = false
 		XCTAssertEqual(track1, try playQueue.currentTrack())
 		XCTAssertEqual(track2, playQueue.nextTrack())
+		
+		playQueue.shuffle = true
+		XCTAssertEqual(try playQueue.currentTrack(), playQueue.previousTrack())
 	}
 	
 	func testRepeatModes_endOfTrack() throws {
@@ -197,11 +200,11 @@ final class PlayQueueTests: XCTestCase {
 		
 		playQueue.repeatMode = .one
 		try playQueue.seekToFirst()
-		XCTAssertNil(playQueue.previousTrack())
+		XCTAssertEqual(playQueue.previousTrack(), tracks.first)
 		
 		playQueue.repeatMode = .none
 		try playQueue.seekToFirst()
-		XCTAssertNil(playQueue.previousTrack())
+		XCTAssertEqual(playQueue.previousTrack(), tracks.first)
 	}
 	
 	func testDurationFilter() {
@@ -315,7 +318,7 @@ final class PlayQueueTests: XCTestCase {
 		}
 		checkDoesntHavePrev()
 		try playQueue.seekToFirst()
-		checkDoesntHavePrev()
+		checkHasPrev()
 		try playQueue.seekToTrack(tracks.last!)
 		checkHasPrev()
 		playQueue.repeatMode = .all
@@ -329,11 +332,11 @@ final class PlayQueueTests: XCTestCase {
 		playQueue.repeatMode = .none
 		checkHasPrev()
 		try playQueue.seekToFirst()
-		checkDoesntHavePrev()
+		checkHasPrev()
 		playQueue.repeatMode = .all
 		checkHasPrev()
 		playQueue.repeatMode = .one
-		checkDoesntHavePrev()
+		checkHasPrev()
 	}
 }
 
