@@ -10,10 +10,6 @@ import Utilities
 import OrderedCollections
 
 public class VLCAudioPlayer: ObservableObject {
-	public enum RepeatMode {
-		case all
-		case one
-	}
 	public enum PlaybackState {
 		case playing
 		case paused
@@ -23,9 +19,9 @@ public class VLCAudioPlayer: ObservableObject {
 	static let sharedPlayer = VLCAudioPlayer()
 	
 	private var mediaPlayer: VLCMediaPlayer
-	private var playQueue: PlayQueue = PlayQueue()
+	@Published private var playQueue: PlayQueue = PlayQueue()
 	@Published private var fileManager = FileManagerService()
-	lazy private var delegate: VLCAudioPlayerDelegate = VLCAudioPlayerDelegate(updateData: { [weak self] in self?.updateData($0) })
+	lazy private var delegate: VLCAudioPlayerDelegate = VLCAudioPlayerDelegate()
 	private var cancels = Set<AnyCancellable>()
 	
 	@MainActor
@@ -50,6 +46,32 @@ public class VLCAudioPlayer: ObservableObject {
 	public var artworkUrl: URL? { mediaPlayer.media?.metaData.artworkURL }
 	public var willPlay: Bool { mediaPlayer.willPlay }
 	@Injected var errorReporter: any ErrorReporting
+	public var errors = ErrorSet()
+		
+	public var textFilter: String? {
+		get { playQueue.textFilter }
+		set { playQueue.textFilter = newValue }
+	}
+	
+	public var durationFilter: Int? {
+		get { playQueue.durationFilter }
+		set { playQueue.durationFilter = newValue }
+	}
+
+	public var shuffle: Bool {
+		get { playQueue.shuffle }
+		set { playQueue.shuffle = newValue }
+	}
+	
+	public var repeatMode: RepeatMode {
+		get { playQueue.repeatMode }
+		set { playQueue.repeatMode = newValue }
+	}
+	
+	public var sort: AudioPlayerSort {
+		get { playQueue.sortCriteria }
+		set { playQueue.sortCriteria = newValue }
+	}
 	
 	private init() {
 		mediaPlayer = VLCMediaPlayer()
@@ -63,20 +85,55 @@ public class VLCAudioPlayer: ObservableObject {
 		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged)).sink { [weak self] _ in
 			self?.handleWalletDisconnect()
 		}.store(in: &cancels)
+		
+		setUpDelegateHandling()
+	}
+	
+	private func setUpDelegateHandling() {
+		Task {
+			for await _ in delegate.stream {
+				if mediaPlayer.state == .ended, let _ = playQueue.nextTrack() {
+					playCurrentTrackInQueue()
+				} else if mediaPlayer.state == .error {
+					//TODO: this isn't getting hit when a song fails to load
+					errors.append(NEWMError(errorDescription: "Unable to load \(currentTrack?.title ?? "song")", failureReason: nil, recoverySuggestion: nil, underlyingError: nil))
+				}
+				DispatchQueue.main.async { [weak self] in
+					self?.objectWillChange.send()
+				}
+				print("player state: \(VLCMediaPlayerStateToString(mediaPlayer.state))")
+				print("media state: \(mediaPlayer.media?.state.description ?? "")")
+				print("mediaplayer isplaying: \(isPlaying)")
+			}
+		}
+	}
+	
+	public func setTracks(_ tracks: Set<NFTTrack>) {
+		playQueue.originalTracks = tracks
+	}
+	
+	public var hasNextTrack: Bool {
+		playQueue.hasNextTrack
+	}
+	
+	public var hasPrevTrack: Bool {
+		playQueue.hasPrevTrack
 	}
 	
 	public func play() {
 		mediaPlayer.play()
 	}
-	
+		
 	private func handleWalletDisconnect() {
 		stop()
 		playQueue.originalTracks = []
 		removeDownloadedSongs()
 	}
 	
-	private func playCurrentIndexInQueue() {
+	private func playCurrentTrackInQueue() {
 		guard let currentTrack else {
+			stop()
+			mediaPlayer.media = nil
 			return
 		}
 		
@@ -117,27 +174,13 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func next() {
-//		guard let currentQueueIndex else { return }
-//		if currentQueueIndex < activePlayQueue.count-1 {
-//			self.currentQueueIndex = currentQueueIndex + 1
-//		} else {
-//			if repeatMode == .all {
-//				self.currentQueueIndex = 0
-//			}
-//		}
-//		playCurrentIndexInQueue()
+		playQueue.nextTrack(userInitiated: true)
+		playCurrentTrackInQueue()
 	}
 	
 	public func prev() {
-//		guard let currentQueueIndex else { return }
-//		if let currentTime, currentTime < 3 {
-//			if currentQueueIndex > 0 {
-//				self.currentQueueIndex = currentQueueIndex - 1
-//			} else if repeatMode == .all {
-//				self.currentQueueIndex = activePlayQueue.count-1
-//			}
-//		}
-//		playCurrentIndexInQueue()
+		playQueue.previousTrack()
+		playCurrentTrackInQueue()
 	}
 	
 	public func seek(toTrack track: NFTTrack) {
@@ -145,8 +188,8 @@ public class VLCAudioPlayer: ObservableObject {
 			mediaPlayer.time = VLCTime(int: 0)
 			return
 		}
-//		currentQueueIndex = activePlayQueue.firstIndex(of: track)
-		playCurrentIndexInQueue()
+		try? playQueue.seekToTrack(track)
+		playCurrentTrackInQueue()
 	}
 	
 	public func seek(toTime time: Double) {
@@ -159,9 +202,9 @@ public class VLCAudioPlayer: ObservableObject {
 	
 	public func setTracks(_ tracks: Set<NFTTrack>, playFirstTrack: Bool = true) {
 		playQueue.originalTracks = tracks
+		try! playQueue.seekToFirst()
 		if playFirstTrack {
-			try! playQueue.seekToFirst()
-			playCurrentIndexInQueue()
+			playCurrentTrackInQueue()
 		}
 	}
 	
@@ -169,8 +212,8 @@ public class VLCAudioPlayer: ObservableObject {
 		state == .playing
 	}
 	
-	var currentTrack: NFTTrack? {
-		try! playQueue.currentTrack()
+	public var currentTrack: NFTTrack? {
+		try? playQueue.currentTrack()
 	}
 	
 	public func trackIsPlaying(_ track: NFTTrack) -> Bool {
@@ -182,16 +225,7 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func cycleRepeatMode() {
-//		repeatMode = {
-//			switch repeatMode {
-//			case .all:
-//				return .one
-//			case .one:
-//				return nil
-//			case nil:
-//				return .all
-//			}
-//		}()
+		playQueue.cycleRepeatMode()
 	}
 	
 	public func removeDownloadedSongs() {
@@ -202,62 +236,45 @@ public class VLCAudioPlayer: ObservableObject {
 		fileManager.clearFile(at: URL(string: song.audioUrl)!)
 	}
 	
-	fileprivate func updateData(_ aNotification: Foundation.Notification) {
-		guard let player = aNotification.vlcPlayer else { return }
-//		if player.state == .ended {
-//			if repeatMode == .one {
-//				prev()
-//			} else {
-//				next()
-//			}
-//		}
-		objectWillChange.send()
-		print("player state: \(VLCMediaPlayerStateToString(player.state))")
-		print("media state: \(player.media?.state.description ?? "")")
-		print("mediaplayer isplaying: \(isPlaying)")
+	public func cycleTitleSort() {
+		playQueue.cycleTitleSort()
+	}
+	
+	public func cycleArtistSort() {
+		playQueue.cycleArtistSort()
+	}
+	
+	public func cycleLengthSort() {
+		playQueue.cycleDurationSort()
 	}
 }
 
 fileprivate class VLCAudioPlayerDelegate: NSObject, VLCMediaPlayerDelegate {
-	let updateData: (Foundation.Notification) -> Void
-	
-	init(updateData: @escaping (Foundation.Notification) -> Void) {
-		self.updateData = updateData
+	var stream: AsyncStream<Void> {
+		AsyncStream { [weak self] continuation in
+			self?.continuation = continuation
+		}
 	}
+
+	private var continuation: AsyncStream<Void>.Continuation!
 	
 	func mediaPlayerStateChanged(_ aNotification: Foundation.Notification) {
-		updateData(aNotification)
+		continuation.yield()
 	}
 	
 	func mediaPlayerTimeChanged(_ aNotification: Foundation.Notification) {
-		updateData(aNotification)
+		continuation.yield()
 	}
 	
 	func mediaPlayerTitleChanged(_ aNotification: Foundation.Notification) {
-		updateData(aNotification)
+		continuation.yield()
 	}
 	
 	func mediaPlayerChapterChanged(_ aNotification: Foundation.Notification) {
-		updateData(aNotification)
+		continuation.yield()
+	}
+	
+	deinit {
+		continuation.finish()
 	}
 }
-
-//extension VLCAudioPlayer {
-//	var filteredSortedNFTTracks: [NFTTrack] {
-//		var tracks = tracks
-//		
-//		if filterText.isEmpty == false {
-//			tracks = tracks.filter {
-//				$0.title.localizedCaseInsensitiveContains(filterText)
-//			}
-//		}
-//		
-//		if let comparator = sort.comparator {
-//			tracks = tracks.sorted(by: comparator)
-//		}
-//		
-//		tracks = tracks.filter { $0.duration < durationFilter }
-//		
-//		return tracks
-//	}
-//}

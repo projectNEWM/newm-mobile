@@ -12,21 +12,13 @@ import SharedExtensions
 class LibraryViewModel: ObservableObject {
 	@Published var searchText: String = ""
 	@Published var errors = ErrorSet()
-	var durationFilter: Int {
-		set {
-			audioPlayer.durationFilter = newValue
-		}
-		get {
-			audioPlayer.durationFilter
-		}
+	var durationFilter: Int? {
+		set { audioPlayer.durationFilter = newValue }
+		get { audioPlayer.durationFilter }
 	}
 	var sort: AudioPlayerSort { 
-		set {
-			audioPlayer.sort = newValue
-		}
-		get {
-			audioPlayer.sort
-		}
+		set { audioPlayer.sort = newValue }
+		get { audioPlayer.sort }
 	}
 	
 	@Published private(set) var route: LibraryRoute?
@@ -125,7 +117,7 @@ class LibraryViewModel: ObservableObject {
 	
 	func trackTapped(_ track: NFTTrack) {
 		if audioPlayer.playQueueIsEmpty {
-			audioPlayer.setPlayQueue(tracks, playFirstTrack: false)
+			audioPlayer.setTracks(Set(tracks), playFirstTrack: false)
 		}
 		audioPlayer.seek(toTrack: track)
 	}

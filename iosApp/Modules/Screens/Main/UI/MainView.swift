@@ -45,7 +45,7 @@ public struct MainView: View {
 		.onShake {
 			route = .debug
 		}
-		.newmAlert(info: AlertInfo(title: nil, message: viewModel.alertMessage))
+		.newmAlert(message: viewModel.alertMessage)
 	}
 }
 

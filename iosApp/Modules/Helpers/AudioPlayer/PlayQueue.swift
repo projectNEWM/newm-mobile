@@ -15,14 +15,34 @@ struct PlayQueue {
 	var isEmpty: Bool {
 		currentQueue.isEmpty
 	}
+	var hasNextTrack: Bool {
+		indexForNextTrack(userInitiated: true) != nil || indexForNextTrack(userInitiated: false) != nil
+	}
+	var hasPrevTrack: Bool {
+		indexForPrevTrack() != nil
+	}
 	@UserDefault(defaultValue: .artist(ascending: true)) var sortCriteria: AudioPlayerSort {
 		didSet {
 			applySortingToCurrentQueue()
 		}
 	}
-	var filters: Filters? {
+	private var filters = Filters() {
 		didSet {
 			applyFiltersToCurrentQueue()
+		}
+	}
+	var textFilter: String? {
+		get { filters.text }
+		set {
+			guard newValue != textFilter else { return }
+			filters.text = newValue
+		}
+	}
+	var durationFilter: Int? {
+		get { filters.duration }
+		set {
+			guard newValue != durationFilter else { return }
+			filters.duration = newValue
 		}
 	}
 	@UserDefault(defaultValue: false) var shuffle: Bool {
@@ -62,7 +82,7 @@ struct PlayQueue {
 		guard currentQueue.indices.contains(currentIndex) else { throw PlayQueueError.invalidIndex }
 		return currentQueue[currentIndex]
 	}
-		
+	
 	mutating
 	func seekToFirst() throws {
 		guard isEmpty == false else { throw PlayQueueError.queueIsEmpty }
@@ -70,9 +90,14 @@ struct PlayQueue {
 	}
 	
 	mutating
-	func nextTrack(userInitiated: Bool = false) -> NFTTrack? {
+	func seekToTrack(_ track: NFTTrack) throws {
+		guard isEmpty == false else { throw PlayQueueError.queueIsEmpty }
+		guard let currentIndex = currentQueue.firstIndex(of: track) else { throw PlayQueueError.trackNotInQueue }
+		self.currentIndex = currentIndex
+	}
+	
+	private func indexForNextTrack(userInitiated: Bool) -> Int? {
 		guard !currentQueue.isEmpty, let oldIndex = currentIndex else { return nil }
-		
 		let newIndex: Int
 		switch repeatMode {
 		case .all:
@@ -86,40 +111,52 @@ struct PlayQueue {
 		case .none:
 			newIndex = oldIndex + 1
 		}
-		
-		if currentQueue.indices.contains(newIndex) {
-			currentIndex = newIndex
-		} else {
-			currentIndex = nil
-		}
-		
-		return currentIndex.flatMap { currentQueue[$0] }
+		return currentQueue.indices.contains(newIndex) ? newIndex : nil
 	}
 	
+	@discardableResult
 	mutating
-	func previousTrack() -> NFTTrack? {
-		guard !currentQueue.isEmpty, let oldIndex = currentIndex, oldIndex > 0 else { return try! currentTrack() }
+	func nextTrack(userInitiated: Bool = false) -> NFTTrack? {
+		guard !currentQueue.isEmpty else { return nil }
+		
+		if let newIndex = indexForNextTrack(userInitiated: userInitiated) {
+			currentIndex = newIndex
+			return currentQueue[newIndex]
+		} else {
+			currentIndex = nil
+			return nil
+		}
+	}
+	
+	private func indexForPrevTrack() -> Int? {
+		guard !currentQueue.isEmpty, let oldIndex = currentIndex else { return nil }
 		
 		let newIndex: Int
 		switch repeatMode {
 		case .none, .one:
-			newIndex = max(0, oldIndex - 1)
+			newIndex = oldIndex - 1
 		case .all:
 			newIndex = (oldIndex - 1 + currentQueue.count) % currentQueue.count
 		}
-		
-		if currentQueue.indices.contains(newIndex) {
+		return currentQueue.indices.contains(newIndex) ? newIndex : nil
+	}
+	
+	@discardableResult
+	mutating
+	func previousTrack() -> NFTTrack? {
+		if let newIndex = indexForPrevTrack() {
 			currentIndex = newIndex
+			return currentQueue[newIndex]
 		} else {
 			currentIndex = nil
+			return nil
 		}
-		return currentQueue.indices.contains(newIndex) ? currentQueue[newIndex] : nil
 	}
 	
 	mutating
 	private func applyFiltersToCurrentQueue() {
-		guard let filter = filters?.filter else { return }
-		let prevItem = try! currentTrack()
+		guard let filter = filters.filter else { return }
+		let prevItem = try? currentTrack()
 		currentQueue = Array(originalTracks).filter(filter)
 		if let prevItem {
 			currentIndex = currentQueue.firstIndex(of: prevItem)
@@ -128,7 +165,7 @@ struct PlayQueue {
 	
 	mutating
 	private func applySortingToCurrentQueue() {
-		let prevItem = try! currentTrack()
+		let prevItem = try? currentTrack()
 		currentQueue.sort(by: sortCriteria.comparator)
 		if let prevItem {
 			currentIndex = currentQueue.firstIndex(of: prevItem)
@@ -138,16 +175,50 @@ struct PlayQueue {
 	
 	mutating
 	func cycleRepeatMode() {
-		repeatMode = {
-			switch repeatMode {
-			case .all:
-				return .one
-			case .one:
-				return .none
-			case .none:
-				return .all
-			}
-		}()
+		repeatMode = switch repeatMode {
+		case .all:
+				.one
+		case .one:
+				.none
+		case .none:
+				.all
+		}
+	}
+	
+	mutating
+	func cycleTitleSort() {
+		sortCriteria = switch sortCriteria {
+		case .title(let ascending) where ascending == true:
+				.title(ascending: false)
+		case .title(let ascending) where ascending == false:
+				.title(ascending: true)
+		default:
+				.title(ascending: true)
+		}
+	}
+	
+	mutating
+	func cycleArtistSort() {
+		sortCriteria = switch sortCriteria {
+		case .artist(let ascending) where ascending == true:
+				.artist(ascending: false)
+		case .artist(let ascending) where ascending == false:
+				.artist(ascending: true)
+		default:
+				.artist(ascending: true)
+		}
+	}
+	
+	mutating
+	func cycleDurationSort() {
+		sortCriteria = switch sortCriteria {
+		case .duration(let ascending) where ascending == true:
+				.duration(ascending: false)
+		case .duration(let ascending) where ascending == false:
+				.duration(ascending: true)
+		default:
+				.duration(ascending: true)
+		}
 	}
 }
 
@@ -155,29 +226,6 @@ extension PlayQueue {
 	enum PlayQueueError: Error {
 		case queueIsEmpty
 		case invalidIndex
-	}
-	
-	struct Filters {
-		var text: String?
-		@UserDefault(defaultValue: 30) var duration: Int?
-		
-		var filter: ((NFTTrack) -> Bool)? {
-			guard text != nil || duration != nil else { return nil }
-			return { track in
-				if let durationFilter = duration, track.duration < durationFilter {
-					return false
-				}
-				
-				if let textFilter = text, !(track.title.localizedCaseInsensitiveContains(textFilter) || track.artists.contains(where: { $0.localizedCaseInsensitiveContains(textFilter) })) {
-					return false
-				}
-				
-				return true
-			}
-		}
-	}
-	
-	enum RepeatMode: Codable {
-		case none, one, all
+		case trackNotInQueue
 	}
 }

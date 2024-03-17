@@ -5,7 +5,6 @@ public enum AudioPlayerSort: Codable, Equatable {
 	case title(ascending: Bool)
 	case artist(ascending: Bool)
 	case duration(ascending: Bool)
-	case noSort
 	
 	public var comparator: (NFTTrack, NFTTrack) -> (Bool) {
 		return switch self {
@@ -31,9 +30,19 @@ public enum AudioPlayerSort: Codable, Equatable {
 				return track2.title < track1.title
 			}
 		}
-		case .noSort: { track1, track2 in
-			true
 		}
-		}
+	}
+}
+
+extension AudioPlayerSort: CaseIterable {
+	public static var allCases: [AudioPlayerSort] {
+		[
+			.artist(ascending: true),
+			.artist(ascending: false),
+			.duration(ascending: true),
+			.duration(ascending: false),
+			.title(ascending: true),
+			.title(ascending: false),
+		]
 	}
 }

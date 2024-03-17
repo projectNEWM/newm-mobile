@@ -7,7 +7,6 @@ import AudioPlayer
 import shared
 import Kingfisher
 import Colors
-import Mocks
 
 public struct NowPlayingView: View {
 	typealias Seconds = Int
@@ -25,6 +24,14 @@ public struct NowPlayingView: View {
 		}
 		.background(background)
 		.backButton()
+		//TODO: make an "ErrorProviding" protocol, replace all these.
+		.alert(isPresented: .constant(audioPlayer.errors.currentError != nil), error: audioPlayer.errors.currentError) {
+			Button {
+				audioPlayer.errors.popFirstError()
+			} label: {
+				Text("Ok")
+			}
+		}
 	}
 }
 
@@ -123,6 +130,7 @@ extension NowPlayingView {
 				.tint(.white)
 		}
 		.scaleEffect(CGSize(width: 1.5, height: 1.5))
+		.disabled(audioPlayer.hasPrevTrack == false)
 	}
 	
 	@ViewBuilder
@@ -134,6 +142,7 @@ extension NowPlayingView {
 				.tint(.white)
 		}
 		.scaleEffect(CGSize(width: 1.5, height: 1.5))
+		.disabled(audioPlayer.hasNextTrack == false)
 	}
 	
 	@ViewBuilder
@@ -157,19 +166,17 @@ extension NowPlayingView {
 	}
 }
 
-struct NowPlayingView_Previews: PreviewProvider {
-	static var previews: some View {
-		AudioPlayerModule.shared.registerAllServices()
-		@InjectedObject var audioPlayer: VLCAudioPlayer
-		let track = NFTTrack(id: "1", policyId: "", title: "Some Awesome Song", assetName: "", amount: 4, imageUrl: url(for: Asset.MockAssets.artist0).absoluteString, audioUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3", duration: 125, artists: ["Some awesome artist"], genres: [], moods: [], isDownloaded: false)
-		audioPlayer.setPlayQueue([track], playFirstTrack: true)
-		return Group {
-			NowPlayingView()
-				.preferredColorScheme(.dark)
-			NowPlayingView().controls
-		}
-		.padding()
+#Preview {
+	AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .mock)
+	AudioPlayerModule.shared.registerAllServices()
+	Resolver.root = .mock
+	@InjectedObject var audioPlayer: VLCAudioPlayer
+	audioPlayer.setTracks(Set(NFTTrackMocksKt.mockTracks), playFirstTrack: true)
+	return Group {
+		NowPlayingView()
+			.preferredColorScheme(.dark)
 	}
+	.padding()
 }
 
 func url(for testImage: ImageAsset) -> URL {

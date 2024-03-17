@@ -15,6 +15,8 @@ struct LibraryView: View {
 	
 	public var body: some View {
 		NavigationView {
+			EmptyView()
+			EmptyView()
 			Group {
 				if viewModel.showLoading {
 					loadingView
@@ -114,7 +116,7 @@ struct LibraryView: View {
 	private var loadedView: some View {
 		NavigationView {
 			List {
-				ForEach(viewModel.filteredSortedNFTTracks, id: \.id) { audioTrack in
+				ForEach(viewModel.tracks, id: \.id) { audioTrack in
 					row(for: audioTrack)
 						.frame(height: 40)
 						.padding(.leading, -6)
@@ -192,11 +194,7 @@ struct LibraryView: View {
 	var filterView: some View {
 		List {
 			Group {
-				Picker(selection: Binding<Int>(get: {
-					viewModel.durationFilter
-				}, set: { value in
-					viewModel.durationFilter = value
-				})) {
+				Picker(selection: $viewModel.durationFilter) {
 					ForEach(Array(stride(from: 5, through: 600, by: 5)), id: \.self) { value in
 						Text("\(value.playbackTimeString)").tag(value)
 					}
@@ -232,7 +230,7 @@ struct LibraryView: View {
 						viewModel.cycleLengthSort()
 					} label: {
 						filterRow(title: "Length") {
-							if case .length = viewModel.sort {
+							if case .duration = viewModel.sort {
 								return rightView(for: viewModel.sort)
 							}
 							return EmptyView()
@@ -260,12 +258,12 @@ struct LibraryView: View {
 		switch sort {
 		case
 				.artist(let ascending) where ascending == true,
-				.length(let ascending) where ascending == true,
+				.duration(let ascending) where ascending == true,
 				.title(let ascending) where ascending == true:
 			Image(systemName: "chevron.up")
 		case
 				.artist(let ascending) where ascending == false,
-				.length(let ascending) where ascending == false,
+				.duration(let ascending) where ascending == false,
 				.title(let ascending) where ascending == false:
 			Image(systemName: "chevron.down")
 		default:
