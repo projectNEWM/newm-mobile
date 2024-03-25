@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.OptIn
@@ -16,40 +15,64 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.ClipOp
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import java.util.concurrent.Executors
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
-import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.theme.Black
+import io.newm.core.theme.CerisePink
+import io.newm.core.theme.Gray23
+import io.newm.core.theme.Gray6F
+import io.newm.core.theme.LightSkyBlue
+import io.newm.core.theme.OceanGreen
+import io.newm.core.theme.SteelPink
+import io.newm.core.theme.White
+import io.newm.core.theme.inter
 import io.newm.core.ui.text.TextFieldWithLabel
-import io.newm.core.ui.text.formTitleStyle
+import io.newm.core.ui.utils.textGradient
+import java.util.concurrent.Executors
+
+val qrLabelStyle = TextStyle(
+    fontSize = 12.sp,
+    fontFamily = inter,
+    fontWeight = FontWeight.Bold,
+    color = Gray6F
+)
+
+val placeholderStyle = TextStyle(
+    fontSize = 16.sp,
+    fontFamily = inter,
+    fontWeight = FontWeight.Normal,
+    color = Gray6F
+)
 
 class BarcodeScannerActivity : ComponentActivity() {
 
@@ -57,66 +80,19 @@ class BarcodeScannerActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Box(modifier = Modifier.fillMaxSize()) {
-                PreviewViewComposable()
-                CameraOverlay()
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 24.dp, horizontal = 16.dp)
-                        .align(Alignment.TopStart),
-                    text = stringResource(id = R.string.barcode_scanner_connect_wallet),
-                    style = formTitleStyle
-                )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 24.dp)
-                        .align(Alignment.BottomCenter),
-                ) {
-                    TextFieldWithLabel(
-                        labelResId = R.string.barcode_scanner_paste_xpub_key,
-                        onValueChange = { value ->
-                            if (value.startsWith("xpub")) {
-                                onValidXpubKey(value)
-                            }
-                        },
-                    )
-                }
-
-            }
-        }
-    }
-
-    @Composable
-    fun CameraOverlay(modifier: Modifier = Modifier) {
-        Box(
-            modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center
-        ) {
-            Box(modifier = Modifier.matchParentSize(), content = {
-                Canvas(modifier = Modifier.fillMaxSize()) {
-                    clipPath(
-                        path = Path().apply {
-                            addRect(
-                                Rect(
-                                    left = (size.width - 250.dp.toPx()) / 2,
-                                    top = (size.height - 250.dp.toPx()) / 2,
-                                    right = (size.width + 250.dp.toPx()) / 2,
-                                    bottom = (size.height + 250.dp.toPx()) / 2
-                                )
-                            )
-                        }, clipOp = ClipOp.Difference
-                    ) {
-                        drawRect(Color.Black.copy(alpha = 0.8f))
-                    }
-                }
-            })
-
-            Box(
+            Column(
                 modifier = Modifier
-                    .size(250.dp)
-                    .border(2.dp, Color.White, RectangleShape)
-            )
+                    .fillMaxSize()
+                    .background(Black),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                TopPanel()
+                Spacer(modifier = Modifier.height(40.dp))
+                PreviewViewComposable()
+                EnterQRCodePanel()
+                Spacer(modifier = Modifier.weight(1f))
+                HelpButton()
+            }
         }
     }
 
@@ -128,6 +104,56 @@ class BarcodeScannerActivity : ComponentActivity() {
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
+    }
+
+    private fun onHelpButtonClick() {
+        //TODO
+    }
+
+    @Composable
+    fun TopPanel() {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            IconButton(
+                onClick = { finish() },
+                modifier = Modifier.padding(vertical = 10.dp, horizontal = 16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = White
+                )
+            }
+            Text(
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+                text = stringResource(id = R.string.title_connect_wallet),
+                style = TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    brush = textGradient(OceanGreen, LightSkyBlue)
+                )
+            )
+        }
+    }
+
+    @Composable
+    fun EnterQRCodePanel() {
+        TextFieldWithLabel(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 38.5.dp),
+            labelResId = R.string.barcode_scanner_paste_qr_code,
+            labelStyle = qrLabelStyle,
+            placeholderResId = R.string.barcode_placeholder_text,
+            placeholderStyle = placeholderStyle,
+            textfieldBackgroundColor = Gray23,
+            onValueChange = { value ->
+                if (value.startsWith("xpub")) {
+                    onValidXpubKey(value)
+                }
+            },
+        )
     }
 
     @Composable
@@ -175,7 +201,10 @@ class BarcodeScannerActivity : ComponentActivity() {
                     }
                 }, ContextCompat.getMainExecutor(context))
                 previewView
-            }, modifier = Modifier.fillMaxSize()
+            },
+            modifier = Modifier
+                .size(278.dp)
+                .clip(RoundedCornerShape(32.dp)),
         )
     }
 
@@ -207,6 +236,29 @@ class BarcodeScannerActivity : ComponentActivity() {
                 }
             }
             imageProxy.close()
+        }
+    }
+
+    @Composable
+    fun HelpButton() {
+        Box(
+            modifier = Modifier
+                .padding(16.dp)
+                .height(40.dp)
+                .fillMaxWidth()
+                .background(Black)
+                .clickable { onHelpButtonClick() },
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = stringResource(id = R.string.barcode_help_text),
+                style = TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    brush = textGradient(SteelPink, CerisePink)
+                )
+            )
         }
     }
 
