@@ -31,7 +31,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -46,10 +48,20 @@ import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.Executors
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
+import io.newm.core.theme.CerisePink
+import io.newm.core.theme.LightSkyBlue
+import io.newm.core.theme.OceanGreen
+import io.newm.core.theme.SteelPink
+import io.newm.core.theme.inter
+import io.newm.core.theme.raleway
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
+import io.newm.core.ui.utils.textGradient
 
 class BarcodeScannerActivity : ComponentActivity() {
 
@@ -57,33 +69,48 @@ class BarcodeScannerActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Box(modifier = Modifier.fillMaxSize()) {
-                PreviewViewComposable()
-                CameraOverlay()
+            Column(modifier = Modifier.fillMaxSize()) {
                 Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 24.dp, horizontal = 16.dp)
-                        .align(Alignment.TopStart),
-                    text = stringResource(id = R.string.barcode_scanner_connect_wallet),
-                    style = formTitleStyle
-                )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 24.dp)
-                        .align(Alignment.BottomCenter),
-                ) {
-                    TextFieldWithLabel(
-                        labelResId = R.string.barcode_scanner_paste_xpub_key,
-                        onValueChange = { value ->
-                            if (value.startsWith("xpub")) {
-                                onValidXpubKey(value)
-                            }
-                        },
+                    modifier = Modifier.padding(top = 16.dp, bottom = 19.dp),
+                    text = stringResource(id = R.string.title_connect_wallet),
+                    style = TextStyle(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        brush = textGradient(OceanGreen, LightSkyBlue)
                     )
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
+                    PreviewViewComposable()
+                    CameraOverlay()
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp, horizontal = 16.dp)
+                            .align(Alignment.TopStart),
+                        text = stringResource(id = R.string.barcode_scanner_connect_wallet),
+                        style = formTitleStyle
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 24.dp)
+                            .align(Alignment.BottomCenter),
+                    ) {
+                        TextFieldWithLabel(
+                            labelResId = R.string.barcode_scanner_paste_xpub_key,
+                            onValueChange = { value ->
+                                if (value.startsWith("xpub")) {
+                                    onValidXpubKey(value)
+                                }
+                            },
+                        )
+                    }
                 }
-
             }
         }
     }
@@ -97,17 +124,22 @@ class BarcodeScannerActivity : ComponentActivity() {
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     clipPath(
                         path = Path().apply {
-                            addRect(
-                                Rect(
-                                    left = (size.width - 250.dp.toPx()) / 2,
-                                    top = (size.height - 250.dp.toPx()) / 2,
-                                    right = (size.width + 250.dp.toPx()) / 2,
-                                    bottom = (size.height + 250.dp.toPx()) / 2
+                            addRoundRect(
+                                RoundRect(
+                                    left = (size.width - 278.dp.toPx()) / 2,
+                                    top = (size.height - 278.dp.toPx()) / 2,
+                                    right = (size.width + 278.dp.toPx()) / 2,
+                                    bottom = (size.height + 278.dp.toPx()) / 2,
+                                    topLeftCornerRadius = CornerRadius(16.dp.toPx()),
+                                    topRightCornerRadius = CornerRadius(16.dp.toPx()),
+                                    bottomLeftCornerRadius = CornerRadius(16.dp.toPx()),
+                                    bottomRightCornerRadius = CornerRadius(16.dp.toPx())
                                 )
                             )
                         }, clipOp = ClipOp.Difference
                     ) {
-                        drawRect(Color.Black.copy(alpha = 0.8f))
+                        drawRect(Color.Black)
+                        //.copy(alpha = 0.8f)
                     }
                 }
             })
