@@ -79,4 +79,7 @@
     <string name="view_more">VIEW MORE</string>
     <string name="wallet">Wallet</string>
     <string name="welcome">Hey %s 👋</string>
+    <string name="connect_wallet_label1">You don\'t have a wallet connected</string>
+    <string name="connect_wallet_label2">Connect to access all your songs</string>
+    <string name="connect_wallet_button_label">Connect Wallet</string>
 </resources>

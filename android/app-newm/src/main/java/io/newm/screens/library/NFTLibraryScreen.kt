@@ -15,16 +15,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
@@ -48,95 +50,119 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.slack.circuit.foundation.internal.BackHandler
 import io.newm.core.resources.R
-import io.newm.core.theme.Black90
 import io.newm.core.theme.CerisePink
-import io.newm.core.theme.Gray100
 import io.newm.core.theme.Gray16
-import io.newm.core.theme.Gray400
-import io.newm.core.theme.Gray500
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.StatusGreen
 import io.newm.core.theme.SteelPink
-import io.newm.core.theme.SystemRed
 import io.newm.core.theme.White
-import io.newm.core.theme.White50
 import io.newm.core.theme.inter
 import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
-import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.textGradient
 import io.newm.feature.musicplayer.MiniPlayer
+import io.newm.feature.musicplayer.MusicPlayerScreen
+import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
-import io.newm.screens.profile.ProfileBottomSheet
-import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
-import kotlin.math.roundToInt
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
+import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NFTLibraryScreen(
-    onPlayerClicked: (NFTTrack) -> Unit, // TODO open full player screen
-    goToProfile: () -> Unit,
 ) {
     val mediaPlayer = rememberMediaPlayer()
 
     mediaPlayer ?: return
 
-    val viewModel : NFTLibraryViewModel = getViewModel {
+    val viewModel: NFTLibraryViewModel = getViewModel {
         parametersOf(mediaPlayer)
     }
 
     val state by viewModel.state.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag(TAG_NFT_LIBRARY_SCREEN)
-            .padding(horizontal = 16.dp)
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+
+    BackHandler(
+        enabled = sheetState.isVisible
     ) {
-        Text(
-            text = stringResource(id = R.string.title_nft_library),
-            modifier = Modifier.padding(vertical = 16.dp),
-            style = TextStyle(
-                fontFamily = raleway,
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                brush = textGradient(SteelPink, CerisePink)
-            )
-        )
-        when (state) {
-            NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
-            NFTLibraryState.LinkWallet -> LinkWalletScreen(goToProfile)
-            NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
-            is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
-            is NFTLibraryState.Content -> {
-                val content = state as NFTLibraryState.Content
-                NFTTracks(
-                    nftTracks = content.nftTracks,
-                    streamTokenTracks = content.streamTokenTracks,
-                    showZeroResultsFound = content.showZeroResultFound,
-                    onQueryChange = viewModel::onQueryChange,
-                    onPlaySong = { viewModel.playSong(it) },
-                    onDownloadSong = viewModel::onDownloadSong,
-                    onPlayerClicked = onPlayerClicked
-                )
-            }
+        coroutineScope.launch {
+            sheetState.hide()
         }
     }
 
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        sheetContent = {
+            MusicPlayerScreen(
+                onNavigateUp = {
+                    coroutineScope.launch {
+                        sheetState.hide()
+                    }
+                })
+        }) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(TAG_NFT_LIBRARY_SCREEN)
+                .systemBarsPadding()
+                .padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.title_nft_library),
+                modifier = Modifier.padding(vertical = 16.dp),
+                style = TextStyle(
+                    fontFamily = raleway,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 32.sp,
+                    brush = textGradient(SteelPink, CerisePink)
+                )
+            )
+            when (state) {
+                NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
+                NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
+                    viewModel.connectWallet(
+                        xpubKey
+                    )
+                }
+                NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
+                is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
+                is NFTLibraryState.Content -> {
+                    val content = state as NFTLibraryState.Content
+                    NFTTracks(
+                        nftTracks = content.nftTracks,
+                        streamTokenTracks = content.streamTokenTracks,
+                        showZeroResultsFound = content.showZeroResultFound,
+                        onQueryChange = viewModel::onQueryChange,
+                        onPlaySong = { viewModel.playSong(it) },
+                        onDownloadSong = viewModel::onDownloadSong,
+                        onPlayerClicked = {
+                            coroutineScope.launch {
+                                sheetState.show()
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
 }
 
 
@@ -148,117 +174,88 @@ fun NFTTracks(
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: (String) -> Unit,
-    onPlayerClicked: (NFTTrack) -> Unit,
+    onPlayerClicked: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
+    Box(modifier = Modifier.fillMaxSize()) {
 
-
-    Column {
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(state = rememberScrollState())
+                .fillMaxSize()
                 .testTag(TAG_NFT_LIBRARY_SCREEN)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                SearchBar(
-                    placeholderResId = R.string.library_search,
+            item {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f),
-                    onQueryChange = onQueryChange
-                )
-                IconButton(
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
-                    onClick = { scope.launch { sheetState.show() } }
+                        .padding(bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_library_filter),
-                        contentDescription = "Filter",
+                    SearchBar(
+                        placeholderResId = R.string.library_search,
                         modifier = Modifier
-                            .clickable { scope.launch { sheetState.show() } }
-                            .drawWithBrush(LibraryBrush)
+                            .fillMaxWidth()
+                            .weight(1f),
+                        onQueryChange = onQueryChange
                     )
+                    IconButton(
+                        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
+                        onClick = { scope.launch { sheetState.show() } }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_library_filter),
+                            contentDescription = "Filter",
+                            modifier = Modifier
+                                .clickable { scope.launch { sheetState.show() } }
+                                .drawWithBrush(LibraryBrush)
+                        )
+                    }
                 }
             }
             when {
-                showZeroResultsFound -> ZeroSearchResults()
+                showZeroResultsFound -> item { ZeroSearchResults() }
+
                 nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
-                    Text(
-                        text = "Stream Tokens",
-                        modifier = Modifier.padding(vertical = 16.dp),
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
-                            color = White
-                        )
-                    )
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Gray16)
-                    ) {
-                        Column(
+                    items(nftTracks + streamTokenTracks, key = { track ->
+                        // Use the unique ID as the key
+                        track.id
+                    }) { track ->
+                        Box(
                             modifier = Modifier
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                                .background(Gray16)
                         ) {
-                            streamTokenTracks.forEach { track ->
-                                TrackRowItemWrapper(
-                                    track = track,
-                                    onPlaySong = onPlaySong,
-                                    onDownloadSong = { onDownloadSong(track.id) }
-                                )
-                            }
-                        }
-                    }
-                    Text(
-                        text = "NFT Tracks",
-                        modifier = Modifier.padding(vertical = 16.dp),
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
-                            color = White
-                        )
-                    )
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Gray16)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            nftTracks.forEach { track ->
-                                TrackRowItemWrapper(
-                                    track = track,
-                                    onPlaySong = onPlaySong,
-                                    onDownloadSong = { onDownloadSong(track.id) }
-                                )
-                            }
+                            TrackRowItemWrapper(
+                                track = track,
+                                onPlaySong = onPlaySong,
+                                onDownloadSong = { onDownloadSong(track.id) }
+                            )
                         }
                     }
                 }
-
+            }
+            // Add a spacer as the last item, with the same height as a track item.
+            item {
+                Spacer(modifier = Modifier.height(64.dp))
             }
         }
-        MiniPlayer()
-        Spacer(
+        Column(
             modifier = Modifier
-                .height(2.dp)
+                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.surface)
-        )
+        ) {
+            MiniPlayer(
+                modifier = Modifier
+                    .clickable { onPlayerClicked() } // replace with current song or drop param altogether
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(2.dp)
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.surface)
+            )
+        }
     }
-
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -272,8 +269,8 @@ private fun TrackRowItemWrapper(
     val deltaX = with(LocalDensity.current) { 82.dp.toPx() }
     Box(
         Modifier
-            .height(56.dp)
-            .padding(vertical = 4.dp)
+            .height(64.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .swipeable(
                 state = swipeableState,
@@ -283,7 +280,7 @@ private fun TrackRowItemWrapper(
                 anchors = mapOf(
                     0f to false,
                     deltaX to true,
-                )
+                ),
             )
     ) {
         if (!track.isDownloaded) {
@@ -319,7 +316,7 @@ private fun TrackRowItem(
         AsyncImage(
             model = track.imageUrl,
             modifier = Modifier
-                .size(40.dp)
+                .size(48.dp)
                 .clip(RoundedCornerShape(4.dp)),
             contentScale = ContentScale.Crop,
             contentDescription = null,
@@ -353,14 +350,5 @@ private fun TrackRowItem(
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = "x${track.amount}",
-            fontFamily = inter,
-            fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
-            color = GraySuit,
-            minLines = 1,
-        )
     }
 }

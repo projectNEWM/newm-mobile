@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @FlowPreview
@@ -96,6 +97,12 @@ class NFTLibraryViewModel(
         musicPlayer.apply {
             seekTo(trackIndex, 0)
             play()
+        }
+    }
+
+    fun connectWallet(xpubKey: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            connectWalletUseCase.connect(xpubKey)
         }
     }
 }

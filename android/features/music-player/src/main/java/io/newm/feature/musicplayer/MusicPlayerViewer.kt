@@ -9,13 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,9 +42,8 @@ import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
-import io.newm.feature.musicplayer.service.MusicPlayer
+import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.shared.public.models.NFTTrack
 
 private val playbackTimeStyle = TextStyle(
     fontSize = 12.sp,
@@ -58,14 +57,18 @@ internal val MusicPlayerBrush = Brush.horizontalGradient(listOf(DarkViolet, Dark
 
 @Composable
 internal fun MusicPlayerViewer(
-    song: NFTTrack,
+    modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
     playbackStatus: PlaybackStatus,
     onEvent: (PlaybackUiEvent) -> Unit,
 ) {
-    Box {
+    val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
+
+    Box(
+        modifier = modifier,
+    ) {
         AsyncImage(
-            model = song.imageUrl,
+            model = song.artworkUri,
             modifier = Modifier
                 .fillMaxSize(),
             contentScale = ContentScale.Crop,
@@ -73,7 +76,8 @@ internal fun MusicPlayerViewer(
         )
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .safeDrawingPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -94,7 +98,7 @@ internal fun MusicPlayerViewer(
                 fontSize = 24.sp,
             )
             Text(
-                text = song.artists.first(),
+                text = song.artist,
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
                 color = White,
                 fontFamily = inter,
@@ -105,26 +109,6 @@ internal fun MusicPlayerViewer(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
-}
-
-@Composable
-fun MusicPlayerControls(
-    mediaPlayer: MusicPlayer? = rememberMediaPlayer(),
-) {
-    mediaPlayer ?: return
-
-    val playbackStatus by mediaPlayer.playbackStatus.collectAsState()
-
-    MusicPlayerControls(playbackStatus, onEvent = { playbackUiEvent ->
-        when (playbackUiEvent) {
-            PlaybackUiEvent.Next -> mediaPlayer.next()
-            PlaybackUiEvent.Pause -> mediaPlayer.pause()
-            PlaybackUiEvent.Play -> mediaPlayer.play()
-            PlaybackUiEvent.Previous -> mediaPlayer.previous()
-            PlaybackUiEvent.Repeat -> mediaPlayer.repeat()
-            is PlaybackUiEvent.Seek -> mediaPlayer.seekTo(playbackUiEvent.position)
-        }
-    })
 }
 
 @Composable

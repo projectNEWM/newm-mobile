@@ -7,6 +7,8 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 
 enum class AppPermission(val manifestName: String) {
@@ -49,3 +51,35 @@ fun rememberRequestPermissionIntent(onGranted: () -> Unit, onDismiss: () -> Unit
             }
         }
     )
+
+@Composable
+fun PermissionHandler(
+    appPermission: AppPermission,
+    onPermissionGranted: () -> Unit,
+    onPermissionDenied: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            onPermissionGranted()
+        } else {
+            onPermissionDenied()
+        }
+    }
+
+    content()
+
+    SideEffect {
+        val permissionStatus = ContextCompat.checkSelfPermission(
+            context,
+            appPermission.manifestName
+        )
+        when (permissionStatus) {
+            PackageManager.PERMISSION_GRANTED -> onPermissionGranted()
+            else -> launcher.launch(appPermission.manifestName)
+        }
+    }
+}

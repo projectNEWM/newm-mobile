@@ -31,7 +31,5 @@ sealed class Screen(val route: String) {
 
     data object BarcodeScanner : Screen("barcode-scanner")
 
-    data object MusicPlayer : Screen("music-player/{songId}") {
-        fun routeOf(songId: String) = "music-player/$songId"
-    }
+    data object MusicPlayer : Screen("music-player/{songId}")
 }

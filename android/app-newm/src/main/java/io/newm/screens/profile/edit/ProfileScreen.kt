@@ -47,6 +47,7 @@ fun ProfileRoute(
                 onShowDocuments = {}, //TODO: Link the appropriate page
                 onShowAskTheCommunity = {}, //TODO: Link the appropriate page
                 onShowFaq = {}, //TODO: Link the appropriate page
+                onConnectWallet = {} //TODO: Link to appropriate page
             )
         }
     }
@@ -63,6 +64,7 @@ fun ProfileScreen(
     onShowDocuments: () -> Unit,
     onShowAskTheCommunity: () -> Unit,
     onShowFaq: () -> Unit,
+    onConnectWallet: () -> Unit
 ) {
     var updatedProfile by remember { mutableStateOf(user) }
     val isModified = user != updatedProfile
@@ -131,7 +133,8 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(40.dp))
             ProfileForm(
                 profile = updatedProfile,
-                onProfileUpdated = { updatedProfile = it }
+                onProfileUpdated = { updatedProfile = it },
+                onConnectWallet = onConnectWallet
             )
         }
     }
