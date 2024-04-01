@@ -46,7 +46,7 @@ struct PlayQueue {
 		}
 	}
 	
-	@UserDefault(defaultValue: .artist(ascending: true)) var sortCriteria: AudioPlayerSort {
+	@UserDefault(defaultValue: .artist(ascending: true)) var sortCriteria: Sort {
 		didSet {
 			applySortingToCurrentQueue()
 		}

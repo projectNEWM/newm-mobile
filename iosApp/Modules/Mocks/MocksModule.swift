@@ -13,19 +13,23 @@ final public class MocksModule: Module {
 	public func registerAllMockedServices(mockResolver: Resolver = .mock) {
 		mockResolver.register {
 			MockUserDetailsUseCase() as UserDetailsUseCase
-		}
+		}.scope(.cached)
 		
 		mockResolver.register {
 			MockConnectWalletUseCase() as ConnectWalletUseCase
-		}.scope(.application)
+		}.scope(.cached)
 		
 		mockResolver.register {
 			MockChangePasswordUseCase() as ChangePasswordUseCase
-		}
+		}.scope(.cached)
 		
 		mockResolver.register {
 			MockErrorLogger() as ErrorReporting
-		}
+		}.scope(.cached)
+		
+		mockResolver.register {
+			MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
+		}.scope(.cached)
 	}
 #endif
 }

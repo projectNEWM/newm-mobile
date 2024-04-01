@@ -47,37 +47,3 @@ data class NFTTrack(
     val moods: List<String> = emptyList(),
     val isDownloaded: Boolean = false,
 )
-
-@Serializable
-enum class SortOption(val description: String) {
-    TitleAscending("Title Ascending"),
-    TitleDescending("Title Descending"),
-    ArtistAscending("Artist Ascending"),
-    ArtistDescending("Artist Descending"),
-    LengthAscending("Length Ascending"),
-    LengthDescending("Length Descending");
-
-    fun compare(s1: NFTTrack, s2: NFTTrack): Int {
-        return when (this) {
-            TitleAscending -> s1.title.compareTo(s2.title)
-            TitleDescending -> s2.title.compareTo(s1.title)
-            ArtistAscending -> s1.artists.firstOrNull()?.compareTo(s2.artists.firstOrNull() ?: "") ?: -1
-            ArtistDescending -> s2.artists.firstOrNull()?.compareTo(s1.artists.firstOrNull() ?: "") ?: -1
-            LengthAscending -> s1.duration.compareTo(s2.duration)
-            LengthDescending -> s2.duration.compareTo(s1.duration)
-        }
-    }
-}
-
-@Serializable
-data class FilterOptions(var searchText: String = "", var maxLength: Int? = null) {
-    fun filter(track: NFTTrack): Boolean {
-        val searchCriteriaMet = if (searchText.isEmpty()) true else {
-            track.title.lowercase().contains(searchText.lowercase()) ||
-                    track.artists.any { artist -> artist.lowercase().contains(searchText.lowercase()) }
-        }
-        val lengthCriteriaMet = maxLength?.let { track.duration <= it } ?: true
-
-        return searchCriteriaMet && lengthCriteriaMet
-    }
-}

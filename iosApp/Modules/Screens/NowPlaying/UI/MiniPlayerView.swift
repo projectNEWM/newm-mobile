@@ -69,7 +69,7 @@ import shared
 struct MiniPlayerView_Previews: PreviewProvider {
 	static var previews: some View {
 		AudioPlayerModule.shared.registerAllServices()
-		Resolver.resolve(VLCAudioPlayer.self).setTracks([NFTTrackMocksKt.mockTracks.first!])
+		Resolver.resolve(VLCAudioPlayer.self).setTracks([NFTTrack.mocks.first!])
 		return ZStack {
 			Color.white
 			MiniPlayerView()

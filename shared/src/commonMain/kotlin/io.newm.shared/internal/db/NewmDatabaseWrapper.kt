@@ -11,6 +11,5 @@ class NewmDatabaseWrapper(private val instance: NewmDatabase?) {
     fun clear() {
         invoke().userQueries.deleteAll()
         invoke().nFTTrackQueries.deleteAll()
-        invoke().userPreferencesQueries.deleteAll()
     }
 }

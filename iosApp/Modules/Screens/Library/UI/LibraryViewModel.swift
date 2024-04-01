@@ -16,7 +16,7 @@ class LibraryViewModel: ObservableObject {
 		set { audioPlayer.durationFilter = newValue }
 		get { audioPlayer.durationFilter }
 	}
-	var sort: AudioPlayerSort { 
+	var sort: Sort { 
 		set { audioPlayer.sort = newValue }
 		get { audioPlayer.sort }
 	}
@@ -55,6 +55,13 @@ class LibraryViewModel: ObservableObject {
 			}
 			.store(in: &cancels)
 		
+		Task { [weak self] in
+			guard let self else { return }
+			for await error in audioPlayer.errors.values {
+				errors.append(error)
+			}
+		}
+			
 		Task {
 			await refresh()
 		}

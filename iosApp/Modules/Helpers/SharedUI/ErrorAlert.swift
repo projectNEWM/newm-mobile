@@ -33,6 +33,6 @@ public extension View {
 	
 	@ViewBuilder
 	func errorAlert(message: String?, onDismiss: @escaping () -> () = {}) -> some View {
-		newmAlert(title: "Error", message: message, onDismiss: onDismiss)
+		newmAlert(title: message != nil ? "Error" : nil, message: message, onDismiss: onDismiss)
 	}
 }

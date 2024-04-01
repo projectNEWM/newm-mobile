@@ -69,12 +69,7 @@ extension MainView {
 	}
 	
 	private var showMiniAudioPlayer: Bool {
-		switch audioPlayer.state {
-		case .buffering, .playing, .paused:
-			return true
-		default:
-			return false
-		}
+		audioPlayer.currentTrack != nil
 	}
 	
 	@ViewBuilder

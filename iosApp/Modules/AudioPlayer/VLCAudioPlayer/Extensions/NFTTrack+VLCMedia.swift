@@ -7,7 +7,7 @@ extension NFTTrack {
 		let media = VLCMedia(url: fileUrl)
 		media.metaData.artist = artists.joined(separator: ", ")
 		media.metaData.title = title
-		media.metaData.artworkURL = URL(string: imageUrl)!
+		media.metaData.artworkURL = URL(string: imageUrl)
 		return media
 	}
 }

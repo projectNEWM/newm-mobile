@@ -1,7 +1,7 @@
 import Foundation
 import shared
 
-public enum AudioPlayerSort: Codable, Equatable {
+public enum Sort: Codable, Equatable {
 	case title(ascending: Bool)
 	case artist(ascending: Bool)
 	case duration(ascending: Bool)
@@ -34,8 +34,8 @@ public enum AudioPlayerSort: Codable, Equatable {
 	}
 }
 
-extension AudioPlayerSort: CaseIterable {
-	public static var allCases: [AudioPlayerSort] {
+extension Sort: CaseIterable {
+	public static var allCases: [Sort] {
 		[
 			.artist(ascending: true),
 			.artist(ascending: false),

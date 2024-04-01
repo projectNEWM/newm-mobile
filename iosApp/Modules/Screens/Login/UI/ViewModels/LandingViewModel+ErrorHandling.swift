@@ -11,7 +11,7 @@ extension LandingViewModel {
 		if let error = error.kmmException {
 			handleKotlinError(error)
 		} else {
-			self.errors.append(error.newmError)
+			errors.append(error.newmError)
 		}
 	}
 	

@@ -15,8 +15,6 @@ struct LibraryView: View {
 	
 	public var body: some View {
 		NavigationView {
-			EmptyView()
-			EmptyView()
 			Group {
 				if viewModel.showLoading {
 					loadingView
@@ -254,7 +252,7 @@ struct LibraryView: View {
 	}
 	
 	@ViewBuilder
-	private func rightView(for sort: AudioPlayerSort?) -> some View {
+	private func rightView(for sort: Sort?) -> some View {
 		switch sort {
 		case
 				.artist(let ascending) where ascending == true,
@@ -273,37 +271,31 @@ struct LibraryView: View {
 }
 
 #if DEBUG
-struct LibraryView_Previews: PreviewProvider {
-	static var previews: some View {
-		LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
-		Resolver.root = Resolver.mock
-		let mockResolver = Resolver(child: .root)
-		mockResolver.register {
-			let useCase = Resolver.mock.resolve(ConnectWalletUseCase.self)
-			useCase.connect(xpub: "xpub3833")
-			return useCase as ConnectWalletUseCase
-		}
-		Resolver.root = mockResolver
-		return Group {
-			LibraryView()
-			LibraryView()
-				.row(for: NFTTrackMocksKt.mockTracks.first!)
-				.padding()
-				.previewDisplayName("Row")
-		}
-		.preferredColorScheme(.dark)
-		.tint(.white)
+#Preview {
+	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
+	Resolver.root = Resolver.mock
+	let mockResolver = Resolver(child: .root)
+	mockResolver.register {
+		let useCase = Resolver.mock.resolve(ConnectWalletUseCase.self)
+		useCase.connect(xpub: "xpub3833")
+		return useCase as ConnectWalletUseCase
 	}
+	Resolver.root = mockResolver
+	return Group {
+		LibraryView()
+		LibraryView()
+			.row(for: NFTTrack.mocks.first!)
+	}
+	.preferredColorScheme(.dark)
+	.tint(.white)
 }
 
-struct LibraryView_Previews2: PreviewProvider {
-	static var previews: some View {
-		LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
-		Resolver.root = Resolver.mock
-		return LibraryView(showFilter: true)
-			.preferredColorScheme(.dark)
-			.tint(.white)
-			.background(.black)
-	}
+#Preview {
+	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
+	Resolver.root = Resolver.mock
+	return LibraryView(showFilter: true)
+		.preferredColorScheme(.dark)
+		.tint(.white)
+		.background(.black)
 }
 #endif

@@ -23,19 +23,21 @@ class LandingViewModel: ObservableObject {
 	@Injected private var logInUseCase: any LoginUseCase
 	@Injected private var signUpUseCase: any SignupUseCase
 	@Injected private var resetPasswordUseCase: any ResetPasswordUseCase
+	@Injected private var errorLogger: ErrorReporting
 	private var recaptcha: RecaptchaClient?
 	
 	private let loginFieldValidator = LoginFieldValidator()
 	
 	init() {
 		Task { [weak self] in
+			guard let self else { return }
 			do {
 				let client = try await Recaptcha.getClient(withSiteKey: EnvironmentVariable.recaptchaKey.value)
-				self?.recaptcha = client
+				recaptcha = client
 			} catch let error as RecaptchaError {
-				Resolver.resolve(ErrorReporting.self).logError("RecaptchaClient creation error: \(String(describing: error.errorMessage)).")
+				errorLogger.logError("RecaptchaClient creation error: \(String(describing: error.errorMessage)).")
 			} catch {
-				Resolver.resolve(ErrorReporting.self).logError("Unknown RecaptchaClient creation error: \(String(describing: error)).")
+				errorLogger.logError("Unknown RecaptchaClient creation error: \(String(describing: error)).")
 			}
 		}
 	}
@@ -65,7 +67,8 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await logInUseCase.logIn(email: email, password: password, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.loginEmail.recaptchaAction) ?? "")
+				let recaptcha = try await recaptcha?.execute(withAction: HumanVerificationAction.loginEmail.recaptchaAction) ?? ""
+				try await logInUseCase.logIn(email: email, password: password, humanVerificationCode: recaptcha)
 			} catch {
 				handleError(error)
 			}

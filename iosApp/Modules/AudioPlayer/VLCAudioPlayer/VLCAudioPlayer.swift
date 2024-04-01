@@ -19,7 +19,7 @@ public class VLCAudioPlayer: ObservableObject {
 	static let sharedPlayer = VLCAudioPlayer()
 	
 	private var mediaPlayer: VLCMediaPlayer
-	@Published private var playQueue: PlayQueue = PlayQueue()
+	@Published private var playQueue = PlayQueue()
 	@Published private var fileManager = FileManagerService()
 	lazy private var delegate: VLCAudioPlayerDelegate = VLCAudioPlayerDelegate()
 	private var cancels = Set<AnyCancellable>()
@@ -27,6 +27,9 @@ public class VLCAudioPlayer: ObservableObject {
 	@MainActor
 	@Published public private(set) var loadingProgress: [NFTTrack: Double] = [:]
 	
+	private var _errors = PassthroughSubject<Error, Never>()
+	public var errors: AnyPublisher<Error, Never> { _errors.eraseToAnyPublisher() }
+
 	public var state: PlaybackState {
 		if mediaPlayer.isPlaying {
 			return .playing
@@ -46,7 +49,6 @@ public class VLCAudioPlayer: ObservableObject {
 	public var artworkUrl: URL? { mediaPlayer.media?.metaData.artworkURL }
 	public var willPlay: Bool { mediaPlayer.willPlay }
 	@Injected var errorReporter: any ErrorReporting
-	public var errors = ErrorSet()
 		
 	public var textFilter: String? {
 		get { playQueue.textFilter }
@@ -68,7 +70,7 @@ public class VLCAudioPlayer: ObservableObject {
 		set { playQueue.repeatMode = newValue }
 	}
 	
-	public var sort: AudioPlayerSort {
+	public var sort: Sort {
 		get { playQueue.sortCriteria }
 		set { playQueue.sortCriteria = newValue }
 	}
@@ -95,15 +97,11 @@ public class VLCAudioPlayer: ObservableObject {
 				if mediaPlayer.state == .ended, let _ = playQueue.nextTrack() {
 					playCurrentTrackInQueue()
 				} else if mediaPlayer.state == .error {
-					//TODO: this isn't getting hit when a song fails to load
-					errors.append(NEWMError(errorDescription: "Unable to load \(currentTrack?.title ?? "song")", failureReason: nil, recoverySuggestion: nil, underlyingError: nil))
+					_errors.send("Unable to load \(currentTrack?.title ?? "song")")
 				}
 				DispatchQueue.main.async { [weak self] in
 					self?.objectWillChange.send()
 				}
-				print("player state: \(VLCMediaPlayerStateToString(mediaPlayer.state))")
-				print("media state: \(mediaPlayer.media?.state.description ?? "")")
-				print("mediaplayer isplaying: \(isPlaying)")
 			}
 		}
 	}
@@ -131,13 +129,13 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	private func playCurrentTrackInQueue() {
-		guard let currentTrack else {
+		guard let currentTrack, let url = URL(string: currentTrack.audioUrl) else {
 			stop()
 			mediaPlayer.media = nil
 			return
 		}
 		
-		let currentTrackVLC = currentTrack.vlcMedia(fileUrl: fileManager.getPlaybackURL(for: URL(string: currentTrack.audioUrl)!))
+		let currentTrackVLC = currentTrack.vlcMedia(fileUrl: fileManager.getPlaybackURL(for: url))
 		
 		guard currentTrackVLC.url != mediaPlayer.media?.url else {
 			seek(toTime: 0)
@@ -195,8 +193,12 @@ public class VLCAudioPlayer: ObservableObject {
 			mediaPlayer.time = VLCTime(int: 0)
 			return
 		}
-		try? playQueue.seekToTrack(track)
-		playCurrentTrackInQueue()
+		do {
+			try playQueue.seekToTrack(track)
+			playCurrentTrackInQueue()
+		} catch {
+			_errors.send(error)
+		}
 	}
 	
 	public func seek(toTime time: Double) {
@@ -254,34 +256,8 @@ public class VLCAudioPlayer: ObservableObject {
 	public func cycleLengthSort() {
 		playQueue.cycleDurationSort()
 	}
-}
-
-fileprivate class VLCAudioPlayerDelegate: NSObject, VLCMediaPlayerDelegate {
-	var stream: AsyncStream<Void> {
-		AsyncStream { [weak self] continuation in
-			self?.continuation = continuation
-		}
-	}
-
-	private var continuation: AsyncStream<Void>.Continuation!
-	
-	func mediaPlayerStateChanged(_ aNotification: Foundation.Notification) {
-		continuation.yield()
-	}
-	
-	func mediaPlayerTimeChanged(_ aNotification: Foundation.Notification) {
-		continuation.yield()
-	}
-	
-	func mediaPlayerTitleChanged(_ aNotification: Foundation.Notification) {
-		continuation.yield()
-	}
-	
-	func mediaPlayerChapterChanged(_ aNotification: Foundation.Notification) {
-		continuation.yield()
-	}
 	
 	deinit {
-		continuation.finish()
+		stop()
 	}
 }

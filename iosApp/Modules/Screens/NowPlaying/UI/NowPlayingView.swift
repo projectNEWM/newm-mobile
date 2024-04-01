@@ -25,13 +25,13 @@ public struct NowPlayingView: View {
 		.background(background)
 		.backButton()
 		//TODO: make an "ErrorProviding" protocol, replace all these.
-		.alert(isPresented: .constant(audioPlayer.errors.currentError != nil), error: audioPlayer.errors.currentError) {
-			Button {
-				audioPlayer.errors.popFirstError()
-			} label: {
-				Text("Ok")
-			}
-		}
+//		.alert(isPresented: .constant(audioPlayer.errors.currentError != nil), error: audioPlayer.errors.currentError) {
+//			Button {
+//				audioPlayer.errors.popFirstError()
+//			} label: {
+//				Text("Ok")
+//			}
+//		}
 	}
 }
 
@@ -171,7 +171,7 @@ extension NowPlayingView {
 	AudioPlayerModule.shared.registerAllServices()
 	Resolver.root = .mock
 	@InjectedObject var audioPlayer: VLCAudioPlayer
-	audioPlayer.setTracks(Set(NFTTrackMocksKt.mockTracks), playFirstTrack: true)
+	audioPlayer.setTracks(Set(NFTTrack.mocks), playFirstTrack: true)
 	return Group {
 		NowPlayingView()
 			.preferredColorScheme(.dark)

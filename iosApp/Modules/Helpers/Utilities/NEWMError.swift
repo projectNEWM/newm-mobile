@@ -1,5 +1,7 @@
 import Foundation
 import shared
+import Resolver
+import ModuleLinker
 
 public struct NEWMError: LocalizedError {
 	public var errorDescription: String?
@@ -45,14 +47,20 @@ public struct ErrorSet {
 	}
 	
 	public init() {}
-		
+	
 	mutating
 	public func append(_ error: NEWMError) {
 		errors.append(error)
 	}
 	
 	mutating
+	public func append(_ error: Error) {
+		errors.append(NEWMError(errorDescription: "\(error)", failureReason: nil, recoverySuggestion: nil, underlyingError: error))
+	}
+	
+	mutating
 	public func popFirstError() {
+		guard errors.count > 0 else { return Resolver.resolve(ErrorReporting.self).logError("No error to pop") }
 		errors.removeFirst()
 	}
 }
