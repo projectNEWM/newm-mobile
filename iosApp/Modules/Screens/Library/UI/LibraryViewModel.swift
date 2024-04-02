@@ -10,19 +10,44 @@ import SharedExtensions
 
 @MainActor
 class LibraryViewModel: ObservableObject {
-	@Published var searchText: String = ""
+	@Published var searchText: String = "" {
+		didSet {
+			sortAndFilterTracks()
+		}
+	}
 	@Published var errors = ErrorSet()
 	var durationFilter: Int? {
-		set { audioPlayer.durationFilter = newValue }
+		set {
+			audioPlayer.durationFilter = newValue
+			sortAndFilterTracks()
+		}
 		get { audioPlayer.durationFilter }
 	}
-	var sort: Sort { 
-		set { audioPlayer.sort = newValue }
+	private(set) var sort: Sort {
+		set {
+			audioPlayer.sort = newValue
+			tracks.sort(by: newValue.comparator)
+		}
 		get { audioPlayer.sort }
 	}
 	
+	private func sortAndFilterTracks() {
+		filteredSortedTracks = tracks
+			.filter { track in
+				return (durationFilter.flatMap { track.duration > $0 } ?? true) && 
+				(searchText.isEmpty == false ? 
+				 (track.title.localizedCaseInsensitiveContains(searchText) || track.artists.first { $0.localizedCaseInsensitiveContains(searchText) } != nil) : true)
+			}
+			.sorted(by: sort.comparator)
+	}
+	
 	@Published private(set) var route: LibraryRoute?
-	@Published private(set) var tracks: [NFTTrack] = []
+	@Published private(set) var filteredSortedTracks: [NFTTrack] = []
+	@Published private var tracks: [NFTTrack] = [] {
+		didSet {
+			sortAndFilterTracks()
+		}
+	}
 	@Published private(set) var showLoading: Bool = true
 	@Published private(set) var showXPubScanner: Bool = false
 	var walletIsConnected: Bool { connectWalletXPubUseCase.isConnected() }
@@ -80,7 +105,6 @@ class LibraryViewModel: ObservableObject {
 		
 		do {
 			try await walletNFTTracksUseCase.refresh()
-			// TODO: split these up.
 			tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 		} catch {
 			logger.logError(error)
@@ -179,14 +203,36 @@ class LibraryViewModel: ObservableObject {
 	}
 	
 	func cycleTitleSort() {
-		audioPlayer.cycleTitleSort()
+		sort = switch sort {
+		case .title(let ascending) where ascending == true:
+				.title(ascending: false)
+		case .title(let ascending) where ascending == false:
+				.title(ascending: true)
+		default:
+				.title(ascending: true)
+		}
 	}
 	
 	func cycleArtistSort() {
-		audioPlayer.cycleArtistSort()
+		sort = switch sort {
+		case .artist(let ascending) where ascending == true:
+				.artist(ascending: false)
+		case .artist(let ascending) where ascending == false:
+				.artist(ascending: true)
+		default:
+				.artist(ascending: true)
+		}
 	}
 	
-	func cycleLengthSort() {
-		audioPlayer.cycleLengthSort()
+	func cycleDurationSort() {
+		sort = switch sort {
+		case .duration(let ascending) where ascending == true:
+				.duration(ascending: false)
+		case .duration(let ascending) where ascending == false:
+				.duration(ascending: true)
+		default:
+				.duration(ascending: true)
+		}
 	}
+
 }

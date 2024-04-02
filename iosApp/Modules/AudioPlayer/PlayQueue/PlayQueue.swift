@@ -178,7 +178,7 @@ struct PlayQueue {
 		if let prevItem {
 			currentIndex = currentQueue.firstIndex(of: prevItem)
 		}
-		print("sorted: \(currentQueue.map(\.id))")
+		print("sorted: \(currentQueue.map(\.title))")
 	}
 	
 	mutating
@@ -190,42 +190,6 @@ struct PlayQueue {
 				.none
 		case .none:
 				.all
-		}
-	}
-	
-	mutating
-	func cycleTitleSort() {
-		sortCriteria = switch sortCriteria {
-		case .title(let ascending) where ascending == true:
-				.title(ascending: false)
-		case .title(let ascending) where ascending == false:
-				.title(ascending: true)
-		default:
-				.title(ascending: true)
-		}
-	}
-	
-	mutating
-	func cycleArtistSort() {
-		sortCriteria = switch sortCriteria {
-		case .artist(let ascending) where ascending == true:
-				.artist(ascending: false)
-		case .artist(let ascending) where ascending == false:
-				.artist(ascending: true)
-		default:
-				.artist(ascending: true)
-		}
-	}
-	
-	mutating
-	func cycleDurationSort() {
-		sortCriteria = switch sortCriteria {
-		case .duration(let ascending) where ascending == true:
-				.duration(ascending: false)
-		case .duration(let ascending) where ascending == false:
-				.duration(ascending: true)
-		default:
-				.duration(ascending: true)
 		}
 	}
 }

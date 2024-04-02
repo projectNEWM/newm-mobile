@@ -245,18 +245,6 @@ public class VLCAudioPlayer: ObservableObject {
 		fileManager.clearFile(at: URL(string: song.audioUrl)!)
 	}
 	
-	public func cycleTitleSort() {
-		playQueue.cycleTitleSort()
-	}
-	
-	public func cycleArtistSort() {
-		playQueue.cycleArtistSort()
-	}
-	
-	public func cycleLengthSort() {
-		playQueue.cycleDurationSort()
-	}
-	
 	deinit {
 		stop()
 	}

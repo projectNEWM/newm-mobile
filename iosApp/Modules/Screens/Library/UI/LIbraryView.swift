@@ -59,7 +59,6 @@ struct LibraryView: View {
 						Image("Filter Icon")
 							.resizable()
 							.renderingMode(.template)
-							.tint(.white)
 							.frame(width: 30, height: 30)
 					})
 				}
@@ -114,7 +113,7 @@ struct LibraryView: View {
 	private var loadedView: some View {
 		NavigationView {
 			List {
-				ForEach(viewModel.tracks, id: \.id) { audioTrack in
+				ForEach(viewModel.filteredSortedTracks, id: \.id) { audioTrack in
 					row(for: audioTrack)
 						.frame(height: 40)
 						.padding(.leading, -6)
@@ -225,7 +224,7 @@ struct LibraryView: View {
 					}
 					
 					Button {
-						viewModel.cycleLengthSort()
+						viewModel.cycleDurationSort()
 					} label: {
 						filterRow(title: "Length") {
 							if case .duration = viewModel.sort {
