@@ -76,9 +76,9 @@ fun LibraryScreen(
             modifier = Modifier.padding(top = 16.dp, bottom = 19.dp),
             text = stringResource(id = R.string.title_library),
             style = TextStyle(
-                fontFamily = raleway,
+                fontFamily = inter,
                 fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
+                fontSize = 24.sp,
                 brush = textGradient(SteelPink, CerisePink)
             )
         )

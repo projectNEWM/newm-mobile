@@ -10,6 +10,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -93,7 +94,8 @@ object TextFieldWithLabelDefaults {
         val NON_UNDERLINED = KeyboardOptions(keyboardType = KeyboardType.Password)
 
         @Stable
-        val Digits = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, autoCorrect = false)
+        val Digits =
+            KeyboardOptions(keyboardType = KeyboardType.NumberPassword, autoCorrect = false)
     }
 }
 
@@ -101,11 +103,13 @@ object TextFieldWithLabelDefaults {
 fun TextFieldWithLabel(
     modifier: Modifier = Modifier,
     labelResId: Int? = null,
+    labelStyle: TextStyle = formLabelStyle,
     value: String? = null,
     onValueChange: (String) -> Unit,
     isPassword: Boolean = false,
     enabled: Boolean = true,
     placeholderResId: Int? = null,
+    placeholderStyle: TextStyle = LocalTextStyle.current,
     isError: Boolean = false,
     keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -120,7 +124,7 @@ fun TextFieldWithLabel(
         labelResId?.let {
             Text(
                 text = stringResource(id = labelResId),
-                style = formLabelStyle
+                style = labelStyle
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
@@ -149,7 +153,14 @@ fun TextFieldWithLabel(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
             enabled = enabled,
-            placeholder = placeholderResId?.let { { Text(text = stringResource(id = it)) } },
+            placeholder = placeholderResId?.let {
+                {
+                    Text(
+                        text = stringResource(id = it),
+                        style = placeholderStyle
+                    )
+                }
+            },
             isError = isError,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,

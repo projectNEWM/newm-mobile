@@ -4,9 +4,9 @@
     <string name="account">Account</string>
     <string name="app_name">Newm</string>
     <string name="artist_list_songs">%s Songs</string>
-    <string name="barcode_scanner_connect_wallet">Connect Wallet</string>
-    <string name="barcode_scanner_paste_xpub_key">OR USE THE XPUB KEY</string>
-    <string name="barcode_scanner_use_test_xpub_key">Connect Test XPUB Key</string>
+    <string name="barcode_scanner_paste_qr_code">OR PASTE QR CODE</string>
+    <string name="barcode_placeholder_text">Paste Here</string>
+    <string name="barcode_help_text">How can I connect a wallet?</string>
     <string name="buddy">buddy</string>
     <string name="community">Community</string>
     <string name="compose">Compose</string>
@@ -63,6 +63,7 @@
     <string name="title_just_for_you_music_carousel">JUST FOR YOU</string>
     <string name="title_just_released_music_carousel">JUST RELEASED</string>
     <string name="title_library">Library</string>
+    <string name="title_connect_wallet">Connect Wallet</string>
     <string name="title_nft_library">NFT Library</string>
     <string name="title_recently_played_music_carousel">RECENTLY PLAYED</string>
     <string name="title_saved_song_list">SAVED SONGS</string>
