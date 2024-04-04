@@ -11,7 +11,7 @@ public struct Gradients {
 	}
 	
 	public static var libraryGradient: [String] {
-		[NEWMColor.purple3, NEWMColor.pink3].hexStrings
+		[NEWMColor.main, NEWMColor.primary].hexStrings
 	}
 	
 	public static var walletGradient: [String] {
@@ -22,7 +22,7 @@ public struct Gradients {
 		[NEWMColor.purple, NEWMColor.pink].hexStrings
 	}
 	
-	public static var primaryPrimary: LinearGradient {
+	public static var mainPrimary: LinearGradient {
 		LinearGradient(
 			stops: [
 				Gradient.Stop(color: Color(red: 0.76, green: 0.25, blue: 0.94), location: 0.00),
@@ -38,4 +38,8 @@ public extension Array where Element == String {
 	var gradient: LinearGradient {
 		LinearGradient(colors: colors, startPoint: .leading, endPoint: .trailing)
 	}
+}
+
+#Preview {
+	Gradients.mainPrimary
 }

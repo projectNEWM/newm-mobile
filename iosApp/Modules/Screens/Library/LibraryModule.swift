@@ -22,6 +22,8 @@ public final class LibraryModule: Module {
 }
 
 #if DEBUG
+import AudioPlayer
+import Mocks
 extension LibraryModule {
     public func registerAllMockedServices(mockResolver: Resolver) {
 		mockResolver.register {
@@ -31,6 +33,12 @@ extension LibraryModule {
 		mockResolver.register {
 			MockConnectWalletUseCase() as ConnectWalletUseCase
 		}
+		
+		mockResolver.register {
+			MockErrorLogger() as ErrorReporting
+		}
+		
+		AudioPlayerModule.shared.registerAllServices()
 	}
 }
 #endif

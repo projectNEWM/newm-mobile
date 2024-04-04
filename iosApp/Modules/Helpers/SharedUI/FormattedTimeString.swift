@@ -36,7 +36,7 @@ public extension Double {
 
 public extension Optional<Double> {
 	var playbackTimeString: String {
-		Int(self ?? 0).playbackTimeString
+		flatMap { Int($0) }.playbackTimeString
 	}
 }
 

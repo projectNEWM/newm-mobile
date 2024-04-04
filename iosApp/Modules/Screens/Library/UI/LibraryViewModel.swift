@@ -10,14 +10,47 @@ import SharedExtensions
 
 @MainActor
 class LibraryViewModel: ObservableObject {
-	@Published var searchText: String = ""
+	@Published var searchText: String = "" {
+		didSet {
+			sortAndFilterTracks()
+		}
+	}
 	@Published var errors = ErrorSet()
-
+	var durationFilter: Int? {
+		set {
+			audioPlayer.durationFilter = newValue
+			sortAndFilterTracks()
+		}
+		get { audioPlayer.durationFilter }
+	}
+	private(set) var sort: Sort {
+		set {
+			audioPlayer.sort = newValue
+			tracks.sort(by: newValue.comparator)
+		}
+		get { audioPlayer.sort }
+	}
+	
+	private func sortAndFilterTracks() {
+		filteredSortedTracks = tracks
+			.filter { track in
+				return (durationFilter.flatMap { track.duration > $0 } ?? true) && 
+				(searchText.isEmpty == false ? 
+				 (track.title.localizedCaseInsensitiveContains(searchText) || track.artists.first { $0.localizedCaseInsensitiveContains(searchText) } != nil) : true)
+			}
+			.sorted(by: sort.comparator)
+	}
+	
 	@Published private(set) var route: LibraryRoute?
-	@Published private(set) var tracks: [NFTTrack] = []
+	@Published private(set) var filteredSortedTracks: [NFTTrack] = []
+	@Published private var tracks: [NFTTrack] = [] {
+		didSet {
+			sortAndFilterTracks()
+		}
+	}
 	@Published private(set) var showLoading: Bool = true
 	@Published private(set) var showXPubScanner: Bool = false
-	@Published private(set) var walletIsConnected: Bool = false
+	var walletIsConnected: Bool { connectWalletXPubUseCase.isConnected() }
 	
 	private var cancels: Set<AnyCancellable> = []
 	
@@ -27,14 +60,11 @@ class LibraryViewModel: ObservableObject {
 	@Injected private var logger: any ErrorReporting
 	
 	init() {
-		walletIsConnected = connectWalletXPubUseCase.isConnected()
-		
 		NotificationCenter.default.publisher(for: Notification().walletConnectionStateChanged)
 			.sink { [weak self] _ in
 				Task {
 					guard let self else { return }
-					self.walletIsConnected = self.connectWalletXPubUseCase.isConnected()
-					if self.connectWalletXPubUseCase.isConnected() {
+					if self.walletIsConnected {
 						await self.refresh()
 					} else {
 						self.tracks = []
@@ -49,18 +79,16 @@ class LibraryViewModel: ObservableObject {
 				self?.objectWillChange.send()
 			}
 			.store(in: &cancels)
-
+		
+		Task { [weak self] in
+			guard let self else { return }
+			for await error in audioPlayer.errors.values {
+				errors.append(error)
+			}
+		}
+			
 		Task {
 			await refresh()
-		}
-	}
-	
-	var filteredNFTTracks: [NFTTrack] {
-		guard searchText.isEmpty == false else {
-			return tracks
-		}
-		return tracks.filter {
-			$0.title.localizedCaseInsensitiveContains(searchText)
 		}
 	}
 	
@@ -77,8 +105,7 @@ class LibraryViewModel: ObservableObject {
 		
 		do {
 			try await walletNFTTracksUseCase.refresh()
-			// TODO: split these up.
-			tracks = try await walletNFTTracksUseCase.getAllNFTTracks() + walletNFTTracksUseCase.getAllStreamTokens()
+			tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
 		} catch {
 			logger.logError(error)
 			errors.append(NEWMError(errorDescription: "Unable to fetch songs.  Please try again."))
@@ -121,7 +148,7 @@ class LibraryViewModel: ObservableObject {
 	
 	func trackTapped(_ track: NFTTrack) {
 		if audioPlayer.playQueueIsEmpty {
-			audioPlayer.setPlayQueue(tracks, playFirstTrack: false)
+			audioPlayer.setTracks(Set(tracks), playFirstTrack: false)
 		}
 		audioPlayer.seek(toTrack: track)
 	}
@@ -174,4 +201,38 @@ class LibraryViewModel: ObservableObject {
 			.downloading
 		}
 	}
+	
+	func cycleTitleSort() {
+		sort = switch sort {
+		case .title(let ascending) where ascending == true:
+				.title(ascending: false)
+		case .title(let ascending) where ascending == false:
+				.title(ascending: true)
+		default:
+				.title(ascending: true)
+		}
+	}
+	
+	func cycleArtistSort() {
+		sort = switch sort {
+		case .artist(let ascending) where ascending == true:
+				.artist(ascending: false)
+		case .artist(let ascending) where ascending == false:
+				.artist(ascending: true)
+		default:
+				.artist(ascending: true)
+		}
+	}
+	
+	func cycleDurationSort() {
+		sort = switch sort {
+		case .duration(let ascending) where ascending == true:
+				.duration(ascending: false)
+		case .duration(let ascending) where ascending == false:
+				.duration(ascending: true)
+		default:
+				.duration(ascending: true)
+		}
+	}
+
 }

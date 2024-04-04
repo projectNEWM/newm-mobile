@@ -8,9 +8,7 @@ import Combine
 
 @testable import Profile
 
-let mockUser = UserMocksKt.mockUsers.first!
 let currentPassword = "currentPassword"
-let fetchLatency: Double = 0.1
 
 @MainActor
 final class ProfileViewModelTests: XCTestCase {
@@ -20,17 +18,21 @@ final class ProfileViewModelTests: XCTestCase {
 	private var connectWalletUseCase: MockConnectWalletUseCase!
 	private var changePasswordUseCase: MockChangePasswordUseCase!
 	private var errorLogger: MockErrorLogger!
+	private var mockUser: User!
 	
 	override func setUp() async throws {
 		try await super.setUp()
 		
-		userDetailsUseCase = MockUserDetailsUseCase(mockUser: mockUser, fetchLatency: fetchLatency)
-		connectWalletUseCase = MockConnectWalletUseCase()
-		changePasswordUseCase = MockChangePasswordUseCase()
-		errorLogger = MockErrorLogger()
-		
+		Resolver.reset()
 		Resolver.root = .mock
-		setUpDI()
+		MocksModule.shared.registerAllMockedServices()
+		
+		userDetailsUseCase = Resolver.resolve(UserDetailsUseCase.self) as! MockUserDetailsUseCase
+		connectWalletUseCase = Resolver.resolve(ConnectWalletUseCase.self) as! MockConnectWalletUseCase
+		changePasswordUseCase = Resolver.resolve(ChangePasswordUseCase.self) as! MockChangePasswordUseCase
+		errorLogger = Resolver.resolve(ErrorReporting.self) as! MockErrorLogger
+		mockUser = try! await userDetailsUseCase.fetchLoggedInUserDetails()
+		
 		profileViewModel = ProfileViewModel()
 		let (cancellable, expectation) = loadingToastCountExpectation(expected: [true, false], vm: profileViewModel)
 		await fulfillment(of: [expectation], timeout: 1)
@@ -84,25 +86,15 @@ final class ProfileViewModelTests: XCTestCase {
 	}
 	
 	func testWalletConnection() {
-		let walletConnectedExpectation = expectation(description: "walletConnected")
-		let walletDisconnectedExpectation = expectation(description: "walletDisconnected")
-		walletDisconnectedExpectation.expectedFulfillmentCount = 2
-		
-		let cancellable = profileViewModel.$isWalletConnected.sink { isWalletConnected in
-			if isWalletConnected {
-				walletConnectedExpectation.fulfill()
-			} else {
-				walletDisconnectedExpectation.fulfill()
-			}
-		}
-		
+		XCTAssertFalse(profileViewModel.isWalletConnected)
 		connectWalletUseCase.connect(xpub: "xpub")
 		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		wait(for: [walletConnectedExpectation], timeout: 1)
+		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+		XCTAssertTrue(profileViewModel.isWalletConnected)
 		profileViewModel.disconnectWallet()
 		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		wait(for: [walletDisconnectedExpectation], timeout: 1)
-		cancellable.cancel()
+		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+		XCTAssertFalse(profileViewModel.isWalletConnected)
 	}
 	
 	func testLoadUserErrors() async throws {
@@ -122,25 +114,5 @@ final class ProfileViewModelTests: XCTestCase {
 		await profileViewModel.save()
 		XCTAssertEqual(profileViewModel.errorAlert, error.errorDescription)
 		XCTAssertEqual(errorLogger.errorsLogged.first!.localizedDescription, error.localizedDescription)
-	}
-}
-
-private extension ProfileViewModelTests {
-	func setUpDI() {
-		Resolver.mock.register {
-			self.userDetailsUseCase as UserDetailsUseCase
-		}
-		
-		Resolver.mock.register {
-			self.connectWalletUseCase as ConnectWalletUseCase
-		}
-		
-		Resolver.mock.register {
-			self.changePasswordUseCase as ChangePasswordUseCase
-		}
-		
-		Resolver.mock.register {
-			self.errorLogger as ErrorReporting
-		}
 	}
 }

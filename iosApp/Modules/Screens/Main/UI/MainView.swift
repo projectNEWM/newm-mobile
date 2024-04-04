@@ -45,16 +45,14 @@ public struct MainView: View {
 		.onShake {
 			route = .debug
 		}
-		.alert("", isPresented: isPresent($viewModel.alertMessage), presenting: viewModel.alertMessage) { alertMessage in
-			Text(alertMessage)
-		}
+		.newmAlert(message: viewModel.alertMessage)
 	}
 }
 
 extension MainView {
 	@ViewBuilder
 	private var miniPlayerView: some View {
-		if showAudioPlayer {
+		if showMiniAudioPlayer {
 			VStack {
 				Spacer()
 				miniPlayerViewProvider.miniNowPlayingView()
@@ -67,16 +65,11 @@ extension MainView {
 	}
 	
 	private var miniPlayerHeight: CGFloat {
-		return showAudioPlayer ? 42 : 0
+		return showMiniAudioPlayer ? 42 : 0
 	}
 	
-	private var showAudioPlayer: Bool {
-		switch audioPlayer.state {
-		case .buffering, .ended, .playing, .paused, .opening:
-			return true
-		default:
-			return false
-		}
+	private var showMiniAudioPlayer: Bool {
+		audioPlayer.currentTrack != nil
 	}
 	
 	@ViewBuilder

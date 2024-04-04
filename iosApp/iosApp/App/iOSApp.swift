@@ -6,6 +6,8 @@ import shared
 import Kingfisher
 import Utilities
 
+private let useMocks = false
+
 @main
 struct iOSApp: App {
 	private let mainViewProvider: MainViewProviding
@@ -20,6 +22,10 @@ struct iOSApp: App {
 		
 		setUpAppearance()
 		setUpKingfisherErrorHandling()
+		
+		if useMocks {
+			Resolver.root = .mock
+		}
 	}
 	
 	var body: some Scene {

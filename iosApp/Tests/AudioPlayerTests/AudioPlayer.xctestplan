@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "01F4D1C3-5257-42EE-AAAE-4352CC6AEF8F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "76FFD1182B9554DF00D77309",
+        "name" : "AudioPlayerTests"
+      }
+    }
+  ],
+  "version" : 1
+}

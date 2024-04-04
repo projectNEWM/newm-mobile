@@ -63,6 +63,26 @@
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "76FFD1182B9554DF00D77309"
+               BuildableName = "AudioPlayerTests.xctest"
+               BlueprintName = "AudioPlayerTests"
+               ReferencedContainer = "container:iosApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "76452A332B5A2C760001F47E"
+               BuildableName = "ModuleLinkerTests.xctest"
+               BlueprintName = "ModuleLinkerTests"
+               ReferencedContainer = "container:iosApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

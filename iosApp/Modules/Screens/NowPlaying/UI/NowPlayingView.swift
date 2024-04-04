@@ -24,6 +24,14 @@ public struct NowPlayingView: View {
 		}
 		.background(background)
 		.backButton()
+		//TODO: make an "ErrorProviding" protocol, replace all these.
+//		.alert(isPresented: .constant(audioPlayer.errors.currentError != nil), error: audioPlayer.errors.currentError) {
+//			Button {
+//				audioPlayer.errors.popFirstError()
+//			} label: {
+//				Text("Ok")
+//			}
+//		}
 	}
 }
 
@@ -59,7 +67,6 @@ extension NowPlayingView {
 		VStack(spacing: 0) {
 			Slider(value: playbackTimeBinding, in: 0.0...Float(audioPlayer.duration ?? 300))
 				.tint(Gradients.loginGradient.gradient)
-				.padding(.bottom, -13)
 				.zIndex(1)
 			
 			VStack {
@@ -95,6 +102,7 @@ extension NowPlayingView {
 	private var playButton: some View {
 		PlayButton().padding([.trailing, .leading], 26)
 			.scaleEffect(CGSize(width: 1.5, height: 1.5))
+			.frame(width: 50, height: 50)
 	}
 	
 	@ViewBuilder
@@ -104,7 +112,7 @@ extension NowPlayingView {
 		} label: {
 			if audioPlayer.shuffle {
 				Image(systemName: "shuffle")
-					.foregroundStyle(Gradients.primaryPrimary)
+					.foregroundStyle(Gradients.mainPrimary)
 			} else {
 				Image(systemName: "shuffle")
 			}
@@ -122,6 +130,7 @@ extension NowPlayingView {
 				.tint(.white)
 		}
 		.scaleEffect(CGSize(width: 1.5, height: 1.5))
+		.disabled(audioPlayer.hasPrevTrack == false)
 	}
 	
 	@ViewBuilder
@@ -133,6 +142,7 @@ extension NowPlayingView {
 				.tint(.white)
 		}
 		.scaleEffect(CGSize(width: 1.5, height: 1.5))
+		.disabled(audioPlayer.hasNextTrack == false)
 	}
 	
 	@ViewBuilder
@@ -143,10 +153,10 @@ extension NowPlayingView {
 			switch audioPlayer.repeatMode {
 			case .all:
 				Image(systemName: "repeat")
-					.tint(Gradients.primaryPrimary)
+					.tint(Gradients.mainPrimary)
 			case .one:
 				Image(systemName: "repeat.1")
-					.tint(Gradients.primaryPrimary)
+					.tint(Gradients.mainPrimary)
 			case .none:
 				Image(systemName: "repeat")
 					.tint(.white)
@@ -156,20 +166,17 @@ extension NowPlayingView {
 	}
 }
 
-private extension NowPlayingView {
-	nonisolated static var playbackTimePlaceholder: String { "--:--" }
-}
-
-struct NowPlayingView_Previews: PreviewProvider {
-	static var previews: some View {
-		AudioPlayerModule.shared.registerAllServices()
-		@InjectedObject var audioPlayer: VLCAudioPlayer
-		return Group {
-			NowPlayingView()
-//				.preferredColorScheme(.dark)
-			NowPlayingView().controls
-		}.padding()
+#Preview {
+	AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .mock)
+	AudioPlayerModule.shared.registerAllServices()
+	Resolver.root = .mock
+	@InjectedObject var audioPlayer: VLCAudioPlayer
+	audioPlayer.setTracks(Set(NFTTrack.mocks), playFirstTrack: true)
+	return Group {
+		NowPlayingView()
+			.preferredColorScheme(.dark)
 	}
+	.padding()
 }
 
 func url(for testImage: ImageAsset) -> URL {

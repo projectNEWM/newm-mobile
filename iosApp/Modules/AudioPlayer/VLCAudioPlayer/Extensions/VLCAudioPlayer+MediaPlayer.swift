@@ -64,7 +64,7 @@ extension VLCAudioPlayer {
 			guard let self, let event = (event as? MPChangeRepeatModeCommandEvent) else {
 				return .commandFailed
 			}
-			repeatMode = event.repeatType.repeatMode
+			repeatMode = event.repeatType.repeatMode ?? .none
 			return .success
 		}
 		commandCenter.changeShuffleModeCommand.addTarget { [weak self] event in
@@ -107,7 +107,7 @@ extension VLCAudioPlayer {
 }
 
 private extension MPRepeatType {
-	var repeatMode: VLCAudioPlayer.RepeatMode? {
+	var repeatMode: RepeatMode? {
 		return switch self {
 		case .all: .all
 		case .off: nil
