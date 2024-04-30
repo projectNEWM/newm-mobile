@@ -2,30 +2,25 @@ package io.newm
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavHostController
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.Screen
 import io.newm.feature.login.screen.HomeScreen
-import io.newm.feature.login.screen.LoginScreen
 
 
 @Composable
 fun rememberNewmNavigator(
     circuitNavigator: Navigator,
-    navHostController: NavHostController,
     startHomeActivity: () -> Unit,
 ): Navigator = remember {
-    NewmNavigator(circuitNavigator, navHostController, startHomeActivity)
+    NewmNavigator(circuitNavigator, startHomeActivity)
 }
 
 private class NewmNavigator(
     private val circuitNavigator: Navigator,
-    private val navController: NavHostController,
     private val startHomeActivity: () -> Unit,
 ) : Navigator {
     override fun goTo(screen: Screen) {
         when (screen) {
-            is io.newm.screens.Screen -> navController.navigate(screen.route)
             is HomeScreen -> startHomeActivity()
             else -> circuitNavigator.goTo(screen)
         }
