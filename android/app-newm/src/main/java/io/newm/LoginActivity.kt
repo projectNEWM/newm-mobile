@@ -9,15 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.google.android.recaptcha.Recaptcha
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
-import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.retained.LocalRetainedStateRegistry
@@ -28,6 +23,7 @@ import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.LoginScreenUi
 import io.newm.feature.login.screen.ResetPasswordScreen
+import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
@@ -40,9 +36,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
-import io.newm.screens.Screen
 import io.newm.screens.Screen.LoginLandingScreen
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.utils.ui
 import kotlinx.coroutines.launch
@@ -139,20 +133,12 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun WelcomeToNewm(
-    onStartHomeActivity: () -> Unit,
-    navController: NavHostController = rememberNavController()
+    onStartHomeActivity: () -> Unit
 ) {
-    NavHost(navController = navController, startDestination = LoginLandingScreen.route) {
-        composable(LoginLandingScreen.route) {
-            val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
-            val circuitNavigator = rememberCircuitNavigator(backstack)
-            val newmNavigator =
-                rememberNewmNavigator(circuitNavigator, navController, onStartHomeActivity)
-            NavigableCircuitContent(newmNavigator, backstack)
-        }
-        composable(Screen.Signup.route) {
-            CircuitContent(screen = CreateAccountScreen)
-        }
-    }
+    val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
+    val circuitNavigator = rememberCircuitNavigator(backstack)
+    val newmNavigator = rememberNewmNavigator(circuitNavigator, onStartHomeActivity)
+
+    NavigableCircuitContent(newmNavigator, backstack)
 }
 
