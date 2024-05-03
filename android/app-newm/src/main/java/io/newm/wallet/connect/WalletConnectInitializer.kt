@@ -11,7 +11,10 @@ import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.constants.WalletConnectConstants
 import timber.log.Timber
 
-class WalletConnectInitializer(private val application: Application) {
+class WalletConnectInitializer(
+    private val application: Application,
+    private val sharedBuildConfig: NewmSharedBuildConfig
+) {
     private val TAG = "WalletConnectInitializer"
     fun initialize() {
         initializeCoreClient()
@@ -21,7 +24,7 @@ class WalletConnectInitializer(private val application: Application) {
     private fun initializeCoreClient() {
         val connectionType = ConnectionType.AUTOMATIC
         val relayUrl = "relay.walletconnect.com"
-        val serverUrl = "wss://$relayUrl?projectId=${NewmSharedBuildConfig.walletConnectProjectId}"
+        val serverUrl = "wss://$relayUrl?projectId=${sharedBuildConfig.walletConnectProjectId}"
         val appMetaData = Core.Model.AppMetaData(
             name = "NEWM",
             description = "Link your wallet to NEWM",

@@ -2,6 +2,7 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
@@ -55,10 +56,10 @@ fun initKoin(enableNetworkLogs: Boolean) = initKoin(enableNetworkLogs = enableNe
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
-    single { createHttpClient(get(), get(), get(), get(), enableNetworkLogs = enableNetworkLogs) }
+    single { createHttpClient(get(), get(), get(), get(), enableNetworkLogs = enableNetworkLogs, get()) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal Configurations
-    single { NewmSharedBuildConfig }
+    single { NewmSharedBuildConfigImpl }
     single { ConnectWalletManager(get()) }
     single { TokenManager(get()) }
     // Internal API Services
@@ -99,5 +100,6 @@ internal fun createHttpClient(
     repository: LogInRepository,
     tokenManager: TokenManager,
     enableNetworkLogs: Boolean,
+    buildConfig: NewmSharedBuildConfig,
 ): NetworkClientFactory =
-    NetworkClientFactory(httpClientEngine, json, repository, tokenManager, enableNetworkLogs)
+    NetworkClientFactory(httpClientEngine, json, repository, tokenManager, enableNetworkLogs, buildConfig)

@@ -24,6 +24,7 @@ import io.newm.screens.account.UserAccountViewModel
 import io.newm.screens.profile.edit.ProfileEditViewModel
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.config.NewmSharedBuildConfigImpl
 import kotlinx.coroutines.FlowPreview
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -41,12 +42,15 @@ val viewModule = module {
     factory { params -> CreateAccountScreenPresenter(params.get(), get(), get()) }
     factory { params -> LoginScreenPresenter(params.get(), get(), get()) }
     factory { params -> ResetPasswordScreenPresenter(params.get(), get(), get(), get()) }
+    single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl }
     single<GoogleSignInLauncher> {
+        val sharedBuildConfig = get<NewmSharedBuildConfig>()
+
         GoogleSignInLauncherImpl(
             GoogleSignIn.getClient(
                 androidContext(),
                 GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(NewmSharedBuildConfig.googleAuthClientId)
+                    .requestIdToken(sharedBuildConfig.googleAuthClientId)
                     .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
                     .requestEmail()
                     .build()
