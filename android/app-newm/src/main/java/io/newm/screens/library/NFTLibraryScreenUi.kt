@@ -1,4 +1,4 @@
-@file:OptIn(FlowPreview::class, ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class)
 
 package io.newm.screens.library
 
@@ -66,7 +66,6 @@ import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.public.models.NFTTrack
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -83,11 +82,10 @@ fun NFTLibraryScreenUi(
             .fillMaxSize()
             .testTag(TAG_NFT_LIBRARY_SCREEN)
             .statusBarsPadding()
-            .padding(horizontal = 16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.title_nft_library),
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier.padding(16.dp),
             style = TextStyle(
                 fontFamily = raleway,
                 fontWeight = FontWeight.Bold,
@@ -137,6 +135,7 @@ private fun NFTTracks(
 
         LazyColumn(
             modifier = Modifier
+                .padding(horizontal = 16.dp)
                 .fillMaxSize()
                 .testTag(TAG_NFT_LIBRARY_SCREEN)
         ) {
@@ -162,7 +161,6 @@ private fun NFTTracks(
                             painter = painterResource(id = R.drawable.ic_library_filter),
                             contentDescription = "Filter",
                             modifier = Modifier
-                                .clickable { scope.launch { sheetState.show() } }
                                 .drawWithBrush(LibraryBrush)
                         )
                     }
@@ -190,6 +188,7 @@ private fun NFTTracks(
                 }
             }
         }
+        SongFilterBottomSheet(sheetState)
     }
 }
 

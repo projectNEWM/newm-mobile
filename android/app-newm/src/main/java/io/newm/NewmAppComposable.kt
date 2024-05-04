@@ -4,8 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -26,11 +26,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,14 +72,17 @@ private val SearchIconGradient = iconGradient(DarkPink, BrightOrange)
 private val WalletIconGradient = iconGradient(OceanGreen, LightSkyBlue)
 private val MarketIconGradient = iconGradient(BrightOrange, YellowJacket)
 
+val LocalIsBottomBarVisible = compositionLocalOf { mutableStateOf(true) }
+
+@Composable
+internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun NewmApp() {
     var currentRootScreen: Screen by remember {
         mutableStateOf(Screen.NFTLibrary)
     }
-
-    val isBottomNavBarVisible = rememberSaveable { (mutableStateOf(true)) }
 
     val backstack = rememberSaveableBackStack {
         push(currentRootScreen)
@@ -132,7 +135,7 @@ internal fun NewmApp() {
                     )
                     NewmBottomNavigation(
                         currentRootScreen = currentRootScreen,
-                        isVisible = isBottomNavBarVisible.value,
+                        isVisible = LocalIsBottomBarVisible.current.value,
                         onNavigationSelected = {
                             currentRootScreen = it
                             navigator.resetRoot(it)
@@ -162,7 +165,7 @@ internal fun NewmBottomNavigation(
     AnimatedVisibility(
         visible = isVisible,
         enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { it }),
+        exit = ExitTransition.None
     ) {
         Column(Modifier.height(76.dp)) {
             BottomNavigation(

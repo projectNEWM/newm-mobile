@@ -23,6 +23,12 @@
     <string name="library_download">Download</string>
     <string name="library_empty_content_subtitle">Time to rescue it with your epic music stash! 🎶</string>
     <string name="library_empty_content_title">Your library is empty.</string>
+    <string name="library_filter_songs">Filter Songs Under</string>
+    <string name="library_filter_songs_under_30">30 seconds</string>
+    <string name="library_sort_songs">Sort By</string>
+    <string name="library_sort_by_title">Title (A to Z)</string>
+    <string name="library_sort_by_artist">Artist (A to Z)</string>
+    <string name="library_sort_by_length">Length (Shortest to Longest)</string>
     <string name="library_search">Search</string>
     <string name="logout_dialog_message">Are you sure you want to log out?</string>
     <string name="logout_dialog_title">👋 %s, not so fast!</string>
