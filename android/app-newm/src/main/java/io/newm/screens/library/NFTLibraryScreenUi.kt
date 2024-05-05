@@ -91,9 +91,9 @@ fun NFTLibraryScreenUi(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
-            ) { xpubKey ->
+            ) { newmWalletConnectionId ->
                 val eventSink = state.onConnectWallet
-                eventSink(xpubKey)
+                eventSink(newmWalletConnectionId)
             }
 
             NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
@@ -129,6 +129,7 @@ fun NFTLibraryScreenUi(
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun NFTTracks(
     modifier: Modifier = Modifier,

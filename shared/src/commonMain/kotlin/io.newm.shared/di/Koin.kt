@@ -15,7 +15,6 @@ import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
-import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.RemoteConfigRepositoryImpl
@@ -26,6 +25,7 @@ import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.internal.services.GenresAPI
 import io.newm.shared.internal.services.LoginAPI
+import io.newm.shared.internal.services.NEWMWalletConnectionAPI
 import io.newm.shared.internal.services.RemoteConfigAPI
 import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import io.newm.shared.internal.services.PlaylistAPI
@@ -64,7 +64,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createHttpClient(get(), get(), get(), get(), enableNetworkLogs = enableNetworkLogs, get()) }
     single { createJson() }
     // Internal Configurations
-    single { ConnectWalletManager(get()) }
+    single { NewmSharedBuildConfigImpl }
     single { NewmSharedBuildConfigImpl }
     single { TokenManager(get()) }
     // Internal API Services
@@ -72,8 +72,8 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { GenresAPI(get()) }
     single { LoginAPI(get()) }
     single { NewmPolicyIdsAPI(get()) }
+    single { NEWMWalletConnectionAPI(get()) }
     single { PlaylistAPI(get()) }
-    single { RemoteConfigAPI(get()) }
     single { UserAPI(get()) }
     // Internal Repositories
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
@@ -85,13 +85,16 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { UserRepository(get(), get()) }
     // External Use Cases to be consumed outside of KMM
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
+    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get()) }
     single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get(), get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
+    single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
+    single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
+    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
 }

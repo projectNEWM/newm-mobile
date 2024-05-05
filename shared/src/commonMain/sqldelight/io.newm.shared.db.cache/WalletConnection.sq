@@ -1,0 +1,27 @@
+
+CREATE TABLE WalletConnection (
+  id TEXT NOT NULL PRIMARY KEY,
+  createdAt TEXT NOT NULL,
+  stakeAddress TEXT NOT NULL
+);
+
+-- Fetches all WalletConnections from the database
+getAll:
+SELECT *
+FROM WalletConnection;
+
+-- Inserts a new WalletConnection into the database
+insert:
+INSERT OR IGNORE INTO WalletConnection(id, createdAt, stakeAddress)
+VALUES (?, ?, ?);
+
+-- Finds a WalletConnection by ID
+findWalletConnectionById:
+SELECT *
+FROM WalletConnection
+WHERE id = ?;
+
+
+-- Deletes all WalletConnections from the database
+deleteAll:
+DELETE FROM WalletConnection;

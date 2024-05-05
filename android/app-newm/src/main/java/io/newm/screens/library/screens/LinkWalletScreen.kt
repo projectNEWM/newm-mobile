@@ -35,9 +35,9 @@ fun LinkWalletScreen(
             // Handle the returned result here
             val data = result.data
             // Do something with the data
-            val xpubKey = data?.getStringExtra(BarcodeScannerActivity.XPUB_KEY).orEmpty()
-            Toast.makeText(context, "Wallet connected $xpubKey", Toast.LENGTH_SHORT).show()
-            onConnectWallet(xpubKey)
+            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_KEY).orEmpty()
+            Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT).show()
+            onConnectWallet(newmWalletConnectionId)
         }
     }
 
