@@ -29,8 +29,8 @@ class NFTLibraryViewModel(
     private val queryFlow = MutableStateFlow("")
 
     val state: StateFlow<NFTLibraryState> by lazy {
-        connectWalletUseCase.isConnectedFlow().flatMapLatest { isConnected ->
-            if (isConnected) {
+        connectWalletUseCase.getWalletConnections().flatMapLatest { walletConnectionsList ->
+            if (walletConnectionsList.isNotEmpty()) {
                 combine(
                     queryFlow.debounce(300),
                     walletNFTTracksUseCase.getAllStreamTokensFlow(),
@@ -41,7 +41,6 @@ class NFTLibraryViewModel(
                         nftTracks.isEmpty() && streamTokenTracks.isEmpty() -> {
                             NFTLibraryState.EmptyWallet
                         }
-
                         else -> {
                             NFTLibraryState.Content(
                                 nftTracks = nftTracks.filter { it.matches(query) },
@@ -100,9 +99,9 @@ class NFTLibraryViewModel(
         }
     }
 
-    fun connectWallet(xpubKey: String) {
+    fun connectWallet(newmWalletConnectionId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            connectWalletUseCase.connect(xpubKey)
+            connectWalletUseCase.connect(newmWalletConnectionId)
         }
     }
 }

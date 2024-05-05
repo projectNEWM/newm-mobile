@@ -29,7 +29,7 @@ object NewmSharedBuildConfig: KoinComponent {
     init {
         // If there's no mode saved in KVault, default to Production.
         if (storage.string(APP_MODE) == null) {
-            mode = Mode.PRODUCTION
+            mode = Mode.STAGING
         }
     }
 

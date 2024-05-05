@@ -13,7 +13,6 @@ import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
 import io.newm.shared.internal.repositories.CardanoWalletRepository
-import io.newm.shared.internal.repositories.ConnectWalletManager
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
@@ -22,6 +21,7 @@ import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.internal.services.GenresAPI
 import io.newm.shared.internal.services.LoginAPI
+import io.newm.shared.internal.services.NEWMWalletConnectionAPI
 import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import io.newm.shared.internal.services.PlaylistAPI
 import io.newm.shared.internal.services.UserAPI
@@ -59,7 +59,6 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal Configurations
     single { NewmSharedBuildConfig }
-    single { ConnectWalletManager(get()) }
     single { TokenManager(get()) }
     // Internal API Services
     single { LoginAPI(get()) }
@@ -68,6 +67,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { PlaylistAPI(get()) }
     single { CardanoWalletAPI(get()) }
     single { NewmPolicyIdsAPI(get()) }
+    single { NEWMWalletConnectionAPI(get()) }
     // Internal Repositories
     single { LogInRepository() }
     single { GenresRepository() }
@@ -81,7 +81,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
+    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
     single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }

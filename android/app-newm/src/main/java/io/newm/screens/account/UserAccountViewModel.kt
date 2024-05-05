@@ -23,7 +23,7 @@ class UserAccountViewModel(
     private val _state: StateFlow<UserAccountState> by lazy {
         combine(
             userDetailsUseCase.fetchLoggedInUserDetailsFlow().filterNotNull(),
-            connectWalletUseCase.isConnectedFlow()
+            connectWalletUseCase.hasWalletConnections()
         ) { user, isConnected ->
             UserAccountState.Content(profile = user, isWalletConnected = isConnected)
         }.stateIn(
@@ -47,9 +47,9 @@ class UserAccountViewModel(
         }
     }
 
-    fun connectWallet(xpubKey: String) {
+    fun connectWallet(newmWalletConnectionId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            connectWalletUseCase.connect(xpubKey)
+            connectWalletUseCase.connect(newmWalletConnectionId)
         }
     }
 }

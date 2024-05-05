@@ -76,7 +76,7 @@ fun UserAccountScreen(
             UserAccountContent(
                 user = (state as UserAccountState.Content).profile,
                 isWalletConnected = (state as UserAccountState.Content).isWalletConnected,
-                onConnectWalletClick = { xpubKey -> viewModel.connectWallet(xpubKey) },
+                onConnectWalletClick = { newmWalletConnectionId -> viewModel.connectWallet(newmWalletConnectionId) },
                 onEditProfileClick = onEditProfileClick,
                 disconnectWallet = { viewModel.disconnectWallet() },
                 onWalletConnectProtocolClick = {
@@ -258,9 +258,9 @@ fun WalletButton(
             // Handle the returned result here
             val data = result.data
             // Do something with the data
-            val xpubKey = data?.getStringExtra(BarcodeScannerActivity.XPUB_KEY).orEmpty()
-            Toast.makeText(context, "Wallet connected $xpubKey", Toast.LENGTH_SHORT).show()
-            onConnectWalletClick(xpubKey)
+            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_KEY).orEmpty()
+            Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT).show()
+            onConnectWalletClick(newmWalletConnectionId)
         }
     }
 

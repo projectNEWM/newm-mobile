@@ -137,10 +137,8 @@ fun NFTLibraryScreen(
             )
             when (state) {
                 NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
-                NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
-                    viewModel.connectWallet(
-                        xpubKey
-                    )
+                NFTLibraryState.LinkWallet -> LinkWalletScreen { newmWalletConnectionId ->
+                    viewModel.connectWallet(newmWalletConnectionId)
                 }
                 NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
                 is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
