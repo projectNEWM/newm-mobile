@@ -83,9 +83,9 @@ fun NFTLibraryScreenUi(
         when (state) {
             NFTLibraryState.Loading -> LoadingScreen()
 
-            is NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
+            is NFTLibraryState.LinkWallet -> LinkWalletScreen { newmWalletConnectionId ->
                 val eventSink = state.onConnectWallet
-                eventSink(xpubKey)
+                eventSink(newmWalletConnectionId)
             }
 
             NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
@@ -121,6 +121,7 @@ fun NFTLibraryScreenUi(
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun NFTTracks(
     modifier: Modifier = Modifier,

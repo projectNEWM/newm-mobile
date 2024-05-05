@@ -132,7 +132,7 @@ private fun UserAccountContent(
             openWalletDialog = openWalletDialog,
             isWalletConnected = state.isWalletConnected,
             disconnectWallet = { eventSink(OnDisconnectWallet) }
-        ) { xpubKey -> eventSink(OnConnectWallet(xpubKey)) }
+        ) { newmWalletConnectionId -> eventSink(OnConnectWallet(newmWalletConnectionId)) }
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -197,9 +197,9 @@ private fun WalletButton(
             // Handle the returned result here
             val data = result.data
             // Do something with the data
-            val xpubKey = data?.getStringExtra(BarcodeScannerActivity.XPUB_KEY).orEmpty()
-            Toast.makeText(context, "Wallet connected $xpubKey", Toast.LENGTH_SHORT).show()
-            onConnectWalletClick(xpubKey)
+            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_KEY).orEmpty()
+            Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT).show()
+            onConnectWalletClick(newmWalletConnectionId)
         }
     }
 
