@@ -38,6 +38,7 @@ import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.Screen.LoginLandingScreen
 import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.utils.ui
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -46,6 +47,7 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : ComponentActivity() {
 
     private val recaptchaClientProvider: RecaptchaClientProvider by inject()
+    private val buildConfig: NewmSharedBuildConfig by inject()
 
     // TODO inject
     private val circuit: Circuit = Circuit.Builder()
@@ -118,7 +120,7 @@ class LoginActivity : ComponentActivity() {
 
     private fun initializeRecaptchaClient() {
         lifecycleScope.launch {
-            Recaptcha.getClient(application, NewmSharedBuildConfig.recaptchaSiteKey, timeout = 20000L)
+            Recaptcha.getClient(application, buildConfig.recaptchaSiteKey, timeout = 20000L)
                 .onSuccess { client ->
                     recaptchaClientProvider.setRecaptchaClient(client)
                 }

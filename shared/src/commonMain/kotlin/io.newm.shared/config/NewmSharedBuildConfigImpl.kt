@@ -12,7 +12,7 @@ enum class Mode {
 }
 
 // BuildConfiguration class to manage app configurations based on the mode
-object NewmSharedBuildConfig: KoinComponent {
+object NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
     private const val APP_MODE = "app_mode"
 
@@ -33,25 +33,33 @@ object NewmSharedBuildConfig: KoinComponent {
         }
     }
 
-    val baseUrl: String
+    override val baseUrl: String
         get() = when (mode) {
             Mode.STAGING -> BuildConfig.STAGING_URL
             Mode.PRODUCTION -> BuildConfig.PRODUCTION_URL
         }
 
-    val sentryAuthToken: String
+    override val sentryAuthToken: String
         get() = BuildConfig.SENTRY_AUTH_TOKEN
 
-    val googleAuthClientId: String
+    override val googleAuthClientId: String
         get() = BuildConfig.GOOGLE_AUTH_CLIENT_ID
 
-    val walletConnectProjectId: String
+    override val walletConnectProjectId: String
         get() = BuildConfig.WALLET_CONNECT_PROJECT_ID
 
-    val recaptchaSiteKey: String
+    override val recaptchaSiteKey: String
         get() = BuildConfig.RECAPTCHA_SITE_KEY
 
-    val isStagingMode: Boolean
+    override val isStagingMode: Boolean
         get() = mode == Mode.STAGING
 }
 
+interface NewmSharedBuildConfig {
+    val baseUrl: String
+    val sentryAuthToken: String
+    val googleAuthClientId: String
+    val walletConnectProjectId: String
+    val recaptchaSiteKey: String
+    val isStagingMode: Boolean
+}

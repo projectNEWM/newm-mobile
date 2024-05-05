@@ -4,6 +4,7 @@ import android.app.Application
 import co.touchlab.kermit.Logger
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
 import io.newm.wallet.connect.WalletConnectInitializer
 import org.koin.android.ext.android.inject
@@ -14,13 +15,14 @@ import org.koin.core.logger.Level
 open class NewmApplication : Application() {
 
     private val logout: Logout by inject()
+    private val sharedBuildConfig by inject<NewmSharedBuildConfig>()
 
     override fun onCreate() {
         Logger.d { "NewmAndroid - NewmApplication" }
         super.onCreate()
         initKoin()
         logout.register()
-        WalletConnectInitializer(this).initialize()
+        WalletConnectInitializer(this, sharedBuildConfig).initialize()
     }
 
     private fun initKoin(enableNetworkLogs: Boolean = true) {

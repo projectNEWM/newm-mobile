@@ -30,6 +30,7 @@ internal class NetworkClientFactory(
     private val repository: LogInRepository,
     private val tokenManager: TokenManager,
     private val enableNetworkLogs: Boolean,
+    private val buildConfig: NewmSharedBuildConfig,
 ) {
     private val logger = co.touchlab.kermit.Logger.withTag("NewmKMM-NetworkClientFactory")
 
@@ -54,7 +55,7 @@ internal class NetworkClientFactory(
         return HttpClient(httpClientEngine) {
             this.expectSuccess = true
             defaultRequest {
-                url(NewmSharedBuildConfig.baseUrl)
+                url(buildConfig.baseUrl)
             }
             install(ContentNegotiation) {
                 json(json)
@@ -82,7 +83,7 @@ internal class NetworkClientFactory(
         return HttpClient(httpClientEngine) {
             this.expectSuccess = true
             defaultRequest {
-                url(NewmSharedBuildConfig.baseUrl)
+                url(buildConfig.baseUrl)
             }
 
             install(ContentNegotiation) {

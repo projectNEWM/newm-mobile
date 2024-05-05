@@ -55,6 +55,7 @@ import io.newm.core.ui.text.formTitleStyle
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.profile.ProfileBanner
 import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -247,7 +248,8 @@ fun WalletButton(
     isWalletConnected: Boolean,
     disconnectWallet: () -> Unit,
     onConnectWalletClick: (String) -> Unit,
-    onWalletConnectProtocolClick: () -> Unit
+    onWalletConnectProtocolClick: () -> Unit,
+    sharedBuildConfig: NewmSharedBuildConfig = koinInject()
 ) {
     val context = LocalContext.current
 
@@ -308,7 +310,7 @@ fun WalletButton(
         )
     }
 
-    if(NewmSharedBuildConfig.isStagingMode) {
+    if(sharedBuildConfig.isStagingMode) {
         PrimaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Wallet Connect",
