@@ -131,7 +131,7 @@ sqldelight {
 	database("NewmDatabase") {
 		packageName = "io.newm.shared.db.cache"
 		sourceFolders = listOf("sqldelight")
-		version = 2
+		version = 3
 	}
 }
 

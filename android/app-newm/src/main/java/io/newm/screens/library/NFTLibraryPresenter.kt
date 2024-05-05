@@ -27,7 +27,7 @@ class NFTLibraryPresenter(
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer()
 
-        val isWalletConnected: Boolean? by remember { connectWalletUseCase.isConnectedFlow() }.collectAsState(
+        val isWalletConnected: Boolean? by remember { connectWalletUseCase.hasWalletConnections() }.collectAsState(
             null
         )
 

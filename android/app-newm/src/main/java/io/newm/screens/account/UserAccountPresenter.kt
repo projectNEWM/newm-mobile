@@ -24,7 +24,7 @@ class UserAccountPresenter(
 ) : Presenter<UserAccountState> {
     @Composable
     override fun present(): UserAccountState {
-        val isWalletConnected by remember { connectWalletUseCase.isConnectedFlow() }.collectAsState(
+        val isWalletConnected by remember { connectWalletUseCase.hasWalletConnections() }.collectAsState(
             false
         )
 
