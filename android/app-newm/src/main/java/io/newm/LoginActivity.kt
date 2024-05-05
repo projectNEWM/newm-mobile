@@ -38,7 +38,6 @@ import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.Screen.LoginLandingScreen
 import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.utils.ui
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -61,7 +60,12 @@ class LoginActivity : ComponentActivity() {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
                 is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
                 is LoginScreen -> inject<LoginScreenPresenter> { parametersOf(navigator) }.value
-                is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> { parametersOf(navigator) }.value
+                is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
                 else -> null
             }
         }
@@ -103,7 +107,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun CircuitDependencies(
+    fun CircuitDependencies(
         content: @Composable () -> Unit
     ) {
         CircuitCompositionLocals(circuit) {

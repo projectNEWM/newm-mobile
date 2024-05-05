@@ -9,10 +9,11 @@ import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.runtime.Navigator
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.feature.musicplayer.MusicPlayerActivity
 import io.newm.screens.Screen
-import io.newm.screens.account.UserAccountScreen
 import io.newm.screens.account.WalletConnect
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
@@ -87,12 +88,27 @@ private fun NavGraphBuilder.addUserAccountTree(
 ) {
     navigation(
         route = Screen.UserAccountViewRoot.route,
-        startDestination = Screen.UserAccountViewLanding.route
+        startDestination = Screen.UserAccount.route
     ) {
-        composable(Screen.UserAccountViewLanding.route) {
-            UserAccountScreen(
-                onEditProfileClick = onEditProfileClick,
-                onWalletConnectClick = onWalletConnect,
+        composable(Screen.UserAccount.route) {
+            CircuitContent(
+                screen = Screen.UserAccount,
+                navigator = object : Navigator {
+                    override fun goTo(screen: com.slack.circuit.runtime.screen.Screen) {
+                        when(screen) {
+                            is Screen.EditProfile -> onEditProfileClick()
+                            is Screen.WalletConnect -> onWalletConnect()
+                        }
+                    }
+
+                    override fun pop(): com.slack.circuit.runtime.screen.Screen? {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun resetRoot(newRoot: com.slack.circuit.runtime.screen.Screen): List<com.slack.circuit.runtime.screen.Screen> {
+                        TODO("Not yet implemented")
+                    }
+                }
             )
         }
     }

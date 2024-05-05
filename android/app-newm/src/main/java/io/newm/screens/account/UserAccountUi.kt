@@ -34,12 +34,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.walletconnect.web3.modal.ui.Web3ModalTheme
 import com.walletconnect.web3.modal.ui.components.internal.Web3ModalComponent
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray100
+import io.newm.core.theme.NewmTheme
 import io.newm.core.theme.SystemRed
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
@@ -53,9 +57,12 @@ import io.newm.core.ui.permissions.rememberRequestPermissionIntent
 import io.newm.core.ui.text.formTextFieldStyle
 import io.newm.core.ui.text.formTitleStyle
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
+import io.newm.screens.account.UserAccountEvent.OnConnectWallet
+import io.newm.screens.account.UserAccountEvent.OnDisconnectWallet
+import io.newm.screens.account.UserAccountEvent.OnEditProfile
+import io.newm.screens.account.UserAccountEvent.OnLogout
+import io.newm.screens.account.UserAccountEvent.OnWalletConnectProtocol
 import io.newm.screens.profile.ProfileBanner
-import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -65,25 +72,16 @@ private const val PRIVACY_POLICY = "https://newm.io/privacy-policy/"
 private const val COMMUNITY_GUIDELINES = "https://newm.io/guidelines/"
 
 @Composable
-fun UserAccountScreen(
-    onEditProfileClick: () -> Unit,
-    onWalletConnectClick: () -> Unit,
-    viewModel: UserAccountViewModel = koinInject()
+fun UserAccountUi(
+    state: UserAccountState,
+    modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsState()
     when (state) {
         UserAccountState.Loading -> LoadingScreen()
         is UserAccountState.Content -> {
             UserAccountContent(
-                user = (state as UserAccountState.Content).profile,
-                isWalletConnected = (state as UserAccountState.Content).isWalletConnected,
-                onConnectWalletClick = { xpubKey -> viewModel.connectWallet(xpubKey) },
-                onEditProfileClick = onEditProfileClick,
-                disconnectWallet = { viewModel.disconnectWallet() },
-                onWalletConnectProtocolClick = {
-                    onWalletConnectClick()
-                },
-                logout = { viewModel.logout() }
+                state = state,
+                modifier = modifier,
             )
         }
     }
@@ -132,22 +130,19 @@ fun WalletConnect() {
 }
 
 @Composable
-fun UserAccountContent(
-    user: User,
-    isWalletConnected: Boolean,
-    onConnectWalletClick: (String) -> Unit,
-    onEditProfileClick: () -> Unit,
-    disconnectWallet: () -> Unit,
-    onWalletConnectProtocolClick: () -> Unit,
-    logout: () -> Unit,
+private fun UserAccountContent(
+    state: UserAccountState.Content,
+    modifier: Modifier,
 ) {
+    val eventSink = state.eventSink
     val context = LocalContext.current
     val scrollState = rememberScrollState()
     val openLogoutDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
     val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val user = state.profile
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
             .testTag(TAG_USER_ACCOUNT_VIEW_SCREEN),
@@ -184,16 +179,24 @@ fun UserAccountContent(
         SecondaryButton(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Edit Profile",
-            onClick = { onEditProfileClick() }
+            onClick = { eventSink(OnEditProfile) }
         )
 
         WalletButton(
             openWalletDialog = openWalletDialog,
-            isWalletConnected = isWalletConnected,
-            disconnectWallet = disconnectWallet,
-            onConnectWalletClick = onConnectWalletClick,
-            onWalletConnectProtocolClick = onWalletConnectProtocolClick
-        )
+            isWalletConnected = state.isWalletConnected,
+            disconnectWallet = { eventSink(OnDisconnectWallet) }
+        ) { xpubKey -> eventSink(OnConnectWallet(xpubKey)) }
+
+        if (state.showWalletConnectButton) {
+            PrimaryButton(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                text = "Wallet Connect",
+                onClick = {
+                    eventSink(OnWalletConnectProtocol)
+                }
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -236,20 +239,18 @@ fun UserAccountContent(
         LogoutButtonWithConfirmation(
             name = user.firstName ?: user.nickname ?: stringResource(id = R.string.buddy),
             openDialog = openLogoutDialog,
-            logout = logout
+            logout = { eventSink(OnLogout) }
         )
     }
 
 }
 
 @Composable
-fun WalletButton(
+private fun WalletButton(
     openWalletDialog: MutableState<Boolean>,
     isWalletConnected: Boolean,
     disconnectWallet: () -> Unit,
-    onConnectWalletClick: (String) -> Unit,
-    onWalletConnectProtocolClick: () -> Unit,
-    sharedBuildConfig: NewmSharedBuildConfig = koinInject()
+    onConnectWalletClick: (String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -309,20 +310,10 @@ fun WalletButton(
             }
         )
     }
-
-    if(sharedBuildConfig.isStagingMode) {
-        PrimaryButton(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            text = "Wallet Connect",
-            onClick = {
-                onWalletConnectProtocolClick()
-            }
-        )
-    }
 }
 
 @Composable
-fun LogoutButtonWithConfirmation(
+private fun LogoutButtonWithConfirmation(
     name: String,
     openDialog: MutableState<Boolean>,
     logout: () -> Unit,
@@ -345,4 +336,47 @@ fun LogoutButtonWithConfirmation(
             openDialog.value = false
         }
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+internal fun UserAccountScreenPreview(
+    @PreviewParameter(AccountScreenPreviewProvider::class)
+    state: UserAccountState,
+) {
+    NewmTheme(darkTheme = true) {
+        UserAccountUi(
+            state = state,
+            modifier = Modifier
+        )
+    }
+}
+
+internal class AccountScreenPreviewProvider : PreviewParameterProvider<UserAccountState> {
+    override val values: Sequence<UserAccountState>
+        get() = sequenceOf(
+            UserAccountState.Loading,
+            UserAccountState.Content(
+                profile = User(
+                    id = "",
+                    createdAt = "",
+                    firstName = "John",
+                    lastName = "Doe",
+                    email = "john@doe.com",
+                    biography = "I love music."
+                ),
+                isWalletConnected = false,
+                eventSink = {},
+                showWalletConnectButton = true,
+            ),
+            UserAccountState.Content(
+                profile = User(
+                    id = "",
+                    createdAt = "",
+                ),
+                isWalletConnected = true,
+                eventSink = {},
+                showWalletConnectButton = true,
+            )
+        )
 }

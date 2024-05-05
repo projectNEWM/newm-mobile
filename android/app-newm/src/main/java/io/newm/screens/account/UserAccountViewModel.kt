@@ -3,9 +3,9 @@ package io.newm.screens.account
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.newm.Logout
-import io.newm.shared.public.models.User
-import io.newm.shared.public.usecases.UserDetailsUseCase
+import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +25,12 @@ class UserAccountViewModel(
             userDetailsUseCase.fetchLoggedInUserDetailsFlow().filterNotNull(),
             connectWalletUseCase.isConnectedFlow()
         ) { user, isConnected ->
-            UserAccountState.Content(profile = user, isWalletConnected = isConnected)
+            UserAccountState.Content(
+                profile = user,
+                isWalletConnected = isConnected,
+                eventSink = { },
+                showWalletConnectButton = NewmSharedBuildConfigImpl.isStagingMode
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -52,9 +57,4 @@ class UserAccountViewModel(
             connectWalletUseCase.connect(xpubKey)
         }
     }
-}
-
-sealed class UserAccountState {
-    data object Loading : UserAccountState()
-    data class Content(val profile: User, val isWalletConnected: Boolean) : UserAccountState()
 }
