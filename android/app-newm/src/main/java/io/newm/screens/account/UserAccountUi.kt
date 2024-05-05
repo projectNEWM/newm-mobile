@@ -23,8 +23,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -65,7 +63,6 @@ import io.newm.screens.account.UserAccountEvent.OnWalletConnectProtocol
 import io.newm.screens.profile.ProfileBanner
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 
 internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
 private const val PRIVACY_POLICY = "https://newm.io/privacy-policy/"
@@ -186,7 +183,7 @@ private fun UserAccountContent(
             openWalletDialog = openWalletDialog,
             isWalletConnected = state.isWalletConnected,
             disconnectWallet = { eventSink(OnDisconnectWallet) }
-        ) { xpubKey -> eventSink(OnConnectWallet(xpubKey)) }
+        ) { newmWalletConnectionId -> eventSink(OnConnectWallet(newmWalletConnectionId)) }
 
         if (state.showWalletConnectButton) {
             PrimaryButton(
@@ -261,9 +258,9 @@ private fun WalletButton(
             // Handle the returned result here
             val data = result.data
             // Do something with the data
-            val xpubKey = data?.getStringExtra(BarcodeScannerActivity.XPUB_KEY).orEmpty()
-            Toast.makeText(context, "Wallet connected $xpubKey", Toast.LENGTH_SHORT).show()
-            onConnectWalletClick(xpubKey)
+            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_KEY).orEmpty()
+            Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT).show()
+            onConnectWalletClick(newmWalletConnectionId)
         }
     }
 

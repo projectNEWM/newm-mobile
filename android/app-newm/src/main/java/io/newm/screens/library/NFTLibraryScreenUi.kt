@@ -163,8 +163,8 @@ fun NFTLibraryScreenUi(
             )
             when (state) {
                 NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
-                NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
-                    onConnectWallet(xpubKey)
+                NFTLibraryState.LinkWallet -> LinkWalletScreen { newmWalletConnectionId ->
+                    onConnectWallet(newmWalletConnectionId)
                 }
 
                 NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
