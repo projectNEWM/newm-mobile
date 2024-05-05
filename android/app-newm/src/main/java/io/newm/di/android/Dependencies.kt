@@ -23,6 +23,7 @@ import io.newm.screens.library.NFTLibraryViewModel
 import io.newm.screens.account.UserAccountViewModel
 import io.newm.screens.profile.edit.ProfileEditViewModel
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.screens.account.UserAccountPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.config.NewmSharedBuildConfigImpl
 import kotlinx.coroutines.FlowPreview
@@ -64,6 +65,15 @@ val viewModule = module {
             recaptchaClientProvider = get(),
             loginUseCase = get(),
             activityResultContract = ActivityResultContracts.StartActivityForResult()
+        )
+    }
+    factory { params ->
+        UserAccountPresenter(
+            params.get(),
+            get(),
+            get(),
+            get(),
+            get(),
         )
     }
     single<MusicRepository> { MockMusicRepository(androidContext()) }
