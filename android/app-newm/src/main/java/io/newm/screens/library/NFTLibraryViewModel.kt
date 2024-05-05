@@ -5,6 +5,7 @@ package io.newm.screens.library
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.slack.circuit.runtime.CircuitUiState
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
@@ -22,7 +23,7 @@ import kotlinx.coroutines.withContext
 class NFTLibraryViewModel(
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
-    private val musicPlayer: MusicPlayer,
+    private val musicPlayer: MusicPlayer
 ) : ViewModel() {
     private var playlist: Playlist = Playlist(emptyList())
 
@@ -48,7 +49,8 @@ class NFTLibraryViewModel(
                                 streamTokenTracks = streamTokenTracks.filter { it.matches(query) },
                                 showZeroResultFound = query.isNotEmpty()
                                         && nftTracks.none { it.matches(query) }
-                                        && streamTokenTracks.none { it.matches(query) }
+                                        && streamTokenTracks.none { it.matches(query) },
+                                eventSink = { event -> Log.d("NFTLibraryViewModel", "eventSink: $event") }
                             )
                         }
                     }
@@ -107,14 +109,15 @@ class NFTLibraryViewModel(
     }
 }
 
-sealed interface NFTLibraryState {
+sealed interface NFTLibraryState: CircuitUiState {
     data object Loading : NFTLibraryState
     data object LinkWallet : NFTLibraryState
     data object EmptyWallet : NFTLibraryState
     data class Content(
         val nftTracks: List<NFTTrack>,
         val streamTokenTracks: List<NFTTrack>,
-        val showZeroResultFound: Boolean
+        val showZeroResultFound: Boolean,
+        val eventSink: (NFTLibraryEvent) -> Unit,
     ) : NFTLibraryState
 
     data class Error(val message: String) : NFTLibraryState

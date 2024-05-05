@@ -18,11 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -80,7 +77,7 @@ import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
-@OptIn(ExperimentalMaterialApi::class)
+
 @Composable
 fun NFTLibraryScreen(
 ) {
@@ -93,6 +90,35 @@ fun NFTLibraryScreen(
     }
 
     val state by viewModel.state.collectAsState()
+
+    NFTLibraryScreenUi(
+        state = state,
+        onConnectWallet = { newmWalletConnectionId ->
+            viewModel.connectWallet(newmWalletConnectionId)
+        },
+        onQueryChange = { newQuery ->
+            viewModel.onQueryChange(newQuery)
+        },
+        onDownloadSong = { trackId ->
+            viewModel.onDownloadSong(trackId)
+        },
+        onPlaySong = { track ->
+            viewModel.playSong(track)
+        }
+    )
+
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun NFTLibraryScreenUi(
+    state: NFTLibraryState,
+    onConnectWallet: (String) -> Unit,
+    onQueryChange: (String) -> Unit,
+    onDownloadSong: (String) -> Unit,
+    onPlaySong: (NFTTrack) -> Unit
+) {
     val coroutineScope = rememberCoroutineScope()
 
     val sheetState = rememberModalBottomSheetState(
@@ -138,10 +164,9 @@ fun NFTLibraryScreen(
             when (state) {
                 NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
                 NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
-                    viewModel.connectWallet(
-                        xpubKey
-                    )
+                    onConnectWallet(xpubKey)
                 }
+
                 NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
                 is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
                 is NFTLibraryState.Content -> {
@@ -150,9 +175,9 @@ fun NFTLibraryScreen(
                         nftTracks = content.nftTracks,
                         streamTokenTracks = content.streamTokenTracks,
                         showZeroResultsFound = content.showZeroResultFound,
-                        onQueryChange = viewModel::onQueryChange,
-                        onPlaySong = { viewModel.playSong(it) },
-                        onDownloadSong = viewModel::onDownloadSong,
+                        onQueryChange = onQueryChange,
+                        onPlaySong = onPlaySong,
+                        onDownloadSong = onDownloadSong,
                         onPlayerClicked = {
                             coroutineScope.launch {
                                 sheetState.show()
