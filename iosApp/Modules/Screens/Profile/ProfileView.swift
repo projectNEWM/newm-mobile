@@ -136,7 +136,9 @@ extension ProfileView {
 	@ViewBuilder
 	private var disconnectWalletView: some View {
 		DisconnectWalletAlertView {
-			viewModel.disconnectWallet()
+			Task {
+				await viewModel.disconnectWallet()
+			}
 		}
 	}
 	

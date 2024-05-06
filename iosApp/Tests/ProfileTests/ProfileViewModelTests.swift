@@ -87,21 +87,14 @@ final class ProfileViewModelTests: XCTestCase {
 	
 	func testWalletConnection() async throws {
 		XCTAssertFalse(profileViewModel.isWalletConnected)
-		
 		try await connectWalletUseCase.connect(walletConnectionId: "newm234324234234243")
-		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		
-		try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-		
+		try await Task.sleep(for: .seconds(0.1))
 		XCTAssertTrue(profileViewModel.isWalletConnected)
-		profileViewModel.disconnectWallet()
-		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		
-		try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-		
+		await profileViewModel.disconnectWallet()
+		try await Task.sleep(for: .seconds(0.1))
 		XCTAssertFalse(profileViewModel.isWalletConnected)
 	}
-
+	
 	func testLoadUserErrors() async throws {
 		let error = "test error".newmError
 		userDetailsUseCase.errorToThrow = error
@@ -119,5 +112,21 @@ final class ProfileViewModelTests: XCTestCase {
 		await profileViewModel.save()
 		XCTAssertEqual(profileViewModel.errorAlert, error.errorDescription)
 		XCTAssertEqual(errorLogger.errorsLogged.first!.localizedDescription, error.localizedDescription)
+	}
+	
+	func testDisconnectWallet_error() async throws {
+		connectWalletUseCase.throwThisError = "some error".newmError
+		XCTAssertNil(profileViewModel.errorAlert)
+		await profileViewModel.disconnectWallet()
+		XCTAssertNotNil(profileViewModel.errorAlert)
+	}
+	
+	func testDisconnectWallet() async throws {
+		try await connectWalletUseCase.connect(walletConnectionId: "1")
+		try await Task.sleep(for: .seconds(0.1))
+		XCTAssertTrue(profileViewModel.isWalletConnected)
+		await profileViewModel.disconnectWallet()
+		try await Task.sleep(for: .seconds(0.1))
+		XCTAssertFalse(profileViewModel.isWalletConnected)
 	}
 }

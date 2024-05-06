@@ -103,8 +103,12 @@ final class ProfileViewModel: ObservableObject {
 		}
 	}
 	
-	func disconnectWallet() {
-		Task { try await connectWalletUseCase.disconnect(walletConnectionId: nil) }
+	func disconnectWallet() async {
+		do {
+			try await connectWalletUseCase.disconnect(walletConnectionId: nil)
+		} catch {
+			errors.append(error)
+		}
 	}
 	
 	func alertDismissed() {
