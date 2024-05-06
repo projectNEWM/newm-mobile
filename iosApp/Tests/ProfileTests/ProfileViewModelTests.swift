@@ -87,7 +87,7 @@ final class ProfileViewModelTests: XCTestCase {
 	
 	func testWalletConnection() {
 		XCTAssertFalse(profileViewModel.isWalletConnected)
-		connectWalletUseCase.connect(xpub: "xpub")
+		connectWalletUseCase.connect(walletConnectionId: "newm234324234234243")
 		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
 		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
 		XCTAssertTrue(profileViewModel.isWalletConnected)

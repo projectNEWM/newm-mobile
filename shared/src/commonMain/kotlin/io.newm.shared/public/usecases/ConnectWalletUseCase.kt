@@ -1,6 +1,5 @@
 package io.newm.shared.public.usecases
 
-import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -36,16 +35,28 @@ interface ConnectWalletUseCase {
      *
      * @return A flow emitting lists of [WalletConnection]s.
      */
-    @NativeCoroutines
-    fun getWalletConnections(): Flow<List<WalletConnection>>
+    fun getWalletConnectionsFlow(): Flow<List<WalletConnection>>
 
     /**
      * Retrieves a flow indicating whether any wallet connections exist.
      *
      * @return A flow emitting `true` if there are wallet connections, `false` otherwise.
      */
-    @NativeCoroutines
-    fun hasWalletConnections(): Flow<Boolean>
+    fun hasWalletConnectionsFlow(): Flow<Boolean>
+
+    /**
+     * Retrieves a list of [WalletConnection]s representing the currently connected wallets.
+     *
+     * @return A list of [WalletConnection]s.
+     */
+    suspend fun getWalletConnections(): List<WalletConnection>
+
+    /**
+     * Retrieves whether any wallet connections exist.
+     *
+     * @return `true` if there are wallet connections, `false` otherwise.
+     */
+    suspend fun hasWalletConnections(): Boolean
 }
 
 class ConnectWalletUseCaseProvider(): KoinComponent {

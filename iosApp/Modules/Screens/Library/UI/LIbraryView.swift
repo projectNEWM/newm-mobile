@@ -27,11 +27,11 @@ struct LibraryView: View {
 			.refreshable {
 				await viewModel.refresh()
 			}
-			.sheet(isPresented: .constant(viewModel.showXPubScanner), onDismiss: {
+			.sheet(isPresented: .constant(viewModel.showCodeScanner), onDismiss: {
 				viewModel.scannerDismissed()
 			}) {
 				XPubScannerView {
-					viewModel.xPubScanned()
+					viewModel.codeScanned()
 				}
 			}
 			.sheet(isPresented: $showFilter) {
@@ -276,7 +276,7 @@ struct LibraryView: View {
 	let mockResolver = Resolver(child: .root)
 	mockResolver.register {
 		let useCase = Resolver.mock.resolve(ConnectWalletUseCase.self)
-		useCase.connect(xpub: "xpub3833")
+		useCase.connect(walletConnectionId: "newm34r343g3g343833")
 		return useCase as ConnectWalletUseCase
 	}
 	Resolver.root = mockResolver
