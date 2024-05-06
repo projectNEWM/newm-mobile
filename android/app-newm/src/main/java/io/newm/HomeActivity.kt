@@ -22,6 +22,9 @@ import io.newm.screens.account.UserAccountUi
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
+import io.newm.screens.profile.edit.ProfileEditPresenter
+import io.newm.screens.profile.edit.ProfileScreenUi
+import io.newm.screens.profile.edit.ProfileState
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -68,6 +71,13 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.EditProfile -> ui<ProfileState> { state, modifier ->
+                    ProfileScreenUi(
+                        state = state,
+                        modifier = modifier
+                    )
+                }
+
                 else -> null
 
             }
@@ -82,7 +92,14 @@ class HomeActivity : ComponentActivity() {
                         navigator
                     )
                 }.value
+
                 is NFTLibrary -> inject<NFTLibraryPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.EditProfile -> inject<ProfileEditPresenter> {
                     parametersOf(
                         navigator
                     )
