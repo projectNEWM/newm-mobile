@@ -22,8 +22,8 @@ internal class ConnectWalletUseCaseImpl(
     override fun disconnect(walletConnectionId: String?) {
         mapErrors {
             cardanoWalletRepository.deleteAllNFTs()
-            postNotification(Notification.walletConnectionStateChanged)
             cardanoWalletRepository.disconnectWallet(walletConnectionId)
+            postNotification(Notification.walletConnectionStateChanged)
         }
     }
 
