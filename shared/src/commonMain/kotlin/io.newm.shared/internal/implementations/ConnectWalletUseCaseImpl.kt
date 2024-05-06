@@ -14,8 +14,8 @@ internal class ConnectWalletUseCaseImpl(
 ) : ConnectWalletUseCase {
     override fun connect(walletConnectionId: String) {
         mapErrors {
-            postNotification(Notification.walletConnectionStateChanged)
             cardanoWalletRepository.connectWallet(walletConnectionId)
+            postNotification(Notification.walletConnectionStateChanged)
         }
     }
 
