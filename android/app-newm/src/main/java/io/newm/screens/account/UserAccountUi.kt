@@ -197,7 +197,7 @@ private fun WalletButton(
             // Handle the returned result here
             val data = result.data
             // Do something with the data
-            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_KEY).orEmpty()
+            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
             Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT).show()
             onConnectWalletClick(newmWalletConnectionId)
         }
