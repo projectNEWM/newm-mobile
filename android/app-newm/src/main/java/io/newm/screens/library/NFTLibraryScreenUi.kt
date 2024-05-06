@@ -30,8 +30,6 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,6 +51,7 @@ import io.newm.core.resources.R
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.Gray16
 import io.newm.core.theme.GraySuit
+import io.newm.core.theme.NewmTheme
 import io.newm.core.theme.StatusGreen
 import io.newm.core.theme.SteelPink
 import io.newm.core.theme.White
@@ -64,60 +64,25 @@ import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.textGradient
 import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.feature.musicplayer.MusicPlayerScreen
-import io.newm.feature.musicplayer.rememberMediaPlayer
+import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
+import io.newm.screens.library.NFTLibraryEvent.OnQueryChange
+import io.newm.screens.library.NFTLibraryEvent.PlaySong
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
 import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
 
-@Composable
-fun NFTLibraryScreen(
-) {
-    val mediaPlayer = rememberMediaPlayer()
-
-    mediaPlayer ?: return
-
-    val viewModel: NFTLibraryViewModel = getViewModel {
-        parametersOf(mediaPlayer)
-    }
-
-    val state by viewModel.state.collectAsState()
-
-    NFTLibraryScreenUi(
-        state = state,
-        onConnectWallet = { newmWalletConnectionId ->
-            viewModel.connectWallet(newmWalletConnectionId)
-        },
-        onQueryChange = { newQuery ->
-            viewModel.onQueryChange(newQuery)
-        },
-        onDownloadSong = { trackId ->
-            viewModel.onDownloadSong(trackId)
-        },
-        onPlaySong = { track ->
-            viewModel.playSong(track)
-        }
-    )
-
-}
-
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NFTLibraryScreenUi(
-    state: NFTLibraryState,
-    onConnectWallet: (String) -> Unit,
-    onQueryChange: (String) -> Unit,
-    onDownloadSong: (String) -> Unit,
-    onPlaySong: (NFTTrack) -> Unit
+    modifier: Modifier = Modifier,
+    state: NFTLibraryState
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -135,6 +100,7 @@ fun NFTLibraryScreenUi(
     }
 
     ModalBottomSheetLayout(
+        modifier = modifier,
         sheetState = sheetState,
         sheetContent = {
             MusicPlayerScreen(
@@ -163,21 +129,23 @@ fun NFTLibraryScreenUi(
             )
             when (state) {
                 NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
-                NFTLibraryState.LinkWallet -> LinkWalletScreen { newmWalletConnectionId ->
-                    onConnectWallet(newmWalletConnectionId)
+                is NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
+                    val eventSink = state.onConnectWallet
+                    eventSink(xpubKey)
                 }
 
                 NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
-                is NFTLibraryState.Error -> ErrorScreen((state as NFTLibraryState.Error).message)
+                is NFTLibraryState.Error -> ErrorScreen(state.message)
                 is NFTLibraryState.Content -> {
-                    val content = state as NFTLibraryState.Content
+                    val eventSink = state.eventSink
+
                     NFTTracks(
-                        nftTracks = content.nftTracks,
-                        streamTokenTracks = content.streamTokenTracks,
-                        showZeroResultsFound = content.showZeroResultFound,
-                        onQueryChange = onQueryChange,
-                        onPlaySong = onPlaySong,
-                        onDownloadSong = onDownloadSong,
+                        nftTracks = state.nftTracks,
+                        streamTokenTracks = state.streamTokenTracks,
+                        showZeroResultsFound = state.showZeroResultFound,
+                        onQueryChange = { query -> eventSink(OnQueryChange(query)) },
+                        onPlaySong = { track -> eventSink(PlaySong(track)) },
+                        onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) },
                         onPlayerClicked = {
                             coroutineScope.launch {
                                 sheetState.show()
@@ -192,7 +160,7 @@ fun NFTLibraryScreenUi(
 
 
 @Composable
-fun NFTTracks(
+private fun NFTTracks(
     nftTracks: List<NFTTrack>,
     streamTokenTracks: List<NFTTrack>,
     showZeroResultsFound: Boolean,
@@ -375,5 +343,40 @@ private fun TrackRowItem(
                 )
             }
         }
+    }
+}
+
+@Preview()
+@Composable
+fun PreviewNftLibrary() {
+    NewmTheme(darkTheme = true) {
+        NFTLibraryScreenUi(
+            state = NFTLibraryState.Content(
+                nftTracks = emptyList(),
+                streamTokenTracks = emptyList(),
+                showZeroResultFound = false,
+                eventSink = {},
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewNftLibraryLoading() {
+    NewmTheme(darkTheme = true) {
+        NFTLibraryScreenUi(
+            state = NFTLibraryState.Loading
+        )
+    }
+}
+
+@Preview()
+@Composable
+fun PreviewNftLibraryEmptyWallet() {
+    NewmTheme(darkTheme = true) {
+        NFTLibraryScreenUi(
+            state = NFTLibraryState.EmptyWallet
+        )
     }
 }

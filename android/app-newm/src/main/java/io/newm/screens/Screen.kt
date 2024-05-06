@@ -20,7 +20,7 @@ sealed class Screen(val route: String) : CircuitScreen {
 
     data object NFTLibraryRoot : Screen("nft-library-root")
 
-    data object NFTLibraryLanding : Screen("nft-library-landing")
+    data object NFTLibrary : Screen("nft-library-landing")
 
     //Single Screens
     @Parcelize
