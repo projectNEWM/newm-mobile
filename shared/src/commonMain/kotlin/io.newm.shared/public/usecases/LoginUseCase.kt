@@ -75,7 +75,7 @@ interface LoginUseCase {
      * This method should handle all necessary steps to effectively terminate the user's session,
      * such as clearing session tokens, disconnecting from external services, or restoring app state.
      */
-    fun logout()
+    suspend fun logout()
 }
 
 
