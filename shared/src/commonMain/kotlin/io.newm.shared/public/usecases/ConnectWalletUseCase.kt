@@ -46,7 +46,7 @@ interface ConnectWalletUseCase {
     fun isConnectedFlow(): Flow<Boolean>
 }
 
-class ConnectWalletUseCaseProvider(): KoinComponent {
+class ConnectWalletUseCaseProvider : KoinComponent {
     private val connectWalletUseCase: ConnectWalletUseCase by inject()
 
     fun get(): ConnectWalletUseCase {

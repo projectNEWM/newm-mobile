@@ -10,7 +10,7 @@ interface ChangePasswordUseCase {
     suspend fun changePassword(oldPassword: String, newPassword: String, confirmPassword: String)
 }
 
-class ChangePasswordUseCaseProvider(): KoinComponent {
+class ChangePasswordUseCaseProvider : KoinComponent {
     private val changePasswordUseCase: ChangePasswordUseCase by inject()
 
     fun get(): ChangePasswordUseCase {

@@ -7,5 +7,4 @@ sealed interface UserAccountEvent : CircuitUiEvent {
     data object OnLogout : UserAccountEvent
     data object OnEditProfile : UserAccountEvent
     data object OnDisconnectWallet : UserAccountEvent
-    data object OnWalletConnectProtocol : UserAccountEvent
 }

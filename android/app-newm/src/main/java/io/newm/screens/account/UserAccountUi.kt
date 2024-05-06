@@ -16,18 +16,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,8 +32,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.walletconnect.web3.modal.ui.Web3ModalTheme
-import com.walletconnect.web3.modal.ui.components.internal.Web3ModalComponent
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray100
 import io.newm.core.theme.NewmTheme
@@ -61,11 +52,8 @@ import io.newm.screens.account.UserAccountEvent.OnConnectWallet
 import io.newm.screens.account.UserAccountEvent.OnDisconnectWallet
 import io.newm.screens.account.UserAccountEvent.OnEditProfile
 import io.newm.screens.account.UserAccountEvent.OnLogout
-import io.newm.screens.account.UserAccountEvent.OnWalletConnectProtocol
 import io.newm.screens.profile.ProfileBanner
 import io.newm.shared.public.models.User
-import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 
 internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
 private const val PRIVACY_POLICY = "https://newm.io/privacy-policy/"
@@ -85,48 +73,6 @@ fun UserAccountUi(
             )
         }
     }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun WalletConnect() {
-    Web3ModalTheme(
-        mode = Web3ModalTheme.Mode.DARK,
-    ) {
-        /* any Web3Modal component or graph */
-        val modalSheetState = rememberModalBottomSheetState(
-            initialValue = ModalBottomSheetValue.Hidden,
-            skipHalfExpanded = true
-        )
-        val coroutineScope = rememberCoroutineScope()
-
-        ModalBottomSheetLayout(
-            sheetContent = {
-                Web3ModalComponent(
-                    shouldOpenChooseNetwork = false,
-                    closeModal = {
-                        coroutineScope.launch { modalSheetState.hide() }
-                    }
-                )
-            },
-            sheetState = modalSheetState
-        ) {
-            Column {
-                SecondaryButton(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    text = "WalletConnect",
-                    textColor = White,
-                    onClick = {
-                        coroutineScope.launch {
-                            modalSheetState.show() // This line opens the modal bottom sheet
-                        }
-                    }
-                )
-            }
-        }
-
-    }
-
 }
 
 @Composable
@@ -187,16 +133,6 @@ private fun UserAccountContent(
             isWalletConnected = state.isWalletConnected,
             disconnectWallet = { eventSink(OnDisconnectWallet) }
         ) { xpubKey -> eventSink(OnConnectWallet(xpubKey)) }
-
-        if (state.showWalletConnectButton) {
-            PrimaryButton(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                text = "Wallet Connect",
-                onClick = {
-                    eventSink(OnWalletConnectProtocol)
-                }
-            )
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -300,7 +236,7 @@ private fun WalletButton(
                 context.run {
                     doWithPermission(
                         onGranted = {
-                            val intent = Intent(this, BarcodeScannerActivity::class.java)
+                            val intent = Intent(this,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  BarcodeScannerActivity::class.java)
                             launcher.launch(intent)
                         },
                         requestPermissionLauncher = requestPermission,
@@ -367,7 +303,6 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<UserAccou
                 ),
                 isWalletConnected = false,
                 eventSink = {},
-                showWalletConnectButton = true,
             ),
             UserAccountState.Content(
                 profile = User(
@@ -376,7 +311,6 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<UserAccou
                 ),
                 isWalletConnected = true,
                 eventSink = {},
-                showWalletConnectButton = true,
             )
         )
 }

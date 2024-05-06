@@ -24,7 +24,6 @@ object WalletConnectModalDelegate : Web3Modal.ModalDelegate, CoreClient.CoreDele
     val coreEvents: SharedFlow<Core.Model> = _coreEvents.asSharedFlow()
 
     private var selectedSessionTopic: String? = null
-        private set
 
     init {
         Web3Modal.setDelegate(this)

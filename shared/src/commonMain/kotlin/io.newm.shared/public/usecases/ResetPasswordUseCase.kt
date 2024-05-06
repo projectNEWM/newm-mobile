@@ -10,7 +10,7 @@ interface ResetPasswordUseCase {
     suspend fun resetPassword(email: String, code: String, newPassword: String, confirmPassword: String, humanVerificationCode: String)
 }
 
-class ResetPasswordUseCaseProvider(): KoinComponent {
+class ResetPasswordUseCaseProvider : KoinComponent {
     private val resetPasswordUseCase: ResetPasswordUseCase by inject()
 
     fun get(): ResetPasswordUseCase {

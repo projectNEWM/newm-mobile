@@ -8,7 +8,6 @@ sealed class UserAccountState : CircuitUiState {
     data class Content(
         val profile: User,
         val isWalletConnected: Boolean,
-        val showWalletConnectButton: Boolean,
         val eventSink: (UserAccountEvent) -> Unit,
     ) : UserAccountState()
 }
