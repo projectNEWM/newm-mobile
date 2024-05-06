@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -39,6 +40,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.BrightOrange
@@ -75,6 +79,7 @@ internal fun NewmApp(
         !routesWithoutBottomNavBar.contains(navBackStackEntry?.destination?.route)
 
     Scaffold(
+        modifier = Modifier.navigationBarsPadding(),
         bottomBar = {
             NewmBottomNavigation(
                 currentRootScreen = currentRootScreen,
@@ -120,8 +125,8 @@ internal fun NewmBottomNavigation(
                 modifier = Modifier
                     .fillMaxHeight()
                     .testTag(TAG_BOTTOM_NAVIGATION),
-                    backgroundColor = Black,
-                    contentColor = Gray100
+                backgroundColor = Black,
+                contentColor = Gray100
             ) {
                 HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.NFTLibraryRoot,
