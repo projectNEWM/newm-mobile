@@ -24,23 +24,22 @@ import io.newm.screens.profile.ProfileBottomSheet
 import io.newm.screens.profile.ProfileForm
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 
 internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 
 @Composable
-fun ProfileRoute(
-    onNavigateUp: () -> Unit,
-    viewModel: ProfileEditViewModel = koinInject()
+fun ProfileScreenUi(
+    modifier: Modifier,
+    state: ProfileState,
 ) {
-    val state by viewModel.state.collectAsState()
-
     when (state) {
         ProfileState.Loading -> LoadingScreen()
         is ProfileState.Content -> {
+            val eventSink = state.eventSink
             ProfileScreen(
-                onNavigateUp = onNavigateUp,
-                user = (state as ProfileState.Content).profile,
+                modifier = modifier,
+                onNavigateUp = { eventSink(ProfileEvent.OnBack) },
+                user = state.profile,
                 onLogout = {},
                 onShowTermsAndConditions = {}, //TODO: Link the appropriate page
                 onShowPrivacyPolicy = {}, //TODO: Link the appropriate page
@@ -56,6 +55,7 @@ fun ProfileRoute(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen(
+    modifier: Modifier = Modifier,
     onNavigateUp: () -> Unit,
     user: User,
     onLogout: () -> Unit,
@@ -72,6 +72,7 @@ fun ProfileScreen(
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {},
