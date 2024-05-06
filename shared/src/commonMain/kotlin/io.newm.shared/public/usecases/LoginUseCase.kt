@@ -13,7 +13,7 @@ import kotlin.coroutines.cancellation.CancellationException
  * It also offers functionality to log out.
  */
 interface LoginUseCase {
-    sealed class LoginException() {
+    sealed class LoginException {
         data class invalidLogin(override val message: String) : KMMException(message)
     }
     /**
@@ -80,7 +80,7 @@ interface LoginUseCase {
 
 
 
-class LoginUseCaseProvider(): KoinComponent {
+class LoginUseCaseProvider : KoinComponent {
     private val loginUseCase: LoginUseCase by inject()
 
     fun get(): LoginUseCase {

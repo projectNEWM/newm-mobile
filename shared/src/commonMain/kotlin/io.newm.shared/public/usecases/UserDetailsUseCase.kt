@@ -41,7 +41,7 @@ interface UserDetailsUseCase {
     fun fetchLoggedInUserDetailsFlow(): Flow<User?>
 }
 
-class UserDetailsUseCaseProvider() : KoinComponent {
+class UserDetailsUseCaseProvider : KoinComponent {
     private val userDetailsUseCase: UserDetailsUseCase by inject()
 
     fun get(): UserDetailsUseCase {

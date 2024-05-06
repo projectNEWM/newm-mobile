@@ -62,7 +62,7 @@ interface WalletNFTTracksUseCase {
     suspend fun refresh()
 }
 
-class WalletNFTTracksUseCaseProvider(): KoinComponent {
+class WalletNFTTracksUseCaseProvider : KoinComponent {
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase by inject()
 
     fun get(): WalletNFTTracksUseCase {

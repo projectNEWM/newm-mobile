@@ -47,7 +47,7 @@ interface SignupUseCase {
     )
 }
 
-class SignupUseCaseProvider() : KoinComponent {
+class SignupUseCaseProvider : KoinComponent {
     private val signUpUseCase: SignupUseCase by inject()
 
     fun get(): SignupUseCase {

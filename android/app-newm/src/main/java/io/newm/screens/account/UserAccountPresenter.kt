@@ -9,8 +9,6 @@ import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
 import io.newm.screens.Screen.EditProfile
-import io.newm.screens.Screen.WalletConnect
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.launch
@@ -20,7 +18,6 @@ class UserAccountPresenter(
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
-    private val sharedBuildConfig: NewmSharedBuildConfig,
 ) : Presenter<UserAccountState> {
     @Composable
     override fun present(): UserAccountState {
@@ -40,7 +37,6 @@ class UserAccountPresenter(
             UserAccountState.Content(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,
-                showWalletConnectButton = sharedBuildConfig.isStagingMode,
                 eventSink = { event ->
                     when (event) {
                         is UserAccountEvent.OnConnectWallet -> coroutineScope.launch {
@@ -53,7 +49,6 @@ class UserAccountPresenter(
 
                         UserAccountEvent.OnEditProfile -> navigator.goTo(EditProfile)
                         UserAccountEvent.OnLogout -> logout.signOutUser()
-                        UserAccountEvent.OnWalletConnectProtocol -> navigator.goTo(WalletConnect)
                     }
                 }
             )

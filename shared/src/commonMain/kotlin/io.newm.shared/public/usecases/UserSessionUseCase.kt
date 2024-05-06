@@ -34,7 +34,7 @@ interface UserSessionUseCase {
 
 }
 
-class UserSessionUseCaseProvider(): KoinComponent {
+class UserSessionUseCaseProvider : KoinComponent {
     private val userSessionUseCase: UserSessionUseCase by inject()
 
     fun get(): UserSessionUseCase {

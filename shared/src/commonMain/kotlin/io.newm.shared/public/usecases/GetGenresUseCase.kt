@@ -11,7 +11,7 @@ interface GetGenresUseCase {
     suspend fun getGenres(): List<Genre>
 }
 
-class GetGenresUseCaseProvider(): KoinComponent {
+class GetGenresUseCaseProvider : KoinComponent {
     private val getGenresUseCase: GetGenresUseCase by inject()
 
     fun get(): GetGenresUseCase {
