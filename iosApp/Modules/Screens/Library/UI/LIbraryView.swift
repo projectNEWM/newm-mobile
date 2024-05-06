@@ -30,7 +30,7 @@ struct LibraryView: View {
 			.sheet(isPresented: .constant(viewModel.showCodeScanner), onDismiss: {
 				viewModel.scannerDismissed()
 			}) {
-				XPubScannerView {
+				ConnectWalletToAccountScannerView {
 					viewModel.codeScanned()
 				}
 			}
