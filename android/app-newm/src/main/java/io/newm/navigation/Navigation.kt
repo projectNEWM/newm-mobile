@@ -17,7 +17,6 @@ import io.newm.screens.Screen
 import io.newm.screens.account.WalletConnect
 import io.newm.screens.home.HomeScreen
 import io.newm.screens.library.LibraryScreen
-import io.newm.screens.library.NFTLibraryScreen
 import io.newm.screens.profile.edit.ProfileRoute
 
 @Composable
@@ -111,16 +110,38 @@ private fun NavGraphBuilder.addUserAccountTree(
                 }
             )
         }
+        composable(Screen.EditProfile.route) {
+            ProfileRoute(
+                onNavigateUp = {
+                    TODO("Not yet implemented")
+                },
+            )
+        }
     }
 }
 
 private fun NavGraphBuilder.addNFTLibraryTree(
 ) {
     navigation(
-        route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibraryLanding.route
+        route = Screen.NFTLibraryRoot.route, startDestination = Screen.NFTLibrary.route
     ) {
-        composable(Screen.NFTLibraryLanding.route) {
-            NFTLibraryScreen()
+        composable(Screen.NFTLibrary.route) {
+            CircuitContent(
+                screen = Screen.NFTLibrary,
+                navigator = object : Navigator {
+                    override fun goTo(screen: com.slack.circuit.runtime.screen.Screen) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun pop(): com.slack.circuit.runtime.screen.Screen? {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun resetRoot(newRoot: com.slack.circuit.runtime.screen.Screen): List<com.slack.circuit.runtime.screen.Screen> {
+                        TODO("Not yet implemented")
+                    }
+                }
+            )
         }
     }
 }

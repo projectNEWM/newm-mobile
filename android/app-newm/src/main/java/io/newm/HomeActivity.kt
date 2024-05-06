@@ -15,9 +15,13 @@ import com.slack.circuit.runtime.ui.Ui
 import com.walletconnect.web3.modal.client.Web3Modal
 import io.newm.core.theme.NewmTheme
 import io.newm.screens.Screen
+import io.newm.screens.Screen.NFTLibrary
 import io.newm.screens.account.UserAccountPresenter
 import io.newm.screens.account.UserAccountState
 import io.newm.screens.account.UserAccountUi
+import io.newm.screens.library.NFTLibraryPresenter
+import io.newm.screens.library.NFTLibraryScreenUi
+import io.newm.screens.library.NFTLibraryState
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -57,6 +61,13 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is NFTLibrary -> ui<NFTLibraryState> { state, modifier ->
+                    NFTLibraryScreenUi(
+                        state = state,
+                        modifier = modifier
+                    )
+                }
+
                 else -> null
 
             }
@@ -67,6 +78,11 @@ class HomeActivity : ComponentActivity() {
         return Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is Screen.UserAccount -> inject<UserAccountPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+                is NFTLibrary -> inject<NFTLibraryPresenter> {
                     parametersOf(
                         navigator
                     )

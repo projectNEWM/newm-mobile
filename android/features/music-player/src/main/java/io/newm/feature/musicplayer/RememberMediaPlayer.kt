@@ -1,13 +1,13 @@
 package io.newm.feature.musicplayer
 
 import android.content.ComponentName
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -27,6 +27,8 @@ import io.newm.feature.musicplayer.service.MusicPlayerImpl
  */
 @Composable
 fun rememberMediaPlayer(): MusicPlayer? {
+    if(LocalInspectionMode.current) return null
+
     val mediaPlayer: MutableState<Player?> = remember { mutableStateOf(null) }
 
     val context = LocalContext.current
