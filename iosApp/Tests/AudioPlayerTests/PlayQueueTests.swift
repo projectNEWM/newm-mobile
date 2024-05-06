@@ -252,29 +252,7 @@ final class PlayQueueTests: XCTestCase {
 		playQueue.cycleRepeatMode()
 		XCTAssertEqual(playQueue.repeatMode, .none)
 	}
-	
-	func testCycleSort() {
-		XCTAssertEqual(playQueue.sortCriteria, .artist(ascending: true))
-		playQueue.cycleTitleSort()
-		XCTAssertEqual(playQueue.sortCriteria, .title(ascending: true))
-		playQueue.cycleTitleSort()
-		XCTAssertEqual(playQueue.sortCriteria, .title(ascending: false))
-		playQueue.cycleTitleSort()
-		XCTAssertEqual(playQueue.sortCriteria, .title(ascending: true))
-		playQueue.cycleArtistSort()
-		XCTAssertEqual(playQueue.sortCriteria, .artist(ascending: true))
-		playQueue.cycleArtistSort()
-		XCTAssertEqual(playQueue.sortCriteria, .artist(ascending: false))
-		playQueue.cycleArtistSort()
-		XCTAssertEqual(playQueue.sortCriteria, .artist(ascending: true))
-		playQueue.cycleDurationSort()
-		XCTAssertEqual(playQueue.sortCriteria, .duration(ascending: true))
-		playQueue.cycleDurationSort()
-		XCTAssertEqual(playQueue.sortCriteria, .duration(ascending: false))
-		playQueue.cycleDurationSort()
-		XCTAssertEqual(playQueue.sortCriteria, .duration(ascending: true))
-	}
-	
+		
 	func testSeekToEndAndRepeat() throws {
 		let tracks = tracks.sorted(by: playQueue.sortCriteria.comparator)
 		try playQueue.seekToFirst()

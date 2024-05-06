@@ -87,16 +87,21 @@ final class ProfileViewModelTests: XCTestCase {
 	
 	func testWalletConnection() async throws {
 		XCTAssertFalse(profileViewModel.isWalletConnected)
+		
 		try await connectWalletUseCase.connect(walletConnectionId: "newm234324234234243")
 		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+		
+		try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+		
 		XCTAssertTrue(profileViewModel.isWalletConnected)
 		profileViewModel.disconnectWallet()
 		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+		
+		try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+		
 		XCTAssertFalse(profileViewModel.isWalletConnected)
 	}
-	
+
 	func testLoadUserErrors() async throws {
 		let error = "test error".newmError
 		userDetailsUseCase.errorToThrow = error
