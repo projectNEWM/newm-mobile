@@ -85,9 +85,9 @@ final class ProfileViewModelTests: XCTestCase {
 		cancellable.cancel()
 	}
 	
-	func testWalletConnection() {
+	func testWalletConnection() async throws {
 		XCTAssertFalse(profileViewModel.isWalletConnected)
-		connectWalletUseCase.connect(walletConnectionId: "newm234324234234243")
+		try await connectWalletUseCase.connect(walletConnectionId: "newm234324234234243")
 		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
 		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
 		XCTAssertTrue(profileViewModel.isWalletConnected)

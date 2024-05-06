@@ -276,7 +276,9 @@ struct LibraryView: View {
 	let mockResolver = Resolver(child: .root)
 	mockResolver.register {
 		let useCase = Resolver.mock.resolve(ConnectWalletUseCase.self)
-		useCase.connect(walletConnectionId: "newm34r343g3g343833")
+		Task {
+			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
+		}
 		return useCase as ConnectWalletUseCase
 	}
 	Resolver.root = mockResolver

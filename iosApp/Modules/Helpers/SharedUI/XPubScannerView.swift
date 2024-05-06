@@ -4,10 +4,11 @@ import Resolver
 import ModuleLinker
 import Utilities
 
-public struct XPubScannerView: View {
+public struct ConnectWalletToAccountScannerView: View {
 	private let completion: () -> ()
-	@State private var manuallyEnteredXPub: String = ""
-	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
+	@State private var manuallyEnteredCode: String = ""
+	@Injected private var connectWalletToAccountUseCase: any ConnectWalletUseCase
+	@State private var isLoading = false
 	@State private var error: Error? {
 		didSet {
 			error.flatMap(Resolver.resolve(ErrorReporting.self).logError)
@@ -27,8 +28,8 @@ public struct XPubScannerView: View {
 			VStack {
 				QRCodeScannerView { result in
 					switch result {
-					case .success(let xPub):
-						success(xPub: xPub)
+					case .success(let code):
+						success(id: code)
 					case .failure(let error):
 						self.error = error
 					}
@@ -47,6 +48,7 @@ public struct XPubScannerView: View {
 				Text("Ok")
 			}
 		}
+		.loadingToast(shouldShow: $isLoading)
 	}
 	
 	@ViewBuilder
@@ -78,7 +80,7 @@ public struct XPubScannerView: View {
 				.foregroundColor(Color(red: 0.44, green: 0.44, blue: 0.44))
 			
 			HStack {
-				TextField("", text: $manuallyEnteredXPub, prompt: Text("Enter xPub key"))
+				TextField("", text: $manuallyEnteredCode, prompt: Text("Enter xPub key"))
 					.padding(.leading, 12)
 					.padding(.trailing, 5)
 					.padding(.vertical, 12)
@@ -86,9 +88,9 @@ public struct XPubScannerView: View {
 					.background(Color(red: 0.14, green: 0.14, blue: 0.14))
 					.cornerRadius(8)
 				
-				let disabled = manuallyEnteredXPub.isEmpty
+				let disabled = manuallyEnteredCode.isEmpty
 				Button {
-					success(xPub: manuallyEnteredXPub)
+					success(id: manuallyEnteredCode)
 				} label: {
 					Text("Connect")
 						.foregroundColor(
@@ -104,13 +106,21 @@ public struct XPubScannerView: View {
 		.frame(width: 358, alignment: .topLeading)
 	}
 	
-	private func success(xPub: String) {
-		connectWalletXPubUseCase.connect(walletConnectionId: xPub)
-		completion()
+	private func success(id: String) {
+		isLoading = true
+		Task {
+			defer { isLoading = false }
+			do {
+				try await connectWalletToAccountUseCase.connect(walletConnectionId: id)
+				completion()
+			} catch {
+				self.error = error
+			}
+		}
 	}
 }
 
 #Preview {
-	XPubScannerView { }
+	ConnectWalletToAccountScannerView { }
 		.preferredColorScheme(.dark)
 }

@@ -74,6 +74,10 @@ public extension View {
 	func toast(shouldShow: Binding<Bool>, type: Toast.ToastType) -> some View {
 		modifier(ToastModifier(shouldShow: shouldShow, toastType: type))
 	}
+	
+	func loadingToast(shouldShow: Binding<Bool>) -> some View {
+		modifier(ToastModifier(shouldShow: shouldShow, toastType: .loading))
+	}
 }
 
 struct Toast_Previews: PreviewProvider {

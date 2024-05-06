@@ -2,17 +2,17 @@ import Foundation
 import shared
 import Utilities
 
-public class MockConnectWalletUseCase: ConnectWalletUseCase {
+public class MockConnectWalletUseCase: ConnectWalletUseCase {	
 	private var walletConnections: [WalletConnection] = []
 	
 	public init() {}
 	
-	public func connect(walletConnectionId id: String) {
+	public func connect(walletConnectionId id: String) async throws {
 		walletConnections.append(WalletConnection(id: id, createdAt: "", stakeAddress: ""))
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: Notification().walletConnectionStateChanged), object: nil)
 	}
 	
-	public func disconnect(walletConnectionId: String?) {
+	public func disconnect(walletConnectionId: String?) async throws {
 		if let walletConnectionId {
 			walletConnections.removeAll { $0.id == walletConnectionId }
 		} else {
@@ -31,11 +31,11 @@ public class MockConnectWalletUseCase: ConnectWalletUseCase {
 }
 
 extension MockConnectWalletUseCase {
-	public func hasWalletConnectionsFlow() -> any Kotlinx_coroutines_coreFlow {
+	public func hasWalletConnectionsFlow() throws -> any Kotlinx_coroutines_coreFlow {
 		fatalError()
 	}
 	
-	public func getWalletConnectionsFlow() -> any Kotlinx_coroutines_coreFlow {
+	public func getWalletConnectionsFlow() throws -> any Kotlinx_coroutines_coreFlow {
 		fatalError()
 	}
 }

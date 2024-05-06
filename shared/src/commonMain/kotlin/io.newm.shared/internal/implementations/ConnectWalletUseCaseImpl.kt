@@ -14,15 +14,16 @@ import shared.postNotification
 internal class ConnectWalletUseCaseImpl(
     private val cardanoWalletRepository: CardanoWalletRepository
 ) : ConnectWalletUseCase {
-    override fun connect(walletConnectionId: String) {
+    override suspend fun connect(walletConnectionId: String) {
         mapErrors {
             postNotification(Notification.walletConnectionStateChanged)
             cardanoWalletRepository.connectWallet(walletConnectionId)
         }
     }
 
-    override fun disconnect(walletConnectionId: String?) {
+    override suspend fun disconnect(walletConnectionId: String?) {
         mapErrors {
+            //TODO: This will need to be updated to handle disconnecting from a specific wallet connection
             cardanoWalletRepository.deleteAllNFTs()
             postNotification(Notification.walletConnectionStateChanged)
             cardanoWalletRepository.disconnectWallet(walletConnectionId)
@@ -41,13 +42,13 @@ internal class ConnectWalletUseCaseImpl(
         }
     }
 
-    suspend override fun hasWalletConnections(): Boolean {
+    override suspend fun hasWalletConnections(): Boolean {
         return mapErrorsSuspend {
             return@mapErrorsSuspend hasWalletConnectionsFlow().first()
         }
     }
 
-    suspend override fun getWalletConnections(): List<WalletConnection> {
+    override suspend fun getWalletConnections(): List<WalletConnection> {
         return mapErrorsSuspend {
             return@mapErrorsSuspend getWalletConnectionsFlow().first()
         }

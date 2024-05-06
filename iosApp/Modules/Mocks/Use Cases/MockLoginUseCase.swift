@@ -28,7 +28,7 @@ public class MockLoginUseCase: LoginUseCase {
 		isLoggedIn = true
 	}
 	
-	public func logout() {
+	public func logout() throws {
 		isLoggedIn = false
 	}
 }

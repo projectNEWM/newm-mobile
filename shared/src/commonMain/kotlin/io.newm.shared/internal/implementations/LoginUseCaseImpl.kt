@@ -1,5 +1,6 @@
 package io.newm.shared.internal.implementations
 
+import io.newm.shared.internal.implementations.utilities.mapErrors
 import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.models.OAuthData
@@ -47,8 +48,10 @@ internal class LoginUseCaseImpl(
         }
     }
 
+    @Throws(KMMException::class, CancellationException::class)
     override fun logout() {
-        connectWalletUseCase.disconnect()
-        repository.logout()
+        mapErrors {
+            repository.logout()
+        }
     }
 }

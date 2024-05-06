@@ -62,7 +62,7 @@ extension ProfileView {
 		.sheet(isPresented: $showXPubScanner, onDismiss: {
 			showXPubScanner = false
 		}) {
-			XPubScannerView {
+			ConnectWalletToAccountScannerView {
 				showXPubScanner = false
 			}
 		}

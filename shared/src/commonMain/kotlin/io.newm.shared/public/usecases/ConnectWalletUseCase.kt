@@ -21,7 +21,7 @@ interface ConnectWalletUseCase {
      * @param walletConnectionId The identifier of the wallet connection to be established.
      */
     @Throws(KMMException::class, CancellationException::class)
-    fun connect(walletConnectionId: String)
+    suspend fun connect(walletConnectionId: String)
 
     /**
      * Disconnects from the wallet identified by [walletConnectionId].
@@ -32,7 +32,7 @@ interface ConnectWalletUseCase {
      * or null to disconnect from all connected wallets.
      */
     @Throws(KMMException::class, CancellationException::class)
-    fun disconnect(walletConnectionId: String? = null)
+    suspend fun disconnect(walletConnectionId: String? = null)
 
     /**
      * Retrieves a flow of lists of [WalletConnection]s representing the currently connected wallets.
