@@ -105,7 +105,7 @@ public struct XPubScannerView: View {
 	}
 	
 	private func success(xPub: String) {
-		connectWalletXPubUseCase.connect(xpub: xPub)
+		connectWalletXPubUseCase.connect(walletConnectionId: xPub)
 		completion()
 	}
 }

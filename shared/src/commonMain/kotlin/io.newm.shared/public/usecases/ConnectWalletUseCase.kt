@@ -1,10 +1,11 @@
 package io.newm.shared.public.usecases
 
-import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * `ConnectWalletUseCase` defines the contract for managing wallet connections.
@@ -19,6 +20,7 @@ interface ConnectWalletUseCase {
      *
      * @param walletConnectionId The identifier of the wallet connection to be established.
      */
+    @Throws(KMMException::class, CancellationException::class)
     fun connect(walletConnectionId: String)
 
     /**
@@ -29,6 +31,7 @@ interface ConnectWalletUseCase {
      * @param walletConnectionId The identifier of the wallet connection to be terminated,
      * or null to disconnect from all connected wallets.
      */
+    @Throws(KMMException::class, CancellationException::class)
     fun disconnect(walletConnectionId: String? = null)
 
     /**
@@ -36,16 +39,32 @@ interface ConnectWalletUseCase {
      *
      * @return A flow emitting lists of [WalletConnection]s.
      */
-    @NativeCoroutines
-    fun getWalletConnections(): Flow<List<WalletConnection>>
+    @Throws(KMMException::class, CancellationException::class)
+    fun getWalletConnectionsFlow(): Flow<List<WalletConnection>>
 
     /**
      * Retrieves a flow indicating whether any wallet connections exist.
      *
      * @return A flow emitting `true` if there are wallet connections, `false` otherwise.
      */
-    @NativeCoroutines
-    fun hasWalletConnections(): Flow<Boolean>
+    @Throws(KMMException::class, CancellationException::class)
+    fun hasWalletConnectionsFlow(): Flow<Boolean>
+
+    /**
+     * Retrieves a list of [WalletConnection]s representing the currently connected wallets.
+     *
+     * @return A list of [WalletConnection]s.
+     */
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun getWalletConnections(): List<WalletConnection>
+
+    /**
+     * Retrieves whether any wallet connections exist.
+     *
+     * @return `true` if there are wallet connections, `false` otherwise.
+     */
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun hasWalletConnections(): Boolean
 }
 
 class ConnectWalletUseCaseProvider(): KoinComponent {
