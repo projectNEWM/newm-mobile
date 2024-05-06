@@ -29,7 +29,7 @@ class ProfilePresenter(
 ) : Presenter<ProfileUiState> {
     @Composable
     override fun present(): ProfileUiState {
-        val isWalletConnected by remember { connectWalletUseCase.hasWalletConnections() }.collectAsState(
+        val isWalletConnected by remember { connectWalletUseCase.hasWalletConnectionsFlow() }.collectAsState(
             false
         )
 

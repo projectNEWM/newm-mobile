@@ -17,17 +17,20 @@ import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class NFTLibraryPresenter(
     private val navigator: Navigator,
     private val connectWalletUseCase: ConnectWalletUseCase,
-    private val walletNFTTracksUseCase: WalletNFTTracksUseCase
+    private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
+    private val scope: CoroutineScope,
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer()
 
-        val isWalletConnected: Boolean? by remember { connectWalletUseCase.hasWalletConnections() }.collectAsState(
+        val isWalletConnected: Boolean? by remember { connectWalletUseCase.hasWalletConnectionsFlow() }.collectAsState(
             null
         )
 
@@ -65,8 +68,10 @@ class NFTLibraryPresenter(
 
         return when {
             isWalletConnected == null -> NFTLibraryState.Loading
-            isWalletConnected == false -> NFTLibraryState.LinkWallet { xpubKey ->
-                connectWalletUseCase.connect(xpubKey)
+            isWalletConnected == false -> NFTLibraryState.LinkWallet { newmWalletConnectionId ->
+                scope.launch {
+                    connectWalletUseCase.connect(newmWalletConnectionId)
+                }
             }
 
             nftTracks.isEmpty() && streamTracks.isEmpty() -> NFTLibraryState.EmptyWallet

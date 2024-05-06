@@ -77,7 +77,8 @@ internal class CardanoWalletRepository(
             .mapToList()
             .onStart {
                 scope.launch {
-                    fetchWalletConnections()
+                    val connections = fetchWalletConnections()
+                    cacheWalletConnections(connections)
                 }
             }
             .map { dbWalletConnections ->
@@ -127,13 +128,13 @@ internal class CardanoWalletRepository(
         }
     }
 
-    private suspend fun fetchWalletConnections() {
+    suspend fun fetchWalletConnections(): List<WalletConnection> {
         try {
             val walletConnections = walletConnectionAPI.getWalletConnections()
-            logger.d { "cje466 Fetched wallet connections from network: $walletConnections" }
-            cacheWalletConnections(walletConnections)
+            logger.d { "Fetched wallet connections from network: $walletConnections" }
+            return walletConnections
         } catch (e: Exception) {
-            logger.e(e) { " cje466 Error fetching wallet connections from network ${e.cause}" }
+            logger.e(e) { "Error fetching wallet connections from network ${e.cause}" }
             throw e
         }
     }
@@ -177,8 +178,7 @@ internal class CardanoWalletRepository(
         }
     }
 
-    fun disconnectWallet(walletConnectionId: String? = null) {
-        scope.launch {
+    suspend fun disconnectWallet(walletConnectionId: String? = null) {
             walletConnectionId?.let {
                 walletConnectionAPI.disconnectWallet(it)
             } ?: run {
@@ -188,7 +188,5 @@ internal class CardanoWalletRepository(
                     }
                 }
             }
-
-        }
     }
 }

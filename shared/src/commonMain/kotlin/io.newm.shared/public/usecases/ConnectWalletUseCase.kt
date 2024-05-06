@@ -19,7 +19,7 @@ interface ConnectWalletUseCase {
      *
      * @param walletConnectionId The identifier of the wallet connection to be established.
      */
-    fun connect(walletConnectionId: String)
+    suspend fun connect(walletConnectionId: String)
 
     /**
      * Disconnects from the wallet identified by [walletConnectionId].
@@ -29,7 +29,14 @@ interface ConnectWalletUseCase {
      * @param walletConnectionId The identifier of the wallet connection to be terminated,
      * or null to disconnect from all connected wallets.
      */
-    fun disconnect(walletConnectionId: String? = null)
+    suspend fun disconnect(walletConnectionId: String? = null)
+
+    /**
+     * Retrieves a lists of [WalletConnection]s representing the currently connected wallets.
+     *
+     * @return A lists of [WalletConnection]s.
+     */
+    suspend fun getWalletConnections(): List<WalletConnection>
 
     /**
      * Retrieves a flow of lists of [WalletConnection]s representing the currently connected wallets.
@@ -37,7 +44,15 @@ interface ConnectWalletUseCase {
      * @return A flow emitting lists of [WalletConnection]s.
      */
     @NativeCoroutines
-    fun getWalletConnections(): Flow<List<WalletConnection>>
+    fun getWalletConnectionsFlow(): Flow<List<WalletConnection>>
+
+    /**
+     * Retrieves a boolean indicating whether any wallet connections exist.
+     *
+     * @return `true` if there are wallet connections, `false` otherwise.
+     */
+    @NativeCoroutines
+    suspend fun hasWalletConnections(): Boolean
 
     /**
      * Retrieves a flow indicating whether any wallet connections exist.
@@ -45,7 +60,7 @@ interface ConnectWalletUseCase {
      * @return A flow emitting `true` if there are wallet connections, `false` otherwise.
      */
     @NativeCoroutines
-    fun hasWalletConnections(): Flow<Boolean>
+    fun hasWalletConnectionsFlow(): Flow<Boolean>
 }
 
 class ConnectWalletUseCaseProvider : KoinComponent {

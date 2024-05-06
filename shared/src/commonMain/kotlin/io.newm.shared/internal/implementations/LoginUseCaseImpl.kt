@@ -47,7 +47,7 @@ internal class LoginUseCaseImpl(
         }
     }
 
-    override fun logout() {
+    override suspend fun logout() {
         connectWalletUseCase.disconnect()
         repository.logout()
     }

@@ -76,6 +76,7 @@ val viewModule = module {
         NFTLibraryPresenter(
             params.get(),
             get(),
+            get(),
             get()
         )
     }
@@ -96,6 +97,6 @@ val viewModule = module {
 }
 
 val androidModules = module {
-    single { Logout(get(), get(), get()) }
+    single { Logout(get(), get(), get(), get()) }
     single { RestartApp(get()) }
 }

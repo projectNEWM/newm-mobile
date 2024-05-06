@@ -40,7 +40,7 @@ class ProfileEditPresenter(
         }
 
         val isWalletConnected by remember {
-            connectWalletUseCase.hasWalletConnections()
+            connectWalletUseCase.hasWalletConnectionsFlow()
         }.collectAsState(initial = false)
 
         val coroutineScope = rememberStableCoroutineScope()
