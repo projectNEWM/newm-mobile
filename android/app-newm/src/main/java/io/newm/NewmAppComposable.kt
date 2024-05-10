@@ -1,26 +1,35 @@
 package io.newm
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,7 +58,10 @@ import io.newm.core.theme.YellowJacket
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.iconGradient
+import io.newm.feature.musicplayer.MiniPlayer
+import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
+import kotlinx.coroutines.launch
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
@@ -60,6 +72,7 @@ private val SearchIconGradient = iconGradient(DarkPink, BrightOrange)
 private val WalletIconGradient = iconGradient(OceanGreen, LightSkyBlue)
 private val MarketIconGradient = iconGradient(BrightOrange, YellowJacket)
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun NewmApp() {
     var currentRootScreen: Screen by remember {
@@ -72,28 +85,72 @@ internal fun NewmApp() {
         push(currentRootScreen)
     }
     val navigator = rememberCircuitNavigator(backstack)
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
 
-    Scaffold(
-        modifier = Modifier.navigationBarsPadding(),
-        bottomBar = {
-            NewmBottomNavigation(
-                currentRootScreen = currentRootScreen,
-                isVisible = isBottomNavBarVisible.value,
-                onNavigationSelected = {
-                    currentRootScreen = it
-                    navigator.resetRoot(it)
-                }
-            )
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(
+        enabled = sheetState.isVisible
+    ) {
+        coroutineScope.launch {
+            sheetState.hide()
         }
-    ) { padding ->
-        Box(modifier = Modifier.padding(padding)) {
+    }
 
+
+    ModalBottomSheetLayout(
+        modifier = Modifier,
+        sheetState = sheetState,
+        sheetContent = {
+            MusicPlayerScreen(onNavigateUp = {
+                coroutineScope.launch {
+                    sheetState.hide()
+                }
+            })
+        },
+    ) {
+        Scaffold(
+            bottomBar = {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    MiniPlayer(
+                        modifier = Modifier.clickable {
+                            coroutineScope.launch {
+                                sheetState.show()
+                            }
+                        }
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .height(2.dp)
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colors.surface)
+                    )
+                    NewmBottomNavigation(
+                        currentRootScreen = currentRootScreen,
+                        isVisible = isBottomNavBarVisible.value,
+                        onNavigationSelected = {
+                            currentRootScreen = it
+                            navigator.resetRoot(it)
+                        }
+                    )
+                }
+
+            }
+        ) { padding ->
             NavigableCircuitContent(
+                modifier = Modifier.padding(padding),
                 navigator = navigator,
                 backstack = backstack
             )
         }
+
     }
+
 }
 
 @Composable
