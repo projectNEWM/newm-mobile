@@ -3,6 +3,9 @@
     <style name="Theme.ProjectNewm" parent="Theme.MaterialComponents">
         <item name="colorPrimary">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/black</item>
     </style>
 
     <style name="Theme.ProjectNewm.NoActionBar">
