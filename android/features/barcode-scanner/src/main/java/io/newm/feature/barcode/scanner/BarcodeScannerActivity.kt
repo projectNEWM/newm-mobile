@@ -98,7 +98,7 @@ class BarcodeScannerActivity : ComponentActivity() {
 
     private fun onValidCodeConnection(newmCode: String) {
         val resultIntent = Intent().apply {
-            putExtra(NEWM_KEY, newmCode)
+            putExtra(NEWM_WALLET_CONNECTION_ID, newmCode)
         }
         this.apply {
             setResult(Activity.RESULT_OK, resultIntent)
@@ -261,6 +261,6 @@ class BarcodeScannerActivity : ComponentActivity() {
     }
 
     companion object {
-        const val NEWM_KEY = "NEWM_SCAN_RESULT_KEY"
+        const val NEWM_WALLET_CONNECTION_ID = "NEWM_WALLET_CONNECTION_ID"
     }
 }

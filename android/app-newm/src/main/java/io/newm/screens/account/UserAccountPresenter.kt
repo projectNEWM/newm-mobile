@@ -24,7 +24,7 @@ class UserAccountPresenter(
 ) : Presenter<UserAccountState> {
     @Composable
     override fun present(): UserAccountState {
-        val isWalletConnected by remember { connectWalletUseCase.hasWalletConnections() }.collectAsState(
+        val isWalletConnected by remember { connectWalletUseCase.hasWalletConnectionsFlow() }.collectAsState(
             false
         )
 
@@ -44,7 +44,7 @@ class UserAccountPresenter(
                 eventSink = { event ->
                     when (event) {
                         is UserAccountEvent.OnConnectWallet -> coroutineScope.launch {
-                            connectWalletUseCase.connect(event.xpubKey)
+                            connectWalletUseCase.connect(event.walletConnectionId)
                         }
 
                         UserAccountEvent.OnDisconnectWallet -> coroutineScope.launch {
@@ -52,7 +52,9 @@ class UserAccountPresenter(
                         }
 
                         UserAccountEvent.OnEditProfile -> navigator.goTo(EditProfile)
-                        UserAccountEvent.OnLogout -> logout.signOutUser()
+                        UserAccountEvent.OnLogout -> {
+                            logout.signOutUser()
+                        }
                         UserAccountEvent.OnWalletConnectProtocol -> navigator.goTo(WalletConnect)
                     }
                 }

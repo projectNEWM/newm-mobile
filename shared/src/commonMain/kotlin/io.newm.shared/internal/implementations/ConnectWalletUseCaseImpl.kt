@@ -23,7 +23,7 @@ internal class ConnectWalletUseCaseImpl(
     }
 
     override suspend fun disconnect(walletConnectionId: String?) {
-        mapErrors {
+        mapErrorsSuspend {
             //TODO: This will need to be updated to handle disconnecting from a specific wallet connection
             cardanoWalletRepository.deleteAllNFTs()
             cardanoWalletRepository.disconnectWallet(walletConnectionId)
@@ -31,12 +31,13 @@ internal class ConnectWalletUseCaseImpl(
         }
     }
 
-    override fun hasWalletConnections(): Flow<Boolean> {
-        return getWalletConnections().map { connections ->
+    override fun hasWalletConnectionsFlow(): Flow<Boolean> {
+        return getWalletConnectionsFlow().map { connections ->
             connections.isNotEmpty()
         }
     }
-    override fun getWalletConnections(): Flow<List<WalletConnection>> {
+
+    override fun getWalletConnectionsFlow(): Flow<List<WalletConnection>> {
         return mapErrors {
             cardanoWalletRepository.getWalletConnections()
         }
