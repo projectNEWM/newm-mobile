@@ -160,7 +160,7 @@ extension ProfileView {
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
 		MocksModule.shared.registerAllMockedServices()
-		Resolver.root = .mock
+		Resolver.root = Resolver(child: .main)
 		return Group {
 			NavigationView {
 				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
@@ -175,8 +175,8 @@ struct ProfileView_Previews: PreviewProvider {
 struct ProfileView_Previews_2: PreviewProvider {
 	static var previews: some View {
 		MocksModule.shared.registerAllMockedServices()
-		Resolver.root = .mock
-		Resolver.mock.register {
+		Resolver.root = Resolver(child: .main)
+		Resolver.root.register {
 			MockUserDetailsUseCase(mockUser: .bannerlessUser) as UserDetailsUseCase
 		}
 		return Group {

@@ -9,9 +9,9 @@ final class PlayQueueTests: XCTestCase {
 	
 	override class func setUp() {
 		super.setUp()
-		AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .mock)
+		AudioPlayerModule.shared.registerAllMockedServices(mockResolver: Resolver(child: .main))
 		AudioPlayerModule.shared.registerAllServices()
-		Resolver.root = .mock
+		Resolver.root = Resolver(child: .main)
 	}
 	
 	override func setUp() {

@@ -6,15 +6,12 @@ import shared
 import Kingfisher
 import Utilities
 
-private let useMocks = false
-
 @main
 struct iOSApp: App {
 	private let mainViewProvider: MainViewProviding
 	private var imageErrorPlugin = KingfisherErrorHandler()
 
 	init() {
-		KoinKt.doInitKoin(enableNetworkLogs: true)
 #if DEBUG
 		UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 #endif
@@ -22,10 +19,6 @@ struct iOSApp: App {
 		
 		setUpAppearance()
 		setUpKingfisherErrorHandling()
-		
-		if useMocks {
-			Resolver.root = .mock
-		}
 	}
 	
 	var body: some Scene {

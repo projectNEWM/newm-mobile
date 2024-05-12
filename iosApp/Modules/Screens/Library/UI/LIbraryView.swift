@@ -271,17 +271,15 @@ struct LibraryView: View {
 
 #if DEBUG
 #Preview {
-	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
-	Resolver.root = Resolver.mock
-	let mockResolver = Resolver(child: .root)
-	mockResolver.register {
-		let useCase = Resolver.mock.resolve(ConnectWalletUseCase.self)
+	Resolver.root = Resolver(child: .main)
+	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
+	Resolver.root.register {
+		let useCase = $0.resolve(ConnectWalletUseCase.self)
 		Task {
 			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
 		}
 		return useCase as ConnectWalletUseCase
 	}
-	Resolver.root = mockResolver
 	return Group {
 		LibraryView()
 		LibraryView()
@@ -292,8 +290,8 @@ struct LibraryView: View {
 }
 
 #Preview {
-	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
-	Resolver.root = Resolver.mock
+	Resolver.root = Resolver(child: .main)
+	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
 	return LibraryView(showFilter: true)
 		.preferredColorScheme(.dark)
 		.tint(.white)
