@@ -1,6 +1,7 @@
+
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
 	kotlin(Plugins.multiplatform)
@@ -9,7 +10,6 @@ plugins {
 	id(Plugins.androidLibrary)
 	id(Plugins.sqlDelight)
 	id("com.google.devtools.ksp") version "1.9.21-1.0.15"
-	id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-22"
 	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
