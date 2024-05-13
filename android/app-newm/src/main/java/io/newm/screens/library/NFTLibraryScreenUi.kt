@@ -15,15 +15,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
@@ -46,7 +44,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.slack.circuit.foundation.internal.BackHandler
 import io.newm.core.resources.R
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.Gray16
@@ -62,8 +59,6 @@ import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.textGradient
-import io.newm.feature.musicplayer.MiniPlayer
-import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
 import io.newm.screens.library.NFTLibraryEvent.OnQueryChange
 import io.newm.screens.library.NFTLibraryEvent.PlaySong
@@ -78,84 +73,52 @@ import kotlin.math.roundToInt
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NFTLibraryScreenUi(
     modifier: Modifier = Modifier,
     state: NFTLibraryState
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-
-    BackHandler(
-        enabled = sheetState.isVisible
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .testTag(TAG_NFT_LIBRARY_SCREEN)
+            .statusBarsPadding()
+            .padding(horizontal = 16.dp)
     ) {
-        coroutineScope.launch {
-            sheetState.hide()
-        }
-    }
-
-    ModalBottomSheetLayout(
-        modifier = modifier,
-        sheetState = sheetState,
-        sheetContent = {
-            MusicPlayerScreen(
-                onNavigateUp = {
-                    coroutineScope.launch {
-                        sheetState.hide()
-                    }
-                })
-        }) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .testTag(TAG_NFT_LIBRARY_SCREEN)
-                .systemBarsPadding()
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.title_nft_library),
-                modifier = Modifier.padding(vertical = 16.dp),
-                style = TextStyle(
-                    fontFamily = raleway,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp,
-                    brush = textGradient(SteelPink, CerisePink)
-                )
+        Text(
+            text = stringResource(id = R.string.title_nft_library),
+            modifier = Modifier.padding(vertical = 16.dp),
+            style = TextStyle(
+                fontFamily = raleway,
+                fontWeight = FontWeight.Bold,
+                fontSize = 32.sp,
+                brush = textGradient(SteelPink, CerisePink)
             )
-            when (state) {
-                NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
-                is NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
-                    val eventSink = state.onConnectWallet
-                    eventSink(xpubKey)
-                }
+        )
+        when (state) {
+            NFTLibraryState.Loading -> LoadingScreen(modifier = Modifier.padding(horizontal = 16.dp))
+            is NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
+                val eventSink = state.onConnectWallet
+                eventSink(xpubKey)
+            }
 
-                NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
-                is NFTLibraryState.Error -> ErrorScreen(state.message)
-                is NFTLibraryState.Content -> {
-                    val eventSink = state.eventSink
+            NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
+            is NFTLibraryState.Error -> ErrorScreen(state.message)
+            is NFTLibraryState.Content -> {
+                val eventSink = state.eventSink
 
-                    NFTTracks(
-                        nftTracks = state.nftTracks,
-                        streamTokenTracks = state.streamTokenTracks,
-                        showZeroResultsFound = state.showZeroResultFound,
-                        onQueryChange = { query -> eventSink(OnQueryChange(query)) },
-                        onPlaySong = { track -> eventSink(PlaySong(track)) },
-                        onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) },
-                        onPlayerClicked = {
-                            coroutineScope.launch {
-                                sheetState.show()
-                            }
-                        }
-                    )
-                }
+                NFTTracks(
+                    nftTracks = state.nftTracks,
+                    streamTokenTracks = state.streamTokenTracks,
+                    showZeroResultsFound = state.showZeroResultFound,
+                    onQueryChange = { query -> eventSink(OnQueryChange(query)) },
+                    onPlaySong = { track -> eventSink(PlaySong(track)) },
+                    onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) }
+                )
             }
         }
     }
+
 }
 
 
@@ -167,7 +130,6 @@ private fun NFTTracks(
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: (String) -> Unit,
-    onPlayerClicked: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -227,26 +189,6 @@ private fun NFTTracks(
                     }
                 }
             }
-            // Add a spacer as the last item, with the same height as a track item.
-            item {
-                Spacer(modifier = Modifier.height(64.dp))
-            }
-        }
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-        ) {
-            MiniPlayer(
-                modifier = Modifier
-                    .clickable { onPlayerClicked() } // replace with current song or drop param altogether
-            )
-            Spacer(
-                modifier = Modifier
-                    .height(2.dp)
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.surface)
-            )
         }
     }
 }
