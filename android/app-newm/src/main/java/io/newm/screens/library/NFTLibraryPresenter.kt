@@ -17,6 +17,7 @@ import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
+import kotlinx.coroutines.flow.flowOf
 
 class NFTLibraryPresenter(
     private val navigator: Navigator,
@@ -33,12 +34,20 @@ class NFTLibraryPresenter(
 
         var query by rememberSaveable { mutableStateOf("") }
 
-        val nftTracks by remember {
-            walletNFTTracksUseCase.getAllNFTTracksFlow()
+        val nftTracks by remember(isWalletConnected) {
+            if(isWalletConnected == true) {
+                walletNFTTracksUseCase.getAllNFTTracksFlow()
+            } else {
+                flowOf()
+            }
         }.collectAsState(initial = emptyList())
 
-        val streamTracks by remember {
-            walletNFTTracksUseCase.getAllStreamTokensFlow()
+        val streamTracks by remember(isWalletConnected) {
+            if(isWalletConnected == true) {
+                walletNFTTracksUseCase.getAllStreamTokensFlow()
+            } else {
+                flowOf()
+            }
         }.collectAsState(initial = emptyList())
 
         val playList = remember(
