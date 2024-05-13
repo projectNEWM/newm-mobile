@@ -1,7 +1,6 @@
 package io.newm.screens.library
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,10 +54,6 @@ class NFTLibraryPresenter(
             streamTracks
         ) { Playlist(nftTracks.toTrack() + streamTracks.toTrack()) }
 
-        LaunchedEffect(playList, musicPlayer) {
-            musicPlayer?.setPlaylist(playList, 0)
-        }
-
         return when {
             isWalletConnected == null -> NFTLibraryState.Loading
             isWalletConnected == false -> NFTLibraryState.LinkWallet { xpubKey ->
@@ -84,7 +79,7 @@ class NFTLibraryPresenter(
                             require(trackIndex >= 0) { "Track not found in playlist" }
 
                             musicPlayer?.apply {
-                                seekTo(trackIndex, 0)
+                                setPlaylist(playList, trackIndex)
                                 play()
                             }
                         }
