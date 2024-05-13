@@ -1,5 +1,6 @@
 package io.newm.feature.musicplayer
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -67,13 +68,19 @@ internal fun MusicPlayerViewer(
     Box(
         modifier = modifier,
     ) {
-        AsyncImage(
-            model = song.artworkUri,
-            modifier = Modifier
-                .fillMaxSize(),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-        )
+        Crossfade(
+            modifier = Modifier.fillMaxSize(),
+            targetState = song.artworkUri,
+            label = "crossfade-artwork"
+        ) { uri ->
+            AsyncImage(
+                model = uri,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
