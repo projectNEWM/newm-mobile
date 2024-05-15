@@ -118,6 +118,7 @@ buildConfig {
 	buildConfigField<String>("RECAPTCHA_SITE_KEY", properties.getProperty("RECAPTCHA_SITE_KEY").replace("\"", ""))
 	buildConfigField<String>("SENTRY_AUTH_TOKEN", properties.getProperty("SENTRY_AUTH_TOKEN").replace("\"", ""))
 	buildConfigField<String>("WALLET_CONNECT_PROJECT_ID", properties.getProperty("WALLET_CONNECT_PROJECT_ID").replace("\"", ""))
+	buildConfigField<String>("NEWM_MOBILE_APP_VERSION", "1.0.0")
 }
 
 

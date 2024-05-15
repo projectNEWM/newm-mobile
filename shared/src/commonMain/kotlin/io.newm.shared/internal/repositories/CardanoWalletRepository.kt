@@ -6,7 +6,6 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import io.newm.shared.internal.db.NewmDatabaseWrapper
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.public.models.NFTTrack
-import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -100,7 +99,7 @@ internal class CardanoWalletRepository(
 
     internal suspend fun fetchNFTTracksFromNetwork() {
         try {
-            val xpub = connectWalletManager.getXPub() ?: throw KMMException("No xpub found")
+            val xpub = connectWalletManager.getXPub() ?: return
             val walletNFTs = service.getWalletNFTs(xpub)
             cacheNFTTracks(walletNFTs)
         } catch (e: Exception) {
