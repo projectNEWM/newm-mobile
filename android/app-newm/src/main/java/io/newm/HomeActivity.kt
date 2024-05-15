@@ -115,7 +115,10 @@ class HomeActivity : ComponentActivity() {
         content: @Composable () -> Unit
     ) {
         CircuitCompositionLocals(circuit) {
-            CompositionLocalProvider(LocalRetainedStateRegistry provides continuityRetainedStateRegistry()) {
+            CompositionLocalProvider(
+                LocalRetainedStateRegistry provides continuityRetainedStateRegistry(),
+                LocalIsBottomBarVisible provides isBottomBarVisible()
+            ) {
                 content()
             }
         }
