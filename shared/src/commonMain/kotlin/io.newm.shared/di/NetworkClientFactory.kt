@@ -27,7 +27,7 @@ internal class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
 //	TODO:
-//    private val repository: LogInRepository,
+    private val repository: LogInRepository,
     private val tokenManager: TokenManager,
     private val enableNetworkLogs: Boolean,
     private val buildConfig: NewmSharedBuildConfig,
@@ -121,13 +121,13 @@ internal class NetworkClientFactory(
                                 )
                             } else {
 //	TODO:
-//                                repository.logout()
+                                repository.logout()
                                 logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
                                 throw KMMException("Invalid Token response")
                             }
                         } catch (e: Exception) {
 //	TODO:
-//                            repository.logout()
+                            repository.logout()
                             logger.d { "NewmKMM - refreshTokens: Exception: $e" }
                             throw KMMException("Refresh token failed: $e")
                         }
