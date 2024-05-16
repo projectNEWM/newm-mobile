@@ -10,7 +10,7 @@ final public class MocksModule: Module {
 		//Intentionally empty.
 	}
 #if DEBUG
-	public func registerAllMockedServices(mockResolver: Resolver = .mock) {
+	public func registerAllMockedServices(mockResolver: Resolver = Resolver(child: .main)) {
 		mockResolver.register {
 			MockUserDetailsUseCase() as UserDetailsUseCase
 		}.scope(.cached)

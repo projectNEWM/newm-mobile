@@ -24,7 +24,7 @@ final class ProfileViewModelTests: XCTestCase {
 		try await super.setUp()
 		
 		Resolver.reset()
-		Resolver.root = .mock
+		Resolver.root = Resolver(child: .main)
 		MocksModule.shared.registerAllMockedServices()
 		
 		userDetailsUseCase = Resolver.resolve(UserDetailsUseCase.self) as! MockUserDetailsUseCase
@@ -85,15 +85,13 @@ final class ProfileViewModelTests: XCTestCase {
 		cancellable.cancel()
 	}
 	
-	func testWalletConnection() {
+	func testWalletConnection() async throws {
 		XCTAssertFalse(profileViewModel.isWalletConnected)
-		connectWalletUseCase.connect(xpub: "xpub")
-		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+		try await connectWalletUseCase.connect(walletConnectionId: "newm234324234234243")
+		try await Task.sleep(for: .seconds(0.1))
 		XCTAssertTrue(profileViewModel.isWalletConnected)
-		profileViewModel.disconnectWallet()
-		NotificationCenter.default.post(name: NSNotification.Name(Notification().walletConnectionStateChanged), object: nil)
-		RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
+		await profileViewModel.disconnectWallet()
+		try await Task.sleep(for: .seconds(0.1))
 		XCTAssertFalse(profileViewModel.isWalletConnected)
 	}
 	
@@ -114,5 +112,21 @@ final class ProfileViewModelTests: XCTestCase {
 		await profileViewModel.save()
 		XCTAssertEqual(profileViewModel.errorAlert, error.errorDescription)
 		XCTAssertEqual(errorLogger.errorsLogged.first!.localizedDescription, error.localizedDescription)
+	}
+	
+	func testDisconnectWallet_error() async throws {
+		connectWalletUseCase.throwThisError = "some error".newmError
+		XCTAssertNil(profileViewModel.errorAlert)
+		await profileViewModel.disconnectWallet()
+		XCTAssertNotNil(profileViewModel.errorAlert)
+	}
+	
+	func testDisconnectWallet() async throws {
+		try await connectWalletUseCase.connect(walletConnectionId: "1")
+		try await Task.sleep(for: .seconds(0.1))
+		XCTAssertTrue(profileViewModel.isWalletConnected)
+		await profileViewModel.disconnectWallet()
+		try await Task.sleep(for: .seconds(0.1))
+		XCTAssertFalse(profileViewModel.isWalletConnected)
 	}
 }

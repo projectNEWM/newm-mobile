@@ -38,7 +38,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow camera access to scan your xPub QR code.</string>
+	<string>Allow camera access to scan your QR code.</string>
 	<key>RECAPTCHA_KEY_ID</key>
 	<string>$(RECAPTCHA_KEY_ID)</string>
 	<key>UIAppFonts</key>

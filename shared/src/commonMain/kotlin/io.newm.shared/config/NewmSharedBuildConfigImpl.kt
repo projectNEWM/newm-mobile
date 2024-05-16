@@ -12,26 +12,21 @@ enum class Mode {
 }
 
 // BuildConfiguration class to manage app configurations based on the mode
-object NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
+class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
-    private const val APP_MODE = "app_mode"
+    private val APP_MODE = "app_mode"
+
+    private val defaultMode = Mode.STAGING
 
     private val storage: KVault by inject()
     var mode: Mode
         get() {
-            val modeString = storage.string(APP_MODE) ?: Mode.PRODUCTION.name
+            val modeString = storage.string(APP_MODE) ?: defaultMode.name
             return Mode.valueOf(modeString)
         }
         set(value) {
             storage.set(APP_MODE, value.name)
         }
-
-    init {
-        // If there's no mode saved in KVault, default to Production.
-        if (storage.string(APP_MODE) == null) {
-            mode = Mode.STAGING
-        }
-    }
 
     override val baseUrl: String
         get() = when (mode) {

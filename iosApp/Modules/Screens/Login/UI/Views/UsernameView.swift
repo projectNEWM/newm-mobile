@@ -42,8 +42,8 @@ extension LandingView {
 #if DEBUG
 struct UsernameView_Previews: PreviewProvider {
 	static var previews: some View {
-		LoginModule.shared.registerAllMockedServices(mockResolver: .mock)
-		Resolver.root = .mock
+		Resolver.root = Resolver(child: .main)
+		LoginModule.shared.registerAllMockedServices(mockResolver: .root)
 		return LandingView()
 			.nicknameView
 			.preferredColorScheme(.dark)
