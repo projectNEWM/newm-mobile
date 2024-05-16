@@ -49,13 +49,13 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	@Published private(set) var showLoading: Bool = true
-	@Published private(set) var showXPubScanner: Bool = false
-	var walletIsConnected: Bool { connectWalletXPubUseCase.isConnected() }
+	@Published private(set) var showCodeScanner: Bool = false
+	var walletIsConnected: Bool = false
 	
 	private var cancels: Set<AnyCancellable> = []
 	
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
-	@Injected private var connectWalletXPubUseCase: any ConnectWalletUseCase
+	@Injected private var connectWalletToAccountUseCase: any ConnectWalletUseCase
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	@Injected private var logger: any ErrorReporting
 	
@@ -64,10 +64,15 @@ class LibraryViewModel: ObservableObject {
 			.sink { [weak self] _ in
 				Task {
 					guard let self else { return }
-					if self.walletIsConnected {
-						await self.refresh()
-					} else {
-						self.tracks = []
+					do {
+						self.walletIsConnected = try await self.connectWalletToAccountUseCase.hasWalletConnections().boolValue
+						if self.walletIsConnected {
+							await self.refresh()
+						} else {
+							self.tracks = []
+						}
+					} catch {
+						self.errors.append(error)
 					}
 				}
 			}
@@ -87,8 +92,9 @@ class LibraryViewModel: ObservableObject {
 			}
 		}
 			
-		Task {
-			await refresh()
+		Task { [weak self] in
+			self?.walletIsConnected = try await self?.connectWalletToAccountUseCase.hasWalletConnections().boolValue == true
+			await self?.refresh()
 		}
 	}
 	
@@ -112,8 +118,8 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	
-	func xPubScanned() {
-		showXPubScanner = false
+	func codeScanned() {
+		showCodeScanner = false
 		showLoading = true
 		Task {
 			await refresh()
@@ -122,11 +128,11 @@ class LibraryViewModel: ObservableObject {
 	}
 	
 	func scannerDismissed() {
-		showXPubScanner = false
+		showCodeScanner = false
 	}
 	
 	func connectWallet() {
-		showXPubScanner = true
+		showCodeScanner = true
 	}
 	
 	private func downloadTrack(_ track: NFTTrack) {

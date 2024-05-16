@@ -31,9 +31,7 @@ final class ProfileViewModel: ObservableObject {
 	@Published var showCompletionToast: Bool = false
 	@Published var isWalletConnected: Bool = false
 	var errorAlert: String? { errors.currentError?.errorDescription }
-	
-	private var cancels = Set<AnyCancellable>()
-	
+		
 	var enableSaveButon: Bool {
 		let hasNewPassword =
 		currentPassword.isEmpty == false &&
@@ -52,12 +50,13 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	init() {
-		isWalletConnected = connectWalletUseCase.isConnected()
-		NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged)
-			.sink { [weak self] _ in
-				self?.isWalletConnected = self?.connectWalletUseCase.isConnected() == true
+		Task.detached {
+			for try await stateChange in NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged).compactMap({ $0 }).values {
+				Task { @MainActor [weak self] in
+					self?.isWalletConnected = try await self?.connectWalletUseCase.hasWalletConnections() == true
+				}
 			}
-			.store(in: &cancels)
+		}
 		
 		Task {
 			await loadUser()
@@ -68,7 +67,11 @@ final class ProfileViewModel: ObservableObject {
 	func loadUser() async {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
-			user = try await getCurrentUser.fetchLoggedInUserDetails()
+			async let user = getCurrentUser.fetchLoggedInUserDetails()
+			async let isWalletConnected = connectWalletUseCase.hasWalletConnections().boolValue
+			
+			self.user = try await user
+			self.isWalletConnected = try await isWalletConnected
 		} catch {
 			logger.logError(error)
 			errors.append(error.newmError)
@@ -100,8 +103,12 @@ final class ProfileViewModel: ObservableObject {
 		}
 	}
 	
-	func disconnectWallet() {
-		connectWalletUseCase.disconnect()
+	func disconnectWallet() async {
+		do {
+			try await connectWalletUseCase.disconnect(walletConnectionId: nil)
+		} catch {
+			errors.append(error)
+		}
 	}
 	
 	func alertDismissed() {

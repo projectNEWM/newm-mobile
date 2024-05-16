@@ -109,7 +109,7 @@ extension MainView {
 #if DEBUG
 struct MainView_Previews: PreviewProvider {
 	static var previews: some View {
-		Resolver.root = Resolver.mock
+		Resolver.root = Resolver(child: .main)
 		MainModule.shared.registerAllServices()
 		AudioPlayerModule.shared.registerAllServices()
 		return MainView()
