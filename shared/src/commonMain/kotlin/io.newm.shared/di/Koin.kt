@@ -56,7 +56,8 @@ fun initKoin(enableNetworkLogs: Boolean) = initKoin(enableNetworkLogs = enableNe
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
-    single { createHttpClient(get(), get(), get(), enableNetworkLogs = enableNetworkLogs, get()) }
+    single { createHttpClient(
+        httpClientEngine = get(), json = get(), logInRepository = get(), tokenManager = get(), buildConfig = get(), enableNetworkLogs = enableNetworkLogs) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal Configurations
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
@@ -97,8 +98,9 @@ fun createJson() = Json {
 internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
     json: Json,
+    logInRepository: LogInRepository,
     tokenManager: TokenManager,
     enableNetworkLogs: Boolean,
     buildConfig: NewmSharedBuildConfig,
 ): NetworkClientFactory =
-    NetworkClientFactory(httpClientEngine, json, tokenManager, enableNetworkLogs, buildConfig)
+    NetworkClientFactory(httpClientEngine, json, logInRepository, tokenManager, enableNetworkLogs, buildConfig)
