@@ -56,10 +56,10 @@ fun initKoin(enableNetworkLogs: Boolean) = initKoin(enableNetworkLogs = enableNe
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
-    single { createHttpClient(get(), get(), get(), get(), enableNetworkLogs = enableNetworkLogs, get()) }
+    single { createHttpClient(get(), get(), get(), enableNetworkLogs = enableNetworkLogs, get()) }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal Configurations
-    single { NewmSharedBuildConfigImpl }
+    single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
     single { TokenManager(get()) }
     // Internal API Services
     single { LoginAPI(get()) }
@@ -77,7 +77,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { NewmPolicyIdsRepository(get(), get(), get()) }
     single { CardanoWalletRepository(get(), get(), get(), get(), get()) }
     // External Use Cases to be consumed outside of KMM
-    single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
+    single<LoginUseCase> { LoginUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
@@ -97,9 +97,8 @@ fun createJson() = Json {
 internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
     json: Json,
-    repository: LogInRepository,
     tokenManager: TokenManager,
     enableNetworkLogs: Boolean,
     buildConfig: NewmSharedBuildConfig,
 ): NetworkClientFactory =
-    NetworkClientFactory(httpClientEngine, json, repository, tokenManager, enableNetworkLogs, buildConfig)
+    NetworkClientFactory(httpClientEngine, json, tokenManager, enableNetworkLogs, buildConfig)

@@ -19,7 +19,6 @@ import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.services.models.LoginResponse
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.json.Json
@@ -27,7 +26,8 @@ import kotlinx.serialization.json.Json
 internal class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
-    private val repository: LogInRepository,
+//	TODO:
+//    private val repository: LogInRepository,
     private val tokenManager: TokenManager,
     private val enableNetworkLogs: Boolean,
     private val buildConfig: NewmSharedBuildConfig,
@@ -120,12 +120,14 @@ internal class NetworkClientFactory(
                                     refreshToken = tokenManager.getRefreshToken()!!
                                 )
                             } else {
-                                repository.logout()
+//	TODO:
+//                                repository.logout()
                                 logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
                                 throw KMMException("Invalid Token response")
                             }
                         } catch (e: Exception) {
-                            repository.logout()
+//	TODO:
+//                            repository.logout()
                             logger.d { "NewmKMM - refreshTokens: Exception: $e" }
                             throw KMMException("Refresh token failed: $e")
                         }
