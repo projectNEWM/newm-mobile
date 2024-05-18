@@ -75,6 +75,7 @@ fun ProfileScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
+                modifier = Modifier.systemBarsPadding(),
                 title = {},
                 backgroundColor = Black,
                 navigationIcon = {
