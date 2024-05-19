@@ -14,4 +14,6 @@ sealed class Screen : CircuitScreen {
     data object EditProfile : Screen()
 
     data object WalletConnect : Screen()
+
+    data object ForceAppUpdate : Screen()
 }
