@@ -1,8 +1,6 @@
 <resources>
-
-    <!-- Strings used for fragments for navigation -->
     <string name="account">Account</string>
-    <string name="app_name">Newm</string>
+    <string name="app_name">NEWM</string>
     <string name="artist_list_songs">%s Songs</string>
     <string name="barcode_scanner_paste_qr_code">OR PASTE QR CODE</string>
     <string name="barcode_placeholder_text">Paste Here</string>
