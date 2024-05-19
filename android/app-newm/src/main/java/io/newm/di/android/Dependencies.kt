@@ -21,6 +21,7 @@ import io.newm.feature.musicplayer.viewmodel.MusicPlayerViewModel
 import io.newm.screens.home.categories.MusicalCategoriesViewModel
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.screens.account.UserAccountPresenter
+import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
@@ -82,6 +83,11 @@ val viewModule = module {
         ProfileEditPresenter(
             params.get(),
             get()
+        )
+    }
+    factory { params ->
+        ForceAppUpdatePresenter(
+            params.get(),
         )
     }
     single<MusicRepository> { MockMusicRepository(androidContext()) }

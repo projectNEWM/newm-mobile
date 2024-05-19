@@ -53,10 +53,14 @@ object NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
     override val isStagingMode: Boolean
         get() = mode == Mode.STAGING
+
+    override val appVersion: String
+        get() = BuildConfig.NEWM_MOBILE_APP_VERSION
 }
 
 interface NewmSharedBuildConfig {
     val baseUrl: String
+    val appVersion: String
     val sentryAuthToken: String
     val googleAuthClientId: String
     val walletConnectProjectId: String

@@ -87,4 +87,7 @@
     <string name="connect_wallet_label1">You don\'t have a wallet connected</string>
     <string name="connect_wallet_label2">Connect to access all your songs</string>
     <string name="connect_wallet_button_label">Connect Wallet</string>
+    <string name="force_app_update_title">An update is available</string>
+    <string name="force_app_update_message">To ensure the best performance and latest features, please update the app. The update might include new features, improved performance, bug fixes, and more!</string>
+    <string name="force_app_update_button">Update Now</string>
 </resources>

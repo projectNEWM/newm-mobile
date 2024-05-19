@@ -19,6 +19,9 @@ import io.newm.screens.Screen.NFTLibrary
 import io.newm.screens.account.UserAccountPresenter
 import io.newm.screens.account.UserAccountState
 import io.newm.screens.account.UserAccountUi
+import io.newm.screens.forceupdate.ForceAppUpdatePresenter
+import io.newm.screens.forceupdate.ForceAppUpdateState
+import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
@@ -79,6 +82,13 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.ForceAppUpdate -> ui<ForceAppUpdateState> { state, modifier ->
+                    ForceAppUpdateUi(
+                        state = state,
+                        modifier = modifier
+                    )
+                }
+
                 else -> null
 
             }
@@ -101,6 +111,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.EditProfile -> inject<ProfileEditPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.ForceAppUpdate -> inject<ForceAppUpdatePresenter> {
                     parametersOf(
                         navigator
                     )
