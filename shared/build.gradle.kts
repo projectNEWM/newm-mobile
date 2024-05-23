@@ -60,7 +60,7 @@ kotlin {
 				implementation(Ktor.clientContentNegotiation)
 				implementation(Ktor.kotlinXJson)
 				implementation(Ktor.clientAuth)
-				implementation("com.liftric:kvault:1.12.0")
+				implementation("androidx.datastore:datastore-preferences:1.1.1")
 			}
 		}
 		val commonTest by getting {
