@@ -1,7 +1,7 @@
 package io.newm.shared.config
 
-import com.liftric.kvault.KVault
 import io.newm.shared.generated.BuildConfig
+import io.newm.shared.internal.db.PreferencesDataStore
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -18,14 +18,14 @@ class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
     private val defaultMode = Mode.STAGING
 
-    private val storage: KVault by inject()
+    private val storage: PreferencesDataStore by inject()
     var mode: Mode
         get() {
-            val modeString = storage.string(APP_MODE) ?: defaultMode.name
+            val modeString = storage.getString(APP_MODE) ?: defaultMode.name
             return Mode.valueOf(modeString)
         }
         set(value) {
-            storage.set(APP_MODE, value.name)
+            storage.saveString(APP_MODE, value.name)
         }
 
     override val baseUrl: String

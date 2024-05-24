@@ -1,6 +1,6 @@
 package io.newm.shared.internal.repositories
 
-import com.liftric.kvault.KVault
+import io.newm.shared.internal.db.PreferencesDataStore
 import io.newm.shared.internal.services.NewmPolicyIdsAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +11,7 @@ import kotlin.concurrent.Volatile
 
 internal class NewmPolicyIdsRepository(
     private val policyIdsAPI: NewmPolicyIdsAPI,
-    private val storage: KVault,
+    private val storage: PreferencesDataStore,
     private val scope: CoroutineScope,
 
     ) : KoinComponent {
@@ -26,7 +26,7 @@ internal class NewmPolicyIdsRepository(
 
     fun getPolicyIds(): Flow<List<String>> = flow {
         // Emit the locally stored IDs if available
-        val storedIds = storage.string(POLICY_IDS_KEY)
+        val storedIds = storage.getString(POLICY_IDS_KEY)
             ?: initialPolicyIdList.joinToString(",")
         if (storedIds.isNotEmpty()) {
             emit(storedIds.split(","))
@@ -38,7 +38,7 @@ internal class NewmPolicyIdsRepository(
             try {
                 val fetchedIds = policyIdsAPI.getNewmPolicyIds()
                 scope.launch {
-                    storage.set(POLICY_IDS_KEY, fetchedIds.joinToString(","))
+                    storage.saveString(POLICY_IDS_KEY, fetchedIds.joinToString(","))
                 }
                 emit(fetchedIds)
 
