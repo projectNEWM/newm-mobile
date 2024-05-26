@@ -51,7 +51,7 @@ final class ProfileViewModel: ObservableObject {
 	
 	init() {
 		Task.detached {
-			for try await stateChange in NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged).compactMap({ $0 }).values {
+			for try await _ in NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged).compactMap({ $0 }).values {
 				Task { @MainActor [weak self] in
 					self?.isWalletConnected = try await self?.connectWalletUseCase.hasWalletConnections() == true
 				}
@@ -67,11 +67,8 @@ final class ProfileViewModel: ObservableObject {
 	func loadUser() async {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
-			async let user = getCurrentUser.fetchLoggedInUserDetails()
-			async let isWalletConnected = connectWalletUseCase.hasWalletConnections().boolValue
-			
-			self.user = try await user
-			self.isWalletConnected = try await isWalletConnected
+			user = try await getCurrentUser.fetchLoggedInUserDetails()
+			isWalletConnected = try await connectWalletUseCase.hasWalletConnections().boolValue
 		} catch {
 			logger.logError(error)
 			errors.append(error.newmError)
