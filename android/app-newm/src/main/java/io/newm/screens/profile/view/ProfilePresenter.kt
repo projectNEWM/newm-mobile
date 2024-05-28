@@ -1,4 +1,4 @@
-package io.newm.screens.account
+package io.newm.screens.profile.view
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -9,18 +9,27 @@ import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
 import io.newm.screens.Screen.EditProfile
+import io.newm.screens.profile.OnConnectWallet
+import io.newm.screens.profile.OnDisconnectWallet
+import io.newm.screens.profile.OnEditProfile
+import io.newm.screens.profile.OnLogout
+import io.newm.screens.profile.OnShowAskTheCommunity
+import io.newm.screens.profile.OnShowDocuments
+import io.newm.screens.profile.OnShowFaq
+import io.newm.screens.profile.OnShowPrivacyPolicy
+import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.launch
 
-class UserAccountPresenter(
+class ProfilePresenter(
     private val navigator: Navigator,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
-) : Presenter<UserAccountState> {
+) : Presenter<ProfileUiState> {
     @Composable
-    override fun present(): UserAccountState {
+    override fun present(): ProfileUiState {
         val isWalletConnected by remember { connectWalletUseCase.isConnectedFlow() }.collectAsState(
             false
         )
@@ -30,25 +39,30 @@ class UserAccountPresenter(
         )
 
         return if (user == null) {
-            UserAccountState.Loading
+            ProfileUiState.Loading
         } else {
             val coroutineScope = rememberStableCoroutineScope()
 
-            UserAccountState.Content(
+            ProfileUiState.Content(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,
                 eventSink = { event ->
                     when (event) {
-                        is UserAccountEvent.OnConnectWallet -> coroutineScope.launch {
-                            connectWalletUseCase.connect(event.xpubKey)
+                        is OnConnectWallet -> coroutineScope.launch {
+                            connectWalletUseCase.connect(event.xpub)
                         }
 
-                        UserAccountEvent.OnDisconnectWallet -> coroutineScope.launch {
+                        OnDisconnectWallet -> coroutineScope.launch {
                             connectWalletUseCase.disconnect()
                         }
 
-                        UserAccountEvent.OnEditProfile -> navigator.goTo(EditProfile)
-                        UserAccountEvent.OnLogout -> logout.signOutUser()
+                        OnEditProfile -> navigator.goTo(EditProfile)
+                        OnLogout -> logout.signOutUser()
+                        OnShowAskTheCommunity -> TODO()
+                        OnShowDocuments -> TODO()
+                        OnShowFaq -> TODO()
+                        OnShowPrivacyPolicy -> TODO()
+                        OnShowTermsAndConditions -> TODO()
                     }
                 }
             )

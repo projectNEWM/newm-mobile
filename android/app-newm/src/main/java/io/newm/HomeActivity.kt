@@ -16,9 +16,9 @@ import com.walletconnect.web3.modal.client.Web3Modal
 import io.newm.core.theme.NewmTheme
 import io.newm.screens.Screen
 import io.newm.screens.Screen.NFTLibrary
-import io.newm.screens.account.UserAccountPresenter
-import io.newm.screens.account.UserAccountState
-import io.newm.screens.account.UserAccountUi
+import io.newm.screens.profile.view.ProfilePresenter
+import io.newm.screens.profile.view.ProfileUiState
+import io.newm.screens.profile.view.ProfileUi
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
@@ -26,8 +26,8 @@ import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
 import io.newm.screens.profile.edit.ProfileEditPresenter
-import io.newm.screens.profile.edit.ProfileScreenUi
-import io.newm.screens.profile.edit.ProfileState
+import io.newm.screens.profile.edit.ProfileEditUi
+import io.newm.screens.profile.edit.ProfileEditUiState
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -61,8 +61,8 @@ class HomeActivity : ComponentActivity() {
     private fun buildUiFactory(): Ui.Factory {
         return Ui.Factory { screen, _ ->
             when (screen) {
-                is Screen.UserAccount -> ui<UserAccountState> { state, modifier ->
-                    UserAccountUi(
+                is Screen.UserAccount -> ui<ProfileUiState> { state, modifier ->
+                    ProfileUi(
                         state = state,
                         modifier = modifier
                     )
@@ -75,8 +75,8 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
-                is Screen.EditProfile -> ui<ProfileState> { state, modifier ->
-                    ProfileScreenUi(
+                is Screen.EditProfile -> ui<ProfileEditUiState> { state, modifier ->
+                    ProfileEditUi(
                         state = state,
                         modifier = modifier
                     )
@@ -98,7 +98,7 @@ class HomeActivity : ComponentActivity() {
     private fun buildPresenterFactory(): Presenter.Factory {
         return Presenter.Factory { screen, navigator, _ ->
             when (screen) {
-                is Screen.UserAccount -> inject<UserAccountPresenter> {
+                is Screen.UserAccount -> inject<ProfilePresenter> {
                     parametersOf(
                         navigator
                     )

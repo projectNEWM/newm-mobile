@@ -20,7 +20,7 @@ import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.feature.musicplayer.viewmodel.MusicPlayerViewModel
 import io.newm.screens.home.categories.MusicalCategoriesViewModel
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
-import io.newm.screens.account.UserAccountPresenter
+import io.newm.screens.profile.view.ProfilePresenter
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
@@ -65,7 +65,7 @@ val viewModule = module {
         )
     }
     factory { params ->
-        UserAccountPresenter(
+        ProfilePresenter(
             params.get(),
             get(),
             get(),

@@ -53,7 +53,7 @@
     <string name="profile_placeholder_new_password">New Password</string>string>
     <string name="profile_placeholder_your_password">Your Password</string>string>
     <string name="profile_privacy_policy">Privacy Policy</string>
-    <string name="profile_save_button_label">Save</string>
+    <string name="profile_save_button_label">Save changes</string>
     <string name="profile_terms_and_condition">Terms &amp; Conditions</string>
     <string name="search">Search</string>
     <string name="second_fragment_label">Second Fragment</string>
