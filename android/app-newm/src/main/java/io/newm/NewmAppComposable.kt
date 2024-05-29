@@ -9,7 +9,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -118,32 +117,36 @@ internal fun NewmApp() {
     ) {
         Scaffold(
             bottomBar = {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
+                AnimatedVisibility(
+                    visible = LocalIsBottomBarVisible.current.value,
+                    enter = slideInVertically(initialOffsetY = { it }),
+                    exit = ExitTransition.None
                 ) {
-                    MiniPlayer(
-                        modifier = Modifier.clickable {
-                            coroutineScope.launch {
-                                sheetState.show()
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        MiniPlayer(
+                            modifier = Modifier.clickable {
+                                coroutineScope.launch {
+                                    sheetState.show()
+                                }
                             }
-                        }
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .height(2.dp)
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colors.surface)
-                    )
-                    NewmBottomNavigation(
-                        currentRootScreen = currentRootScreen,
-                        isVisible = LocalIsBottomBarVisible.current.value,
-                        onNavigationSelected = {
-                            currentRootScreen = it
-                            navigator.resetRoot(it)
-                        }
-                    )
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .height(2.dp)
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colors.surface)
+                        )
+                        NewmBottomNavigation(
+                            currentRootScreen = currentRootScreen,
+                            onNavigationSelected = {
+                                currentRootScreen = it
+                                navigator.resetRoot(it)
+                            }
+                        )
+                    }
                 }
-
             }
         ) { padding ->
             NavigableCircuitContent(
@@ -160,39 +163,32 @@ internal fun NewmApp() {
 @Composable
 internal fun NewmBottomNavigation(
     currentRootScreen: Screen,
-    isVisible: Boolean,
     onNavigationSelected: (Screen) -> Unit
 ) {
-    AnimatedVisibility(
-        visible = isVisible,
-        enter = slideInVertically(initialOffsetY = { it }),
-        exit = ExitTransition.None
-    ) {
-        Column(Modifier.height(76.dp)) {
-            BottomNavigation(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .testTag(TAG_BOTTOM_NAVIGATION),
-                backgroundColor = Black,
-                contentColor = Gray100
-            ) {
-                HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.NFTLibrary,
-                    iconResId = R.drawable.ic_library,
-                    labelResId = R.string.nft_library,
-                    selectedIconBrush = LibraryIconGradient,
-                    selectedLabelColor = DarkPink,
-                    onClick = { onNavigationSelected(Screen.NFTLibrary) },
-                )
-                HomeBottomNavigationItem(
-                    selected = currentRootScreen == Screen.UserAccount,
-                    iconResId = R.drawable.ic_profile,
-                    labelResId = R.string.account,
-                    selectedIconBrush = AccountIconGradient,
-                    selectedLabelColor = DarkPink,
-                    onClick = { onNavigationSelected(Screen.UserAccount) },
-                )
-            }
+    Column(Modifier.height(76.dp)) {
+        BottomNavigation(
+            modifier = Modifier
+                .fillMaxHeight()
+                .testTag(TAG_BOTTOM_NAVIGATION),
+            backgroundColor = Black,
+            contentColor = Gray100
+        ) {
+            HomeBottomNavigationItem(
+                selected = currentRootScreen == Screen.NFTLibrary,
+                iconResId = R.drawable.ic_library,
+                labelResId = R.string.nft_library,
+                selectedIconBrush = LibraryIconGradient,
+                selectedLabelColor = DarkPink,
+                onClick = { onNavigationSelected(Screen.NFTLibrary) },
+            )
+            HomeBottomNavigationItem(
+                selected = currentRootScreen == Screen.UserAccount,
+                iconResId = R.drawable.ic_profile,
+                labelResId = R.string.account,
+                selectedIconBrush = AccountIconGradient,
+                selectedLabelColor = DarkPink,
+                onClick = { onNavigationSelected(Screen.UserAccount) },
+            )
         }
     }
 }
@@ -200,7 +196,7 @@ internal fun NewmBottomNavigation(
 @Preview(showBackground = true)
 @Composable
 fun BottomNavigationBarPreview() {
-    NewmBottomNavigation(Screen.NFTLibrary, true) {}
+    NewmBottomNavigation(Screen.NFTLibrary) {}
 }
 
 // Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt

@@ -22,10 +22,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,10 +62,12 @@ import io.newm.core.ui.utils.textGradient
 import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
 import io.newm.screens.library.NFTLibraryEvent.OnQueryChange
 import io.newm.screens.library.NFTLibraryEvent.PlaySong
+import io.newm.screens.library.NFTLibraryEvent.OnApplyFilters
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.public.models.NFTTrack
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
@@ -77,8 +82,7 @@ fun NFTLibraryScreenUi(
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .testTag(TAG_NFT_LIBRARY_SCREEN)
-            .padding(horizontal = 16.dp),
+            .testTag(TAG_NFT_LIBRARY_SCREEN),
     ) {
         when (state) {
             NFTLibraryState.Loading -> LoadingScreen()
@@ -95,7 +99,7 @@ fun NFTLibraryScreenUi(
 
                 Text(
                     text = stringResource(id = R.string.title_nft_library),
-                    modifier = Modifier.padding(vertical = 16.dp),
+                    modifier = Modifier.padding(16.dp),
                     style = TextStyle(
                         fontFamily = raleway,
                         fontWeight = FontWeight.Bold,
@@ -109,15 +113,15 @@ fun NFTLibraryScreenUi(
                     nftTracks = state.nftTracks,
                     streamTokenTracks = state.streamTokenTracks,
                     showZeroResultsFound = state.showZeroResultFound,
+                    filters = state.filters,
                     onQueryChange = { query -> eventSink(OnQueryChange(query)) },
                     onPlaySong = { track -> eventSink(PlaySong(track)) },
-                    onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) }
+                    onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) },
+                    onApplyFilters = { filters -> eventSink(OnApplyFilters(filters)) }
                 )
             }
         }
-
     }
-
 }
 
 
@@ -127,61 +131,70 @@ private fun NFTTracks(
     nftTracks: List<NFTTrack>,
     streamTokenTracks: List<NFTTrack>,
     showZeroResultsFound: Boolean,
+    filters: NFTLibraryFilters,
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: (String) -> Unit,
+    onApplyFilters: (NFTLibraryFilters) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier
-            .testTag(TAG_NFT_LIBRARY_SCREEN)
-    ) {
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                SearchBar(
-                    placeholderResId = R.string.library_search,
+    val scope = rememberCoroutineScope()
+    val filterSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    Box(modifier = modifier) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()
+                .testTag(TAG_NFT_LIBRARY_SCREEN)
+        ) {
+            item {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f),
-                    onQueryChange = onQueryChange
-                )
-                IconButton(
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
-                    onClick = { }
+                        .padding(bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_library_filter),
-                        contentDescription = "Filter",
-                        modifier = Modifier.drawWithBrush(LibraryBrush)
-                    )
-                }
-            }
-        }
-        when {
-            showZeroResultsFound -> item { ZeroSearchResults() }
-
-            nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
-                items(nftTracks + streamTokenTracks, key = { track ->
-                    // Use the unique ID as the key
-                    track.id
-                }) { track ->
-                    Box(
+                    SearchBar(
+                        placeholderResId = R.string.library_search,
                         modifier = Modifier
-                            .background(Gray16)
+                            .fillMaxWidth()
+                            .weight(1f),
+                        onQueryChange = onQueryChange
+                    )
+                    IconButton(
+                        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
+                        onClick = { scope.launch { filterSheetState.show() } }
                     ) {
-                        TrackRowItemWrapper(
-                            track = track,
-                            onPlaySong = onPlaySong,
-                            onDownloadSong = { onDownloadSong(track.id) }
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_library_filter),
+                            contentDescription = "Filter",
+                            modifier = Modifier.drawWithBrush(LibraryBrush)
                         )
                     }
                 }
             }
+            when {
+                showZeroResultsFound -> item { ZeroSearchResults() }
+
+                nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
+                    items(nftTracks + streamTokenTracks, key = { track ->
+                        // Use the unique ID as the key
+                        track.id
+                    }) { track ->
+                        Box(
+                            modifier = Modifier
+                                .background(Gray16)
+                        ) {
+                            TrackRowItemWrapper(
+                                track = track,
+                                onPlaySong = onPlaySong,
+                                onDownloadSong = { onDownloadSong(track.id) }
+                            )
+                        }
+                    }
+                }
+            }
         }
+        SongFilterBottomSheet(filterSheetState, filters, onApplyFilters)
     }
 }
 
@@ -289,7 +302,11 @@ fun PreviewNftLibrary() {
                 nftTracks = emptyList(),
                 streamTokenTracks = emptyList(),
                 showZeroResultFound = false,
-                eventSink = {},
+                filters = NFTLibraryFilters(
+                    sortType = NFTLibrarySortType.None,
+                    showShortTracks = false
+                ),
+                eventSink = {}
             )
         )
     }
