@@ -1,8 +1,17 @@
 package io.newm.screens.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -10,12 +19,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.*
+import io.newm.core.theme.Black90
+import io.newm.core.theme.Gray100
+import io.newm.core.theme.Gray400
+import io.newm.core.theme.SystemRed
+import io.newm.core.theme.White
+import io.newm.core.theme.inter
 import io.newm.core.ui.buttons.SecondaryButton
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ProfileBottomSheet(
+fun ProfileBottomSheetLayout(
+    modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
     onLogout: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
@@ -23,8 +38,10 @@ fun ProfileBottomSheet(
     onShowDocuments: () -> Unit,
     onShowAskTheCommunity: () -> Unit,
     onShowFaq: () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ModalBottomSheetLayout(
+        modifier = modifier,
         sheetState = sheetState,
         sheetContent = {
             Column(
@@ -97,6 +114,6 @@ fun ProfileBottomSheet(
             }
         },
         scrimColor = Black90,
-        content = { }
+        content = content
     )
 }
