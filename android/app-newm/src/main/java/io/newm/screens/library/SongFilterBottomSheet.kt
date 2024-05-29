@@ -47,7 +47,9 @@ private val buttonGradient =
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SongFilterBottomSheet(
-    sheetState: ModalBottomSheetState
+    sheetState: ModalBottomSheetState,
+    filters: NFTLibraryFilters,
+    onApplyFilters: (NFTLibraryFilters) -> Unit
 ) {
     LocalIsBottomBarVisible.current.value = sheetState.targetValue != ModalBottomSheetValue.Expanded
     ModalBottomSheetLayout(
@@ -79,9 +81,9 @@ fun SongFilterBottomSheet(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SongFilterButton(
-                        onClick = {},
+                        onClick = { onApplyFilters(filters.copy(showShortTracks = !filters.showShortTracks)) },
                         labelRes = R.string.library_filter_songs_under_30,
-                        isSelected = true //TODO: Wire real data MOBILE-202
+                        isSelected = filters.showShortTracks
                     )
                     Spacer(modifier = Modifier.height(40.dp))
                     Text(
@@ -95,21 +97,21 @@ fun SongFilterBottomSheet(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SongFilterButton(
-                        onClick = {},
+                        onClick = { onApplyFilters(filters.selectSortType(NFTLibrarySortType.ByTitle)) },
                         labelRes = R.string.library_sort_by_title,
-                        isSelected = false //TODO: Wire real data MOBILE-202
+                        isSelected = filters.sortType == NFTLibrarySortType.ByTitle
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     SongFilterButton(
-                        onClick = {},
+                        onClick = { onApplyFilters(filters.selectSortType(NFTLibrarySortType.ByArtist)) },
                         labelRes = R.string.library_sort_by_artist,
-                        isSelected = true //TODO: Wire real data MOBILE-202
+                        isSelected = filters.sortType == NFTLibrarySortType.ByArtist
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     SongFilterButton(
-                        onClick = {},
+                        onClick = { onApplyFilters(filters.selectSortType(NFTLibrarySortType.ByLength)) },
                         labelRes = R.string.library_sort_by_length,
-                        isSelected = false //TODO: Wire real data MOBILE-202
+                        isSelected = filters.sortType == NFTLibrarySortType.ByLength
                     )
                 }
             }
@@ -131,7 +133,9 @@ private fun SongFilterButton(
         .height(40.dp)
     Button(
         onClick = onClick,
-        modifier = if (isSelected) modifier.background(Purple) else modifier.background(buttonGradient),
+        modifier = if (isSelected) modifier.background(Purple) else modifier.background(
+            buttonGradient
+        ),
         elevation = null,
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
     )
@@ -155,3 +159,6 @@ private fun SongFilterButton(
         }
     }
 }
+
+private fun NFTLibraryFilters.selectSortType(sortType: NFTLibrarySortType): NFTLibraryFilters =
+    copy(sortType = if (this.sortType == sortType) NFTLibrarySortType.None else sortType)

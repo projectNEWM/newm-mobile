@@ -34,7 +34,7 @@ class NFTLibraryPresenter(
         var query by rememberSaveable { mutableStateOf("") }
 
         val nftTracks by remember(isWalletConnected) {
-            if(isWalletConnected == true) {
+            if (isWalletConnected == true) {
                 walletNFTTracksUseCase.getAllNFTTracksFlow()
             } else {
                 flowOf()
@@ -42,7 +42,7 @@ class NFTLibraryPresenter(
         }.collectAsState(initial = emptyList())
 
         val streamTracks by remember(isWalletConnected) {
-            if(isWalletConnected == true) {
+            if (isWalletConnected == true) {
                 walletNFTTracksUseCase.getAllStreamTokensFlow()
             } else {
                 flowOf()
@@ -54,6 +54,15 @@ class NFTLibraryPresenter(
             streamTracks
         ) { Playlist(nftTracks.toTrack() + streamTracks.toTrack()) }
 
+        var filters: NFTLibraryFilters by remember {
+            mutableStateOf(
+                NFTLibraryFilters(
+                    sortType = NFTLibrarySortType.None,
+                    showShortTracks = false
+                )
+            )
+        }
+
         return when {
             isWalletConnected == null -> NFTLibraryState.Loading
             isWalletConnected == false -> NFTLibraryState.LinkWallet { xpubKey ->
@@ -63,11 +72,12 @@ class NFTLibraryPresenter(
             nftTracks.isEmpty() && streamTracks.isEmpty() -> NFTLibraryState.EmptyWallet
 
             else -> NFTLibraryState.Content(
-                nftTracks = nftTracks.filter { it.matches(query) },
-                streamTokenTracks = streamTracks.filter { it.matches(query) },
+                nftTracks = nftTracks.filterAndSort(query, filters),
+                streamTokenTracks = streamTracks.filterAndSort(query, filters),
                 showZeroResultFound = query.isNotEmpty()
                         && nftTracks.none { it.matches(query) }
                         && streamTracks.none { it.matches(query) },
+                filters = filters,
                 eventSink = { event ->
                     when (event) {
                         is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
@@ -83,9 +93,26 @@ class NFTLibraryPresenter(
                                 play()
                             }
                         }
+
+                        is NFTLibraryEvent.OnApplyFilters -> filters = event.filters
                     }
                 }
             )
+        }
+    }
+
+    private fun List<NFTTrack>.filterAndSort(
+        query: String,
+        filters: NFTLibraryFilters
+    ): List<NFTTrack> {
+        val filteredTracks = filter {
+            it.matches(query) && (filters.showShortTracks || it.duration >= 30)
+        }
+        return when (filters.sortType) {
+            NFTLibrarySortType.None -> filteredTracks
+            NFTLibrarySortType.ByTitle -> filteredTracks.sortedBy { it.title }
+            NFTLibrarySortType.ByArtist -> filteredTracks.sortedBy { it.artists.first() }
+            NFTLibrarySortType.ByLength -> filteredTracks.sortedBy { it.duration }
         }
     }
 }

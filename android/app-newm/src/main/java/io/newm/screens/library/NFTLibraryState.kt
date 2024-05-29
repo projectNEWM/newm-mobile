@@ -14,8 +14,21 @@ sealed interface NFTLibraryState : CircuitUiState {
         val nftTracks: List<NFTTrack>,
         val streamTokenTracks: List<NFTTrack>,
         val showZeroResultFound: Boolean,
+        val filters: NFTLibraryFilters,
         val eventSink: (NFTLibraryEvent) -> Unit,
     ) : NFTLibraryState
 
     data class Error(val message: String) : NFTLibraryState
+}
+
+data class NFTLibraryFilters(
+    val sortType: NFTLibrarySortType,
+    val showShortTracks: Boolean
+)
+
+enum class NFTLibrarySortType {
+    None,
+    ByTitle,
+    ByArtist,
+    ByLength
 }
