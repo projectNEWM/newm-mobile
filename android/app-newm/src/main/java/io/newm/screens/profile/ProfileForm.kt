@@ -7,32 +7,27 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.newm.core.theme.Gray600
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray16
 import io.newm.core.theme.Gray23
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
-import io.newm.core.ui.wallet.ConnectWalletPanel
 import io.newm.shared.public.models.User
 
 @Composable
 fun ProfileForm(
     profile: User,
-    onProfileUpdated: (User) -> Unit,
-    onConnectWallet: () -> Unit
+    onProfileUpdated: (User) -> Unit
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
-        ConnectWalletPanel(onButtonClick = onConnectWallet)
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
