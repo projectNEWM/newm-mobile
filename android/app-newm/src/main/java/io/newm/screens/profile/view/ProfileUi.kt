@@ -42,9 +42,6 @@ import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
-import io.newm.screens.profile.OnShowAskTheCommunity
-import io.newm.screens.profile.OnShowDocuments
-import io.newm.screens.profile.OnShowFaq
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.ProfileAppBar
@@ -89,10 +86,7 @@ private fun ProfileUiContent(
         sheetState = sheetState,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
-        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
-        onShowDocuments = { onEvent(OnShowDocuments) },
-        onShowAskTheCommunity = { onEvent(OnShowAskTheCommunity) },
-        onShowFaq = { onEvent(OnShowFaq) }
+        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
     ) {
         Column(
             modifier = Modifier.fillMaxSize()

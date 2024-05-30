@@ -19,7 +19,4 @@ data class OnConnectWallet(val xpub: String) : ProfileEditUiEvent, ProfileUiEven
 data object OnLogout : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowTermsAndConditions : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowPrivacyPolicy : ProfileEditUiEvent, ProfileUiEvent
-data object OnShowDocuments : ProfileEditUiEvent, ProfileUiEvent
-data object OnShowAskTheCommunity : ProfileEditUiEvent, ProfileUiEvent
-data object OnShowFaq : ProfileEditUiEvent, ProfileUiEvent
 

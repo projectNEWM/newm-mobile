@@ -1,5 +1,7 @@
 package io.newm
 
+import android.content.Intent
+import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -36,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -88,6 +91,12 @@ internal fun NewmApp() {
         push(currentRootScreen)
     }
     val navigator = rememberCircuitNavigator(backstack)
+
+    val context = LocalContext.current
+    val newmNavigator = rememberNewmNavigator(navigator, {}, launchBrowser = { url ->
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    })
+
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -151,7 +160,7 @@ internal fun NewmApp() {
         ) { padding ->
             NavigableCircuitContent(
                 modifier = Modifier.padding(padding),
-                navigator = navigator,
+                navigator = newmNavigator,
                 backstack = backstack
             )
         }
