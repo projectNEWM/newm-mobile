@@ -1,12 +1,26 @@
 package io.newm.screens.profile.edit
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -20,9 +34,6 @@ import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.screens.profile.OnBack
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnSaveProfile
-import io.newm.screens.profile.OnShowAskTheCommunity
-import io.newm.screens.profile.OnShowDocuments
-import io.newm.screens.profile.OnShowFaq
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.ProfileAppBar
@@ -72,10 +83,7 @@ private fun ProfileEditUiContent(
         sheetState = sheetState,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
-        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
-        onShowDocuments = { onEvent(OnShowDocuments) },
-        onShowAskTheCommunity = { onEvent(OnShowAskTheCommunity) },
-        onShowFaq = { onEvent(OnShowFaq) }
+        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
     ) {
         Column(
             modifier = Modifier

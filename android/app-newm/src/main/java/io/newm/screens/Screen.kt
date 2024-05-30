@@ -16,4 +16,20 @@ sealed class Screen : CircuitScreen {
     data object WalletConnect : Screen()
 
     data object ForceAppUpdate : Screen()
+
+    data object TermsAndConditions : Screen(), WebBrowserScreen {
+        override val url: String = "https://newm.io/terms-and-conditions"
+    }
+
+    data object PrivacyPolicy : Screen(), WebBrowserScreen {
+        override val url: String = "https://newm.io/privacy-policy"
+
+    }
+}
+
+/**
+ * A screen that launches a web browser with a specific URL.
+ */
+interface WebBrowserScreen {
+    val url: String
 }

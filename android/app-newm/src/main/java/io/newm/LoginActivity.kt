@@ -1,12 +1,14 @@
 package io.newm
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.google.android.recaptcha.Recaptcha
@@ -141,9 +143,14 @@ class LoginActivity : ComponentActivity() {
 fun WelcomeToNewm(
     onStartHomeActivity: () -> Unit
 ) {
+    val context = LocalContext.current
+
     val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
     val circuitNavigator = rememberCircuitNavigator(backstack)
-    val newmNavigator = rememberNewmNavigator(circuitNavigator, onStartHomeActivity)
+    val newmNavigator =
+        rememberNewmNavigator(circuitNavigator, onStartHomeActivity, launchBrowser = { url ->
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        })
 
     NavigableCircuitContent(newmNavigator, backstack)
 }

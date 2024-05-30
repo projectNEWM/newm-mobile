@@ -9,13 +9,12 @@ import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
 import io.newm.screens.Screen.EditProfile
+import io.newm.screens.Screen.PrivacyPolicy
+import io.newm.screens.Screen.TermsAndConditions
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
-import io.newm.screens.profile.OnShowAskTheCommunity
-import io.newm.screens.profile.OnShowDocuments
-import io.newm.screens.profile.OnShowFaq
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.public.usecases.ConnectWalletUseCase
@@ -58,14 +57,12 @@ class ProfilePresenter(
 
                         OnEditProfile -> navigator.goTo(EditProfile)
                         OnLogout -> logout.signOutUser()
-                        OnShowAskTheCommunity -> TODO()
-                        OnShowDocuments -> TODO()
-                        OnShowFaq -> TODO()
-                        OnShowPrivacyPolicy -> TODO()
-                        OnShowTermsAndConditions -> TODO()
+                        OnShowTermsAndConditions -> navigator.goTo(TermsAndConditions)
+                        OnShowPrivacyPolicy -> navigator.goTo(PrivacyPolicy)
                     }
                 }
             )
         }
     }
 }
+

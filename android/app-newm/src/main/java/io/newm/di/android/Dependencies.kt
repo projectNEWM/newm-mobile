@@ -82,7 +82,9 @@ val viewModule = module {
     factory { params ->
         ProfileEditPresenter(
             params.get(),
-            get()
+            get(),
+            get(),
+            get(),
         )
     }
     factory { params ->
