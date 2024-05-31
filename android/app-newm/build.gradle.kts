@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.konan.properties.Properties
 apply(from = "../../gradle_include/compose.gradle")
 apply(from = "../../gradle_include/circuit.gradle")
 apply(from = "../../gradle_include/flipper.gradle")
-apply(from = "../../gradle_include/wallet-connect.gradle")
 
 plugins {
     id(Plugins.androidApplication)

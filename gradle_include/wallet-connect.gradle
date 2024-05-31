@@ -1,5 +1,0 @@
-dependencies {
-    implementation(platform("com.walletconnect:android-bom:1.22.2"))
-    implementation("com.walletconnect:android-core")
-    implementation("com.walletconnect:web3modal")
-}
