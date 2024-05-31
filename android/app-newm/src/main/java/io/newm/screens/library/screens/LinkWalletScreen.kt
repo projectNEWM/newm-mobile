@@ -2,30 +2,30 @@ package io.newm.screens.library.screens
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
 import io.newm.core.ui.wallet.ConnectWalletPanel
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
-import android.provider.Settings
-import android.net.Uri
 import io.newm.screens.library.TAG_NFT_LIBRARY_SCREEN
 
 @Composable
-fun LinkWalletScreen(onConnectWallet: (String) -> Unit) {
+fun LinkWalletScreen(
+    modifier: Modifier = Modifier,
+    onConnectWallet: (String) -> Unit
+) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -62,9 +62,7 @@ fun LinkWalletScreen(onConnectWallet: (String) -> Unit) {
         rememberRequestPermissionIntent(onGranted = { onRequestPermissionGranted.invoke() },
             onDismiss = { navigateToAppSettings.invoke() })
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
+        modifier = modifier
             .testTag(TAG_NFT_LIBRARY_SCREEN),
         contentAlignment = Alignment.BottomCenter // This centers the content both horizontally and vertically
     ) {

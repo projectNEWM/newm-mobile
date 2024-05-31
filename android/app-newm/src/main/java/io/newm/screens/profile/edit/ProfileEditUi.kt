@@ -16,11 +16,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -31,19 +27,20 @@ import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.profile.OnBack
+import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnLogout
-import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
-import io.newm.screens.profile.ProfileEditUiEvent
+import io.newm.screens.profile.ProfileEditUiEvent.OnProfileUpdated
+import io.newm.screens.profile.ProfileEditUiEvent.OnSaveProfile
 import io.newm.screens.profile.ProfileForm
 import io.newm.screens.profile.ProfileHeader
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
-import io.newm.shared.public.models.User
 import io.newm.shared.public.models.mocks.mockUsers
 import kotlinx.coroutines.launch
 
@@ -59,8 +56,7 @@ fun ProfileEditUi(
         is Content -> {
             ProfileEditUiContent(
                 modifier = modifier,
-                onEvent = state.eventSink,
-                user = state.profile
+                state = state,
             )
         }
     }
@@ -70,11 +66,11 @@ fun ProfileEditUi(
 @Composable
 private fun ProfileEditUiContent(
     modifier: Modifier = Modifier,
-    onEvent: (ProfileEditUiEvent) -> Unit,
-    user: User,
+    state: Content,
 ) {
-    var updatedProfile by remember { mutableStateOf(user) }
-    val isModified = user != updatedProfile
+    val onEvent = state.eventSink
+    val profile = state.profile
+
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
 
@@ -94,29 +90,33 @@ private fun ProfileEditUiContent(
             verticalArrangement = Arrangement.Top
         ) {
             ProfileAppBar(
-                bannerUrl = user.bannerUrl.orEmpty(),
-                avatarUrl = user.pictureUrl.orEmpty(),
+                bannerUrl = profile.bannerUrl.orEmpty(),
+                avatarUrl = profile.pictureUrl.orEmpty(),
                 onOverflowTapped = { scope.launch { sheetState.show() } },
                 onNavigationClick = { onEvent(OnBack) }
             )
             ProfileHeader(
-                nickname = user.nickname.orEmpty(),
-                email = user.email.orEmpty(),
+                nickname = profile.nickname.orEmpty(),
+                email = profile.email.orEmpty(),
             )
             Spacer(modifier = Modifier.height(40.dp))
-            ProfileForm(
-                profile = updatedProfile,
-                onProfileUpdated = { updatedProfile = it },
-                onConnectWallet = {
-                    // TODO
+            if (state.showConnectWallet) {
+                LinkWalletScreen(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                ) {
+                    onEvent(OnConnectWallet(it))
                 }
+            }
+            ProfileForm(
+                profile = profile,
+                onProfileUpdated = { user -> onEvent(OnProfileUpdated(user)) }
             )
             Spacer(modifier = Modifier.height(40.dp))
             PrimaryButton(
-                enabled = isModified,
+                enabled = state.submitButtonEnabled,
                 text = stringResource(id = R.string.profile_save_button_label),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClick = { onEvent(OnSaveProfile(updatedProfile)) }
+                onClick = { onEvent(OnSaveProfile) }
             )
             Spacer(Modifier.height(12.dp))
         }
@@ -147,8 +147,12 @@ private fun ProfileScreenPreview() {
         darkTheme = true
     ) {
         ProfileEditUiContent(
-            onEvent = {},
-            user = mockUsers.first(),
+            state = Content(
+                profile = mockUsers.first(),
+                submitButtonEnabled = true,
+                showConnectWallet = true,
+                eventSink = {},
+            )
         )
     }
 }

@@ -8,6 +8,8 @@ sealed class ProfileEditUiState : CircuitUiState {
     data object Loading : ProfileEditUiState()
     data class Content(
         val profile: User,
+        val submitButtonEnabled: Boolean,
+        val showConnectWallet: Boolean,
         val eventSink: (ProfileEditUiEvent) -> Unit
     ) : ProfileEditUiState()
 }

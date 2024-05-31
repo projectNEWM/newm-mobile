@@ -59,10 +59,10 @@ import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.textGradient
+import io.newm.screens.library.NFTLibraryEvent.OnApplyFilters
 import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
 import io.newm.screens.library.NFTLibraryEvent.OnQueryChange
 import io.newm.screens.library.NFTLibraryEvent.PlaySong
-import io.newm.screens.library.NFTLibraryEvent.OnApplyFilters
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
@@ -87,7 +87,11 @@ fun NFTLibraryScreenUi(
         when (state) {
             NFTLibraryState.Loading -> LoadingScreen()
 
-            is NFTLibraryState.LinkWallet -> LinkWalletScreen { xpubKey ->
+            is NFTLibraryState.LinkWallet -> LinkWalletScreen(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+            ) { xpubKey ->
                 val eventSink = state.onConnectWallet
                 eventSink(xpubKey)
             }
