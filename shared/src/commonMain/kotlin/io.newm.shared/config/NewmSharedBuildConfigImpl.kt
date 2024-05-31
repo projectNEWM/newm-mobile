@@ -16,7 +16,7 @@ class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
     private val APP_MODE = "app_mode"
 
-    private val defaultMode = Mode.STAGING
+    private val defaultMode = Mode.PRODUCTION
 
     private val storage: PreferencesDataStore by inject()
     var mode: Mode
