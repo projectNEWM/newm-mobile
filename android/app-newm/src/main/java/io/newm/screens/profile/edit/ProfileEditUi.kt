@@ -116,7 +116,8 @@ private fun ProfileEditUiContent(
                 enabled = state.submitButtonEnabled,
                 text = stringResource(id = R.string.profile_save_button_label),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClick = { onEvent(OnSaveProfile) }
+                onClick = { onEvent(OnSaveProfile) },
+                enabledIconRes = R.drawable.ic_library_filter_check,
             )
             Spacer(Modifier.height(12.dp))
         }
