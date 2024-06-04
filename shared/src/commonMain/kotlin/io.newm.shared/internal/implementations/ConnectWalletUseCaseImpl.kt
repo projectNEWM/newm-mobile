@@ -18,7 +18,6 @@ internal class ConnectWalletUseCaseImpl(
         mapErrors {
             cardanoWalletRepository.connectWallet(walletConnectionId)
             postNotification(Notification.walletConnectionStateChanged)
-            cardanoWalletRepository.connectWallet(walletConnectionId)
         }
     }
 
