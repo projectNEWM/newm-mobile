@@ -39,6 +39,21 @@ interface UserDetailsUseCase {
      * @throws CancellationException if the operation is cancelled during execution.
      */
     fun fetchLoggedInUserDetailsFlow(): Flow<User?>
+
+    /**
+     * Updates the details of the currently logged-in user.
+     *
+     * This method is responsible for updating the user details of the currently authenticated user.
+     * It takes a [User] object containing the updated user details and returns a [User] object
+     * containing the updated user details.
+     *
+     * @param user The updated user details to be saved.
+     * @return User - An object containing the updated details of the currently authenticated user.
+     * @throws KMMException if there is an issue in the process of updating user details, such as network errors.
+     * @throws CancellationException if the operation is cancelled during execution.
+     */
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun updateUserDetails(user: User)
 }
 
 class UserDetailsUseCaseProvider : KoinComponent {

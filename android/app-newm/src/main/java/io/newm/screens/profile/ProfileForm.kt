@@ -7,23 +7,30 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray16
 import io.newm.core.theme.Gray23
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
-import io.newm.shared.public.models.User
+import io.newm.feature.login.screen.TextFieldState
+import io.newm.feature.login.screen.email.Email
+import io.newm.feature.login.screen.password.Password
 
 @Composable
 fun ProfileForm(
-    profile: User,
-    onProfileUpdated: (User) -> Unit
+    email: String,
+    nicknameState: TextFieldState,
+    currentPasswordState: TextFieldState,
+    newPasswordState: TextFieldState,
+    confirmNewPasswordState: TextFieldState,
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -38,15 +45,16 @@ fun ProfileForm(
                 modifier = Modifier
                     .padding(top = 12.dp, start = 12.dp, end = 12.dp)
             ) {
-                TextFieldWithLabel(
-                    labelResId = R.string.profile_form_nickname,
-                    value = profile.nickname,
-                    onValueChange = { value -> onProfileUpdated(profile.copy(nickname = value)) },
-                    textfieldBackgroundColor = Gray23,
+                Email(
+                    label = R.string.profile_form_nickname,
+                    emailState = nicknameState,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    )
                 )
                 TextFieldWithLabel(
                     labelResId = R.string.profile_form_email,
-                    value = profile.email,
+                    value = email,
                     onValueChange = { },
                     enabled = false,
                     textfieldBackgroundColor = Gray23,
@@ -68,26 +76,26 @@ fun ProfileForm(
                     style = formTitleStyle
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                TextFieldWithLabel(
-                    labelResId = R.string.profile_form_password_current_password,
-                    onValueChange = { value -> onProfileUpdated(profile.copy(currentPassword = value)) },
-                    isPassword = true,
-                    textfieldBackgroundColor = Gray23,
-                    placeholderResId = R.string.profile_placeholder_your_password
+                Password(
+                    label = R.string.profile_form_password_current_password,
+                    passwordState = currentPasswordState,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    )
                 )
-                TextFieldWithLabel(
-                    labelResId = R.string.profile_form_password_new_password,
-                    onValueChange = { value -> onProfileUpdated(profile.copy(newPassword = value)) },
-                    isPassword = true,
-                    textfieldBackgroundColor = Gray23,
-                    placeholderResId = R.string.profile_placeholder_new_password
+                Password(
+                    label = R.string.profile_form_password_new_password,
+                    passwordState = newPasswordState,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    )
                 )
-                TextFieldWithLabel(
-                    labelResId = R.string.profile_form_password_confirm_password,
-                    onValueChange = { value -> onProfileUpdated(profile.copy(confirmPassword = value)) },
-                    isPassword = true,
-                    textfieldBackgroundColor = Gray23,
-                    placeholderResId = R.string.profile_placeholder_new_password
+                Password(
+                    label = R.string.profile_form_password_confirm_password,
+                    passwordState = confirmNewPasswordState,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                    )
                 )
             }
         }
