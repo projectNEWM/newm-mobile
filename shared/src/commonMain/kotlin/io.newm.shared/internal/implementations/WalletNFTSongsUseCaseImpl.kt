@@ -1,8 +1,8 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.repositories.CardanoWalletRepository
 import io.newm.shared.internal.implementations.utilities.mapErrors
 import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
+import io.newm.shared.internal.repositories.NFTRepository
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
@@ -11,42 +11,42 @@ import kotlinx.coroutines.flow.first
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class WalletNFTTracksUseCaseImpl(
-    private val cardanoRepository: CardanoWalletRepository,
+    private val nftRepository: NFTRepository,
 ) : WalletNFTTracksUseCase {
 
-    override fun getAllNFTTracksFlow(): Flow<List<NFTTrack>> {
-        return cardanoRepository.getWalletCollectableTracks()
+    override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
+        return nftRepository.getAllCollectableTracksFlow()
     }
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun getAllNFTTracks(): List<NFTTrack> {
+    override suspend fun getAllCollectableTracks(): List<NFTTrack> {
         return mapErrorsSuspend {
-            return@mapErrorsSuspend cardanoRepository.getWalletCollectableTracks().first()
+            return@mapErrorsSuspend nftRepository.getAllCollectableTracksFlow().first()
         }
     }
 
     override fun getAllStreamTokensFlow(): Flow<List<NFTTrack>> {
-        return cardanoRepository.getWalletStreamTokens()
+        return nftRepository.getAllStreamTokensFlow()
     }
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun getAllStreamTokens(): List<NFTTrack> {
         return mapErrorsSuspend {
-            return@mapErrorsSuspend getAllStreamTokensFlow().first()
+            return@mapErrorsSuspend nftRepository.getAllStreamTokensFlow().first()
         }
     }
 
     @Throws(KMMException::class, CancellationException::class)
     override fun getNFTTrack(id: String): NFTTrack? {
         return mapErrors {
-            return@mapErrors cardanoRepository.getTrackCache(id)
+            return@mapErrors nftRepository.getTrack(id)
         }
     }
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun refresh() {
         mapErrorsSuspend {
-            cardanoRepository.getWalletNFTsNetwork()
+            nftRepository.syncNFTTracksFromNetworkToDevice()
         }
     }
 }

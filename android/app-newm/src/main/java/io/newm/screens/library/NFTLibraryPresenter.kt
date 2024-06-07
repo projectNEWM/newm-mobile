@@ -1,6 +1,7 @@
 package io.newm.screens.library
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +16,7 @@ import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +24,7 @@ import kotlinx.coroutines.launch
 
 class NFTLibraryPresenter(
     private val navigator: Navigator,
+    private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
     private val scope: CoroutineScope,
@@ -30,15 +33,21 @@ class NFTLibraryPresenter(
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer()
 
-        val isWalletConnected: Boolean? by remember { connectWalletUseCase.hasWalletConnectionsFlow() }.collectAsState(
+        val isWalletConnected: Boolean? by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }.collectAsState(
             null
         )
 
         var query by rememberSaveable { mutableStateOf("") }
 
+        if(isWalletConnected == true) {
+            LaunchedEffect(Unit) {
+                walletNFTTracksUseCase.refresh()
+            }
+        }
+
         val nftTracks by remember(isWalletConnected) {
             if (isWalletConnected == true) {
-                walletNFTTracksUseCase.getAllNFTTracksFlow()
+                walletNFTTracksUseCase.getAllCollectableTracksFlow()
             } else {
                 flowOf()
             }

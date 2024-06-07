@@ -1,4 +1,4 @@
-package io.newm.shared.internal.db
+package io.newm.shared.internal.services.db
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -6,8 +6,6 @@ import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 
 fun NewmDatabaseWrapper.getTrack(id: String): NFTTrack? =
     invoke().nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->

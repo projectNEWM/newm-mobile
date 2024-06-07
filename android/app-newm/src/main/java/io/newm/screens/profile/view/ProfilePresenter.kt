@@ -19,11 +19,17 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.DisconnectWalletUseCase
+import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.launch
 
 class ProfilePresenter(
     private val navigator: Navigator,
+    private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
+    private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
+    private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
@@ -33,12 +39,12 @@ class ProfilePresenter(
 
         val coroutineScope = rememberStableCoroutineScope()
 
-        val isWalletConnected by remember { connectWalletUseCase.hasWalletConnectionsFlow() }.collectAsState(
+        val isWalletConnected by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }.collectAsState(
             false
         )
 
         LaunchedEffect(Unit) {
-            connectWalletUseCase.getWalletConnectionsNetwork()
+            syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
         }
 
         val user by remember { userDetailsUseCase.fetchLoggedInUserDetailsFlow() }.collectAsState(
@@ -59,7 +65,7 @@ class ProfilePresenter(
                         }
 
                         OnDisconnectWallet -> coroutineScope.launch {
-                            connectWalletUseCase.disconnect()
+                            disconnectWalletUseCase.disconnect()
                         }
 
                         OnEditProfile -> navigator.goTo(EditProfile)

@@ -1,8 +1,8 @@
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.internal.implementations.ForceAppUpdateUseCaseImpl
 import io.newm.shared.internal.repositories.RemoteConfigRepository
-import io.newm.shared.internal.services.models.MobileClientConfig
-import io.newm.shared.internal.services.models.MobileConfig
+import io.newm.shared.internal.api.models.MobileClientConfig
+import io.newm.shared.internal.api.models.MobileConfig
 import io.newm.shared.public.usecases.ForceAppUpdateUseCase
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

@@ -3,9 +3,9 @@ package io.newm.shared.internal.repositories
 import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
-import io.newm.shared.internal.db.NewmDatabaseWrapper
-import io.newm.shared.internal.services.UserAPI
-import io.newm.shared.internal.services.models.UserProfileUpdateRequest
+import io.newm.shared.internal.services.db.NewmDatabaseWrapper
+import io.newm.shared.internal.api.UserAPI
+import io.newm.shared.internal.api.models.UserProfileUpdateRequest
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
