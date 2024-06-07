@@ -39,14 +39,14 @@ internal class WalletNFTTracksUseCaseImpl(
     @Throws(KMMException::class, CancellationException::class)
     override fun getNFTTrack(id: String): NFTTrack? {
         return mapErrors {
-            return@mapErrors cardanoRepository.getTrack(id)
+            return@mapErrors cardanoRepository.getTrackCache(id)
         }
     }
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun refresh() {
         mapErrorsSuspend {
-            cardanoRepository.fetchNFTTracksFromNetwork()
+            cardanoRepository.getWalletNFTsNetwork()
         }
     }
 }

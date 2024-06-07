@@ -40,7 +40,7 @@ interface ConnectWalletUseCase {
      * @return A flow emitting lists of [WalletConnection]s.
      */
     @Throws(KMMException::class, CancellationException::class)
-    fun getWalletConnectionsFlow(): Flow<List<WalletConnection>>
+    fun getCacheWalletConnectionsFlow(): Flow<List<WalletConnection>>
 
     /**
      * Retrieves a flow indicating whether any wallet connections exist.
@@ -49,6 +49,10 @@ interface ConnectWalletUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     fun hasWalletConnectionsFlow(): Flow<Boolean>
+
+
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun getWalletConnectionsNetwork()
 
     /**
      * Retrieves a list of [WalletConnection]s representing the currently connected wallets.

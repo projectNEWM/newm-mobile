@@ -90,7 +90,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get()) }
     single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get(), get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<LoginUseCase> { LoginUseCaseImpl(get()) }
+    single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }

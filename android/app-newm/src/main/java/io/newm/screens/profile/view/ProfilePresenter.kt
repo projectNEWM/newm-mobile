@@ -1,6 +1,7 @@
 package io.newm.screens.profile.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -29,9 +30,16 @@ class ProfilePresenter(
 ) : Presenter<ProfileUiState> {
     @Composable
     override fun present(): ProfileUiState {
+
+        val coroutineScope = rememberStableCoroutineScope()
+
         val isWalletConnected by remember { connectWalletUseCase.hasWalletConnectionsFlow() }.collectAsState(
             false
         )
+
+        LaunchedEffect(Unit) {
+            connectWalletUseCase.getWalletConnectionsNetwork()
+        }
 
         val user by remember { userDetailsUseCase.fetchLoggedInUserDetailsFlow() }.collectAsState(
             null
@@ -40,7 +48,6 @@ class ProfilePresenter(
         return if (user == null) {
             ProfileUiState.Loading
         } else {
-            val coroutineScope = rememberStableCoroutineScope()
 
             ProfileUiState.Content(
                 profile = user!!,

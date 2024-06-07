@@ -1,9 +1,14 @@
 package io.newm.shared.internal.repositories
 
 import co.touchlab.kermit.Logger
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
 import io.newm.shared.internal.db.NewmDatabaseWrapper
+import io.newm.shared.internal.db.cacheNFTTracks
+import io.newm.shared.internal.db.cacheWalletConnections
+import io.newm.shared.internal.db.deleteAllNFTs
+import io.newm.shared.internal.db.deleteAllWalletConnections
+import io.newm.shared.internal.db.getAllTracks
+import io.newm.shared.internal.db.getTrack
+import io.newm.shared.internal.db.getWalletConnections
 import io.newm.shared.internal.services.CardanoWalletAPI
 import io.newm.shared.internal.services.NEWMWalletConnectionAPI
 import io.newm.shared.public.models.NFTTrack
@@ -11,7 +16,6 @@ import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -26,36 +30,29 @@ internal class CardanoWalletRepository(
 
     private val logger = Logger.withTag("NewmKMM-CardanoWalletRepository")
 
-    fun getTrack(id: String): NFTTrack? =
-        db().nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->
-            NFTTrack(
-                id = track.id,
-                policyId = track.policyId,
-                title = track.title,
-                assetName = track.assetName,
-                amount = track.amount,
-                imageUrl = track.imageUrl,
-                audioUrl = track.audioUrl,
-                duration = track.duration,
-                artists = track.artists.split(","),
-                genres = track.genres.split(","),
-                moods = track.moods.split(","),
-            )
-        }
-
+    fun getTrackCache(id: String): NFTTrack? = db.getTrack(id)
 
     fun getWalletCollectableTracks(): Flow<List<NFTTrack>> =
         combine(
-            getWalletNFTs(),
+            getWalletNFTsCache(),
             policyIdsRepository.getPolicyIds()
         ) { walletNFTs, policyIds ->
             walletNFTs.filter { track ->
                 track.policyId !in policyIds
             }
+        }.onStart {
+            scope.launch {
+                try {
+                    val nfts = getWalletNFTsNetwork()
+                    db.cacheNFTTracks(nfts)
+                } catch (e: Exception) {
+                    logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
+                }
+            }
         }
 
     fun getWalletStreamTokens(): Flow<List<NFTTrack>> = combine(
-        getWalletNFTs(),
+        getWalletNFTsCache(),
         policyIdsRepository.getPolicyIds()
     ) { walletNFTs, policyIds ->
         walletNFTs.filter { track ->
@@ -63,128 +60,48 @@ internal class CardanoWalletRepository(
         }
     }
 
-    fun deleteAllNFTs() {
-        db().transaction {
-            db().nFTTrackQueries.deleteAll()
-        }
+    fun deleteAllTracksNFTsCache() {
+        db.deleteAllNFTs()
     }
 
-    fun getWalletConnections(): Flow<List<WalletConnection>> =
-        db().walletConnectionQueries.getAll()
-            .asFlow()
-            .mapToList()
-            .onStart {
-                scope.launch {
-                    val connections = fetchWalletConnections()
-                    cacheWalletConnections(connections)
-                }
-            }
-            .map { dbWalletConnections ->
-                dbWalletConnections.map { wallet ->
-                    WalletConnection(
-                        id = wallet.id,
-                        createdAt = wallet.createdAt,
-                        stakeAddress = wallet.stakeAddress
-                    )
-                }
-            }
 
-    private fun getWalletNFTs(): Flow<List<NFTTrack>> = db().nFTTrackQueries.selectAllTracks()
-        .asFlow()
-        .mapToList()
-        .onStart {
-            // Triggered when the Flow starts collecting
-            scope.launch {
-                fetchNFTTracksFromNetwork()
-            }
-        }
-        .map { tracksFromDb ->
-            tracksFromDb.map { track ->
-                NFTTrack(
-                    id = track.id,
-                    policyId = track.policyId,
-                    title = track.title,
-                    assetName = track.assetName,
-                    amount = track.amount,
-                    imageUrl = track.imageUrl,
-                    audioUrl = track.audioUrl,
-                    duration = track.duration,
-                    artists = track.artists.split(","),
-                    genres = track.genres.split(","),
-                    moods = track.genres.split(",")
-                )
-            }
-        }
-
-    internal suspend fun fetchNFTTracksFromNetwork() {
-        try {
-            val walletNFTs = service.getWalletNFTs()
-            cacheNFTTracks(walletNFTs)
-        } catch (e: Exception) {
-            logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
-            throw e
-        }
+    fun getWalletConnectionsCache(): Flow<List<WalletConnection>> {
+        return db.getWalletConnections()
     }
 
-    suspend fun fetchWalletConnections(): List<WalletConnection> {
-        try {
-            val walletConnections = walletConnectionAPI.getWalletConnections()
-            logger.d { "Fetched wallet connections from network: $walletConnections" }
-            return walletConnections
+    suspend fun getWalletConnectionsNetwork(): List<WalletConnection> {
+        return try {
+            val connections = walletConnectionAPI.getWalletConnections()
+            db.cacheWalletConnections(connections)
+            connections
         } catch (e: Exception) {
             logger.e(e) { "Error fetching wallet connections from network ${e.cause}" }
             throw e
         }
     }
 
-    private fun cacheNFTTracks(nftTracks: List<NFTTrack>) {
-        db().transaction {
-            nftTracks.forEach { track ->
-                db().nFTTrackQueries.insertOrReplaceTrack(
-                    id = track.id,
-                    policyId = track.policyId,
-                    title = track.title,
-                    assetName = track.assetName,
-                    amount = track.amount,
-                    imageUrl = track.imageUrl,
-                    audioUrl = track.audioUrl,
-                    duration = track.duration,
-                    artists = track.artists.joinToString(","),
-                    genres = track.genres.joinToString(","),
-                    moods = track.moods.joinToString(",")
-                )
-            }
+    private fun getWalletNFTsCache(): Flow<List<NFTTrack>> = db.getAllTracks()
+
+    suspend fun getWalletNFTsNetwork(): List<NFTTrack> {
+        return try {
+            service.getWalletNFTs()
+        } catch (e: Exception) {
+            logger.e(e) { "Error fetching NFTs from network ${e.cause}" }
+            throw e
         }
     }
 
-    private fun cacheWalletConnections(walletConnections: List<WalletConnection>) {
-        db().transaction {
-            walletConnections.forEach { connection ->
-                db().walletConnectionQueries.insert(
-                    id = connection.id,
-                    createdAt = connection.createdAt,
-                    stakeAddress = connection.stakeAddress
-                )
-            }
-        }
-    }
+
 
     fun connectWallet(newmCode: String) {
         scope.launch {
-            walletConnectionAPI.connectWallet(newmCode.removePrefix("newm-"))
-            fetchWalletConnections()
+            val newConnection = walletConnectionAPI.connectWallet(newmCode.removePrefix("newm-"))
+            db.cacheWalletConnections(listOf(newConnection))
         }
     }
 
-    suspend fun disconnectWallet(walletConnectionId: String? = null) {
-            walletConnectionId?.let {
-                walletConnectionAPI.disconnectWallet(it)
-            } ?: run {
-                getWalletConnections().map { connections ->
-                    connections.forEach { connection ->
-                        walletConnectionAPI.disconnectWallet(connection.id)
-                    }
-                }
-            }
+    suspend fun disconnectWallet(walletConnectionId: String) {
+        walletConnectionAPI.disconnectWallet(walletConnectionId)
+        db.deleteAllWalletConnections(walletConnectionId)
     }
 }

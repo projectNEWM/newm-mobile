@@ -8,4 +8,5 @@ interface PreferencesDataStore {
     fun saveBoolean(key: String, value: Boolean)
     fun getBoolean(key: String): Boolean?
     fun deleteValue(key: String)
+    fun clearAll()
 }

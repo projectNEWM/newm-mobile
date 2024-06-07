@@ -16,7 +16,8 @@ class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
     private val APP_MODE = "app_mode"
 
-    private val defaultMode = Mode.PRODUCTION
+    private val defaultMode
+        get() = Mode.PRODUCTION
 
     private val storage: PreferencesDataStore by inject()
     var mode: Mode
@@ -27,6 +28,10 @@ class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
         set(value) {
             storage.saveString(APP_MODE, value.name)
         }
+
+    init {
+        mode = defaultMode
+    }
 
     override val baseUrl: String
         get() = when (mode) {
