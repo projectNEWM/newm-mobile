@@ -18,7 +18,6 @@ import io.newm.core.resources.R
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
-import io.newm.core.ui.utils.shortToast
 import io.newm.feature.login.screen.PreLoginArtistBackgroundContentTemplate
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
 import io.newm.feature.login.screen.email.EmailState

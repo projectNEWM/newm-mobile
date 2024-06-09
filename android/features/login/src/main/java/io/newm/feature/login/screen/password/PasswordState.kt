@@ -30,11 +30,11 @@ private fun passwordAndConfirmationValid(password: String, confirmedPassword: St
     return isPasswordValid(password) && password == confirmedPassword
 }
 
-private fun isPasswordValid(password: String): Boolean {
+fun isPasswordValid(password: String): Boolean {
     return LoginFieldValidator.isPasswordValid(password)
 }
 
-private fun passwordValidationError(password: String): String {
+fun passwordValidationError(password: String): String {
     return "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number."
 }
 
