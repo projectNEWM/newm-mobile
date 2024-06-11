@@ -1,4 +1,4 @@
-package io.newm.shared.internal.services
+package io.newm.shared.internal.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -11,7 +11,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory
-import io.newm.shared.internal.services.models.UserProfileUpdateRequest
+import io.newm.shared.internal.api.models.UserProfileUpdateRequest
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.Serializable

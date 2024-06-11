@@ -21,6 +21,10 @@ SELECT *
 FROM WalletConnection
 WHERE id = ?;
 
+-- Deletes a WalletConnection by ID
+deleteById:
+DELETE FROM WalletConnection
+WHERE id = ?;
 
 -- Deletes all WalletConnections from the database
 deleteAll:

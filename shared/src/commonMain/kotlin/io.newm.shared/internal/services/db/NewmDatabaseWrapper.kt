@@ -1,4 +1,4 @@
-package io.newm.shared.internal.db
+package io.newm.shared.internal.services.db
 
 import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.public.models.error.KMMException
@@ -11,5 +11,6 @@ class NewmDatabaseWrapper(private val instance: NewmDatabase?) {
     fun clear() {
         invoke().userQueries.deleteAll()
         invoke().nFTTrackQueries.deleteAll()
+        invoke().walletConnectionQueries.deleteAll()
     }
 }

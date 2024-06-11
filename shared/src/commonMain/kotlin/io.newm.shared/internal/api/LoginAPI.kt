@@ -1,4 +1,4 @@
-package io.newm.shared.internal.services
+package io.newm.shared.internal.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,16 +14,16 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory
-import io.newm.shared.internal.services.models.AppleSignInRequest
-import io.newm.shared.internal.services.models.FacebookSignInRequest
-import io.newm.shared.internal.services.models.GoogleSignInRequest
-import io.newm.shared.internal.services.models.LinkedInSignInRequest
-import io.newm.shared.internal.services.models.LogInUser
-import io.newm.shared.internal.services.models.LoginResponse
-import io.newm.shared.internal.services.models.NewUser
-import io.newm.shared.internal.services.models.RegisterException
-import io.newm.shared.internal.services.models.ResetPasswordException
-import io.newm.shared.internal.services.models.ResetPasswordRequest
+import io.newm.shared.internal.api.models.AppleSignInRequest
+import io.newm.shared.internal.api.models.FacebookSignInRequest
+import io.newm.shared.internal.api.models.GoogleSignInRequest
+import io.newm.shared.internal.api.models.LinkedInSignInRequest
+import io.newm.shared.internal.api.models.LogInUser
+import io.newm.shared.internal.api.models.LoginResponse
+import io.newm.shared.internal.api.models.NewUser
+import io.newm.shared.internal.api.models.RegisterException
+import io.newm.shared.internal.api.models.ResetPasswordException
+import io.newm.shared.internal.api.models.ResetPasswordRequest
 import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
 import shared.getPlatformName

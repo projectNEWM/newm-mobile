@@ -1,10 +1,9 @@
-package io.newm.shared.internal.services
+package io.newm.shared.internal.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
-import io.ktor.client.request.parameter
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.newm.shared.di.NetworkClientFactory

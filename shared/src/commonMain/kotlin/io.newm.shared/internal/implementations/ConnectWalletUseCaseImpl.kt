@@ -1,56 +1,30 @@
+
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.implementations.utilities.mapErrors
 import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
-import io.newm.shared.internal.repositories.CardanoWalletRepository
+import io.newm.shared.internal.repositories.WalletRepository
 import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.ConnectWalletUseCase
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
+import org.koin.core.component.KoinComponent
 import shared.Notification
 import shared.postNotification
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class ConnectWalletUseCaseImpl(
-    private val cardanoWalletRepository: CardanoWalletRepository
+    private val walletRepository: WalletRepository,
+    private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
 ) : ConnectWalletUseCase {
-    override suspend fun connect(walletConnectionId: String) {
-        mapErrors {
-            cardanoWalletRepository.connectWallet(walletConnectionId)
-            postNotification(Notification.walletConnectionStateChanged)
-        }
-    }
 
-    override suspend fun disconnect(walletConnectionId: String?) {
-        mapErrorsSuspend {
-            //TODO: This will need to be updated to handle disconnecting from a specific wallet connection
-            cardanoWalletRepository.deleteAllNFTs()
-            cardanoWalletRepository.disconnectWallet(walletConnectionId)
-            postNotification(Notification.walletConnectionStateChanged)
-        }
-    }
-
-    override fun hasWalletConnectionsFlow(): Flow<Boolean> {
-        return getWalletConnectionsFlow().map { connections ->
-            connections.isNotEmpty()
-        }
-    }
-
-    override fun getWalletConnectionsFlow(): Flow<List<WalletConnection>> {
-        return mapErrors {
-            cardanoWalletRepository.getWalletConnections()
-        }
-    }
-
-    override suspend fun hasWalletConnections(): Boolean {
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun connect(walletConnectionId: String): WalletConnection? {
         return mapErrorsSuspend {
-            return@mapErrorsSuspend hasWalletConnectionsFlow().first()
-        }
-    }
-
-    override suspend fun getWalletConnections(): List<WalletConnection> {
-        return mapErrorsSuspend {
-            return@mapErrorsSuspend getWalletConnectionsFlow().first()
+            val walletConnection = walletRepository.connectWallet(walletConnectionId)
+            postNotification(Notification.walletConnectionStateChanged)
+            // Sync wallet connections after connecting
+            syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+            walletConnection
         }
     }
 }

@@ -20,11 +20,13 @@ import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.ProfileEditUiEvent.OnProfileUpdated
 import io.newm.screens.profile.ProfileEditUiEvent.OnSaveProfile
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.launch
 
 class ProfileEditPresenter(
     private val navigator: Navigator,
+    private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
@@ -40,7 +42,7 @@ class ProfileEditPresenter(
         }
 
         val isWalletConnected by remember {
-            connectWalletUseCase.hasWalletConnectionsFlow()
+            hasWalletConnectionsUseCase.hasWalletConnectionsFlow()
         }.collectAsState(initial = false)
 
         val coroutineScope = rememberStableCoroutineScope()

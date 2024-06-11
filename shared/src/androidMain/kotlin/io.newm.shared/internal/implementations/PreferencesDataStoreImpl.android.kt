@@ -64,4 +64,12 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataSt
             }
         }
     }
+
+    override fun clearAll() {
+        runBlocking {
+            context.dataStore.edit { preferences ->
+                preferences.clear()
+            }
+        }
+    }
 }

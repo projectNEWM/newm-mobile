@@ -8,7 +8,7 @@ internal class TokenManager(private val storage: PreferencesDataStore) {
     private val logger = Logger.withTag("NewmKMM-TokenManagerImpl")
 
     fun hasTokens(): Boolean {
-        return getAccessToken() != null && getRefreshToken() != null
+        return !getAccessToken().isNullOrEmpty() && !getRefreshToken().isNullOrEmpty()
     }
 
     fun getAccessToken(): String? {
@@ -19,9 +19,12 @@ internal class TokenManager(private val storage: PreferencesDataStore) {
     }
 
     fun getRefreshToken(): String? {
-        return storage.getString(REFRESH_TOKEN_KEY) ?: run {
+        val refreshToken = storage.getString(REFRESH_TOKEN_KEY)
+        if (refreshToken.isNullOrEmpty()) {
             logger.d("No Refresh Token found - Time to Login")
-            null
+            return null
+        } else {
+            return refreshToken
         }
     }
 

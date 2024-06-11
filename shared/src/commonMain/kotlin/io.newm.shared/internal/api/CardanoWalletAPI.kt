@@ -1,4 +1,4 @@
-package io.newm.shared.internal.services
+package io.newm.shared.internal.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

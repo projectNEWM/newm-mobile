@@ -36,4 +36,11 @@ class PreferencesDataStoreImpl : PreferencesDataStore {
     override fun deleteValue(key: String) {
         userDefaults.removeObjectForKey(key)
     }
+
+    override fun clearAll() {
+        val keys = userDefaults.dictionaryRepresentation().keys
+        for (key in keys) {
+            userDefaults.removeObjectForKey(key.toString())
+        }
+    }
 }

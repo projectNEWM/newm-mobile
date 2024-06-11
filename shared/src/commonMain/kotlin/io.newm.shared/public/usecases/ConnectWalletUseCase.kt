@@ -8,63 +8,20 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
- * `ConnectWalletUseCase` defines the contract for managing wallet connections.
- *
- * This interface provides methods to connect to a wallet using a wallet connection id,
- * disconnect from the wallet, and check if a wallet is currently connected.
+ * `ConnectWalletUseCase` defines the contract for connecting to a wallet.
  */
 interface ConnectWalletUseCase {
 
     /**
-     * Connects to a wallet using the specified [walletConnectionId].
+     * Connects to a wallet using the given wallet connection ID.
      *
-     * @param walletConnectionId The identifier of the wallet connection to be established.
+     * @param walletConnectionId The ID of the wallet connection.
+     * @return The connected [WalletConnection] if successful, or null if an error occurs.
+     * @throws KMMException If an application-specific error occurs.
+     * @throws CancellationException If the operation is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun connect(walletConnectionId: String)
-
-    /**
-     * Disconnects from the wallet identified by [walletConnectionId].
-     *
-     * If [walletConnectionId] is null, disconnects from all connected wallets.
-     *
-     * @param walletConnectionId The identifier of the wallet connection to be terminated,
-     * or null to disconnect from all connected wallets.
-     */
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun disconnect(walletConnectionId: String? = null)
-
-    /**
-     * Retrieves a flow of lists of [WalletConnection]s representing the currently connected wallets.
-     *
-     * @return A flow emitting lists of [WalletConnection]s.
-     */
-    @Throws(KMMException::class, CancellationException::class)
-    fun getWalletConnectionsFlow(): Flow<List<WalletConnection>>
-
-    /**
-     * Retrieves a flow indicating whether any wallet connections exist.
-     *
-     * @return A flow emitting `true` if there are wallet connections, `false` otherwise.
-     */
-    @Throws(KMMException::class, CancellationException::class)
-    fun hasWalletConnectionsFlow(): Flow<Boolean>
-
-    /**
-     * Retrieves a list of [WalletConnection]s representing the currently connected wallets.
-     *
-     * @return A list of [WalletConnection]s.
-     */
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun getWalletConnections(): List<WalletConnection>
-
-    /**
-     * Retrieves whether any wallet connections exist.
-     *
-     * @return `true` if there are wallet connections, `false` otherwise.
-     */
-    @Throws(KMMException::class, CancellationException::class)
-    suspend fun hasWalletConnections(): Boolean
+    suspend fun connect(walletConnectionId: String): WalletConnection?
 }
 
 class ConnectWalletUseCaseProvider : KoinComponent {

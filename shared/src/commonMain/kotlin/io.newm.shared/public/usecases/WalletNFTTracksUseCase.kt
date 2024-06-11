@@ -25,10 +25,10 @@ interface WalletNFTTracksUseCase {
      *
      * @return Flow<List<NFTTrack>> - A flow emitting the list of NFT tracks associated with the wallet.
      */
-    fun getAllNFTTracksFlow(): Flow<List<NFTTrack>>
+    fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>>
 
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun getAllNFTTracks(): List<NFTTrack>
+    suspend fun getAllCollectableTracks(): List<NFTTrack>
 
     /**
      * Provides a continuous stream (Flow) of all NFT tracks associated with the wallet
