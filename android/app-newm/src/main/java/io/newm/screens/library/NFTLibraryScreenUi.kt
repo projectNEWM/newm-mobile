@@ -129,6 +129,7 @@ fun NFTLibraryScreenUi(
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun NFTTracks(
     modifier: Modifier = Modifier,
