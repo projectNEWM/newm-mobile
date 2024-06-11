@@ -49,4 +49,7 @@ internal class NFTRepository(
     fun getTrack(id: String): NFTTrack? {
         return cacheService.getTrack(id)
     }
+
+	fun getAll(): Flow<List<NFTTrack>> =
+		cacheService.getAllTracks()
 }

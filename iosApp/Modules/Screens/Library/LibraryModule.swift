@@ -18,6 +18,14 @@ public final class LibraryModule: Module {
 		Resolver.register {
 			ConnectWalletUseCaseProvider().get() as ConnectWalletUseCase
 		}
+		
+		Resolver.register {
+			HasWalletConnectionsUseCaseProvider().get() as HasWalletConnectionsUseCase
+		}
+		
+		Resolver.register {
+			DisconnectWalletUseCaseProvider().get() as DisconnectWalletUseCase
+		}
     }
 }
 

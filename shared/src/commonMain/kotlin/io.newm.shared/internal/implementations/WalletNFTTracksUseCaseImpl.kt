@@ -49,4 +49,18 @@ internal class WalletNFTTracksUseCaseImpl(
             nftRepository.syncNFTTracksFromNetworkToDevice()
         }
     }
+
+	@Throws(KMMException::class, CancellationException::class)
+	override suspend fun getAllTracksFlow(): Flow<List<NFTTrack>> {
+		return mapErrorsSuspend {
+			return@mapErrorsSuspend nftRepository.getAll()
+		}
+	}
+
+	@Throws(KMMException::class, CancellationException::class)
+	override suspend fun getAllTracks(): List<NFTTrack> {
+		return mapErrorsSuspend {
+			return@mapErrorsSuspend getAllTracksFlow().first()
+		}
+	}
 }

@@ -57,6 +57,12 @@ interface WalletNFTTracksUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     fun getNFTTrack(id: String): NFTTrack?
+	
+	@Throws(KMMException::class, CancellationException::class)
+	suspend fun getAllTracksFlow(): Flow<List<NFTTrack>>
+
+	@Throws(KMMException::class, CancellationException::class)
+	suspend fun getAllTracks(): List<NFTTrack>
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun refresh()

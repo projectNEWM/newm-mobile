@@ -20,9 +20,10 @@ internal class DisconnectWalletUseCaseImpl(
     private val nftRepository: NFTRepository,
 ) : DisconnectWalletUseCase, KoinComponent {
 
+//TODO: don't return success value, throw error
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun disconnect(walletConnectionId: String?): Boolean {
-        return mapErrorsSuspend {
+    override suspend fun disconnect(walletConnectionId: String?) {
+        mapErrorsSuspend {
             if (walletConnectionId != null) {
                 walletRepository.disconnectWallet(walletConnectionId)
             } else {
@@ -36,7 +37,6 @@ internal class DisconnectWalletUseCaseImpl(
             }
             nftRepository.deleteAllTracksNFTsCache()
             postNotification(Notification.walletConnectionStateChanged)
-            true
         }
     }
 }

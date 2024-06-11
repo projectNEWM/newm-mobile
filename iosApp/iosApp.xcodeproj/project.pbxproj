@@ -2730,7 +2730,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7618FCD528164C5C007573B4 /* Build configuration list for PBXNativeTarget "SharedUI" */;
 			buildPhases = (
-				7615B3242908AA0F008FC5A6 /* ShellScript */,
 				7618FCC828164C5C007573B4 /* Headers */,
 				7618FCC928164C5C007573B4 /* Sources */,
 				7618FCCA28164C5C007573B4 /* Frameworks */,
@@ -2757,7 +2756,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7618FD1F28164CBD007573B4 /* Build configuration list for PBXNativeTarget "Colors" */;
 			buildPhases = (
-				7615B3272909A1D6008FC5A6 /* ShellScript */,
 				7618FD1228164CBD007573B4 /* Headers */,
 				7618FD1328164CBD007573B4 /* Sources */,
 				7618FD1428164CBD007573B4 /* Frameworks */,
@@ -3537,42 +3535,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7615B3242908AA0F008FC5A6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#swiftgen\ncd Modules/Helpers/SharedUI\nswiftgen\n";
-		};
-		7615B3272909A1D6008FC5A6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#swiftgen\ncd Modules/Resources/Colors\nswiftgen\n";
-		};
 		761ADD102AE389F0001B56CF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

@@ -32,6 +32,7 @@ internal class WalletRepository(
             cacheService.cacheWalletConnections(listOf(newConnection))
             newConnection
         } catch (e: Exception) {
+//TODO: throw error, don't return false
             Logger.e(e) { "Error connecting wallet ${e.cause}" }
             null
         }
@@ -45,6 +46,7 @@ internal class WalletRepository(
             }
             success
         } catch (e: Exception) {
+//TODO: throw error, don't return false
             Logger.e(e) { "Error disconnecting wallet ${e.cause}" }
             false
         }
