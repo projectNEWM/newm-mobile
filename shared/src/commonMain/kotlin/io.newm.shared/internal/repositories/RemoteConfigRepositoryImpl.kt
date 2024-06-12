@@ -20,7 +20,7 @@ internal class RemoteConfigRepositoryImpl(
             mobileConfigAPI.getMobileConfig()
         } catch (e: Exception) {
             logger.e(e) { "Failed to get mobile config" }
-            null
+            throw e
         }
     }
 }

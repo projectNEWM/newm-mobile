@@ -4,6 +4,7 @@ import co.touchlab.kermit.Logger
 import io.newm.shared.internal.services.cache.NFTCacheService
 import io.newm.shared.internal.services.network.NFTNetworkService
 import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -13,7 +14,7 @@ internal class NFTRepository(
     private val networkService: NFTNetworkService,
     private val cacheService: NFTCacheService,
     private val policyIdsRepository: NewmPolicyIdsRepository,
-)  {
+) {
 
     suspend fun syncNFTTracksFromNetworkToDevice(): List<NFTTrack>? {
         return try {
@@ -21,8 +22,7 @@ internal class NFTRepository(
             cacheService.cacheNFTTracks(nfts)
             nfts
         } catch (e: Exception) {
-            Logger.e(e) { "Error refreshing NFTs ${e.cause}" }
-            null
+            throw e
         }
     }
 
@@ -50,6 +50,6 @@ internal class NFTRepository(
         return cacheService.getTrack(id)
     }
 
-	fun getAll(): Flow<List<NFTTrack>> =
-		cacheService.getAllTracks()
+    fun getAll(): Flow<List<NFTTrack>> =
+        cacheService.getAllTracks()
 }

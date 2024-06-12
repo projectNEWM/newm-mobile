@@ -18,13 +18,12 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserRepository(
     private val dbWrapper: NewmDatabaseWrapper,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) : KoinComponent {
 
     private val service: UserAPI by inject()
     private val logger = Logger.withTag("NewmKMM-UserRepository")
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun fetchLoggedInUserDetails(): User {
         logger.d { "getCurrentUser()" }
         return service.getCurrentUser()

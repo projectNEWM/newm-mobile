@@ -15,6 +15,6 @@ internal class WalletConnectionNetworkService(
 
     suspend fun disconnectWallet(connectionId: String): Boolean {
         val response = walletConnectionAPI.disconnectWallet(connectionId)
-        return response.call.response.status.value == 200
+        return response.call.response.status.value == 204
     }
 }
