@@ -14,12 +14,11 @@ interface DisconnectWalletUseCase {
      * Disconnects from a wallet. If no wallet connection ID is provided, all wallets are disconnected.
      *
      * @param walletConnectionId The ID of the wallet connection to disconnect, or null to disconnect all wallets.
-     * @return True if the disconnection was successful, false otherwise.
      * @throws KMMException If an application-specific error occurs.
      * @throws CancellationException If the operation is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun disconnect(walletConnectionId: String? = null): Boolean
+    suspend fun disconnect(walletConnectionId: String? = null)
 }
 
 class DisconnectWalletUseCaseProvider : KoinComponent {
