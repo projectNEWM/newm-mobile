@@ -12,7 +12,6 @@ import com.slack.circuit.retained.LocalRetainedStateRegistry
 import com.slack.circuit.retained.continuityRetainedStateRegistry
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
-import com.walletconnect.web3.modal.client.Web3Modal
 import io.newm.core.theme.NewmTheme
 import io.newm.screens.Screen
 import io.newm.screens.Screen.NFTLibrary
@@ -41,7 +40,6 @@ class HomeActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         super.onCreate(savedInstanceState)
-        Web3Modal.register(this)
         setContent {
             NewmTheme(darkTheme = true) {
                 CircuitDependencies {

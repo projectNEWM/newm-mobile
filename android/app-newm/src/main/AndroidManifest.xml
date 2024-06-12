@@ -55,11 +55,4 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
             android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
     </application>
-    <queries>
-        <package android:name="io.metamask" />
-        <package android:name="com.wallet.crypto.trustapp" />
-        <package android:name="io.gnosis.safe" />
-        <package android:name="me.rainbow" />
-        <package android:name="com.ledger.live" />
-    </queries>
 </manifest>

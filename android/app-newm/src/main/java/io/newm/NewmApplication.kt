@@ -6,7 +6,6 @@ import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
-import io.newm.wallet.connect.WalletConnectInitializer
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -22,7 +21,6 @@ open class NewmApplication : Application() {
         super.onCreate()
         initKoin()
         logout.register()
-        WalletConnectInitializer(this, sharedBuildConfig).initialize()
     }
 
     private fun initKoin(enableNetworkLogs: Boolean = true) {

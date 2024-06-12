@@ -45,9 +45,6 @@ class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
     override val googleAuthClientId: String
         get() = BuildConfig.GOOGLE_AUTH_CLIENT_ID
 
-    override val walletConnectProjectId: String
-        get() = BuildConfig.WALLET_CONNECT_PROJECT_ID
-
     override val recaptchaSiteKey: String
         get() = BuildConfig.RECAPTCHA_SITE_KEY
 
@@ -63,7 +60,6 @@ interface NewmSharedBuildConfig {
     val appVersion: String
     val sentryAuthToken: String
     val googleAuthClientId: String
-    val walletConnectProjectId: String
     val recaptchaSiteKey: String
     val isStagingMode: Boolean
 }
