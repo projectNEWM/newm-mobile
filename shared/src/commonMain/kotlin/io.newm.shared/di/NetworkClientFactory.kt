@@ -19,8 +19,8 @@ import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.internal.TokenManager
+import io.newm.shared.internal.api.models.LoginResponse
 import io.newm.shared.internal.repositories.LogInRepository
-import io.newm.shared.internal.services.models.LoginResponse
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.json.Json
 
@@ -98,6 +98,9 @@ internal class NetworkClientFactory(
             install(Auth) {
                 bearer {
                     loadTokens {
+                        if(tokenManager.getAccessToken().isNullOrEmpty()) {
+                            return@loadTokens null
+                        }
                         logger.d { "KMM - loadTokens" }
                         BearerTokens(
                             accessToken = tokenManager.getAccessToken().orEmpty(),
@@ -107,6 +110,10 @@ internal class NetworkClientFactory(
 
                     refreshTokens {
                         try {
+                            if(tokenManager.getRefreshToken().isNullOrEmpty()) {
+                                return@refreshTokens null
+                            }
+
                             val renewTokens = client.get( "/v1/auth/refresh") {
                                 markAsRefreshTokenRequest()
                             }.body<LoginResponse>()
@@ -120,11 +127,13 @@ internal class NetworkClientFactory(
                                     refreshToken = tokenManager.getRefreshToken()!!
                                 )
                             } else {
+//	TODO:
                                 repository.logout()
                                 logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
                                 throw KMMException("Invalid Token response")
                             }
                         } catch (e: Exception) {
+//	TODO:
                             repository.logout()
                             logger.d { "NewmKMM - refreshTokens: Exception: $e" }
                             throw KMMException("Refresh token failed: $e")

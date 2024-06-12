@@ -96,9 +96,9 @@ class BarcodeScannerActivity : ComponentActivity() {
         }
     }
 
-    private fun onValidXpubKey(xpubKey: String) {
+    private fun onValidCodeConnection(newmCode: String) {
         val resultIntent = Intent().apply {
-            putExtra(XPUB_KEY, xpubKey)
+            putExtra(NEWM_WALLET_CONNECTION_ID, newmCode)
         }
         this.apply {
             setResult(Activity.RESULT_OK, resultIntent)
@@ -148,10 +148,8 @@ class BarcodeScannerActivity : ComponentActivity() {
             placeholderResId = R.string.barcode_placeholder_text,
             placeholderStyle = placeholderStyle,
             textfieldBackgroundColor = Gray23,
-            onValueChange = { value ->
-                if (value.startsWith("xpub")) {
-                    onValidXpubKey(value)
-                }
+            onValueChange = { newmWalletConnectionId ->
+                    onValidCodeConnection(newmWalletConnectionId)
             },
         )
     }
@@ -177,7 +175,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                     val imageAnalyzer = ImageAnalysis.Builder().build().also {
                         it.setAnalyzer(cameraExecutor, BarcodeAnalyser { barcodeResult ->
                             // Return the result to the calling activity
-                            onValidXpubKey(barcodeResult)
+                            onValidCodeConnection(barcodeResult)
                         })
                     }
 
@@ -225,7 +223,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                 scanner.process(image).addOnSuccessListener { barcodes ->
                     if (barcodes.size > 0) {
                         barcodes.forEach {
-                            if (it.rawValue?.startsWith("xpub") == true) {
+                            if (it.rawValue?.startsWith("newm-") == true){
                                 onValidScan(it.rawValue.toString())
                             }
                         }
@@ -263,6 +261,6 @@ class BarcodeScannerActivity : ComponentActivity() {
     }
 
     companion object {
-        const val XPUB_KEY = "XPUB_SCAN_RESULT_KEY"
+        const val NEWM_WALLET_CONNECTION_ID = "NEWM_WALLET_CONNECTION_ID"
     }
 }

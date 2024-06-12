@@ -11,9 +11,17 @@ public final class ProfileModule: Module {
 		Resolver.register {
 			ChangePasswordUseCaseProvider().get() as ChangePasswordUseCase
 		}
+		
+		Resolver.register {
+			HasWalletConnectionsUseCaseProvider().get() as HasWalletConnectionsUseCase
+		}
+		
+		Resolver.register {
+			DisconnectWalletUseCaseProvider().get() as DisconnectWalletUseCase
+		}
 	}
 	
 #if DEBUG
-	public func registerAllMockedServices(mockResolver: Resolver = .mock) {	}
+	public func registerAllMockedServices(mockResolver: Resolver = Resolver(child: .main)) {	}
 #endif
 }

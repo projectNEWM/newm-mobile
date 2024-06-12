@@ -1,8 +1,8 @@
 package io.newm.shared.internal.repositories
 
 import co.touchlab.kermit.Logger
-import io.newm.shared.internal.services.RemoteConfigAPI
-import io.newm.shared.internal.services.models.MobileConfig
+import io.newm.shared.internal.api.RemoteConfigAPI
+import io.newm.shared.internal.api.models.MobileConfig
 import org.koin.core.component.KoinComponent
 
 interface RemoteConfigRepository {
@@ -20,7 +20,7 @@ internal class RemoteConfigRepositoryImpl(
             mobileConfigAPI.getMobileConfig()
         } catch (e: Exception) {
             logger.e(e) { "Failed to get mobile config" }
-            null
+            throw e
         }
     }
 }

@@ -1,44 +1,37 @@
 package io.newm.shared.internal.repositories
 
-import com.liftric.kvault.KVault
-import io.newm.shared.internal.services.NewmPolicyIdsAPI
+import io.newm.shared.internal.services.cache.NewmPolicyIdsCacheService
+import io.newm.shared.internal.services.network.NewmPolicyIdsNetworkService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import kotlin.concurrent.Volatile
 
 internal class NewmPolicyIdsRepository(
-    private val policyIdsAPI: NewmPolicyIdsAPI,
-    private val storage: KVault,
-    private val scope: CoroutineScope,
-
-    ) : KoinComponent {
-
-    private val initialPolicyIdList = listOf(
-        "46e607b3046a34c95e7c29e47047618dbf5e10de777ba56c590cfd5c",
-        "3333c8022c24d2014f02236c082105ebceb73c46c45f94eb99136f92"
-    )
-
+    private val networkService: NewmPolicyIdsNetworkService,
+    private val cacheService: NewmPolicyIdsCacheService,
+    private val scope: CoroutineScope
+) {
     @Volatile
     private var isApiCalled = false
 
     fun getPolicyIds(): Flow<List<String>> = flow {
         // Emit the locally stored IDs if available
-        val storedIds = storage.string(POLICY_IDS_KEY)
-            ?: initialPolicyIdList.joinToString(",")
-        if (storedIds.isNotEmpty()) {
-            emit(storedIds.split(","))
+        val storedIds = cacheService.getPolicyIds().firstOrNull()
+        if (!storedIds.isNullOrEmpty()) {
+            emit(storedIds)
         }
 
         // Check if the API has already been called
         if (!isApiCalled) {
             // Fetch from the API, store them, and emit the new list
             try {
-                val fetchedIds = policyIdsAPI.getNewmPolicyIds()
+                val fetchedIds = networkService.fetchPolicyIds()
                 scope.launch {
-                    storage.set(POLICY_IDS_KEY, fetchedIds.joinToString(","))
+                    cacheService.savePolicyIds(fetchedIds)
                 }
                 emit(fetchedIds)
 
@@ -49,9 +42,5 @@ internal class NewmPolicyIdsRepository(
                 throw e
             }
         }
-    }
-
-    companion object {
-        private const val POLICY_IDS_KEY = "policy_ids"
     }
 }

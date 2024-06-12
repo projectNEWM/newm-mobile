@@ -23,11 +23,13 @@ import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.public.models.User
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.launch
 
 class ProfileEditPresenter(
     private val navigator: Navigator,
+    private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
@@ -39,7 +41,7 @@ class ProfileEditPresenter(
         }.collectAsState(initial = null)
 
         val isWalletConnected by remember {
-            connectWalletUseCase.isConnectedFlow()
+            hasWalletConnectionsUseCase.hasWalletConnectionsFlow()
         }.collectAsState(initial = false)
 
         val profile = remember(storedUser) {

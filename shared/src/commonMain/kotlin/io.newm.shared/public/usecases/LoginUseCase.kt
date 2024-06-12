@@ -14,6 +14,7 @@ import kotlin.coroutines.cancellation.CancellationException
  */
 interface LoginUseCase {
     sealed class LoginException {
+        //TODO: This is never used.  We should be mapping the errors to this in the implementation
         data class invalidLogin(override val message: String) : KMMException(message)
     }
     /**
@@ -75,6 +76,7 @@ interface LoginUseCase {
      * This method should handle all necessary steps to effectively terminate the user's session,
      * such as clearing session tokens, disconnecting from external services, or restoring app state.
      */
+    @Throws(KMMException::class, CancellationException::class)
     fun logout()
 }
 

@@ -1,7 +1,7 @@
 package io.newm.shared.config
 
-import com.liftric.kvault.KVault
 import io.newm.shared.generated.BuildConfig
+import io.newm.shared.internal.db.PreferencesDataStore
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -12,25 +12,25 @@ enum class Mode {
 }
 
 // BuildConfiguration class to manage app configurations based on the mode
-object NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
+class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
-    private const val APP_MODE = "app_mode"
+    private val APP_MODE = "app_mode"
 
-    private val storage: KVault by inject()
+    private val defaultMode
+        get() = Mode.PRODUCTION
+
+    private val storage: PreferencesDataStore by inject()
     var mode: Mode
         get() {
-            val modeString = storage.string(APP_MODE) ?: Mode.PRODUCTION.name
+            val modeString = storage.getString(APP_MODE) ?: defaultMode.name
             return Mode.valueOf(modeString)
         }
         set(value) {
-            storage.set(APP_MODE, value.name)
+            storage.saveString(APP_MODE, value.name)
         }
 
     init {
-        // If there's no mode saved in KVault, default to Production.
-        if (storage.string(APP_MODE) == null) {
-            mode = Mode.PRODUCTION
-        }
+        mode = defaultMode
     }
 
     override val baseUrl: String

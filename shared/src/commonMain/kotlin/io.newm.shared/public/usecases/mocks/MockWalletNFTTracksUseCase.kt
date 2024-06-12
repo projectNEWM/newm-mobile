@@ -12,11 +12,11 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
         // no-op
     }
 
-    override fun getAllNFTTracksFlow(): Flow<List<NFTTrack>> {
+    override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
         return flow { emit(mockTracks) }
     }
 
-    override suspend fun getAllNFTTracks(): List<NFTTrack> {
+    override suspend fun getAllCollectableTracks(): List<NFTTrack> {
         return mockTracks
     }
 
@@ -30,5 +30,13 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 
     override fun getNFTTrack(id: String): NFTTrack? {
         return mockTracks.firstOrNull { it.id == id }
+    }
+
+    override suspend fun getAllTracksFlow(): Flow<List<NFTTrack>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllTracks(): List<NFTTrack> {
+        TODO("Not yet implemented")
     }
 }

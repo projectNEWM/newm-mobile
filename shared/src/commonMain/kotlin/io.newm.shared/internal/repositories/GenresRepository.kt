@@ -2,7 +2,7 @@ package io.newm.shared.internal.repositories
 
 import co.touchlab.kermit.Logger
 import io.newm.shared.public.models.Genre
-import io.newm.shared.internal.services.GenresAPI
+import io.newm.shared.internal.api.GenresAPI
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

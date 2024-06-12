@@ -15,6 +15,15 @@ import Logging
 import Profile
 import Mocks
 
+#if DEBUG
+enum MockMode {
+	case use
+	case fallback
+	case dontUse
+}
+let mockMode: MockMode = .dontUse
+#endif
+
 struct iOSAppModule: Module {
 	static var shared = iOSAppModule()
 	
@@ -33,14 +42,27 @@ struct iOSAppModule: Module {
 			MocksModule.shared
 		]
 	}()
+	
+	init() {
+		KoinKt.doInitKoin(enableNetworkLogs: true)
+	}
 }
 
 extension Resolver: ResolverRegistering {
 	public static func registerAllServices() {
 		iOSAppModule.shared.registerAllServices()
 #if DEBUG
-		Resolver.root.add(child: .mock)
-		iOSAppModule.shared.registerAllMockedServices(mockResolver: .mock)
+		switch mockMode {
+		case .use:
+			Resolver.root = Resolver(child: .main)
+			iOSAppModule.shared.registerAllMockedServices(mockResolver: .root)
+		case .fallback:
+			let mock = Resolver()
+			Resolver.root.add(child: mock)
+			iOSAppModule.shared.registerAllMockedServices(mockResolver: mock)
+		case .dontUse:
+			break
+		}
 #endif
 	}
 }
@@ -55,7 +77,7 @@ extension iOSAppModule {
 
 #if DEBUG
 	func registerAllMockedServices(mockResolver: Resolver) {
-		modules.forEach { $0.registerAllMockedServices(mockResolver: .mock) }
+		modules.forEach { $0.registerAllMockedServices(mockResolver: mockResolver) }
 	}
 #endif
 }

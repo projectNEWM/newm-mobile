@@ -1,6 +1,7 @@
+
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
 	kotlin(Plugins.multiplatform)
@@ -9,7 +10,6 @@ plugins {
 	id(Plugins.androidLibrary)
 	id(Plugins.sqlDelight)
 	id("com.google.devtools.ksp") version "1.9.21-1.0.15"
-	id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-22"
 	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
@@ -60,7 +60,7 @@ kotlin {
 				implementation(Ktor.clientContentNegotiation)
 				implementation(Ktor.kotlinXJson)
 				implementation(Ktor.clientAuth)
-				implementation("com.liftric:kvault:1.12.0")
+				implementation("androidx.datastore:datastore-preferences:1.1.1")
 			}
 		}
 		val commonTest by getting {
@@ -132,7 +132,7 @@ sqldelight {
 	database("NewmDatabase") {
 		packageName = "io.newm.shared.db.cache"
 		sourceFolders = listOf("sqldelight")
-		version = 2
+		version = 3
 	}
 }
 

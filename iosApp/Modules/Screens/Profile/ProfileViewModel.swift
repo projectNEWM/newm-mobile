@@ -10,8 +10,9 @@ import Utilities
 @MainActor
 final class ProfileViewModel: ObservableObject {
 	@Injected private var getCurrentUser: UserDetailsUseCase
-	@Injected private var connectWalletUseCase: ConnectWalletUseCase
+	@Injected private var hasWalletConnectionUseCase: HasWalletConnectionsUseCase
 	@Injected private var changePasswordUseCase: ChangePasswordUseCase
+	@Injected private var disconnectWalletUseCase: DisconnectWalletUseCase
 	
 	@Injected private var logger: ErrorReporting
 	
@@ -31,9 +32,7 @@ final class ProfileViewModel: ObservableObject {
 	@Published var showCompletionToast: Bool = false
 	@Published var isWalletConnected: Bool = false
 	var errorAlert: String? { errors.currentError?.errorDescription }
-	
-	private var cancels = Set<AnyCancellable>()
-	
+		
 	var enableSaveButon: Bool {
 		let hasNewPassword =
 		currentPassword.isEmpty == false &&
@@ -52,12 +51,13 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	init() {
-		isWalletConnected = connectWalletUseCase.isConnected()
-		NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged)
-			.sink { [weak self] _ in
-				self?.isWalletConnected = self?.connectWalletUseCase.isConnected() == true
+		Task.detached {
+			for try await _ in NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged).compactMap({ $0 }).values {
+				Task { @MainActor [weak self] in
+					self?.isWalletConnected = try await self?.hasWalletConnectionUseCase.hasWalletConnections() == true
+				}
 			}
-			.store(in: &cancels)
+		}
 		
 		Task {
 			await loadUser()
@@ -69,6 +69,7 @@ final class ProfileViewModel: ObservableObject {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
 			user = try await getCurrentUser.fetchLoggedInUserDetails()
+			isWalletConnected = try await hasWalletConnectionUseCase.hasWalletConnections().boolValue
 		} catch {
 			logger.logError(error)
 			errors.append(error.newmError)
@@ -100,8 +101,12 @@ final class ProfileViewModel: ObservableObject {
 		}
 	}
 	
-	func disconnectWallet() {
-		connectWalletUseCase.disconnect()
+	func disconnectWallet() async {
+		do {
+			try await disconnectWalletUseCase.disconnect(walletConnectionId: nil)
+		} catch {
+			errors.append(error)
+		}
 	}
 	
 	func alertDismissed() {

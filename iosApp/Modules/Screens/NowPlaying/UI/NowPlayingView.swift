@@ -167,9 +167,9 @@ extension NowPlayingView {
 }
 
 #Preview {
-	AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .mock)
+	Resolver.root = Resolver(child: .main)
+	AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .root)
 	AudioPlayerModule.shared.registerAllServices()
-	Resolver.root = .mock
 	@InjectedObject var audioPlayer: VLCAudioPlayer
 	audioPlayer.setTracks(Set(NFTTrack.mocks), playFirstTrack: true)
 	return Group {

@@ -1,6 +1,7 @@
 package io.newm.screens.profile.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -18,20 +19,33 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.DisconnectWalletUseCase
+import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import kotlinx.coroutines.launch
 
 class ProfilePresenter(
     private val navigator: Navigator,
+    private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
+    private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
+    private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
 ) : Presenter<ProfileUiState> {
     @Composable
     override fun present(): ProfileUiState {
-        val isWalletConnected by remember { connectWalletUseCase.isConnectedFlow() }.collectAsState(
+
+        val coroutineScope = rememberStableCoroutineScope()
+
+        val isWalletConnected by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }.collectAsState(
             false
         )
+
+        LaunchedEffect(Unit) {
+            syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+        }
 
         val user by remember { userDetailsUseCase.fetchLoggedInUserDetailsFlow() }.collectAsState(
             null
@@ -40,7 +54,6 @@ class ProfilePresenter(
         return if (user == null) {
             ProfileUiState.Loading
         } else {
-            val coroutineScope = rememberStableCoroutineScope()
 
             ProfileUiState.Content(
                 profile = user!!,
@@ -52,7 +65,7 @@ class ProfilePresenter(
                         }
 
                         OnDisconnectWallet -> coroutineScope.launch {
-                            connectWalletUseCase.disconnect()
+                            disconnectWalletUseCase.disconnect()
                         }
 
                         OnEditProfile -> navigator.goTo(EditProfile)

@@ -1,4 +1,4 @@
-package io.newm.shared.internal.services.models
+package io.newm.shared.internal.api.models
 
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.Serializable

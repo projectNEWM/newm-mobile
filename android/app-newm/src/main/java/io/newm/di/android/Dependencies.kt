@@ -40,7 +40,6 @@ val viewModule = module {
     factory { params -> CreateAccountScreenPresenter(params.get(), get(), get()) }
     factory { params -> LoginScreenPresenter(params.get(), get(), get()) }
     factory { params -> ResetPasswordScreenPresenter(params.get(), get(), get(), get()) }
-    single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl }
     single<GoogleSignInLauncher> {
         val sharedBuildConfig = get<NewmSharedBuildConfig>()
 
@@ -70,11 +69,16 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get(),
+            get(),
+            get(),
         )
     }
     factory { params ->
         NFTLibraryPresenter(
             params.get(),
+            get(),
+            get(),
             get(),
             get()
         )
@@ -85,6 +89,7 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get()
         )
     }
     factory { params ->
@@ -96,6 +101,6 @@ val viewModule = module {
 }
 
 val androidModules = module {
-    single { Logout(get(), get(), get()) }
+    single { Logout(get(), get(), get(), get()) }
     single { RestartApp(get()) }
 }

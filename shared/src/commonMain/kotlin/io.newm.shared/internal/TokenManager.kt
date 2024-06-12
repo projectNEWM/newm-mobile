@@ -2,39 +2,36 @@ package io.newm.shared.internal
 
 
 import co.touchlab.kermit.Logger
-import com.liftric.kvault.KVault
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import io.newm.shared.internal.db.PreferencesDataStore
 
-internal class TokenManager(private val storage: KVault) {
+internal class TokenManager(private val storage: PreferencesDataStore) {
     private val logger = Logger.withTag("NewmKMM-TokenManagerImpl")
 
-    fun hasTokens(): Boolean {
-        return getAccessToken() != null && getRefreshToken() != null
-    }
-
     fun getAccessToken(): String? {
-        return storage.string(ACCESS_TOKEN_KEY) ?: run {
+        return storage.getString(ACCESS_TOKEN_KEY) ?: run {
             logger.d("No Access Token found - Time to Login")
             null
         }
     }
 
     fun getRefreshToken(): String? {
-        return storage.string(REFRESH_TOKEN_KEY) ?: run {
+        val refreshToken = storage.getString(REFRESH_TOKEN_KEY)
+        if (refreshToken.isNullOrEmpty()) {
             logger.d("No Refresh Token found - Time to Login")
-            null
+            return null
+        } else {
+            return refreshToken
         }
     }
 
     fun clearToken() {
-        storage.deleteObject(ACCESS_TOKEN_KEY)
-        storage.deleteObject(REFRESH_TOKEN_KEY)
+        storage.deleteValue(ACCESS_TOKEN_KEY)
+        storage.deleteValue(REFRESH_TOKEN_KEY)
     }
 
     fun setAuthTokens(accessToken: String, refreshToken: String) {
-        storage.set(ACCESS_TOKEN_KEY, accessToken)
-        storage.set(REFRESH_TOKEN_KEY, refreshToken)
+        storage.saveString(ACCESS_TOKEN_KEY, accessToken)
+        storage.saveString(REFRESH_TOKEN_KEY, refreshToken)
     }
 
     companion object {

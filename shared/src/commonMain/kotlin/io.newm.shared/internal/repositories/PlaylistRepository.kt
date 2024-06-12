@@ -3,7 +3,7 @@ package io.newm.shared.internal.repositories
 import co.touchlab.kermit.Logger
 import io.newm.shared.public.models.Playlist
 import io.newm.shared.public.models.Song
-import io.newm.shared.internal.services.PlaylistAPI
+import io.newm.shared.internal.api.PlaylistAPI
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

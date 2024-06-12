@@ -91,9 +91,9 @@ fun NFTLibraryScreenUi(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
-            ) { xpubKey ->
+            ) { newmWalletConnectionId ->
                 val eventSink = state.onConnectWallet
-                eventSink(xpubKey)
+                eventSink(newmWalletConnectionId)
             }
 
             NFTLibraryState.EmptyWallet -> EmptyWalletScreen()

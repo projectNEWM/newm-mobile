@@ -1,37 +1,30 @@
+
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.repositories.CardanoWalletRepository
-import io.newm.shared.internal.repositories.ConnectWalletManager
-import io.newm.shared.internal.implementations.utilities.mapErrors
+import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
+import io.newm.shared.internal.repositories.WalletRepository
+import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.ConnectWalletUseCase
-import kotlinx.coroutines.flow.Flow
+import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
+import org.koin.core.component.KoinComponent
 import shared.Notification
 import shared.postNotification
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class ConnectWalletUseCaseImpl(
-    private val connectWalletManager: ConnectWalletManager,
-    private val cardanoWalletRepository: CardanoWalletRepository
+    private val walletRepository: WalletRepository,
+    private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
 ) : ConnectWalletUseCase {
-    override fun connect(xpub: String) {
-        mapErrors {
-            connectWalletManager.connect(xpub)
+
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun connect(walletConnectionId: String): WalletConnection? {
+        return mapErrorsSuspend {
+            val walletConnection = walletRepository.connectWallet(walletConnectionId)
             postNotification(Notification.walletConnectionStateChanged)
+            // Sync wallet connections after connecting
+            syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+            walletConnection
         }
     }
-
-    override fun disconnect() {
-        mapErrors {
-            connectWalletManager.disconnect()
-            cardanoWalletRepository.deleteAllNFTs()
-            postNotification(Notification.walletConnectionStateChanged)
-        }
-    }
-
-    override fun isConnected(): Boolean {
-        return mapErrors {
-            return@mapErrors connectWalletManager.isConnected()
-        }
-    }
-
-    override fun isConnectedFlow(): Flow<Boolean> = connectWalletManager.connectionState
 }
