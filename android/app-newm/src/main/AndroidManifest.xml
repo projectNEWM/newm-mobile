@@ -47,12 +47,7 @@
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".feature.musicplayer.MusicPlayerActivity"
-            android:launchMode="singleTop"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
+
         <activity
             android:name=".feature.barcode.scanner.BarcodeScannerActivity"
             android:launchMode="singleTop"
