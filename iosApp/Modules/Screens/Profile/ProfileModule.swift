@@ -11,6 +11,14 @@ public final class ProfileModule: Module {
 		Resolver.register {
 			ChangePasswordUseCaseProvider().get() as ChangePasswordUseCase
 		}
+		
+		Resolver.register {
+			HasWalletConnectionsUseCaseProvider().get() as HasWalletConnectionsUseCase
+		}
+		
+		Resolver.register {
+			DisconnectWalletUseCaseProvider().get() as DisconnectWalletUseCase
+		}
 	}
 	
 #if DEBUG

@@ -55,7 +55,7 @@ class LibraryViewModel: ObservableObject {
 	private var cancels: Set<AnyCancellable> = []
 	
 	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
-	@Injected private var connectWalletToAccountUseCase: any ConnectWalletUseCase
+	@Injected private var hasWalletConnectionsUseCase: any HasWalletConnectionsUseCase
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
 	@Injected private var logger: any ErrorReporting
 	
@@ -65,7 +65,7 @@ class LibraryViewModel: ObservableObject {
 				Task {
 					guard let self else { return }
 					do {
-						self.walletIsConnected = try await self.connectWalletToAccountUseCase.hasWalletConnections().boolValue
+						self.walletIsConnected = try await self.hasWalletConnectionsUseCase.hasWalletConnections().boolValue
 						if self.walletIsConnected {
 							await self.refresh()
 						} else {
@@ -93,7 +93,7 @@ class LibraryViewModel: ObservableObject {
 		}
 			
 		Task { [weak self] in
-			self?.walletIsConnected = try await self?.connectWalletToAccountUseCase.hasWalletConnections().boolValue == true
+			self?.walletIsConnected = try await self?.hasWalletConnectionsUseCase.hasWalletConnections().boolValue == true
 			await self?.refresh()
 		}
 	}
@@ -111,7 +111,7 @@ class LibraryViewModel: ObservableObject {
 		
 		do {
 			try await walletNFTTracksUseCase.refresh()
-			tracks = try await walletNFTTracksUseCase.getAllNFTTracks()
+			tracks = try await walletNFTTracksUseCase.getAllTracks()
 		} catch {
 			logger.logError(error)
 			errors.append(NEWMError(errorDescription: "Unable to fetch songs.  Please try again."))

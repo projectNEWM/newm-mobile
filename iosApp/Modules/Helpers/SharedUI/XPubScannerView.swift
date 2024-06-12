@@ -4,6 +4,7 @@ import Resolver
 import ModuleLinker
 import Utilities
 
+@MainActor
 public struct ConnectWalletToAccountScannerView: View {
 	private let completion: () -> ()
 	@State private var manuallyEnteredCode: String = ""

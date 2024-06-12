@@ -10,8 +10,9 @@ import Utilities
 @MainActor
 final class ProfileViewModel: ObservableObject {
 	@Injected private var getCurrentUser: UserDetailsUseCase
-	@Injected private var connectWalletUseCase: ConnectWalletUseCase
+	@Injected private var hasWalletConnectionUseCase: HasWalletConnectionsUseCase
 	@Injected private var changePasswordUseCase: ChangePasswordUseCase
+	@Injected private var disconnectWalletUseCase: DisconnectWalletUseCase
 	
 	@Injected private var logger: ErrorReporting
 	
@@ -53,7 +54,7 @@ final class ProfileViewModel: ObservableObject {
 		Task.detached {
 			for try await _ in NotificationCenter.default.publisher(for: shared.Notification().walletConnectionStateChanged).compactMap({ $0 }).values {
 				Task { @MainActor [weak self] in
-					self?.isWalletConnected = try await self?.connectWalletUseCase.hasWalletConnections() == true
+					self?.isWalletConnected = try await self?.hasWalletConnectionUseCase.hasWalletConnections() == true
 				}
 			}
 		}
@@ -68,7 +69,7 @@ final class ProfileViewModel: ObservableObject {
 		// don't set loading state here, since this might be called from the view's "refreshable"
 		do {
 			user = try await getCurrentUser.fetchLoggedInUserDetails()
-			isWalletConnected = try await connectWalletUseCase.hasWalletConnections().boolValue
+			isWalletConnected = try await hasWalletConnectionUseCase.hasWalletConnections().boolValue
 		} catch {
 			logger.logError(error)
 			errors.append(error.newmError)
@@ -102,7 +103,7 @@ final class ProfileViewModel: ObservableObject {
 	
 	func disconnectWallet() async {
 		do {
-			try await connectWalletUseCase.disconnect(walletConnectionId: nil)
+			try await disconnectWalletUseCase.disconnect(walletConnectionId: nil)
 		} catch {
 			errors.append(error)
 		}

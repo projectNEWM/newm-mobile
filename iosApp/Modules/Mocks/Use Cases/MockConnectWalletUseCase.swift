@@ -2,7 +2,11 @@ import Foundation
 import shared
 import Utilities
 
-public class MockConnectWalletUseCase: ConnectWalletUseCase {	
+public class MockConnectWalletUseCase: ConnectWalletUseCase {
+	public func connect(walletConnectionId: String) async throws -> WalletConnection? {
+		nil
+	}
+	
 	private var walletConnections: [WalletConnection] = []
 	
 	public var throwThisError: Error?
