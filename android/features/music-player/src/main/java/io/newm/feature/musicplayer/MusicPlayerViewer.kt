@@ -1,6 +1,5 @@
 package io.newm.feature.musicplayer
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.DarkPink
@@ -38,6 +36,7 @@ import io.newm.core.theme.Gray500
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
+import io.newm.core.ui.ZoomableImage
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
@@ -68,18 +67,13 @@ internal fun MusicPlayerViewer(
     Box(
         modifier = modifier,
     ) {
-        Crossfade(
-            modifier = Modifier.fillMaxSize(),
-            targetState = song.artworkUri,
-            label = "crossfade-artwork"
-        ) { uri ->
-            AsyncImage(
-                model = uri,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-            )
-        }
+
+        ZoomableImage(
+            modifier = Modifier.align(Alignment.Center),
+            model = song.artworkUri,
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
+        )
 
         Column(
             modifier = Modifier
