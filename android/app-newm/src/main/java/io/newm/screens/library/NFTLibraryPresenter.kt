@@ -16,7 +16,9 @@ import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
+import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.CoroutineScope
@@ -26,12 +28,17 @@ class NFTLibraryPresenter(
     private val navigator: Navigator,
     private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
+    private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
     private val scope: CoroutineScope,
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer()
+
+        LaunchedEffect(Unit) {
+            syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+        }
 
         val isWalletConnected: Boolean? by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }.collectAsState(
             null

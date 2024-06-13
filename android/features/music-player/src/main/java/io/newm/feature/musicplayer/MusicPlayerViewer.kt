@@ -1,5 +1,7 @@
 package io.newm.feature.musicplayer
 
+import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,18 +17,27 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.palette.graphics.Palette
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.DarkPink
@@ -44,6 +55,8 @@ import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private val playbackTimeStyle = TextStyle(
     fontSize = 12.sp,
@@ -63,9 +76,15 @@ internal fun MusicPlayerViewer(
     onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
+    val context = LocalContext.current
+    var dominantColor by remember { mutableStateOf(Color.Black) }
+
+    LaunchedEffect(song.artworkUri) {
+        dominantColor = getDominantColor(context = context, imageUri = song.artworkUri!!)
+    }
 
     Box(
-        modifier = modifier,
+        modifier = modifier.background(dominantColor),
     ) {
 
         ZoomableImage(
@@ -305,3 +324,23 @@ fun RepeatButton(
     }
 }
 
+suspend fun getDominantColor(context: Context, imageUri: String): Color {
+    return withContext(Dispatchers.IO) {
+        val loader = ImageLoader(context)
+        val request = ImageRequest.Builder(context)
+            .data(imageUri)
+            .allowHardware(false) // Disable hardware bitmaps.
+            .build()
+
+        val result = (loader.execute(request) as? SuccessResult)?.drawable
+        val bitmap = (result as? BitmapDrawable)?.bitmap
+
+        bitmap?.let {
+            val palette = Palette.from(it).generate()
+            val dominantSwatch = palette.dominantSwatch
+            dominantSwatch?.let { swatch ->
+                Color(swatch.rgb)
+            } ?: Color.Black
+        } ?: Color.Black
+    }
+}
