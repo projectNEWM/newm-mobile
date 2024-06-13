@@ -19,6 +19,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 
 @Composable
 fun ZoomableImage(
@@ -27,6 +28,7 @@ fun ZoomableImage(
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String? = null,
     initialZoomed: Boolean = true,
+    onState: ((AsyncImagePainter.State) -> Unit)? = null
 ) {
 
     var zoomed by remember { mutableStateOf(initialZoomed) }
@@ -42,6 +44,7 @@ fun ZoomableImage(
         ) { imageModel ->
             AsyncImage(
                 model = imageModel,
+                onState = onState,
                 contentDescription = contentDescription,
                 contentScale = if (isZoomed) contentScale else ContentScale.Fit,
                 modifier = Modifier

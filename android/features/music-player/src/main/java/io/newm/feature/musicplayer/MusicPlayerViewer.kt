@@ -1,7 +1,9 @@
 package io.newm.feature.musicplayer
 
-import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,10 +19,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,9 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.palette.graphics.Palette
-import coil.ImageLoader
+import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
-import coil.request.SuccessResult
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.DarkPink
@@ -56,6 +57,7 @@ import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 private val playbackTimeStyle = TextStyle(
@@ -76,22 +78,37 @@ internal fun MusicPlayerViewer(
     onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
+    var palette by remember { mutableStateOf<Palette?>(null) }
+    val dominantColor = remember(palette) { palette?.dominantColor ?: Black }
+    val animatedColor by animateColorAsState(dominantColor, label = "", animationSpec = tween(200))
+
     val context = LocalContext.current
-    var dominantColor by remember { mutableStateOf(Color.Black) }
-
-    LaunchedEffect(song.artworkUri) {
-        dominantColor = getDominantColor(context = context, imageUri = song.artworkUri!!)
-    }
-
     Box(
-        modifier = modifier.background(dominantColor),
+        modifier = modifier.background(animatedColor),
     ) {
-
+        val coroutineScope = rememberCoroutineScope()
         ZoomableImage(
             modifier = Modifier.align(Alignment.Center),
-            model = song.artworkUri,
+            model = ImageRequest.Builder(context)
+                .data(song.artworkUri)
+                .allowHardware(false) // Disable hardware bitmaps.
+                .build(),
             contentScale = ContentScale.Crop,
             contentDescription = null,
+            onState = { state ->
+                when (state) {
+                    is AsyncImagePainter.State.Success -> {
+                        coroutineScope.launch {
+                            val drawable = state.result.drawable as? BitmapDrawable
+                            drawable?.let {
+                                palette = getPalletColors(it.bitmap)
+                            }
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
         )
 
         Column(
@@ -324,23 +341,15 @@ fun RepeatButton(
     }
 }
 
-suspend fun getDominantColor(context: Context, imageUri: String): Color {
-    return withContext(Dispatchers.IO) {
-        val loader = ImageLoader(context)
-        val request = ImageRequest.Builder(context)
-            .data(imageUri)
-            .allowHardware(false) // Disable hardware bitmaps.
-            .build()
-
-        val result = (loader.execute(request) as? SuccessResult)?.drawable
-        val bitmap = (result as? BitmapDrawable)?.bitmap
-
-        bitmap?.let {
-            val palette = Palette.from(it).generate()
-            val dominantSwatch = palette.dominantSwatch
-            dominantSwatch?.let { swatch ->
-                Color(swatch.rgb)
-            } ?: Color.Black
-        } ?: Color.Black
+val Palette.dominantColor: Color?
+    get() {
+        val swatch = dominantSwatch ?: vibrantSwatch ?: lightVibrantSwatch ?: darkVibrantSwatch
+        return swatch?.let { Color(it.rgb) }
     }
-}
+
+suspend fun getPalletColors(bitmap: Bitmap): Palette =
+    withContext(Dispatchers.IO) {
+        val palette = Palette.from(bitmap).generate()
+        palette
+    }
+
