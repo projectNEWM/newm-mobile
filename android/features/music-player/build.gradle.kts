@@ -38,6 +38,7 @@ dependencies {
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.shared))
+    implementation("androidx.palette:palette-ktx:1.0.0")
 
     testImplementation(project(Modules.testUtils))
 }
