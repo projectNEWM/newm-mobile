@@ -1,9 +1,12 @@
+@file:kotlin.OptIn(ExperimentalMaterialApi::class)
+
 package io.newm.feature.barcode.scanner
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.OptIn
@@ -26,15 +29,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,15 +66,20 @@ import com.google.mlkit.vision.common.InputImage
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.CerisePink
+import io.newm.core.theme.GlassSmith
 import io.newm.core.theme.Gray23
+import io.newm.core.theme.Gray400
 import io.newm.core.theme.Gray6F
 import io.newm.core.theme.LightSkyBlue
+import io.newm.core.theme.NewmTheme
 import io.newm.core.theme.OceanGreen
 import io.newm.core.theme.SteelPink
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.textGradient
+import io.newm.core.ui.wallet.buttonGradient
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 val qrLabelStyle = TextStyle(
@@ -78,20 +100,9 @@ class BarcodeScannerActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Black),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                TopPanel()
-                Spacer(modifier = Modifier.height(40.dp))
-                PreviewViewComposable()
-                EnterQRCodePanel()
-                Spacer(modifier = Modifier.weight(1f))
-                HelpButton()
+            NewmTheme(darkTheme = true) {
+                BarcodeScannerUi()
             }
         }
     }
@@ -106,8 +117,65 @@ class BarcodeScannerActivity : ComponentActivity() {
         }
     }
 
-    private fun onHelpButtonClick() {
-        //TODO
+    @Composable
+    private fun HelpButton(onClick: () -> Unit) {
+        Box(
+            modifier = Modifier
+                .padding(16.dp)
+                .height(40.dp)
+                .fillMaxWidth()
+                .background(Black)
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = stringResource(id = R.string.barcode_help_text),
+                style = TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    brush = textGradient(SteelPink, CerisePink)
+                )
+            )
+        }
+    }
+
+    @Composable
+    private fun BarcodeScannerUi() {
+        val bottomSheetState =
+            rememberModalBottomSheetState(
+                initialValue = ModalBottomSheetValue.Hidden,
+                skipHalfExpanded = true
+            )
+        val coroutineScope = rememberCoroutineScope()
+
+        ModalBottomSheetLayout(
+            sheetState = bottomSheetState,
+            sheetContent = {
+                InstructionList()
+            },
+            content = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .background(Black),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    TopPanel()
+                    Spacer(modifier = Modifier.height(40.dp))
+                    PreviewViewComposable()
+                    EnterQRCodePanel()
+                    Spacer(modifier = Modifier.weight(1f))
+                    CopyToClipboardButton()
+                    HelpButton {
+                        coroutineScope.launch {
+                            bottomSheetState.show()
+                        }
+                    }
+                }
+            }
+        )
     }
 
     @Composable
@@ -118,7 +186,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         ) {
             IconButton(
                 onClick = { finish() },
-                modifier = Modifier.padding(vertical = 10.dp, horizontal = 16.dp)
+                modifier = Modifier.padding(vertical = 16.dp)
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
@@ -140,6 +208,43 @@ class BarcodeScannerActivity : ComponentActivity() {
     }
 
     @Composable
+    fun CopyToClipboardButton() {
+        val context = LocalContext.current
+        val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
+        Button(
+            onClick = {
+                clipboardManager.setText(androidx.compose.ui.text.AnnotatedString("https://newm.tools/"))
+                Toast
+                    .makeText(context, "URL copied to clipboard", Toast.LENGTH_SHORT)
+                    .show()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .background(buttonGradient)
+                .clip(RoundedCornerShape(8.dp)),
+            elevation = null,
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+        )
+        {
+            Text(
+                text = "Visit https://newm.tools/",
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp,
+                color = GlassSmith
+            )
+            Icon(
+                modifier = Modifier.padding(start = 8.dp),
+                painter = painterResource(id = R.drawable.icon_copy_text),
+                contentDescription = "Copy",
+                tint = GlassSmith
+            )
+        }
+    }
+
+    @Composable
     fun EnterQRCodePanel() {
         TextFieldWithLabel(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 38.5.dp),
@@ -149,9 +254,60 @@ class BarcodeScannerActivity : ComponentActivity() {
             placeholderStyle = placeholderStyle,
             textfieldBackgroundColor = Gray23,
             onValueChange = { newmWalletConnectionId ->
-                    onValidCodeConnection(newmWalletConnectionId)
+                onValidCodeConnection(newmWalletConnectionId)
             },
         )
+    }
+
+    @Composable
+    fun InstructionList() {
+        val instructions = listOf(
+            R.string.newm_connect_wallet_instruction_1,
+            R.string.newm_connect_wallet_instruction_2,
+            R.string.newm_connect_wallet_instruction_3,
+            R.string.newm_connect_wallet_instruction_4,
+            R.string.newm_connect_wallet_instruction_5,
+            R.string.newm_connect_wallet_instruction_6,
+            R.string.newm_connect_wallet_instruction_7,
+            R.string.newm_connect_wallet_instruction_8,
+            R.string.newm_connect_wallet_instruction_9,
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.surface, shape = MaterialTheme.shapes.large)
+                .padding(vertical = 32.dp, horizontal = 16.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.newm_connect_wallet_instruction_title),
+                style = TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = White
+                )
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider(color = Gray400)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            instructions.forEach { instructionResId ->
+                Text(
+                    text = stringResource(id = instructionResId),
+                    style = TextStyle(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        color = White
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            CopyToClipboardButton()
+        }
     }
 
     @Composable
@@ -223,7 +379,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                 scanner.process(image).addOnSuccessListener { barcodes ->
                     if (barcodes.size > 0) {
                         barcodes.forEach {
-                            if (it.rawValue?.startsWith("newm-") == true){
+                            if (it.rawValue?.startsWith("newm-") == true) {
                                 onValidScan(it.rawValue.toString())
                             }
                         }
@@ -234,29 +390,6 @@ class BarcodeScannerActivity : ComponentActivity() {
                 }
             }
             imageProxy.close()
-        }
-    }
-
-    @Composable
-    fun HelpButton() {
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .height(40.dp)
-                .fillMaxWidth()
-                .background(Black)
-                .clickable { onHelpButtonClick() },
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = stringResource(id = R.string.barcode_help_text),
-                style = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    brush = textGradient(SteelPink, CerisePink)
-                )
-            )
         }
     }
 
