@@ -90,4 +90,16 @@
     <string name="force_app_update_title">An update is available</string>
     <string name="force_app_update_message">To ensure the best performance and latest features, please update the app. The update might include new features, improved performance, bug fixes, and more!</string>
     <string name="force_app_update_button">Update Now</string>
+    <string name="newm_connect_wallet_instruction_title">Instructions</string>
+    <string name="newm_connect_wallet_instruction_1">1. Visit <a href="https://newm.tools">newm.tools</a></string>
+    <string name="newm_connect_wallet_instruction_2">2. Click on the "Connect your wallet" button.</string>
+    <string name="newm_connect_wallet_instruction_3">3. Connect your preferred Cardano wallet.</string>
+    <string name="newm_connect_wallet_instruction_4">4. After connecting your wallet, click on "Connect from newm app".</string>
+    <string name="newm_connect_wallet_instruction_5">5. To generate the QR code, sign an empty transaction that verifies you own the music you’re trying to access.</string>
+    <string name="newm_connect_wallet_instruction_6">6. Once the transaction is signed, you will be redirected to a page with a QR code.</string>
+    <string name="newm_connect_wallet_instruction_7">7. On the QR page, you have two options to link your wallet to the newm app:
+        \n- Scan the QR code.
+        \n- Copy the code under the barcode and paste it into the newm app.</string>
+    <string name="newm_connect_wallet_instruction_8">8. Note: The QR code can only be scanned once and will expire after 5 minutes.</string>
+    <string name="newm_connect_wallet_instruction_9">9. Enjoy your music!</string>
 </resources>

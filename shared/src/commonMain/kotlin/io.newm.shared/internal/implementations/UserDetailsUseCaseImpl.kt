@@ -1,7 +1,7 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
+import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.UserDetailsUseCase
@@ -21,5 +21,11 @@ internal class UserDetailsUseCaseImpl(
 
     override fun fetchLoggedInUserDetailsFlow(): Flow<User?> {
         return userRepository.fetchUserDetailsFlow()
+    }
+
+    override suspend fun updateUserDetails(user: User) {
+        return mapErrorsSuspend {
+            userRepository.updateUserDetails(user)
+        }
     }
 }

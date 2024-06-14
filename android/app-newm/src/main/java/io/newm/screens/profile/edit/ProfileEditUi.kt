@@ -1,5 +1,6 @@
 package io.newm.screens.profile.edit
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,20 +29,21 @@ import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.feature.login.screen.TextFieldState
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.profile.OnBack
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnLogout
+import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
-import io.newm.screens.profile.ProfileEditUiEvent.OnProfileUpdated
-import io.newm.screens.profile.ProfileEditUiEvent.OnSaveProfile
 import io.newm.screens.profile.ProfileForm
 import io.newm.screens.profile.ProfileHeader
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
+import io.newm.shared.public.models.User
 import io.newm.shared.public.models.mocks.mockUsers
 import kotlinx.coroutines.launch
 
@@ -90,14 +93,14 @@ private fun ProfileEditUiContent(
             verticalArrangement = Arrangement.Top
         ) {
             ProfileAppBar(
-                bannerUrl = profile.bannerUrl.orEmpty(),
-                avatarUrl = profile.pictureUrl.orEmpty(),
+                bannerUrl = profile.bannerUrl,
+                avatarUrl = profile.pictureUrl,
                 onOverflowTapped = { scope.launch { sheetState.show() } },
                 onNavigationClick = { onEvent(OnBack) }
             )
             ProfileHeader(
-                nickname = profile.nickname.orEmpty(),
-                email = profile.email.orEmpty(),
+                nickname = profile.nickname,
+                email = profile.email,
             )
             Spacer(modifier = Modifier.height(40.dp))
             if (state.showConnectWallet) {
@@ -108,15 +111,26 @@ private fun ProfileEditUiContent(
                 }
             }
             ProfileForm(
-                profile = profile,
-                onProfileUpdated = { user -> onEvent(OnProfileUpdated(user)) }
+                email = profile.email,
+                nicknameState = state.nicknameState,
+                currentPasswordState = state.currentPasswordState,
+                newPasswordState = state.newPasswordState,
+                confirmNewPasswordState = state.confirmPasswordState,
             )
             Spacer(modifier = Modifier.height(40.dp))
+            AnimatedVisibility(state.errorMessage != null) {
+                Text(
+                    text = state.errorMessage.orEmpty(),
+                    color = Color.Red,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
             PrimaryButton(
                 enabled = state.submitButtonEnabled,
                 text = stringResource(id = R.string.profile_save_button_label),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClick = { onEvent(OnSaveProfile) }
+                onClick = { onEvent(OnSaveProfile) },
+                enabledIconRes = R.drawable.ic_library_filter_check,
             )
             Spacer(Modifier.height(12.dp))
         }
@@ -148,11 +162,25 @@ private fun ProfileScreenPreview() {
     ) {
         ProfileEditUiContent(
             state = Content(
-                profile = mockUsers.first(),
+                profile = mockUsers.first().toProfile(),
                 submitButtonEnabled = true,
                 showConnectWallet = true,
+                nicknameState = TextFieldState(),
+                currentPasswordState = TextFieldState(),
+                newPasswordState = TextFieldState(),
+                confirmPasswordState = TextFieldState(),
+                errorMessage = null,
                 eventSink = {},
             )
         )
     }
+}
+
+private fun User.toProfile(): Content.Profile {
+    return Content.Profile(
+        email = email.orEmpty(),
+        nickname = nickname.orEmpty(),
+        pictureUrl = pictureUrl.orEmpty(),
+        bannerUrl = bannerUrl.orEmpty(),
+    )
 }

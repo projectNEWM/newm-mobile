@@ -4,6 +4,7 @@ import co.touchlab.kermit.Logger
 import io.newm.shared.internal.services.cache.WalletConnectionCacheService
 import io.newm.shared.internal.services.network.WalletConnectionNetworkService
 import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -32,23 +33,22 @@ internal class WalletRepository(
             cacheService.cacheWalletConnections(listOf(newConnection))
             newConnection
         } catch (e: Exception) {
-//TODO: throw error, don't return false
             Logger.e(e) { "Error connecting wallet ${e.cause}" }
-            null
+            throw e
         }
     }
 
-    suspend fun disconnectWallet(walletConnectionId: String): Boolean {
-        return try {
+    suspend fun disconnectWallet(walletConnectionId: String) {
+        try {
             val success = networkService.disconnectWallet(walletConnectionId)
             if (success) {
                 cacheService.deleteAllWalletConnections(walletConnectionId)
+            } else {
+                throw KMMException("Error disconnecting wallet")
             }
-            success
         } catch (e: Exception) {
-//TODO: throw error, don't return false
             Logger.e(e) { "Error disconnecting wallet ${e.cause}" }
-            false
+            throw e
         }
     }
 }

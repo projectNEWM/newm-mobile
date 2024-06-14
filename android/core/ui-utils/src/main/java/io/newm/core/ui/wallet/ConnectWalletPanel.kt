@@ -29,7 +29,7 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.iconGradient
 
-private val buttonGradient =
+val buttonGradient =
     iconGradient(OceanGreen.copy(alpha = 0.08f), LightSkyBlue.copy(alpha = 0.08f))
 
 @Composable

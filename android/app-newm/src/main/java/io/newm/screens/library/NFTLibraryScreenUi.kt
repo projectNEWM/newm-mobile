@@ -203,6 +203,9 @@ private fun NFTTracks(
     }
 }
 
+// TODO: Remove this flag once the download functionality is implemented
+private const val DOWNLOAD_UI_ENABLED = false
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun TrackRowItemWrapper(
@@ -228,18 +231,18 @@ private fun TrackRowItemWrapper(
                 ),
             )
     ) {
-        if (!track.isDownloaded) {
+        if (!track.isDownloaded && DOWNLOAD_UI_ENABLED) {
             RevealedPanel(onDownloadSong)
         }
         TrackRowItem(
             track = track,
             onClick = onPlaySong,
-            modifier = Modifier.offset {
+            modifier = if(DOWNLOAD_UI_ENABLED) Modifier.offset {
                 IntOffset(
                     x = -swipeableState.offset.value.roundToInt(),
                     y = 0
                 )
-            }
+            } else Modifier
         )
     }
 }

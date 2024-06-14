@@ -13,8 +13,9 @@ import io.newm.feature.login.screen.TextFieldState
 
 @Composable
 fun Email(
-    modifier: Modifier = Modifier,
     emailState: TextFieldState,
+    modifier: Modifier = Modifier,
+    label: Int = R.string.email,
     keyboardOptions: KeyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.EMAIL,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
@@ -29,7 +30,7 @@ fun Email(
             },
         onValueChange = { emailState.text = it },
         value = emailState.text,
-        labelResId = R.string.email,
+        labelResId = label,
         isError = emailState.showErrors(),
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,

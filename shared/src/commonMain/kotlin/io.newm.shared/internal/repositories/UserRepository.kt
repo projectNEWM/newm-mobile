@@ -18,13 +18,12 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserRepository(
     private val dbWrapper: NewmDatabaseWrapper,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) : KoinComponent {
 
     private val service: UserAPI by inject()
     private val logger = Logger.withTag("NewmKMM-UserRepository")
 
-    @Throws(KMMException::class, CancellationException::class)
     suspend fun fetchLoggedInUserDetails(): User {
         logger.d { "getCurrentUser()" }
         return service.getCurrentUser()
@@ -39,30 +38,33 @@ internal class UserRepository(
                 logger.d { "No Users found in DB, fetching from network" }
                 scope.launch {
                     val user = fetchLoggedInUserDetails()
-                    dbWrapper().userQueries.insertUser(
-                        id = user.id,
-                        createdAt = user.createdAt,
-                        oauthType = user.oauthType,
-                        oauthId = user.oauthId,
-                        firstName = user.firstName,
-                        lastName = user.lastName,
-                        nickname = user.nickname,
-                        pictureUrl = user.pictureUrl,
-                        bannerUrl = user.bannerUrl,
-                        websiteUrl = user.websiteUrl,
-                        twitterUrl = user.twitterUrl,
-                        instagramUrl = user.instagramUrl,
-                        location = user.location,
-                        role = user.role,
-                        genre = user.genre,
-                        biography = user.biography,
-                        walletAddress = user.walletAddress,
-                        email = user.email,
-                        companyName = user.companyName,
-                        companyLogoUrl = user.companyLogoUrl,
-                        companyIpRights = user.companyIpRights,
-                        verificationStatus = user.verificationStatus,
-                    )
+                    dbWrapper().transaction {
+                        dbWrapper().userQueries.deleteAll() // just in case...
+                        dbWrapper().userQueries.insertUser(
+                            id = user.id,
+                            createdAt = user.createdAt,
+                            oauthType = user.oauthType,
+                            oauthId = user.oauthId,
+                            firstName = user.firstName,
+                            lastName = user.lastName,
+                            nickname = user.nickname,
+                            pictureUrl = user.pictureUrl,
+                            bannerUrl = user.bannerUrl,
+                            websiteUrl = user.websiteUrl,
+                            twitterUrl = user.twitterUrl,
+                            instagramUrl = user.instagramUrl,
+                            location = user.location,
+                            role = user.role,
+                            genre = user.genre,
+                            biography = user.biography,
+                            walletAddress = user.walletAddress,
+                            email = user.email,
+                            companyName = user.companyName,
+                            companyLogoUrl = user.companyLogoUrl,
+                            companyIpRights = user.companyIpRights,
+                            verificationStatus = user.verificationStatus,
+                        )
+                    }
                 }
             }
         }.map { dbUser ->
@@ -135,5 +137,34 @@ internal class UserRepository(
                 confirmPassword = confirmNewPassword
             )
         )
+    }
+
+    suspend fun updateUserDetails(user: User) {
+        logger.d { "updateUserDetails" }
+        service.updateUserProfile(
+            UserProfileUpdateRequest(
+                firstName = user.firstName?.takeIf { it.isNotBlank() },
+                lastName = user.lastName?.takeIf { it.isNotBlank() },
+                nickname = user.nickname?.takeIf { it.isNotBlank() },
+                pictureUrl = user.pictureUrl?.takeIf { it.isNotBlank() },
+                bannerUrl = user.bannerUrl?.takeIf { it.isNotBlank() },
+                websiteUrl = user.websiteUrl?.takeIf { it.isNotBlank() },
+                twitterUrl = user.twitterUrl?.takeIf { it.isNotBlank() },
+                instagramUrl = user.instagramUrl?.takeIf { it.isNotBlank() },
+                location = user.location?.takeIf { it.isNotBlank() },
+                role = user.role?.takeIf { it.isNotBlank() },
+                biography = user.biography?.takeIf { it.isNotBlank() },
+                walletAddress = user.walletAddress?.takeIf { it.isNotBlank() },
+                email = user.email?.takeIf { it.isNotBlank() },
+                companyName = user.companyName?.takeIf { it.isNotBlank() },
+                companyLogoUrl = user.companyLogoUrl?.takeIf { it.isNotBlank() },
+                newPassword = user.newPassword?.takeIf { it.isNotBlank() },
+                confirmPassword = user.confirmPassword?.takeIf { it.isNotBlank() },
+                currentPassword = user.currentPassword?.takeIf { it.isNotBlank() },
+            )
+        )
+        dbWrapper().transaction {
+            dbWrapper().userQueries.deleteAll() // invalidate cache
+        }
     }
 }

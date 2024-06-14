@@ -80,6 +80,7 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }

@@ -7,10 +7,6 @@ import io.newm.shared.internal.db.PreferencesDataStore
 internal class TokenManager(private val storage: PreferencesDataStore) {
     private val logger = Logger.withTag("NewmKMM-TokenManagerImpl")
 
-    fun hasTokens(): Boolean {
-        return !getAccessToken().isNullOrEmpty() && !getRefreshToken().isNullOrEmpty()
-    }
-
     fun getAccessToken(): String? {
         return storage.getString(ACCESS_TOKEN_KEY) ?: run {
             logger.d("No Access Token found - Time to Login")
