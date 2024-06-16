@@ -1,7 +1,15 @@
 import Foundation
 import shared
 
-class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {	
+class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
+	func getAllTracks() async throws -> [NFTTrack] {
+		[]
+	}
+		
+	func getAllTracksFlow() async throws -> any Kotlinx_coroutines_coreFlow {
+		fatalError()
+	}
+	
 	func getAllCollectableTracks() async throws -> [NFTTrack] {
 		[]
 	}

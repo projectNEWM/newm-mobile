@@ -3,6 +3,9 @@ import ModuleLinker
 import shared
 
 public class MockUserDetailsUseCase: UserDetailsUseCase {
+	public func updateUserDetails(user: User) async throws {
+	}
+	
 	private let mockUser: User
 	public var errorToThrow: Error?
 	public let fetchLatency: Double
