@@ -3,7 +3,8 @@ package io.newm.feature.musicplayer
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Spring.StiffnessLow
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -80,7 +81,7 @@ internal fun MusicPlayerViewer(
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
     var palette by remember { mutableStateOf<Palette?>(null) }
     val dominantColor = remember(palette) { palette?.dominantColor ?: Black }
-    val animatedColor by animateColorAsState(dominantColor, label = "", animationSpec = tween(200))
+    val animatedColor by animateColorAsState(dominantColor, label = "", animationSpec = spring(stiffness = StiffnessLow))
 
     val context = LocalContext.current
     Box(
@@ -101,7 +102,7 @@ internal fun MusicPlayerViewer(
                         coroutineScope.launch {
                             val drawable = state.result.drawable as? BitmapDrawable
                             drawable?.let {
-                                palette = getPalletColors(it.bitmap)
+                                palette = it.bitmap.getPalletColors()
                             }
                         }
                     }
@@ -347,9 +348,9 @@ val Palette.dominantColor: Color?
         return swatch?.let { Color(it.rgb) }
     }
 
-suspend fun getPalletColors(bitmap: Bitmap): Palette =
-    withContext(Dispatchers.IO) {
-        val palette = Palette.from(bitmap).generate()
+suspend fun Bitmap.getPalletColors(): Palette =
+    withContext(Dispatchers.Unconfined) {
+        val palette = Palette.from(this@getPalletColors).generate()
         palette
     }
 
