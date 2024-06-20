@@ -50,6 +50,7 @@ import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.ZoomableImage
+import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
@@ -77,40 +78,50 @@ internal fun MusicPlayerViewer(
     onNavigateUp: () -> Unit,
     playbackStatus: PlaybackStatus,
     onEvent: (PlaybackUiEvent) -> Unit,
+    onSwipe: (direction: Int) -> Unit
 ) {
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
     var palette by remember { mutableStateOf<Palette?>(null) }
     val dominantColor = remember(palette) { palette?.dominantColor ?: Black }
-    val animatedColor by animateColorAsState(dominantColor, label = "", animationSpec = spring(stiffness = StiffnessLow))
+    val animatedColor by animateColorAsState(
+        dominantColor,
+        label = "",
+        animationSpec = spring(stiffness = StiffnessLow)
+    )
 
     val context = LocalContext.current
     Box(
         modifier = modifier.background(animatedColor),
     ) {
         val coroutineScope = rememberCoroutineScope()
-        ZoomableImage(
+        SwipeableWrapper(
             modifier = Modifier.align(Alignment.Center),
-            model = ImageRequest.Builder(context)
-                .data(song.artworkUri)
-                .allowHardware(false) // Disable hardware bitmaps.
-                .build(),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-            onState = { state ->
-                when (state) {
-                    is AsyncImagePainter.State.Success -> {
-                        coroutineScope.launch {
-                            val drawable = state.result.drawable as? BitmapDrawable
-                            drawable?.let {
-                                palette = it.bitmap.getPalletColors()
+            onSwipe = onSwipe
+        ) {
+            ZoomableImage(
+                modifier = Modifier.align(Alignment.Center),
+                model = ImageRequest.Builder(context)
+                    .data(song.artworkUri)
+                    .allowHardware(false) // Disable hardware bitmaps.
+                    .build(),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+                onState = { state ->
+                    when (state) {
+                        is AsyncImagePainter.State.Success -> {
+                            coroutineScope.launch {
+                                val drawable = state.result.drawable as? BitmapDrawable
+                                drawable?.let {
+                                    palette = it.bitmap.getPalletColors()
+                                }
                             }
                         }
-                    }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
-            }
-        )
+            )
+        }
 
         Column(
             modifier = Modifier

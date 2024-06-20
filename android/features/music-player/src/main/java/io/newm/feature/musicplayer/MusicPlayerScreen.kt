@@ -31,6 +31,14 @@ fun MusicPlayerScreen(
                     is PlaybackUiEvent.Seek -> seekTo(event.position)
                 }
             }
+        },
+        onSwipe = { direction ->
+            with(mediaPlayer) {
+                when (direction) {
+                    1 -> next()  // Swipe right to next song
+                    -1 -> previous()  // Swipe left to previous song
+                }
+            }
         }
     )
 }
