@@ -42,6 +42,8 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import io.newm.core.theme.White
+import io.newm.core.ui.utils.SwipeDirection
+import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
@@ -68,8 +70,15 @@ fun MiniPlayer(
                 PlaybackState.STOPPED -> mediaPlayer.play()
             }
         },
-        playStatus = playbackStatus
+        playStatus = playbackStatus,
+        onSwipe = { direction ->
+            when (direction) {
+                SwipeDirection.LEFT -> mediaPlayer.next()  // Swipe right to next song
+                SwipeDirection.RIGHT -> mediaPlayer.previous()  // Swipe left to previous song
+            }
+        },
     )
+
 }
 
 
@@ -77,6 +86,7 @@ fun MiniPlayer(
 fun MiniPlayer(
     onPlayPauseClicked: () -> Unit,
     playStatus: PlaybackStatus,
+    onSwipe: (SwipeDirection) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (playStatus.track == null) return
@@ -123,89 +133,97 @@ fun MiniPlayer(
 
     val coroutineScope = rememberCoroutineScope()
 
+
     Card(
         modifier = modifier,
         elevation = 4.dp,
         backgroundColor = animatedDominantColor,
     ) {
-        Column {
-            MusicPlayerSlider(
-                value = if (playStatus.duration == 0L) 0f else playStatus.position.toFloat() / playStatus.duration.toFloat(),
-                onValueChange = {},
-                colors = SliderDefaults.colors(
-                    thumbColor = White,
-                    inactiveTrackColor = Color.DarkGray.copy(alpha = 0.7f)
-                ),
-                allowScrub = false,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(4.dp)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp, horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val context = LocalContext.current
-                artworkUrl?.let { url ->
-                    val model = remember(url) {
-                        ImageRequest.Builder(context)
-                            .allowHardware(false)
-                            .data(url)
-                            .build()
-                    }
-
-                    Image(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(shape = RoundedCornerShape(size = 4.dp)),
-                        painter = rememberAsyncImagePainter(model = model, onState = {
-                            if (it is AsyncImagePainter.State.Success) {
-                                val bitmap = (it.result.drawable as? BitmapDrawable)?.bitmap
-                                bitmap?.let {
-                                    coroutineScope.launch {
-                                        palette.value = bitmap.getPalletColors()
-                                    }
-                                }
-                            }
-                        }),
-                        contentDescription = "artwork",
-                        contentScale = ContentScale.FillBounds,
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                }
-                Column {
-                    Text(
-                        text = songTitle,
-                        style = MaterialTheme.typography.body2,
-                        color = animatedTitleTextColor
-                    )
-                    Text(
-                        text = artistName,
-                        style = MaterialTheme.typography.body2.copy(
-                            fontSize = 10.sp,
-                        ),
-                        color = animatedBodyTextColor
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = { onPlayPauseClicked() }) {
-                    when (playStatus.state) {
-                        PlaybackState.PAUSED,
-                        PlaybackState.STOPPED -> {
-                            Icon(
-                                Icons.Default.PlayArrow,
-                                contentDescription = "Play",
-                            )
+        SwipeableWrapper(
+            onSwipe = onSwipe
+        ) {
+            Column {
+                MusicPlayerSlider(
+                    value = if (playStatus.duration == 0L) 0f else playStatus.position.toFloat() / playStatus.duration.toFloat(),
+                    onValueChange = {},
+                    colors = SliderDefaults.colors(
+                        thumbColor = White,
+                        inactiveTrackColor = Color.DarkGray.copy(alpha = 0.7f)
+                    ),
+                    allowScrub = false,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(4.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp, horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val context = LocalContext.current
+                    artworkUrl?.let { url ->
+                        val model = remember(url) {
+                            ImageRequest.Builder(context)
+                                .allowHardware(false)
+                                .data(url)
+                                .build()
                         }
 
-                        PlaybackState.PLAYING,
-                        PlaybackState.BUFFERING -> {
-                            Icon(
-                                Icons.Default.Pause,
-                                contentDescription = "Pause",
-                            )
+                        Image(
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .size(40.dp)
+                                .clip(shape = RoundedCornerShape(size = 4.dp)),
+                            painter = rememberAsyncImagePainter(model = model, onState = {
+                                if (it is AsyncImagePainter.State.Success) {
+                                    val bitmap = (it.result.drawable as? BitmapDrawable)?.bitmap
+                                    bitmap?.let {
+                                        coroutineScope.launch {
+                                            palette.value = bitmap.getPalletColors()
+                                        }
+                                    }
+                                }
+                            }),
+                            contentDescription = "artwork",
+                            contentScale = ContentScale.FillBounds,
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+
+                    Column {
+                        Text(
+                            text = songTitle,
+                            style = MaterialTheme.typography.body2,
+                            color = animatedTitleTextColor
+                        )
+                        Text(
+                            text = artistName,
+                            style = MaterialTheme.typography.body2.copy(
+                                fontSize = 10.sp,
+                            ),
+                            color = animatedBodyTextColor
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    IconButton(onClick = { onPlayPauseClicked() }) {
+                        when (playStatus.state) {
+                            PlaybackState.PAUSED,
+                            PlaybackState.STOPPED -> {
+                                Icon(
+                                    Icons.Default.PlayArrow,
+                                    contentDescription = "Play",
+                                )
+                            }
+
+                            PlaybackState.PLAYING,
+                            PlaybackState.BUFFERING -> {
+                                Icon(
+                                    Icons.Default.Pause,
+                                    contentDescription = "Pause",
+                                )
+                            }
                         }
                     }
                 }
@@ -228,6 +246,7 @@ fun PreviewMiniPlayer() {
             ),
             state = PlaybackState.PLAYING
         ),
+        onSwipe = {},
         onPlayPauseClicked = {}
     )
 }
