@@ -19,7 +19,7 @@ import kotlin.math.roundToInt
  * @param modifier Modifier to be applied to the swipeable wrapper.
  * @param swipeThreshold The distance in Dp that must be swiped to trigger a swipe action.
  * @param onSwipe Lambda function to be executed when a swipe action is detected.
- *                The direction parameter is 1 for a right swipe and -1 for a left swipe.
+ *                The direction parameter is 1 for a left swipe and -1 for a right swipe.
  * @param content Composable content to be displayed within the swipeable wrapper.
  */
 @Composable
@@ -44,8 +44,8 @@ fun SwipeableWrapper(
                     },
                     onDragEnd = {
                         when {
-                            offsetX > swipeThresholdPx -> onSwipe(1) // Swipe right
-                            offsetX < -swipeThresholdPx -> onSwipe(-1) // Swipe left
+                            offsetX > swipeThresholdPx -> onSwipe(-1) // Swipe right
+                            offsetX < -swipeThresholdPx -> onSwipe(1) // Swipe left
                         }
                         offsetX = 0f // Reset for next gesture
                     }
