@@ -50,6 +50,7 @@ import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.ZoomableImage
+import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
@@ -78,7 +79,7 @@ internal fun MusicPlayerViewer(
     onNavigateUp: () -> Unit,
     playbackStatus: PlaybackStatus,
     onEvent: (PlaybackUiEvent) -> Unit,
-    onSwipe: (direction: Int) -> Unit
+    onSwipe: (SwipeDirection) -> Unit,
 ) {
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
     var palette by remember { mutableStateOf<Palette?>(null) }

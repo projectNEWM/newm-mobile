@@ -42,6 +42,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import io.newm.core.theme.White
+import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
@@ -72,8 +73,8 @@ fun MiniPlayer(
         playStatus = playbackStatus,
         onSwipe = { direction ->
             when (direction) {
-                1 -> mediaPlayer.next()  // Swipe right to next song
-                -1 -> mediaPlayer.previous()  // Swipe left to previous song
+                SwipeDirection.LEFT -> mediaPlayer.next()  // Swipe right to next song
+                SwipeDirection.RIGHT -> mediaPlayer.previous()  // Swipe left to previous song
             }
         },
     )
@@ -85,7 +86,7 @@ fun MiniPlayer(
 fun MiniPlayer(
     onPlayPauseClicked: () -> Unit,
     playStatus: PlaybackStatus,
-    onSwipe: (direction: Int) -> Unit,
+    onSwipe: (SwipeDirection) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (playStatus.track == null) return

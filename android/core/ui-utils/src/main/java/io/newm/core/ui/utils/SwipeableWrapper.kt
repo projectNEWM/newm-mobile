@@ -14,19 +14,26 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 
 /**
+ * Enum class representing the direction of a swipe.
+ */
+enum class SwipeDirection {
+    LEFT, RIGHT
+}
+
+/**
  * A composable function that wraps content and provides swipeable functionality.
  *
  * @param modifier Modifier to be applied to the swipeable wrapper.
  * @param swipeThreshold The distance in Dp that must be swiped to trigger a swipe action.
  * @param onSwipe Lambda function to be executed when a swipe action is detected.
- *                The direction parameter is 1 for a left swipe and -1 for a right swipe.
+ *                The direction parameter indicates the direction of the swipe.
  * @param content Composable content to be displayed within the swipeable wrapper.
  */
 @Composable
 fun SwipeableWrapper(
     modifier: Modifier = Modifier,
     swipeThreshold: Dp = 100.dp,
-    onSwipe: (direction: Int) -> Unit,
+    onSwipe: (SwipeDirection) -> Unit,
     content: @Composable () -> Unit
 ) {
     val swipeThresholdPx = with(LocalDensity.current) { swipeThreshold.toPx() }
@@ -44,8 +51,8 @@ fun SwipeableWrapper(
                     },
                     onDragEnd = {
                         when {
-                            offsetX > swipeThresholdPx -> onSwipe(-1) // Swipe right
-                            offsetX < -swipeThresholdPx -> onSwipe(1) // Swipe left
+                            offsetX > swipeThresholdPx -> onSwipe(SwipeDirection.RIGHT)
+                            offsetX < -swipeThresholdPx -> onSwipe(SwipeDirection.LEFT)
                         }
                         offsetX = 0f // Reset for next gesture
                     }
