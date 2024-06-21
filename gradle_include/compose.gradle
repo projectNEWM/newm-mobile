@@ -17,6 +17,8 @@ dependencies {
     debugImplementation(Google.composeUiTooling)
 
     implementation(Coil.compose)
+    implementation(Coil.svg)
+    implementation(Coil.gif)
     implementation(Google.activityCompose)
     implementation(Google.composeMaterial)
     implementation(Google.composeUi)
