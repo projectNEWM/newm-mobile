@@ -2,19 +2,22 @@ package io.newm
 
 import android.app.Application
 import co.touchlab.kermit.Logger
+import coil.ImageLoader
+import coil.ImageLoaderFactory
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
+import io.newm.utils.NewmImageLoaderFactory
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 
-open class NewmApplication : Application() {
+open class NewmApplication : Application(), ImageLoaderFactory {
 
     private val logout: Logout by inject()
-    private val sharedBuildConfig by inject<NewmSharedBuildConfig>()
+    private val imageLoaderFactory by lazy { NewmImageLoaderFactory(this) }
 
     override fun onCreate() {
         Logger.d { "NewmAndroid - NewmApplication" }
@@ -32,5 +35,9 @@ open class NewmApplication : Application() {
                 androidModules
             )
         }
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        return imageLoaderFactory.newImageLoader()
     }
 }
