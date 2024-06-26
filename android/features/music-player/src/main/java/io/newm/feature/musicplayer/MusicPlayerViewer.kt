@@ -103,6 +103,7 @@ internal fun MusicPlayerViewer(
                 modifier = Modifier.align(Alignment.Center),
                 model = ImageRequest.Builder(context)
                     .data(song.artworkUri)
+                    .error(R.drawable.ic_default_track_cover_art)
                     .allowHardware(false) // Disable hardware bitmaps.
                     .build(),
                 contentScale = ContentScale.Crop,
