@@ -69,7 +69,7 @@ class CreateAccountScreenPresenter(
                             coroutineScope.launch {
                                 step = Step.Loading
                                 step = try {
-                                    recaptchaClientProvider.get().execute(RecaptchaAction.SIGNUP).onSuccess { token ->
+                                    recaptchaClientProvider.get().execute(RecaptchaAction.custom("auth_code")).onSuccess { token ->
                                         signupUseCase.requestEmailConfirmationCode(
                                             email = userEmail.text,
                                             humanVerificationCode = token
