@@ -8,8 +8,13 @@ import io.newm.shared.internal.repositories.WalletRepository
 import io.newm.shared.public.models.WalletConnection
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import shared.Notification
 import shared.postNotification
@@ -18,6 +23,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class DisconnectWalletUseCaseImpl(
     private val walletRepository: WalletRepository,
     private val nftRepository: NFTRepository,
+    private val scope: CoroutineScope
 ) : DisconnectWalletUseCase, KoinComponent {
 
     @Throws(KMMException::class, CancellationException::class)
@@ -26,13 +32,16 @@ internal class DisconnectWalletUseCaseImpl(
             if (walletConnectionId != null) {
                 walletRepository.disconnectWallet(walletConnectionId)
             } else {
-                walletRepository.getWalletConnectionsCache()
-                    .mapLatest { connections: List<WalletConnection> ->
-                        connections.forEach { connection ->
+                val connections = walletRepository.syncWalletConnectionsFromNetworkToDB()
+
+                scope.launch {
+                    connections.map { connection ->
+                        async {
                             walletRepository.disconnectWallet(connection.id)
                         }
-                    }
-                    .collect { }
+                    }.awaitAll()
+                }
+
             }
             nftRepository.deleteAllTracksNFTsCache()
             postNotification(Notification.walletConnectionStateChanged)

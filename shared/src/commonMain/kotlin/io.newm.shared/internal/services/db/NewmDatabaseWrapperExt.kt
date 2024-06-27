@@ -99,8 +99,14 @@ fun NewmDatabaseWrapper.cacheWalletConnections(walletConnections: List<WalletCon
     }
 }
 
-fun NewmDatabaseWrapper.deleteAllWalletConnections(walletConnectionsId: String) {
+fun NewmDatabaseWrapper.deleteWalletConnectionById(walletConnectionsId: String) {
     invoke().transaction {
         invoke().walletConnectionQueries.deleteById(walletConnectionsId)
+    }
+}
+
+fun NewmDatabaseWrapper.deleteAllWalletConnections() {
+    invoke().transaction {
+        invoke().walletConnectionQueries.deleteAll()
     }
 }
