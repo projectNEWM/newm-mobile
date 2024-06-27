@@ -266,7 +266,8 @@ private fun TrackRowItem(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(track.imageUrl)
-                .error(R.drawable.ic_error_cover_art)
+                .error(R.drawable.ic_default_track_cover_art)
+                .placeholder(R.drawable.ic_default_track_cover_art)
                 .build(),
             modifier = Modifier
                 .size(48.dp)
