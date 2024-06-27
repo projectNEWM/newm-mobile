@@ -138,7 +138,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
+    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get(), get()) }
     single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
     single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
     single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
