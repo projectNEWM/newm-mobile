@@ -15,8 +15,6 @@ class DebugNewmApplication : NewmApplication() {
     override fun onCreate() {
         Logger.d { "NewmAndroid - Debug Newm Application" }
 
-        initKoin(enableNetworkLogs = true)
-
         SoLoader.init(this, false)
         AndroidFlipperClient.getInstance(this).apply {
             addPlugin(

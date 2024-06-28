@@ -92,7 +92,7 @@ internal class NetworkClientFactory(
             }
             if (enableNetworkLogs) {
                 install(Logging) {
-                    logger = Logger.DEFAULT
+                    logger = Logger.SIMPLE
                     level = LogLevel.ALL
                 }
             }

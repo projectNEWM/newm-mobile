@@ -6,7 +6,6 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
 import io.newm.utils.NewmImageLoaderFactory
 import org.koin.android.ext.android.inject
@@ -22,11 +21,11 @@ open class NewmApplication : Application(), ImageLoaderFactory {
     override fun onCreate() {
         Logger.d { "NewmAndroid - NewmApplication" }
         super.onCreate()
-        initKoin(enableNetworkLogs = false)
+        initKoin()
         logout.register()
     }
 
-    fun initKoin(enableNetworkLogs: Boolean) {
+    private fun initKoin(enableNetworkLogs: Boolean = true) {
         initKoin(enableNetworkLogs = enableNetworkLogs) {
             androidLogger(if (enableNetworkLogs) Level.INFO else Level.NONE)
             androidContext(this@NewmApplication)
