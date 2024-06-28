@@ -22,11 +22,11 @@ open class NewmApplication : Application(), ImageLoaderFactory {
     override fun onCreate() {
         Logger.d { "NewmAndroid - NewmApplication" }
         super.onCreate()
-        initKoin()
+        initKoin(enableNetworkLogs = false)
         logout.register()
     }
 
-    private fun initKoin(enableNetworkLogs: Boolean = true) {
+    fun initKoin(enableNetworkLogs: Boolean) {
         initKoin(enableNetworkLogs = enableNetworkLogs) {
             androidLogger(if (enableNetworkLogs) Level.INFO else Level.NONE)
             androidContext(this@NewmApplication)

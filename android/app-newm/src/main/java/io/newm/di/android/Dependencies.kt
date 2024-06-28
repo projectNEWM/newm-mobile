@@ -37,7 +37,7 @@ val viewModule = module {
     viewModel { params -> MusicPlayerViewModel(params.get(), params.get(), get(), get()) }
     single { RecaptchaClientProvider() }
 
-    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get()) }
+    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get(), get()) }
     factory { params -> LoginScreenPresenter(params.get(), get(), get()) }
     factory { params -> ResetPasswordScreenPresenter(params.get(), get(), get(), get()) }
     single<GoogleSignInLauncher> {

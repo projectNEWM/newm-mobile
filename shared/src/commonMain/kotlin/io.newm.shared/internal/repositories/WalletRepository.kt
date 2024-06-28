@@ -24,7 +24,7 @@ internal class WalletRepository(
             connections
         } catch (e: Exception) {
             Logger.e(e) { "Error fetching wallet connections from network ${e.cause}" }
-            throw e
+            return emptyList()
         }
     }
 
