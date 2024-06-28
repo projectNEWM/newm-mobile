@@ -35,10 +35,12 @@ internal class LoginAPI(
 
     private val httpClient: HttpClient = networkClient.httpClient()
 
-    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String) {
+    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean) {
         val response = httpClient.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
             parameter("email", email)
+            parameter("mustExists", mustExists)
+            parameter("mobile", true)
             addHumanVerificationCodeToHeader(humanVerificationCode)
         }
 

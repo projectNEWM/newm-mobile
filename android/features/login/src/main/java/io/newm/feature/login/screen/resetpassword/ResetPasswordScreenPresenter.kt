@@ -11,6 +11,7 @@ import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
@@ -20,6 +21,7 @@ import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
+import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
@@ -33,6 +35,7 @@ private enum class ResetPasswordStep {
 class ResetPasswordScreenPresenter(
     private val navigator: Navigator,
     private val signupUseCase: SignupUseCase,
+    private val loginUseCase: LoginUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider
 ) : Presenter<ResetPasswordScreenUiState> {
@@ -60,8 +63,8 @@ class ResetPasswordScreenPresenter(
                             isLoading = true
                             coroutineScope.launch {
                                 try {
-                                    recaptchaClientProvider.get().execute(RecaptchaAction.custom("RequestCode")).onSuccess { token ->
-                                        signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = token)
+                                    recaptchaClientProvider.get().execute(RecaptchaAction.custom("auth_code")).onSuccess { token ->
+                                        signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = token, mustExists = true)
                                         step = ResetPasswordStep.EnterVerificationCode
                                     }.onFailure {
                                         Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
@@ -107,7 +110,7 @@ class ResetPasswordScreenPresenter(
                                 isLoading = true
                                 coroutineScope.launch {
                                     try {
-                                        recaptchaClientProvider.get().execute(RecaptchaAction.custom("ResetPassword")).onSuccess { token ->
+                                        recaptchaClientProvider.get().execute(RecaptchaAction.custom("password_reset")).onSuccess { token ->
                                             resetPasswordUseCase.resetPassword(
                                                 email = email.text,
                                                 code = authCode.text,
@@ -116,7 +119,10 @@ class ResetPasswordScreenPresenter(
                                                 humanVerificationCode = token
                                             )
                                             errorMessage = "Password reset successfully"
-                                            navigator.goTo(LoginScreen)
+                                            recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess { newToken ->
+                                                loginUseCase.logIn(email.text, password.text, humanVerificationCode = newToken)
+                                                navigator.goTo(HomeScreen)
+                                            }
                                         }.onFailure {
                                             Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
                                         }

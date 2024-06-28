@@ -6,7 +6,6 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
 import io.newm.utils.NewmImageLoaderFactory
 import org.koin.android.ext.android.inject

@@ -31,9 +31,9 @@ internal class LogInRepository : KoinComponent {
     private val logger = Logger.withTag("NewmKMM-LogInRepo")
 
 
-    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String) {
+    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean = false) {
         logger.d { "requestEmailConfirmationCode: email $email" }
-        return service.requestEmailConfirmationCode(email, humanVerificationCode)
+        return service.requestEmailConfirmationCode(email, humanVerificationCode, mustExists)
     }
 
     suspend fun registerUser(user: NewUser, humanVerificationCode: String) {

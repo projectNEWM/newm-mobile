@@ -13,6 +13,7 @@ import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.encodedPath
@@ -62,7 +63,7 @@ internal class NetworkClientFactory(
             }
             if (enableNetworkLogs) {
                 install(Logging) {
-                    logger = Logger.DEFAULT
+                    logger = Logger.SIMPLE
                     level = LogLevel.ALL
                 }
             }
@@ -91,7 +92,7 @@ internal class NetworkClientFactory(
             }
             if (enableNetworkLogs) {
                 install(Logging) {
-                    logger = Logger.DEFAULT
+                    logger = Logger.SIMPLE
                     level = LogLevel.ALL
                 }
             }
@@ -127,16 +128,14 @@ internal class NetworkClientFactory(
                                     refreshToken = tokenManager.getRefreshToken()!!
                                 )
                             } else {
-//	TODO:
-                                repository.logout()
                                 logger.d { "NewmKMM - refreshTokens Invalid Token response: $renewTokens" }
-                                throw KMMException("Invalid Token response")
+                                repository.logout()
+                                null
                             }
                         } catch (e: Exception) {
-//	TODO:
-                            repository.logout()
                             logger.d { "NewmKMM - refreshTokens: Exception: $e" }
-                            throw KMMException("Refresh token failed: $e")
+                            repository.logout()
+                            null
                         }
                     }
                 }
