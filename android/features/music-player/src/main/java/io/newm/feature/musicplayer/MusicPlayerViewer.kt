@@ -131,10 +131,12 @@ internal fun MusicPlayerViewer(
                 .safeDrawingPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 16.dp)) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_music_player_back),
+                        painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "Back",
                         tint = White
                     )
