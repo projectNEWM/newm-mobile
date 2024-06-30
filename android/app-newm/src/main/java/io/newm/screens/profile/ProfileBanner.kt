@@ -33,8 +33,8 @@ fun ProfileBanner(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(bannerUrl)
-                .error(R.drawable.banner_placeholder)
-                .placeholder(R.drawable.banner_placeholder)
+                .error(R.drawable.ic_banner_placeholder)
+                .placeholder(R.drawable.ic_banner_placeholder)
                 .build(),
             modifier = Modifier
                 .height(160.dp)
@@ -46,8 +46,8 @@ fun ProfileBanner(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(avatarUrl)
-                .error(R.drawable.avatar_placeholder)
-                .placeholder(R.drawable.avatar_placeholder)
+                .error(R.drawable.ic_avatar_placeholder)
+                .placeholder(R.drawable.ic_avatar_placeholder)
                 .build(),
             modifier = Modifier
                 .size(140.dp)
