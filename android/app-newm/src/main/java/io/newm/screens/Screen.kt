@@ -1,5 +1,6 @@
 package io.newm.screens
 
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -18,10 +19,12 @@ sealed class Screen : CircuitScreen {
     data object ForceAppUpdate : Screen()
 
     data object TermsAndConditions : Screen(), WebBrowserScreen {
+        @IgnoredOnParcel
         override val url: String = "https://newm.io/terms-and-conditions"
     }
 
     data object PrivacyPolicy : Screen(), WebBrowserScreen {
+        @IgnoredOnParcel
         override val url: String = "https://newm.io/privacy-policy"
 
     }

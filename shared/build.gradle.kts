@@ -1,34 +1,32 @@
 
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
 
 plugins {
-	kotlin(Plugins.multiplatform)
-	kotlin(Plugins.serialization)
-	id(Plugins.kotlinxSerialization)
-	id(Plugins.androidLibrary)
-	id(Plugins.sqlDelight)
-	id("com.google.devtools.ksp") version "1.9.21-1.0.15"
+	kotlin("multiplatform")
+	kotlin("plugin.serialization")
+	id("kotlinx-serialization")
+	id("com.android.library")
+	id("com.squareup.sqldelight")
+	id("com.google.devtools.ksp") version "2.0.0-1.0.22"
 	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
 android {
-	compileSdk = Versions.androidCompileSdk
+	compileSdk = libs.versions.android.compileSdk.get().toInt()
+
 	sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 	namespace = "io.newm.shared"
 
 	defaultConfig {
-		minSdk = Versions.androidMinSdk
+		minSdk = libs.versions.android.minSdk.get().toInt()
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 	}
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_11
 		targetCompatibility = JavaVersion.VERSION_11
 	}
-}
-dependencies {
-	implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
 }
 
 kotlin {
@@ -48,40 +46,40 @@ kotlin {
 	sourceSets {
 		val commonMain by getting {
 			dependencies {
-				implementation(Kotlin.coroutinesCore)
-				implementation(Kotlin.stdlib)
-				implementation(SqlDelight.runtime)
-				implementation(SqlDelight.coroutinesExtensions)
-				api(Koin.core)
-				api(Log.kermit)
-				implementation(Ktor.clientLogging)
-				implementation(Ktor.ktorClientCore)
-				implementation(Ktor.ktorClientCIO)
-				implementation(Ktor.clientContentNegotiation)
-				implementation(Ktor.kotlinXJson)
-				implementation(Ktor.clientAuth)
-				implementation("androidx.datastore:datastore-preferences:1.1.1")
+				implementation(libs.kotlinx.coroutines.core)
+				implementation(libs.kotlin.stdlib)
+				implementation(libs.runtime)
+				implementation(libs.coroutines.extensions)
+				api(libs.koin.core)
+				api(libs.kermit)
+				implementation(libs.ktor.client.logging)
+				implementation(libs.ktor.client.core)
+				implementation(libs.ktor.client.cio)
+				implementation(libs.ktor.client.content.negotiation)
+				implementation(libs.ktor.serialization.kotlinx.json)
+				implementation(libs.ktor.client.auth)
+				implementation(libs.androidx.datastore.preferences)
 			}
 		}
 		val commonTest by getting {
 			dependencies {
-				implementation(Koin.test)
-				implementation(Kotlin.coroutinesTest)
+				implementation(libs.koin.test)
+				implementation(libs.kotlinx.coroutines.test)
 				implementation(kotlin("test-common"))
 				implementation(kotlin("test-annotations-common"))
 			}
 		}
 		val androidMain by getting {
 			dependencies {
-				implementation(SqlDelight.androidDriver)
-				implementation(Ktor.clientAndroid)
+				implementation(libs.android.driver)
+				implementation(libs.ktor.client.android)
 			}
 		}
 
 		named("androidUnitTest") {
 			dependencies {
 				implementation(kotlin("test-junit"))
-				implementation("junit:junit:4.13.2")
+				implementation(libs.junit)
 			}
 		}
 
@@ -92,8 +90,8 @@ kotlin {
 			iosArm64Main.dependsOn(this)
 			iosSimulatorArm64Main.dependsOn(this)
 			dependencies {
-				implementation(Ktor.iosDarwin)
-				implementation(SqlDelight.nativeDriver)
+				implementation(libs.ktor.client.darwin)
+				implementation(libs.native.driver)
 			}
 		}
 		val iosSimulatorArm64Test by getting
@@ -111,7 +109,8 @@ kotlin {
 buildConfig {
 	packageName("io.newm.shared.generated")
 
-	val properties: Properties = gradleLocalProperties(rootDir)
+	val properties = Properties().apply { load(FileInputStream(File(rootProject.rootDir, "local.properties"))) }
+
 	buildConfigField<String>( "STAGING_URL", properties.getProperty("STAGING_URL").replace("\"", ""))
 	buildConfigField<String>("PRODUCTION_URL", properties.getProperty("PRODUCTION_URL").replace("\"", ""))
 	buildConfigField<String>("GOOGLE_AUTH_CLIENT_ID", properties.getProperty("GOOGLE_AUTH_CLIENT_ID").replace("\"", ""))

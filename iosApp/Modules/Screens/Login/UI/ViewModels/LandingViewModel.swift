@@ -84,7 +84,7 @@ class LandingViewModel: ObservableObject {
 		navPath.append(.enterNewPassword)
 		Task {
 			do {
-				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.authCode.recaptchaAction) ?? "")
+				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.authCode.recaptchaAction) ?? "", mustExists: true)
 			} catch {
 				handleError(error)
 			}
@@ -114,7 +114,7 @@ class LandingViewModel: ObservableObject {
 		}
 		Task {
 			do {
-				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.authCode.recaptchaAction) ?? "")
+				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.authCode.recaptchaAction) ?? "", mustExists: false)
 			} catch {
 				handleError(error)
 			}

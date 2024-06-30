@@ -1,20 +1,20 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
-    id(Plugins.parcelize)
-    id(Plugins.paparazzi)
+    id("com.android.library")
+    kotlin("android")
+    id("kotlin-parcelize")
+    id("app.cash.paparazzi")
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
 apply(from = "../../../gradle_include/circuit.gradle")
 
 android {
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm.feature.login"
 
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
         resourcePrefix = "login"
     }
 
@@ -30,20 +30,22 @@ android {
 }
 
 dependencies {
-    implementation(Google.androidxCore)
-    implementation(Google.material)
-    implementation(Google.materialIconsExtended)
-    implementation(Google.playServicesAuth)
-    implementation(Google.recaptcha)
-    implementation(Koin.android)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.koin.android)
+    implementation(libs.play.services.auth)
+    implementation(libs.recaptcha)
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.shared))
-    testImplementation(Google.testParameterInjector)
-    testImplementation(JUnit.jUnit)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.test.parameter.injector)
     testImplementation(project(Modules.testUtils))
 
-    androidTestImplementation(Google.espressoTest)
-    androidTestImplementation(JUnit.androidxJUnit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.junit)
 }
