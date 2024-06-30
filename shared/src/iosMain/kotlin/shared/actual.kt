@@ -1,7 +1,10 @@
 package shared
 
+import androidx.room.RoomDatabase
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import database.getNewmAppDatabase
 import io.ktor.client.engine.darwin.Darwin
+import io.newm.shared.database.NewmAppDatabase
 import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.services.db.NewmDatabaseWrapper
@@ -17,6 +20,7 @@ actual fun platformModule() = module {
 	}
     single { Darwin.create() }
 	single<PreferencesDataStore> { PreferencesDataStoreImpl() }
+	single<RoomDatabase.Builder<NewmAppDatabase>> { getNewmAppDatabase() }
 	single<TokenManager> { TokenManagerImpl(get(), get()) }
 }
 

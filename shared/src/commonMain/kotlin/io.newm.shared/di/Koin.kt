@@ -4,6 +4,8 @@ import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.config.NewmSharedBuildConfigImpl
+import io.newm.shared.config.getNewmAppDatabase
+import io.newm.shared.database.NewmAppDatabase
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.api.CardanoWalletAPI
 import io.newm.shared.internal.api.GenresAPI
@@ -89,6 +91,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     single { createJson() }
     // Internal Configurations
+    single<NewmAppDatabase> { getNewmAppDatabase(get()) }
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
     single { NewmAppLogger() }
     single { NewmAppEventLogger() }
@@ -102,9 +105,9 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { UserAPI(get(), get()) }
     // Internal Services
     single { WalletConnectionNetworkService(get()) }
-    single { WalletConnectionCacheService(get()) }
+    single { WalletConnectionCacheService(get(), get()) }
     single { NFTNetworkService(get()) }
-    single { NFTCacheService(get()) }
+    single { NFTCacheService(get(), get()) }
     single { NftTrackStore(get(), get()) }
     // Internal Repositories
     single { WalletRepository(get(), get(), get()) }

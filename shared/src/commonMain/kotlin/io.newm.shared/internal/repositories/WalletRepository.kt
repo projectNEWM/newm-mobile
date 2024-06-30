@@ -6,6 +6,7 @@ import io.newm.shared.internal.services.network.WalletConnectionNetworkService
 import io.newm.shared.public.models.WalletConnection
 import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 
 internal class WalletRepository(
     private val networkService: WalletConnectionNetworkService,
@@ -23,14 +24,17 @@ internal class WalletRepository(
             connections
         } catch (e: Exception) {
             logger.error("WalletRepository", "Error fetching wallet connections from network ${e.cause}", e)
-            return emptyList()
+            cacheService.getWalletConnections().first().ifEmpty {
+                emptyList()
+            }
         }
     }
 
     suspend fun connectWallet(newmCode: String): WalletConnection? {
         return try {
-            val newConnection = networkService.connectWallet(newmCode.removePrefix("newm-"))
-            cacheService.cacheWalletConnections(listOf(newConnection))
+            val networkConnection = networkService.connectWallet(newmCode.removePrefix("newm-"))
+            cacheService.cacheWalletConnections(listOf(networkConnection))
+            val newConnection = cacheService.getById(id = networkConnection.id)
             newConnection
         } catch (e: Exception) {
             logger.error("WalletRepository", "Error connecting wallet ${e.cause}", e)

@@ -2,6 +2,7 @@ package io.newm.shared.internal.services.db
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
@@ -66,7 +67,8 @@ fun NewmDatabaseWrapper.getWalletConnections(): Flow<List<WalletConnection>> =
                 WalletConnection(
                     id = wallet.id,
                     createdAt = wallet.createdAt,
-                    stakeAddress = wallet.stakeAddress
+                    stakeAddress = wallet.stakeAddress,
+                    name = ""
                 )
             }
         }
@@ -78,11 +80,29 @@ fun NewmDatabaseWrapper.cacheWalletConnections(walletConnections: List<WalletCon
             invoke().walletConnectionQueries.insert(
                 id = connection.id,
                 createdAt = connection.createdAt,
-                stakeAddress = connection.stakeAddress
+                stakeAddress = connection.stakeAddress,
             )
         }
     }
 }
+
+fun NewmDatabaseWrapper.getWalletConnectionById(id: String): Flow<WalletConnection?> =
+    invoke().walletConnectionQueries.getAll()
+        .asFlow()
+        .mapToOneOrNull()
+        .map { wallet ->
+            if (wallet != null) {
+                WalletConnection(
+                    id = wallet.id,
+                    createdAt = wallet.createdAt,
+                    stakeAddress = wallet.stakeAddress,
+                    name = ""
+                )
+            } else {
+                null
+            }
+        }
+
 
 fun NewmDatabaseWrapper.deleteWalletConnectionById(walletConnectionsId: String) {
     invoke().transaction {

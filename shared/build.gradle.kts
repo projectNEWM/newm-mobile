@@ -9,7 +9,8 @@ plugins {
 	id("kotlinx-serialization")
 	id("com.android.library")
 	id("com.squareup.sqldelight")
-	id("com.google.devtools.ksp") version "2.0.0-1.0.22"
+	id("androidx.room") version "2.7.0-alpha04"
+	id("com.google.devtools.ksp") version "1.9.24-1.0.20"
 	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
@@ -40,6 +41,8 @@ kotlin {
 		it.binaries.framework {
 			baseName = "shared"
 			xcf.add(this)
+			isStatic = true
+			linkerOpts.add("-lsqlite3")
 		}
 	}
 
@@ -58,6 +61,8 @@ kotlin {
 				implementation(libs.ktor.serialization.kotlinx.json)
 				implementation(libs.ktor.client.auth)
 				implementation(libs.androidx.datastore.preferences)
+				implementation(libs.androidx.room.runtime)
+				implementation(libs.androidx.sqlite.bundled)
 				implementation(libs.store5)
 			}
 		}
@@ -137,4 +142,13 @@ sqldelight {
 
 kotlin.sourceSets.all {
 	languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+}
+
+room {
+	schemaDirectory("$projectDir/schemas")
+}
+
+dependencies {
+	implementation(libs.androidx.sqlite.framework.android)
+	ksp(libs.androidx.room.compiler)
 }
