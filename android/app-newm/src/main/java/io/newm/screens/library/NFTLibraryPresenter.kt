@@ -18,7 +18,6 @@ import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.HasEmptyWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
@@ -31,7 +30,6 @@ class NFTLibraryPresenter(
     private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
-    private val hasEmptyWalletUseCase: HasEmptyWalletUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
     private val scope: CoroutineScope,
 ) : Presenter<NFTLibraryState> {
@@ -47,7 +45,7 @@ class NFTLibraryPresenter(
             null
         )
 
-        val hasEmptyWallet by remember { hasEmptyWalletUseCase.hasEmptyWallet }.collectAsState(false)
+        val hasEmptyWallet by remember { walletNFTTracksUseCase.hasEmptyWallet }.collectAsState(false)
 
         var query by rememberSaveable { mutableStateOf("") }
 

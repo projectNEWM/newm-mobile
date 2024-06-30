@@ -66,6 +66,9 @@ interface WalletNFTTracksUseCase {
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun refresh()
+
+    val hasEmptyWallet: Flow<Boolean>
+    fun setHasEmptyWallet(hasEmptyWallet: Boolean)
 }
 
 class WalletNFTTracksUseCaseProvider : KoinComponent {

@@ -46,8 +46,6 @@ import io.newm.shared.public.usecases.DisconnectWalletUseCase
 import io.newm.shared.public.usecases.ForceAppUpdateUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
-import io.newm.shared.public.usecases.HasEmptyWalletImpl
-import io.newm.shared.public.usecases.HasEmptyWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
@@ -142,7 +140,6 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
-    single<HasEmptyWalletUseCase> { HasEmptyWalletImpl() }
     single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
     single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
     single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
