@@ -5,14 +5,14 @@ buildscript {
     Repo.addRepos(repositories)
 
     dependencies {
-        classpath(Build.gradle)
-        classpath(Google.crashlyticsClasspath)
-        classpath(Google.googleServices)
-        classpath(Kotlin.kotlinGradle)
-        classpath(Kotlin.serialization)
-        classpath(Plugins.benManesVersionsClasspath)
-        classpath(SqlDelight.gradlePlugin)
-        classpath(Plugins.paparazziClassPath)
+        classpath(libs.gradle)
+        classpath(libs.firebase.crashlytics.gradle)
+        classpath(libs.google.services)
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.kotlin.serialization)
+        classpath(libs.gradle.versions.plugin)
+        classpath(libs.sqldelight.gradle.plugin)
+        classpath(libs.paparazzi.gradle.plugin)
     }
 }
 
@@ -42,11 +42,13 @@ allprojects {
  * Run with `./gradlew dependencyUpdates` and the report will be in:
  *      /build/dependencyUpdates/versionsReport.html
  */
-apply(plugin = Plugins.benManesVersionsPlugin)
+apply(plugin = "com.github.ben-manes.versions")
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase(Locale.getDefault())
-        .contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any {
+        version.uppercase(Locale.getDefault())
+            .contains(it)
+    }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
@@ -68,5 +70,5 @@ tasks.withType<DependencyUpdatesTask> {
 }
 
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    delete(rootProject.layout.buildDirectory)
 }
