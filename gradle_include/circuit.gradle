@@ -1,5 +1,5 @@
 dependencies {
-    implementation(Circuit.foundation)
-    implementation(Circuit.retained)
-    testImplementation(Circuit.test)
+    implementation(libs.circuit.foundation)
+    implementation(libs.circuit.retained)
+    testImplementation(libs.circuit.test)
 }

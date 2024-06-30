@@ -1,18 +1,18 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
+    id("com.android.library")
+    kotlin("android")
 }
 
 apply(from = "../../../gradle_include/circuit.gradle")
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm.core.test.utils"
 
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
         resourcePrefix = "core_test_utils"
     }
 
@@ -27,12 +27,12 @@ android {
 }
 
 dependencies {
-    implementation("app.cash.paparazzi:paparazzi:${Versions.paparazzi}")
+    implementation(libs.paparazzi)
     implementation(project(Modules.coreTheme))
 
-    testImplementation(Google.testParameterInjector)
-    testImplementation(JUnit.jUnit)
+    testImplementation(libs.test.parameter.injector)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(Google.espressoTest)
-    androidTestImplementation(JUnit.androidxJUnit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.junit)
 }

@@ -7,10 +7,10 @@ apply(from = "../../../gradle_include/compose.gradle")
 
 android {
     namespace = "io.newm.feature.barcode.scanner"
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
         resourcePrefix = "barcode-scanner"
     }
 
@@ -25,14 +25,14 @@ android {
 }
 
 dependencies {
-    implementation("androidx.camera:camera-camera2:1.4.0-alpha04")
-    implementation("androidx.camera:camera-lifecycle:1.4.0-alpha04")
-    implementation("androidx.camera:camera-view:1.4.0-alpha04")
-    implementation("com.google.mlkit:barcode-scanning:17.2.0")
-    implementation(Google.androidxCore)
-    implementation(Google.material)
-    implementation(Google.materialIconsExtended)
-    implementation(Google.playServicesAuth)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.barcode.scanning)
+    implementation(libs.play.services.auth)
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))

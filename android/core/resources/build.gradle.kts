@@ -1,13 +1,13 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
+    id("com.android.library")
+    kotlin("android")
 }
 
 android {
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm.core.resources"
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }

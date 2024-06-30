@@ -1,17 +1,17 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
+    id("com.android.library")
+    kotlin("android")
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm.core.ui.utils"
 
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
         resourcePrefix = "core_ui_utils"
     }
 
@@ -27,8 +27,9 @@ android {
 
 dependencies {
     api(project(Modules.coreResources))
-    implementation(Google.androidxCore)
-    implementation(Google.material)
-    implementation(Google.materialIconsExtended)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.material.icons.extended)
     implementation(project(Modules.coreTheme))
 }

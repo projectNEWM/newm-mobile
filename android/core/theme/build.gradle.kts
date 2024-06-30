@@ -1,18 +1,18 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
-    kotlin(Plugins.kapt)
+    id("com.android.library")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm.core.theme"
 
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -30,13 +30,13 @@ android {
 
 dependencies {
 
-    implementation(Google.androidxCore)
-    implementation(Google.appCompat)
-    implementation(Google.constraintLayout)
-    implementation(Google.material)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.material)
 
-    testImplementation(JUnit.jUnit)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(Google.espressoTest)
-    androidTestImplementation(JUnit.androidxJUnit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.junit)
 }
