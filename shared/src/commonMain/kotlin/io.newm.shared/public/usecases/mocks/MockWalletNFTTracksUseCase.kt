@@ -4,12 +4,26 @@ import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.mocks.mockTracks
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
 
 class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 
     override suspend fun refresh() {
         // no-op
+    }
+
+    private var _hasEmptyWallet = MutableStateFlow(false)
+
+    override val hasEmptyWallet: Flow<Boolean>
+        get() = _hasEmptyWallet.asStateFlow()
+
+    override fun setHasEmptyWallet(hasEmptyWallet: Boolean) {
+        _hasEmptyWallet.update {
+            hasEmptyWallet
+        }
     }
 
     override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
