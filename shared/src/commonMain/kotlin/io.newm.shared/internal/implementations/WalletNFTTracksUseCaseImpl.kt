@@ -7,25 +7,12 @@ import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class WalletNFTTracksUseCaseImpl(
     private val nftRepository: NFTRepository,
 ) : WalletNFTTracksUseCase {
-
-    private var _hasEmptyWallet = MutableStateFlow(false)
-
-    override val hasEmptyWallet: Flow<Boolean> = _hasEmptyWallet.asStateFlow()
-
-    override fun setHasEmptyWallet(hasEmptyWallet: Boolean) {
-        _hasEmptyWallet.update {
-            hasEmptyWallet
-        }
-    }
 
     override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
         return nftRepository.getAllCollectableTracksFlow()
