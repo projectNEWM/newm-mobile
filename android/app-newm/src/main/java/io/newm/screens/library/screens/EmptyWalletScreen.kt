@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -53,31 +52,4 @@ fun EmptyWalletScreen() {
             )
         }
     }
-}
-
-@Composable
-fun RecordStoreCta(
-    modifier: Modifier = Modifier,
-) {
-    val context = LocalContext.current
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = "Looking to add more to your epic music stash?",
-            style = MaterialTheme.typography.body1,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-
-        PrimaryButton(
-            modifier = Modifier.padding(all = 16.dp),
-            text = "Visit the Record Store",
-            onClick = {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(RECORD_STORE_URL)))
-            },
-        )
-    }
-
 }
