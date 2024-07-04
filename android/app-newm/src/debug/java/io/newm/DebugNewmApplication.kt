@@ -17,11 +17,21 @@ class DebugNewmApplication : NewmApplication() {
 
         SoLoader.init(this, false)
         AndroidFlipperClient.getInstance(this).apply {
-            addPlugin(InspectorFlipperPlugin(this@DebugNewmApplication, DescriptorMapping.withDefaults()))
+            addPlugin(
+                InspectorFlipperPlugin(
+                    this@DebugNewmApplication,
+                    DescriptorMapping.withDefaults()
+                )
+            )
             addPlugin(CrashReporterPlugin.getInstance())
             addPlugin(DatabasesFlipperPlugin(this@DebugNewmApplication))
             addPlugin(NavigationFlipperPlugin.getInstance())
-            addPlugin(SharedPreferencesFlipperPlugin(this@DebugNewmApplication, "newm_encrypted_shared_prefs"))
+            addPlugin(
+                SharedPreferencesFlipperPlugin(
+                    this@DebugNewmApplication,
+                    "newm_encrypted_shared_prefs"
+                )
+            )
         }.start()
 
         super.onCreate()

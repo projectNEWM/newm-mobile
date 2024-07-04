@@ -4,24 +4,24 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
  }
 
 dependencies {
-    androidTestImplementation(JUnit.androidxComposeJUnit)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    debugImplementation(Google.composeUiTestManifest)
-    debugImplementation(Google.composeUiTestManifest)
-    debugImplementation(Google.composeUiTooling)
-    debugImplementation(Google.composeUiTooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.androidx.ui.tooling)
 
-    implementation(Coil.compose)
-    implementation(Google.activityCompose)
-    implementation(Google.composeMaterial)
-    implementation(Google.composeUi)
-    implementation(Google.composeUiToolingPreview)
-    implementation(Google.composeUiUtil)
-    implementation(Google.navigationCompose)
-    implementation(Koin.androidCompose)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.util)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
+    implementation(libs.coil.svg)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.material)
 }

@@ -10,9 +10,9 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class SignupUseCaseImpl(private val repository: LogInRepository) : SignupUseCase {
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String) {
+    override suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean) {
         mapErrorsSuspend {
-            repository.requestEmailConfirmationCode(email, humanVerificationCode)
+            repository.requestEmailConfirmationCode(email, humanVerificationCode, mustExists)
         }
     }
 

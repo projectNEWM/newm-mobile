@@ -7,7 +7,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.google.android.recaptcha.RecaptchaAction
-import com.google.android.recaptcha.RecaptchaClient
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.TextFieldState
@@ -19,12 +18,14 @@ import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.password.PasswordState
+import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
 
 class CreateAccountScreenPresenter(
     private val navigateHome: () -> Unit,
     private val signupUseCase: SignupUseCase,
+    private val loginUseCase: LoginUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider
 ) : Presenter<CreateAccountUiState> {
 
@@ -69,12 +70,14 @@ class CreateAccountScreenPresenter(
                             coroutineScope.launch {
                                 step = Step.Loading
                                 step = try {
-                                    recaptchaClientProvider.get().execute(RecaptchaAction.SIGNUP).onSuccess { token ->
-                                        signupUseCase.requestEmailConfirmationCode(
-                                            email = userEmail.text,
-                                            humanVerificationCode = token
-                                        )
-                                    }.onFailure {
+                                    recaptchaClientProvider.get()
+                                        .execute(RecaptchaAction.custom("auth_code"))
+                                        .onSuccess { token ->
+                                            signupUseCase.requestEmailConfirmationCode(
+                                                email = userEmail.text,
+                                                humanVerificationCode = token
+                                            )
+                                        }.onFailure {
                                         errorMessage = "Are you even a human?"
                                     }
                                     Step.SetName
@@ -103,18 +106,23 @@ class CreateAccountScreenPresenter(
                             coroutineScope.launch {
                                 step = Step.Loading
                                 try {
-                                    recaptchaClientProvider.get().execute(RecaptchaAction.SIGNUP).onSuccess { token ->
-                                        signupUseCase.registerUser(
-                                            email = userEmail.text,
-                                            verificationCode = verificationCode.text,
-                                            password = password.text,
-                                            passwordConfirmation = passwordConfirmation.text,
-                                            nickname = name.text,
-                                            humanVerificationCode = token,
-                                        )
-                                        navigateHome()
-                                    }.onFailure {
-                                      errorMessage = "Are you even a human?"
+                                    recaptchaClientProvider.get()
+                                        .execute(RecaptchaAction.SIGNUP)
+                                        .onSuccess { token ->
+                                            signupUseCase.registerUser(
+                                                email = userEmail.text,
+                                                verificationCode = verificationCode.text,
+                                                password = password.text,
+                                                passwordConfirmation = passwordConfirmation.text,
+                                                nickname = name.text,
+                                                humanVerificationCode = token,
+                                            )
+                                            recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess { newToken ->
+                                                loginUseCase.logIn(userEmail.text, password.text, humanVerificationCode = newToken)
+                                                navigateHome()
+                                            }
+                                        }.onFailure {
+                                        errorMessage = "Are you even a human?"
                                     }
                                 } catch (e: Throwable) {
                                     errorMessage = e.message

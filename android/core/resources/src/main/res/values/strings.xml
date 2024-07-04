@@ -39,9 +39,13 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="previous">Previous</string>
     <string name="profile">Profile</string>
+    <string name="profile_add_music">Looking to add more to your epic music stash?</string>
     <string name="profile_ask_the_community">Ask the community</string>
     <string name="profile_company_related">COMPANY RELATED</string>
+    <string name="profile_connect_wallet_button_label">Connect Wallet</string>
+    <string name="profile_disconnect_wallet_button_label">Disconnect Wallet</string>
     <string name="profile_documents">Documents</string>
+    <string name="profile_edit_button_label">Edit Profile</string>
     <string name="profile_faq">FAQ</string>
     <string name="profile_form_email">EMAIL ADDRESS</string>
     <string name="profile_form_nickname">NICKNAME</string>
@@ -55,6 +59,7 @@
     <string name="profile_privacy_policy">Privacy Policy</string>
     <string name="profile_save_button_label">Save changes</string>
     <string name="profile_terms_and_condition">Terms &amp; Conditions</string>
+    <string name="profile_visit_store">Visit Record Store</string>
     <string name="search">Search</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="stars">Stars</string>

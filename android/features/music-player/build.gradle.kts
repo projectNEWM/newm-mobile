@@ -1,16 +1,16 @@
 plugins {
-    id(Plugins.androidLibrary)
-    kotlin(Plugins.android)
+    id("com.android.library")
+    kotlin("android")
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
     namespace = "io.newm.feature.musicplayer"
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Versions.androidMinSdk
+        minSdk = libs.versions.android.minSdk.get().toInt()
         resourcePrefix = "musicplayer"
     }
 
@@ -25,20 +25,21 @@ android {
 }
 
 dependencies {
-    implementation(Google.androidxCore)
-    implementation(Google.material)
-    implementation(Google.materialIconsExtended)
-    implementation(Google.media3Common)
-    implementation(Google.media3Exoplayer)
-    implementation(Google.media3Session)
-    implementation(Google.media3ui)
-    implementation(Google.playServicesAuth)
-    implementation(Koin.android)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.palette.ktx)
+    implementation(libs.koin.android)
+    implementation(libs.play.services.auth)
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.shared))
-    implementation("androidx.palette:palette-ktx:1.0.0")
 
     testImplementation(project(Modules.testUtils))
 }

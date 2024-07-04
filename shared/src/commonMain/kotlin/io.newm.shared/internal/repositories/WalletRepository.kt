@@ -19,11 +19,12 @@ internal class WalletRepository(
     suspend fun syncWalletConnectionsFromNetworkToDB(): List<WalletConnection> {
         return try {
             val connections = networkService.getWalletConnections()
+            cacheService.deleteAllWalletConnections()
             cacheService.cacheWalletConnections(connections)
             connections
         } catch (e: Exception) {
             Logger.e(e) { "Error fetching wallet connections from network ${e.cause}" }
-            throw e
+            return emptyList()
         }
     }
 
@@ -42,7 +43,7 @@ internal class WalletRepository(
         try {
             val success = networkService.disconnectWallet(walletConnectionId)
             if (success) {
-                cacheService.deleteAllWalletConnections(walletConnectionId)
+                cacheService.deleteWalletConnectionsById(walletConnectionId)
             } else {
                 throw KMMException("Error disconnecting wallet")
             }

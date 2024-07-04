@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import io.newm.core.ui.utils.SwipeDirection
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 
@@ -29,6 +30,14 @@ fun MusicPlayerScreen(
                     PlaybackUiEvent.Previous -> previous()
                     PlaybackUiEvent.Repeat -> repeat()
                     is PlaybackUiEvent.Seek -> seekTo(event.position)
+                }
+            }
+        },
+        onSwipe = { direction ->
+            with(mediaPlayer) {
+                when (direction) {
+                    SwipeDirection.LEFT -> next()
+                    SwipeDirection.RIGHT -> previous()
                 }
             }
         }

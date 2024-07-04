@@ -3,7 +3,8 @@ package io.newm.feature.musicplayer
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Spring.StiffnessLow
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,6 +50,8 @@ import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.ZoomableImage
+import io.newm.core.ui.utils.SwipeDirection
+import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
@@ -76,40 +79,51 @@ internal fun MusicPlayerViewer(
     onNavigateUp: () -> Unit,
     playbackStatus: PlaybackStatus,
     onEvent: (PlaybackUiEvent) -> Unit,
+    onSwipe: (SwipeDirection) -> Unit,
 ) {
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
     var palette by remember { mutableStateOf<Palette?>(null) }
     val dominantColor = remember(palette) { palette?.dominantColor ?: Black }
-    val animatedColor by animateColorAsState(dominantColor, label = "", animationSpec = tween(200))
+    val animatedColor by animateColorAsState(
+        dominantColor,
+        label = "",
+        animationSpec = spring(stiffness = StiffnessLow)
+    )
 
     val context = LocalContext.current
     Box(
         modifier = modifier.background(animatedColor),
     ) {
         val coroutineScope = rememberCoroutineScope()
-        ZoomableImage(
+        SwipeableWrapper(
             modifier = Modifier.align(Alignment.Center),
-            model = ImageRequest.Builder(context)
-                .data(song.artworkUri)
-                .allowHardware(false) // Disable hardware bitmaps.
-                .build(),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-            onState = { state ->
-                when (state) {
-                    is AsyncImagePainter.State.Success -> {
-                        coroutineScope.launch {
-                            val drawable = state.result.drawable as? BitmapDrawable
-                            drawable?.let {
-                                palette = getPalletColors(it.bitmap)
+            onSwipe = onSwipe
+        ) {
+            ZoomableImage(
+                modifier = Modifier.align(Alignment.Center),
+                model = ImageRequest.Builder(context)
+                    .data(song.artworkUri)
+                    .error(R.drawable.ic_default_track_cover_art)
+                    .allowHardware(false) // Disable hardware bitmaps.
+                    .build(),
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+                onState = { state ->
+                    when (state) {
+                        is AsyncImagePainter.State.Success -> {
+                            coroutineScope.launch {
+                                val drawable = state.result.drawable as? BitmapDrawable
+                                drawable?.let {
+                                    palette = it.bitmap.getPalletColors()
+                                }
                             }
                         }
-                    }
 
-                    else -> {}
+                        else -> {}
+                    }
                 }
-            }
-        )
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -117,10 +131,12 @@ internal fun MusicPlayerViewer(
                 .safeDrawingPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 16.dp)) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_music_player_back),
+                        painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "Back",
                         tint = White
                     )
@@ -347,9 +363,9 @@ val Palette.dominantColor: Color?
         return swatch?.let { Color(it.rgb) }
     }
 
-suspend fun getPalletColors(bitmap: Bitmap): Palette =
-    withContext(Dispatchers.IO) {
-        val palette = Palette.from(bitmap).generate()
+suspend fun Bitmap.getPalletColors(): Palette =
+    withContext(Dispatchers.Unconfined) {
+        val palette = Palette.from(this@getPalletColors).generate()
         palette
     }
 

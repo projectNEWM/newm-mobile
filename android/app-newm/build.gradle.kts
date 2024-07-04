@@ -1,32 +1,29 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.konan.properties.Properties
 
 apply(from = "../../gradle_include/compose.gradle")
 apply(from = "../../gradle_include/circuit.gradle")
 apply(from = "../../gradle_include/flipper.gradle")
 
 plugins {
-    id(Plugins.androidApplication)
-    id(Plugins.crashlytics)
-    id(Plugins.googleServices)
-    id(Plugins.parcelize)
-    kotlin(Plugins.android)
-    kotlin(Plugins.kapt)
+    id("com.android.application")
+    id("com.google.firebase.crashlytics")
+    id( "com.google.gms.google-services")
+    id("kotlin-parcelize")
+    kotlin("android")
+    kotlin("kapt")
 }
 
-val properties: Properties = gradleLocalProperties(rootDir)
 
 android {
-    compileSdk = Versions.androidCompileSdk
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm"
     testNamespace = "io.newm.test"
     defaultConfig {
         applicationId = "io.newm"
-        minSdk = Versions.androidMinSdk
-        targetSdk = Versions.androidTargetSdk
-        versionCode = 3
-        versionName = "0.2"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = 4
+        versionName = "0.2.2"
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
     }
@@ -80,21 +77,21 @@ android {
 
 dependencies {
 
-    implementation("com.jakewharton:process-phoenix:2.1.2")
-    implementation(Google.androidxCore)
-    implementation(Google.appCompat)
-    implementation(Google.constraintLayout)
-    implementation(Google.firebaseAnalytics)
-    implementation(Google.firebaseCrashlytics)
-    implementation(Google.lifecycle)
-    implementation(Google.material)
-    implementation(Google.navigationUiKtx)
-    implementation(Google.playServicesAuth)
-    implementation(Google.recaptcha)
-    implementation(Google.splashScreen)
-    implementation(Koin.android)
-    implementation(Kotlin.reflect)
-    implementation(platform(Google.firebase))
+    implementation(libs.process.phoenix)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.play.services.auth)
+    implementation(libs.recaptcha)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.koin.android)
+    implementation(libs.kotlin.reflect)
+    implementation(platform(libs.firebase.bom))
     implementation(project(Modules.barcodeScanner))
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
@@ -103,10 +100,10 @@ dependencies {
     implementation(project(Modules.musicPlayer))
     implementation(project(Modules.shared))
 
-    testImplementation(JUnit.jUnit)
-    testImplementation(Mockk.mockk)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
 
-    androidTestImplementation(Google.espressoTest)
-    androidTestImplementation(JUnit.androidxJUnit)
-    androidTestImplementation(Mockk.android)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.mockk.android)
 }

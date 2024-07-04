@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import io.newm.core.resources.R
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.Gray16
@@ -262,7 +264,11 @@ private fun TrackRowItem(
 
     ) {
         AsyncImage(
-            model = track.imageUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(track.imageUrl)
+                .error(R.drawable.ic_default_track_cover_art)
+                .placeholder(R.drawable.ic_default_track_cover_art)
+                .build(),
             modifier = Modifier
                 .size(48.dp)
                 .clip(RoundedCornerShape(4.dp)),

@@ -13,8 +13,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BrushPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import io.newm.core.resources.R
 
 @Composable
 fun ProfileBanner(
@@ -28,7 +31,11 @@ fun ProfileBanner(
             .fillMaxWidth(),
     ) {
         AsyncImage(
-            model = bannerUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(bannerUrl)
+                .error(R.drawable.ic_banner_placeholder)
+                .placeholder(R.drawable.ic_banner_placeholder)
+                .build(),
             modifier = Modifier
                 .height(160.dp)
                 .fillMaxWidth(),
@@ -37,7 +44,11 @@ fun ProfileBanner(
             contentDescription = null,
         )
         AsyncImage(
-            model = avatarUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(avatarUrl)
+                .error(R.drawable.ic_avatar_placeholder)
+                .placeholder(R.drawable.ic_avatar_placeholder)
+                .build(),
             modifier = Modifier
                 .size(140.dp)
                 .align(Alignment.BottomCenter)

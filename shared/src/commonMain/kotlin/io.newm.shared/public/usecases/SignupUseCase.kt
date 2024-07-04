@@ -22,7 +22,7 @@ interface SignupUseCase {
      * @throws CancellationException if the request process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String)
+    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean = false)
 
     /**
      * Registers a new user with the provided details.
