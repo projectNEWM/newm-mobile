@@ -333,6 +333,7 @@
 		76F8E9572BA81D710013595D /* getSchwifty16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76F8E9452BA81D700013595D /* getSchwifty16.mp3 */; };
 		76F8E95D2BBA04EE0013595D /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; };
 		76F8E95E2BBA04EE0013595D /* Logging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76FDDFE72C3744FB000DF15C /* MockResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FDDFE62C3744FB000DF15C /* MockResolver.swift */; };
 		76FFD1142B95492F00D77309 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 76FFD1132B95492F00D77309 /* OrderedCollections */; };
 		76FFD11C2B9554DF00D77309 /* PlayQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FFD11B2B9554DF00D77309 /* PlayQueueTests.swift */; };
 		76FFD11D2B9554DF00D77309 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
@@ -1201,6 +1202,7 @@
 		76F8E9432BA81D700013595D /* getSchwifty14.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = getSchwifty14.mp3; sourceTree = "<group>"; };
 		76F8E9442BA81D700013595D /* getSchwifty15.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = getSchwifty15.mp3; sourceTree = "<group>"; };
 		76F8E9452BA81D700013595D /* getSchwifty16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = getSchwifty16.mp3; sourceTree = "<group>"; };
+		76FDDFE62C3744FB000DF15C /* MockResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolver.swift; sourceTree = "<group>"; };
 		76FFD1192B9554DF00D77309 /* AudioPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76FFD11B2B9554DF00D77309 /* PlayQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTests.swift; sourceTree = "<group>"; };
 		76FFD1272B955D5900D77309 /* PlayQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueue.swift; sourceTree = "<group>"; };
@@ -1808,6 +1810,7 @@
 			isa = PBXGroup;
 			children = (
 				76D01D9F28164B2100305605 /* ModuleLinker */,
+				76FDDFE62C3744FB000DF15C /* MockResolver.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -3846,6 +3849,7 @@
 				7618FCC628164BB5007573B4 /* Wallet.swift in Sources */,
 				76DC3A2928169995004D5021 /* Login.swift in Sources */,
 				7618FCC428164BB5007573B4 /* Main.swift in Sources */,
+				76FDDFE72C3744FB000DF15C /* MockResolver.swift in Sources */,
 				7618FCC328164BB5007573B4 /* Home.swift in Sources */,
 				763B987D2B28644B00E6F492 /* (null) in Sources */,
 				7618FCC528164BB5007573B4 /* SharedUI.swift in Sources */,
