@@ -80,8 +80,8 @@ class DownloadManager: NSObject, ObservableObject {
 			return
 		}
 		
-		let persistentUrl = fileURL(forDownloadURL: remoteUrl)
 		do {
+			let persistentUrl = try fileURL(forDownloadURL: remoteUrl)
 			try FileManager.default.moveItem(at: tmpLocalUrl, to: persistentUrl)
 			downloadCompletionHandlers[remoteUrl]?(.success(persistentUrl))
 		} catch {

@@ -4,7 +4,7 @@ import ModuleLinker
 
 public extension FileManagerService {
 	func getPlaybackURL(forTrack track: NFTTrack) async throws -> URL {
-		getPlaybackURL(for: URL(string: track.audioUrl)!)
+		try getPlaybackURL(for: URL(string: track.audioUrl)!)
 	}
 	
 	func download(track: NFTTrack, progressHandler: @escaping (Double) -> Void) async throws {

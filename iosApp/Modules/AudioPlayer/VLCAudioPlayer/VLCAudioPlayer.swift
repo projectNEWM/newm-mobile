@@ -135,15 +135,18 @@ public class VLCAudioPlayer: ObservableObject {
 			return
 		}
 		
-		let currentTrackVLC = currentTrack.vlcMedia(fileUrl: fileManager.getPlaybackURL(for: url))
-		
-		guard currentTrackVLC.url != mediaPlayer.media?.url else {
-			seek(toTime: 0)
-			return
+		do {
+			let currentTrackVLC = currentTrack.vlcMedia(fileUrl: try fileManager.getPlaybackURL(for: url))
+			guard currentTrackVLC.url != mediaPlayer.media?.url else {
+				seek(toTime: 0)
+				return
+			}
+			
+			mediaPlayer.media = currentTrackVLC
+			mediaPlayer.play()
+		} catch {
+			_errors.send(error)
 		}
-		
-		mediaPlayer.media = currentTrackVLC
-		mediaPlayer.play()
 	}
 	
 	@MainActor

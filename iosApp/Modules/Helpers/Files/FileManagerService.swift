@@ -4,6 +4,16 @@ import ModuleLinker
 import shared
 import Resolver
 
+enum FileManagerServiceError: Error {
+	case badSongUrl
+	
+	var localizedDescription: String {
+		switch self {
+		case .badSongUrl: "We encountered an error"
+		}
+	}
+}
+
 public class FileManagerService: ObservableObject {
 	public typealias ProgressHandler = (Double) -> Void
 
@@ -17,16 +27,22 @@ public class FileManagerService: ObservableObject {
 	}
 	
 	/// Returns the downloaded URL if available, otherwise the remote URL.
-	public func getPlaybackURL(for downloadURL: URL) -> URL {
+	public func getPlaybackURL(for downloadURL: URL) throws -> URL {
 		return if fileExists(for: downloadURL) {
-			fileURL(forDownloadURL: downloadURL)
+			try fileURL(forDownloadURL: downloadURL)
 		} else {
 			downloadURL
 		}
 	}
 	
 	public func fileExists(for url: URL) -> Bool {
-		FileManager.default.fileExists(atPath: fileURL(forDownloadURL: url).path)
+		do {
+			let url = try fileURL(forDownloadURL: url)
+			return FileManager.default.fileExists(atPath: url.path)
+		} catch {
+			errorLogger.logError(error)
+			return false
+		}
 	}
 	
 	public func clearFiles() {
@@ -46,7 +62,7 @@ public class FileManagerService: ObservableObject {
 	
 	public func clearFile(at url: URL) {
 		do {
-			try FileManager.default.removeItem(at: fileURL(forDownloadURL: url))
+			try FileManager.default.removeItem(at: try fileURL(forDownloadURL: url))
 			objectWillChange.send()
 		} catch {
 			errorLogger.logError("Error clearing documents directory: \(error)")
@@ -63,8 +79,12 @@ public class FileManagerService: ObservableObject {
 	}
 }
 
-func fileURL(forDownloadURL downloadURL: URL) -> URL {
-	FileManager.default.documentsDirectory.appendingPathComponent(downloadURL.lastPathComponent)
+func fileURL(forDownloadURL downloadURL: URL) throws -> URL {
+	guard let query = downloadURL.query else {
+		throw FileManagerServiceError.badSongUrl
+	}
+	
+	return FileManager.default.documentsDirectory.appendingPathComponent(query)
 }
 
 extension FileManager {
