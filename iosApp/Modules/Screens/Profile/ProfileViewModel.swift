@@ -10,9 +10,10 @@ import Utilities
 @MainActor
 final class ProfileViewModel: ObservableObject {
 	@Injected private var getCurrentUser: UserDetailsUseCase
-	@Injected private var hasWalletConnectionUseCase: HasWalletConnectionsUseCase
-	@Injected private var changePasswordUseCase: ChangePasswordUseCase
-	@Injected private var disconnectWalletUseCase: DisconnectWalletUseCase
+	@LazyInjected private var hasWalletConnectionUseCase: HasWalletConnectionsUseCase
+	@LazyInjected private var changePasswordUseCase: ChangePasswordUseCase
+	@LazyInjected private var disconnectWalletUseCase: DisconnectWalletUseCase
+	@LazyInjected private var logOutUseCase: LoginUseCase
 	
 	@Injected private var logger: ErrorReporting
 	
@@ -112,5 +113,13 @@ final class ProfileViewModel: ObservableObject {
 	
 	func alertDismissed() {
 		errors.popFirstError()
+	}
+	
+	func logOut() {
+		do {
+			try logOutUseCase.logout()
+		} catch {
+			errors.append(error)
+		}
 	}
 }

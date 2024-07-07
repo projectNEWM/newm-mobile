@@ -4,19 +4,9 @@ import ModuleLinker
 import shared
 import Resolver
 
-enum FileManagerServiceError: Error {
-	case badSongUrl
-	
-	var localizedDescription: String {
-		switch self {
-		case .badSongUrl: "We encountered an error"
-		}
-	}
-}
-
 public class FileManagerService: ObservableObject {
 	public typealias ProgressHandler = (Double) -> Void
-
+	
 	let downloadManager = DownloadManager()
 	
 	@Injected private var errorLogger: ErrorReporting
@@ -48,10 +38,10 @@ public class FileManagerService: ObservableObject {
 	public func clearFiles() {
 		let fileManager = FileManager.default
 		guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-
+		
 		do {
 			let fileURLs = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
-
+			
 			for fileURL in fileURLs {
 				try fileManager.removeItem(at: fileURL)
 			}
@@ -80,11 +70,10 @@ public class FileManagerService: ObservableObject {
 }
 
 func fileURL(forDownloadURL downloadURL: URL) throws -> URL {
-	guard let query = downloadURL.query else {
-		throw FileManagerServiceError.badSongUrl
-	}
+	let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.")
+	let path = downloadURL.absoluteString.addingPercentEncoding(withAllowedCharacters: allowedCharacters)
 	
-	return FileManager.default.documentsDirectory.appendingPathComponent(query)
+	return FileManager.default.documentsDirectory.appendingPathComponent(path!)
 }
 
 extension FileManager {

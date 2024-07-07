@@ -46,6 +46,12 @@ public enum NEWMColor {
   public static let purple2 = ColorAsset(name: "purple2")
   public static let red = ColorAsset(name: "red")
   public static let yellow = ColorAsset(name: "yellow")
+  public enum Background {
+    public static let defaultLighter = ColorAsset(name: "Background/defaultLighter")
+  }
+  public static let company = ColorAsset(name: "Company")
+  public static let music = ColorAsset(name: "Music")
+  public static let error = ColorAsset(name: "Error")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

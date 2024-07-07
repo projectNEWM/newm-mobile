@@ -22,6 +22,6 @@ public final class ProfileModule: Module {
 	}
 	
 #if DEBUG
-	public func registerAllMockedServices(mockResolver: Resolver = Resolver(child: .main)) {	}
+	public func registerAllMockedServices(mockResolver: Resolver) {	}
 #endif
 }
