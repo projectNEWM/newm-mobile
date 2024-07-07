@@ -2668,7 +2668,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
-				761E97462B6BE15200FDFC5E /* ShellScript */,
+				761E97462B6BE15200FDFC5E /* Upload Sentry Debug Files */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
@@ -3555,7 +3555,7 @@
 			shellPath = /bin/bash;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:assembleXCFramework\n";
 		};
-		761E97462B6BE15200FDFC5E /* ShellScript */ = {
+		761E97462B6BE15200FDFC5E /* Upload Sentry Debug Files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3564,13 +3564,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Upload Sentry Debug Files";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=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\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\nfi\n";
+			shellScript = "#if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\n#fi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
