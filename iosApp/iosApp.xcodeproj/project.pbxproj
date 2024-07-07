@@ -194,6 +194,7 @@
 		766B50322C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B50312C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift */; };
 		766B50332C3B035D0030BDF3 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
 		766B50342C3B035D0030BDF3 /* Colors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		766B503A2C3B10A40030BDF3 /* SwiftUIToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */; };
 		766E8FA228562CF200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FAC28562EBF00F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
@@ -1103,6 +1104,7 @@
 		7669071229088D2A00D9F989 /* VLCAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCAudioPlayer.swift; sourceTree = "<group>"; };
 		766B1EC62A15C74B0083DE3E /* KeyboardObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
 		766B50312C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHasWalletConnectionsUseCase.swift; sourceTree = "<group>"; };
+		766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIToolbar.swift; sourceTree = "<group>"; };
 		766E8FEE285636EE00F18779 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		766E8FF22856418A00F18779 /* HomeViewUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewUIModel.swift; sourceTree = "<group>"; };
 		76764AE1281A19720095BEF9 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -2082,6 +2084,7 @@
 				765A364729E918CF00B939BD /* SharedUIModule.swift */,
 				765A363129E918CF00B939BD /* StickyHeader.swift */,
 				765A363729E918CF00B939BD /* SwiftUI+Common.swift */,
+				766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */,
 				765A364429E918CF00B939BD /* TitleSection.swift */,
 				765A362629E918CF00B939BD /* ViewState.swift */,
 				7650E1442B17A0F300D686B8 /* XPubScannerView.swift */,
@@ -3652,6 +3655,7 @@
 				765A364F29E918CF00B939BD /* HorizontalScroller.swift in Sources */,
 				765A364829E918CF00B939BD /* ViewState.swift in Sources */,
 				765A364E29E918CF00B939BD /* Icon+Generated.swift in Sources */,
+				766B503A2C3B10A40030BDF3 /* SwiftUIToolbar.swift in Sources */,
 				765A364929E918CF00B939BD /* CellsSectionModel.swift in Sources */,
 				765A366229E918CF00B939BD /* Placeholder.swift in Sources */,
 				765A365129E918CF00B939BD /* HorizontalScrollingSection.swift in Sources */,
@@ -4397,7 +4401,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 			};
 			name = Debug;
 		};
@@ -4465,7 +4469,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -5061,6 +5065,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5100,6 +5105,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5752,6 +5758,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5791,6 +5798,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

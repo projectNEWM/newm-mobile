@@ -15,24 +15,17 @@ public struct ProfileView: View {
 	private let sectionSpacing: CGFloat = 12
 	@State private var showXPubScanner = false
 	@State private var showBottomSheet = false
-
+	
 	public init() {}
 	
 	public var body: some View {
-		NavigationView {
-			mainView
-//				.toolbar(.visible, for: .navigationBar)
-				.autocorrectionDisabled(true)
-				.scrollDismissesKeyboard(.immediately)
-		}
-		.toolbar {
-			ToolbarItem(placement: .topBarTrailing) {
-				Image(systemName: "ellipsis").rotationEffect(.degrees(90))
-					.onTapGesture {
-						showBottomSheet = true
-					}
+		mainView
+			.toolbar(.visible, for: .navigationBar, .tabBar, .bottomBar)
+			.autocorrectionDisabled(true)
+			.scrollDismissesKeyboard(.immediately)
+			.moreButtonTopRight {
+				showBottomSheet = true
 			}
-		}
 	}
 }
 
@@ -218,12 +211,8 @@ struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
 		Resolver.root = .mock
 		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
-		return Group {
-			NavigationView {
-				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
-			}
-		}
-		.preferredColorScheme(.dark)
+		return ProfileView()
+			.preferredColorScheme(.dark)
 	}
 }
 #endif
