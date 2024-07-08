@@ -193,7 +193,6 @@
 		765E35262B3245C000AB3AF1 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35252B3245C000AB3AF1 /* Sentry */; };
 		766B50322C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B50312C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift */; };
 		766B50332C3B035D0030BDF3 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
-		766B50342C3B035D0030BDF3 /* Colors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766B503A2C3B10A40030BDF3 /* SwiftUIToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */; };
 		766E8FA228562CF200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
@@ -910,17 +909,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		766B50372C3B035D0030BDF3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				766B50342C3B035D0030BDF3 /* Colors.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		76F8E9142BA5AC7F0013595D /* Embed Frameworks */ = {
@@ -3013,7 +3001,6 @@
 				7650E1472B17B3FA00D686B8 /* Sources */,
 				7650E1482B17B3FA00D686B8 /* Frameworks */,
 				7650E1492B17B3FA00D686B8 /* Resources */,
-				766B50372C3B035D0030BDF3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4484,7 +4471,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -4524,7 +4511,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
