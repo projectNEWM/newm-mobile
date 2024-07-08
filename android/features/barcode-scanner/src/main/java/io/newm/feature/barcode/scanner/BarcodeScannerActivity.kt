@@ -5,7 +5,6 @@ package io.newm.feature.barcode.scanner
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -79,7 +78,9 @@ import io.newm.core.theme.inter
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.textGradient
 import io.newm.core.ui.wallet.buttonGradient
+import io.newm.shared.NewmAppLogger
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import java.util.concurrent.Executors
 
 val qrLabelStyle = TextStyle(
@@ -97,6 +98,8 @@ val placeholderStyle = TextStyle(
 )
 
 class BarcodeScannerActivity : ComponentActivity() {
+
+    private val logger: NewmAppLogger by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -323,7 +326,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                     val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
                     val preview = Preview.Builder().build().also {
-                        it.setSurfaceProvider(previewView.surfaceProvider)
+                        it.surfaceProvider = previewView.surfaceProvider
                     }
 
                     val imageCapture = ImageCapture.Builder().build()
@@ -351,7 +354,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                         )
 
                     } catch (exc: Exception) {
-                        Log.e("DEBUG", "Use case binding failed", exc)
+                        logger.error("BarcodeScannerActivity", "Use case binding failed", exc)
                     }
                 }, ContextCompat.getMainExecutor(context))
                 previewView
@@ -384,9 +387,6 @@ class BarcodeScannerActivity : ComponentActivity() {
                             }
                         }
                     }
-                }.addOnFailureListener {
-                    // Task failed with an exception
-                    // ...
                 }
             }
             imageProxy.close()

@@ -61,7 +61,7 @@ class ProfilePresenter(
                 eventSink = { event ->
                     when (event) {
                         is OnConnectWallet -> coroutineScope.launch {
-                            connectWalletUseCase.connect(event.xpub)
+                            connectWalletUseCase.connect(event.newmCode)
                         }
 
                         OnDisconnectWallet -> coroutineScope.launch {

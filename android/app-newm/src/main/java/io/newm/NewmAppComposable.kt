@@ -64,6 +64,7 @@ import io.newm.core.ui.utils.iconGradient
 import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
+import io.newm.shared.NewmAppLogger
 import kotlinx.coroutines.launch
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
@@ -82,7 +83,7 @@ internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-internal fun NewmApp() {
+internal fun NewmApp(logger: NewmAppLogger) {
     var currentRootScreen: Screen by remember {
         mutableStateOf(Screen.NFTLibrary)
     }
@@ -93,7 +94,7 @@ internal fun NewmApp() {
     val navigator = rememberCircuitNavigator(backstack)
 
     val context = LocalContext.current
-    val newmNavigator = rememberNewmNavigator(navigator, {}, launchBrowser = { url ->
+    val newmNavigator = rememberNewmNavigator(navigator, logger, {}, launchBrowser = { url ->
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     })
 

@@ -1,7 +1,7 @@
 package io.newm.shared.internal.repositories
 
-import co.touchlab.kermit.Logger
 import io.ktor.client.plugins.ClientRequestException
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.services.db.NewmDatabaseWrapper
 import io.newm.shared.internal.repositories.models.OAuthData
@@ -18,7 +18,6 @@ import io.newm.shared.internal.api.models.LoginResponse
 import io.newm.shared.internal.api.models.NewUser
 import io.newm.shared.internal.api.models.ResetPasswordRequest
 import io.newm.shared.internal.api.models.isValid
-import io.newm.shared.public.models.error.KMMException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import shared.Notification
@@ -28,67 +27,91 @@ internal class LogInRepository : KoinComponent {
     private val service: LoginAPI by inject()
     private val tokenManager: TokenManager by inject()
     private val db: NewmDatabaseWrapper by inject()
-    private val logger = Logger.withTag("NewmKMM-LogInRepo")
+    private val logger: NewmAppLogger by inject()
 
 
-    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean = false) {
-        logger.d { "requestEmailConfirmationCode: email $email" }
+    suspend fun requestEmailConfirmationCode(
+        email: String,
+        humanVerificationCode: String,
+        mustExists: Boolean = false
+    ) {
+        logger.debug("LogInRepository", "requestEmailConfirmationCode: email $email")
         return service.requestEmailConfirmationCode(email, humanVerificationCode, mustExists)
     }
 
     suspend fun registerUser(user: NewUser, humanVerificationCode: String) {
-        logger.d { "registerUser: email $user" }
+        logger.debug("LogInRepository", "registerUser: email $user")
         return service.register(user, humanVerificationCode)
     }
 
     suspend fun logIn(email: String, password: String, humanVerificationCode: String) {
-        logger.d { "logIn: email $email" }
-        return handleLoginResponse { service.logIn(LogInUser(email = email, password = password), humanVerificationCode) }
-    }
-
-    suspend fun oAuthLogin(oAuthData: OAuthData, humanVerificationCode: String) = handleLoginResponse {
-        logger.d { "logIn: oAuth" }
-        when (oAuthData) {
-            is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
-            is OAuthData.Google -> service.loginWithGoogle(GoogleSignInRequest(accessToken = oAuthData.idToken), humanVerificationCode)
-            is OAuthData.Apple -> service.loginWithApple(AppleSignInRequest(idToken = oAuthData.idToken), humanVerificationCode)
-            is OAuthData.LinkedIn -> service.loginWithLinkedIn(LinkedInSignInRequest(accessToken = oAuthData.accessToken))
+        logger.debug("LogInRepository", "logIn: email $email")
+        return handleLoginResponse {
+            service.logIn(
+                LogInUser(email = email, password = password),
+                humanVerificationCode
+            )
         }
     }
+
+    suspend fun oAuthLogin(oAuthData: OAuthData, humanVerificationCode: String) =
+        handleLoginResponse {
+            logger.debug("LogInRepository", "logIn: oAuth")
+            when (oAuthData) {
+                is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
+                is OAuthData.Google -> service.loginWithGoogle(
+                    GoogleSignInRequest(accessToken = oAuthData.idToken),
+                    humanVerificationCode
+                )
+
+                is OAuthData.Apple -> service.loginWithApple(
+                    AppleSignInRequest(idToken = oAuthData.idToken),
+                    humanVerificationCode
+                )
+
+                is OAuthData.LinkedIn -> service.loginWithLinkedIn(LinkedInSignInRequest(accessToken = oAuthData.accessToken))
+            }
+        }
 
     private suspend fun handleLoginResponse(request: suspend () -> LoginResponse) {
         try {
             storeAccessToken(request())
             postNotification(Notification.loginStateChanged)
         } catch (e: ClientRequestException) {
+            logger.error(
+                "LogInRepository",
+                "LoginStatus 1- ClientRequestException: ${e.response.status}",
+                e
+            )
             when (e.response.status.value) {
                 404 -> {
-                    logger.d { "logIn: LoginStatus UserNotFound (404)" }
+                    logger.debug("LogInRepository", "logIn: LoginStatus UserNotFound (404)")
                     //404 NOT FOUND If no registered user with 'email' is found
                     throw UserNotFound("Invalid login.  Please try again.")
                 }
 
                 401 -> {
-                    logger.d { "logIn: LoginStatus WrongPassword (401): $e" }
+                    logger.debug("LogInRepository", "logIn: LoginStatus WrongPassword (401): $e")
                     //401 UNAUTHORIZED if 'password' is invalid.
                     throw WrongPassword("Invalid login.  Please try again.")
                 }
 
                 403 -> {
-                    logger.d { "logIn: LoginStatus TwoFactorAuthenticationFailed (403): $e" }
+                    logger.debug(
+                        "LogInRepository",
+                        "logIn: LoginStatus TwoFactorAuthenticationFailed (403): $e"
+                    )
                     //403 FORBIDDEN if recaptcha fails.
                     throw HumanVerificationFailed("Humanity could not be verified. Please try again.")
                 }
 
                 else -> {
                     // No-Op
-                    logger.d { "logIn: LoginStatus: ${e.response.status}" }
-                    throw e
+                    logger.debug("LogInRepository", "logIn: LoginStatus: ${e.response.status}")
                 }
             }
         } catch (e: Exception) {
-            logger.e { "logIn: LoginStatus 2- UnknownError: $e" }
-            throw KMMException("UnknownErrorException")
+            logger.error("LogInRepository", "logIn: LoginStatus 2- UnknownError: $e", e)
         }
     }
 
@@ -119,14 +142,13 @@ internal class LogInRepository : KoinComponent {
 
     private fun storeAccessToken(response: LoginResponse) {
         if (response.isValid()) {
-            logger.d { "logIn: LoginStatus Valid Response" }
+            logger.debug("LogInRepository", "logIn: LoginStatus Valid Response")
             tokenManager.setAuthTokens(
                 response.accessToken.orEmpty(),
                 response.refreshToken.orEmpty()
             )
-            logger.d { "logIn: LoginStatus Success" }
         } else {
-            logger.d { "logIn: Fail to login: $response" }
+            logger.debug("LogInRepository", "logIn: Fail to login: $response")
             throw Exception("Response is not valid: $response")
         }
     }
@@ -134,16 +156,27 @@ internal class LogInRepository : KoinComponent {
     fun logout() {
         tokenManager.clearToken()
         db.clear()
-		postNotification(Notification.loginStateChanged)
+        postNotification(Notification.loginStateChanged)
     }
 
-    suspend fun resetPassword(email: String, newPassword: String, confirmPassword: String, authCode: String, humanVerificationCode: String) {
-        logger.d { "resetPassword" }
-        service.resetPassword(ResetPasswordRequest(
-            email,
-            newPassword,
-            confirmPassword,
-            authCode,
-        ), humanVerificationCode)
+    suspend fun resetPassword(
+        email: String,
+        newPassword: String,
+        confirmPassword: String,
+        authCode: String,
+        humanVerificationCode: String
+    ) {
+        logger.debug(
+            "LogInRepository",
+            "resetPassword"
+        )
+        service.resetPassword(
+            ResetPasswordRequest(
+                email,
+                newPassword,
+                confirmPassword,
+                authCode,
+            ), humanVerificationCode
+        )
     }
 }

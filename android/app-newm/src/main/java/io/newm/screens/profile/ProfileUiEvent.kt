@@ -14,7 +14,7 @@ data object OnBack : ProfileEditUiEvent
 data object OnSaveProfile : ProfileEditUiEvent
 
 /** Profile edit and view UI Events */
-data class OnConnectWallet(val xpub: String) : ProfileEditUiEvent, ProfileUiEvent
+data class OnConnectWallet(val newmCode: String) : ProfileEditUiEvent, ProfileUiEvent
 data object OnLogout : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowTermsAndConditions : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowPrivacyPolicy : ProfileEditUiEvent, ProfileUiEvent

@@ -12,7 +12,6 @@ import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.HomeScreen
-import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
@@ -21,6 +20,7 @@ import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
@@ -37,7 +37,8 @@ class ResetPasswordScreenPresenter(
     private val signupUseCase: SignupUseCase,
     private val loginUseCase: LoginUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
-    private val recaptchaClientProvider: RecaptchaClientProvider
+    private val recaptchaClientProvider: RecaptchaClientProvider,
+    private val logger: NewmAppLogger
 ) : Presenter<ResetPasswordScreenUiState> {
     @Composable
     override fun present(): ResetPasswordScreenUiState {
@@ -67,9 +68,10 @@ class ResetPasswordScreenPresenter(
                                         signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = token, mustExists = true)
                                         step = ResetPasswordStep.EnterVerificationCode
                                     }.onFailure {
-                                        Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
+                                        logger.error("ResetPasswordScreenPresenter", "Human verification error", it)
                                     }
                                 } catch (e: Throwable) {
+                                    logger.error("ResetPasswordScreenPresenter", "Requesting email confirmation code failed", e)
                                     errorMessage = e.message
                                 }
 
@@ -124,9 +126,10 @@ class ResetPasswordScreenPresenter(
                                                 navigator.goTo(HomeScreen)
                                             }
                                         }.onFailure {
-                                            Log.e("ResetPasswordScreenPresenter", "Human verification error", it)
+                                            logger.error("ResetPasswordScreenPresenter", "Human verification error", it)
                                         }
                                     } catch (e: Throwable) {
+                                        logger.error("ResetPasswordScreenPresenter", "Resetting password failed", e)
                                         errorMessage = e.message
                                     }
 

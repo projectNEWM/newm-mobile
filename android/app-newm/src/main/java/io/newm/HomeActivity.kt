@@ -27,13 +27,14 @@ import io.newm.screens.library.NFTLibraryState
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
+import io.newm.shared.NewmAppLogger
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
-@Suppress("UnstableApiUsage")
 class HomeActivity : ComponentActivity() {
     private val circuit: Circuit = createCircuit()
+    private val logger: NewmAppLogger by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,7 @@ class HomeActivity : ComponentActivity() {
         setContent {
             NewmTheme(darkTheme = true) {
                 CircuitDependencies {
-                    NewmApp()
+                    NewmApp(logger)
                 }
             }
         }

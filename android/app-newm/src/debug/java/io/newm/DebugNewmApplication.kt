@@ -1,8 +1,6 @@
 package io.newm
 
-import co.touchlab.kermit.Logger
 import com.facebook.flipper.android.AndroidFlipperClient
-import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.crashreporter.CrashReporterPlugin
 import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
 import com.facebook.flipper.plugins.inspector.DescriptorMapping
@@ -13,8 +11,6 @@ import com.facebook.soloader.SoLoader
 
 class DebugNewmApplication : NewmApplication() {
     override fun onCreate() {
-        Logger.d { "NewmAndroid - Debug Newm Application" }
-
         SoLoader.init(this, false)
         AndroidFlipperClient.getInstance(this).apply {
             addPlugin(

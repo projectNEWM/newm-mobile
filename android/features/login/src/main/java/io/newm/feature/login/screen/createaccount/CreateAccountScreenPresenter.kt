@@ -18,6 +18,7 @@ import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.password.PasswordState
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
@@ -26,7 +27,8 @@ class CreateAccountScreenPresenter(
     private val navigateHome: () -> Unit,
     private val signupUseCase: SignupUseCase,
     private val loginUseCase: LoginUseCase,
-    private val recaptchaClientProvider: RecaptchaClientProvider
+    private val recaptchaClientProvider: RecaptchaClientProvider,
+    private val appLogger: NewmAppLogger
 ) : Presenter<CreateAccountUiState> {
 
     @Composable
@@ -82,6 +84,7 @@ class CreateAccountScreenPresenter(
                                     }
                                     Step.SetName
                                 } catch (e: Throwable) {
+                                    appLogger.error(tag = "Sign up", message = "${e.message}", exception = e)
                                     errorMessage = e.message
                                     Step.EmailAndPassword
                                 }
@@ -125,6 +128,7 @@ class CreateAccountScreenPresenter(
                                         errorMessage = "Are you even a human?"
                                     }
                                 } catch (e: Throwable) {
+                                    appLogger.error(tag = "Create Account", message = "Email verification: ${e.message}", exception = e)
                                     errorMessage = e.message
                                     step = Step.EmailVerification
                                 }

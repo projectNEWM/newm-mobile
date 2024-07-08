@@ -5,11 +5,12 @@ apply(from = "../../gradle_include/flipper.gradle")
 
 plugins {
     id("com.android.application")
-    id("com.google.firebase.crashlytics")
     id( "com.google.gms.google-services")
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
+
+    id("io.sentry.android.gradle") version "4.9.0"
 }
 
 
@@ -23,7 +24,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 4
-        versionName = "0.2.2"
+        versionName = "0.2.3"
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
     }
@@ -61,6 +62,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -82,7 +87,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.material)
     implementation(libs.androidx.navigation.ui.ktx)
@@ -106,4 +110,15 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.mockk.android)
+}
+
+
+sentry {
+    org.set("project-newm")
+    projectName.set("android")
+
+    // this will upload your source code to Sentry to show it as part of the stack traces
+    // disable if you don't want to expose your sources
+    includeSourceContext.set(true)
+    telemetry.set(true)
 }

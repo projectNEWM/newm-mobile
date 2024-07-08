@@ -1,6 +1,7 @@
 package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.internal.TokenManager
@@ -82,32 +83,24 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
             logInRepository = get(),
             tokenManager = get(),
             buildConfig = get(),
-            enableNetworkLogs = enableNetworkLogs
+            enableNetworkLogs = enableNetworkLogs,
+            appLogger = get()
         )
     }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
-    single {
-        createHttpClient(
-            get(),
-            get(),
-            get(),
-            get(),
-            enableNetworkLogs = enableNetworkLogs,
-            get()
-        )
-    }
     single { createJson() }
     // Internal Configurations
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
     single { TokenManager(get()) }
+    single { NewmAppLogger() }
     // Internal API Services
     single { CardanoWalletAPI(get()) }
     single { GenresAPI(get()) }
-    single { LoginAPI(get()) }
+    single { LoginAPI(get(), get()) }
     single { NewmPolicyIdsAPI(get()) }
     single { NEWMWalletConnectionAPI(get()) }
     single { PlaylistAPI(get()) }
-    single { UserAPI(get()) }
+    single { UserAPI(get(), get()) }
     // Internal Services
     single { WalletConnectionNetworkService(get()) }
     single { WalletConnectionCacheService(get()) }
@@ -116,14 +109,14 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { NewmPolicyIdsNetworkService(get()) }
     single { NewmPolicyIdsCacheService(get()) }
     // Internal Repositories
-    single { WalletRepository(get(), get()) }
-    single { NFTRepository(get(), get(), get()) }
+    single { WalletRepository(get(), get(), get()) }
+    single { NFTRepository(get(), get(), get(), get()) }
     single { GenresRepository() }
     single { LogInRepository() }
-    single { NewmPolicyIdsRepository(get(), get(), get()) }
+    single { NewmPolicyIdsRepository(get(), get(), get(), get()) }
     single { PlaylistRepository() }
-    single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get()) }
-    single { UserRepository(get(), get()) }
+    single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get(), get()) }
+    single { UserRepository(get(), get(), get()) }
     // External Use Cases to be consumed outside of KMM
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
@@ -138,7 +131,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
     single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get(), get()) }
+    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
     single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
     single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
     single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
@@ -157,6 +150,7 @@ internal fun createHttpClient(
     tokenManager: TokenManager,
     enableNetworkLogs: Boolean,
     buildConfig: NewmSharedBuildConfig,
+    appLogger: NewmAppLogger
 ): NetworkClientFactory =
     NetworkClientFactory(
         httpClientEngine,
@@ -164,5 +158,6 @@ internal fun createHttpClient(
         logInRepository,
         tokenManager,
         enableNetworkLogs,
-        buildConfig
+        buildConfig,
+        appLogger
     )

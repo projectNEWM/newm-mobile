@@ -3,8 +3,8 @@
 package io.newm
 
 import android.content.Context
-import co.touchlab.kermit.Logger
 import com.jakewharton.processphoenix.ProcessPhoenix
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -17,26 +17,25 @@ class Logout(
     private val loginUseCase: LoginUseCase,
     private val userSessionUseCase: UserSessionUseCase,
     private val restartApp: RestartApp,
-    private val scope: CoroutineScope
-    ) : KoinComponent {
-
-    private val logger = Logger.withTag("NewmAndroid-Logout")
+    private val scope: CoroutineScope,
+    private val logger: NewmAppLogger
+) {
 
     fun signOutUser() = try {
         scope.launch {
             loginUseCase.logout()
         }
         restartApp.run()
-        logger.d("Logout successful")
+        logger.info("Logout", "Logout successful")
     } catch (e: Exception) {
-        logger.d("Logout Exception: $e")
+        logger.error("Logout", "Logout failed", e)
     }
 
     fun register() {
         GlobalScope.launch {
             userSessionUseCase.isLoggedInFlow().collect { isLoggedIn ->
                 if (!isLoggedIn) {
-                    logger.d("User is not logged in")
+                    logger.debug("Logout", "User is not logged in")
                     signOutUser()
                 }
             }

@@ -3,21 +3,21 @@ package io.newm.shared.internal.repositories
 import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.internal.services.db.NewmDatabaseWrapper
 import io.newm.shared.internal.api.UserAPI
 import io.newm.shared.internal.api.models.UserProfileUpdateRequest
 import io.newm.shared.public.models.User
-import io.newm.shared.public.models.error.KMMException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserRepository(
     private val dbWrapper: NewmDatabaseWrapper,
+    private val newmCrashReporter: NewmAppLogger,
     private val scope: CoroutineScope
 ) : KoinComponent {
 
@@ -26,7 +26,9 @@ internal class UserRepository(
 
     suspend fun fetchLoggedInUserDetails(): User {
         logger.d { "getCurrentUser()" }
-        return service.getCurrentUser()
+        val user = service.getCurrentUser()
+        newmCrashReporter.user(user.id)
+        return user
     }
 
 
@@ -34,7 +36,7 @@ internal class UserRepository(
         .asFlow()
         .mapToOneOrNull() // This will emit either one user or null
         .onStart {
-            if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null ) {
+            if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null) {
                 logger.d { "No Users found in DB, fetching from network" }
                 scope.launch {
                     val user = fetchLoggedInUserDetails()

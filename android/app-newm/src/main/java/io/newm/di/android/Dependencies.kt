@@ -1,5 +1,3 @@
-@file:OptIn(FlowPreview::class)
-
 package io.newm.di.android
 
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,8 +23,6 @@ import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.config.NewmSharedBuildConfigImpl
-import kotlinx.coroutines.FlowPreview
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -37,9 +33,9 @@ val viewModule = module {
     viewModel { params -> MusicPlayerViewModel(params.get(), params.get(), get(), get()) }
     single { RecaptchaClientProvider() }
 
-    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get(), get()) }
-    factory { params -> LoginScreenPresenter(params.get(), get(), get()) }
-    factory { params -> ResetPasswordScreenPresenter(params.get(), get(), get(), get(), get()) }
+    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get(), get(), get()) }
+    factory { params -> LoginScreenPresenter(params.get(), get(), get(), get()) }
+    factory { params -> ResetPasswordScreenPresenter(params.get(), get(), get(), get(), get(), get()) }
     single<GoogleSignInLauncher> {
         val sharedBuildConfig = get<NewmSharedBuildConfig>()
 
@@ -60,7 +56,8 @@ val viewModule = module {
             googleSignInLauncher = get(),
             recaptchaClientProvider = get(),
             loginUseCase = get(),
-            activityResultContract = ActivityResultContracts.StartActivityForResult()
+            activityResultContract = ActivityResultContracts.StartActivityForResult(),
+            logger = get()
         )
     }
     factory { params ->
@@ -90,6 +87,7 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }
@@ -102,6 +100,6 @@ val viewModule = module {
 }
 
 val androidModules = module {
-    single { Logout(get(), get(), get(), get()) }
+    single { Logout(get(), get(), get(), get(), get()) }
     single { RestartApp(get()) }
 }
