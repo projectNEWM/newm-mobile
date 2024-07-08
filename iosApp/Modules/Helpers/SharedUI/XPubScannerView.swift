@@ -64,8 +64,8 @@ public struct ConnectWalletToAccountScannerView: View {
 	
 	@ViewBuilder
 	private var aimSubtitle: some View {
-		Text("Aim at the wallet QRCode")
-			.font(Font.custom("Inter", size: 12))
+		Text("Go to `https://newm.tools` on your desktop browser to connect your wallet.")
+			.font(Font.custom("Inter", size: 20))
 			.multilineTextAlignment(.center)
 			.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
 	}
@@ -73,7 +73,7 @@ public struct ConnectWalletToAccountScannerView: View {
 	@ViewBuilder
 	private var manualEntry: some View {
 		VStack(alignment: .leading, spacing: 4) {
-			Text("OR USE THE XPUB KEY")
+			Text("SCAN THE QR CODE ABOVE, OR ENTER IT HERE.")
 				.font(
 					Font.custom("Inter", size: 12)
 						.weight(.bold)
@@ -81,7 +81,7 @@ public struct ConnectWalletToAccountScannerView: View {
 				.foregroundColor(Color(red: 0.44, green: 0.44, blue: 0.44))
 			
 			HStack {
-				TextField("", text: $manuallyEnteredCode, prompt: Text("Enter xPub key"))
+				TextField("", text: $manuallyEnteredCode, prompt: Text("Enter newm code"))
 					.padding(.leading, 12)
 					.padding(.trailing, 5)
 					.padding(.vertical, 12)

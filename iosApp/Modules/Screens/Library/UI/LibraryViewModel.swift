@@ -240,4 +240,38 @@ class LibraryViewModel: ObservableObject {
 				.duration(ascending: true)
 		}
 	}
+	
+	func toggleLengthFilter() {
+		if durationFilter == 30 {
+			durationFilter = 0
+		} else {
+			durationFilter = 30
+		}
+	}
+}
+
+extension LibraryViewModel {
+	var titleSortSelected: Bool {
+		return if case .title = sort {
+			true
+		} else {
+			false
+		}
+	}
+	
+	var artistSortSelected: Bool {
+		return if case .artist = sort {
+			true
+		} else {
+			false
+		}
+	}
+	
+	var durationSortSelected: Bool {
+		return if case .duration = sort {
+			true
+		} else {
+			false
+		}
+	}
 }
