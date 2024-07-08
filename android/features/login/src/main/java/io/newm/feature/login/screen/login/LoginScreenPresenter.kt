@@ -1,6 +1,5 @@
 package io.newm.feature.login.screen.login
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,13 +15,16 @@ import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.usecases.LoginUseCase
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class LoginScreenPresenter(
     private val navigator: Navigator,
     private val loginUseCase: LoginUseCase,
-    private val recaptchaClientProvider: RecaptchaClientProvider
+    private val recaptchaClientProvider: RecaptchaClientProvider,
+    private val logger: NewmAppLogger
 ) : Presenter<LoginScreenUiState> {
     @Composable
     override fun present(): LoginScreenUiState {
@@ -64,6 +66,7 @@ class LoginScreenPresenter(
                                 }
 
                             } catch (e: Throwable) {
+                                logger.error("LoginScreenPresenter", "Login failed", e)
                                 isLoading = false
                                 errorMessage = e.message
                             }

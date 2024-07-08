@@ -21,6 +21,7 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.models.User
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
@@ -33,6 +34,7 @@ class ProfileEditPresenter(
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
+    private val logger: NewmAppLogger
 ) : Presenter<ProfileEditUiState> {
     @Composable
     override fun present(): ProfileEditUiState {
@@ -121,7 +123,7 @@ class ProfileEditPresenter(
                                 return@launch
                             }
 
-                            val profile = User(
+                            val updatedProfile = User(
                                 newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
                                 currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
                                 confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
@@ -129,16 +131,16 @@ class ProfileEditPresenter(
                                 createdAt = "",
                                 id = ""
                             )
-                            userDetailsUseCase.updateUserDetails(profile)
+                            userDetailsUseCase.updateUserDetails(updatedProfile)
                             navigator.pop()
                         } catch (e: Throwable) {
-                            e.printStackTrace()
+                            logger.error("ProfileEditPresenter", "An error occurred", e)
                             errorMessage = "An error occurred. Please try again."
                         }
                     }
 
                     is OnConnectWallet -> coroutineScope.launch {
-                        connectWalletUseCase.connect(event.xpub)
+                        connectWalletUseCase.connect(event.newmCode)
                     }
 
                     OnLogout -> logout.signOutUser()

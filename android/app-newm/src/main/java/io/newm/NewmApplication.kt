@@ -1,39 +1,70 @@
 package io.newm
 
 import android.app.Application
-import co.touchlab.kermit.Logger
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import io.newm.BuildConfig.*
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
+import io.newm.shared.NewmAppLogger
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
+import io.newm.utils.AndroidNewmAppLogger
 import io.newm.utils.NewmImageLoaderFactory
+import io.sentry.Hint
+import io.sentry.SentryEvent
+import io.sentry.SentryLevel
+import io.sentry.SentryOptions
+import io.sentry.android.core.SentryAndroid
+import io.sentry.android.core.SentryAndroidOptions
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 
+
 open class NewmApplication : Application(), ImageLoaderFactory {
 
     private val logout: Logout by inject()
+    private val logger: NewmAppLogger by inject()
     private val imageLoaderFactory by lazy { NewmImageLoaderFactory(this) }
+    private val config: NewmSharedBuildConfig by inject()
 
     override fun onCreate() {
-        Logger.d { "NewmAndroid - NewmApplication" }
         super.onCreate()
         initKoin()
         logout.register()
+        setupSentry()
     }
 
-    private fun initKoin(enableNetworkLogs: Boolean = true) {
-        initKoin(enableNetworkLogs = enableNetworkLogs) {
-            androidLogger(if (enableNetworkLogs) Level.INFO else Level.NONE)
+    private fun initKoin() {
+        val enableLogs = DEBUG
+        initKoin(enableNetworkLogs = enableLogs) {
+            androidLogger(if (enableLogs) Level.INFO else Level.NONE)
             androidContext(this@NewmApplication)
             modules(
                 viewModule,
                 androidModules
             )
         }
+    }
+
+    private fun setupSentry() {
+        SentryAndroid.init(
+            this
+        ) { options: SentryAndroidOptions ->
+            options.dsn = config.androidSentryDNS
+            options.environment = if (DEBUG) "development" else "production"
+            options.beforeSend =
+                SentryOptions.BeforeSendCallback { event: SentryEvent, hint: Hint ->
+                    if (SentryLevel.DEBUG == event.level) {
+                        null
+                    } else {
+                        event
+                    }
+                }
+        }
+        logger.setClientLogger(AndroidNewmAppLogger())
     }
 
     override fun newImageLoader(): ImageLoader {

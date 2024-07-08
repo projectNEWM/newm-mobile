@@ -1,26 +1,38 @@
 package io.newm.shared.internal.repositories
 
-import co.touchlab.kermit.Logger
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.internal.api.RemoteConfigAPI
 import io.newm.shared.internal.api.models.MobileConfig
-import org.koin.core.component.KoinComponent
 
+/**
+ * Interface for fetching remote mobile configuration.
+ */
 interface RemoteConfigRepository {
+    /**
+     * Fetches the mobile configuration.
+     *
+     * @return The mobile configuration or null if an error occurs.
+     */
     suspend fun getMobileConfig(): MobileConfig?
 }
 
+/**
+ * Implementation of [RemoteConfigRepository] that fetches remote mobile configuration using an API.
+ *
+ * @property mobileConfigAPI The API service for fetching the mobile configuration.
+ * @property logger The crash reporter for logging exceptions.
+ */
 internal class RemoteConfigRepositoryImpl(
-    private val mobileConfigAPI: RemoteConfigAPI
-) : KoinComponent, RemoteConfigRepository {
-
-    private val logger = Logger.withTag("NewmKMM-MobileConfigRepository")
+    private val mobileConfigAPI: RemoteConfigAPI,
+    private val logger: NewmAppLogger
+) : RemoteConfigRepository {
 
     override suspend fun getMobileConfig(): MobileConfig? {
         return try {
             mobileConfigAPI.getMobileConfig()
         } catch (e: Exception) {
-            logger.e(e) { "Failed to get mobile config" }
-            throw e
+            logger.error("RemoteConfigRepositoryImpl", "Error fetching mobile config", e)
+            null
         }
     }
 }

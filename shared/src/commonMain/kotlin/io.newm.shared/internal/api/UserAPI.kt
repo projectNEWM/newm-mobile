@@ -10,6 +10,7 @@ import io.ktor.client.request.patch
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.internal.api.models.UserProfileUpdateRequest
 import io.newm.shared.public.models.User
@@ -17,7 +18,7 @@ import io.newm.shared.public.models.error.KMMException
 import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 
-internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
+internal class UserAPI(networkClient: NetworkClientFactory, val logger: NewmAppLogger) : KoinComponent {
 
     private val authHttpClient: HttpClient  = networkClient.authHttpClient()
 
@@ -74,6 +75,7 @@ internal class UserAPI(networkClient: NetworkClientFactory) : KoinComponent {
                 setBody(userProfileUpdateRequest)
             }
         } catch (e: ClientRequestException) {
+            logger.error("UserAPI", "Failed to update user profile", e)
             //TODO:  We need api level errors returned from the api (not http level) so we know what went wrong.  401 here can mean "bad auth token" or "wrong password"
             val errorBody: APIErrorResponse = e.response.body()
             throw when (errorBody.code) {

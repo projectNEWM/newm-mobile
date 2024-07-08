@@ -24,8 +24,10 @@ import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.LoginUseCase
+import kotlin.math.log
 
 class WelcomeScreenPresenter(
     private val navigator: Navigator,
@@ -33,7 +35,8 @@ class WelcomeScreenPresenter(
     private val googleSignInLauncher: GoogleSignInLauncher,
     private val activityResultContract: ActivityResultContract<Intent, ActivityResult>,
     private val recaptchaClientProvider: RecaptchaClientProvider,
-    ) : Presenter<WelcomeScreenUiState> {
+    private val logger: NewmAppLogger
+) : Presenter<WelcomeScreenUiState> {
 
 
     @Composable
@@ -60,21 +63,30 @@ class WelcomeScreenPresenter(
                     val idToken = account.idToken
                     idToken ?: throw IllegalStateException("Google sign in failed. idToken is null")
 
-                    recaptchaClientProvider.get().execute(RecaptchaAction.LoginGoogle).onSuccess {
-                        isHumanProof ->
-                        loginUseCase.logInWithGoogle(idToken, humanVerificationCode = isHumanProof)
-                        navigator.goTo(HomeScreen)
-                    }.onFailure {
+                    recaptchaClientProvider.get().execute(RecaptchaAction.LoginGoogle)
+                        .onSuccess { isHumanProof ->
+                            loginUseCase.logInWithGoogle(
+                                idToken,
+                                humanVerificationCode = isHumanProof
+                            )
+                            navigator.goTo(HomeScreen)
+                        }.onFailure {
                         Log.e("WelcomeScreenPresenter", "Recaptcha failed", it)
                     }
                 } catch (e: ApiException) {
                     // The ApiException status code indicates the detailed failure reason.
                     // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                    Log.d("WelcomeScreenPresenter", "Google sign in failed: ${task.result}")
-                    e.printStackTrace()
+                    logger.error(
+                        "WelcomeScreenPresenter",
+                        "Google sign in failed: ${task.result}",
+                        e
+                    )
                 } catch (kmmException: KMMException) {
-                    Log.d("WelcomeScreenPresenter", "Google sign in failed kmmException: $kmmException")
-                    kmmException.printStackTrace()
+                    logger.error(
+                        "WelcomeScreenPresenter",
+                        "Google sign in failed kmmException: $kmmException",
+                        kmmException
+                    )
                 }
             }
         }

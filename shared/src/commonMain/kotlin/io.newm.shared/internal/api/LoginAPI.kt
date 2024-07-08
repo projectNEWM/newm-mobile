@@ -13,6 +13,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.internal.api.models.AppleSignInRequest
 import io.newm.shared.internal.api.models.FacebookSignInRequest
@@ -25,17 +26,21 @@ import io.newm.shared.internal.api.models.RegisterException
 import io.newm.shared.internal.api.models.ResetPasswordException
 import io.newm.shared.internal.api.models.ResetPasswordRequest
 import io.newm.shared.public.models.error.KMMException
-import org.koin.core.component.KoinComponent
 import shared.getPlatformName
 
 
 internal class LoginAPI(
-    networkClient: NetworkClientFactory
-) : KoinComponent {
+    networkClient: NetworkClientFactory,
+    private val logger: NewmAppLogger
+) {
 
     private val httpClient: HttpClient = networkClient.httpClient()
 
-    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean) {
+    suspend fun requestEmailConfirmationCode(
+        email: String,
+        humanVerificationCode: String,
+        mustExists: Boolean
+    ) {
         val response = httpClient.get("/v1/auth/code") {
             contentType(ContentType.Application.Json)
             parameter("email", email)
@@ -47,6 +52,7 @@ internal class LoginAPI(
         return when (response.status) {
             HttpStatusCode.NoContent -> {
             }
+
             else -> {
                 throw KMMException("Unknown Error")
             }
@@ -64,22 +70,28 @@ internal class LoginAPI(
             HttpStatusCode.Conflict -> {
                 throw RegisterException.UserAlreadyExists("User already exists")
             }
+
             HttpStatusCode.Forbidden -> {
                 throw RegisterException.TwoFactorAuthenticationFailed("TwoFactorAuthenticationFailed")
             }
+
             else -> {
                 throw KMMException("Unknown Error")
             }
         }
     }
 
-    suspend fun logIn(user: LogInUser, humanVerificationCode: String) = httpClient.post("/v1/auth/login") {
-        contentType(ContentType.Application.Json)
-        setBody(user)
-        addHumanVerificationCodeToHeader(humanVerificationCode)
-    }.body<LoginResponse>()
+    suspend fun logIn(user: LogInUser, humanVerificationCode: String) =
+        httpClient.post("/v1/auth/login") {
+            contentType(ContentType.Application.Json)
+            setBody(user)
+            addHumanVerificationCodeToHeader(humanVerificationCode)
+        }.body<LoginResponse>()
 
-    suspend fun loginWithGoogle(request: GoogleSignInRequest, humanVerificationCode: String): LoginResponse {
+    suspend fun loginWithGoogle(
+        request: GoogleSignInRequest,
+        humanVerificationCode: String
+    ): LoginResponse {
         val response = httpClient.post("/v1/auth/login/google") {
             contentType(ContentType.Application.Json)
             setBody(request)
@@ -94,7 +106,10 @@ internal class LoginAPI(
         }
     }
 
-    suspend fun loginWithApple(request: AppleSignInRequest, humanVerificationCode: String): LoginResponse {
+    suspend fun loginWithApple(
+        request: AppleSignInRequest,
+        humanVerificationCode: String
+    ): LoginResponse {
         val response = httpClient.post("/v1/auth/login/apple") {
             contentType(ContentType.Application.Json)
             setBody(request)
@@ -145,19 +160,24 @@ internal class LoginAPI(
                 addHumanVerificationCodeToHeader(humanVerificationCode)
             }
         } catch (e: ClientRequestException) {
+            logger.error("ResetPassword", "Error resetting password", e)
             throw when (e.response.status.value) {
                 400 -> {
                     ResetPasswordException.MissingField("Missing field")
                 }
+
                 403 -> {
                     ResetPasswordException.InvalidAuthCode("Invalid auth code")
                 }
+
                 422 -> {
                     ResetPasswordException.InvalidContent("Invalid content")
                 }
+
                 404 -> {
                     ResetPasswordException.EmailNotFound("Email not found: ${request.email}")
                 }
+
                 else -> {
                     e
                 }

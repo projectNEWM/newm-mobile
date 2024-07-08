@@ -19,7 +19,6 @@ coreSplashscreen = "1.0.1"
 coroutinesExtensions = "1.5.5"
 datastorePreferences = "1.1.1"
 firebaseBom = "33.1.1"
-firebaseCrashlyticsGradle = "3.0.2"
 flipper = "0.238.0"
 flipperNoop = "0.238.0"
 googleServices = "4.4.2"
@@ -97,8 +96,6 @@ coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilGif" }
 coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
-firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 flipper = { module = "com.facebook.flipper:flipper", version.ref = "flipper" }
 flipper-noop = { module = "com.facebook.flipper:flipper-noop", version.ref = "flipperNoop" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }

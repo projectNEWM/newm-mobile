@@ -6,7 +6,6 @@ buildscript {
 
     dependencies {
         classpath(libs.gradle)
-        classpath(libs.firebase.crashlytics.gradle)
         classpath(libs.google.services)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.kotlin.serialization)

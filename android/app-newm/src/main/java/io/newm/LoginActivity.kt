@@ -3,7 +3,6 @@ package io.newm
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -39,6 +38,7 @@ import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.Screen.LoginLandingScreen
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.utils.ui
 import kotlinx.coroutines.launch
@@ -49,6 +49,7 @@ class LoginActivity : ComponentActivity() {
 
     private val recaptchaClientProvider: RecaptchaClientProvider by inject()
     private val buildConfig: NewmSharedBuildConfig by inject()
+    private val logger: NewmAppLogger by inject()
 
     // TODO inject
     private val circuit: Circuit = Circuit.Builder()
@@ -102,7 +103,7 @@ class LoginActivity : ComponentActivity() {
         setContent {
             NewmTheme(darkTheme = true) {
                 CircuitDependencies {
-                    WelcomeToNewm(::launchHomeActivity)
+                    WelcomeToNewm(logger, ::launchHomeActivity)
                 }
             }
         }
@@ -129,11 +130,12 @@ class LoginActivity : ComponentActivity() {
             Recaptcha.getClient(application, buildConfig.recaptchaSiteKey, timeout = 20000L)
                 .onSuccess { client ->
                     recaptchaClientProvider.setRecaptchaClient(client)
-                }
-                .onFailure { exception ->
-                    // Handle communication errors ...
-                    // See "Handle communication errors" section
-                    Log.e("LoginActivity", "Setup failed", exception)
+                }.onFailure { exception ->
+                    logger.error(
+                        tag = "RecaptchaClient",
+                        message = "Failed to initialize Recaptcha client.",
+                        exception = exception
+                    )
                 }
         }
     }
@@ -141,6 +143,7 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun WelcomeToNewm(
+    logger: NewmAppLogger,
     onStartHomeActivity: () -> Unit
 ) {
     val context = LocalContext.current
@@ -148,9 +151,13 @@ fun WelcomeToNewm(
     val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
     val circuitNavigator = rememberCircuitNavigator(backstack)
     val newmNavigator =
-        rememberNewmNavigator(circuitNavigator, onStartHomeActivity, launchBrowser = { url ->
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-        })
+        rememberNewmNavigator(
+            circuitNavigator,
+            logger,
+            onStartHomeActivity,
+            launchBrowser = { url ->
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            })
 
     NavigableCircuitContent(newmNavigator, backstack)
 }
