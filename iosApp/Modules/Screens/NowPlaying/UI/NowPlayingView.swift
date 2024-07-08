@@ -165,19 +165,19 @@ extension NowPlayingView {
 		.scaleEffect(CGSize(width: 1.5, height: 1.5))
 	}
 }
-
-#Preview {
-	Resolver.root = Resolver(child: .main)
-	AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .root)
-	AudioPlayerModule.shared.registerAllServices()
-	@InjectedObject var audioPlayer: VLCAudioPlayer
-	audioPlayer.setTracks(Set(NFTTrack.mocks), playFirstTrack: true)
-	return Group {
-		NowPlayingView()
-			.preferredColorScheme(.dark)
-	}
-	.padding()
-}
+//
+//#Preview {
+//	Resolver.root = Resolver(child: .main)
+//	AudioPlayerModule.shared.registerAllMockedServices(mockResolver: .root)
+//	AudioPlayerModule.shared.registerAllServices()
+//	@InjectedObject var audioPlayer: VLCAudioPlayer
+//	audioPlayer.setTracks(Set(NFTTrack.mocks), playFirstTrack: true)
+//	return Group {
+//		NowPlayingView()
+//			.preferredColorScheme(.dark)
+//	}
+//	.padding()
+//}
 
 func url(for testImage: ImageAsset) -> URL {
 	guard let imageURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(testImage.name).png") else {
