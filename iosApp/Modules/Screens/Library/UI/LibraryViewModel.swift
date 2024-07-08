@@ -54,10 +54,10 @@ class LibraryViewModel: ObservableObject {
 	
 	private var cancels: Set<AnyCancellable> = []
 	
-	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
-	@Injected private var hasWalletConnectionsUseCase: any HasWalletConnectionsUseCase
+	@LazyInjected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
+	@LazyInjected private var hasWalletConnectionsUseCase: any HasWalletConnectionsUseCase
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
-	@Injected private var logger: any ErrorReporting
+	@LazyInjected private var logger: any ErrorReporting
 	
 	init() {
 		NotificationCenter.default.publisher(for: Notification().walletConnectionStateChanged)
@@ -240,5 +240,38 @@ class LibraryViewModel: ObservableObject {
 				.duration(ascending: true)
 		}
 	}
+	
+	func toggleLengthFilter() {
+		if durationFilter == 30 {
+			durationFilter = 0
+		} else {
+			durationFilter = 30
+		}
+	}
+}
 
+extension LibraryViewModel {
+	var titleSortSelected: Bool {
+		return if case .title = sort {
+			true
+		} else {
+			false
+		}
+	}
+	
+	var artistSortSelected: Bool {
+		return if case .artist = sort {
+			true
+		} else {
+			false
+		}
+	}
+	
+	var durationSortSelected: Bool {
+		return if case .duration = sort {
+			true
+		} else {
+			false
+		}
+	}
 }

@@ -4,7 +4,14 @@ import Utilities
 
 public class MockConnectWalletUseCase: ConnectWalletUseCase {
 	public func connect(walletConnectionId: String) async throws -> WalletConnection? {
-		nil
+		if let throwThisError {
+			throw throwThisError
+		}
+		
+		walletConnections.append(WalletConnection(id: walletConnectionId, createdAt: "", stakeAddress: ""))
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: Notification().walletConnectionStateChanged), object: nil)
+		
+		return WalletConnection(id: "", createdAt: "", stakeAddress: "")
 	}
 	
 	private var walletConnections: [WalletConnection] = []
@@ -12,16 +19,7 @@ public class MockConnectWalletUseCase: ConnectWalletUseCase {
 	public var throwThisError: Error?
 	
 	public init() {}
-	
-	public func connect(walletConnectionId id: String) async throws {
-		if let throwThisError {
-			throw throwThisError
-		}
-		
-		walletConnections.append(WalletConnection(id: id, createdAt: "", stakeAddress: ""))
-		NotificationCenter.default.post(name: NSNotification.Name(rawValue: Notification().walletConnectionStateChanged), object: nil)
-	}
-	
+
 	public func disconnect(walletConnectionId: String?) async throws {
 		if let throwThisError {
 			throw throwThisError

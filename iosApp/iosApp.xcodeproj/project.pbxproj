@@ -191,6 +191,10 @@
 		765D1616293EFAE70021FEC7 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
 		765E35242B32458400AB3AF1 /* SentrySwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35232B32458400AB3AF1 /* SentrySwiftUI */; };
 		765E35262B3245C000AB3AF1 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35252B3245C000AB3AF1 /* Sentry */; };
+		766B50322C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B50312C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift */; };
+		766B50332C3B035D0030BDF3 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
+		766B50342C3B035D0030BDF3 /* Colors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		766B503A2C3B10A40030BDF3 /* SwiftUIToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */; };
 		766E8FA228562CF200F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
 		766E8FA828562EB300F18779 /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
 		766E8FAC28562EBF00F18779 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; platformFilter = ios; };
@@ -333,6 +337,7 @@
 		76F8E9572BA81D710013595D /* getSchwifty16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76F8E9452BA81D700013595D /* getSchwifty16.mp3 */; };
 		76F8E95D2BBA04EE0013595D /* Logging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; };
 		76F8E95E2BBA04EE0013595D /* Logging.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 760808A92B2799D20015A2ED /* Logging.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76FDDFE72C3744FB000DF15C /* MockResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FDDFE62C3744FB000DF15C /* MockResolver.swift */; };
 		76FFD1142B95492F00D77309 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 76FFD1132B95492F00D77309 /* OrderedCollections */; };
 		76FFD11C2B9554DF00D77309 /* PlayQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FFD11B2B9554DF00D77309 /* PlayQueueTests.swift */; };
 		76FFD11D2B9554DF00D77309 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
@@ -639,6 +644,13 @@
 			remoteGlobalIDString = 76D01D9D28164B2100305605;
 			remoteInfo = ModuleLinker;
 		};
+		766B50352C3B035D0030BDF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7618FD1628164CBD007573B4;
+			remoteInfo = Colors;
+		};
 		766E8FA428562CF200F18779 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -900,6 +912,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		766B50372C3B035D0030BDF3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				766B50342C3B035D0030BDF3 /* Colors.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		76F8E9142BA5AC7F0013595D /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1080,6 +1103,8 @@
 		765D1614293EF8F70021FEC7 /* Gradients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradients.swift; sourceTree = "<group>"; };
 		7669071229088D2A00D9F989 /* VLCAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCAudioPlayer.swift; sourceTree = "<group>"; };
 		766B1EC62A15C74B0083DE3E /* KeyboardObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
+		766B50312C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHasWalletConnectionsUseCase.swift; sourceTree = "<group>"; };
+		766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIToolbar.swift; sourceTree = "<group>"; };
 		766E8FEE285636EE00F18779 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		766E8FF22856418A00F18779 /* HomeViewUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewUIModel.swift; sourceTree = "<group>"; };
 		76764AE1281A19720095BEF9 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -1201,6 +1226,7 @@
 		76F8E9432BA81D700013595D /* getSchwifty14.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = getSchwifty14.mp3; sourceTree = "<group>"; };
 		76F8E9442BA81D700013595D /* getSchwifty15.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = getSchwifty15.mp3; sourceTree = "<group>"; };
 		76F8E9452BA81D700013595D /* getSchwifty16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = getSchwifty16.mp3; sourceTree = "<group>"; };
+		76FDDFE62C3744FB000DF15C /* MockResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResolver.swift; sourceTree = "<group>"; };
 		76FFD1192B9554DF00D77309 /* AudioPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76FFD11B2B9554DF00D77309 /* PlayQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTests.swift; sourceTree = "<group>"; };
 		76FFD1272B955D5900D77309 /* PlayQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueue.swift; sourceTree = "<group>"; };
@@ -1377,6 +1403,7 @@
 				76D99EC92B19EF11002FB4B2 /* shared.xcframework in Frameworks */,
 				7650E15F2B17B46800D686B8 /* Resolver in Frameworks */,
 				7650E1592B17B44E00D686B8 /* ModuleLinker.framework in Frameworks */,
+				766B50332C3B035D0030BDF3 /* Colors.framework in Frameworks */,
 				7650E1682B17C69A00D686B8 /* SharedUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1719,6 +1746,7 @@
 				761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */,
 				768C69C22B5CDA30001A1B1A /* MockUserDetailsUseCase.swift */,
 				76F8E9302BA7F0EA0013595D /* MockWalletNFTTracksUseCase.swift */,
+				766B50312C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift */,
 			);
 			path = "Use Cases";
 			sourceTree = "<group>";
@@ -1808,6 +1836,7 @@
 			isa = PBXGroup;
 			children = (
 				76D01D9F28164B2100305605 /* ModuleLinker */,
+				76FDDFE62C3744FB000DF15C /* MockResolver.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -2055,6 +2084,7 @@
 				765A364729E918CF00B939BD /* SharedUIModule.swift */,
 				765A363129E918CF00B939BD /* StickyHeader.swift */,
 				765A363729E918CF00B939BD /* SwiftUI+Common.swift */,
+				766B50392C3B10A40030BDF3 /* SwiftUIToolbar.swift */,
 				765A364429E918CF00B939BD /* TitleSection.swift */,
 				765A362629E918CF00B939BD /* ViewState.swift */,
 				7650E1442B17A0F300D686B8 /* XPubScannerView.swift */,
@@ -2665,7 +2695,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
-				761E97462B6BE15200FDFC5E /* ShellScript */,
+				761E97462B6BE15200FDFC5E /* Upload Sentry Debug Files */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
 				7555FF79242A565900829871 /* Resources */,
@@ -2983,6 +3013,7 @@
 				7650E1472B17B3FA00D686B8 /* Sources */,
 				7650E1482B17B3FA00D686B8 /* Frameworks */,
 				7650E1492B17B3FA00D686B8 /* Resources */,
+				766B50372C3B035D0030BDF3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2992,6 +3023,7 @@
 				762EF9BB2B21BCD4009E08D8 /* PBXTargetDependency */,
 				761E97182B6A88B600FDFC5E /* PBXTargetDependency */,
 				761E97202B6A906900FDFC5E /* PBXTargetDependency */,
+				766B50362C3B035D0030BDF3 /* PBXTargetDependency */,
 			);
 			name = Profile;
 			packageProductDependencies = (
@@ -3552,7 +3584,7 @@
 			shellPath = /bin/bash;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:assembleXCFramework\n";
 		};
-		761E97462B6BE15200FDFC5E /* ShellScript */ = {
+		761E97462B6BE15200FDFC5E /* Upload Sentry Debug Files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3561,13 +3593,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Upload Sentry Debug Files";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=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\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3622,6 +3655,7 @@
 				765A364F29E918CF00B939BD /* HorizontalScroller.swift in Sources */,
 				765A364829E918CF00B939BD /* ViewState.swift in Sources */,
 				765A364E29E918CF00B939BD /* Icon+Generated.swift in Sources */,
+				766B503A2C3B10A40030BDF3 /* SwiftUIToolbar.swift in Sources */,
 				765A364929E918CF00B939BD /* CellsSectionModel.swift in Sources */,
 				765A366229E918CF00B939BD /* Placeholder.swift in Sources */,
 				765A365129E918CF00B939BD /* HorizontalScrollingSection.swift in Sources */,
@@ -3790,6 +3824,7 @@
 				768C69BB2B5CD9CE001A1B1A /* MockErrorLogger.swift in Sources */,
 				76F8E92F2BA7EF670013595D /* MockNFTTracks.swift in Sources */,
 				761E97122B6A7C0500FDFC5E /* MockLoginUseCase.swift in Sources */,
+				766B50322C3A60F70030BDF3 /* MockHasWalletConnectionsUseCase.swift in Sources */,
 				76F8E9312BA7F0EA0013595D /* MockWalletNFTTracksUseCase.swift in Sources */,
 				768C69C32B5CDA30001A1B1A /* MockUserDetailsUseCase.swift in Sources */,
 				769BB6882B5E0B85007CA421 /* MockChangePasswordUseCase.swift in Sources */,
@@ -3846,6 +3881,7 @@
 				7618FCC628164BB5007573B4 /* Wallet.swift in Sources */,
 				76DC3A2928169995004D5021 /* Login.swift in Sources */,
 				7618FCC428164BB5007573B4 /* Main.swift in Sources */,
+				76FDDFE72C3744FB000DF15C /* MockResolver.swift in Sources */,
 				7618FCC328164BB5007573B4 /* Home.swift in Sources */,
 				763B987D2B28644B00E6F492 /* (null) in Sources */,
 				7618FCC528164BB5007573B4 /* SharedUI.swift in Sources */,
@@ -4100,6 +4136,11 @@
 			isa = PBXTargetDependency;
 			target = 76D01D9D28164B2100305605 /* ModuleLinker */;
 			targetProxy = 76562521284BEF68004B6E4B /* PBXContainerItemProxy */;
+		};
+		766B50362C3B035D0030BDF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7618FD1628164CBD007573B4 /* Colors */;
+			targetProxy = 766B50352C3B035D0030BDF3 /* PBXContainerItemProxy */;
 		};
 		766E8FA528562CF200F18779 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4360,6 +4401,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = targeted;
 			};
 			name = Debug;
 		};
@@ -4427,6 +4469,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -4441,7 +4484,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -4481,7 +4524,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -5022,6 +5065,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5061,6 +5105,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5713,6 +5758,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5752,6 +5798,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

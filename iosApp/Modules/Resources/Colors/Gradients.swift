@@ -25,8 +25,19 @@ public struct Gradients {
 	public static var mainPrimary: LinearGradient {
 		LinearGradient(
 			stops: [
-				Gradient.Stop(color: Color(red: 0.76, green: 0.25, blue: 0.94), location: 0.00),
-				Gradient.Stop(color: Color(red: 0.96, green: 0.24, blue: 0.41), location: 1.00),
+				Gradient.Stop(color: NEWMColor.main.swiftUIColor, location: 0.00),
+				Gradient.Stop(color: NEWMColor.primary.swiftUIColor, location: 1.00),
+			],
+			startPoint: UnitPoint(x: 0, y: 1),
+			endPoint: UnitPoint(x: 1, y: 0)
+		)
+	}
+	
+	public static var mainPrimaryLight: LinearGradient {
+		LinearGradient(
+			stops: [
+				Gradient.Stop(color: NEWMColor.main.swiftUIColor.opacity(0.08), location: 0.00),
+				Gradient.Stop(color: NEWMColor.primary.swiftUIColor.opacity(0.08), location: 1.00),
 			],
 			startPoint: UnitPoint(x: 0, y: 1),
 			endPoint: UnitPoint(x: 1, y: 0)

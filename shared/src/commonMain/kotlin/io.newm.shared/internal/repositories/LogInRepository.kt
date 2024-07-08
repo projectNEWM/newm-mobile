@@ -134,6 +134,7 @@ internal class LogInRepository : KoinComponent {
     fun logout() {
         tokenManager.clearToken()
         db.clear()
+		postNotification(Notification.loginStateChanged)
     }
 
     suspend fun resetPassword(email: String, newPassword: String, confirmPassword: String, authCode: String, humanVerificationCode: String) {

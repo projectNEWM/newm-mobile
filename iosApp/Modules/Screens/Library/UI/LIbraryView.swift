@@ -8,6 +8,7 @@ import Colors
 import ModuleLinker
 import Kingfisher
 import AudioPlayer
+import Mocks
 
 struct LibraryView: View {
 	@StateObject private var viewModel = LibraryViewModel()
@@ -52,15 +53,17 @@ struct LibraryView: View {
 						.font(.newmTitle1)
 						.foregroundStyle(Gradients.libraryGradient.gradient)
 				}
-				ToolbarItem(placement: .topBarTrailing) {
-					Button(action: {
-						showFilter = true
-					}, label: {
-						Image("Filter Icon")
-							.resizable()
-							.renderingMode(.template)
-							.frame(width: 30, height: 30)
-					})
+				if viewModel.filteredSortedTracks.isEmpty == false {
+					ToolbarItem(placement: .topBarTrailing) {
+						Button(action: {
+							showFilter = true
+						}, label: {
+							Image("Filter Icon")
+								.resizable()
+								.renderingMode(.template)
+								.frame(width: 30, height: 30)
+						})
+					}
 				}
 			}
 		}
@@ -69,28 +72,37 @@ struct LibraryView: View {
 	@ViewBuilder
 	private var noSongsMessage: some View {
 		ZStack {
-			ScrollView {}
-				.background {
-					VStack {
-						Text("Your library is empty.")
-							.font(
-								Font.custom("Inter", size: 24)
-									.weight(.bold)
-							)
-							.multilineTextAlignment(.center)
-							.foregroundColor(.white)
-							.frame(width: 358, alignment: .top)
-						
-						Text("Time to rescue it with your epic music stash! 🎶")
-							.font(
-								Font.custom("Inter", size: 14)
-									.weight(.medium)
-							)
-							.multilineTextAlignment(.center)
-							.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
-							.frame(width: 358, alignment: .top)
-					}
+			VStack {
+				Text("Your library is empty.")
+					.font(
+						Font.custom("Inter", size: 24)
+							.weight(.bold)
+					)
+					.multilineTextAlignment(.center)
+					.foregroundColor(.white)
+					.frame(width: 358, alignment: .top)
+					.padding(.bottom)
+				
+				Text("Time to rescue it with your epic music stash!\nLet’s fill this up. 🎶")
+					.font(
+						Font.custom("Inter", size: 14)
+							.weight(.medium)
+					)
+					.multilineTextAlignment(.center)
+					.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
+					.frame(width: 358, alignment: .top)
+					.padding(.bottom)
+				
+				Link(destination: URL(string: "https://newm.io/recordstore")!) {
+					Text("Visit Record Store")
+						.frame(maxWidth: .infinity)
+						.padding()
+						.background(Gradients.mainPrimary.opacity(0.08))
+						.foregroundColor(NEWMColor.midMusic.swiftUIColor)
+						.cornerRadius(8)
+						.padding([.leading, .trailing])
 				}
+			}
 			if viewModel.walletIsConnected == false {
 				VStack {
 					Spacer()
@@ -189,55 +201,88 @@ struct LibraryView: View {
 	
 	@ViewBuilder
 	var filterView: some View {
-		List {
-			Group {
-				Picker(selection: $viewModel.durationFilter) {
-					ForEach(Array(stride(from: 5, through: 600, by: 5)), id: \.self) { value in
-						Text("\(value.playbackTimeString)").tag(value)
-					}
-				} label: {
-					Text("Filter songs under")
-				}
-				.foregroundStyle(NEWMColor.midMusic.swiftUIColor)
+		ZStack {
+			Color.black
+			VStack(alignment: .leading, spacing: 20) {
+				Text("Filter songs under")
+					.foregroundColor(.white)
 				
-				Section("Sort by") {
-					Button {
+				Button(action: {
+					viewModel.toggleLengthFilter()
+				}) {
+					HStack {
+						Text("30 seconds")
+							.foregroundColor(viewModel.durationFilter == 30 ? .black : NEWMColor.midMusic())
+						Spacer()
+						Image(systemName: "checkmark")
+							.foregroundColor(.black)
+					}
+					.padding()
+					.background(viewModel.durationFilter == 30 ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+					.cornerRadius(8)
+				}
+				.frame(height: 40)
+				
+				Text("Sort by")
+					.foregroundColor(.white)
+					.padding(.top)
+				
+				VStack(alignment: .leading, spacing: 10) {
+					Button(action: {
 						viewModel.cycleTitleSort()
-					} label: {
-						filterRow(title: "Title") {
-							if case .title = viewModel.sort {
-								return rightView(for: viewModel.sort)
+					}) {
+						Group {
+							if case .title(let ascending) = viewModel.sort, ascending {
+								Text("Title (A to Z)")
+							} else {
+								Text("Title (Z to A)")
 							}
-							return EmptyView()
 						}
+						.frame(maxWidth: .infinity, alignment: .leading)
+						.padding()
+						.background(viewModel.titleSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+						.foregroundColor(viewModel.titleSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
+						.cornerRadius(8)
 					}
 					
-					Button {
+					Button(action: {
 						viewModel.cycleArtistSort()
-					} label: {
-						filterRow(title: "Artist") {
-							if case .artist = viewModel.sort {
-								return rightView(for: viewModel.sort)
+					}) {
+						Group {
+							if case .artist(let ascending) = viewModel.sort, ascending {
+								Text("Artist (A to Z)")
+							} else {
+								Text("Artist (Z to A)")
 							}
-							return EmptyView()
 						}
+						.frame(maxWidth: .infinity, alignment: .leading)
+						.padding()
+						.background(viewModel.artistSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+						.foregroundColor(viewModel.artistSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
+						.cornerRadius(8)
 					}
 					
-					Button {
+					Button(action: {
 						viewModel.cycleDurationSort()
-					} label: {
-						filterRow(title: "Length") {
-							if case .duration = viewModel.sort {
-								return rightView(for: viewModel.sort)
+					}) {
+						Group {
+							if case .duration(let ascending) = viewModel.sort, ascending {
+								Text("Length (Shortest to Longest)")
+							} else {
+								Text("Length (Longest to Shortest)")
 							}
-							return EmptyView()
 						}
+						.frame(maxWidth: .infinity, alignment: .leading)
+						.padding()
+						.background(viewModel.durationSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+						.foregroundColor(viewModel.durationSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
+						.cornerRadius(8)
 					}
 				}
 			}
-			.listRowBackground(try! Color(hex: "#1C0707"))
-			.listRowSeparator(.hidden)
 		}
+		.padding()
+		.background(Color.black)
 	}
 	
 	@ViewBuilder
@@ -270,31 +315,48 @@ struct LibraryView: View {
 }
 
 #if DEBUG
-#Preview {
-	Resolver.root = Resolver(child: .main)
-	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
-	Resolver.root.register {
-		let useCase = $0.resolve(ConnectWalletUseCase.self)
-		Task {
-			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
-		}
-		return useCase as ConnectWalletUseCase
-	}
-	return Group {
-		LibraryView()
-		LibraryView()
-			.row(for: NFTTrack.mocks.first!)
-	}
-	.preferredColorScheme(.dark)
-	.tint(.white)
-}
+//#Preview {
+//	Resolver.root = .mock
+//	//	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
+//	MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+//	AudioPlayerModule.shared.registerAllServices()
+//	Resolver.root.register {
+//		let useCase = $0.resolve(ConnectWalletUseCase.self)
+//		Task {
+//			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
+//		}
+//		return useCase as ConnectWalletUseCase
+//	}
+//	return Group {
+//		LibraryView()
+//		LibraryView()
+//			.row(for: NFTTrack.mocks.first!)
+//	}
+//	.preferredColorScheme(.dark)
+//	.tint(.white)
+//}
 
 #Preview {
 	Resolver.root = Resolver(child: .main)
 	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
-	return LibraryView(showFilter: true)
+	return LibraryView(showFilter: false)
 		.preferredColorScheme(.dark)
 		.tint(.white)
 		.background(.black)
 }
 #endif
+//
+//struct FilterView: View {
+//	@State var lengthFilterSelected = false
+//	@State var sortOption = "Title (A to Z)"
+//	@Environment(\.dismiss) var dismiss
+//
+//	static let titleAscen
+//
+//	var body: some View {
+//	}
+//}
+//
+//#Preview {
+//	FilterView()
+//}

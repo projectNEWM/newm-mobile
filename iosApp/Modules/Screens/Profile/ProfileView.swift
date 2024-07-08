@@ -13,23 +13,15 @@ public struct ProfileView: View {
 	@StateObject private var viewModel = ProfileViewModel()
 	private let userImageSize: CGFloat = 128
 	private let sectionSpacing: CGFloat = 12
-	@State private var showMore = false
 	@State private var showXPubScanner = false
+	@State private var showBottomSheet = false
 	
 	public init() {}
 	
 	public var body: some View {
-		NavigationView {
-			mainView
-				.toolbar {
-					ToolbarItem(placement: .topBarTrailing) {
-						saveButton
-					}
-				}
-				.toolbar(.visible, for: .navigationBar)
-				.autocorrectionDisabled(true)
-				.scrollDismissesKeyboard(.immediately)
-		}
+		mainView
+			.autocorrectionDisabled(true)
+			.scrollDismissesKeyboard(.immediately)
 	}
 }
 
@@ -59,12 +51,18 @@ extension ProfileView {
 			.toast(shouldShow: $viewModel.showLoadingToast, type: .loading)
 			.toast(shouldShow: $viewModel.showCompletionToast, type: .complete)
 		}
+		.moreButtonTopRight {
+			showBottomSheet = true
+		}
 		.sheet(isPresented: $showXPubScanner, onDismiss: {
 			showXPubScanner = false
 		}) {
 			ConnectWalletToAccountScannerView {
 				showXPubScanner = false
 			}
+		}
+		.sheet(isPresented: $showBottomSheet) {
+			bottomSheet
 		}
 	}
 	
@@ -151,41 +149,89 @@ extension ProfileView {
 		}
 	}
 	
+	@ViewBuilder
 	private func bottomSectionHeader(_ text: String) -> some View {
 		Text(text).font(.inter(ofSize: 16).bold())
+	}
+	
+	@ViewBuilder
+	private var bottomSheet: some View {
+		ZStack {
+			Color.black.edgesIgnoringSafeArea(.all)
+			
+			VStack {
+				Spacer()
+				
+				VStack(spacing: 10) {
+					Button(action: {
+						// Terms & Conditions action
+					}) {
+						Text("Terms & Conditions")
+							.frame(maxWidth: .infinity)
+							.padding()
+							.background(Gradients.mainPrimary.opacity(0.08))
+							.foregroundColor(NEWMColor.midMusic.swiftUIColor)
+							.cornerRadius(8)
+					}
+					
+					Button(action: {
+						// Privacy & Policy action
+					}) {
+						Text("Privacy & Policy")
+							.frame(maxWidth: .infinity)
+							.padding()
+							.background(Gradients.mainPrimary.opacity(0.08))
+							.foregroundColor(NEWMColor.midMusic.swiftUIColor)
+							.cornerRadius(8)
+					}
+					
+					Button(action: {
+						viewModel.logOut()
+					}) {
+						Text("Logout")
+							.frame(maxWidth: .infinity)
+							.padding()
+							.background(try! Color(hex: "#EB5545").opacity(0.08))
+							.foregroundColor(NEWMColor.error.swiftUIColor)
+							.cornerRadius(8)
+					}
+				}
+				.padding()
+				.background(Color.black.opacity(0.8))
+				.cornerRadius(16)
+			}
+		}
+		.presentationDetents([.height(204)])
 	}
 }
 
 #if DEBUG
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
-		MocksModule.shared.registerAllMockedServices()
-		Resolver.root = Resolver(child: .main)
-		return Group {
-			NavigationView {
-				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
-			}
-		}
-		.preferredColorScheme(.dark)
+		Resolver.root = .mock
+		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+		return ProfileView()
+			.preferredColorScheme(.dark)
 	}
 }
 #endif
 
-#if DEBUG
-struct ProfileView_Previews_2: PreviewProvider {
-	static var previews: some View {
-		MocksModule.shared.registerAllMockedServices()
-		Resolver.root = Resolver(child: .main)
-		Resolver.root.register {
-			MockUserDetailsUseCase(mockUser: .bannerlessUser) as UserDetailsUseCase
-		}
-		return Group {
-			NavigationView {
-				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
-			}
-		}
-		.preferredColorScheme(.dark)
-		.previewDisplayName("no banner")
-	}
-}
-#endif
+//#if DEBUG
+//struct ProfileView_Previews_2: PreviewProvider {
+//	static var previews: some View {
+//		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+//		Resolver.root = .mock
+//		Resolver.root.register {
+//			MockUserDetailsUseCase(mockUser: .bannerlessUser) as UserDetailsUseCase
+//		}
+//		return Group {
+//			NavigationView {
+//				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
+//			}
+//		}
+//		.preferredColorScheme(.dark)
+//		.previewDisplayName("no banner")
+//	}
+//}
+//#endif
+//

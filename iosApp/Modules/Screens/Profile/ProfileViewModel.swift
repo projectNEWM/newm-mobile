@@ -10,9 +10,10 @@ import Utilities
 @MainActor
 final class ProfileViewModel: ObservableObject {
 	@Injected private var getCurrentUser: UserDetailsUseCase
-	@Injected private var hasWalletConnectionUseCase: HasWalletConnectionsUseCase
-	@Injected private var changePasswordUseCase: ChangePasswordUseCase
-	@Injected private var disconnectWalletUseCase: DisconnectWalletUseCase
+	@LazyInjected private var hasWalletConnectionUseCase: HasWalletConnectionsUseCase
+	@LazyInjected private var changePasswordUseCase: ChangePasswordUseCase
+	@LazyInjected private var disconnectWalletUseCase: DisconnectWalletUseCase
+	@LazyInjected private var logOutUseCase: LoginUseCase
 	
 	@Injected private var logger: ErrorReporting
 	
@@ -104,6 +105,7 @@ final class ProfileViewModel: ObservableObject {
 	func disconnectWallet() async {
 		do {
 			try await disconnectWalletUseCase.disconnect(walletConnectionId: nil)
+			isWalletConnected = false
 		} catch {
 			errors.append(error)
 		}
@@ -111,5 +113,14 @@ final class ProfileViewModel: ObservableObject {
 	
 	func alertDismissed() {
 		errors.popFirstError()
+	}
+	
+	func logOut() {
+		do {
+			try logOutUseCase.logout()
+			NotificationCenter.default.post(name: Notification.Name(shared.Notification().loginStateChanged), object: nil)
+		} catch {
+			errors.append(error)
+		}
 	}
 }
