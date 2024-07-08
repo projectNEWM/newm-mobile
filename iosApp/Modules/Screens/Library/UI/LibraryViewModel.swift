@@ -54,10 +54,10 @@ class LibraryViewModel: ObservableObject {
 	
 	private var cancels: Set<AnyCancellable> = []
 	
-	@Injected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
-	@Injected private var hasWalletConnectionsUseCase: any HasWalletConnectionsUseCase
+	@LazyInjected private var walletNFTTracksUseCase: any WalletNFTTracksUseCase
+	@LazyInjected private var hasWalletConnectionsUseCase: any HasWalletConnectionsUseCase
 	@InjectedObject private var audioPlayer: VLCAudioPlayer
-	@Injected private var logger: any ErrorReporting
+	@LazyInjected private var logger: any ErrorReporting
 	
 	init() {
 		NotificationCenter.default.publisher(for: Notification().walletConnectionStateChanged)
@@ -240,5 +240,4 @@ class LibraryViewModel: ObservableObject {
 				.duration(ascending: true)
 		}
 	}
-
 }

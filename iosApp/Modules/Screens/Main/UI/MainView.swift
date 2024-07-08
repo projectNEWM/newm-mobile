@@ -41,7 +41,7 @@ public struct MainView: View {
 					.tint(tabTint)
 			}
 		}
-//		.animation(.easeInOut, value: viewModel.shouldShowLogin)
+		.animation(.easeInOut, value: viewModel.shouldShowLogin)
 		.onShake {
 			route = .debug
 		}

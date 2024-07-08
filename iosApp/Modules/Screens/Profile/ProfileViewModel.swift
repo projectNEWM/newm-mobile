@@ -118,6 +118,7 @@ final class ProfileViewModel: ObservableObject {
 	func logOut() {
 		do {
 			try logOutUseCase.logout()
+			NotificationCenter.default.post(name: Notification.Name(shared.Notification().loginStateChanged), object: nil)
 		} catch {
 			errors.append(error)
 		}

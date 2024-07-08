@@ -3600,7 +3600,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\n#fi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Release\" ]; then\n\tif which sentry-cli >/dev/null; then\n\t\texport SENTRY_ORG=project-newm\n\t\texport SENTRY_PROJECT=newm-ios\n\t\texport SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN\n\t\tERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null --log-level=debug)\n\t\tif [ ! $? -eq 0 ]; then\n\t\t\techo \"warning: sentry-cli - $ERROR\"\n\t\tfi\n\t\telse\n\t\t\techo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n\tfi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

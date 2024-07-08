@@ -20,12 +20,8 @@ public struct ProfileView: View {
 	
 	public var body: some View {
 		mainView
-			.toolbar(.visible, for: .navigationBar, .tabBar, .bottomBar)
 			.autocorrectionDisabled(true)
 			.scrollDismissesKeyboard(.immediately)
-			.moreButtonTopRight {
-				showBottomSheet = true
-			}
 	}
 }
 
@@ -54,6 +50,9 @@ extension ProfileView {
 			}
 			.toast(shouldShow: $viewModel.showLoadingToast, type: .loading)
 			.toast(shouldShow: $viewModel.showCompletionToast, type: .complete)
+		}
+		.moreButtonTopRight {
+			showBottomSheet = true
 		}
 		.sheet(isPresented: $showXPubScanner, onDismiss: {
 			showXPubScanner = false

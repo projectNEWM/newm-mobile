@@ -8,6 +8,7 @@ import Colors
 import ModuleLinker
 import Kingfisher
 import AudioPlayer
+import Mocks
 
 struct LibraryView: View {
 	@StateObject private var viewModel = LibraryViewModel()
@@ -69,28 +70,34 @@ struct LibraryView: View {
 	@ViewBuilder
 	private var noSongsMessage: some View {
 		ZStack {
-			ScrollView {}
-				.background {
-					VStack {
-						Text("Your library is empty.")
-							.font(
-								Font.custom("Inter", size: 24)
-									.weight(.bold)
-							)
-							.multilineTextAlignment(.center)
-							.foregroundColor(.white)
-							.frame(width: 358, alignment: .top)
-						
-						Text("Time to rescue it with your epic music stash! 🎶")
-							.font(
-								Font.custom("Inter", size: 14)
-									.weight(.medium)
-							)
-							.multilineTextAlignment(.center)
-							.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
-							.frame(width: 358, alignment: .top)
-					}
+			VStack {
+				Text("Your library is empty.")
+					.font(
+						Font.custom("Inter", size: 24)
+							.weight(.bold)
+					)
+					.multilineTextAlignment(.center)
+					.foregroundColor(.white)
+					.frame(width: 358, alignment: .top)
+				
+				Text("Time to rescue it with your epic music stash!\nLet’s fill this up. 🎶")
+					.font(
+						Font.custom("Inter", size: 14)
+							.weight(.medium)
+					)
+					.multilineTextAlignment(.center)
+					.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
+					.frame(width: 358, alignment: .top)
+				
+				Link(destination: URL(string: "https://newm.io/recordstore")!) {
+					Text("Visit Record Store")
+						.frame(maxWidth: .infinity)
+						.padding()
+						.background(Gradients.mainPrimary.opacity(0.08))
+						.foregroundColor(NEWMColor.midMusic.swiftUIColor)
+						.cornerRadius(8)
 				}
+			}
 			if viewModel.walletIsConnected == false {
 				VStack {
 					Spacer()
@@ -271,8 +278,10 @@ struct LibraryView: View {
 
 #if DEBUG
 #Preview {
-	Resolver.root = Resolver(child: .main)
-	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
+	Resolver.root = .mock
+	//	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
+	MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+	AudioPlayerModule.shared.registerAllServices()
 	Resolver.root.register {
 		let useCase = $0.resolve(ConnectWalletUseCase.self)
 		Task {
@@ -289,12 +298,12 @@ struct LibraryView: View {
 	.tint(.white)
 }
 
-#Preview {
-	Resolver.root = Resolver(child: .main)
-	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
-	return LibraryView(showFilter: true)
-		.preferredColorScheme(.dark)
-		.tint(.white)
-		.background(.black)
-}
+//#Preview {
+//	Resolver.root = Resolver(child: .main)
+//	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
+//	return LibraryView(showFilter: true)
+//		.preferredColorScheme(.dark)
+//		.tint(.white)
+//		.background(.black)
+//}
 #endif

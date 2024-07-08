@@ -24,7 +24,7 @@ class LandingViewModel: ObservableObject {
 	@Injected private var signUpUseCase: any SignupUseCase
 	@Injected private var resetPasswordUseCase: any ResetPasswordUseCase
 	@Injected private var errorLogger: ErrorReporting
-	private var recaptcha: RecaptchaClient?
+	private var recaptcha: RecaptchaClient!
 	
 	private let loginFieldValidator = LoginFieldValidator()
 	
@@ -32,8 +32,7 @@ class LandingViewModel: ObservableObject {
 		Task { [weak self] in
 			guard let self else { return }
 			do {
-				let client = try await Recaptcha.getClient(withSiteKey: EnvironmentVariable.recaptchaKey.value)
-				recaptcha = client
+				recaptcha = try await Recaptcha.getClient(withSiteKey: EnvironmentVariable.recaptchaKey.value)
 			} catch let error as RecaptchaError {
 				errorLogger.logError("RecaptchaClient creation error: \(String(describing: error.errorMessage)).")
 			} catch {
@@ -67,8 +66,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				let recaptcha = try await recaptcha?.execute(withAction: HumanVerificationAction.loginEmail.recaptchaAction) ?? ""
-				try await logInUseCase.logIn(email: email, password: password, humanVerificationCode: recaptcha)
+				try await logInUseCase.logIn(email: email, password: password, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.loginEmail.recaptchaAction))
 			} catch {
 				handleError(error)
 			}
@@ -78,13 +76,15 @@ class LandingViewModel: ObservableObject {
 	
 	func forgotPassword() {
 		navPath.append(.forgotPassword)
+		password = ""
+		confirmPassword = ""
 	}
 	
 	func requestPasswordResetCode() {
 		navPath.append(.enterNewPassword)
 		Task {
 			do {
-				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.authCode.recaptchaAction) ?? "", mustExists: true)
+				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.authCode.recaptchaAction), mustExists: true)
 			} catch {
 				handleError(error)
 			}
@@ -95,8 +95,8 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await resetPasswordUseCase.resetPassword(email: email, code: confirmationCode, newPassword: password, confirmPassword: confirmPassword, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.resetPassword.recaptchaAction) ?? "")
-				try await logInUseCase.logIn(email: email, password: password, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.resetPassword.recaptchaAction) ?? "")
+				try await resetPasswordUseCase.resetPassword(email: email, code: confirmationCode, newPassword: password, confirmPassword: confirmPassword, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.resetPassword.recaptchaAction))
+				try await logInUseCase.logIn(email: email, password: password, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.loginEmail.recaptchaAction))
 			} catch {
 				handleError(error)
 			}
@@ -114,7 +114,7 @@ class LandingViewModel: ObservableObject {
 		}
 		Task {
 			do {
-				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.authCode.recaptchaAction) ?? "", mustExists: false)
+				try await signUpUseCase.requestEmailConfirmationCode(email: email, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.authCode.recaptchaAction), mustExists: false)
 			} catch {
 				handleError(error)
 			}
@@ -134,7 +134,7 @@ class LandingViewModel: ObservableObject {
 													 password: password,
 													 passwordConfirmation: confirmPassword,
 													 verificationCode: confirmationCode,
-													 humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.register.recaptchaAction) ?? "")
+													 humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.register.recaptchaAction))
 				navPath.append(.done)
 			} catch {
 				handleError(error)
@@ -165,7 +165,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await logInUseCase.logInWithGoogle(idToken: idToken, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.loginGoogle.recaptchaAction) ?? "")
+				try await logInUseCase.logInWithGoogle(idToken: idToken, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.loginGoogle.recaptchaAction))
 			} catch {
 				handleError(error)
 			}
@@ -186,7 +186,7 @@ class LandingViewModel: ObservableObject {
 			isLoading = true
 			Task {
 				do {
-					try await logInUseCase.logInWithApple(idToken: token, humanVerificationCode: recaptcha?.execute(withAction: HumanVerificationAction.loginApple.recaptchaAction) ?? "")
+					try await logInUseCase.logInWithApple(idToken: token, humanVerificationCode: try await recaptcha.execute(withAction: HumanVerificationAction.loginApple.recaptchaAction))
 				} catch {
 					handleError(error)
 				}
