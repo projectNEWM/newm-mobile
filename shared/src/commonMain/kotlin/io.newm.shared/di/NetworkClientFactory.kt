@@ -13,6 +13,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
+import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.http.HttpHeaders
 import io.ktor.http.encodedPath
@@ -73,10 +74,7 @@ internal class NetworkClientFactory(
         onRequest { request, _ ->
             if (request.url.encodedPath == "/v1/auth/refresh") {
                 request.headers.remove(HttpHeaders.Authorization)
-                request.headers.append(
-                    HttpHeaders.Authorization,
-                    "Bearer ${tokenManager.getRefreshToken()}"
-                )
+                request.bearerAuth(tokenManager.getRefreshToken().toString())
             }
         }
     }
