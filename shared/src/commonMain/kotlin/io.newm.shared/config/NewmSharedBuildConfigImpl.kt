@@ -41,8 +41,8 @@ class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
 
     override val sentryAuthToken: String
         get() = BuildConfig.SENTRY_AUTH_TOKEN
-    override val androidSentryDNS: String
-        get() = BuildConfig.ANDROID_SENTRY_DNS
+    override val androidSentryDSN: String
+        get() = BuildConfig.ANDROID_SENTRY_DSN
 
     override val googleAuthClientId: String
         get() = BuildConfig.GOOGLE_AUTH_CLIENT_ID
@@ -61,7 +61,7 @@ interface NewmSharedBuildConfig {
     val baseUrl: String
     val appVersion: String
     val sentryAuthToken: String
-    val androidSentryDNS: String
+    val androidSentryDSN: String
     val googleAuthClientId: String
     val recaptchaSiteKey: String
     val isStagingMode: Boolean

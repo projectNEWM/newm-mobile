@@ -53,7 +53,7 @@ open class NewmApplication : Application(), ImageLoaderFactory {
         SentryAndroid.init(
             this
         ) { options: SentryAndroidOptions ->
-            options.dsn = config.androidSentryDNS
+            options.dsn = config.androidSentryDSN
             options.environment = if (DEBUG) "development" else "production"
             options.beforeSend =
                 SentryOptions.BeforeSendCallback { event: SentryEvent, hint: Hint ->
