@@ -66,6 +66,6 @@ jobs:
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{vars.FIREBASE_ANDROID_APP_ID}}
-          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          serviceCredentialsFileContent: ${{ vars.CREDENTIAL_FILE_CONTENT }}
           groups: newm-team
           file: ${{steps.sign_app.outputs.signedReleaseFile}}
