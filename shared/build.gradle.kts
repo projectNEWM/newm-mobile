@@ -10,7 +10,7 @@ plugins {
 	id("com.android.library")
 	id("com.squareup.sqldelight")
 	id("androidx.room") version "2.7.0-alpha04"
-	id("com.google.devtools.ksp") version "1.9.24-1.0.20"
+	id("com.google.devtools.ksp") version "2.0.0-1.0.22"
 	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 
