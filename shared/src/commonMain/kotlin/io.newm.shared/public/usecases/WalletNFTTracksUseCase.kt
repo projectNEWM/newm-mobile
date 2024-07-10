@@ -15,6 +15,8 @@ import kotlin.coroutines.cancellation.CancellationException
  * or as a single suspending function call.
  */
 interface WalletNFTTracksUseCase {
+    val walletSynced: Flow<Boolean>
+
 
     /**
      * Provides a continuous stream (Flow) of all NFT tracks associated with the wallet

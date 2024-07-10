@@ -14,6 +14,8 @@ internal class WalletNFTTracksUseCaseImpl(
     private val nftRepository: NFTRepository,
 ) : WalletNFTTracksUseCase {
 
+    override val walletSynced: Flow<Boolean> = nftRepository.isSynced
+
     override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
         return nftRepository.getAllCollectableTracksFlow()
     }

@@ -5,7 +5,10 @@ import io.newm.shared.internal.services.cache.NFTCacheService
 import io.newm.shared.internal.services.network.NFTNetworkService
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 
 internal class NFTRepository(
     private val networkService: NFTNetworkService,
@@ -14,10 +17,17 @@ internal class NFTRepository(
     private val logger: NewmAppLogger
 ) {
 
+    private val _syncedNftWallet = MutableStateFlow(false)
+
+    val isSynced: Flow<Boolean>
+        get() = _syncedNftWallet.asStateFlow()
+
     suspend fun syncNFTTracksFromNetworkToDevice(): List<NFTTrack>? {
         return try {
+            _syncedNftWallet.update { false }
             val nfts = networkService.getWalletNFTs()
             cacheService.cacheNFTTracks(nfts)
+            _syncedNftWallet.update { true }
             nfts
         } catch (e: Exception) {
             logger.error("NFTRepository", "Error fetching NFTs from network ${e.cause}", e)
