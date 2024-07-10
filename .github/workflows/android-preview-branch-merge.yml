@@ -34,12 +34,12 @@ jobs:
           
           echo "RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}" >> ./local.properties
           echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> ./local.properties
-          echo "ANDROID_SENTRY_DSN=${{ secrets.ANDROID_SENTRY_DSN }}" >> ./local.properties
+          echo "ANDROID_SENTRY_DSN=${{ vars.ANDROID_SENTRY_DSN }}" >> ./local.properties
 
       - name: create google-services.json
         env:
-          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $GOOGLE_SERVICES_JSON | base64 -di > ./android/app-newm/google-services.json
+          GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
+        run: echo $GOOGLE_SERVICES_JSON > ./android/app-newm/google-services.json
 
       - name: build android app
         run: ./gradlew :android:app-newm:assembleProductionRelease
@@ -65,7 +65,7 @@ jobs:
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{secrets.FIREBASE_ANDROID_APP_ID}}
+          appId: ${{vars.FIREBASE_ANDROID_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: newm-team
           file: ${{steps.sign_app.outputs.signedReleaseFile}}
