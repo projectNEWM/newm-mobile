@@ -13,3 +13,6 @@
 local.properties
 google-services.json
 *.jks
+
+# Sentry Config File
+sentry.properties
