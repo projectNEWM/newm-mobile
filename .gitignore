@@ -13,6 +13,8 @@
 local.properties
 google-services.json
 *.jks
+.kotlin
+Package.resolved
 
 # Sentry Config File
 sentry.properties
