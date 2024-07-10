@@ -1,5 +1,6 @@
 package io.newm.feature.musicplayer.service
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
@@ -61,7 +62,6 @@ class MediaService : MediaSessionService() {
     }
 
 
-
     private val focusRequest by lazy {
         AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
             .setAcceptsDelayedFocusGain(true)
@@ -79,8 +79,27 @@ class MediaService : MediaSessionService() {
         super.onCreate()
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         player = ExoPlayer.Builder(this).build()
+
         mediaSession = MediaSession.Builder(this, player)
-            .setCallback(MediaSessionCallback()).build()
+            .setSessionActivity()
+            .setCallback(MediaSessionCallback())
+            .build()
+
+    }
+
+    private fun MediaSession.Builder.setSessionActivity(): MediaSession.Builder {
+        val launchIntentForPackage = packageManager.getLaunchIntentForPackage(packageName)
+
+        launchIntentForPackage ?: return this
+
+        val pendingIntent = PendingIntent.getActivity(
+            this@MediaService,
+            21000000,
+            launchIntentForPackage,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        return setSessionActivity(pendingIntent)
     }
 
     override fun onGetSession(
