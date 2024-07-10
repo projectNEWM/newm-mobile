@@ -45,7 +45,7 @@ jobs:
           echo "ANDROID_SENTRY_DSN=${{ vars.ANDROID_SENTRY_DSN }}" >> ./local.properties
 
       - name: create google-services.json
-        run: echo "${{ vars.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
+        run: echo "${{ vars.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/src/production/google-services.json
 
       - name: run tests
         run: ./gradlew verifyPaparazziDebug -s
