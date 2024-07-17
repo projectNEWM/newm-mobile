@@ -24,7 +24,6 @@ internal data class LinkedInSignInRequest(val accessToken: String)
 internal data class NewUser(
     val firstName: String? = null,
     val lastName: String? = null,
-    val nickname: String? = null,
     val pictureUrl: String? = null,
     val email: String,
     val newPassword: String,

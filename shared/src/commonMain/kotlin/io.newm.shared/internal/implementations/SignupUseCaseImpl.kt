@@ -18,7 +18,6 @@ internal class SignupUseCaseImpl(private val repository: LogInRepository) : Sign
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun registerUser(
-        nickname: String,
         email: String,
         password: String,
         passwordConfirmation: String,
@@ -27,7 +26,6 @@ internal class SignupUseCaseImpl(private val repository: LogInRepository) : Sign
     ) {
         mapErrorsSuspend {
             val newUser = NewUser(
-                nickname = nickname,
                 email = email,
                 newPassword = password,
                 confirmPassword = passwordConfirmation,

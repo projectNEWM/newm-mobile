@@ -24,7 +24,6 @@ import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EmailAndPasswordUi(
     modifier: Modifier,

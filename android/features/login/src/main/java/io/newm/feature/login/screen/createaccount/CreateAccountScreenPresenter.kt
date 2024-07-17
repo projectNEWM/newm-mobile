@@ -9,11 +9,9 @@ import androidx.compose.runtime.setValue
 import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVerificationUiState
-import io.newm.feature.login.screen.createaccount.CreateAccountUiState.SetNameUiState
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.VerificationCodeState
@@ -37,12 +35,6 @@ class CreateAccountScreenPresenter(
         val userEmail = rememberRetained { EmailState() }
         val password = rememberRetained { PasswordState() }
         val passwordConfirmation = rememberRetained { ConfirmPasswordState(password) }
-        val name = rememberRetained {
-            TextFieldState(
-                validator = { it.length >= 3 },
-                errorFor = { "Name must be at least 3 characters" },
-            )
-        }
         val verificationCode = rememberRetained { VerificationCodeState() }
 
         val coroutineScope = rememberCoroutineScope()
@@ -82,7 +74,7 @@ class CreateAccountScreenPresenter(
                                         }.onFailure {
                                         errorMessage = "Are you even a human?"
                                     }
-                                    Step.SetName
+                                    Step.EmailVerification
                                 } catch (e: Throwable) {
                                     appLogger.error(tag = "Sign up", message = "${e.message}", exception = e)
                                     errorMessage = e.message
@@ -102,7 +94,7 @@ class CreateAccountScreenPresenter(
                 ) { event ->
                     when (event) {
                         is EmailVerificationUiEvent.Next -> {
-                            require(emailAndPasswordValid && verificationCode.isValid && name.isValid) {
+                            require(emailAndPasswordValid && verificationCode.isValid) {
                                 "Email verification - next button should not be enabled if any of the fields are invalid"
                             }
 
@@ -117,7 +109,6 @@ class CreateAccountScreenPresenter(
                                                 verificationCode = verificationCode.text,
                                                 password = password.text,
                                                 passwordConfirmation = passwordConfirmation.text,
-                                                nickname = name.text,
                                                 humanVerificationCode = token,
                                             )
                                             recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess { newToken ->
@@ -138,20 +129,6 @@ class CreateAccountScreenPresenter(
                 }
             }
 
-            Step.SetName -> SetNameUiState(
-                name = name,
-                nextButtonEnabled = name.isValid,
-            ) { event ->
-                when (event) {
-                    SetNameUiEvent.Next -> {
-                        require(name.isValid) {
-                            "Name - next button should not be enabled if the name is invalid"
-                        }
-                        step = Step.EmailVerification
-                    }
-                }
-            }
-
             Step.Loading -> CreateAccountUiState.Loading
         }
     }
@@ -161,5 +138,4 @@ private enum class Step {
     Loading,
     EmailAndPassword,
     EmailVerification,
-    SetName,
 }

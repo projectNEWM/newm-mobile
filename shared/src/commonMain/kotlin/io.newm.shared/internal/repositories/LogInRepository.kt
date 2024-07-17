@@ -118,7 +118,6 @@ internal class LogInRepository : KoinComponent {
     suspend fun registerUser(
         firstName: String,
         lastName: String,
-        nickname: String,
         pictureUrl: String,
         email: String,
         newPassword: String,
@@ -130,7 +129,6 @@ internal class LogInRepository : KoinComponent {
             NewUser(
                 firstName = firstName,
                 lastName = lastName,
-                nickname = nickname,
                 pictureUrl = pictureUrl,
                 email = email,
                 newPassword = newPassword,

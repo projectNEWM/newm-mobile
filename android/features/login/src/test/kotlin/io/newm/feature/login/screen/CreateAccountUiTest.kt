@@ -44,12 +44,5 @@ enum class TestCase(
             nextButtonEnabled = true,
             eventSink = {},
         )
-    ),
-    WHAT_SHOULD_WE_CALL_YOU(
-        state = CreateAccountUiState.SetNameUiState(
-            name = TextFieldState(),
-            nextButtonEnabled = true,
-            eventSink = {},
-        )
-    ),
+    )
 }

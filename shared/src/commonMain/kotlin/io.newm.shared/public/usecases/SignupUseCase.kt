@@ -28,7 +28,6 @@ interface SignupUseCase {
      * Registers a new user with the provided details.
      * This method completes the user registration process.
      *
-     * @param nickname The nickname of the user.
      * @param email The email address of the user.
      * @param password The password chosen by the user.
      * @param passwordConfirmation The password confirmation, should match the `password`.
@@ -38,7 +37,6 @@ interface SignupUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     suspend fun registerUser(
-        nickname: String,
         email: String,
         password: String,
         passwordConfirmation: String,
