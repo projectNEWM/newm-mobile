@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
 import io.newm.core.theme.Black90
 import io.newm.core.theme.Gray400
-import io.newm.core.theme.SystemRed
-import io.newm.core.theme.White
+import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -48,25 +47,22 @@ fun ProfileBottomSheetLayout(
                     thickness = 1.dp,
                     color = Gray400
                 )
-                Column(modifier = Modifier.padding(24.dp)) {
+                Column(modifier = Modifier.padding(16.dp)) {
                     SecondaryButton(
-                        text = stringResource(R.string.profile_privacy_policy),
-                        textColor = White,
+                        labelResId = R.string.profile_privacy_policy,
                         onClick = onShowPrivacyPolicy
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     SecondaryButton(
-                        text = stringResource(R.string.profile_terms_and_condition),
-                        textColor = White,
+                        labelResId = R.string.profile_terms_and_condition,
                         onClick = onShowTermsAndConditions
                     )
-                    Spacer(modifier = Modifier.height(28.dp))
-                    SecondaryButton(
-                        text = stringResource(R.string.user_account_logout),
-                        textColor = SystemRed,
+                    Spacer(modifier = Modifier.height(32.dp))
+                    PrimaryButton(
+                        text = stringResource(id = R.string.user_account_logout),
                         onClick = onLogout
                     )
-                    Spacer(modifier = Modifier.height(48.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
             }
         },

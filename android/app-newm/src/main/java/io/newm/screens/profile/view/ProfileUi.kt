@@ -51,12 +51,10 @@ import io.newm.core.theme.NewmTheme
 import io.newm.core.theme.OceanGreen
 import io.newm.core.theme.Pinkish
 import io.newm.core.theme.Purple
-import io.newm.core.theme.SystemRed
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.ConfirmationDialog
 import io.newm.core.ui.LoadingScreen
-import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
@@ -308,32 +306,6 @@ private fun WalletButton(
             },
         )
     }
-}
-
-@Composable
-private fun LogoutButtonWithConfirmation(
-    name: String,
-    openDialog: MutableState<Boolean>,
-    logout: () -> Unit,
-) {
-    SecondaryButton(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
-        text = stringResource(R.string.user_account_logout),
-        textColor = SystemRed,
-        onClick = { openDialog.value = true }
-    )
-    ConfirmationDialog(
-        title = stringResource(R.string.logout_dialog_title, name),
-        message = stringResource(R.string.logout_dialog_message),
-        isOpen = openDialog,
-        onConfirm = {
-            logout()
-        },
-        onDismiss = {
-            // Handle the cancellation of logout here
-            openDialog.value = false
-        }
-    )
 }
 
 @Preview(showBackground = true)

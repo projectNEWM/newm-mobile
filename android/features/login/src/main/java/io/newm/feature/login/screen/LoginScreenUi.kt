@@ -2,10 +2,13 @@ package io.newm.feature.login.screen
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -18,12 +21,15 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
+import io.newm.core.theme.inter
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
@@ -32,6 +38,7 @@ import io.newm.feature.login.screen.login.LoginScreenUiState
 import io.newm.feature.login.screen.login.LoginUiEvent.ForgotPasswordClick
 import io.newm.feature.login.screen.login.LoginUiEvent.OnLoginClick
 import io.newm.feature.login.screen.password.Password
+import io.newm.feature.login.screen.welcome.WelcomeScreenUiEvent.CreateAccountClicked
 
 internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
 
@@ -42,7 +49,6 @@ class LoginScreenUi : Ui<LoginScreenUiState> {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginScreenContent(
     state: LoginScreenUiState,
@@ -56,11 +62,17 @@ internal fun LoginScreenContent(
     PreLoginArtistBackgroundContentTemplate(
         isLoading = state.isLoading,
         header = {
-            TextButton(
-                modifier = Modifier.align(Alignment.End),
-                onClick = { eventSink(ForgotPasswordClick) }) {
-                Text("Forgot your password?")
-            }
+            Text(
+                text = "Forgot your password?",
+                fontSize = 16.sp,
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(16.dp)
+                    .clickable { eventSink(ForgotPasswordClick) }
+            )
         }
     ) {
         Email(
