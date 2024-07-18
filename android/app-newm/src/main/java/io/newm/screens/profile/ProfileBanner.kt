@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BrushPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -53,7 +54,8 @@ fun ProfileBanner(
                 .size(140.dp)
                 .align(Alignment.BottomCenter)
                 .clip(CircleShape),
-            placeholder = gradient(),
+            placeholder = painterResource(R.drawable.ic_default_moster),
+            error = painterResource(R.drawable.ic_default_moster),
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
