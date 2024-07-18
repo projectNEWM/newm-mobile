@@ -1,9 +1,10 @@
-@file:kotlin.OptIn(ExperimentalMaterialApi::class)
+@file:kotlin.OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
 
 package io.newm.feature.barcode.scanner
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -36,6 +37,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -69,16 +71,19 @@ import io.newm.core.theme.GlassSmith
 import io.newm.core.theme.Gray23
 import io.newm.core.theme.Gray400
 import io.newm.core.theme.Gray6F
+import io.newm.core.theme.GraySuit
 import io.newm.core.theme.LightSkyBlue
 import io.newm.core.theme.NewmTheme
 import io.newm.core.theme.OceanGreen
 import io.newm.core.theme.SteelPink
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
+import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.textGradient
 import io.newm.core.ui.wallet.buttonGradient
 import io.newm.shared.NewmAppLogger
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.concurrent.Executors
@@ -148,14 +153,14 @@ class BarcodeScannerActivity : ComponentActivity() {
         val bottomSheetState =
             rememberModalBottomSheetState(
                 initialValue = ModalBottomSheetValue.Hidden,
-                skipHalfExpanded = true
+                skipHalfExpanded = false
             )
         val coroutineScope = rememberCoroutineScope()
 
         ModalBottomSheetLayout(
             sheetState = bottomSheetState,
             sheetContent = {
-                InstructionList()
+                InstructionList(bottomSheetState, coroutineScope)
             },
             content = {
                 Column(
@@ -212,30 +217,24 @@ class BarcodeScannerActivity : ComponentActivity() {
 
     @Composable
     fun CopyToClipboardButton() {
-        val context = LocalContext.current
         val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
         Button(
             onClick = {
                 clipboardManager.setText(androidx.compose.ui.text.AnnotatedString("https://newm.tools/"))
-                Toast
-                    .makeText(context, "URL copied to clipboard", Toast.LENGTH_SHORT)
-                    .show()
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .background(buttonGradient)
-                .clip(RoundedCornerShape(8.dp)),
+                .clip(RoundedCornerShape(8.dp))
+                .background(buttonGradient),
             elevation = null,
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-        )
-        {
+        ) {
             Text(
-                text = "Visit https://newm.tools/",
+                text = "https://newm.tools/",
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 color = GlassSmith
             )
             Icon(
@@ -263,38 +262,32 @@ class BarcodeScannerActivity : ComponentActivity() {
     }
 
     @Composable
-    fun InstructionList() {
+    fun InstructionList(
+        bottomSheetState: ModalBottomSheetState,
+        coroutineScope: CoroutineScope
+    ) {
         val instructions = listOf(
             R.string.newm_connect_wallet_instruction_1,
-            R.string.newm_connect_wallet_instruction_2,
-            R.string.newm_connect_wallet_instruction_3,
-            R.string.newm_connect_wallet_instruction_4,
-            R.string.newm_connect_wallet_instruction_5,
-            R.string.newm_connect_wallet_instruction_6,
-            R.string.newm_connect_wallet_instruction_7,
-            R.string.newm_connect_wallet_instruction_8,
-            R.string.newm_connect_wallet_instruction_9,
+            R.string.newm_connect_wallet_instruction_2
         )
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .background(MaterialTheme.colors.surface, shape = MaterialTheme.shapes.large)
                 .padding(vertical = 32.dp, horizontal = 16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.newm_connect_wallet_instruction_title),
+                text = stringResource(id = R.string.newm_connect_wallet_instruction_title).uppercase(),
                 style = TextStyle(
                     fontFamily = inter,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    color = White
-                )
+                    fontSize = 12.sp,
+                    color = Gray6F
+                ),
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-            Divider(color = Gray400)
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             instructions.forEach { instructionResId ->
                 Text(
@@ -302,14 +295,31 @@ class BarcodeScannerActivity : ComponentActivity() {
                     style = TextStyle(
                         fontFamily = inter,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         color = White
                     )
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
             }
-            Spacer(modifier = Modifier.height(16.dp))
             CopyToClipboardButton()
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "or continue on desktop at the same address",
+                style = TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    color = GraySuit
+                ),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+
+            SecondaryButton(labelResId = R.string.got_it, onClick = {
+                coroutineScope.launch {
+                    bottomSheetState.hide()
+                }
+            })
         }
     }
 
