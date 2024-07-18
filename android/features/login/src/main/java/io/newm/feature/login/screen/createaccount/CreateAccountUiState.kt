@@ -22,16 +22,6 @@ sealed interface CreateAccountUiState : CircuitUiState {
         val nextButtonEnabled: Boolean,
         val eventSink: (EmailVerificationUiEvent) -> Unit,
     ) : CreateAccountUiState
-
-    data class SetNameUiState(
-        val name: TextFieldState,
-        val nextButtonEnabled: Boolean,
-        val eventSink: (SetNameUiEvent) -> Unit,
-    ) : CreateAccountUiState
-}
-
-interface SetNameUiEvent : CircuitUiEvent {
-    object Next : SetNameUiEvent
 }
 
 sealed interface EmailVerificationUiEvent : CircuitUiEvent {

@@ -16,12 +16,13 @@ fun ProfileHeader(
     nickname: String,
     email: String
 ) {
+    // TODO: Replace nickname with user's name
     Text(
         modifier = Modifier
             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally),
-        text = nickname,
+        text = nickname.ifEmpty { "Welcome to NEWM" },
         style = formNameStyle
     )
     Text(
