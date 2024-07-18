@@ -304,7 +304,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             CopyToClipboardButton()
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "or continue on desktop at the same address",
+                text = getString(R.string.wallet_desktop_option),
                 style = TextStyle(
                     fontFamily = inter,
                     fontWeight = FontWeight.Normal,

@@ -20,6 +20,7 @@
     <string name="force_app_update_button">Update Now</string>
     <string name="force_app_update_message">To ensure the best performance and latest features, please update the app. The update might include new features, improved performance, bug fixes, and more!</string>
     <string name="force_app_update_title">An update is available</string>
+    <string name="got_it">Got it</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="home">Home</string>
@@ -42,8 +43,10 @@
     <string name="logout_dialog_message">Are you sure you want to log out?</string>
     <string name="logout_dialog_title">👋 %s, not so fast!</string>
     <string name="marketplace">Market</string>
+    <string name="newm_connect_wallet_instruction_1">1. Open your Cardano supported web3 wallet app</string>
+    <string name="newm_connect_wallet_instruction_2">2. Use this URL to connect your wallet</string>
+    <string name="newm_connect_wallet_instruction_title">how to connect</string>
     <string name="next">Next</string>
-    <string name="got_it">Got it</string>
     <string name="nft_library">NFT Library</string>
     <string name="password">Password</string>
     <string name="previous">Previous</string>
@@ -99,9 +102,7 @@
     <string name="view_all">VIEW ALL</string>
     <string name="view_more">VIEW MORE</string>
     <string name="wallet">Wallet</string>
+    <string name="wallet_desktop_option">or continue on desktop at the same address</string>
     <string name="welcome">Hey %s 👋</string>
     <string name="welcome_to_newm">Welcome to NEWM</string>
-    <string name="newm_connect_wallet_instruction_title">how to connect</string>
-    <string name="newm_connect_wallet_instruction_1">1. Open your Cardano supported web3 wallet app</string>
-    <string name="newm_connect_wallet_instruction_2">2. Use this URL to connect your wallet</string>
 </resources>
