@@ -7,14 +7,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.google.android.gms.common.SignInButton
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
+import io.newm.core.theme.inter
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.feature.login.screen.LoginPageMainImage
@@ -39,9 +39,20 @@ fun WelcomeScreenUi(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = stringResource(id = R.string.create_account),
+                fontSize = 16.sp,
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .clickable { onEvent(CreateAccountClicked) }
+            )
+
             LoginPageMainImage(R.drawable.ic_newm_logo)
             Text(
-                text = "Welcome to NEWM",
+                text = stringResource(id = R.string.welcome_to_newm),
                 fontSize = 30.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = MaterialTheme.colors.onBackground
@@ -49,28 +60,19 @@ fun WelcomeScreenUi(
             Spacer(modifier = Modifier.weight(1f))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(all = 16.dp)
             ) {
-                SignInWithGoogleButton(onEvent)
                 PrimaryButton(
-                    text = "Login",
+                    text = stringResource(id = R.string.login_with_email),
                     onClick = { onEvent(LoginClicked) },
                 )
                 SecondaryButton(
-                    text = "Create new account",
-                    onClick = { onEvent(CreateAccountClicked) }
+                    labelResId = R.string.login_with_google,
+                    onClick = { onEvent(WelcomeScreenUiEvent.OnGoogleSignInClicked) },
+                    iconResId = R.drawable.ic_google_g
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun SignInWithGoogleButton(onEvent: (WelcomeScreenUiEvent) -> Unit) {
-    AndroidView(factory = { context -> SignInButton(context) }) { button ->
-        button.apply {
-            setSize(SignInButton.SIZE_WIDE)
-            setOnClickListener { onEvent(WelcomeScreenUiEvent.OnGoogleSignInClicked) }
         }
     }
 }

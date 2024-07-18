@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,6 +17,7 @@ import io.newm.feature.login.screen.email.Email
 import io.newm.feature.login.screen.password.Password
 import io.newm.core.resources.R
 import io.newm.core.ui.ToastSideEffect
+import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.feature.login.screen.PreLoginArtistBackgroundContentTemplate
@@ -69,9 +71,9 @@ fun EmailAndPasswordUi(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SecondaryButton(
+        PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = "Next",
+            text = stringResource(id = R.string.next),
             onClick = {
                 onEvent(SignupFormUiEvent.Next)
             },

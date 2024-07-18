@@ -23,8 +23,8 @@ import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
-import io.newm.feature.login.R
 import io.newm.feature.login.screen.TextFieldState
+import io.newm.core.resources.R
 
 @Composable
 internal fun EmailVerificationUi(

@@ -71,7 +71,6 @@ internal fun ResetPasswordScreenContent(
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class)
 private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) {
     val eventSink = state.eventSink
     val focusRequester = remember { FocusRequester() }
