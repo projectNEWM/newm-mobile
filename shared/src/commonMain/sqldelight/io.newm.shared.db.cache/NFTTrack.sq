@@ -11,7 +11,8 @@ CREATE TABLE NFTTrack (
     duration INTEGER NOT NULL, -- Duration in seconds
     artists TEXT NOT NULL,
     genres TEXT NOT NULL,
-    moods TEXT NOT NULL
+    moods TEXT NOT NULL,
+    isStreamToken INTEGER NOT NULL DEFAULT 0
 );
 
 -- Select all tracks
@@ -27,8 +28,8 @@ WHERE id = ?;
 
 -- Insert or replace a track
 insertOrReplaceTrack:
-REPLACE INTO NFTTrack (id, policyId,  title, assetName, amount, imageUrl, audioUrl, duration, artists, genres, moods)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+REPLACE INTO NFTTrack (id, policyId, title, assetName, amount, imageUrl, audioUrl, duration, artists, genres, moods, isStreamToken)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 -- Delete all tracks
 deleteAll:

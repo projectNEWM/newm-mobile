@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
 internal class NFTRepository(
     private val networkService: NFTNetworkService,
     private val cacheService: NFTCacheService,
-    private val policyIdsRepository: NewmPolicyIdsRepository,
     private val logger: NewmAppLogger
 ) {
 
@@ -35,21 +36,15 @@ internal class NFTRepository(
         }
     }
 
-    fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> =
-        combine(
-            cacheService.getAllTracks(),
-            policyIdsRepository.getPolicyIds()
-        ) { walletNFTs, policyIds ->
-            walletNFTs.filter { track -> track.policyId !in policyIds }
-        }
+    fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
+        return cacheService.getAllTracks()
+            .map { tracks -> tracks.filter { !it.isStreamToken } }
+    }
 
-    fun getAllStreamTokensFlow(): Flow<List<NFTTrack>> =
-        combine(
-            cacheService.getAllTracks(),
-            policyIdsRepository.getPolicyIds()
-        ) { walletNFTs, policyIds ->
-            walletNFTs.filter { track -> track.policyId in policyIds }
-        }
+    fun getAllStreamTokensFlow(): Flow<List<NFTTrack>> {
+        return cacheService.getAllTracks()
+            .map { tracks -> tracks.filter { it.isStreamToken } }
+    }
 
     fun deleteAllTracksNFTsCache() {
         cacheService.deleteAllNFTs()
