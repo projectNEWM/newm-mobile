@@ -113,6 +113,7 @@ private fun makeMockTrack(
 		duration = duration,
 		artists = artists,
 		genres = arrayOf("Jazz").asList(),
-		moods = arrayOf("Rock").asList()
+		moods = arrayOf("Rock").asList(),
+        isStreamToken = false
     )
 }

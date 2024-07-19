@@ -18,7 +18,6 @@ import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.RemoteConfigRepositoryImpl
-import io.newm.shared.internal.repositories.NewmPolicyIdsRepository
 import io.newm.shared.internal.repositories.PlaylistRepository
 import io.newm.shared.internal.repositories.RemoteConfigRepository
 import io.newm.shared.internal.repositories.UserRepository
@@ -26,7 +25,6 @@ import io.newm.shared.internal.api.CardanoWalletAPI
 import io.newm.shared.internal.api.GenresAPI
 import io.newm.shared.internal.api.LoginAPI
 import io.newm.shared.internal.api.NEWMWalletConnectionAPI
-import io.newm.shared.internal.api.NewmPolicyIdsAPI
 import io.newm.shared.internal.api.PlaylistAPI
 import io.newm.shared.internal.api.UserAPI
 import io.newm.shared.internal.implementations.DisconnectWalletUseCaseImpl
@@ -36,10 +34,8 @@ import io.newm.shared.internal.implementations.SyncWalletConnectionsUseCaseImpl
 import io.newm.shared.internal.repositories.NFTRepository
 import io.newm.shared.internal.repositories.WalletRepository
 import io.newm.shared.internal.services.cache.NFTCacheService
-import io.newm.shared.internal.services.cache.NewmPolicyIdsCacheService
 import io.newm.shared.internal.services.cache.WalletConnectionCacheService
 import io.newm.shared.internal.services.network.NFTNetworkService
-import io.newm.shared.internal.services.network.NewmPolicyIdsNetworkService
 import io.newm.shared.internal.services.network.WalletConnectionNetworkService
 import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
@@ -97,7 +93,6 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { CardanoWalletAPI(get()) }
     single { GenresAPI(get()) }
     single { LoginAPI(get(), get()) }
-    single { NewmPolicyIdsAPI(get()) }
     single { NEWMWalletConnectionAPI(get()) }
     single { PlaylistAPI(get()) }
     single { UserAPI(get(), get()) }
@@ -106,14 +101,11 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { WalletConnectionCacheService(get()) }
     single { NFTNetworkService(get()) }
     single { NFTCacheService(get()) }
-    single { NewmPolicyIdsNetworkService(get()) }
-    single { NewmPolicyIdsCacheService(get()) }
     // Internal Repositories
     single { WalletRepository(get(), get(), get()) }
-    single { NFTRepository(get(), get(), get(), get()) }
+    single { NFTRepository(get(), get(), get()) }
     single { GenresRepository() }
     single { LogInRepository() }
-    single { NewmPolicyIdsRepository(get(), get(), get(), get()) }
     single { PlaylistRepository() }
     single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get(), get()) }
     single { UserRepository(get(), get(), get()) }

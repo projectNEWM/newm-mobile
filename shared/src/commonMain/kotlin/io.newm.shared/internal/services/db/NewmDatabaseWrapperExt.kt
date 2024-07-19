@@ -21,6 +21,7 @@ fun NewmDatabaseWrapper.getTrack(id: String): NFTTrack? =
             artists = track.artists.split(","),
             genres = track.genres.split(","),
             moods = track.moods.split(","),
+            isStreamToken = track.isStreamToken == 1L,
         )
     }
 
@@ -41,7 +42,8 @@ fun NewmDatabaseWrapper.getAllTracks(): Flow<List<NFTTrack>> =
                     duration = track.duration,
                     artists = track.artists.split(","),
                     genres = track.genres.split(","),
-                    moods = track.genres.split(",")
+                    moods = track.genres.split(","),
+                    isStreamToken = track.isStreamToken == 1L,
                 )
             }
         }
@@ -60,7 +62,8 @@ fun NewmDatabaseWrapper.cacheNFTTracks(nftTracks: List<NFTTrack>) {
                 duration = track.duration,
                 artists = track.artists.joinToString(","),
                 genres = track.genres.joinToString(","),
-                moods = track.moods.joinToString(",")
+                moods = track.moods.joinToString(","),
+                isStreamToken = if (track.isStreamToken) 1L else 0L
             )
         }
     }

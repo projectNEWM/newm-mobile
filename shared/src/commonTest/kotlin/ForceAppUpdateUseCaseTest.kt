@@ -56,8 +56,8 @@ class ForceAppUpdateUseCaseTest {
         override val appVersion: String = fakeVersion
         override val baseUrl: String = "https://example.com"
         override val sentryAuthToken: String = "sentryAuthToken"
+        override val androidSentryDSN: String = "androidSentryDSN"
         override val googleAuthClientId: String = "googleAuthClientId"
-        override val walletConnectProjectId: String = "walletConnectProjectId"
         override val recaptchaSiteKey: String = "recaptchaSiteKey"
         override val isStagingMode: Boolean = false
     }
