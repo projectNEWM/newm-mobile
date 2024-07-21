@@ -37,5 +37,6 @@ fun Password(
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         helperText = passwordState.getError(),
+        singleLine = true,
     )
 }

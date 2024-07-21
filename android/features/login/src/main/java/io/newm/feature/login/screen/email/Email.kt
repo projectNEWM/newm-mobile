@@ -35,5 +35,6 @@ fun Email(
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         helperText = emailState.getError(),
+        singleLine = true,
     )
 }

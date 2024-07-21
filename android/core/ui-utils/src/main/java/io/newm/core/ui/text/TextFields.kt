@@ -114,7 +114,8 @@ fun TextFieldWithLabel(
     keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     helperText: String? = null,
-    textfieldBackgroundColor: Color = MaterialTheme.colors.surface
+    textfieldBackgroundColor: Color = MaterialTheme.colors.surface,
+    singleLine: Boolean = false,
 ) {
     val isInputMasked = remember { mutableStateOf(isPassword) }
     Column(
@@ -169,6 +170,7 @@ fun TextFieldWithLabel(
             } else {
                 null
             },
+            singleLine = singleLine,
         )
         Text(
             text = helperText.orEmpty(),
