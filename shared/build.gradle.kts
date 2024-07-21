@@ -150,5 +150,6 @@ room {
 
 dependencies {
 	implementation(libs.androidx.sqlite.framework.android)
+	implementation(libs.androidx.room.common)
 	ksp(libs.androidx.room.compiler)
 }

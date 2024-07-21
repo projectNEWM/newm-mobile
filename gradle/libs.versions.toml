@@ -49,6 +49,7 @@ testParameterInjector = "1.16"
 uiUtil = "1.6.8"
 sqliteBundled = "2.5.0-SNAPSHOT"
 sqliteFrameworkAndroid = "2.5.0-alpha04"
+roomCommon = "2.6.1"
 
 [libraries]
 android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "coroutinesExtensions" }
@@ -133,6 +134,7 @@ sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", v
 store5 = { module = "org.mobilenativefoundation.store:store5", version.ref = "store5" }
 test-parameter-injector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 androidx-sqlite-framework-android = { group = "androidx.sqlite", name = "sqlite-framework-android", version.ref = "sqliteFrameworkAndroid" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

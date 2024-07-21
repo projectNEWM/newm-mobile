@@ -51,6 +51,8 @@ data class DBNFTTrack(
     val genres: List<String>,
     @SerialName("moods")
     val moods: List<String>,
+    @SerialName("isStreamToken")
+    val isStreamToken: Boolean,
     val isDownloaded: Boolean = false
 )
 
@@ -67,6 +69,7 @@ fun DBNFTTrack.toNFTTrack(): NFTTrack {
         artists = artists,
         genres = genres,
         moods = moods,
+        isStreamToken = isStreamToken,
         isDownloaded = isDownloaded
     )
 }
@@ -84,6 +87,7 @@ fun NFTTrack.toDBNFTTrack(): DBNFTTrack {
         artists = artists,
         genres = genres,
         moods = moods,
+        isStreamToken = isStreamToken,
         isDownloaded = isDownloaded
     )
 }
