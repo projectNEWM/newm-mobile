@@ -13,16 +13,18 @@ import io.newm.core.ui.text.formNameStyle
 
 @Composable
 fun ProfileHeader(
-    nickname: String,
+    firstName: String,
+    lastName: String,
     email: String
 ) {
-    // TODO: Replace nickname with user's name
+    val fullName = if(firstName.isNotEmpty() || lastName.isNotEmpty()) "$firstName $lastName" else ""
+
     Text(
         modifier = Modifier
             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally),
-        text = nickname.ifEmpty { "Welcome to NEWM" },
+        text = fullName.ifEmpty { "Welcome to NEWM" },
         style = formNameStyle
     )
     Text(

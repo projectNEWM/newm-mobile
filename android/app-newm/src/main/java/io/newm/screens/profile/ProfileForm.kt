@@ -27,7 +27,8 @@ import io.newm.feature.login.screen.password.Password
 @Composable
 fun ProfileForm(
     email: String,
-    nicknameState: TextFieldState,
+    firstName: TextFieldState,
+    lastName: TextFieldState,
     currentPasswordState: TextFieldState,
     newPasswordState: TextFieldState,
     confirmNewPasswordState: TextFieldState,
@@ -46,8 +47,15 @@ fun ProfileForm(
                     .padding(top = 12.dp, start = 12.dp, end = 12.dp)
             ) {
                 Email(
-                    label = R.string.profile_form_nickname,
-                    emailState = nicknameState,
+                    label = R.string.profile_form_first_name,
+                    emailState = firstName,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                    )
+                )
+                Email(
+                    label = R.string.profile_form_last_name,
+                    emailState = lastName,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next,
                     )

@@ -99,7 +99,8 @@ private fun ProfileEditUiContent(
                 onNavigationClick = { onEvent(OnBack) }
             )
             ProfileHeader(
-                nickname = profile.nickname,
+                firstName = profile.firstName,
+                lastName = profile.lastName,
                 email = profile.email,
             )
             Spacer(modifier = Modifier.height(40.dp))
@@ -112,7 +113,8 @@ private fun ProfileEditUiContent(
             }
             ProfileForm(
                 email = profile.email,
-                nicknameState = state.nicknameState,
+                firstName = state.firstName,
+                lastName = state.lastName,
                 currentPasswordState = state.currentPasswordState,
                 newPasswordState = state.newPasswordState,
                 confirmNewPasswordState = state.confirmPasswordState,
@@ -165,7 +167,8 @@ private fun ProfileScreenPreview() {
                 profile = mockUsers.first().toProfile(),
                 submitButtonEnabled = true,
                 showConnectWallet = true,
-                nicknameState = TextFieldState(),
+                firstName = TextFieldState(),
+                lastName = TextFieldState(),
                 currentPasswordState = TextFieldState(),
                 newPasswordState = TextFieldState(),
                 confirmPasswordState = TextFieldState(),
@@ -179,7 +182,8 @@ private fun ProfileScreenPreview() {
 private fun User.toProfile(): Content.Profile {
     return Content.Profile(
         email = email.orEmpty(),
-        nickname = nickname.orEmpty(),
+        firstName = firstName.orEmpty(),
+        lastName = lastName.orEmpty(),
         pictureUrl = pictureUrl.orEmpty(),
         bannerUrl = bannerUrl.orEmpty(),
     )

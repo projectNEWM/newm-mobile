@@ -8,7 +8,8 @@ sealed class ProfileEditUiState : CircuitUiState {
     data object Loading : ProfileEditUiState()
     data class Content(
         val profile: Profile,
-        val nicknameState: TextFieldState,
+        val firstName: TextFieldState,
+        val lastName: TextFieldState,
         val currentPasswordState: TextFieldState,
         val newPasswordState: TextFieldState,
         val confirmPasswordState: TextFieldState,
@@ -18,7 +19,8 @@ sealed class ProfileEditUiState : CircuitUiState {
         val eventSink: (ProfileEditUiEvent) -> Unit
     ) : ProfileEditUiState() {
         data class Profile(
-            val nickname: String,
+            val firstName: String,
+            val lastName: String,
             val email: String,
             val pictureUrl: String,
             val bannerUrl: String,

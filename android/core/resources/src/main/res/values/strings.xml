@@ -60,7 +60,8 @@
     <string name="profile_edit_button_label">Edit Profile</string>
     <string name="profile_faq">FAQ</string>
     <string name="profile_form_email">EMAIL ADDRESS</string>
-    <string name="profile_form_nickname">NICKNAME</string>
+    <string name="profile_form_first_name">FIRST NAME</string>
+    <string name="profile_form_last_name">LAST NAME</string>
     <string name="profile_form_password_confirm_password">CONFIRM NEW PASSWORD</string>
     <string name="profile_form_password_current_password">CURRENT PASSWORD</string>
     <string name="profile_form_password_new_password">NEW PASSWORD</string>
