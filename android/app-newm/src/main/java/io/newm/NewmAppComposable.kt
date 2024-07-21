@@ -88,7 +88,9 @@ internal fun NewmApp(logger: NewmAppLogger) {
         mutableStateOf(Screen.NFTLibrary)
     }
 
-    val backstack = rememberSaveableBackStack(listOf(currentRootScreen))
+    val backstack = rememberSaveableBackStack {
+        push(currentRootScreen)
+    }
     val navigator = rememberCircuitNavigator(backstack)
 
     val context = LocalContext.current
@@ -160,7 +162,7 @@ internal fun NewmApp(logger: NewmAppLogger) {
             NavigableCircuitContent(
                 modifier = Modifier.padding(padding),
                 navigator = newmNavigator,
-                backStack = backstack
+                backstack = backstack
             )
         }
 
