@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +36,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.palette.graphics.Palette
@@ -128,12 +131,13 @@ internal fun MusicPlayerViewer(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .safeDrawingPadding(),
+                .safeDrawingPadding()
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = 16.dp)) {
+                .padding(vertical = 16.dp)) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_down),
@@ -146,9 +150,14 @@ internal fun MusicPlayerViewer(
             Text(
                 text = song.title,
                 color = White,
-                fontFamily = inter,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                style = LocalTextStyle.current.copy(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 32.sp,
+                    lineBreak = LineBreak.Heading,
+                )
             )
             Text(
                 text = song.artist,
