@@ -17,7 +17,7 @@ fun ProfileHeader(
     lastName: String,
     email: String
 ) {
-    val fullName = if(firstName.isNotEmpty() || lastName.isNotEmpty()) "$firstName $lastName" else ""
+    val fullName = "${firstName.trim()} ${lastName.trim()}".trim()
 
     Text(
         modifier = Modifier
