@@ -1,6 +1,7 @@
 package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
+import io.newm.shared.NewmAppAnalyticsTracker
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.config.NewmSharedBuildConfigImpl
@@ -89,6 +90,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
     single { TokenManager(get()) }
     single { NewmAppLogger() }
+    single { NewmAppAnalyticsTracker() }
     // Internal API Services
     single { CardanoWalletAPI(get()) }
     single { GenresAPI(get()) }
