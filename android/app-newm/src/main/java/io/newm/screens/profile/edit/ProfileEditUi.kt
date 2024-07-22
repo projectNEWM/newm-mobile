@@ -44,6 +44,7 @@ import io.newm.screens.profile.ProfileHeader
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
 import io.newm.shared.public.models.User
+import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.models.mocks.mockUsers
 import kotlinx.coroutines.launch
 
@@ -104,17 +105,11 @@ private fun ProfileEditUiContent(
                 email = profile.email,
             )
             Spacer(modifier = Modifier.height(40.dp))
-            if (state.showConnectWallet) {
-                LinkWalletScreen(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                ) {
-                    onEvent(OnConnectWallet(it))
-                }
-            }
             ProfileForm(
                 email = profile.email,
                 firstName = state.firstName,
                 lastName = state.lastName,
+                canUserEditName = profile.canUserEditName,
                 currentPasswordState = state.currentPasswordState,
                 newPasswordState = state.newPasswordState,
                 confirmNewPasswordState = state.confirmPasswordState,
@@ -167,6 +162,7 @@ private fun ProfileScreenPreview() {
                 profile = mockUsers.first().toProfile(),
                 submitButtonEnabled = true,
                 showConnectWallet = true,
+                canUserEditName = true,
                 firstName = TextFieldState(),
                 lastName = TextFieldState(),
                 currentPasswordState = TextFieldState(),
@@ -184,6 +180,7 @@ private fun User.toProfile(): Content.Profile {
         email = email.orEmpty(),
         firstName = firstName.orEmpty(),
         lastName = lastName.orEmpty(),
+        canUserEditName = canEditName(),
         pictureUrl = pictureUrl.orEmpty(),
         bannerUrl = bannerUrl.orEmpty(),
     )

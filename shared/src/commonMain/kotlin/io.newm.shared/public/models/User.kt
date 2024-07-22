@@ -62,3 +62,11 @@ data class User(
     val newPassword: String? = null,
     val confirmPassword: String? = null
 )
+
+fun User.fullName(): String? {
+    return if(!firstName.isNullOrBlank() && !lastName.isNullOrBlank()) "$firstName $lastName" else null
+}
+
+fun User.canEditName(): Boolean {
+    return verificationStatus == "Unverified"
+}

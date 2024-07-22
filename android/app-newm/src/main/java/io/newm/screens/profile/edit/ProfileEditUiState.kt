@@ -10,6 +10,7 @@ sealed class ProfileEditUiState : CircuitUiState {
         val profile: Profile,
         val firstName: TextFieldState,
         val lastName: TextFieldState,
+        val canUserEditName: Boolean,
         val currentPasswordState: TextFieldState,
         val newPasswordState: TextFieldState,
         val confirmPasswordState: TextFieldState,
@@ -21,6 +22,7 @@ sealed class ProfileEditUiState : CircuitUiState {
         data class Profile(
             val firstName: String,
             val lastName: String,
+            val canUserEditName: Boolean,
             val email: String,
             val pictureUrl: String,
             val bannerUrl: String,

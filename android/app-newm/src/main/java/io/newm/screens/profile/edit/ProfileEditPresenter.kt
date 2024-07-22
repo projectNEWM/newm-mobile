@@ -23,6 +23,7 @@ import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.models.User
+import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
@@ -53,6 +54,7 @@ class ProfileEditPresenter(
                     bannerUrl = user.bannerUrl.orEmpty(),
                     firstName = user.firstName.orEmpty(),
                     lastName = user.lastName.orEmpty(),
+                    canUserEditName = user.canEditName(),
                     email = user.email.orEmpty(),
                 )
             }
@@ -110,6 +112,7 @@ class ProfileEditPresenter(
                 submitButtonEnabled = isFormDirty,
                 firstName = firstNameState,
                 lastName = lastNameState,
+                canUserEditName = profile.canUserEditName,
                 currentPasswordState = currentPasswordState,
                 newPasswordState = newPasswordState,
                 confirmPasswordState = confirmPasswordState,
