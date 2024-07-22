@@ -6,9 +6,11 @@ import coil.ImageLoaderFactory
 import io.newm.BuildConfig.*
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
+import io.newm.shared.NewmAppAnalyticsTracker
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
+import io.newm.utils.AndroidNewmAppAnalyticsTracker
 import io.newm.utils.AndroidNewmAppLogger
 import io.newm.utils.NewmImageLoaderFactory
 import io.sentry.Hint
@@ -27,6 +29,7 @@ open class NewmApplication : Application(), ImageLoaderFactory {
 
     private val logout: Logout by inject()
     private val logger: NewmAppLogger by inject()
+    private val analyticsTracker: NewmAppAnalyticsTracker by inject()
     private val imageLoaderFactory by lazy { NewmImageLoaderFactory(this) }
     private val config: NewmSharedBuildConfig by inject()
 
@@ -34,7 +37,7 @@ open class NewmApplication : Application(), ImageLoaderFactory {
         super.onCreate()
         initKoin()
         logout.register()
-        setupSentry()
+        bindClientImplementations()
     }
 
     private fun initKoin() {
@@ -49,7 +52,7 @@ open class NewmApplication : Application(), ImageLoaderFactory {
         }
     }
 
-    private fun setupSentry() {
+    private fun bindClientImplementations() {
         SentryAndroid.init(
             this
         ) { options: SentryAndroidOptions ->
@@ -64,7 +67,8 @@ open class NewmApplication : Application(), ImageLoaderFactory {
                     }
                 }
         }
-        logger.setClientLogger(AndroidNewmAppLogger())
+        analyticsTracker.setClientAnalyticsTracker(AndroidNewmAppAnalyticsTracker(logger))
+        logger.setClientLogger(AndroidNewmAppLogger(analyticsTracker))
     }
 
     override fun newImageLoader(): ImageLoader {
