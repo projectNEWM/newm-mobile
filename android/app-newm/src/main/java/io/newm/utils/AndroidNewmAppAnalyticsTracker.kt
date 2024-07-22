@@ -1,6 +1,5 @@
 package io.newm.utils
 
-import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -8,7 +7,6 @@ import com.google.firebase.analytics.logEvent
 import com.google.firebase.ktx.Firebase
 import io.newm.shared.AppAnalyticsTracker
 import io.newm.shared.NewmAppLogger
-import org.json.JSONObject
 
 /**
  * Implementation of [AppAnalyticsTracker] for Android using Firebase Analytics.
