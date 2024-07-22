@@ -155,7 +155,8 @@ private fun ProfileUiContent(
                 onOverflowTapped = { scope.launch { sheetState.show() } },
             )
             ProfileHeader(
-                nickname = user.nickname.orEmpty(),
+                firstName = user.firstName.orEmpty(),
+                lastName = user.lastName.orEmpty(),
                 email = user.email.orEmpty(),
             )
             Spacer(Modifier.height(40.dp))

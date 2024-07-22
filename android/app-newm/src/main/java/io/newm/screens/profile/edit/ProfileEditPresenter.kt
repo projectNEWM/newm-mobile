@@ -23,6 +23,7 @@ import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.models.User
+import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
@@ -51,14 +52,20 @@ class ProfileEditPresenter(
                 ProfileEditUiState.Content.Profile(
                     pictureUrl = user.pictureUrl.orEmpty(),
                     bannerUrl = user.bannerUrl.orEmpty(),
-                    nickname = user.nickname.orEmpty(),
+                    firstName = user.firstName.orEmpty(),
+                    lastName = user.lastName.orEmpty(),
+                    canUserEditName = user.canEditName(),
                     email = user.email.orEmpty(),
                 )
             }
         }
 
-        val nicknameState = remember(profile?.nickname) {
-            TextFieldState(profile?.nickname.orEmpty())
+        val firstNameState = remember(profile?.firstName) {
+            TextFieldState(profile?.firstName.orEmpty())
+        }
+
+        val lastNameState = remember(profile?.lastName) {
+            TextFieldState(profile?.lastName.orEmpty())
         }
 
         val currentPasswordState = remember {
@@ -79,13 +86,15 @@ class ProfileEditPresenter(
 
         val isFormDirty =
             remember(
-                nicknameState.isFocusedDirty,
+                firstNameState.isFocusedDirty,
+                lastNameState.isFocusedDirty,
                 currentPasswordState.isFocusedDirty,
                 newPasswordState.isFocusedDirty,
                 confirmPasswordState.isFocusedDirty
             ) {
                 listOf(
-                    nicknameState,
+                    firstNameState,
+                    lastNameState,
                     currentPasswordState,
                     newPasswordState,
                     confirmPasswordState
@@ -101,7 +110,9 @@ class ProfileEditPresenter(
                 profile = profile,
                 errorMessage = errorMessage,
                 submitButtonEnabled = isFormDirty,
-                nicknameState = nicknameState,
+                firstName = firstNameState,
+                lastName = lastNameState,
+                canUserEditName = profile.canUserEditName,
                 currentPasswordState = currentPasswordState,
                 newPasswordState = newPasswordState,
                 confirmPasswordState = confirmPasswordState,
@@ -114,7 +125,8 @@ class ProfileEditPresenter(
                                 currentPasswordState,
                                 newPasswordState,
                                 confirmPasswordState,
-                                nicknameState
+                                firstNameState,
+                                lastNameState
                             )
 
                             errorMessage = error
@@ -127,7 +139,8 @@ class ProfileEditPresenter(
                                 newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
                                 currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
                                 confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
-                                nickname = nicknameState.text,
+                                firstName = firstNameState.text,
+                                lastName = lastNameState.text,
                                 createdAt = "",
                                 id = ""
                             )
@@ -167,7 +180,8 @@ class ProfileEditPresenter(
         currentPasswordState: TextFieldState,
         newPasswordState: TextFieldState,
         confirmPasswordState: TextFieldState,
-        nicknameState: TextFieldState
+        firstNameState: TextFieldState,
+        lastNameState: TextFieldState
     ): String? {
         if (newPasswordState.text.isNotEmpty() && isPasswordValid(newPasswordState.text).not()) {
             return passwordValidationError(newPasswordState.text)
@@ -185,8 +199,12 @@ class ProfileEditPresenter(
             return "Please enter your current password"
         }
 
-        if (nicknameState.text.isEmpty()) {
-            return "Please enter a nickname"
+        if (firstNameState.text.isEmpty()) {
+            return "Please enter your name"
+        }
+
+        if (lastNameState.text.isEmpty()) {
+            return "Please enter your last name"
         }
 
         return null

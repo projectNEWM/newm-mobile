@@ -27,7 +27,9 @@ import io.newm.feature.login.screen.password.Password
 @Composable
 fun ProfileForm(
     email: String,
-    nicknameState: TextFieldState,
+    canUserEditName: Boolean,
+    firstName: TextFieldState,
+    lastName: TextFieldState,
     currentPasswordState: TextFieldState,
     newPasswordState: TextFieldState,
     confirmNewPasswordState: TextFieldState,
@@ -45,13 +47,37 @@ fun ProfileForm(
                 modifier = Modifier
                     .padding(top = 12.dp, start = 12.dp, end = 12.dp)
             ) {
-                Email(
-                    label = R.string.profile_form_nickname,
-                    emailState = nicknameState,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
+                if (canUserEditName) {
+                    Email(
+                        label = R.string.profile_form_first_name,
+                        emailState = firstName,
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                        )
                     )
-                )
+                    Email(
+                        label = R.string.profile_form_last_name,
+                        emailState = lastName,
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                        )
+                    )
+                } else {
+                    TextFieldWithLabel(
+                        labelResId = R.string.profile_form_first_name,
+                        value = firstName.text,
+                        onValueChange = { },
+                        enabled = false,
+                        textfieldBackgroundColor = Gray23,
+                    )
+                    TextFieldWithLabel(
+                        labelResId = R.string.profile_form_last_name,
+                        value = lastName.text,
+                        onValueChange = { },
+                        enabled = false,
+                        textfieldBackgroundColor = Gray23,
+                    )
+                }
                 TextFieldWithLabel(
                     labelResId = R.string.profile_form_email,
                     value = email,

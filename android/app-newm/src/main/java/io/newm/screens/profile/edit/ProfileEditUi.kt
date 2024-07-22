@@ -44,6 +44,7 @@ import io.newm.screens.profile.ProfileHeader
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
 import io.newm.shared.public.models.User
+import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.models.mocks.mockUsers
 import kotlinx.coroutines.launch
 
@@ -99,20 +100,16 @@ private fun ProfileEditUiContent(
                 onNavigationClick = { onEvent(OnBack) }
             )
             ProfileHeader(
-                nickname = profile.nickname,
+                firstName = profile.firstName,
+                lastName = profile.lastName,
                 email = profile.email,
             )
             Spacer(modifier = Modifier.height(40.dp))
-            if (state.showConnectWallet) {
-                LinkWalletScreen(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                ) {
-                    onEvent(OnConnectWallet(it))
-                }
-            }
             ProfileForm(
                 email = profile.email,
-                nicknameState = state.nicknameState,
+                firstName = state.firstName,
+                lastName = state.lastName,
+                canUserEditName = profile.canUserEditName,
                 currentPasswordState = state.currentPasswordState,
                 newPasswordState = state.newPasswordState,
                 confirmNewPasswordState = state.confirmPasswordState,
@@ -165,7 +162,9 @@ private fun ProfileScreenPreview() {
                 profile = mockUsers.first().toProfile(),
                 submitButtonEnabled = true,
                 showConnectWallet = true,
-                nicknameState = TextFieldState(),
+                canUserEditName = true,
+                firstName = TextFieldState(),
+                lastName = TextFieldState(),
                 currentPasswordState = TextFieldState(),
                 newPasswordState = TextFieldState(),
                 confirmPasswordState = TextFieldState(),
@@ -179,7 +178,9 @@ private fun ProfileScreenPreview() {
 private fun User.toProfile(): Content.Profile {
     return Content.Profile(
         email = email.orEmpty(),
-        nickname = nickname.orEmpty(),
+        firstName = firstName.orEmpty(),
+        lastName = lastName.orEmpty(),
+        canUserEditName = canEditName(),
         pictureUrl = pictureUrl.orEmpty(),
         bannerUrl = bannerUrl.orEmpty(),
     )
