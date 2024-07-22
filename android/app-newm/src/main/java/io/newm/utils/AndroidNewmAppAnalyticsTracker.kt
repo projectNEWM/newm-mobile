@@ -1,6 +1,7 @@
 package io.newm.utils
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.logEvent
@@ -28,21 +29,7 @@ class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAnalyticsTr
             logger.info(TAG, "Invalid event name: $eventName. Event not tracked.")
             return
         }
-
-        val bundle = Bundle().apply {
-            properties?.forEach { (key, value) ->
-                try {
-                    putValue(key, value)
-                } catch (e: Exception) {
-                    logger.error(
-                        TAG,
-                        "Error adding property '$key' with value '$value': ${e.message}",
-                        e
-                    )
-                }
-            }
-        }
-
+        val bundle = bundleOf(*properties?.toList()?.toTypedArray().orEmpty())
         firebaseAnalytics.logEvent(safeEventName, bundle)
     }
 
@@ -71,12 +58,10 @@ class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAnalyticsTr
         )
     }
 
-    // Generalized method to track button interactions
     override fun trackButtonInteraction(buttonName: String, eventType: String) {
         trackEvent(eventType, mapOf("button_name" to buttonName))
     }
 
-    // Method to track play button click with song details
     override fun trackPlayButtonClick(songId: String, songName: String) {
         trackEvent(
             "play_button_click", mapOf(
@@ -96,21 +81,6 @@ class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAnalyticsTr
 
     override fun trackUserScroll(percentage: Double) {
         trackEvent("user_scroll", mapOf("scroll_percentage" to percentage))
-    }
-
-    // Helper Functions:
-
-    private fun Bundle.putValue(key: String, value: Any?) {
-        when (value) {
-            null -> putString(key, null)
-            is String -> putString(key, value)
-            is Int -> putInt(key, value)
-            is Double -> putDouble(key, value)
-            is Boolean -> putBoolean(key, value)
-            is Long -> putLong(key, value)
-            is Array<*> -> putStringArray(key, value.map { it?.toString() }.toTypedArray())
-            else -> putString(key, JSONObject(value.toString()).toString())
-        }
     }
 
     private fun validateEventName(name: String): String? {
