@@ -73,11 +73,6 @@ class NFTLibraryPresenter(
             }
         }.collectAsRetainedState(initial = emptyList())
 
-        val playList = remember(
-            nftTracks,
-            streamTracks
-        ) { Playlist(nftTracks.toTrack() + streamTracks.toTrack()) }
-
         var filters: NFTLibraryFilters by rememberRetained {
             mutableStateOf(
                 NFTLibraryFilters(
@@ -95,6 +90,10 @@ class NFTLibraryPresenter(
             streamTracks.filterAndSort(query, filters)
         }
 
+        val playList = remember(
+            filteredNftTracks,
+            filteredStreamTokens
+        ) { Playlist(filteredNftTracks.toTrack() + filteredStreamTokens.toTrack()) }
 
         val showZeroResultFound = remember(query, nftTracks, streamTracks) {
             (query.isNotEmpty()
