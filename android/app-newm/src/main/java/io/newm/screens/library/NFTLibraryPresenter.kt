@@ -112,7 +112,7 @@ class NFTLibraryPresenter(
             }
         }
 
-        val isWalletEmpty = isWalletSynced && playList.tracks.isEmpty()
+        val isWalletEmpty = isWalletSynced && playList.tracks.isEmpty() && !showZeroResultFound
 
         return when {
             isLoading -> NFTLibraryState.Loading
