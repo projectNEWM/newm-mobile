@@ -218,10 +218,10 @@ class BarcodeScannerActivity : ComponentActivity() {
     @Composable
     fun CopyToClipboardButton() {
         val clipboardManager: ClipboardManager = LocalClipboardManager.current
-
+        val connectWalletUrl = stringResource(id = R.string.newm_tools_connect_wallet_url)
         Button(
             onClick = {
-                clipboardManager.setText(androidx.compose.ui.text.AnnotatedString("https://newm.tools/"))
+                clipboardManager.setText(androidx.compose.ui.text.AnnotatedString(connectWalletUrl))
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -231,7 +231,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
         ) {
             Text(
-                text = "https://newm.tools/",
+                text = getString(R.string.newm_tools_url),
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
