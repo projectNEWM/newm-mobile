@@ -75,7 +75,6 @@ class MusicPlayerImpl(
                 else -> PlaybackRepeatMode.REPEAT_OFF
             }
 
-            Log.d("MusicPlayer", "Updating playback status")
             PlaybackStatus(
                 state = state,
                 position = player.currentPosition,

@@ -29,11 +29,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -66,6 +64,7 @@ import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
 import io.newm.shared.NewmAppLogger
 import kotlinx.coroutines.launch
+import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
@@ -81,22 +80,27 @@ val LocalIsBottomBarVisible = compositionLocalOf { mutableStateOf(true) }
 @Composable
 internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
 
+val initialScreen = Screen.NFTLibrary
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun NewmApp(logger: NewmAppLogger) {
-    var currentRootScreen: Screen by remember {
-        mutableStateOf(Screen.NFTLibrary)
+    val backstack = rememberSaveableBackStack {
+        push(initialScreen)
     }
 
-    val backstack = rememberSaveableBackStack {
-        push(currentRootScreen)
-    }
-    val navigator = rememberCircuitNavigator(backstack)
+    val circuitNavigator = rememberCircuitNavigator(
+        backstack,
+        // Disabling back handler because we are using our own
+        enableBackHandler = false
+    )
 
     val context = LocalContext.current
-    val newmNavigator = rememberNewmNavigator(navigator, logger, {}, launchBrowser = { url ->
+    val newmNavigator = rememberNewmNavigator(circuitNavigator, logger, {}, launchBrowser = { url ->
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     })
+
+    val currentRootScreen = backstack.topRecord?.screen
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -106,10 +110,13 @@ internal fun NewmApp(logger: NewmAppLogger) {
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler(
-        enabled = sheetState.isVisible
+        enabled = backstack.size > 1 || currentRootScreen != initialScreen || sheetState.isVisible
     ) {
-        coroutineScope.launch {
-            sheetState.hide()
+
+        when {
+            sheetState.isVisible -> coroutineScope.launch { sheetState.hide() }
+            backstack.size > 1 -> newmNavigator.pop()
+            currentRootScreen != initialScreen -> newmNavigator.resetRoot(initialScreen)
         }
     }
 
@@ -151,8 +158,7 @@ internal fun NewmApp(logger: NewmAppLogger) {
                         NewmBottomNavigation(
                             currentRootScreen = currentRootScreen,
                             onNavigationSelected = {
-                                currentRootScreen = it
-                                navigator.resetRoot(it)
+                                circuitNavigator.resetRoot(it)
                             }
                         )
                     }
@@ -172,7 +178,7 @@ internal fun NewmApp(logger: NewmAppLogger) {
 
 @Composable
 internal fun NewmBottomNavigation(
-    currentRootScreen: Screen,
+    currentRootScreen: CircuitScreen?,
     onNavigationSelected: (Screen) -> Unit
 ) {
     Column(Modifier.height(76.dp)) {
