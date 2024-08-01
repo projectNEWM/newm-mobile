@@ -64,7 +64,7 @@ public struct ConnectWalletToAccountScannerView: View {
 	
 	@ViewBuilder
 	private var aimSubtitle: some View {
-		Text("Go to `https://newm.tools` on your desktop browser to connect your wallet.")
+		Text("Go to `https://tools.newm.io` on your desktop browser to connect your wallet.")
 			.font(Font.custom("Inter", size: 20))
 			.multilineTextAlignment(.center)
 			.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
