@@ -59,6 +59,7 @@ kotlin {
 				implementation(libs.ktor.serialization.kotlinx.json)
 				implementation(libs.ktor.client.auth)
 				implementation(libs.androidx.datastore.preferences)
+				implementation(libs.store5)
 			}
 		}
 		val commonTest by getting {
