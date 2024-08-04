@@ -7,6 +7,7 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.Validator
 
 internal class NftTrackStore(
     private val networkService: NFTNetworkService,
@@ -14,8 +15,7 @@ internal class NftTrackStore(
 ) : Store<Unit, List<NFTTrack>> by StoreBuilder.from(
     fetcher = Fetcher.of { _: Unit ->
         networkService.getWalletNFTs()
-    },
-    sourceOfTruth = SourceOfTruth.of(
+    }, sourceOfTruth = SourceOfTruth.of(
         reader = { _: Unit ->
             cacheService.getAllTracks()
         },
@@ -25,5 +25,6 @@ internal class NftTrackStore(
         },
         deleteAll = cacheService::deleteAllNFTs
     )
+).validator(Validator.by { it.isNotEmpty() } // If we have no data, we should always fetch
 ).build()
 

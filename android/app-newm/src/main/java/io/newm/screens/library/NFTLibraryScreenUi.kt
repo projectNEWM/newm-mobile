@@ -22,8 +22,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
@@ -123,6 +127,8 @@ fun NFTLibraryScreenUi(
                     onQueryChange = { query -> eventSink(OnQueryChange(query)) },
                     onPlaySong = { track -> eventSink(PlaySong(track)) },
                     onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) },
+                    refresh = { eventSink(NFTLibraryEvent.OnRefresh) },
+                    refreshing = state.refreshing,
                     onApplyFilters = { filters -> eventSink(OnApplyFilters(filters)) }
                 )
             }
@@ -142,11 +148,16 @@ private fun NFTTracks(
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: (String) -> Unit,
+    refresh: () -> Unit,
+    refreshing: Boolean,
     onApplyFilters: (NFTLibraryFilters) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val filterSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    Box(modifier = modifier) {
+
+    val pullRefreshState = rememberPullRefreshState(refreshing, refresh)
+
+    Box(modifier = modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -201,6 +212,13 @@ private fun NFTTracks(
                 }
             }
         }
+        PullRefreshIndicator(
+            refreshing = refreshing,
+            state = pullRefreshState,
+            contentColor = MaterialTheme.colors.primary,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
+
         SongFilterBottomSheet(filterSheetState, filters, onApplyFilters)
     }
 }
@@ -320,6 +338,7 @@ fun PreviewNftLibrary() {
                     sortType = NFTLibrarySortType.None,
                     showShortTracks = false
                 ),
+                refreshing = false,
                 eventSink = {}
             )
         )
