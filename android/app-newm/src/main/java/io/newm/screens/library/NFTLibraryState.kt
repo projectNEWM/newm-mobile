@@ -15,6 +15,7 @@ sealed interface NFTLibraryState : CircuitUiState {
         val streamTokenTracks: List<NFTTrack>,
         val showZeroResultFound: Boolean,
         val filters: NFTLibraryFilters,
+        val refreshing: Boolean,
         val eventSink: (NFTLibraryEvent) -> Unit,
     ) : NFTLibraryState
 

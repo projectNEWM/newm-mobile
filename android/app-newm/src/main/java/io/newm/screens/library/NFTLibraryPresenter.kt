@@ -51,12 +51,6 @@ class NFTLibraryPresenter(
 
         var query by rememberSaveable { mutableStateOf("") }
 
-        if (isWalletConnected == true) {
-            LaunchedEffect(Unit) {
-                walletNFTTracksUseCase.refresh()
-            }
-        }
-
         val nftTracks by remember(isWalletConnected) {
             if (isWalletConnected == true) {
                 walletNFTTracksUseCase.getAllCollectableTracksFlow()
@@ -114,6 +108,20 @@ class NFTLibraryPresenter(
 
         val isWalletEmpty = isWalletSynced && playList.tracks.isEmpty() && !showZeroResultFound
 
+        var refreshing by remember { mutableStateOf(false) }
+
+        fun refresh() = scope.launch {
+            refreshing = true
+            walletNFTTracksUseCase.refresh()
+            refreshing = false
+        }
+
+        if (isWalletConnected == true) {
+            LaunchedEffect(Unit) {
+                refresh()
+            }
+        }
+
         return when {
             isLoading -> NFTLibraryState.Loading
             isWalletConnected == false -> NFTLibraryState.LinkWallet { newmWalletConnectionId ->
@@ -128,6 +136,7 @@ class NFTLibraryPresenter(
                     streamTokenTracks = filteredStreamTokens,
                     showZeroResultFound = showZeroResultFound,
                     filters = filters,
+                    refreshing = refreshing,
                     eventSink = { event ->
                         when (event) {
                             is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
@@ -145,6 +154,7 @@ class NFTLibraryPresenter(
                             }
 
                             is NFTLibraryEvent.OnApplyFilters -> filters = event.filters
+                            NFTLibraryEvent.OnRefresh -> refresh()
                         }
                     }
                 )
