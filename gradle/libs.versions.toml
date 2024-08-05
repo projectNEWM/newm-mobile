@@ -44,6 +44,7 @@ processPhoenix = "2.1.2"
 recaptcha = "18.5.1"
 runtime = "1.5.5"
 soloader = "0.10.5"
+store5 = "5.1.0-alpha04"
 testParameterInjector = "1.16"
 uiUtil = "1.6.8"
 
@@ -125,6 +126,7 @@ recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "
 runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "runtime" }
 soloader = { module = "com.facebook.soloader:soloader", version.ref = "soloader" }
 sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "gradlePlugin" }
+store5 = { module = "org.mobilenativefoundation.store:store5", version.ref = "store5" }
 test-parameter-injector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 
 [plugins]
