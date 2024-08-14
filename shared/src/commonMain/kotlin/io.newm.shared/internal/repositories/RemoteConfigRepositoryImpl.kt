@@ -13,7 +13,7 @@ interface RemoteConfigRepository {
      *
      * @return The mobile configuration or null if an error occurs.
      */
-    suspend fun getMobileConfig(): MobileConfig?
+    suspend fun getMobileConfig(humanVerificationCode: String): MobileConfig?
 }
 
 /**
@@ -27,9 +27,9 @@ internal class RemoteConfigRepositoryImpl(
     private val logger: NewmAppLogger
 ) : RemoteConfigRepository {
 
-    override suspend fun getMobileConfig(): MobileConfig? {
+    override suspend fun getMobileConfig(humanVerificationCode: String): MobileConfig? {
         return try {
-            mobileConfigAPI.getMobileConfig()
+            mobileConfigAPI.getMobileConfig(humanVerificationCode)
         } catch (e: Exception) {
             logger.error("RemoteConfigRepositoryImpl", "Error fetching mobile config", e)
             null

@@ -28,7 +28,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -62,7 +65,10 @@ import io.newm.core.ui.utils.iconGradient
 import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
+import io.newm.screens.forceupdate.ForceAppUpdateState
+import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.shared.NewmAppLogger
+import io.newm.utils.ForceAppUpdateViewModel
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -84,7 +90,11 @@ val initialScreen = Screen.NFTLibrary
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-internal fun NewmApp(logger: NewmAppLogger) {
+internal fun NewmApp(
+    logger: NewmAppLogger,
+) {
+
+    val context = LocalContext.current
     val backstack = rememberSaveableBackStack {
         push(initialScreen)
     }
@@ -95,10 +105,10 @@ internal fun NewmApp(logger: NewmAppLogger) {
         enableBackHandler = false
     )
 
-    val context = LocalContext.current
-    val newmNavigator = rememberNewmNavigator(circuitNavigator, logger, {}, launchBrowser = { url ->
-        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-    })
+    val newmNavigator =
+        rememberNewmNavigator(circuitNavigator, logger, {}, launchBrowser = { url ->
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        })
 
     val currentRootScreen = backstack.topRecord?.screen
 
@@ -173,7 +183,6 @@ internal fun NewmApp(logger: NewmAppLogger) {
         }
 
     }
-
 }
 
 @Composable

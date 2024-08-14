@@ -7,14 +7,16 @@ import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.internal.api.models.MobileConfig
+import io.newm.shared.internal.api.utils.addHumanVerificationCodeToHeader
 import org.koin.core.component.KoinComponent
 
-internal class RemoteConfigAPI(networkClient: NetworkClientFactory) : KoinComponent {
+internal class RemoteConfigAPI(networkClient: NetworkClientFactory) {
 
     private val httpClient: HttpClient = networkClient.httpClient()
 
-    suspend fun getMobileConfig(): MobileConfig =
-        httpClient.get("v1/mobile-config") {
+    suspend fun getMobileConfig(humanVerificationCode: String): MobileConfig =
+        httpClient.get("/v1/client-config/mobile") {
             accept(ContentType.Application.Json)
+            addHumanVerificationCodeToHeader(humanVerificationCode)
         }.body()
 }

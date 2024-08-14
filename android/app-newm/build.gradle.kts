@@ -24,7 +24,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 5
-        versionName = "0.2.5"
+        versionName = "0.3.0"
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
     }
@@ -57,7 +57,6 @@ android {
             namespace = "io.newm"
             applicationId = "io.newm"
             applicationIdSuffix = ".dev"
-            versionNameSuffix = "-dev"
             dimension = "version"
         }
     }

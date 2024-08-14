@@ -3,7 +3,6 @@ package io.newm.shared.internal.api
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -25,8 +24,8 @@ import io.newm.shared.internal.api.models.NewUser
 import io.newm.shared.internal.api.models.RegisterException
 import io.newm.shared.internal.api.models.ResetPasswordException
 import io.newm.shared.internal.api.models.ResetPasswordRequest
+import io.newm.shared.internal.api.utils.addHumanVerificationCodeToHeader
 import io.newm.shared.public.models.error.KMMException
-import shared.getPlatformName
 
 
 internal class LoginAPI(
@@ -184,9 +183,4 @@ internal class LoginAPI(
             }
         }
     }
-}
-
-private fun HttpRequestBuilder.addHumanVerificationCodeToHeader(humanVerificationCode: String) {
-    this.headers.append("g-recaptcha-token", humanVerificationCode)
-    this.headers.append("g-recaptcha-platform", getPlatformName())
 }
