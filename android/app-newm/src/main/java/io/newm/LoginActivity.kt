@@ -7,10 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
-import com.google.android.recaptcha.Recaptcha
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -24,7 +24,6 @@ import io.newm.core.theme.NewmTheme
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.LoginScreenUi
 import io.newm.feature.login.screen.ResetPasswordScreen
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
@@ -38,18 +37,19 @@ import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.Screen.LoginLandingScreen
+import io.newm.screens.forceupdate.ForceAppUpdateState
+import io.newm.screens.forceupdate.ForceAppUpdateUi
+import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class LoginActivity : ComponentActivity() {
 
-    private val recaptchaClientProvider: RecaptchaClientProvider by inject()
-    private val buildConfig: NewmSharedBuildConfig by inject()
     private val logger: NewmAppLogger by inject()
+    private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
 
     // TODO inject
     private val circuit: Circuit = Circuit.Builder()
@@ -99,11 +99,18 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        initializeRecaptchaClient()
         setContent {
             NewmTheme(darkTheme = true) {
                 CircuitDependencies {
-                    WelcomeToNewm(logger, ::launchHomeActivity)
+                    val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
+
+                    if (updateRequired) {
+                        ForceAppUpdateUi(
+                            ForceAppUpdateState.Content(eventSink = { openAppPlayStore()})
+                        )
+                    } else {
+                        WelcomeToNewm(logger, ::launchHomeActivity)
+                    }
                 }
             }
         }
@@ -123,21 +130,6 @@ class LoginActivity : ComponentActivity() {
     private fun launchHomeActivity() {
         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
         finish()
-    }
-
-    private fun initializeRecaptchaClient() {
-        lifecycleScope.launch {
-            Recaptcha.getClient(application, buildConfig.recaptchaSiteKey, timeout = 20000L)
-                .onSuccess { client ->
-                    recaptchaClientProvider.setRecaptchaClient(client)
-                }.onFailure { exception ->
-                    logger.error(
-                        tag = "RecaptchaClient",
-                        message = "Failed to initialize Recaptcha client.",
-                        exception = exception
-                    )
-                }
-        }
     }
 }
 

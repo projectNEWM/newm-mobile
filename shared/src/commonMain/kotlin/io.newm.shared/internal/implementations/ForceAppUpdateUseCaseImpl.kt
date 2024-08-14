@@ -1,6 +1,5 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.internal.repositories.RemoteConfigRepository
 import io.newm.shared.internal.api.models.MobileConfig
 import io.newm.shared.public.usecases.ForceAppUpdateUseCase
@@ -8,20 +7,29 @@ import io.newm.shared.utils.VersionUtils
 
 internal class ForceAppUpdateUseCaseImpl(
     private val remoteConfigRepository: RemoteConfigRepository,
-    private val sharedBuildConfig: NewmSharedBuildConfig
 ) : ForceAppUpdateUseCase {
 
-    override suspend fun isAndroidUpdateRequired(): Boolean =
-        shouldForceAppUpdate { it.android.minAppVersion }
+    override suspend fun isAndroidUpdateRequired(
+        currentAppVersion: String,
+        humanVerificationCode: String
+    ): Boolean =
+        shouldForceAppUpdate(currentAppVersion, humanVerificationCode) { it.android.minAppVersion }
 
-    override suspend fun isiOSUpdateRequired(): Boolean =
-        shouldForceAppUpdate { it.ios.minAppVersion }
+    override suspend fun isiOSUpdateRequired(
+        currentAppVersion: String,
+        humanVerificationCode: String
+    ): Boolean =
+        shouldForceAppUpdate(currentAppVersion, humanVerificationCode) { it.ios.minAppVersion }
 
 
-    private suspend fun shouldForceAppUpdate(versionSelector: (MobileConfig) -> String): Boolean {
-        val mobileConfig = remoteConfigRepository.getMobileConfig()
+    private suspend fun shouldForceAppUpdate(
+        currentAppVersion: String,
+        humanVerificationCode: String,
+        minSupportedVersion: (MobileConfig) -> String
+    ): Boolean {
+        val mobileConfig = remoteConfigRepository.getMobileConfig(humanVerificationCode)
         return mobileConfig?.let {
-            VersionUtils.isVersionGreaterThan(versionSelector(it), sharedBuildConfig.appVersion)
+            VersionUtils.isVersionGreaterThan(minSupportedVersion(it), currentAppVersion)
         } ?: false
     }
 

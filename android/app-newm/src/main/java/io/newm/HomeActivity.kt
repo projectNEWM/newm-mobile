@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -21,6 +23,7 @@ import io.newm.screens.profile.view.ProfileUi
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
+import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
@@ -28,6 +31,7 @@ import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
 import io.newm.shared.NewmAppLogger
+import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -35,6 +39,7 @@ import org.koin.core.parameter.parametersOf
 class HomeActivity : ComponentActivity() {
     private val circuit: Circuit = createCircuit()
     private val logger: NewmAppLogger by inject()
+    private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +49,14 @@ class HomeActivity : ComponentActivity() {
         setContent {
             NewmTheme(darkTheme = true) {
                 CircuitDependencies {
-                    NewmApp(logger)
+                    val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
+                    if (updateRequired) {
+                        ForceAppUpdateUi(
+                            ForceAppUpdateState.Content(eventSink = { openAppPlayStore() })
+                        )
+                    } else {
+                        NewmApp(logger)
+                    }
                 }
             }
         }

@@ -9,17 +9,23 @@ interface ForceAppUpdateUseCase {
 
     /**
      * Checks if the current Android application version is lower than the minimum required version.
+     * Additionally, a human verification code is used to validate the request.
      *
+     * @param currentAppVersion The current version of the Android application.
+     * @param humanVerificationCode A code used to verify the authenticity of the request.
      * @return True if the current app version is below the minimum required version, indicating
      *         that an update is required; false otherwise.
      */
-    suspend fun isAndroidUpdateRequired(): Boolean
+    suspend fun isAndroidUpdateRequired(currentAppVersion: String, humanVerificationCode: String): Boolean
 
     /**
      * Checks if the current iOS application version is lower than the minimum required version.
+     * Additionally, a human verification code is used to validate the request.
      *
+     * @param currentAppVersion The current version of the iOS application.
+     * @param humanVerificationCode A code used to verify the authenticity of the request.
      * @return True if the current app version is below the minimum required version, indicating
      *         that an update is required; false otherwise.
      */
-    suspend fun isiOSUpdateRequired(): Boolean
+    suspend fun isiOSUpdateRequired(currentAppVersion: String, humanVerificationCode: String): Boolean
 }

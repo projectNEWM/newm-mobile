@@ -11,6 +11,7 @@ import io.newm.shared.internal.api.GenresAPI
 import io.newm.shared.internal.api.LoginAPI
 import io.newm.shared.internal.api.NEWMWalletConnectionAPI
 import io.newm.shared.internal.api.PlaylistAPI
+import io.newm.shared.internal.api.RemoteConfigAPI
 import io.newm.shared.internal.api.UserAPI
 import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
@@ -98,6 +99,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { LoginAPI(get(), get()) }
     single { NEWMWalletConnectionAPI(get()) }
     single { PlaylistAPI(get()) }
+    single { RemoteConfigAPI(get()) }
     single { UserAPI(get(), get()) }
     // Internal Services
     single { WalletConnectionNetworkService(get()) }
@@ -116,7 +118,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     // External Use Cases to be consumed outside of KMM
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get(), get()) }
+    single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
     single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
