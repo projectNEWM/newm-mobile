@@ -3,7 +3,7 @@ import shared
 
 class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 	var walletSynced: any Kotlinx_coroutines_coreFlow { fatalError() }
-	
+
 	func getAllTracks() async throws -> [NFTTrack] {
 		[]
 	}
@@ -36,9 +36,9 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 		fatalError()
 	}
 	
-	func getNFTTrack(id: String) throws -> NFTTrack {
-		NFTTrack.mocks.first { $0.id == id }!
-	}
+    func getNFTTrack(id: String) ->  NFTTrack? {
+        NFTTrack.mocks.first { $0.id == id }
+    }
 	
 	func refresh() async throws {
 		// no-op
