@@ -25,9 +25,9 @@ import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.LoginUseCase
-import kotlin.math.log
 
 class WelcomeScreenPresenter(
     private val navigator: Navigator,
@@ -35,7 +35,8 @@ class WelcomeScreenPresenter(
     private val googleSignInLauncher: GoogleSignInLauncher,
     private val activityResultContract: ActivityResultContract<Intent, ActivityResult>,
     private val recaptchaClientProvider: RecaptchaClientProvider,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
+    private val analyticsTracker: NewmAppAnalyticsTracker
 ) : Presenter<WelcomeScreenUiState> {
 
 
@@ -45,9 +46,18 @@ class WelcomeScreenPresenter(
 
         return WelcomeScreenUiState { event ->
             when (event) {
-                WelcomeScreenUiEvent.CreateAccountClicked -> navigator.goTo(CreateAccountScreen)
-                WelcomeScreenUiEvent.LoginClicked -> navigator.goTo(LoginScreen)
-                WelcomeScreenUiEvent.OnGoogleSignInClicked -> launchGoogleSignIn()
+                WelcomeScreenUiEvent.CreateAccountClicked -> {
+                    analyticsTracker.trackButtonInteraction("Create account")
+                    navigator.goTo(CreateAccountScreen)
+                }
+                WelcomeScreenUiEvent.LoginClicked -> {
+                    analyticsTracker.trackButtonInteraction("Login with email")
+                    navigator.goTo(LoginScreen)
+                }
+                WelcomeScreenUiEvent.OnGoogleSignInClicked -> {
+                    analyticsTracker.trackButtonInteraction("Login with Google")
+                    launchGoogleSignIn()
+                }
             }
         }
     }

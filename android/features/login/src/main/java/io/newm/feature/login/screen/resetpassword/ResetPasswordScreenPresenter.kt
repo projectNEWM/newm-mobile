@@ -1,6 +1,5 @@
 package io.newm.feature.login.screen.resetpassword
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +20,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmai
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
@@ -38,7 +38,8 @@ class ResetPasswordScreenPresenter(
     private val loginUseCase: LoginUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
+    private val analyticsTracker: NewmAppAnalyticsTracker
 ) : Presenter<ResetPasswordScreenUiState> {
     @Composable
     override fun present(): ResetPasswordScreenUiState {
@@ -52,51 +53,74 @@ class ResetPasswordScreenPresenter(
         val coroutineScope = rememberCoroutineScope()
 
         return when (step) {
-            ResetPasswordStep.EnterEmail -> ResetPasswordScreenUiState.EnterEmail(
-                email = email,
-                errorMessage = errorMessage,
-                isLoading = isLoading,
-                submitButtonEnabled = email.isValid && !isLoading,
-                eventSink = { event ->
-                    when (event) {
-                        EnterEmailUiEvent.OnSubmit -> {
-                            errorMessage = null
-                            isLoading = true
-                            coroutineScope.launch {
-                                try {
-                                    recaptchaClientProvider.get().execute(RecaptchaAction.custom("auth_code")).onSuccess { token ->
-                                        signupUseCase.requestEmailConfirmationCode(email.text, humanVerificationCode = token, mustExists = true)
-                                        step = ResetPasswordStep.EnterVerificationCode
-                                    }.onFailure {
-                                        logger.error("ResetPasswordScreenPresenter", "Human verification error", it)
+            ResetPasswordStep.EnterEmail -> {
+                ResetPasswordScreenUiState.EnterEmail(
+                    email = email,
+                    errorMessage = errorMessage,
+                    isLoading = isLoading,
+                    submitButtonEnabled = email.isValid && !isLoading,
+                    eventSink = { event ->
+                        when (event) {
+                            EnterEmailUiEvent.OnSubmit -> {
+                                analyticsTracker.trackScreenView("Enter Email")
+                                analyticsTracker.trackButtonInteraction("Continue")
+                                errorMessage = null
+                                isLoading = true
+                                coroutineScope.launch {
+                                    try {
+                                        recaptchaClientProvider.get()
+                                            .execute(RecaptchaAction.custom("auth_code"))
+                                            .onSuccess { token ->
+                                                signupUseCase.requestEmailConfirmationCode(
+                                                    email.text,
+                                                    humanVerificationCode = token,
+                                                    mustExists = true
+                                                )
+                                                step = ResetPasswordStep.EnterVerificationCode
+                                            }.onFailure {
+                                            logger.error(
+                                                "ResetPasswordScreenPresenter",
+                                                "Human verification error",
+                                                it
+                                            )
+                                        }
+                                    } catch (e: Throwable) {
+                                        logger.error(
+                                            "ResetPasswordScreenPresenter",
+                                            "Requesting email confirmation code failed",
+                                            e
+                                        )
+                                        errorMessage = e.message
                                     }
-                                } catch (e: Throwable) {
-                                    logger.error("ResetPasswordScreenPresenter", "Requesting email confirmation code failed", e)
-                                    errorMessage = e.message
-                                }
 
-                                isLoading = false
+                                    isLoading = false
+                                }
                             }
                         }
-                    }
-                },
-            )
+                    },
+                )
+            }
 
-            ResetPasswordStep.EnterVerificationCode -> ResetPasswordScreenUiState.EnterVerificationCode(
-                code = authCode,
-                errorMessage = errorMessage,
-                isLoading = isLoading,
-                submitButtonEnabled = authCode.isValid && !isLoading,
-                eventSink = { event ->
-                    when (event) {
-                        EnterVerificationCodeUiEvent.OnSubmit -> {
-                            step = ResetPasswordStep.EnterNewPassword
+            ResetPasswordStep.EnterVerificationCode -> {
+                analyticsTracker.trackScreenView("Enter Verification Code")
+                ResetPasswordScreenUiState.EnterVerificationCode(
+                    code = authCode,
+                    errorMessage = errorMessage,
+                    isLoading = isLoading,
+                    submitButtonEnabled = authCode.isValid && !isLoading,
+                    eventSink = { event ->
+                        when (event) {
+                            EnterVerificationCodeUiEvent.OnSubmit -> {
+                                analyticsTracker.trackButtonInteraction("Continue")
+                                step = ResetPasswordStep.EnterNewPassword
+                            }
                         }
-                    }
-                },
-            )
+                    },
+                )
+            }
 
             ResetPasswordStep.EnterNewPassword -> {
+                analyticsTracker.trackScreenView("Enter New Password")
                 val submitEnabled = password.isValid && passwordConfirmation.isValid && !isLoading
 
                 ResetPasswordScreenUiState.EnterNewPassword(
@@ -108,28 +132,45 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterNewPasswordUiEvent.OnSubmit -> {
+                                analyticsTracker.trackButtonInteraction("Confirm")
                                 errorMessage = null
                                 isLoading = true
                                 coroutineScope.launch {
                                     try {
-                                        recaptchaClientProvider.get().execute(RecaptchaAction.custom("password_reset")).onSuccess { token ->
-                                            resetPasswordUseCase.resetPassword(
-                                                email = email.text,
-                                                code = authCode.text,
-                                                newPassword = password.text,
-                                                confirmPassword = passwordConfirmation.text,
-                                                humanVerificationCode = token
+                                        recaptchaClientProvider.get()
+                                            .execute(RecaptchaAction.custom("password_reset"))
+                                            .onSuccess { token ->
+                                                resetPasswordUseCase.resetPassword(
+                                                    email = email.text,
+                                                    code = authCode.text,
+                                                    newPassword = password.text,
+                                                    confirmPassword = passwordConfirmation.text,
+                                                    humanVerificationCode = token
+                                                )
+                                                errorMessage = "Password reset successfully"
+                                                recaptchaClientProvider.get()
+                                                    .execute(RecaptchaAction.LOGIN)
+                                                    .onSuccess { newToken ->
+                                                        loginUseCase.logIn(
+                                                            email.text,
+                                                            password.text,
+                                                            humanVerificationCode = newToken
+                                                        )
+                                                        navigator.goTo(HomeScreen)
+                                                    }
+                                            }.onFailure {
+                                            logger.error(
+                                                "ResetPasswordScreenPresenter",
+                                                "Human verification error",
+                                                it
                                             )
-                                            errorMessage = "Password reset successfully"
-                                            recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess { newToken ->
-                                                loginUseCase.logIn(email.text, password.text, humanVerificationCode = newToken)
-                                                navigator.goTo(HomeScreen)
-                                            }
-                                        }.onFailure {
-                                            logger.error("ResetPasswordScreenPresenter", "Human verification error", it)
                                         }
                                     } catch (e: Throwable) {
-                                        logger.error("ResetPasswordScreenPresenter", "Resetting password failed", e)
+                                        logger.error(
+                                            "ResetPasswordScreenPresenter",
+                                            "Resetting password failed",
+                                            e
+                                        )
                                         errorMessage = e.message
                                     }
 

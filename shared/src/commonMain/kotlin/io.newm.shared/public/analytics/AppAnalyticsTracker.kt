@@ -1,4 +1,4 @@
-package io.newm.shared
+package io.newm.shared.public.analytics
 
 /**
  * Interface for tracking analytics events in the application.

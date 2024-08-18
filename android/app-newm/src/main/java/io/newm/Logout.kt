@@ -9,7 +9,6 @@ import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.UserSessionUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
@@ -21,18 +20,20 @@ class Logout(
     private val logger: NewmAppLogger
 ) {
 
-    fun signOutUser() = try {
+    fun signOutUser() {
         scope.launch {
-            loginUseCase.logout()
+            try {
+                loginUseCase.logout()
+                restartApp.run()
+                logger.info("Logout", "Logout successful")
+            } catch (e: Exception) {
+                logger.error("Logout", "Logout failed", e)
+            }
         }
-        restartApp.run()
-        logger.info("Logout", "Logout successful")
-    } catch (e: Exception) {
-        logger.error("Logout", "Logout failed", e)
     }
 
     fun register() {
-        GlobalScope.launch {
+        scope.launch {
             userSessionUseCase.isLoggedInFlow().collect { isLoggedIn ->
                 if (!isLoggedIn) {
                     logger.debug("Logout", "User is not logged in")

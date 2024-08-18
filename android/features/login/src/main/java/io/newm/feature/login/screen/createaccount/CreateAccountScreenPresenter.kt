@@ -17,6 +17,7 @@ import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
@@ -26,7 +27,8 @@ class CreateAccountScreenPresenter(
     private val signupUseCase: SignupUseCase,
     private val loginUseCase: LoginUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider,
-    private val appLogger: NewmAppLogger
+    private val appLogger: NewmAppLogger,
+    private val analyticsTracker: NewmAppAnalyticsTracker
 ) : Presenter<CreateAccountUiState> {
 
     @Composable
@@ -48,6 +50,7 @@ class CreateAccountScreenPresenter(
 
         return when (step) {
             Step.EmailAndPassword -> {
+                analyticsTracker.trackScreenView("Create Account")
                 EmailAndPasswordUiState(
                     emailState = userEmail,
                     passwordState = password,
@@ -57,6 +60,7 @@ class CreateAccountScreenPresenter(
                 ) { event ->
                     when (event) {
                         SignupFormUiEvent.Next -> {
+                            analyticsTracker.trackButtonInteraction("Next")
                             require(emailAndPasswordValid) {
                                 "Email and password - next button should not be enabled if any of the fields are invalid"
                             }
@@ -87,6 +91,7 @@ class CreateAccountScreenPresenter(
             }
 
             Step.EmailVerification -> {
+                analyticsTracker.trackScreenView("Email Verification")
                 EmailVerificationUiState(
                     verificationCode = verificationCode,
                     nextButtonEnabled = verificationCode.isValid,
@@ -97,6 +102,7 @@ class CreateAccountScreenPresenter(
                             require(emailAndPasswordValid && verificationCode.isValid) {
                                 "Email verification - next button should not be enabled if any of the fields are invalid"
                             }
+                            analyticsTracker.trackButtonInteraction("Next")
 
                             coroutineScope.launch {
                                 step = Step.Loading
@@ -129,7 +135,10 @@ class CreateAccountScreenPresenter(
                 }
             }
 
-            Step.Loading -> CreateAccountUiState.Loading
+            Step.Loading -> {
+                analyticsTracker.trackScreenView("Loading")
+                CreateAccountUiState.Loading
+            }
         }
     }
 }

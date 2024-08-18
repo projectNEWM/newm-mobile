@@ -2,7 +2,7 @@ package io.newm.utils
 
 import android.util.Log
 import io.newm.shared.AppLogger
-import io.newm.shared.NewmAppAnalyticsTracker
+import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
 import io.sentry.Sentry
 import io.sentry.protocol.User
 

@@ -16,15 +16,16 @@ import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
 import io.newm.shared.public.usecases.LoginUseCase
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class LoginScreenPresenter(
     private val navigator: Navigator,
     private val loginUseCase: LoginUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
+    private val analyticsTracker: NewmAppAnalyticsTracker
 ) : Presenter<LoginScreenUiState> {
     @Composable
     override fun present(): LoginScreenUiState {
@@ -47,6 +48,7 @@ class LoginScreenPresenter(
             eventSink = { event ->
                 when (event) {
                     LoginUiEvent.OnLoginClick -> {
+                        analyticsTracker.trackButtonInteraction("Login")
                         coroutineScope.launch {
                             errorMessage = null
 
@@ -73,7 +75,10 @@ class LoginScreenPresenter(
                         }
                     }
 
-                    LoginUiEvent.ForgotPasswordClick -> navigator.goTo(ResetPasswordScreen(email.text))
+                    LoginUiEvent.ForgotPasswordClick -> {
+                        analyticsTracker.trackButtonInteraction("Forgot your password password?")
+                        navigator.goTo(ResetPasswordScreen(email.text))
+                    }
                 }
             }
         )

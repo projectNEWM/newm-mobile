@@ -5,13 +5,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.logEvent
 import com.google.firebase.ktx.Firebase
-import io.newm.shared.AppAnalyticsTracker
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.AppAnalyticsTracker
 
 /**
  * Implementation of [AppAnalyticsTracker] for Android using Firebase Analytics.
  */
-class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAnalyticsTracker {
+internal class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAnalyticsTracker {
 
     private val firebaseAnalytics = Firebase.analytics
 
