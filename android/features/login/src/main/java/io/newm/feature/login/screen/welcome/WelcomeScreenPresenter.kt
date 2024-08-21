@@ -25,7 +25,7 @@ import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.LoginUseCase
 
@@ -36,7 +36,7 @@ class WelcomeScreenPresenter(
     private val activityResultContract: ActivityResultContract<Intent, ActivityResult>,
     private val recaptchaClientProvider: RecaptchaClientProvider,
     private val logger: NewmAppLogger,
-    private val analyticsTracker: NewmAppAnalyticsTracker
+    private val analyticsTracker: NewmAppEventLogger
 ) : Presenter<WelcomeScreenUiState> {
 
 
@@ -47,15 +47,15 @@ class WelcomeScreenPresenter(
         return WelcomeScreenUiState { event ->
             when (event) {
                 WelcomeScreenUiEvent.CreateAccountClicked -> {
-                    analyticsTracker.trackButtonInteraction("Create account")
+                    analyticsTracker.logClickEvent("Create account")
                     navigator.goTo(CreateAccountScreen)
                 }
                 WelcomeScreenUiEvent.LoginClicked -> {
-                    analyticsTracker.trackButtonInteraction("Login with email")
+                    analyticsTracker.logClickEvent("Login with email")
                     navigator.goTo(LoginScreen)
                 }
                 WelcomeScreenUiEvent.OnGoogleSignInClicked -> {
-                    analyticsTracker.trackButtonInteraction("Login with Google")
+                    analyticsTracker.logClickEvent("Login with Google")
                     launchGoogleSignIn()
                 }
             }

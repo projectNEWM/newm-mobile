@@ -3,7 +3,7 @@ package io.newm.shared.public.analytics
 /**
  * Interface for tracking analytics events in the application.
  */
-interface AppAnalyticsTracker {
+interface IEventLogger {
 
     /**
      * Tracks a custom event with the given name and properties.
@@ -11,14 +11,14 @@ interface AppAnalyticsTracker {
      * @param eventName The name of the event to track.
      * @param properties A map of properties associated with the event.
      */
-    fun trackEvent(eventName: String, properties: Map<String, Any?>?)
+    fun logEvent(eventName: String, properties: Map<String, Any?>?)
 
     /**
      * Tracks a screen view event.
      *
      * @param screenName The name of the screen being viewed.
      */
-    fun trackScreenView(screenName: String)
+    fun logPageLoad(screenName: String)
 
     /**
      * Sets the user ID for tracking purposes.
@@ -42,7 +42,7 @@ interface AppAnalyticsTracker {
      * @param endPosition The ending position of the scroll.
      * @param screenName The name of the screen where the scroll happened.
      */
-    fun trackScroll(startPosition: Int, endPosition: Int, screenName: String)
+    fun logScroll(startPosition: Int, endPosition: Int, screenName: String)
 
     /**
      * Tracks a button interaction event.
@@ -50,7 +50,7 @@ interface AppAnalyticsTracker {
      * @param buttonName The name of the button being interacted with.
      * @param eventType The type of the event (default is "button_click").
      */
-    fun trackButtonInteraction(buttonName: String, eventType: String = "button_click")
+    fun logClickEvent(buttonName: String, eventType: String = "button_click")
 
     /**
      * Tracks a play button click event with song details.
@@ -58,22 +58,22 @@ interface AppAnalyticsTracker {
      * @param songId The ID of the song being played.
      * @param songName The name of the song being played.
      */
-    fun trackPlayButtonClick(songId: String, songName: String)
+    fun logPlayButtonClick(songId: String, songName: String)
 
     /**
      * Tracks the app launch event.
      */
-    fun trackAppLaunch()
+    fun logAppLaunch()
 
     /**
      * Tracks the app close event.
      */
-    fun trackAppClose()
+    fun logAppClose()
 
     /**
      * Tracks a user scroll event with a scroll percentage.
      *
      * @param percentage The percentage of the scroll.
      */
-    fun trackUserScroll(percentage: Double)
+    fun logUserScroll(percentage: Double)
 }

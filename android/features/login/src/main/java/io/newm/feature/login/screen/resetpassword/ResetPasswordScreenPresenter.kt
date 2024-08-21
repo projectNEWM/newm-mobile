@@ -20,7 +20,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmai
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
@@ -39,7 +39,7 @@ class ResetPasswordScreenPresenter(
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider,
     private val logger: NewmAppLogger,
-    private val analyticsTracker: NewmAppAnalyticsTracker
+    private val analyticsTracker: NewmAppEventLogger
 ) : Presenter<ResetPasswordScreenUiState> {
     @Composable
     override fun present(): ResetPasswordScreenUiState {
@@ -62,8 +62,8 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterEmailUiEvent.OnSubmit -> {
-                                analyticsTracker.trackScreenView("Enter Email")
-                                analyticsTracker.trackButtonInteraction("Continue")
+                                analyticsTracker.logPageLoad("Enter Email")
+                                analyticsTracker.logClickEvent("Continue")
                                 errorMessage = null
                                 isLoading = true
                                 coroutineScope.launch {
@@ -102,7 +102,7 @@ class ResetPasswordScreenPresenter(
             }
 
             ResetPasswordStep.EnterVerificationCode -> {
-                analyticsTracker.trackScreenView("Enter Verification Code")
+                analyticsTracker.logPageLoad("Enter Verification Code")
                 ResetPasswordScreenUiState.EnterVerificationCode(
                     code = authCode,
                     errorMessage = errorMessage,
@@ -111,7 +111,7 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterVerificationCodeUiEvent.OnSubmit -> {
-                                analyticsTracker.trackButtonInteraction("Continue")
+                                analyticsTracker.logClickEvent("Continue")
                                 step = ResetPasswordStep.EnterNewPassword
                             }
                         }
@@ -120,7 +120,7 @@ class ResetPasswordScreenPresenter(
             }
 
             ResetPasswordStep.EnterNewPassword -> {
-                analyticsTracker.trackScreenView("Enter New Password")
+                analyticsTracker.logPageLoad("Enter New Password")
                 val submitEnabled = password.isValid && passwordConfirmation.isValid && !isLoading
 
                 ResetPasswordScreenUiState.EnterNewPassword(
@@ -132,7 +132,7 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterNewPasswordUiEvent.OnSubmit -> {
-                                analyticsTracker.trackButtonInteraction("Confirm")
+                                analyticsTracker.logClickEvent("Confirm")
                                 errorMessage = null
                                 isLoading = true
                                 coroutineScope.launch {

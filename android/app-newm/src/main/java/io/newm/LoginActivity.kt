@@ -41,6 +41,7 @@ import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -49,6 +50,7 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : ComponentActivity() {
 
     private val logger: NewmAppLogger by inject()
+    private val eventLogger: NewmAppEventLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
 
     // TODO inject
@@ -106,7 +108,11 @@ class LoginActivity : ComponentActivity() {
 
                     if (updateRequired) {
                         ForceAppUpdateUi(
-                            ForceAppUpdateState.Content(eventSink = { openAppPlayStore()})
+                            ForceAppUpdateState.Content(eventSink = {
+                                eventLogger.logClickEvent("Update Now")
+                                openAppPlayStore()
+                            }),
+                            eventLogger
                         )
                     } else {
                         WelcomeToNewm(logger, ::launchHomeActivity)

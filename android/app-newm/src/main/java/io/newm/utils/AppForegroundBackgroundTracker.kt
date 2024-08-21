@@ -4,10 +4,10 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 class AppForegroundBackgroundTracker(
-    private val analyticsTracker: NewmAppAnalyticsTracker,
+    private val analyticsTracker: NewmAppEventLogger,
     private val logger: NewmAppLogger
 ) : Application.ActivityLifecycleCallbacks {
 
@@ -19,7 +19,7 @@ class AppForegroundBackgroundTracker(
         if (activityReferences == 0 && !isActivityChangingConfigurations) {
             // Track initial app launch when first activity is created
             try {
-                analyticsTracker.trackAppLaunch()
+                analyticsTracker.logAppLaunch()
             } catch (e: Exception) {
                 logger.error(TAG, "Error tracking app launch", e)
             }
@@ -41,7 +41,7 @@ class AppForegroundBackgroundTracker(
         if (activityReferences == 0 && !isActivityChangingConfigurations) {
             // Track app closure when all activities are stopped and none are changing configurations
             try {
-                analyticsTracker.trackAppClose()
+                analyticsTracker.logAppClose()
             } catch (e: Exception) {
                 logger.error(TAG, "Error tracking app close", e)
             }

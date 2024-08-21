@@ -10,6 +10,7 @@ import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +34,8 @@ interface MusicPlayer {
 
 class MusicPlayerImpl(
     private val player: Player,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    private val eventLogger: NewmAppEventLogger
 ) : MusicPlayer {
     private val _playbackStatus = MutableStateFlow(PlaybackStatus.EMPTY)
 
@@ -66,10 +68,12 @@ class MusicPlayerImpl(
         _playbackStatus.update {
             val state = when (player.playbackState) {
                 Player.STATE_BUFFERING -> PlaybackState.BUFFERING
-                Player.STATE_READY -> if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
+                Player.STATE_READY -> {
+                    if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
+                }
                 else -> PlaybackState.STOPPED
             }
-            val repeatMode = when(player.repeatMode) {
+            val repeatMode = when (player.repeatMode) {
                 Player.REPEAT_MODE_ALL -> PlaybackRepeatMode.REPEAT_ALL
                 Player.REPEAT_MODE_ONE -> PlaybackRepeatMode.REPEAT_ONE
                 else -> PlaybackRepeatMode.REPEAT_OFF
@@ -86,34 +90,40 @@ class MusicPlayerImpl(
     }
 
     override fun play() {
+        eventLogger.logClickEvent("Play")
         player.play()
     }
 
     override fun pause() {
+        eventLogger.logClickEvent("Pause")
         Log.d("MusicPlayer", "Pause")
         player.pause()
     }
 
     override fun stop() {
+        eventLogger.logClickEvent("Stop")
         Log.d("MusicPlayer", "Stop")
         player.stop()
     }
 
     override fun next() {
+        eventLogger.logClickEvent("Next")
         Log.d("MusicPlayer", "Next")
         player.seekToNext()
         play()
     }
 
     override fun previous() {
+        eventLogger.logClickEvent("Previous")
         Log.d("MusicPlayer", "Previous")
         player.seekToPrevious()
         play()
     }
 
     override fun repeat() {
+        eventLogger.logClickEvent("Repeat")
         Log.d("MusicPlayer", "Repeat")
-        player.repeatMode = when(player.repeatMode) {
+        player.repeatMode = when (player.repeatMode) {
             Player.REPEAT_MODE_OFF -> Player.REPEAT_MODE_ALL
             Player.REPEAT_MODE_ALL -> Player.REPEAT_MODE_ONE
             else -> Player.REPEAT_MODE_OFF
@@ -122,16 +132,19 @@ class MusicPlayerImpl(
     }
 
     override fun seekTo(position: Long) {
+        eventLogger.logEvent("Seek", mapOf("position" to position))
         Log.d("MusicPlayer", "Seek to $position")
         player.seekTo(position)
     }
 
     override fun seekTo(index: Int, position: Long) {
+        eventLogger.logEvent("Seek", mapOf("position" to position, "index" to index))
         Log.d("MusicPlayer", "Seek to $index, $position")
         player.seekTo(index, position)
     }
 
     override fun setPlaylist(playlist: Playlist, initialTrackIndex: Int) {
+        eventLogger.logEvent("Playlist Size", mapOf("size" to playlist.tracks.size))
         Log.d("MusicPlayer", "Setting playlist with ${playlist.tracks.size} tracks")
         player.setMediaItems(playlist.tracks.map { track ->
             MediaItem.Builder()

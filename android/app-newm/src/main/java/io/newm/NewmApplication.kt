@@ -13,8 +13,8 @@ import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
-import io.newm.shared.public.analytics.NewmAppAnalyticsTracker
-import io.newm.utils.AndroidNewmAppAnalyticsTracker
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.utils.AndroidEventLoggerImpl
 import io.newm.utils.AndroidNewmAppLogger
 import io.newm.utils.AppForegroundBackgroundTracker
 import io.newm.utils.ForceAppUpdateViewModel
@@ -33,7 +33,7 @@ import org.koin.core.logger.Level
 
 open class NewmApplication : Application(), ImageLoaderFactory {
 
-    private val analyticsTracker: NewmAppAnalyticsTracker by inject()
+    private val analyticsTracker: NewmAppEventLogger by inject()
     private val config: NewmSharedBuildConfig by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
     private val imageLoaderFactory by lazy { NewmImageLoaderFactory(this@NewmApplication) }
@@ -97,7 +97,7 @@ open class NewmApplication : Application(), ImageLoaderFactory {
 
     private fun setupLogger() {
         logger.setClientLogger(AndroidNewmAppLogger(analyticsTracker))
-        analyticsTracker.setClientAnalyticsTracker(AndroidNewmAppAnalyticsTracker(logger))
+        analyticsTracker.setClientAnalyticsTracker(AndroidEventLoggerImpl(logger))
     }
 
     override fun newImageLoader(): ImageLoader {

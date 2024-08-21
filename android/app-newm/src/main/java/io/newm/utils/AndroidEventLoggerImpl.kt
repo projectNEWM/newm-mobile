@@ -5,15 +5,21 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.logEvent
 import com.google.firebase.ktx.Firebase
+import io.newm.BuildConfig
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.AppAnalyticsTracker
+import io.newm.shared.public.analytics.IEventLogger
 
 /**
- * Implementation of [AppAnalyticsTracker] for Android using Firebase Analytics.
+ * Implementation of [IEventLogger] for Android using Firebase Analytics.
  */
-internal class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAnalyticsTracker {
+internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger {
 
     private val firebaseAnalytics = Firebase.analytics
+
+    private val defaultProperties = mapOf(
+        "app_version" to BuildConfig.VERSION_NAME,
+        "platform" to "Android",
+    )
 
     companion object {
         private const val MAX_EVENT_NAME_LENGTH =
@@ -21,20 +27,20 @@ internal class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAn
         private const val TAG = "AnalyticsTracker" // Tag for logging
     }
 
-    override fun trackEvent(eventName: String, properties: Map<String, Any?>?) {
+    override fun logEvent(eventName: String, properties: Map<String, Any?>?) {
         val safeEventName = validateEventName(eventName)
         if (safeEventName == null) {
             logger.info(TAG, "Invalid event name: $eventName. Event not tracked.")
             return
         }
-        val bundle = bundleOf(*properties?.toList()?.toTypedArray().orEmpty())
+        val combinedProperties = defaultProperties + (properties ?: emptyMap())
+        val bundle = bundleOf(*combinedProperties.toList().toTypedArray())
         firebaseAnalytics.logEvent(safeEventName, bundle)
     }
 
-    override fun trackScreenView(screenName: String) {
+    override fun logPageLoad(screenName: String) {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, screenName) // Optional, if relevant
         }
     }
 
@@ -46,8 +52,8 @@ internal class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAn
         firebaseAnalytics.setUserProperty(name, value)
     }
 
-    override fun trackScroll(startPosition: Int, endPosition: Int, screenName: String) {
-        trackEvent(
+    override fun logScroll(startPosition: Int, endPosition: Int, screenName: String) {
+        logEvent(
             "scroll", mapOf(
                 "scroll_position_start" to startPosition,
                 "scroll_position_end" to endPosition,
@@ -56,12 +62,12 @@ internal class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAn
         )
     }
 
-    override fun trackButtonInteraction(buttonName: String, eventType: String) {
-        trackEvent(eventType, mapOf("button_name" to buttonName))
+    override fun logClickEvent(buttonName: String, eventType: String) {
+        logEvent(eventType, mapOf("button_name" to buttonName))
     }
 
-    override fun trackPlayButtonClick(songId: String, songName: String) {
-        trackEvent(
+    override fun logPlayButtonClick(songId: String, songName: String) {
+        logEvent(
             "play_button_click", mapOf(
                 "song_id" to songId,
                 "song_name" to songName
@@ -69,16 +75,16 @@ internal class AndroidNewmAppAnalyticsTracker(val logger: NewmAppLogger) : AppAn
         )
     }
 
-    override fun trackAppLaunch() {
-        trackEvent("app_launch", null)
+    override fun logAppLaunch() {
+        logEvent("app_launch", null)
     }
 
-    override fun trackAppClose() {
-        trackEvent("app_close", null)
+    override fun logAppClose() {
+        logEvent("app_close", null)
     }
 
-    override fun trackUserScroll(percentage: Double) {
-        trackEvent("user_scroll", mapOf("scroll_percentage" to percentage))
+    override fun logUserScroll(percentage: Double) {
+        logEvent("user_scroll", mapOf("scroll_percentage" to percentage))
     }
 
     private fun validateEventName(name: String): String? {

@@ -83,6 +83,7 @@ import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.textGradient
 import io.newm.core.ui.wallet.buttonGradient
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -105,11 +106,13 @@ val placeholderStyle = TextStyle(
 class BarcodeScannerActivity : ComponentActivity() {
 
     private val logger: NewmAppLogger by inject()
+    private val eventLogger: NewmAppEventLogger by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NewmTheme(darkTheme = true) {
+                eventLogger.logPageLoad("Connect Wallet Page")
                 BarcodeScannerUi()
             }
         }
@@ -160,6 +163,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         ModalBottomSheetLayout(
             sheetState = bottomSheetState,
             sheetContent = {
+                eventLogger.logPageLoad("Wallet Instructions Page")
                 InstructionList(bottomSheetState, coroutineScope)
             },
             content = {
@@ -221,6 +225,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         val connectWalletUrl = stringResource(id = R.string.newm_tools_connect_wallet_url)
         Button(
             onClick = {
+                eventLogger.logClickEvent("Copy URL")
                 clipboardManager.setText(androidx.compose.ui.text.AnnotatedString(connectWalletUrl))
             },
             modifier = Modifier

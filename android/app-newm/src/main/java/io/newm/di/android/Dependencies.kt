@@ -78,11 +78,13 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get()
         )
     }
     factory { params ->
         NFTLibraryPresenter(
             params.get(),
+            get(),
             get(),
             get(),
             get(),
@@ -93,6 +95,7 @@ val viewModule = module {
     factory { params ->
         ProfileEditPresenter(
             params.get(),
+            get(),
             get(),
             get(),
             get(),

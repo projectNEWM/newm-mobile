@@ -28,10 +28,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -66,6 +63,7 @@ import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -89,8 +87,8 @@ val initialScreen = Screen.NFTLibrary
 @Composable
 internal fun NewmApp(
     logger: NewmAppLogger,
+    eventLogger: NewmAppEventLogger,
 ) {
-
     val context = LocalContext.current
     val backstack = rememberSaveableBackStack {
         push(initialScreen)
@@ -119,7 +117,6 @@ internal fun NewmApp(
     BackHandler(
         enabled = backstack.size > 1 || currentRootScreen != initialScreen || sheetState.isVisible
     ) {
-
         when {
             sheetState.isVisible -> coroutineScope.launch { sheetState.hide() }
             backstack.size > 1 -> newmNavigator.pop()
@@ -127,16 +124,18 @@ internal fun NewmApp(
         }
     }
 
-
     ModalBottomSheetLayout(
         modifier = Modifier,
         sheetState = sheetState,
         sheetContent = {
-            MusicPlayerScreen(onNavigateUp = {
-                coroutineScope.launch {
-                    sheetState.hide()
-                }
-            })
+            eventLogger.logPageLoad("Music Player")
+            MusicPlayerScreen(
+                eventLogger = eventLogger,
+                onNavigateUp = {
+                    coroutineScope.launch {
+                        sheetState.hide()
+                    }
+                })
         },
     ) {
         Scaffold(
@@ -152,9 +151,11 @@ internal fun NewmApp(
                         MiniPlayer(
                             modifier = Modifier.clickable {
                                 coroutineScope.launch {
+                                    eventLogger.logClickEvent("Mini Player")
                                     sheetState.show()
                                 }
-                            }
+                            },
+                            eventLogger = eventLogger
                         )
                         Spacer(
                             modifier = Modifier
@@ -164,6 +165,7 @@ internal fun NewmApp(
                         )
                         NewmBottomNavigation(
                             currentRootScreen = currentRootScreen,
+                            eventLogger = eventLogger,
                             onNavigationSelected = {
                                 circuitNavigator.resetRoot(it)
                             }
@@ -185,6 +187,7 @@ internal fun NewmApp(
 @Composable
 internal fun NewmBottomNavigation(
     currentRootScreen: CircuitScreen?,
+    eventLogger: NewmAppEventLogger,
     onNavigationSelected: (Screen) -> Unit
 ) {
     Column(Modifier.height(76.dp)) {
@@ -201,7 +204,10 @@ internal fun NewmBottomNavigation(
                 labelResId = R.string.nft_library,
                 selectedIconBrush = LibraryIconGradient,
                 selectedLabelColor = DarkPink,
-                onClick = { onNavigationSelected(Screen.NFTLibrary) },
+                onClick = {
+                    eventLogger.logClickEvent("NFT Library")
+                    onNavigationSelected(Screen.NFTLibrary)
+                },
             )
             HomeBottomNavigationItem(
                 selected = currentRootScreen == Screen.UserAccount,
@@ -209,7 +215,10 @@ internal fun NewmBottomNavigation(
                 labelResId = R.string.account,
                 selectedIconBrush = AccountIconGradient,
                 selectedLabelColor = DarkPink,
-                onClick = { onNavigationSelected(Screen.UserAccount) },
+                onClick = {
+                    eventLogger.logClickEvent("Account")
+                    onNavigationSelected(Screen.UserAccount)
+                },
             )
         }
     }
@@ -218,7 +227,7 @@ internal fun NewmBottomNavigation(
 @Preview(showBackground = true)
 @Composable
 fun BottomNavigationBarPreview() {
-    NewmBottomNavigation(Screen.NFTLibrary) {}
+    NewmBottomNavigation(Screen.NFTLibrary, NewmAppEventLogger()) {}
 }
 
 // Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
