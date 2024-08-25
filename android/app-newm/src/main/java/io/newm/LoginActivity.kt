@@ -115,7 +115,7 @@ class LoginActivity : ComponentActivity() {
                             eventLogger
                         )
                     } else {
-                        WelcomeToNewm(logger, ::launchHomeActivity)
+                        WelcomeToNewm(logger, eventLogger,  ::launchHomeActivity)
                     }
                 }
             }
@@ -142,7 +142,8 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun WelcomeToNewm(
     logger: NewmAppLogger,
-    onStartHomeActivity: () -> Unit
+    eventLogger: NewmAppEventLogger,
+    onStartHomeActivity: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -155,7 +156,8 @@ fun WelcomeToNewm(
             onStartHomeActivity,
             launchBrowser = { url ->
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-            })
+            },
+            eventLogger = eventLogger)
 
     NavigableCircuitContent(newmNavigator, backstack)
 }

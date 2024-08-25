@@ -18,7 +18,7 @@ internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger 
 
     private val defaultProperties = mapOf(
         "app_version" to BuildConfig.VERSION_NAME,
-        "platform" to "Android",
+        "platform" to "Android"
     )
 
     companion object {
@@ -27,64 +27,67 @@ internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger 
         private const val TAG = "AnalyticsTracker" // Tag for logging
     }
 
+    override fun setUserId(userId: String) {
+        logger.debug(tag = "analytics - user", message = "userId: $userId")
+        firebaseAnalytics.setUserId(userId)
+    }
+
+    override fun setUserProperty(propertyName: String, value: String) {
+        logger.debug(
+            tag = "analytics - user",
+            message = "propertyName: $propertyName, value:$value"
+        )
+        firebaseAnalytics.setUserProperty(propertyName, value)
+    }
+
     override fun logEvent(eventName: String, properties: Map<String, Any?>?) {
+        logger.debug(
+            tag = "analytics - event",
+            message = "eventName: $eventName, properties:$properties"
+        )
+        actualLogEvent(eventName, properties)
+    }
+
+    override fun logPageLoad(screenName: String, properties: Map<String, Any?>?) {
+        logger.debug(
+            tag = "analytics - screen",
+            message = "screen: $screenName"
+        )
+
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+            properties?.forEach { (key, value) ->
+                param(key, value.toString())
+            }
+        }
+    }
+
+    override fun logClickEvent(
+        buttonName: String,
+        properties: Map<String, Any?>?
+    ) {
+        logger.debug(
+            tag = "analytics - click",
+            message = "buttonName: $buttonName"
+        )
+        actualLogEvent(
+            eventName = "button_click",
+            properties = mapOf("button_name" to buttonName,) + (properties ?: emptyMap())
+        )
+    }
+
+    private fun actualLogEvent(eventName: String, properties: Map<String, Any?>?) {
         val safeEventName = validateEventName(eventName)
         if (safeEventName == null) {
             logger.info(TAG, "Invalid event name: $eventName. Event not tracked.")
             return
         }
-        val combinedProperties = defaultProperties + (properties ?: emptyMap())
+        val metadata = mapOf(
+            "timestamp" to System.currentTimeMillis()
+        )
+        val combinedProperties = defaultProperties + (properties ?: emptyMap()) + metadata
         val bundle = bundleOf(*combinedProperties.toList().toTypedArray())
         firebaseAnalytics.logEvent(safeEventName, bundle)
-    }
-
-    override fun logPageLoad(screenName: String) {
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-        }
-    }
-
-    override fun setUserId(userId: String) {
-        firebaseAnalytics.setUserId(userId)
-    }
-
-    override fun setUserProperty(name: String, value: String) {
-        firebaseAnalytics.setUserProperty(name, value)
-    }
-
-    override fun logScroll(startPosition: Int, endPosition: Int, screenName: String) {
-        logEvent(
-            "scroll", mapOf(
-                "scroll_position_start" to startPosition,
-                "scroll_position_end" to endPosition,
-                "screen_name" to screenName
-            )
-        )
-    }
-
-    override fun logClickEvent(buttonName: String, eventType: String) {
-        logEvent(eventType, mapOf("button_name" to buttonName))
-    }
-
-    override fun logPlayButtonClick(songId: String, songName: String) {
-        logEvent(
-            "play_button_click", mapOf(
-                "song_id" to songId,
-                "song_name" to songName
-            )
-        )
-    }
-
-    override fun logAppLaunch() {
-        logEvent("app_launch", null)
-    }
-
-    override fun logAppClose() {
-        logEvent("app_close", null)
-    }
-
-    override fun logUserScroll(percentage: Double) {
-        logEvent("user_scroll", mapOf("scroll_percentage" to percentage))
     }
 
     private fun validateEventName(name: String): String? {

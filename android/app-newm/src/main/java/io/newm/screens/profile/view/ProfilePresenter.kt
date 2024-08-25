@@ -56,7 +56,6 @@ class ProfilePresenter(
         return if (user == null) {
             ProfileUiState.Loading
         } else {
-            eventLogger.logPageLoad("Account View")
             ProfileUiState.Content(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,

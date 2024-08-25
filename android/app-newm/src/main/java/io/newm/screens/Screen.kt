@@ -5,25 +5,26 @@ import kotlinx.parcelize.Parcelize
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
 @Parcelize
-sealed class Screen : CircuitScreen {
-    data object UserAccount : Screen()
+sealed class Screen(val screenName: String) : CircuitScreen {
 
-    data object NFTLibrary : Screen()
+    data object UserAccount : Screen(screenName = "Account View")
 
-    data object LoginLandingScreen : Screen()
+    data object NFTLibrary : Screen(screenName = "NFT Library")
 
-    data object EditProfile : Screen()
+    data object LoginLandingScreen : Screen(screenName = "Login Landing Screen")
 
-    data object WalletConnect : Screen()
+    data object EditProfile : Screen(screenName = "Edit Profile")
 
-    data object ForceAppUpdate : Screen()
+    data object WalletConnect : Screen(screenName = "Wallet Connect")
 
-    data object TermsAndConditions : Screen(), WebBrowserScreen {
+    data object ForceAppUpdate : Screen(screenName = "Force App Update")
+
+    data object TermsAndConditions : Screen(screenName = "Terms And Conditions"), WebBrowserScreen {
         @IgnoredOnParcel
         override val url: String = "https://newm.io/terms-and-conditions"
     }
 
-    data object PrivacyPolicy : Screen(), WebBrowserScreen {
+    data object PrivacyPolicy : Screen(screenName = "Privacy Policy"), WebBrowserScreen {
         @IgnoredOnParcel
         override val url: String = "https://newm.io/privacy-policy"
 

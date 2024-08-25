@@ -108,7 +108,6 @@ class ProfileEditPresenter(
         return if (profile == null) {
             ProfileEditUiState.Loading
         } else {
-            eventLogger.logPageLoad("Profile Edit")
             ProfileEditUiState.Content(
                 profile = profile,
                 errorMessage = errorMessage,

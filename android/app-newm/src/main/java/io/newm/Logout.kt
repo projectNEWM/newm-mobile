@@ -24,8 +24,8 @@ class Logout(
         scope.launch {
             try {
                 loginUseCase.logout()
-                restartApp.run()
                 logger.info("Logout", "Logout successful")
+                restartApp.run()
             } catch (e: Exception) {
                 logger.error("Logout", "Logout failed", e)
             }

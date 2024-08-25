@@ -133,7 +133,6 @@ class NFTLibraryPresenter(
             }
             isWalletEmpty -> NFTLibraryState.EmptyWallet
             else -> {
-                eventLogger.logPageLoad("NFT Library")
                 NFTLibraryState.Content(
                     nftTracks = filteredNftTracks,
                     streamTokenTracks = filteredStreamTokens,

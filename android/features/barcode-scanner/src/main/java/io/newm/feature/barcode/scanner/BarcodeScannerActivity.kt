@@ -44,6 +44,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -151,6 +152,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         }
     }
 
+    @kotlin.OptIn(ExperimentalMaterialApi::class)
     @Composable
     private fun BarcodeScannerUi() {
         val bottomSheetState =
@@ -163,7 +165,6 @@ class BarcodeScannerActivity : ComponentActivity() {
         ModalBottomSheetLayout(
             sheetState = bottomSheetState,
             sheetContent = {
-                eventLogger.logPageLoad("Wallet Instructions Page")
                 InstructionList(bottomSheetState, coroutineScope)
             },
             content = {
@@ -182,6 +183,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                     CopyToClipboardButton()
                     HelpButton {
                         coroutineScope.launch {
+
                             bottomSheetState.show()
                         }
                     }
@@ -271,6 +273,12 @@ class BarcodeScannerActivity : ComponentActivity() {
         bottomSheetState: ModalBottomSheetState,
         coroutineScope: CoroutineScope
     ) {
+        if(bottomSheetState.isVisible) {
+            LaunchedEffect(Unit) {
+                eventLogger.logPageLoad("Wallet Instructions Page")
+            }
+        }
+
         val instructions = listOf(
             R.string.newm_connect_wallet_instruction_1,
             R.string.newm_connect_wallet_instruction_2

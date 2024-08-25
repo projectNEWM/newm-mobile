@@ -33,7 +33,6 @@ fun ForceAppUpdateUi(
 ) {
     when (state) {
         is ForceAppUpdateState.Content -> {
-            eventLogger.logPageLoad("Force App Update")
             ForceAppUpdateContent(
                 state = state,
                 modifier = modifier

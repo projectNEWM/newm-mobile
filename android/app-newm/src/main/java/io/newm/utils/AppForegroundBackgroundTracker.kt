@@ -3,6 +3,7 @@ package io.newm.utils
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import io.newm.BuildConfig
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
 
@@ -19,7 +20,13 @@ class AppForegroundBackgroundTracker(
         if (activityReferences == 0 && !isActivityChangingConfigurations) {
             // Track initial app launch when first activity is created
             try {
-                analyticsTracker.logAppLaunch()
+                analyticsTracker.logEvent(
+                    "app_launch",
+                    mapOf(
+                        "app_version" to BuildConfig.VERSION_NAME,
+                        "timestamp" to System.currentTimeMillis()
+                    )
+                )
             } catch (e: Exception) {
                 logger.error(TAG, "Error tracking app launch", e)
             }
@@ -41,7 +48,13 @@ class AppForegroundBackgroundTracker(
         if (activityReferences == 0 && !isActivityChangingConfigurations) {
             // Track app closure when all activities are stopped and none are changing configurations
             try {
-                analyticsTracker.logAppClose()
+                analyticsTracker.logEvent(
+                    "app_close",
+                    mapOf(
+                        "app_version" to BuildConfig.VERSION_NAME,
+                        "timestamp" to System.currentTimeMillis()
+                    )
+                )
             } catch (e: Exception) {
                 logger.error(TAG, "Error tracking app close", e)
             }

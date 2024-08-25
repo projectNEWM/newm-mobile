@@ -12,39 +12,19 @@ class NewmAppEventLogger : IEventLogger {
         eventLogger?.logEvent(eventName, properties)
     }
 
-    override fun logPageLoad(screenName: String) {
-        eventLogger?.logPageLoad(screenName)
+    override fun logPageLoad(screenName: String, properties: Map<String, Any?>?) {
+        eventLogger?.logPageLoad(screenName, properties)
     }
 
     override fun setUserId(userId: String) {
         eventLogger?.setUserId(userId)
     }
 
-    override fun setUserProperty(name: String, value: String) {
-        eventLogger?.setUserProperty(name, value)
+    override fun setUserProperty(propertyName: String, value: String) {
+        eventLogger?.setUserProperty(propertyName, value)
     }
 
-    override fun logScroll(startPosition: Int, endPosition: Int, screenName: String) {
-        eventLogger?.logScroll(startPosition, endPosition, screenName)
-    }
-
-    override fun logClickEvent(buttonName: String, eventType: String) {
-        eventLogger?.logClickEvent(buttonName, eventType)
-    }
-
-    override fun logPlayButtonClick(songId: String, songName: String) {
-        eventLogger?.logPlayButtonClick(songId, songName)
-    }
-
-    override fun logAppLaunch() {
-        eventLogger?.logAppLaunch()
-    }
-
-    override fun logAppClose() {
-        eventLogger?.logAppClose()
-    }
-
-    override fun logUserScroll(percentage: Double) {
-        eventLogger?.logUserScroll(percentage)
+    override fun logClickEvent(buttonName: String, properties: Map<String, Any?>?) {
+        eventLogger?.logClickEvent(buttonName, properties)
     }
 }

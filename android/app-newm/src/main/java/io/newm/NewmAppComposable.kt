@@ -28,6 +28,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -103,7 +104,7 @@ internal fun NewmApp(
     val newmNavigator =
         rememberNewmNavigator(circuitNavigator, logger, {}, launchBrowser = { url ->
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-        })
+        }, eventLogger)
 
     val currentRootScreen = backstack.topRecord?.screen
 
@@ -128,7 +129,10 @@ internal fun NewmApp(
         modifier = Modifier,
         sheetState = sheetState,
         sheetContent = {
-            eventLogger.logPageLoad("Music Player")
+            LaunchedEffect(Unit) {
+                eventLogger.logPageLoad("Music Player")
+            }
+
             MusicPlayerScreen(
                 eventLogger = eventLogger,
                 onNavigateUp = {
