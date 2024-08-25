@@ -59,6 +59,9 @@ android {
             applicationIdSuffix = ".dev"
             dimension = "version"
         }
+        all {
+            resValue("string", "account_type", "$applicationId${applicationIdSuffix.orEmpty()}.account")
+        }
     }
 
     buildFeatures {

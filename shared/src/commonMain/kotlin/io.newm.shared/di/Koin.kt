@@ -90,7 +90,6 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     // Internal Configurations
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
-    single { TokenManager(get()) }
     single { NewmAppLogger() }
     single { NewmAppAnalyticsTracker() }
     // Internal API Services
