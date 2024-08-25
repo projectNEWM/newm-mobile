@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,13 +21,19 @@ import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.feature.login.screen.LoginPageMainImage
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiEvent.CreateAccountClicked
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiEvent.LoginClicked
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 @Composable
 fun WelcomeScreenUi(
     modifier: Modifier = Modifier,
-    state: WelcomeScreenUiState
+    state: WelcomeScreenUiState,
+    eventLogger: NewmAppEventLogger
 ) {
     val onEvent = state.onEvent
+
+    LaunchedEffect(Unit) {
+        eventLogger.logPageLoad("Welcome Screen")
+    }
 
     Box(
         modifier = modifier
@@ -82,7 +89,8 @@ fun WelcomeScreenUi(
 private fun DefaultLightWelcomePreview() {
     NewmTheme(darkTheme = false) {
         WelcomeScreenUi(
-            state = WelcomeScreenUiState(onEvent = {})
+            state = WelcomeScreenUiState(onEvent = {}),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -92,7 +100,8 @@ private fun DefaultLightWelcomePreview() {
 private fun DefaultDarkWelcomePreview() {
     NewmTheme(darkTheme = true) {
         WelcomeScreenUi(
-            state = WelcomeScreenUiState(onEvent = {})
+            state = WelcomeScreenUiState(onEvent = {}),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }

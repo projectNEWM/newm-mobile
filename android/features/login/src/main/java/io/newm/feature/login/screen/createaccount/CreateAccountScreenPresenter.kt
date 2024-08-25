@@ -50,7 +50,6 @@ class CreateAccountScreenPresenter(
 
         return when (step) {
             Step.EmailAndPassword -> {
-                eventLogger.logPageLoad("Create Account")
                 EmailAndPasswordUiState(
                     emailState = userEmail,
                     passwordState = password,

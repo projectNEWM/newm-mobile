@@ -83,7 +83,7 @@ class LoginActivity : ComponentActivity() {
                 }
 
                 is LoginLandingScreen -> ui<WelcomeScreenUiState> { state, modifier ->
-                    WelcomeScreenUi(modifier, state)
+                    WelcomeScreenUi(modifier, state, eventLogger)
                 }
 
                 is LoginScreen -> ui<LoginScreenUiState> { state, modifier ->
@@ -91,7 +91,7 @@ class LoginActivity : ComponentActivity() {
                 }
 
                 is ResetPasswordScreen -> ui<ResetPasswordScreenUiState> { state, modifier ->
-                    ResetPasswordScreenUi().Content(state = state, modifier = modifier)
+                    ResetPasswordScreenUi(eventLogger).Content(state = state, modifier = modifier)
                 }
 
                 else -> null

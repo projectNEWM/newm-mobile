@@ -6,15 +6,18 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 @Composable
 fun ConfirmationDialog(
     title: String,
     message: String,
+    eventLogger: NewmAppEventLogger,
     isOpen: MutableState<Boolean>,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
@@ -24,6 +27,9 @@ fun ConfirmationDialog(
     val confirmationText = stringResource(id = R.string.dialog_confirm)
     val cancelText = stringResource(id = R.string.dialog_cancel)
     if (isOpen.value) {
+        LaunchedEffect(Unit) {
+            eventLogger.logPageLoad("Logout Confirmation Dialog")
+        }
         AlertDialog(
             onDismissRequest = {
                 // Update the isOpen state to false when the user clicks outside the dialog or presses the back button

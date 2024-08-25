@@ -3,13 +3,17 @@ package io.newm.core.ui.utils
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 @Composable
-fun ErrorScreen(errorMessage: String) {
+fun ErrorScreen(
+    errorMessage: String
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()

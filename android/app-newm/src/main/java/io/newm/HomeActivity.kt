@@ -80,21 +80,24 @@ class HomeActivity : ComponentActivity() {
                 is Screen.UserAccount -> ui<ProfileUiState> { state, modifier ->
                     ProfileUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 
                 is NFTLibrary -> ui<NFTLibraryState> { state, modifier ->
                     NFTLibraryScreenUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 
                 is Screen.EditProfile -> ui<ProfileEditUiState> { state, modifier ->
                     ProfileEditUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 

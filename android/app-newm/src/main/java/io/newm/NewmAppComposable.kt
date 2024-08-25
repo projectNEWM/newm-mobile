@@ -129,10 +129,6 @@ internal fun NewmApp(
         modifier = Modifier,
         sheetState = sheetState,
         sheetContent = {
-            LaunchedEffect(Unit) {
-                eventLogger.logPageLoad("Music Player")
-            }
-
             MusicPlayerScreen(
                 eventLogger = eventLogger,
                 onNavigateUp = {
@@ -155,7 +151,6 @@ internal fun NewmApp(
                         MiniPlayer(
                             modifier = Modifier.clickable {
                                 coroutineScope.launch {
-                                    eventLogger.logClickEvent("Mini Player")
                                     sheetState.show()
                                 }
                             },
@@ -221,6 +216,7 @@ internal fun NewmBottomNavigation(
                 selectedLabelColor = DarkPink,
                 onClick = {
                     eventLogger.logClickEvent("Account")
+                    eventLogger.logPageLoad("Account")
                     onNavigationSelected(Screen.UserAccount)
                 },
             )

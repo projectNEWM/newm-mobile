@@ -19,6 +19,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +40,7 @@ import io.newm.core.theme.Purple
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.iconGradient
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 
 private val buttonGradient =
@@ -49,12 +51,18 @@ private val buttonGradient =
 fun SongFilterBottomSheet(
     sheetState: ModalBottomSheetState,
     filters: NFTLibraryFilters,
-    onApplyFilters: (NFTLibraryFilters) -> Unit
+    onApplyFilters: (NFTLibraryFilters) -> Unit,
+    eventLogger: NewmAppEventLogger
 ) {
     LocalIsBottomBarVisible.current.value = sheetState.targetValue != ModalBottomSheetValue.Expanded
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = {
+            if (sheetState.targetValue == ModalBottomSheetValue.Expanded) {
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad("NFT Library Filter")
+                }
+            }
             Box(
                 modifier = Modifier
                     .background(Black90)

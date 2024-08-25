@@ -62,7 +62,6 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterEmailUiEvent.OnSubmit -> {
-                                analyticsTracker.logPageLoad("Enter Email")
                                 analyticsTracker.logClickEvent("Continue")
                                 errorMessage = null
                                 isLoading = true
@@ -102,7 +101,6 @@ class ResetPasswordScreenPresenter(
             }
 
             ResetPasswordStep.EnterVerificationCode -> {
-                analyticsTracker.logPageLoad("Enter Verification Code")
                 ResetPasswordScreenUiState.EnterVerificationCode(
                     code = authCode,
                     errorMessage = errorMessage,
@@ -120,7 +118,6 @@ class ResetPasswordScreenPresenter(
             }
 
             ResetPasswordStep.EnterNewPassword -> {
-                analyticsTracker.logPageLoad("Enter New Password")
                 val submitEnabled = password.isValid && passwordConfirmation.isValid && !isLoading
 
                 ResetPasswordScreenUiState.EnterNewPassword(
