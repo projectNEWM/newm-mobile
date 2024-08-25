@@ -28,7 +28,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -151,6 +150,7 @@ internal fun NewmApp(
                         MiniPlayer(
                             modifier = Modifier.clickable {
                                 coroutineScope.launch {
+                                    eventLogger.logPageLoad("Music Player")
                                     sheetState.show()
                                 }
                             },
