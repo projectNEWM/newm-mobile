@@ -55,6 +55,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ProjectNewm.NoActionBar.Fullscreen" />
 
+        <service
+            android:name="io.newm.accounts.NewmAccountAuthenticatorService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/account_authenticator" />
+        </service>
 
         <meta-data android:name="io.sentry.auto-init" android:value="false" />
 
