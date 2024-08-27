@@ -2,6 +2,8 @@ import Foundation
 import shared
 
 class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
+	var walletSynced: any Kotlinx_coroutines_coreFlow { fatalError() }
+	
 	func getAllTracks() async throws -> [NFTTrack] {
 		[]
 	}

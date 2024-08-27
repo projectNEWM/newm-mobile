@@ -129,8 +129,7 @@ class LandingViewModel: ObservableObject {
 		isLoading = true
 		Task {
 			do {
-				try await signUpUseCase.registerUser(nickname: nickname,
-													 email: email,
+				try await signUpUseCase.registerUser(email: email,
 													 password: password,
 													 passwordConfirmation: confirmPassword,
 													 verificationCode: confirmationCode,
