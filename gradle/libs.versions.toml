@@ -26,7 +26,6 @@ gradle = "8.5.0"
 gradlePlugin = "1.5.5"
 gradleVersionsPlugin = "0.51.0"
 junit = "4.13.2"
-kermit = "2.0.2"
 koin = "3.5.0"
 kotlin = "2.0.0"
 kotlinxCoroutines = "1.8.1"
@@ -85,7 +84,6 @@ flipper-noop = { module = "com.facebook.flipper:flipper-noop", version.ref = "fl
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }

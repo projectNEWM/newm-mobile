@@ -65,10 +65,7 @@ import io.newm.core.ui.utils.iconGradient
 import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
-import io.newm.screens.forceupdate.ForceAppUpdateState
-import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.shared.NewmAppLogger
-import io.newm.utils.ForceAppUpdateViewModel
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 

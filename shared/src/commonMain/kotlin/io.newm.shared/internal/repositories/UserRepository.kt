@@ -1,6 +1,5 @@
 package io.newm.shared.internal.repositories
 
-import co.touchlab.kermit.Logger
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import io.newm.shared.NewmAppLogger
@@ -17,17 +16,15 @@ import org.koin.core.component.inject
 
 internal class UserRepository(
     private val dbWrapper: NewmDatabaseWrapper,
-    private val newmCrashReporter: NewmAppLogger,
-    private val scope: CoroutineScope
+    private val logger: NewmAppLogger,
+    private val scope: CoroutineScope,
 ) : KoinComponent {
 
     private val service: UserAPI by inject()
-    private val logger = Logger.withTag("NewmKMM-UserRepository")
 
     suspend fun fetchLoggedInUserDetails(): User {
-        logger.d { "getCurrentUser()" }
         val user = service.getCurrentUser()
-        newmCrashReporter.user(user.id)
+        logger.user(user.id)
         return user
     }
 
@@ -37,7 +34,7 @@ internal class UserRepository(
         .mapToOneOrNull() // This will emit either one user or null
         .onStart {
             if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null) {
-                logger.d { "No Users found in DB, fetching from network" }
+                logger.debug("UserRepository","No Users found in DB, fetching from network" )
                 scope.launch {
                     val user = fetchLoggedInUserDetails()
                     dbWrapper().transaction {
@@ -99,7 +96,6 @@ internal class UserRepository(
         }
 
     suspend fun getUserById(userId: String): User {
-        logger.d { "getUserById(userId)" }
         return service.getUserById(userId)
     }
 
@@ -112,17 +108,14 @@ internal class UserRepository(
         olderThan: String?,
         newerThan: String?
     ): List<User> {
-        logger.d { "getUsers List" }
         return service.getUsers(offset, limit, ids, roles, genres, olderThan, newerThan)
     }
 
     suspend fun getUserCount(): Int {
-        logger.d { "getUserCount" }
         return service.getUserCount().count
     }
 
     suspend fun deleteCurrentUser(): Boolean {
-        logger.d { "deleteCurrentUser" }
         return service.deleteCurrentUser().status.value == 204
     }
 
@@ -131,7 +124,6 @@ internal class UserRepository(
         newPassword: String,
         confirmNewPassword: String
     ) {
-        logger.d { "changePassword" }
         service.updateUserProfile(
             UserProfileUpdateRequest(
                 currentPassword = currentPassword,
@@ -142,7 +134,6 @@ internal class UserRepository(
     }
 
     suspend fun updateUserDetails(user: User) {
-        logger.d { "updateUserDetails" }
         service.updateUserProfile(
             UserProfileUpdateRequest(
                 firstName = user.firstName?.takeIf { it.isNotBlank() },

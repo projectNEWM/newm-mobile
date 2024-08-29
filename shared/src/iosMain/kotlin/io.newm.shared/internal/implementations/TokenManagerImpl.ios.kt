@@ -1,16 +1,18 @@
 package io.newm.shared.internal.implementations
 
 
-import co.touchlab.kermit.Logger
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.db.PreferencesDataStore
 
-internal class TokenManagerImpl(private val storage: PreferencesDataStore) : TokenManager {
-    private val logger = Logger.withTag("NewmKMM-TokenManagerImpl")
+internal class TokenManagerImpl(
+    private val storage: PreferencesDataStore,
+    private val logger: NewmAppLogger
+) : TokenManager {
 
     override fun getAccessToken(): String? {
         return storage.getString(ACCESS_TOKEN_KEY) ?: run {
-            logger.d("No Access Token found - Time to Login")
+            logger.debug("TokenManagerImpl", "No Access Token found - Time to Login")
             null
         }
     }
@@ -18,7 +20,7 @@ internal class TokenManagerImpl(private val storage: PreferencesDataStore) : Tok
     override fun getRefreshToken(): String? {
         val refreshToken = storage.getString(REFRESH_TOKEN_KEY)
         if (refreshToken.isNullOrEmpty()) {
-            logger.d("No Refresh Token found - Time to Login")
+            logger.debug("TokenManagerImpl", "No Refresh Token found - Time to Login")
             return null
         } else {
             return refreshToken
