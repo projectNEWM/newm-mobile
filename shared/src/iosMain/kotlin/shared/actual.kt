@@ -17,7 +17,7 @@ actual fun platformModule() = module {
 	}
     single { Darwin.create() }
 	single<PreferencesDataStore> { PreferencesDataStoreImpl() }
-	single<TokenManager> { TokenManagerImpl(get()) }
+	single<TokenManager> { TokenManagerImpl(get(), get()) }
 }
 
 actual fun getPlatformName(): String = "iOS"

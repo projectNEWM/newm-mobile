@@ -51,7 +51,6 @@ kotlin {
 				implementation(libs.runtime)
 				implementation(libs.coroutines.extensions)
 				api(libs.koin.core)
-				api(libs.kermit)
 				implementation(libs.ktor.client.logging)
 				implementation(libs.ktor.client.core)
 				implementation(libs.ktor.client.cio)
