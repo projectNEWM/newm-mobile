@@ -36,7 +36,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
-import io.newm.screens.Screen.LoginLandingScreen
+import io.newm.screens.Screen.Welcome
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
@@ -63,7 +63,7 @@ class LoginActivity : ComponentActivity() {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
-                is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
+                is Welcome -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
                 is LoginScreen -> inject<LoginScreenPresenter> { parametersOf(navigator) }.value
                 is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> {
                     parametersOf(
@@ -82,7 +82,7 @@ class LoginActivity : ComponentActivity() {
                     CreateAccountUi(state, modifier)
                 }
 
-                is LoginLandingScreen -> ui<WelcomeScreenUiState> { state, modifier ->
+                is Welcome -> ui<WelcomeScreenUiState> { state, modifier ->
                     WelcomeScreenUi(modifier, state, eventLogger)
                 }
 
@@ -147,7 +147,7 @@ fun WelcomeToNewm(
 ) {
     val context = LocalContext.current
 
-    val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
+    val backstack = rememberSaveableBackStack { push(Welcome) }
     val circuitNavigator = rememberCircuitNavigator(backstack)
     val newmNavigator =
         rememberNewmNavigator(
