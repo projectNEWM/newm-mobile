@@ -18,6 +18,7 @@ import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
@@ -90,7 +91,7 @@ class CreateAccountScreenPresenter(
             }
 
             Step.EmailVerification -> {
-                eventLogger.logPageLoad("Email Verification")
+                eventLogger.logPageLoad(AppScreens.EmailVerificationScreen.name)
                 EmailVerificationUiState(
                     verificationCode = verificationCode,
                     nextButtonEnabled = verificationCode.isValid,
@@ -135,7 +136,7 @@ class CreateAccountScreenPresenter(
             }
 
             Step.Loading -> {
-                eventLogger.logPageLoad("Loading")
+                eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
                 CreateAccountUiState.Loading
             }
         }

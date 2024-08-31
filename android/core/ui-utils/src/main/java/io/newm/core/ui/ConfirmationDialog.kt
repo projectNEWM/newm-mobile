@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 @Composable
 fun ConfirmationDialog(
@@ -28,7 +29,7 @@ fun ConfirmationDialog(
     val cancelText = stringResource(id = R.string.dialog_cancel)
     if (isOpen.value) {
         LaunchedEffect(Unit) {
-            eventLogger.logPageLoad("Logout Confirmation Dialog")
+            eventLogger.logPageLoad(AppScreens.LogoutConfirmationDialogScreen.name)
         }
         AlertDialog(
             onDismissRequest = {

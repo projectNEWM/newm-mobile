@@ -74,6 +74,7 @@ import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -96,14 +97,14 @@ fun NFTLibraryScreenUi(
         when (state) {
             NFTLibraryState.Loading -> {
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("NFT Library Loading")
+                    eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
                 }
                 LoadingScreen()
             }
 
             is NFTLibraryState.LinkWallet -> {
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("NFT Library Link Wallet")
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryLinkWalletScreen.name)
                 }
                 LinkWalletScreen(
                     modifier = Modifier
@@ -117,14 +118,14 @@ fun NFTLibraryScreenUi(
 
             NFTLibraryState.EmptyWallet -> {
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("NFT Library Empty Wallet")
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryEmptyWalletScreen.name)
                 }
                 EmptyWalletScreen(eventLogger)
             }
 
             is NFTLibraryState.Error -> {
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("NFT Library Error Screen")
+                    eventLogger.logPageLoad(AppScreens.ErrorScreen.name)
                 }
                 ErrorScreen(state.message)
             }
@@ -133,7 +134,7 @@ fun NFTLibraryScreenUi(
                 val eventSink = state.eventSink
 
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("NFT Library Song List")
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryScreen.name)
                 }
                 Text(
                     text = stringResource(id = R.string.title_nft_library),

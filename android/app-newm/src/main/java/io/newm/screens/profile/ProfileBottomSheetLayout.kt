@@ -22,6 +22,7 @@ import io.newm.core.theme.Gray400
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -40,7 +41,7 @@ fun ProfileBottomSheetLayout(
         sheetContent = {
             if(sheetState.isVisible) {
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("Account Options")
+                    eventLogger.logPageLoad(AppScreens.AccountOptionsScreen.name)
                 }
             }
             Column(

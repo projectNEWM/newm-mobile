@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -45,6 +44,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmai
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 class ResetPasswordScreenUi(val eventLogger: NewmAppEventLogger) : Ui<ResetPasswordScreenUiState> {
     @Composable
@@ -92,7 +92,7 @@ private fun EnterEmailContent(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
-        eventLogger.logPageLoad("Reset Password Enter Email")
+        eventLogger.logPageLoad(AppScreens.ResetPasswordEnterEmailScreen.name)
     }
     Column(
         modifier = modifier.padding(16.dp),
@@ -145,7 +145,7 @@ private fun EnterCodeContent(
 ) {
     val eventSink = state.eventSink
     LaunchedEffect(Unit) {
-        eventLogger.logPageLoad("Reset Password Enter Code")
+        eventLogger.logPageLoad(AppScreens.ResetPasswordEnterCodeScreen.name)
     }
     EmailVerificationContent(
         modifier = modifier,
@@ -167,7 +167,7 @@ private fun SetNewPasswordContent(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
-        eventLogger.logPageLoad("Reset Password Set New Password")
+        eventLogger.logPageLoad(AppScreens.NewPasswordScreen.name)
     }
 
     ToastSideEffect(message = state.errorMessage)

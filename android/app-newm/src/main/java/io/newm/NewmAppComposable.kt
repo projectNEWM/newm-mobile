@@ -64,6 +64,7 @@ import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -150,7 +151,7 @@ internal fun NewmApp(
                         MiniPlayer(
                             modifier = Modifier.clickable {
                                 coroutineScope.launch {
-                                    eventLogger.logPageLoad("Music Player")
+                                    eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
                                     sheetState.show()
                                 }
                             },
@@ -216,7 +217,7 @@ internal fun NewmBottomNavigation(
                 selectedLabelColor = DarkPink,
                 onClick = {
                     eventLogger.logClickEvent("Account")
-                    eventLogger.logPageLoad("Account")
+                    eventLogger.logPageLoad(AppScreens.AccountScreen.name)
                     onNavigationSelected(Screen.UserAccount)
                 },
             )

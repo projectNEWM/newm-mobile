@@ -4,9 +4,7 @@ package io.newm.feature.barcode.scanner
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.OptIn
@@ -31,7 +29,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -52,7 +49,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -70,7 +66,6 @@ import io.newm.core.theme.Black
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.GlassSmith
 import io.newm.core.theme.Gray23
-import io.newm.core.theme.Gray400
 import io.newm.core.theme.Gray6F
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.LightSkyBlue
@@ -85,6 +80,7 @@ import io.newm.core.ui.utils.textGradient
 import io.newm.core.ui.wallet.buttonGradient
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -113,7 +109,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewmTheme(darkTheme = true) {
-                eventLogger.logPageLoad("Connect Wallet Page")
+                eventLogger.logPageLoad(AppScreens.ConnectWalletScannerScreen.name)
                 BarcodeScannerUi()
             }
         }
@@ -275,7 +271,7 @@ class BarcodeScannerActivity : ComponentActivity() {
     ) {
         if(bottomSheetState.isVisible) {
             LaunchedEffect(Unit) {
-                eventLogger.logPageLoad("Wallet Instructions Page")
+                eventLogger.logPageLoad(AppScreens.WalletInstructionsScreen.name)
             }
         }
 

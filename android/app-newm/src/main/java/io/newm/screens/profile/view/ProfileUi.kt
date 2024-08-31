@@ -71,6 +71,7 @@ import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 
@@ -206,7 +207,7 @@ fun RecordStorePanel(eventLogger: NewmAppEventLogger) {
             ProfileButton(
                 labelResId = R.string.profile_visit_store,
                 onClick = {
-                    eventLogger.logPageLoad("Record Store")
+                    eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
                     eventLogger.logClickEvent("Visit the Record Store")
                     context.startActivity(
                         Intent(

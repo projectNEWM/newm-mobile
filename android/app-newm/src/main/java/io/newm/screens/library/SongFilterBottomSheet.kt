@@ -41,6 +41,7 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.iconGradient
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 
 private val buttonGradient =
@@ -60,7 +61,7 @@ fun SongFilterBottomSheet(
         sheetContent = {
             if (sheetState.targetValue == ModalBottomSheetValue.Expanded) {
                 LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad("NFT Library Filter")
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryFilterScreen.name)
                 }
             }
             Box(

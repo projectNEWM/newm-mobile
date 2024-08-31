@@ -22,6 +22,7 @@ import io.newm.feature.login.screen.LoginPageMainImage
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiEvent.CreateAccountClicked
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiEvent.LoginClicked
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 @Composable
 fun WelcomeScreenUi(
@@ -32,7 +33,7 @@ fun WelcomeScreenUi(
     val onEvent = state.onEvent
 
     LaunchedEffect(Unit) {
-        eventLogger.logPageLoad("Welcome Screen")
+        eventLogger.logPageLoad(AppScreens.WelcomeScreen.name)
     }
 
     Box(
