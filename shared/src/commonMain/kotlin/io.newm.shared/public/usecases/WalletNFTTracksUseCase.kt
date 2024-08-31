@@ -57,7 +57,6 @@ interface WalletNFTTracksUseCase {
      * @param id The unique identifier of the NFT track to be retrieved.
      * @return NFTTrack? - The NFT track with the specified ID, or `null` if no such track is found.
      */
-    @Throws(KMMException::class, CancellationException::class)
     fun getNFTTrack(id: String): NFTTrack?
 	
 	@Throws(KMMException::class, CancellationException::class)

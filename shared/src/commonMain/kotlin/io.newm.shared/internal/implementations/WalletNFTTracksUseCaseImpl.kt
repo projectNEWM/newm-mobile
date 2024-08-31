@@ -1,6 +1,5 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.implementations.utilities.mapErrors
 import io.newm.shared.internal.implementations.utilities.mapErrorsSuspend
 import io.newm.shared.internal.repositories.NFTRepository
 import io.newm.shared.public.models.NFTTrack
@@ -38,11 +37,8 @@ internal class WalletNFTTracksUseCaseImpl(
         }
     }
 
-    @Throws(KMMException::class, CancellationException::class)
     override fun getNFTTrack(id: String): NFTTrack? {
-        return mapErrors {
-            return@mapErrors nftRepository.getTrack(id)
-        }
+        return nftRepository.getTrack(id)
     }
 
     @Throws(KMMException::class, CancellationException::class)

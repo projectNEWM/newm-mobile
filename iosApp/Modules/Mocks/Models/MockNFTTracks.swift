@@ -18,8 +18,8 @@ public extension NFTTrack {
 					duration: track.duration,
 					artists: track.artists,
 					genres: track.genres,
-					moods: track.moods, 
-					isStreamToken: false,
+					moods: track.moods,
+                    isStreamToken: track.isStreamToken,
 					isDownloaded: track.isDownloaded
 				)
 			}
