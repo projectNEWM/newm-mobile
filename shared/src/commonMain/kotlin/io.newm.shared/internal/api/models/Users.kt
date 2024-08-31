@@ -9,7 +9,7 @@ internal data class LogInUser(
 )
 
 @Serializable
-internal data class GoogleSignInRequest(val accessToken: String)
+internal data class GoogleSignInRequest(val idToken: String)
 
 @Serializable
 internal data class AppleSignInRequest(val idToken: String)

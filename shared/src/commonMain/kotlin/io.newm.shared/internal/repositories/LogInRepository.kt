@@ -60,7 +60,7 @@ internal class LogInRepository : KoinComponent {
             when (oAuthData) {
                 is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
                 is OAuthData.Google -> service.loginWithGoogle(
-                    GoogleSignInRequest(accessToken = oAuthData.idToken),
+                    GoogleSignInRequest(idToken = oAuthData.idToken),
                     humanVerificationCode
                 )
 
