@@ -1,29 +1,31 @@
 package io.newm.screens
 
+import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
 @Parcelize
-sealed class Screen : CircuitScreen {
-    data object UserAccount : Screen()
+sealed class Screen(val screenName: String) : CircuitScreen {
 
-    data object NFTLibrary : Screen()
+    data object UserAccount : Screen(screenName = AppScreens.AccountScreen.name)
 
-    data object LoginLandingScreen : Screen()
+    data object NFTLibrary : Screen(screenName = AppScreens.NFTLibraryScreen.name)
 
-    data object EditProfile : Screen()
+    data object Welcome : Screen(screenName = AppScreens.WelcomeScreen.name)
 
-    data object WalletConnect : Screen()
+    data object EditProfile : Screen(screenName = AppScreens.EditProfileScreen.name)
 
-    data object ForceAppUpdate : Screen()
+    data object WalletConnect : Screen(screenName = AppScreens.ConnectWalletScannerScreen.name)
 
-    data object TermsAndConditions : Screen(), WebBrowserScreen {
+    data object ForceAppUpdate : Screen(screenName = AppScreens.ForceUpdateScreen.name)
+
+    data object TermsAndConditions : Screen(screenName = AppScreens.TermsAndConditionsScreen.name), WebBrowserScreen {
         @IgnoredOnParcel
         override val url: String = "https://newm.io/terms-and-conditions"
     }
 
-    data object PrivacyPolicy : Screen(), WebBrowserScreen {
+    data object PrivacyPolicy : Screen(screenName = AppScreens.PrivacyPolicyScreen.name), WebBrowserScreen {
         @IgnoredOnParcel
         override val url: String = "https://newm.io/privacy-policy"
 

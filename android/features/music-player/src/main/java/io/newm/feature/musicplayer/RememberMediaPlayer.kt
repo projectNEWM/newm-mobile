@@ -19,6 +19,7 @@ import com.google.common.util.concurrent.MoreExecutors
 import io.newm.feature.musicplayer.service.MediaService
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.service.MusicPlayerImpl
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 /**
  * Get a [MusicPlayer] instance that is scoped to the lifecycle of the current [LifecycleOwner].
@@ -26,7 +27,7 @@ import io.newm.feature.musicplayer.service.MusicPlayerImpl
  * When the [LifecycleOwner] is destroyed, the [MusicPlayer] will be released.
  */
 @Composable
-fun rememberMediaPlayer(): MusicPlayer? {
+fun rememberMediaPlayer(eventLogger: NewmAppEventLogger): MusicPlayer? {
     if(LocalInspectionMode.current) return null
 
     val mediaPlayer: MutableState<Player?> = remember { mutableStateOf(null) }
@@ -55,9 +56,9 @@ fun rememberMediaPlayer(): MusicPlayer? {
         })
     }
 
-    return remember(mediaPlayer.value, lifecycleOwner.lifecycleScope) {
+    return remember(mediaPlayer.value, lifecycleOwner.lifecycleScope, eventLogger) {
         mediaPlayer.value?.let {
-            MusicPlayerImpl(it, lifecycleOwner.lifecycleScope)
+            MusicPlayerImpl(it, lifecycleOwner.lifecycleScope, eventLogger)
         }
     }
 }

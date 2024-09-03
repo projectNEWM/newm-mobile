@@ -135,9 +135,11 @@ internal fun MusicPlayerViewer(
                 .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+            ) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_down),
@@ -252,7 +254,8 @@ fun PlaybackControlPanel(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     onClick = { onEvent(PlaybackUiEvent.Next) })
                 Spacer(modifier = Modifier.weight(1f))
-                ShareButton(onClick = {})
+                // TODO: Implement share functionality
+                //ShareButton(onClick = {})
             }
         }
     }

@@ -32,6 +32,7 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,6 +73,8 @@ import io.newm.screens.library.NFTLibraryEvent.PlaySong
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -82,7 +85,8 @@ internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
 @Composable
 fun NFTLibraryScreenUi(
     modifier: Modifier = Modifier,
-    state: NFTLibraryState
+    state: NFTLibraryState,
+    eventLogger: NewmAppEventLogger
 ) {
     Column(
         modifier = modifier
@@ -91,22 +95,47 @@ fun NFTLibraryScreenUi(
             .testTag(TAG_NFT_LIBRARY_SCREEN),
     ) {
         when (state) {
-            NFTLibraryState.Loading -> LoadingScreen()
-
-            is NFTLibraryState.LinkWallet -> LinkWalletScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-            ) { newmWalletConnectionId ->
-                val eventSink = state.onConnectWallet
-                eventSink(newmWalletConnectionId)
+            NFTLibraryState.Loading -> {
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
+                }
+                LoadingScreen()
             }
 
-            NFTLibraryState.EmptyWallet -> EmptyWalletScreen()
-            is NFTLibraryState.Error -> ErrorScreen(state.message)
+            is NFTLibraryState.LinkWallet -> {
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryLinkWalletScreen.name)
+                }
+                LinkWalletScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                ) { newmWalletConnectionId ->
+                    val eventSink = state.onConnectWallet
+                    eventSink(newmWalletConnectionId)
+                }
+            }
+
+            NFTLibraryState.EmptyWallet -> {
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryEmptyWalletScreen.name)
+                }
+                EmptyWalletScreen(eventLogger)
+            }
+
+            is NFTLibraryState.Error -> {
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad(AppScreens.ErrorScreen.name)
+                }
+                ErrorScreen(state.message)
+            }
+
             is NFTLibraryState.Content -> {
                 val eventSink = state.eventSink
 
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad(AppScreens.NFTLibraryScreen.name)
+                }
                 Text(
                     text = stringResource(id = R.string.title_nft_library),
                     modifier = Modifier.padding(16.dp),
@@ -129,7 +158,8 @@ fun NFTLibraryScreenUi(
                     onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) },
                     refresh = { eventSink(NFTLibraryEvent.OnRefresh) },
                     refreshing = state.refreshing,
-                    onApplyFilters = { filters -> eventSink(OnApplyFilters(filters)) }
+                    eventLogger = eventLogger,
+                    onApplyFilters = { filters -> eventSink(OnApplyFilters(filters)) },
                 )
             }
         }
@@ -150,7 +180,8 @@ private fun NFTTracks(
     onDownloadSong: (String) -> Unit,
     refresh: () -> Unit,
     refreshing: Boolean,
-    onApplyFilters: (NFTLibraryFilters) -> Unit
+    eventLogger: NewmAppEventLogger,
+    onApplyFilters: (NFTLibraryFilters) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val filterSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -219,7 +250,7 @@ private fun NFTTracks(
             modifier = Modifier.align(Alignment.TopCenter)
         )
 
-        SongFilterBottomSheet(filterSheetState, filters, onApplyFilters)
+        SongFilterBottomSheet(filterSheetState, filters, onApplyFilters, eventLogger)
     }
 }
 
@@ -257,7 +288,7 @@ private fun TrackRowItemWrapper(
         TrackRowItem(
             track = track,
             onClick = onPlaySong,
-            modifier = if(DOWNLOAD_UI_ENABLED) Modifier.offset {
+            modifier = if (DOWNLOAD_UI_ENABLED) Modifier.offset {
                 IntOffset(
                     x = -swipeableState.offset.value.roundToInt(),
                     y = 0
@@ -340,7 +371,8 @@ fun PreviewNftLibrary() {
                 ),
                 refreshing = false,
                 eventSink = {}
-            )
+            ),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -350,7 +382,8 @@ fun PreviewNftLibrary() {
 fun PreviewNftLibraryLoading() {
     NewmTheme(darkTheme = true) {
         NFTLibraryScreenUi(
-            state = NFTLibraryState.Loading
+            state = NFTLibraryState.Loading,
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -360,7 +393,8 @@ fun PreviewNftLibraryLoading() {
 fun PreviewNftLibraryEmptyWallet() {
     NewmTheme(darkTheme = true) {
         NFTLibraryScreenUi(
-            state = NFTLibraryState.EmptyWallet
+            state = NFTLibraryState.EmptyWallet,
+            eventLogger = NewmAppEventLogger()
         )
     }
 }

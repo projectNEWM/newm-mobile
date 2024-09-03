@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +24,7 @@ import io.newm.core.ui.permissions.rememberRequestPermissionIntent
 import io.newm.core.ui.wallet.ConnectWalletPanel
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.library.TAG_NFT_LIBRARY_SCREEN
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 @Composable
 fun LinkWalletScreen(
@@ -30,7 +32,6 @@ fun LinkWalletScreen(
     onConnectWallet: (String) -> Unit
 ) {
     val context = LocalContext.current
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->

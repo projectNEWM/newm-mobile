@@ -16,6 +16,7 @@ import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.MusicPlayer
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
@@ -32,10 +33,11 @@ class NFTLibraryPresenter(
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
     private val scope: CoroutineScope,
+    private val eventLogger: NewmAppEventLogger
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
-        val musicPlayer: MusicPlayer? = rememberMediaPlayer()
+        val musicPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger)
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
@@ -140,7 +142,10 @@ class NFTLibraryPresenter(
                     eventSink = { event ->
                         when (event) {
                             is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
-                            is NFTLibraryEvent.OnQueryChange -> query = event.newQuery
+                            is NFTLibraryEvent.OnQueryChange -> {
+                                eventLogger.logEvent("Search", mapOf("query" to event.newQuery))
+                                query = event.newQuery
+                            }
                             is NFTLibraryEvent.PlaySong -> {
                                 val trackIndex =
                                     playList.tracks.indexOfFirst { it.id == event.track.id }
@@ -153,8 +158,14 @@ class NFTLibraryPresenter(
                                 }
                             }
 
-                            is NFTLibraryEvent.OnApplyFilters -> filters = event.filters
-                            NFTLibraryEvent.OnRefresh -> refresh()
+                            is NFTLibraryEvent.OnApplyFilters -> {
+                                eventLogger.logClickEvent("Apply Filters")
+                                filters = event.filters
+                            }
+                            NFTLibraryEvent.OnRefresh -> {
+                                eventLogger.logClickEvent("Refresh")
+                                refresh()
+                            }
                         }
                     }
                 )

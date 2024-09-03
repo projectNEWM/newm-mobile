@@ -4,9 +4,7 @@ package io.newm.feature.barcode.scanner
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.OptIn
@@ -31,7 +29,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -44,6 +41,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +49,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -69,7 +66,6 @@ import io.newm.core.theme.Black
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.GlassSmith
 import io.newm.core.theme.Gray23
-import io.newm.core.theme.Gray400
 import io.newm.core.theme.Gray6F
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.LightSkyBlue
@@ -83,6 +79,8 @@ import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.utils.textGradient
 import io.newm.core.ui.wallet.buttonGradient
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -105,11 +103,13 @@ val placeholderStyle = TextStyle(
 class BarcodeScannerActivity : ComponentActivity() {
 
     private val logger: NewmAppLogger by inject()
+    private val eventLogger: NewmAppEventLogger by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NewmTheme(darkTheme = true) {
+                eventLogger.logPageLoad(AppScreens.ConnectWalletScannerScreen.name)
                 BarcodeScannerUi()
             }
         }
@@ -148,6 +148,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         }
     }
 
+    @kotlin.OptIn(ExperimentalMaterialApi::class)
     @Composable
     private fun BarcodeScannerUi() {
         val bottomSheetState =
@@ -178,6 +179,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                     CopyToClipboardButton()
                     HelpButton {
                         coroutineScope.launch {
+
                             bottomSheetState.show()
                         }
                     }
@@ -221,6 +223,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         val connectWalletUrl = stringResource(id = R.string.newm_tools_connect_wallet_url)
         Button(
             onClick = {
+                eventLogger.logClickEvent("Copy URL")
                 clipboardManager.setText(androidx.compose.ui.text.AnnotatedString(connectWalletUrl))
             },
             modifier = Modifier
@@ -266,6 +269,12 @@ class BarcodeScannerActivity : ComponentActivity() {
         bottomSheetState: ModalBottomSheetState,
         coroutineScope: CoroutineScope
     ) {
+        if(bottomSheetState.isVisible) {
+            LaunchedEffect(Unit) {
+                eventLogger.logPageLoad(AppScreens.WalletInstructionsScreen.name)
+            }
+        }
+
         val instructions = listOf(
             R.string.newm_connect_wallet_instruction_1,
             R.string.newm_connect_wallet_instruction_2

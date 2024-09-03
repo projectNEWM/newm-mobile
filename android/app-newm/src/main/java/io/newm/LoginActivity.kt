@@ -36,11 +36,12 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
-import io.newm.screens.Screen.LoginLandingScreen
+import io.newm.screens.Screen.Welcome
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -49,6 +50,7 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : ComponentActivity() {
 
     private val logger: NewmAppLogger by inject()
+    private val eventLogger: NewmAppEventLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
 
     // TODO inject
@@ -61,7 +63,7 @@ class LoginActivity : ComponentActivity() {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
-                is LoginLandingScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
+                is Welcome -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
                 is LoginScreen -> inject<LoginScreenPresenter> { parametersOf(navigator) }.value
                 is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> {
                     parametersOf(
@@ -80,8 +82,8 @@ class LoginActivity : ComponentActivity() {
                     CreateAccountUi(state, modifier)
                 }
 
-                is LoginLandingScreen -> ui<WelcomeScreenUiState> { state, modifier ->
-                    WelcomeScreenUi(modifier, state)
+                is Welcome -> ui<WelcomeScreenUiState> { state, modifier ->
+                    WelcomeScreenUi(modifier, state, eventLogger)
                 }
 
                 is LoginScreen -> ui<LoginScreenUiState> { state, modifier ->
@@ -89,7 +91,7 @@ class LoginActivity : ComponentActivity() {
                 }
 
                 is ResetPasswordScreen -> ui<ResetPasswordScreenUiState> { state, modifier ->
-                    ResetPasswordScreenUi().Content(state = state, modifier = modifier)
+                    ResetPasswordScreenUi(eventLogger).Content(state = state, modifier = modifier)
                 }
 
                 else -> null
@@ -106,10 +108,14 @@ class LoginActivity : ComponentActivity() {
 
                     if (updateRequired) {
                         ForceAppUpdateUi(
-                            ForceAppUpdateState.Content(eventSink = { openAppPlayStore()})
+                            ForceAppUpdateState.Content(eventSink = {
+                                eventLogger.logClickEvent("Update Now")
+                                openAppPlayStore()
+                            }),
+                            eventLogger
                         )
                     } else {
-                        WelcomeToNewm(logger, ::launchHomeActivity)
+                        WelcomeToNewm(logger, eventLogger,  ::launchHomeActivity)
                     }
                 }
             }
@@ -136,11 +142,12 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun WelcomeToNewm(
     logger: NewmAppLogger,
-    onStartHomeActivity: () -> Unit
+    eventLogger: NewmAppEventLogger,
+    onStartHomeActivity: () -> Unit,
 ) {
     val context = LocalContext.current
 
-    val backstack = rememberSaveableBackStack { push(LoginLandingScreen) }
+    val backstack = rememberSaveableBackStack { push(Welcome) }
     val circuitNavigator = rememberCircuitNavigator(backstack)
     val newmNavigator =
         rememberNewmNavigator(
@@ -149,7 +156,8 @@ fun WelcomeToNewm(
             onStartHomeActivity,
             launchBrowser = { url ->
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-            })
+            },
+            eventLogger = eventLogger)
 
     NavigableCircuitContent(newmNavigator, backstack)
 }

@@ -32,8 +32,8 @@ val viewModule = module {
     viewModel { params -> MusicPlayerViewModel(params.get(), params.get(), get(), get()) }
     single { RecaptchaClientProvider() }
 
-    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get(), get(), get()) }
-    factory { params -> LoginScreenPresenter(params.get(), get(), get(), get()) }
+    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get(), get(), get(), get()) }
+    factory { params -> LoginScreenPresenter(params.get(), get(), get(), get(), get()) }
     factory { params ->
         ResetPasswordScreenPresenter(
             params.get(),
@@ -42,7 +42,7 @@ val viewModule = module {
             get(),
             get(),
             get()
-        )
+        , get())
     }
     single<GoogleSignInLauncher> {
         val sharedBuildConfig = get<NewmSharedBuildConfig>()
@@ -65,7 +65,8 @@ val viewModule = module {
             recaptchaClientProvider = get(),
             loginUseCase = get(),
             activityResultContract = ActivityResultContracts.StartActivityForResult(),
-            logger = get()
+            logger = get(),
+            analyticsTracker = get()
         )
     }
     factory { params ->
@@ -77,11 +78,13 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get()
         )
     }
     factory { params ->
         NFTLibraryPresenter(
             params.get(),
+            get(),
             get(),
             get(),
             get(),
@@ -92,6 +95,7 @@ val viewModule = module {
     factory { params ->
         ProfileEditPresenter(
             params.get(),
+            get(),
             get(),
             get(),
             get(),
