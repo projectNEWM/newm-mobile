@@ -108,7 +108,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { NftTrackStore(get(), get()) }
     // Internal Repositories
     single { WalletRepository(get(), get(), get()) }
-    single { NFTRepository(get(), get()) }
+    single { NFTRepository(get()) }
     single { GenresRepository() }
     single { LogInRepository() }
     single { PlaylistRepository() }

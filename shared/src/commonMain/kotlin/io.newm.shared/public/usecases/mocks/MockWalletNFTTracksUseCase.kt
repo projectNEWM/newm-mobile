@@ -36,10 +36,6 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
         return mockTracks
     }
 
-    override fun getNFTTrack(id: String): NFTTrack? {
-        return mockTracks.firstOrNull { it.id == id }
-    }
-
     override suspend fun getAllTracksFlow(): Flow<List<NFTTrack>> {
         TODO("Not yet implemented")
     }
