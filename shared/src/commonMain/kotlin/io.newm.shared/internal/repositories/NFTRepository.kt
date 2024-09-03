@@ -1,6 +1,5 @@
 package io.newm.shared.internal.repositories
 
-import io.newm.shared.internal.services.cache.NFTCacheService
 import io.newm.shared.internal.store.NftTrackStore
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +11,7 @@ import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.impl.extensions.fresh
 
 internal class NFTRepository(
-    private val nftStore: NftTrackStore,
-    private val cacheService: NFTCacheService
+    private val nftStore: NftTrackStore
 ) {
 
     // TODO remove this when we start returning the state of the store
@@ -39,10 +37,6 @@ internal class NFTRepository(
     @OptIn(ExperimentalStoreApi::class)
     suspend fun deleteAllTracksNFTsCache() {
         nftStore.clear()
-    }
-
-    fun getTrack(id: String): NFTTrack? {
-        return cacheService.getTrack(id)
     }
 
     fun getAll(refresh: Boolean = false): Flow<List<NFTTrack>> =

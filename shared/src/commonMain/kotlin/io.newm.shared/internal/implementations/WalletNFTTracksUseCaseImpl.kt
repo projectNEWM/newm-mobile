@@ -37,10 +37,6 @@ internal class WalletNFTTracksUseCaseImpl(
         }
     }
 
-    override fun getNFTTrack(id: String): NFTTrack? {
-        return nftRepository.getTrack(id)
-    }
-
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun refresh() {
         mapErrorsSuspend {

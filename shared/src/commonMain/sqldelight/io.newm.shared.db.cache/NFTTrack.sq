@@ -20,12 +20,6 @@ selectAllTracks:
 SELECT *
 FROM NFTTrack;
 
--- Select a specific track by its ID
-selectTrackById:
-SELECT *
-FROM NFTTrack
-WHERE id = ?;
-
 -- Insert or replace a track
 insertOrReplaceTrack:
 REPLACE INTO NFTTrack (id, policyId, title, assetName, amount, imageUrl, audioUrl, duration, artists, genres, moods, isStreamToken)

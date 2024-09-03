@@ -36,10 +36,6 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 		fatalError()
 	}
 	
-    func getNFTTrack(id: String) ->  NFTTrack? {
-        NFTTrack.mocks.first { $0.id == id }
-    }
-	
 	func refresh() async throws {
 		// no-op
 	}
