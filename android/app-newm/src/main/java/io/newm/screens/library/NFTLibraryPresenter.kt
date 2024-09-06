@@ -17,6 +17,7 @@ import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
@@ -143,7 +144,7 @@ class NFTLibraryPresenter(
                         when (event) {
                             is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
                             is NFTLibraryEvent.OnQueryChange -> {
-                                eventLogger.logEvent("Search", mapOf("query" to event.newQuery))
+                                eventLogger.logEvent(AppScreens.NFTLibraryScreen.SEARCH_BUTTON, mapOf("query" to event.newQuery))
                                 query = event.newQuery
                             }
                             is NFTLibraryEvent.PlaySong -> {
@@ -159,11 +160,11 @@ class NFTLibraryPresenter(
                             }
 
                             is NFTLibraryEvent.OnApplyFilters -> {
-                                eventLogger.logClickEvent("Apply Filters")
+                                eventLogger.logClickEvent(AppScreens.NFTLibraryFilterScreen.APPLY_BUTTON)
                                 filters = event.filters
                             }
                             NFTLibraryEvent.OnRefresh -> {
-                                eventLogger.logClickEvent("Refresh")
+                                eventLogger.logClickEvent(AppScreens.NFTLibraryScreen.REFRESH_BUTTON)
                                 refresh()
                             }
                         }

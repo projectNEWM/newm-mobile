@@ -20,14 +20,24 @@ object AppScreens {
 
     object AccountScreen : ScreenEvents {
         override val name = "Account"
+        const val VISIT_RECORDS_BUTTON: String = "Visit the Record Store"
+        const val CONNECT_WALLET_BUTTON: String = "Connect Wallet"
+        const val EDIT_PROFILE_BUTTON: String = "Edit Profile"
+        const val DISCONNECT_WALLET_BUTTON: String = "Disconnect Wallet"
+        const val LOGOUT_BUTTON: String = "Logout"
+        const val TERMS_AND_CONDITIONS_BUTTON: String = "Terms and Conditions"
+        const val PRIVACY_POLICY_BUTTON: String = "Privacy Policy"
     }
 
     object ConnectWalletScannerScreen : ScreenEvents {
         override val name = "Connect Wallet Scanner"
+        const val COPY_URL_BUTTON: String = "Copy URL"
     }
 
     object EditProfileScreen : ScreenEvents {
         override val name = "Edit Profile"
+        const val SAVE_CHANGES_BUTTON: String = "Save changes"
+        const val BACK_BUTTON: String = "Back"
     }
 
     object EmailVerificationScreen : ScreenEvents {
@@ -47,14 +57,24 @@ object AppScreens {
 
     object MusicPlayerScreen : ScreenEvents {
         override val name = "Music Player"
+        const val PLAY_BUTTON: String = "Play"
+        const val PAUSE_BUTTON: String = "Pause"
+        const val NEXT_BUTTON: String = "Next"
+        const val PREVIOUS_BUTTON: String = "Previous"
+        const val STOP_BUTTON: String = "Stop"
+        const val REPEAT_BUTTON: String = "Repeat"
+        const val SEEK_ACTION: String = "Seek Action"
+
     }
 
     object NFTLibraryEmptyWalletScreen : ScreenEvents {
         override val name = "NFT Library Empty Wallet"
+        const val VISIT_RECORDS_BUTTON: String = "Visit the Record Store"
     }
 
     object NFTLibraryFilterScreen : ScreenEvents {
         override val name = "NFT Library Filter"
+        const val APPLY_BUTTON: String = "Apply Filters"
     }
 
     object NFTLibraryLinkWalletScreen : ScreenEvents {
@@ -63,6 +83,9 @@ object AppScreens {
 
     object NFTLibraryScreen : ScreenEvents {
         override val name = "NFT Library"
+        const val REFRESH_BUTTON: String = "Refresh"
+        const val SEARCH_BUTTON: String = "Search"
+        const val PLAYLIST_SIZE_EVENT: String = "Playlist Size"
     }
 
     object NewPasswordScreen : ScreenEvents {
@@ -112,6 +135,12 @@ object AppScreens {
     object CreateAccountScreen : ScreenEvents {
         override val name = "Create Account"
         const val NEXT_BUTTON: String = "Next"
+    }
+
+    object HomeScreen : ScreenEvents {
+        override val name = "Home"
+        const val NFT_LIBRARY_BUTTON: String = "NFT Library"
+        const val ACCOUNT_BUTTON: String = "Account"
     }
 
 }

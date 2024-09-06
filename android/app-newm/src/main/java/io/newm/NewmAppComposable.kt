@@ -205,7 +205,7 @@ internal fun NewmBottomNavigation(
                 selectedIconBrush = LibraryIconGradient,
                 selectedLabelColor = DarkPink,
                 onClick = {
-                    eventLogger.logClickEvent("NFT Library")
+                    eventLogger.logClickEvent(AppScreens.HomeScreen.NFT_LIBRARY_BUTTON)
                     onNavigationSelected(Screen.NFTLibrary)
                 },
             )
@@ -216,7 +216,7 @@ internal fun NewmBottomNavigation(
                 selectedIconBrush = AccountIconGradient,
                 selectedLabelColor = DarkPink,
                 onClick = {
-                    eventLogger.logClickEvent("Account")
+                    eventLogger.logClickEvent(AppScreens.HomeScreen.ACCOUNT_BUTTON)
                     eventLogger.logPageLoad(AppScreens.AccountScreen.name)
                     onNavigationSelected(Screen.UserAccount)
                 },

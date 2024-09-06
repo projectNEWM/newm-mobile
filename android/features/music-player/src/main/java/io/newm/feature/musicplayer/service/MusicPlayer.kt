@@ -11,6 +11,7 @@ import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -90,38 +91,38 @@ class MusicPlayerImpl(
     }
 
     override fun play() {
-        eventLogger.logClickEvent("Play")
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.PLAY_BUTTON)
         player.play()
     }
 
     override fun pause() {
-        eventLogger.logClickEvent("Pause")
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.PAUSE_BUTTON)
         Log.d("MusicPlayer", "Pause")
         player.pause()
     }
 
     override fun stop() {
-        eventLogger.logClickEvent("Stop")
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.STOP_BUTTON)
         Log.d("MusicPlayer", "Stop")
         player.stop()
     }
 
     override fun next() {
-        eventLogger.logClickEvent("Next")
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.NEXT_BUTTON)
         Log.d("MusicPlayer", "Next")
         player.seekToNext()
         play()
     }
 
     override fun previous() {
-        eventLogger.logClickEvent("Previous")
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.PREVIOUS_BUTTON)
         Log.d("MusicPlayer", "Previous")
         player.seekToPrevious()
         play()
     }
 
     override fun repeat() {
-        eventLogger.logClickEvent("Repeat")
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.REPEAT_BUTTON)
         Log.d("MusicPlayer", "Repeat")
         player.repeatMode = when (player.repeatMode) {
             Player.REPEAT_MODE_OFF -> Player.REPEAT_MODE_ALL
@@ -132,19 +133,19 @@ class MusicPlayerImpl(
     }
 
     override fun seekTo(position: Long) {
-        eventLogger.logEvent("Seek", mapOf("position" to position))
+        eventLogger.logEvent(AppScreens.MusicPlayerScreen.SEEK_ACTION, mapOf("position" to position))
         Log.d("MusicPlayer", "Seek to $position")
         player.seekTo(position)
     }
 
     override fun seekTo(index: Int, position: Long) {
-        eventLogger.logEvent("Seek", mapOf("position" to position, "index" to index))
+        eventLogger.logEvent(AppScreens.MusicPlayerScreen.SEEK_ACTION, mapOf("position" to position, "index" to index))
         Log.d("MusicPlayer", "Seek to $index, $position")
         player.seekTo(index, position)
     }
 
     override fun setPlaylist(playlist: Playlist, initialTrackIndex: Int) {
-        eventLogger.logEvent("Playlist Size", mapOf("size" to playlist.tracks.size))
+        eventLogger.logEvent(AppScreens.NFTLibraryScreen.PLAYLIST_SIZE_EVENT, mapOf("size" to playlist.tracks.size))
         Log.d("MusicPlayer", "Setting playlist with ${playlist.tracks.size} tracks")
         player.setMediaItems(playlist.tracks.map { track ->
             MediaItem.Builder()

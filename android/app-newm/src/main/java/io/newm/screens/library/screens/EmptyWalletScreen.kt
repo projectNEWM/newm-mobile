@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 
@@ -49,7 +50,7 @@ fun EmptyWalletScreen(eventLogger: NewmAppEventLogger) {
                 modifier = Modifier.padding(all = 16.dp),
                 text = "Visit the Record Store",
                 onClick = {
-                    eventLogger.logClickEvent("Visit the Record Store")
+                    eventLogger.logClickEvent(AppScreens.NFTLibraryEmptyWalletScreen.VISIT_RECORDS_BUTTON)
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(RECORD_STORE_URL)))
                 },
             )
