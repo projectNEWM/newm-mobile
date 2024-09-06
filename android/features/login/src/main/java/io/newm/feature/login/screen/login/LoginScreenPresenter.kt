@@ -17,6 +17,7 @@ import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.usecases.LoginUseCase
 import kotlinx.coroutines.launch
 
@@ -48,7 +49,7 @@ class LoginScreenPresenter(
             eventSink = { event ->
                 when (event) {
                     LoginUiEvent.OnLoginClick -> {
-                        analyticsTracker.logClickEvent("Login")
+                        analyticsTracker.logClickEvent(AppScreens.LogInWithEmailScreen.LOGIN_BUTTON)
                         coroutineScope.launch {
                             errorMessage = null
 
@@ -76,7 +77,7 @@ class LoginScreenPresenter(
                     }
 
                     LoginUiEvent.ForgotPasswordClick -> {
-                        analyticsTracker.logClickEvent("Forgot your password password?")
+                        analyticsTracker.logClickEvent(AppScreens.LogInWithEmailScreen.FORGOT_PASSWORD_BUTTON)
                         navigator.goTo(ResetPasswordScreen(email.text))
                     }
                 }

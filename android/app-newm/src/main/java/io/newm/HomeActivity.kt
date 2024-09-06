@@ -32,6 +32,7 @@ import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -54,7 +55,7 @@ class HomeActivity : ComponentActivity() {
                     if (updateRequired) {
                         ForceAppUpdateUi(
                             state = ForceAppUpdateState.Content(eventSink = {
-                                eventLogger.logClickEvent("Update Now")
+                                eventLogger.logClickEvent(AppScreens.ForceUpdateScreen.UPDATE_BUTTON)
                                 openAppPlayStore()
                             }),
                             eventLogger

@@ -42,6 +42,7 @@ import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -109,7 +110,7 @@ class LoginActivity : ComponentActivity() {
                     if (updateRequired) {
                         ForceAppUpdateUi(
                             ForceAppUpdateState.Content(eventSink = {
-                                eventLogger.logClickEvent("Update Now")
+                                eventLogger.logClickEvent(AppScreens.ForceUpdateScreen.UPDATE_BUTTON)
                                 openAppPlayStore()
                             }),
                             eventLogger
