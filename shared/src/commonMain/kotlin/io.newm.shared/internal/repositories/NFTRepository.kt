@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import org.mobilenativefoundation.store.core5.ExperimentalStoreApi
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
+import org.mobilenativefoundation.store.store5.impl.extensions.get
 
 internal class NFTRepository(
     private val nftStore: NftTrackStore
@@ -28,6 +29,14 @@ internal class NFTRepository(
             .first()
 
         _syncedNftWallet.value = true
+    }
+
+    suspend fun getAllCollectableTracks(): List<NFTTrack> {
+        return nftStore.get(Unit).filterNot { it.isStreamToken }
+    }
+
+    suspend fun getAllStreamTokens(): List<NFTTrack> {
+        return nftStore.get(Unit).filter { it.isStreamToken }
     }
 
     fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> = getAll().map { tracks ->
