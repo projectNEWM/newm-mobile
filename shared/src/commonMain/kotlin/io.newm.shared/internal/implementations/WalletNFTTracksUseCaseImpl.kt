@@ -22,7 +22,7 @@ internal class WalletNFTTracksUseCaseImpl(
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun getAllCollectableTracks(): List<NFTTrack> {
         return mapErrorsSuspend {
-            return@mapErrorsSuspend nftRepository.getAllCollectableTracksFlow().first()
+            return@mapErrorsSuspend nftRepository.getAllCollectableTracks()
         }
     }
 
@@ -33,7 +33,7 @@ internal class WalletNFTTracksUseCaseImpl(
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun getAllStreamTokens(): List<NFTTrack> {
         return mapErrorsSuspend {
-            return@mapErrorsSuspend nftRepository.getAllStreamTokensFlow().first()
+            return@mapErrorsSuspend nftRepository.getAllStreamTokens()
         }
     }
 
