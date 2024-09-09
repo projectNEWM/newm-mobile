@@ -10,10 +10,7 @@ import io.newm.shared.internal.services.db.deleteAllNFTs
 import io.newm.shared.internal.services.db.getAllTracks
 import io.newm.shared.public.models.NFTTrack
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 
 internal class NFTCacheService(
     private val db: NewmDatabaseWrapper,
@@ -44,16 +41,6 @@ internal class NFTCacheService(
             database.nftTracksDao().deleteAll()
         } else {
             db.deleteAllNFTs()
-        }
-    }
-
-    fun getTrack(id: String): NFTTrack? {
-        return if (ENABLE_ROOM_DATABASE) {
-            runBlocking {
-                database.nftTracksDao().getByIdFlow(id).firstOrNull()?.toNFTTrack()
-            }
-        } else {
-            db.getTrack(id)
         }
     }
 }

@@ -9,7 +9,7 @@ import io.newm.shared.database.entries.DBNFTTrack
 import io.newm.shared.database.entries.DBWalletConnection
 import io.newm.shared.database.sqlite.DataConverters
 
-val ENABLE_ROOM_DATABASE = true
+const val ENABLE_ROOM_DATABASE = true
 
 @Database(
     entities = [

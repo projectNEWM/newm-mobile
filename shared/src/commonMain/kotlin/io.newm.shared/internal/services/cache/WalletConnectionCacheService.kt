@@ -12,7 +12,6 @@ import io.newm.shared.internal.services.db.getWalletConnectionById
 import io.newm.shared.internal.services.db.getWalletConnections
 import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
