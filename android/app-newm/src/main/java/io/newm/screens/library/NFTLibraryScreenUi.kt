@@ -160,6 +160,7 @@ fun NFTLibraryScreenUi(
                     refreshing = state.refreshing,
                     eventLogger = eventLogger,
                     onApplyFilters = { filters -> eventSink(OnApplyFilters(filters)) },
+                    currentTrackId = state.currentTrackId
                 )
             }
         }
@@ -182,6 +183,7 @@ private fun NFTTracks(
     refreshing: Boolean,
     eventLogger: NewmAppEventLogger,
     onApplyFilters: (NFTLibraryFilters) -> Unit,
+    currentTrackId: String?
 ) {
     val scope = rememberCoroutineScope()
     val filterSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -236,7 +238,8 @@ private fun NFTTracks(
                             TrackRowItemWrapper(
                                 track = track,
                                 onPlaySong = onPlaySong,
-                                onDownloadSong = { onDownloadSong(track.id) }
+                                onDownloadSong = { onDownloadSong(track.id) },
+                                isSelected = track.id == currentTrackId
                             )
                         }
                     }
@@ -262,7 +265,8 @@ private const val DOWNLOAD_UI_ENABLED = false
 private fun TrackRowItemWrapper(
     track: NFTTrack,
     onPlaySong: (NFTTrack) -> Unit,
-    onDownloadSong: () -> Unit
+    onDownloadSong: () -> Unit,
+    isSelected: Boolean
 ) {
     val swipeableState = rememberSwipeableState(initialValue = false)
     val deltaX = with(LocalDensity.current) { 82.dp.toPx() }
@@ -293,7 +297,8 @@ private fun TrackRowItemWrapper(
                     x = -swipeableState.offset.value.roundToInt(),
                     y = 0
                 )
-            } else Modifier
+            } else Modifier,
+            isSelected = isSelected
         )
     }
 }
@@ -303,6 +308,7 @@ private fun TrackRowItem(
     track: NFTTrack,
     onClick: (NFTTrack) -> Unit,
     modifier: Modifier,
+    isSelected: Boolean
 ) {
     Row(
         modifier = modifier
@@ -333,7 +339,7 @@ private fun TrackRowItem(
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
-                color = White
+                color = if (isSelected) StatusGreen else White
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (track.isDownloaded) {
@@ -370,7 +376,8 @@ fun PreviewNftLibrary() {
                     showShortTracks = false
                 ),
                 refreshing = false,
-                eventSink = {}
+                eventSink = {},
+                currentTrackId = null
             ),
             eventLogger = NewmAppEventLogger()
         )

@@ -12,6 +12,7 @@ import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.rememberMediaPlayer
@@ -92,6 +93,11 @@ class NFTLibraryPresenter(
             filteredStreamTokens
         ) { Playlist(filteredNftTracks.toTrack() + filteredStreamTokens.toTrack()) }
 
+        val currentTrackId = musicPlayer?.let {
+            val playbackStatus by musicPlayer.playbackStatus.collectAsState()
+            remember(playbackStatus) { playbackStatus.track?.id.takeIf { playbackStatus.state != PlaybackState.BUFFERING } }
+        }
+
         val showZeroResultFound = remember(query, nftTracks, streamTracks) {
             (query.isNotEmpty()
                     && nftTracks.none { it.matches(query) }
@@ -132,6 +138,7 @@ class NFTLibraryPresenter(
                     connectWalletUseCase.connect(newmWalletConnectionId)
                 }
             }
+
             isWalletEmpty -> NFTLibraryState.EmptyWallet
             else -> {
                 NFTLibraryState.Content(
@@ -144,9 +151,13 @@ class NFTLibraryPresenter(
                         when (event) {
                             is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
                             is NFTLibraryEvent.OnQueryChange -> {
-                                eventLogger.logEvent(AppScreens.NFTLibraryScreen.SEARCH_BUTTON, mapOf("query" to event.newQuery))
+                                eventLogger.logEvent(
+                                    AppScreens.NFTLibraryScreen.SEARCH_BUTTON,
+                                    mapOf("query" to event.newQuery)
+                                )
                                 query = event.newQuery
                             }
+
                             is NFTLibraryEvent.PlaySong -> {
                                 val trackIndex =
                                     playList.tracks.indexOfFirst { it.id == event.track.id }
@@ -163,12 +174,14 @@ class NFTLibraryPresenter(
                                 eventLogger.logClickEvent(AppScreens.NFTLibraryFilterScreen.APPLY_BUTTON)
                                 filters = event.filters
                             }
+
                             NFTLibraryEvent.OnRefresh -> {
                                 eventLogger.logClickEvent(AppScreens.NFTLibraryScreen.REFRESH_BUTTON)
                                 refresh()
                             }
                         }
-                    }
+                    },
+                    currentTrackId = currentTrackId
                 )
             }
         }
