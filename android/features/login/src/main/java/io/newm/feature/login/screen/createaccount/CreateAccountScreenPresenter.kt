@@ -60,7 +60,7 @@ class CreateAccountScreenPresenter(
                 ) { event ->
                     when (event) {
                         SignupFormUiEvent.Next -> {
-                            eventLogger.logClickEvent("Next")
+                            eventLogger.logClickEvent(AppScreens.CreateAccountScreen.NEXT_BUTTON)
                             require(emailAndPasswordValid) {
                                 "Email and password - next button should not be enabled if any of the fields are invalid"
                             }
@@ -102,7 +102,7 @@ class CreateAccountScreenPresenter(
                             require(emailAndPasswordValid && verificationCode.isValid) {
                                 "Email verification - next button should not be enabled if any of the fields are invalid"
                             }
-                            eventLogger.logClickEvent("Next")
+                            eventLogger.logClickEvent(AppScreens.EmailVerificationScreen.CONTINUE_BUTTON)
 
                             coroutineScope.launch {
                                 step = Step.Loading

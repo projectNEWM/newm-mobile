@@ -26,6 +26,7 @@ import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.error.KMMException
 import io.newm.shared.public.usecases.LoginUseCase
 
@@ -47,15 +48,15 @@ class WelcomeScreenPresenter(
         return WelcomeScreenUiState { event ->
             when (event) {
                 WelcomeScreenUiEvent.CreateAccountClicked -> {
-                    analyticsTracker.logClickEvent("Create account")
+                    analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.CREATE_ACCOUNT_BUTTON)
                     navigator.goTo(CreateAccountScreen)
                 }
                 WelcomeScreenUiEvent.LoginClicked -> {
-                    analyticsTracker.logClickEvent("Login with email")
+                    analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.LOGIN_WITH_EMAIL_BUTTON)
                     navigator.goTo(LoginScreen)
                 }
                 WelcomeScreenUiEvent.OnGoogleSignInClicked -> {
-                    analyticsTracker.logClickEvent("Login with Google")
+                    analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.LOGIN_WITH_GOOGLE_BUTTON)
                     launchGoogleSignIn()
                 }
             }

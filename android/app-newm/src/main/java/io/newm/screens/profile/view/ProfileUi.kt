@@ -208,7 +208,7 @@ fun RecordStorePanel(eventLogger: NewmAppEventLogger) {
                 labelResId = R.string.profile_visit_store,
                 onClick = {
                     eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
-                    eventLogger.logClickEvent("Visit the Record Store")
+                    eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_RECORDS_BUTTON)
                     context.startActivity(
                         Intent(
                             Intent.ACTION_VIEW,

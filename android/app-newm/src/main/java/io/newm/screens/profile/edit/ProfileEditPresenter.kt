@@ -23,6 +23,7 @@ import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.usecases.ConnectWalletUseCase
@@ -122,7 +123,7 @@ class ProfileEditPresenter(
             ) { event ->
                 when (event) {
                     is OnSaveProfile -> {
-                        eventLogger.logClickEvent("Save Profile")
+                        eventLogger.logClickEvent(AppScreens.EditProfileScreen.SAVE_CHANGES_BUTTON)
                         coroutineScope.launch {
                             try {
                                 val error = getFormErrorOrNull(
@@ -158,24 +159,24 @@ class ProfileEditPresenter(
                     }
 
                     is OnConnectWallet -> coroutineScope.launch {
-                        eventLogger.logClickEvent("Connect Wallet")
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.CONNECT_WALLET_BUTTON)
                         connectWalletUseCase.connect(event.newmCode)
                     }
 
                     OnLogout -> {
-                        eventLogger.logClickEvent("Logout")
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.LOGOUT_BUTTON)
                         logout.signOutUser()
                     }
                     OnShowTermsAndConditions -> {
-                        eventLogger.logClickEvent("Terms and Conditions")
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
                         navigator.goTo(TermsAndConditions)
                     }
                     OnShowPrivacyPolicy -> {
-                        eventLogger.logClickEvent("Privacy Policy")
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
                         navigator.goTo(PrivacyPolicy)
                     }
                     OnBack -> {
-                        eventLogger.logClickEvent("Back")
+                        eventLogger.logClickEvent(AppScreens.EditProfileScreen.BACK_BUTTON)
                         navigator.pop()
                     }
                 }

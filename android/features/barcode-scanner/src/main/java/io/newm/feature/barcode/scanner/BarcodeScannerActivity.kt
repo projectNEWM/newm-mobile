@@ -223,7 +223,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         val connectWalletUrl = stringResource(id = R.string.newm_tools_connect_wallet_url)
         Button(
             onClick = {
-                eventLogger.logClickEvent("Copy URL")
+                eventLogger.logClickEvent(AppScreens.ConnectWalletScannerScreen.COPY_URL_BUTTON)
                 clipboardManager.setText(androidx.compose.ui.text.AnnotatedString(connectWalletUrl))
             },
             modifier = Modifier

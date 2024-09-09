@@ -21,6 +21,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewP
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
@@ -62,7 +63,7 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterEmailUiEvent.OnSubmit -> {
-                                analyticsTracker.logClickEvent("Continue")
+                                analyticsTracker.logClickEvent(AppScreens.ResetPasswordEnterEmailScreen.CONTINUE_BUTTON)
                                 errorMessage = null
                                 isLoading = true
                                 coroutineScope.launch {
@@ -109,7 +110,7 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterVerificationCodeUiEvent.OnSubmit -> {
-                                analyticsTracker.logClickEvent("Continue")
+                                analyticsTracker.logClickEvent(AppScreens.ResetPasswordEnterCodeScreen.CONTINUE_BUTTON)
                                 step = ResetPasswordStep.EnterNewPassword
                             }
                         }
@@ -129,7 +130,7 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterNewPasswordUiEvent.OnSubmit -> {
-                                analyticsTracker.logClickEvent("Confirm")
+                                analyticsTracker.logClickEvent(AppScreens.NewPasswordScreen.CONFIRM_BUTTON)
                                 errorMessage = null
                                 isLoading = true
                                 coroutineScope.launch {
