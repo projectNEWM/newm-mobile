@@ -12,10 +12,13 @@ import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.MusicPlayer
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
@@ -32,10 +35,11 @@ class NFTLibraryPresenter(
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
     private val scope: CoroutineScope,
+    private val eventLogger: NewmAppEventLogger
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
-        val musicPlayer: MusicPlayer? = rememberMediaPlayer()
+        val musicPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger)
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
@@ -89,6 +93,11 @@ class NFTLibraryPresenter(
             filteredStreamTokens
         ) { Playlist(filteredNftTracks.toTrack() + filteredStreamTokens.toTrack()) }
 
+        val currentTrackId = musicPlayer?.let {
+            val playbackStatus by musicPlayer.playbackStatus.collectAsState()
+            remember(playbackStatus) { playbackStatus.track?.id.takeIf { playbackStatus.state != PlaybackState.BUFFERING } }
+        }
+
         val showZeroResultFound = remember(query, nftTracks, streamTracks) {
             (query.isNotEmpty()
                     && nftTracks.none { it.matches(query) }
@@ -129,6 +138,7 @@ class NFTLibraryPresenter(
                     connectWalletUseCase.connect(newmWalletConnectionId)
                 }
             }
+
             isWalletEmpty -> NFTLibraryState.EmptyWallet
             else -> {
                 NFTLibraryState.Content(
@@ -140,7 +150,14 @@ class NFTLibraryPresenter(
                     eventSink = { event ->
                         when (event) {
                             is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
-                            is NFTLibraryEvent.OnQueryChange -> query = event.newQuery
+                            is NFTLibraryEvent.OnQueryChange -> {
+                                eventLogger.logEvent(
+                                    AppScreens.NFTLibraryScreen.SEARCH_BUTTON,
+                                    mapOf("query" to event.newQuery)
+                                )
+                                query = event.newQuery
+                            }
+
                             is NFTLibraryEvent.PlaySong -> {
                                 val trackIndex =
                                     playList.tracks.indexOfFirst { it.id == event.track.id }
@@ -153,10 +170,18 @@ class NFTLibraryPresenter(
                                 }
                             }
 
-                            is NFTLibraryEvent.OnApplyFilters -> filters = event.filters
-                            NFTLibraryEvent.OnRefresh -> refresh()
+                            is NFTLibraryEvent.OnApplyFilters -> {
+                                eventLogger.logClickEvent(AppScreens.NFTLibraryFilterScreen.APPLY_BUTTON)
+                                filters = event.filters
+                            }
+
+                            NFTLibraryEvent.OnRefresh -> {
+                                eventLogger.logClickEvent(AppScreens.NFTLibraryScreen.REFRESH_BUTTON)
+                                refresh()
+                            }
                         }
-                    }
+                    },
+                    currentTrackId = currentTrackId
                 )
             }
         }

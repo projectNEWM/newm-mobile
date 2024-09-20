@@ -32,4 +32,5 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.material.icons.extended)
     implementation(project(Modules.coreTheme))
+    implementation(project(":shared"))
 }

@@ -13,9 +13,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -43,11 +43,13 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.Ent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
-class ResetPasswordScreenUi : Ui<ResetPasswordScreenUiState> {
+class ResetPasswordScreenUi(val eventLogger: NewmAppEventLogger) : Ui<ResetPasswordScreenUiState> {
     @Composable
     override fun Content(state: ResetPasswordScreenUiState, modifier: Modifier) {
-        ResetPasswordScreenContent(modifier = modifier, state = state)
+        ResetPasswordScreenContent(modifier = modifier, state = state, eventLogger = eventLogger)
     }
 }
 
@@ -55,14 +57,23 @@ class ResetPasswordScreenUi : Ui<ResetPasswordScreenUiState> {
 internal fun ResetPasswordScreenContent(
     state: ResetPasswordScreenUiState,
     modifier: Modifier = Modifier,
+    eventLogger: NewmAppEventLogger
 ) {
     ToastSideEffect(message = state.errorMessage)
 
     Scaffold(modifier = modifier.fillMaxSize()) { padding ->
         when (state) {
-            is EnterEmail -> EnterEmailContent(state, modifier = Modifier.padding(padding))
-            is EnterVerificationCode -> EnterCodeContent(state, modifier = Modifier.padding(padding))
-            is EnterNewPassword -> SetNewPasswordContent(state, modifier = Modifier.padding(padding))
+            is EnterEmail -> {
+                EnterEmailContent(state, modifier = Modifier.padding(padding), eventLogger)
+            }
+
+            is EnterVerificationCode -> {
+                EnterCodeContent(state, modifier = Modifier.padding(padding), eventLogger)
+            }
+
+            is EnterNewPassword -> {
+                SetNewPasswordContent(state, modifier = Modifier.padding(padding), eventLogger)
+            }
         }
         if (state.isLoading) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
@@ -71,11 +82,18 @@ internal fun ResetPasswordScreenContent(
 }
 
 @Composable
-private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) {
+private fun EnterEmailContent(
+    state: EnterEmail,
+    modifier: Modifier = Modifier,
+    eventLogger: NewmAppEventLogger
+) {
     val eventSink = state.eventSink
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    LaunchedEffect(Unit) {
+        eventLogger.logPageLoad(AppScreens.ResetPasswordEnterEmailScreen.name)
+    }
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -120,9 +138,15 @@ private fun EnterEmailContent(state: EnterEmail, modifier: Modifier = Modifier) 
 }
 
 @Composable
-private fun EnterCodeContent(state: EnterVerificationCode, modifier: Modifier) {
+private fun EnterCodeContent(
+    state: EnterVerificationCode,
+    modifier: Modifier,
+    eventLogger: NewmAppEventLogger
+) {
     val eventSink = state.eventSink
-
+    LaunchedEffect(Unit) {
+        eventLogger.logPageLoad(AppScreens.ResetPasswordEnterCodeScreen.name)
+    }
     EmailVerificationContent(
         modifier = modifier,
         verificationCode = state.code,
@@ -132,12 +156,19 @@ private fun EnterCodeContent(state: EnterVerificationCode, modifier: Modifier) {
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun SetNewPasswordContent(state: EnterNewPassword, modifier: Modifier = Modifier) {
+private fun SetNewPasswordContent(
+    state: EnterNewPassword,
+    modifier: Modifier = Modifier,
+    eventLogger: NewmAppEventLogger
+) {
     val onEvent = state.eventSink
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(Unit) {
+        eventLogger.logPageLoad(AppScreens.NewPasswordScreen.name)
+    }
 
     ToastSideEffect(message = state.errorMessage)
 
@@ -200,7 +231,8 @@ private fun PreviewEnterEmail() {
                 isLoading = false,
                 submitButtonEnabled = true,
                 eventSink = {},
-            )
+            ),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -218,6 +250,7 @@ private fun PreviewVerificationCode() {
                 submitButtonEnabled = true,
                 eventSink = {},
             ),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -235,7 +268,8 @@ private fun PreviewSetNewPassword() {
                 isLoading = false,
                 submitButtonEnabled = true,
                 eventSink = {},
-            )
+            ),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -253,7 +287,8 @@ private fun PreviewLoading() {
                 isLoading = true,
                 submitButtonEnabled = true,
                 eventSink = {},
-            )
+            ),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }

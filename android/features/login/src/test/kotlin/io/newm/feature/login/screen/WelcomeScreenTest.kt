@@ -7,6 +7,7 @@ import io.newm.core.test.utils.SnapshotTest
 import io.newm.core.test.utils.SnapshotTestConfiguration
 import io.newm.feature.login.screen.welcome.WelcomeScreenUi
 import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -20,7 +21,8 @@ class WelcomeScreenTest(
         snapshot {
             WelcomeScreenUi(
                 modifier = Modifier,
-                state = WelcomeScreenUiState { }
+                state = WelcomeScreenUiState { },
+                eventLogger = NewmAppEventLogger()
             )
         }
     }

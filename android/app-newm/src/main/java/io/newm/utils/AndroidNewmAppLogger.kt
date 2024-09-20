@@ -2,7 +2,7 @@ package io.newm.utils
 
 import android.util.Log
 import io.newm.shared.AppLogger
-import io.newm.shared.NewmAppAnalyticsTracker
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.sentry.Sentry
 import io.sentry.protocol.User
 
@@ -10,7 +10,7 @@ import io.sentry.protocol.User
  * An Android-specific implementation of [AppLogger] that logs messages
  * using Android's [Log] class and integrates with Sentry for error tracking.
  */
-internal class AndroidNewmAppLogger(private val analyticsTracker: NewmAppAnalyticsTracker) : AppLogger {
+internal class AndroidNewmAppLogger(private val analyticsTracker: NewmAppEventLogger) : AppLogger {
 
     /**
      * Sets the user identifier for the logging context and Sentry.

@@ -23,10 +23,12 @@ import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.feature.login.screen.LoginPageMainImage
+import io.newm.shared.public.analytics.NewmAppEventLogger
 
 @Composable
 fun ForceAppUpdateUi(
     state: ForceAppUpdateState,
+    eventLogger: NewmAppEventLogger,
     modifier: Modifier = Modifier
 ) {
     when (state) {
@@ -92,7 +94,8 @@ fun ForceAppUpdateContent(
 fun ForceAppUpdateUiDarkModePreview() {
     NewmTheme(darkTheme = true) {
         ForceAppUpdateUi(
-            state = ForceAppUpdateState.Content(eventSink = {})
+            state = ForceAppUpdateState.Content(eventSink = {}),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }
@@ -102,7 +105,8 @@ fun ForceAppUpdateUiDarkModePreview() {
 fun ForceAppUpdateUiPreview() {
     NewmTheme(darkTheme = false) {
         ForceAppUpdateUi(
-            state = ForceAppUpdateState.Content(eventSink = {})
+            state = ForceAppUpdateState.Content(eventSink = {}),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }

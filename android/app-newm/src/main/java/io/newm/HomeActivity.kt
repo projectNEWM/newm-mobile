@@ -31,6 +31,8 @@ import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -40,7 +42,7 @@ class HomeActivity : ComponentActivity() {
     private val circuit: Circuit = createCircuit()
     private val logger: NewmAppLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
-
+    private val eventLogger: NewmAppEventLogger by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -52,10 +54,14 @@ class HomeActivity : ComponentActivity() {
                     val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
                     if (updateRequired) {
                         ForceAppUpdateUi(
-                            ForceAppUpdateState.Content(eventSink = { openAppPlayStore() })
+                            state = ForceAppUpdateState.Content(eventSink = {
+                                eventLogger.logClickEvent(AppScreens.ForceUpdateScreen.UPDATE_BUTTON)
+                                openAppPlayStore()
+                            }),
+                            eventLogger
                         )
                     } else {
-                        NewmApp(logger)
+                        NewmApp(logger, eventLogger)
                     }
                 }
             }
@@ -75,28 +81,32 @@ class HomeActivity : ComponentActivity() {
                 is Screen.UserAccount -> ui<ProfileUiState> { state, modifier ->
                     ProfileUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 
                 is NFTLibrary -> ui<NFTLibraryState> { state, modifier ->
                     NFTLibraryScreenUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 
                 is Screen.EditProfile -> ui<ProfileEditUiState> { state, modifier ->
                     ProfileEditUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 
                 is Screen.ForceAppUpdate -> ui<ForceAppUpdateState> { state, modifier ->
                     ForceAppUpdateUi(
                         state = state,
-                        modifier = modifier
+                        modifier = modifier,
+                        eventLogger = eventLogger
                     )
                 }
 

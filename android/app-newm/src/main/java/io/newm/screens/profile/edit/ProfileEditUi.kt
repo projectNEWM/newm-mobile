@@ -43,6 +43,7 @@ import io.newm.screens.profile.ProfileForm
 import io.newm.screens.profile.ProfileHeader
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
+import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.models.mocks.mockUsers
@@ -54,6 +55,7 @@ internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 fun ProfileEditUi(
     modifier: Modifier,
     state: ProfileEditUiState,
+    eventLogger: NewmAppEventLogger
 ) {
     when (state) {
         Loading -> LoadingScreen()
@@ -61,6 +63,7 @@ fun ProfileEditUi(
             ProfileEditUiContent(
                 modifier = modifier,
                 state = state,
+                eventLogger = eventLogger
             )
         }
     }
@@ -71,6 +74,7 @@ fun ProfileEditUi(
 private fun ProfileEditUiContent(
     modifier: Modifier = Modifier,
     state: Content,
+    eventLogger: NewmAppEventLogger
 ) {
     val onEvent = state.eventSink
     val profile = state.profile
@@ -81,6 +85,7 @@ private fun ProfileEditUiContent(
     ProfileBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
+        eventLogger = eventLogger,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
@@ -170,7 +175,8 @@ private fun ProfileScreenPreview() {
                 confirmPasswordState = TextFieldState(),
                 errorMessage = null,
                 eventSink = {},
-            )
+            ),
+            eventLogger = NewmAppEventLogger()
         )
     }
 }

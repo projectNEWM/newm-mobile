@@ -12,6 +12,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -20,12 +21,15 @@ import io.newm.core.theme.Black90
 import io.newm.core.theme.Gray400
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileBottomSheetLayout(
     modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
+    eventLogger: NewmAppEventLogger,
     onLogout: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
@@ -35,6 +39,11 @@ fun ProfileBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
         sheetContent = {
+            if(sheetState.isVisible) {
+                LaunchedEffect(Unit) {
+                    eventLogger.logPageLoad(AppScreens.AccountOptionsScreen.name)
+                }
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

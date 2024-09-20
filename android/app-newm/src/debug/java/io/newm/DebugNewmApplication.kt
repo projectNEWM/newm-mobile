@@ -22,12 +22,6 @@ class DebugNewmApplication : NewmApplication() {
             addPlugin(CrashReporterPlugin.getInstance())
             addPlugin(DatabasesFlipperPlugin(this@DebugNewmApplication))
             addPlugin(NavigationFlipperPlugin.getInstance())
-            addPlugin(
-                SharedPreferencesFlipperPlugin(
-                    this@DebugNewmApplication,
-                    "newm_encrypted_shared_prefs"
-                )
-            )
         }.start()
 
         super.onCreate()

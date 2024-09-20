@@ -17,6 +17,8 @@ import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import kotlinx.coroutines.launch
@@ -26,7 +28,8 @@ class CreateAccountScreenPresenter(
     private val signupUseCase: SignupUseCase,
     private val loginUseCase: LoginUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider,
-    private val appLogger: NewmAppLogger
+    private val appLogger: NewmAppLogger,
+    private val eventLogger: NewmAppEventLogger
 ) : Presenter<CreateAccountUiState> {
 
     @Composable
@@ -57,6 +60,7 @@ class CreateAccountScreenPresenter(
                 ) { event ->
                     when (event) {
                         SignupFormUiEvent.Next -> {
+                            eventLogger.logClickEvent(AppScreens.CreateAccountScreen.NEXT_BUTTON)
                             require(emailAndPasswordValid) {
                                 "Email and password - next button should not be enabled if any of the fields are invalid"
                             }
@@ -87,6 +91,7 @@ class CreateAccountScreenPresenter(
             }
 
             Step.EmailVerification -> {
+                eventLogger.logPageLoad(AppScreens.EmailVerificationScreen.name)
                 EmailVerificationUiState(
                     verificationCode = verificationCode,
                     nextButtonEnabled = verificationCode.isValid,
@@ -97,6 +102,7 @@ class CreateAccountScreenPresenter(
                             require(emailAndPasswordValid && verificationCode.isValid) {
                                 "Email verification - next button should not be enabled if any of the fields are invalid"
                             }
+                            eventLogger.logClickEvent(AppScreens.EmailVerificationScreen.CONTINUE_BUTTON)
 
                             coroutineScope.launch {
                                 step = Step.Loading
@@ -129,7 +135,10 @@ class CreateAccountScreenPresenter(
                 }
             }
 
-            Step.Loading -> CreateAccountUiState.Loading
+            Step.Loading -> {
+                eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
+                CreateAccountUiState.Loading
+            }
         }
     }
 }

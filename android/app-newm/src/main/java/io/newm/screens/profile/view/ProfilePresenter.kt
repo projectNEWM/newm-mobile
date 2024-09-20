@@ -18,6 +18,8 @@ import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
@@ -33,6 +35,7 @@ class ProfilePresenter(
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
+    private val eventLogger: NewmAppEventLogger
 ) : Presenter<ProfileUiState> {
     @Composable
     override fun present(): ProfileUiState {
@@ -54,24 +57,37 @@ class ProfilePresenter(
         return if (user == null) {
             ProfileUiState.Loading
         } else {
-
             ProfileUiState.Content(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,
                 eventSink = { event ->
                     when (event) {
                         is OnConnectWallet -> coroutineScope.launch {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.CONNECT_WALLET_BUTTON)
                             connectWalletUseCase.connect(event.newmCode)
                         }
 
                         OnDisconnectWallet -> coroutineScope.launch {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.DISCONNECT_WALLET_BUTTON)
                             disconnectWalletUseCase.disconnect()
                         }
 
-                        OnEditProfile -> navigator.goTo(EditProfile)
-                        OnLogout -> logout.signOutUser()
-                        OnShowTermsAndConditions -> navigator.goTo(TermsAndConditions)
-                        OnShowPrivacyPolicy -> navigator.goTo(PrivacyPolicy)
+                        OnEditProfile -> {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.EDIT_PROFILE_BUTTON)
+                            navigator.goTo(EditProfile)
+                        }
+                        OnLogout -> {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.LOGOUT_BUTTON)
+                            logout.signOutUser()
+                        }
+                        OnShowTermsAndConditions -> {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
+                            navigator.goTo(TermsAndConditions)
+                        }
+                        OnShowPrivacyPolicy -> {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
+                            navigator.goTo(PrivacyPolicy)
+                        }
                     }
                 }
             )

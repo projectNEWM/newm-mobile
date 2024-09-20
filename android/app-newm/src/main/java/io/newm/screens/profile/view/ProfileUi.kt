@@ -70,6 +70,8 @@ import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 
@@ -111,6 +113,7 @@ private val disconnectWalletButtonTextGradient =
 fun ProfileUi(
     state: ProfileUiState,
     modifier: Modifier = Modifier,
+    eventLogger : NewmAppEventLogger
 ) {
     when (state) {
         ProfileUiState.Loading -> LoadingScreen()
@@ -118,6 +121,7 @@ fun ProfileUi(
             ProfileUiContent(
                 state = state,
                 modifier = modifier,
+                eventLogger = eventLogger
             )
         }
     }
@@ -128,6 +132,7 @@ fun ProfileUi(
 private fun ProfileUiContent(
     state: ProfileUiState.Content,
     modifier: Modifier,
+    eventLogger: NewmAppEventLogger
 ) {
     val onEvent = state.eventSink
     val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
@@ -139,6 +144,7 @@ private fun ProfileUiContent(
     ProfileBottomSheetLayout(
         modifier = modifier.fillMaxSize(),
         sheetState = sheetState,
+        eventLogger = eventLogger,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
@@ -169,10 +175,11 @@ private fun ProfileUiContent(
             WalletButton(
                 openWalletDialog = openWalletDialog,
                 isWalletConnected = state.isWalletConnected,
+                eventLogger = eventLogger,
                 disconnectWallet = { onEvent(OnDisconnectWallet) }
             ) { newmWalletConnectionId -> onEvent(OnConnectWallet(newmWalletConnectionId)) }
             Spacer(Modifier.weight(1f))
-            RecordStorePanel()
+            RecordStorePanel(eventLogger)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -180,7 +187,7 @@ private fun ProfileUiContent(
 }
 
 @Composable
-fun RecordStorePanel() {
+fun RecordStorePanel(eventLogger: NewmAppEventLogger) {
     val context = LocalContext.current
 
     Box(
@@ -200,6 +207,8 @@ fun RecordStorePanel() {
             ProfileButton(
                 labelResId = R.string.profile_visit_store,
                 onClick = {
+                    eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
+                    eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_RECORDS_BUTTON)
                     context.startActivity(
                         Intent(
                             Intent.ACTION_VIEW,
@@ -241,6 +250,7 @@ private fun ProfileButton(
 private fun WalletButton(
     openWalletDialog: MutableState<Boolean>,
     isWalletConnected: Boolean,
+    eventLogger: NewmAppEventLogger,
     disconnectWallet: () -> Unit,
     onConnectWalletClick: (String) -> Unit
 ) {
@@ -280,6 +290,7 @@ private fun WalletButton(
         ConfirmationDialog(
             title = "Unlink Cardano Wallet",
             message = "Are you sure you want to disconnect your wallet?",
+            eventLogger = eventLogger,
             isOpen = openWalletDialog,
             onConfirm = {
                 disconnectWallet()
@@ -318,7 +329,8 @@ internal fun UserAccountScreenPreview(
     NewmTheme(darkTheme = true) {
         ProfileUi(
             state = state,
-            modifier = Modifier
+            modifier = Modifier,
+            eventLogger = NewmAppEventLogger()
         )
     }
 }

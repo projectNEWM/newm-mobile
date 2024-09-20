@@ -11,17 +11,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 
 @Composable
-fun EmptyWalletScreen() {
+fun EmptyWalletScreen(eventLogger: NewmAppEventLogger) {
     val context = LocalContext.current
 
     Box(
@@ -47,6 +50,7 @@ fun EmptyWalletScreen() {
                 modifier = Modifier.padding(all = 16.dp),
                 text = "Visit the Record Store",
                 onClick = {
+                    eventLogger.logClickEvent(AppScreens.NFTLibraryEmptyWalletScreen.VISIT_RECORDS_BUTTON)
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(RECORD_STORE_URL)))
                 },
             )

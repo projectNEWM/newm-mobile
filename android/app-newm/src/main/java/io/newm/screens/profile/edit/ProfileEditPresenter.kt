@@ -22,6 +22,8 @@ import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.usecases.ConnectWalletUseCase
@@ -35,7 +37,8 @@ class ProfileEditPresenter(
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val logout: Logout,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
+    private val eventLogger: NewmAppEventLogger
 ) : Presenter<ProfileEditUiState> {
     @Composable
     override fun present(): ProfileEditUiState {
@@ -119,47 +122,63 @@ class ProfileEditPresenter(
                 showConnectWallet = !isWalletConnected,
             ) { event ->
                 when (event) {
-                    is OnSaveProfile -> coroutineScope.launch {
-                        try {
-                            val error = getFormErrorOrNull(
-                                currentPasswordState,
-                                newPasswordState,
-                                confirmPasswordState,
-                                firstNameState,
-                                lastNameState
-                            )
+                    is OnSaveProfile -> {
+                        eventLogger.logClickEvent(AppScreens.EditProfileScreen.SAVE_CHANGES_BUTTON)
+                        coroutineScope.launch {
+                            try {
+                                val error = getFormErrorOrNull(
+                                    currentPasswordState,
+                                    newPasswordState,
+                                    confirmPasswordState,
+                                    firstNameState,
+                                    lastNameState
+                                )
 
-                            errorMessage = error
+                                errorMessage = error
 
-                            if (error != null) {
-                                return@launch
+                                if (error != null) {
+                                    return@launch
+                                }
+
+                                val updatedProfile = User(
+                                    newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
+                                    currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
+                                    confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
+                                    firstName = firstNameState.text,
+                                    lastName = lastNameState.text,
+                                    createdAt = "",
+                                    id = ""
+                                )
+                                userDetailsUseCase.updateUserDetails(updatedProfile)
+                                navigator.pop()
+                            } catch (e: Throwable) {
+                                logger.error("ProfileEditPresenter", "An error occurred", e)
+                                errorMessage = "An error occurred. Please try again."
                             }
-
-                            val updatedProfile = User(
-                                newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
-                                currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
-                                confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
-                                firstName = firstNameState.text,
-                                lastName = lastNameState.text,
-                                createdAt = "",
-                                id = ""
-                            )
-                            userDetailsUseCase.updateUserDetails(updatedProfile)
-                            navigator.pop()
-                        } catch (e: Throwable) {
-                            logger.error("ProfileEditPresenter", "An error occurred", e)
-                            errorMessage = "An error occurred. Please try again."
                         }
                     }
 
                     is OnConnectWallet -> coroutineScope.launch {
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.CONNECT_WALLET_BUTTON)
                         connectWalletUseCase.connect(event.newmCode)
                     }
 
-                    OnLogout -> logout.signOutUser()
-                    OnShowTermsAndConditions -> navigator.goTo(TermsAndConditions)
-                    OnShowPrivacyPolicy -> navigator.goTo(PrivacyPolicy)
-                    OnBack -> navigator.pop()
+                    OnLogout -> {
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.LOGOUT_BUTTON)
+                        logout.signOutUser()
+                    }
+                    OnShowTermsAndConditions -> {
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
+                        navigator.goTo(TermsAndConditions)
+                    }
+                    OnShowPrivacyPolicy -> {
+                        eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
+                        navigator.goTo(PrivacyPolicy)
+                    }
+                    OnBack -> {
+                        eventLogger.logClickEvent(AppScreens.EditProfileScreen.BACK_BUTTON)
+                        navigator.pop()
+                    }
                 }
             }
         }

@@ -7,24 +7,6 @@ import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-fun NewmDatabaseWrapper.getTrack(id: String): NFTTrack? =
-    invoke().nFTTrackQueries.selectTrackById(id).executeAsOneOrNull()?.let { track ->
-        NFTTrack(
-            id = track.id,
-            policyId = track.policyId,
-            title = track.title,
-            assetName = track.assetName,
-            amount = track.amount,
-            imageUrl = track.imageUrl,
-            audioUrl = track.audioUrl,
-            duration = track.duration,
-            artists = track.artists.split(","),
-            genres = track.genres.split(","),
-            moods = track.moods.split(","),
-            isStreamToken = track.isStreamToken == 1L,
-        )
-    }
-
 fun NewmDatabaseWrapper.getAllTracks(): Flow<List<NFTTrack>> =
     invoke().nFTTrackQueries.selectAllTracks()
         .asFlow()
