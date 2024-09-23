@@ -20,13 +20,13 @@ final class PlayQueueTests: XCTestCase {
 			UserDefaults.standard.removePersistentDomain(forName: bundleID)
 		}
 		let tracks = [
-			NFTTrack(id: "0", policyId: "B", title: "i", assetName: "Asset2", amount: 1, imageUrl: "", audioUrl: "", duration: 200, artists: ["Artist 2"], genres: ["Rock"], moods: ["Sad"], isDownloaded: true),
-			NFTTrack(id: "1", policyId: "A", title: "f", assetName: "Asset1", amount: 1, imageUrl: "", audioUrl: "", duration: 400, artists: ["Artist 1"], genres: ["Pop"], moods: ["Happy"], isDownloaded: true),
-			NFTTrack(id: "2", policyId: "C", title: "h", assetName: "Asset3", amount: 1, imageUrl: "", audioUrl: "", duration: 300, artists: ["Artist 3"], genres: ["Jazz"], moods: ["Relaxed"], isDownloaded: true),
-			NFTTrack(id: "3", policyId: "r", title: "g", assetName: "Asset4", amount: 1, imageUrl: "", audioUrl: "", duration: 500, artists: ["Artist 4"], genres: ["Jazz"], moods: ["Relaxed"], isDownloaded: true),
-			NFTTrack(id: "4", policyId: "z", title: "e", assetName: "Asset7", amount: 1, imageUrl: "", audioUrl: "", duration: 44, artists: ["Artist 7"], genres: ["Jazz"], moods: ["Relaxed"], isDownloaded: true),
-			NFTTrack(id: "5", policyId: "e", title: "z", assetName: "Asset5", amount: 1, imageUrl: "", audioUrl: "", duration: 30, artists: ["Artist 5"], genres: ["Jazz"], moods: ["Relaxed"], isDownloaded: true),
-			NFTTrack(id: "6", policyId: "d", title: "r", assetName: "Asset6", amount: 1, imageUrl: "", audioUrl: "", duration: 44, artists: ["Artist 6"], genres: ["Jazz"], moods: ["Relaxed"], isDownloaded: true),
+			NFTTrack(id: "0", policyId: "B", title: "i", assetName: "Asset2", amount: 1, imageUrl: "", audioUrl: "", duration: 200, artists: ["Artist 2"], genres: ["Rock"], moods: ["Sad"], isStreamToken: false, isDownloaded: true),
+			NFTTrack(id: "1", policyId: "A", title: "f", assetName: "Asset1", amount: 1, imageUrl: "", audioUrl: "", duration: 400, artists: ["Artist 1"], genres: ["Pop"], moods: ["Happy"], isStreamToken: false, isDownloaded: true),
+			NFTTrack(id: "2", policyId: "C", title: "h", assetName: "Asset3", amount: 1, imageUrl: "", audioUrl: "", duration: 300, artists: ["Artist 3"], genres: ["Jazz"], moods: ["Relaxed"], isStreamToken: false, isDownloaded: true),
+			NFTTrack(id: "3", policyId: "r", title: "g", assetName: "Asset4", amount: 1, imageUrl: "", audioUrl: "", duration: 500, artists: ["Artist 4"], genres: ["Jazz"], moods: ["Relaxed"], isStreamToken: false, isDownloaded: true),
+			NFTTrack(id: "4", policyId: "z", title: "e", assetName: "Asset7", amount: 1, imageUrl: "", audioUrl: "", duration: 44, artists: ["Artist 7"], genres: ["Jazz"], moods: ["Relaxed"], isStreamToken: false, isDownloaded: true),
+			NFTTrack(id: "5", policyId: "e", title: "z", assetName: "Asset5", amount: 1, imageUrl: "", audioUrl: "", duration: 30, artists: ["Artist 5"], genres: ["Jazz"], moods: ["Relaxed"], isStreamToken: false, isDownloaded: true),
+			NFTTrack(id: "6", policyId: "d", title: "r", assetName: "Asset6", amount: 1, imageUrl: "", audioUrl: "", duration: 44, artists: ["Artist 6"], genres: ["Jazz"], moods: ["Relaxed"], isStreamToken: false, isDownloaded: true),
 		]
 		var playQueue = PlayQueue()
 		playQueue.originalTracks = Set(tracks)
@@ -240,7 +240,7 @@ final class PlayQueueTests: XCTestCase {
 	func testSeekToTrack() throws {
 		try playQueue.seekToTrack(tracks[4])
 		XCTAssertEqual(try playQueue.currentTrack(), tracks[4])
-		XCTAssertThrowsError(try playQueue.seekToTrack(NFTTrack(id: "999", policyId: "999", title: "hi", assetName: "hi", amount: 4, imageUrl: "", audioUrl: "", duration: 9, artists: [], genres: [], moods: [], isDownloaded: false)))
+		XCTAssertThrowsError(try playQueue.seekToTrack(NFTTrack(id: "999", policyId: "999", title: "hi", assetName: "hi", amount: 4, imageUrl: "", audioUrl: "", duration: 9, artists: [], genres: [], moods: [], isStreamToken: false, isDownloaded: false)))
 	}
 	
 	func testCycleRepeatMode() {

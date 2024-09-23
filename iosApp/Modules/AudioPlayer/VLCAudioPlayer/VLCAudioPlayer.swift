@@ -9,6 +9,7 @@ import ModuleLinker
 import Utilities
 import OrderedCollections
 
+@MainActor
 public class VLCAudioPlayer: ObservableObject {
 	public enum PlaybackState {
 		case playing
@@ -24,7 +25,6 @@ public class VLCAudioPlayer: ObservableObject {
 	lazy private var delegate: VLCAudioPlayerDelegate = VLCAudioPlayerDelegate()
 	private var cancels = Set<AnyCancellable>()
 	
-	@MainActor
 	@Published public private(set) var loadingProgress: [NFTTrack: Double] = [:]
 	
 	private var _errors = PassthroughSubject<Error, Never>()
@@ -149,7 +149,6 @@ public class VLCAudioPlayer: ObservableObject {
 		}
 	}
 	
-	@MainActor
 	public func downloadTrack(_ track: NFTTrack) async throws {
 		guard trackIsDownloaded(track) == false, loadingProgress[track] == nil else {
 			return
@@ -168,7 +167,6 @@ public class VLCAudioPlayer: ObservableObject {
 		}
 	}
 	
-	@MainActor
 	public func cancelDownload(_ track: NFTTrack) {
 		fileManager.cancelDownload(track: track)
 	}
@@ -249,6 +247,8 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	deinit {
-		stop()
+		Task { [weak self] in
+			await self?.stop()
+		}
 	}
 }
