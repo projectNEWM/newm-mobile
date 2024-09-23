@@ -152,7 +152,7 @@ class LandingViewModel: ObservableObject {
 	}
 		
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
-		guard let idToken = result?.user.accessToken.tokenString else {
+		guard let idToken = result?.user.idToken?.tokenString else {
 			//TODO: localize
 			handleError("Failed to sign in with Google"); return
 		}
