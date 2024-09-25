@@ -1,5 +1,7 @@
 package io.newm.feature.musicplayer
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
@@ -61,6 +63,8 @@ import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
+import io.newm.feature.musicplayer.share.ShareButton
+import io.newm.feature.musicplayer.share.getRandomSharePhrase
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -254,8 +258,10 @@ fun PlaybackControlPanel(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     onClick = { onEvent(PlaybackUiEvent.Next) })
                 Spacer(modifier = Modifier.weight(1f))
-                // TODO: Implement share functionality
-                //ShareButton(onClick = {})
+                ShareButton(
+                    songTitle = playbackStatus.track?.title,
+                    songArtist = playbackStatus.track?.artist
+                )
             }
         }
     }
@@ -338,16 +344,6 @@ fun NextTrackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun ShareButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_share),
-            contentDescription = "Share Song",
-            tint = Color.White
-        )
-    }
-}
 
 @Composable
 fun RepeatButton(
