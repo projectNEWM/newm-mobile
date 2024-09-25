@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "235697C8-B3B7-45DC-A2A3-2A64B55CB429",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "7651619D2C8E368C00E79860",
+        "name" : "LibraryTests"
+      }
+    }
+  ],
+  "version" : 1
+}

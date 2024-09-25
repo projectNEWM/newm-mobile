@@ -42,6 +42,10 @@ struct PlayQueue {
 		get { filters.duration }
 		set {
 			guard newValue != durationFilter else { return }
+			guard let newValue, newValue > 0 else {
+				filters.duration = nil
+				return
+			}
 			filters.duration = newValue
 		}
 	}

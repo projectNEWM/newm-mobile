@@ -32,7 +32,7 @@ class LandingViewModel: ObservableObject {
 		Task { [weak self] in
 			guard let self else { return }
 			do {
-				recaptcha = try await Recaptcha.getClient(withSiteKey: EnvironmentVariable.recaptchaKey.value)
+				recaptcha = try await Recaptcha.fetchClient(withSiteKey: EnvironmentVariable.recaptchaKey.value)
 			} catch let error as RecaptchaError {
 				errorLogger.logError("RecaptchaClient creation error: \(String(describing: error.errorMessage)).")
 			} catch {
@@ -152,7 +152,7 @@ class LandingViewModel: ObservableObject {
 	}
 		
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
-		guard let idToken = result?.user.accessToken.tokenString else {
+		guard let idToken = result?.user.idToken?.tokenString else {
 			//TODO: localize
 			handleError("Failed to sign in with Google"); return
 		}

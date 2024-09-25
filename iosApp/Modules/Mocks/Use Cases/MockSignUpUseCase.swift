@@ -10,10 +10,6 @@ public class MockSignupUseCase: SignupUseCase {
 		
 	}
 	
-	public func registerUser(email: String, password: String, passwordConfirmation: String, verificationCode: String, humanVerificationCode: String) async throws {
-		
-	}
-
     public func requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Bool) async throws {
 		
 	}

@@ -34,9 +34,8 @@ class LibraryViewModel: ObservableObject {
 	private func sortAndFilterTracks() {
 		filteredSortedTracks = tracks
 			.filter { track in
-				return (durationFilter.flatMap { track.duration > $0 } ?? true) && 
-				(searchText.isEmpty == false ? 
-				 (track.title.localizedCaseInsensitiveContains(searchText) || track.artists.first { $0.localizedCaseInsensitiveContains(searchText) } != nil) : true)
+				return track.isAboveDurationFilter(durationFilter) &&
+				track.containsSearchText(searchText)
 			}
 			.sorted(by: sort.comparator)
 	}
@@ -91,7 +90,7 @@ class LibraryViewModel: ObservableObject {
 				errors.append(error)
 			}
 		}
-			
+		
 		Task { [weak self] in
 			self?.walletIsConnected = try await self?.hasWalletConnectionsUseCase.hasWalletConnections().boolValue == true
 			await self?.refresh()
@@ -243,7 +242,7 @@ class LibraryViewModel: ObservableObject {
 	
 	func toggleLengthFilter() {
 		if durationFilter == 30 {
-			durationFilter = 0
+			durationFilter = nil
 		} else {
 			durationFilter = 30
 		}
