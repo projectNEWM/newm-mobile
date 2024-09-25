@@ -229,54 +229,36 @@ struct LibraryView: View {
 				
 				VStack(alignment: .leading, spacing: 10) {
 					Button(action: {
-						viewModel.cycleTitleSort()
+						viewModel.titleSortTapped()
 					}) {
-						Group {
-							if case .title(let ascending) = viewModel.sort, ascending {
-								Text("Title (A to Z)")
-							} else {
-								Text("Title (Z to A)")
-							}
-						}
-						.frame(maxWidth: .infinity, alignment: .leading)
-						.padding()
-						.background(viewModel.titleSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
-						.foregroundColor(viewModel.titleSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
-						.cornerRadius(8)
+						Text(viewModel.titleSortButtonTitle)
+							.frame(maxWidth: .infinity, alignment: .leading)
+							.padding()
+							.background(viewModel.titleSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+							.foregroundColor(viewModel.titleSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
+							.cornerRadius(8)
 					}
 					
 					Button(action: {
-						viewModel.cycleArtistSort()
+						viewModel.artistSortTapped()
 					}) {
-						Group {
-							if case .artist(let ascending) = viewModel.sort, ascending {
-								Text("Artist (A to Z)")
-							} else {
-								Text("Artist (Z to A)")
-							}
-						}
-						.frame(maxWidth: .infinity, alignment: .leading)
-						.padding()
-						.background(viewModel.artistSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
-						.foregroundColor(viewModel.artistSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
-						.cornerRadius(8)
+						Text(viewModel.artistSortButtonTitle)
+							.frame(maxWidth: .infinity, alignment: .leading)
+							.padding()
+							.background(viewModel.artistSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+							.foregroundColor(viewModel.artistSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
+							.cornerRadius(8)
 					}
 					
 					Button(action: {
-						viewModel.cycleDurationSort()
+						viewModel.durationSortTapped()
 					}) {
-						Group {
-							if case .duration(let ascending) = viewModel.sort, ascending {
-								Text("Length (Shortest to Longest)")
-							} else {
-								Text("Length (Longest to Shortest)")
-							}
-						}
-						.frame(maxWidth: .infinity, alignment: .leading)
-						.padding()
-						.background(viewModel.durationSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
-						.foregroundColor(viewModel.durationSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
-						.cornerRadius(8)
+						Text(viewModel.durationSortButtonTitle)
+							.frame(maxWidth: .infinity, alignment: .leading)
+							.padding()
+							.background(viewModel.durationSortSelected ? NEWMColor.midMusic().erased : Gradients.mainPrimaryLight.erased)
+							.foregroundColor(viewModel.durationSortSelected ? .black : NEWMColor.midMusic.swiftUIColor)
+							.cornerRadius(8)
 					}
 				}
 			}

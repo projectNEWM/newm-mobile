@@ -23,12 +23,38 @@ class LibraryViewModel: ObservableObject {
 		}
 		get { audioPlayer.durationFilter }
 	}
-	private(set) var sort: Sort {
+		
+	private(set) var selectedSort: Sort {
 		set {
 			audioPlayer.sort = newValue
 			tracks.sort(by: newValue.comparator)
 		}
 		get { audioPlayer.sort }
+	}
+	
+	private var titleSort: Sort = .title(ascending: true)
+	private var artistSort: Sort = .artist(ascending: true)
+	private var durationSort: Sort = .duration(ascending: true)
+	
+	var titleSortButtonTitle: String {
+		guard case .title(let ascending) = titleSort else {
+			return ""
+		}
+		return ascending ? "Title (A to Z)" : "Title (Z to A)"
+	}
+	
+	var artistSortButtonTitle: String {
+		guard case .artist(let ascending) = artistSort else {
+			return ""
+		}
+		return ascending ? "Artist (A to Z)" : "Artist (Z to A)"
+	}
+	
+	var durationSortButtonTitle: String {
+		guard case .duration(let ascending) = durationSort else {
+			return ""
+		}
+		return ascending ? "Length (Shortest to Longest)" : "Length (Longest to Shortest)"
 	}
 	
 	private func sortAndFilterTracks() {
@@ -37,7 +63,7 @@ class LibraryViewModel: ObservableObject {
 				return track.isAboveDurationFilter(durationFilter) &&
 				track.containsSearchText(searchText)
 			}
-			.sorted(by: sort.comparator)
+			.sorted(by: selectedSort.comparator)
 	}
 	
 	@Published private(set) var route: LibraryRoute?
@@ -207,37 +233,34 @@ class LibraryViewModel: ObservableObject {
 		}
 	}
 	
-	func cycleTitleSort() {
-		sort = switch sort {
-		case .title(let ascending) where ascending == true:
-				.title(ascending: false)
-		case .title(let ascending) where ascending == false:
-				.title(ascending: true)
-		default:
-				.title(ascending: true)
+	func titleSortTapped() {
+		guard case .title(let ascending) = selectedSort else {
+			selectedSort = titleSort
+			return
 		}
+		
+		titleSort = .title(ascending: !ascending)
+		selectedSort = titleSort
 	}
 	
-	func cycleArtistSort() {
-		sort = switch sort {
-		case .artist(let ascending) where ascending == true:
-				.artist(ascending: false)
-		case .artist(let ascending) where ascending == false:
-				.artist(ascending: true)
-		default:
-				.artist(ascending: true)
+	func artistSortTapped() {
+		guard case .artist(let ascending) = selectedSort else {
+			selectedSort = artistSort
+			return
 		}
+		
+		artistSort = .artist(ascending: !ascending)
+		selectedSort = artistSort
 	}
 	
-	func cycleDurationSort() {
-		sort = switch sort {
-		case .duration(let ascending) where ascending == true:
-				.duration(ascending: false)
-		case .duration(let ascending) where ascending == false:
-				.duration(ascending: true)
-		default:
-				.duration(ascending: true)
+	func durationSortTapped() {
+		guard case .duration(let ascending) = selectedSort else {
+			selectedSort = durationSort
+			return
 		}
+		
+		durationSort = .duration(ascending: !ascending)
+		selectedSort = durationSort
 	}
 	
 	func toggleLengthFilter() {
@@ -251,7 +274,7 @@ class LibraryViewModel: ObservableObject {
 
 extension LibraryViewModel {
 	var titleSortSelected: Bool {
-		return if case .title = sort {
+		return if case .title = selectedSort {
 			true
 		} else {
 			false
@@ -259,7 +282,7 @@ extension LibraryViewModel {
 	}
 	
 	var artistSortSelected: Bool {
-		return if case .artist = sort {
+		return if case .artist = selectedSort {
 			true
 		} else {
 			false
@@ -267,7 +290,7 @@ extension LibraryViewModel {
 	}
 	
 	var durationSortSelected: Bool {
-		return if case .duration = sort {
+		return if case .duration = selectedSort {
 			true
 		} else {
 			false
