@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+import java.util.Date
 
 apply(from = "../../gradle_include/compose.gradle")
 apply(from = "../../gradle_include/circuit.gradle")
@@ -5,7 +7,7 @@ apply(from = "../../gradle_include/flipper.gradle")
 
 plugins {
     id("com.android.application")
-    id( "com.google.gms.google-services")
+    id("com.google.gms.google-services")
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
@@ -23,8 +25,8 @@ android {
         applicationId = "io.newm"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 5
-        versionName = "0.3.0"
+        versionCode = getCurrentDateTimeVersionCode()
+        versionName = getCustomVersionName(major = 1)
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
     }
@@ -60,7 +62,11 @@ android {
             dimension = "version"
         }
         all {
-            resValue("string", "account_type", "$applicationId${applicationIdSuffix.orEmpty()}.account")
+            resValue(
+                "string",
+                "account_type",
+                "$applicationId${applicationIdSuffix.orEmpty()}.account"
+            )
         }
     }
 
@@ -123,4 +129,46 @@ sentry {
     // disable if you don't want to expose your sources
     includeSourceContext.set(true)
     telemetry.set(true)
+}
+
+/**
+ * Generates a dynamic `versionCode` based on the current date and hour.
+ *
+ * The `versionCode` is constructed using the format `yyyyMMddHH`, which represents:
+ * - `yyyy`: 4-digit year
+ * - `MM`: 2-digit month (01-12)
+ * - `dd`: 2-digit day of the month (01-31)
+ * - `HH`: 2-digit hour in 24-hour format (00-23)
+ *
+ * This ensures that each build has a unique `versionCode` per hour of the day.
+ *
+ * @return An integer representing the dynamically generated `versionCode`.
+ */
+fun getCurrentDateTimeVersionCode(): Int {
+    val dateFormat = SimpleDateFormat("yyyyMMddHH")
+    return dateFormat.format(Date()).toInt()
+}
+
+/**
+ * Generates a dynamic `versionName` based on a specified major version, current year, month, day, and hour.
+ *
+ * The `versionName` follows the format `Major.Year.MMDDHH`, where:
+ * - `Major`: The major version number provided as an input parameter.
+ * - `Year`: The current year (e.g., 2024).
+ * - `MMDD`: Month and day combined (e.g., 0925 for September 25).
+ * - `HH`: Hour in 24-hour format (00-23).
+ *
+ * @param major The major version number to be included in the `versionName`.
+ * @return A string representing the dynamically generated `versionName`.
+ */
+fun getCustomVersionName(major: Int): String {
+    val yearFormat = SimpleDateFormat("yyyy")
+    val monthDayFormat = SimpleDateFormat("MMdd")
+    val hourFormat = SimpleDateFormat("HH")
+
+    val year = yearFormat.format(Date())
+    val monthDay = monthDayFormat.format(Date())
+    val hour = hourFormat.format(Date())
+
+    return "$major.$year.$monthDay$hour"
 }
