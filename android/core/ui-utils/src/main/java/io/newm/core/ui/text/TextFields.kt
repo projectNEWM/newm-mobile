@@ -75,6 +75,13 @@ val formEmailStyle = TextStyle(
     color = Gray100
 )
 
+val versionTextStyle = TextStyle(
+    fontSize = 12.sp,
+    fontFamily = inter,
+    fontWeight = FontWeight.Light,
+    color = Gray100
+)
+
 object TextFieldWithLabelDefaults {
     object KeyboardOptions {
         @Stable
