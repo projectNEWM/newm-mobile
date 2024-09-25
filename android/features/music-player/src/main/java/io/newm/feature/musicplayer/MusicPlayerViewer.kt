@@ -47,7 +47,6 @@ import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.DarkPink
 import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Gray23
 import io.newm.core.theme.Gray500
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
@@ -364,7 +363,7 @@ fun RepeatButton(
         Icon(
             painter = painterResource(id = imageRes),
             contentDescription = "Repeat",
-            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) Gray23 else White
+            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) White else DarkViolet
         )
     }
 }
