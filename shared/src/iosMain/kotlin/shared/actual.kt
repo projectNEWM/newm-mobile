@@ -20,4 +20,4 @@ actual fun platformModule() = module {
 	single<TokenManager> { TokenManagerImpl(get(), get()) }
 }
 
-actual fun getPlatformName(): String = "iOS"
+actual fun getPlatformName(): String = "IOS"
