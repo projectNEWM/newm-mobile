@@ -131,44 +131,50 @@ sentry {
     telemetry.set(true)
 }
 
+
 /**
- * Generates a dynamic `versionCode` based on the current date and hour.
+ * Generates a version code based on the current date and time in the format `yyMMddHH`.
  *
- * The `versionCode` is constructed using the format `yyyyMMddHH`, which represents:
- * - `yyyy`: 4-digit year
- * - `MM`: 2-digit month (01-12)
- * - `dd`: 2-digit day of the month (01-31)
- * - `HH`: 2-digit hour in 24-hour format (00-23)
+ * The version code is an integer composed of:
+ * - `yy`: The last two digits of the current year.
+ * - `MM`: The current month.
+ * - `dd`: The current day of the month.
+ * - `HH`: The current hour (24-hour format).
  *
- * This ensures that each build has a unique `versionCode` per hour of the day.
+ * The function formats the current date and time using `SimpleDateFormat`,
+ * converts it into a string, and then parses it as an integer.
  *
- * @return An integer representing the dynamically generated `versionCode`.
+ * @return An integer representing the current date and time in the format `yyMMddHH`.
  */
 fun getCurrentDateTimeVersionCode(): Int {
-    val dateFormat = SimpleDateFormat("yyyyMMddHH")
+    val dateFormat = SimpleDateFormat("yyMMddHH")
     return dateFormat.format(Date()).toInt()
 }
 
 /**
- * Generates a dynamic `versionName` based on a specified major version, current year, month, day, and hour.
+ * Generates a custom version name based on the provided major version and the current date and time.
  *
- * The `versionName` follows the format `Major.Year.MMDDHH`, where:
- * - `Major`: The major version number provided as an input parameter.
- * - `Year`: The current year (e.g., 2024).
- * - `MMDD`: Month and day combined (e.g., 0925 for September 25).
- * - `HH`: Hour in 24-hour format (00-23).
+ * The version name follows the format: `major.YYYY.MMDDHHmm`, where:
+ * - `major`: The major version number passed as a parameter.
+ * - `YYYY`: The current year.
+ * - `MMDD`: The current month and day.
+ * - `HHmm`: The current hour and minute.
  *
- * @param major The major version number to be included in the `versionName`.
- * @return A string representing the dynamically generated `versionName`.
+ * The function retrieves the current date and time using `SimpleDateFormat` to format each component.
+ *
+ * @param major The major version number to be used as the first part of the version name.
+ * @return A custom version name string in the format: `major.YYYY.MMDDHHmm`.
  */
 fun getCustomVersionName(major: Int): String {
     val yearFormat = SimpleDateFormat("yyyy")
     val monthDayFormat = SimpleDateFormat("MMdd")
     val hourFormat = SimpleDateFormat("HH")
+    val minuteFormat = SimpleDateFormat("mm")
 
     val year = yearFormat.format(Date())
     val monthDay = monthDayFormat.format(Date())
     val hour = hourFormat.format(Date())
+    val minute = minuteFormat.format(Date())
 
-    return "$major.$year.$monthDay$hour"
+    return "$major.$year.$monthDay$hour$minute"
 }
