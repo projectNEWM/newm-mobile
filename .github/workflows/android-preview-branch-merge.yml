@@ -42,8 +42,11 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
         run: echo $GOOGLE_SERVICES_JSON > ./android/app-newm/google-services.json
 
-      - name: build android app
+      - name: build android apk
         run: ./gradlew :android:app-newm:assembleProductionRelease
+      
+      - name: build android applicationBundle
+        run: ./gradlew bundleRelease
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
@@ -62,6 +65,11 @@ jobs:
         with:
           name: apk
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
+      
+      - uses: actions/upload-artifact@v2
+        with:
+            name: Signed app bundle
+            path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
