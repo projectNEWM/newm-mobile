@@ -46,6 +46,7 @@
     <string name="newm_connect_wallet_instruction_1">1. Open your Cardano supported web3 wallet app</string>
     <string name="newm_connect_wallet_instruction_2">2. Use this URL to connect your wallet</string>
     <string name="newm_connect_wallet_instruction_title">how to connect</string>
+    <string name="newm_download_app_landing_page" translatable="false">"https://newm.io/app/"</string>
     <string name="newm_tools_connect_wallet_url">https://tools.newm.io/wallet-connect</string>
     <string name="newm_tools_url">https://tools.newm.io</string>
     <string name="next">Next</string>
@@ -79,22 +80,21 @@
     <string name="reset_password_new_password">Your new password</string>
     <string name="search">Search</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="share_call_to_action">👉 Tap in and discover what you\'re missing: https://newm.io</string>
-    <string name="share_phrase_1">🚀 Vibing to %1$s by %2$s on the Newm App! 🎧 Don\'t miss out!</string>
-    <string name="share_phrase_2">🎶 Can\'t stop grooving to %1$s by %2$s. Catch the beat on Newm! 🔥</string>
-    <string name="share_phrase_3">🎧 Jammin\' to %1$s by %2$s on repeat! Newm\'s got the tunes! 🚀</string>
-    <string name="share_phrase_4">🎉 Just found my new anthem: %1$s by %2$s! Discover yours on Newm! 🎶</string>
-    <string name="share_phrase_5">🔥 Turn it up! %1$s by %2$s is a whole vibe on Newm App! 🎶</string>
-    <string name="share_phrase_6">🌟 If you\'re not listening to %1$s by %2$s on Newm, you\'re missing out! 🎧</string>
-    <string name="share_phrase_7">🎶 Locked into the rhythm of %1$s by %2$s on Newm App. Check it out! 🔥</string>
-    <string name="share_phrase_8">🚀 Fueling my day with %1$s by %2$s. Newm App has all the jams! 🎧</string>
-    <string name="share_phrase_9">🎉 Newm App’s playlist on fire with %1$s by %2$s. Ready to vibe? 🔥</string>
-    <string name="share_phrase_10">🎧 Tuning into the best beats with %1$s by %2$s on Newm! 🚀</string>
-    <string name="share_phrase_11">🔥 Crank up %1$s by %2$s on Newm App. The track is lit! 🎶</string>
-    <string name="share_phrase_12">🎉 Found my groove with %1$s by %2$s. Discover fresh beats on Newm! 🚀</string>
-    <string name="share_phrase_13">🎧 You NEED to hear %1$s by %2$s! Now playing on Newm App! 🔥</string>
-    <string name="share_phrase_14">🎶 Feeling the rhythm of %1$s by %2$s. Newm App = non-stop vibes! 🚀</string>
-    <string name="share_phrase_15">🔥 Plug into the sound of %1$s by %2$s on Newm App. Your new favorite jam awaits! 🎧</string>
+    <string name="share_phrase_1">Tune in to %1$s by %2$s on NEWM app! \n👉 Discover your next favorite song: %3$s</string>
+    <string name="share_phrase_10">Find your rhythm with %1$s by %2$s on NEWM app. \n👉 Download NEWM app to start listening: %3$s</string>
+    <string name="share_phrase_11">Bless your ears with %1$s by %2$s on NEWM app! \n👉 Download NEWM app to start listening: %3$s</string>
+    <string name="share_phrase_12">%1$s by %2$s is the track you didn’t know you needed on NEWM app. \n👉 Download NEWM app to discover &amp; listen: %3$s</string>
+    <string name="share_phrase_13">Ready to refresh your playlist? %1$s by %2$s is live on NEWM app! \n👉 Check it out: %3$s</string>
+    <string name="share_phrase_14">%1$s by %2$s is perfect for your next playlist. Stream it on NEWM app! \n👉 Discover it here: %3$s</string>
+    <string name="share_phrase_15">If you\'re not listening to %1$s by %2$s, you\'re missing out! \n👉 Download NEWM app to discover &amp; listen: %3$s</string>
+    <string name="share_phrase_2">%1$s by %2$s is a whole vibe on NEWM app! \n👉 Discover your next playlist-worthy track: %3$s</string>
+    <string name="share_phrase_3">Ready for a new vibe? %1$s by %2$s is waiting for you on NEWM app! \n👉 Discover more music on NEWM app: %3$s</string>
+    <string name="share_phrase_4">Can\'t stop playing %1$s by %2$s? Stream it on NEWM app now! \n👉 Discover more: %3$s</string>
+    <string name="share_phrase_5">Lose yourself in %1$s by %2$s! Download the NEWM app and start listening now. \n👉 Explore more music: %3$s</string>
+    <string name="share_phrase_6">Welcome to your next music obsession – %1$s by %2$s! \nDownload the NEWM app and start listening now. \n👉 %3$s</string>
+    <string name="share_phrase_7">Explore %1$s by %2$s on NEWM app and level-up your playlist! \n👉 Download NEWM app to discover &amp; listen: %3$s</string>
+    <string name="share_phrase_8">Love discovering new music? Start with %1$s by %2$s on NEWM app. \n👉 Download NEWM app to discover &amp; listen: %3$s</string>
+    <string name="share_phrase_9">Looking for fresh tracks? %1$s by %2$s is a must-listen on NEWM app! \n👉 Download NEWM app to discover &amp; listen: %3$s</string>
     <string name="stars">Stars</string>
     <string name="subtitle_this_week_earnings">Earnings</string>
     <string name="subtitle_this_week_followers">Followers this week</string>

@@ -63,7 +63,6 @@ import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.share.ShareButton
-import io.newm.feature.musicplayer.share.getRandomSharePhrase
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
