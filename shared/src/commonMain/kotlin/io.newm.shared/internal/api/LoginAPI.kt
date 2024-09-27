@@ -26,6 +26,7 @@ import io.newm.shared.internal.api.models.ResetPasswordException
 import io.newm.shared.internal.api.models.ResetPasswordRequest
 import io.newm.shared.internal.api.utils.addHumanVerificationCodeToHeader
 import io.newm.shared.public.models.error.KMMException
+import shared.getPlatformName
 
 
 internal class LoginAPI(
@@ -63,6 +64,7 @@ internal class LoginAPI(
             contentType(ContentType.Application.Json)
             setBody(user)
             addHumanVerificationCodeToHeader(humanVerificationCode)
+            parameter("clientPlatform", getPlatformName())
         }
         when (response.status) {
             HttpStatusCode.OK -> {}
@@ -85,6 +87,7 @@ internal class LoginAPI(
             contentType(ContentType.Application.Json)
             setBody(user)
             addHumanVerificationCodeToHeader(humanVerificationCode)
+            parameter("clientPlatform", getPlatformName())
         }.body<LoginResponse>()
 
     suspend fun loginWithGoogle(
@@ -95,6 +98,7 @@ internal class LoginAPI(
             contentType(ContentType.Application.Json)
             setBody(request)
             addHumanVerificationCodeToHeader(humanVerificationCode)
+            parameter("clientPlatform", getPlatformName())
         }
 
         return when (response.status) {
@@ -113,6 +117,7 @@ internal class LoginAPI(
             contentType(ContentType.Application.Json)
             setBody(request)
             addHumanVerificationCodeToHeader(humanVerificationCode)
+            parameter("clientPlatform", getPlatformName())
         }
 
         return when (response.status) {
@@ -127,6 +132,7 @@ internal class LoginAPI(
         val response = httpClient.post("/v1/auth/login/facebook") {
             contentType(ContentType.Application.Json)
             setBody(request)
+            parameter("clientPlatform", getPlatformName())
         }
 
         return when (response.status) {
@@ -141,6 +147,7 @@ internal class LoginAPI(
         val response = httpClient.post("/v1/auth/login/linkedin") {
             contentType(ContentType.Application.Json)
             setBody(request)
+            parameter("clientPlatform", getPlatformName())
         }
 
         return when (response.status) {
