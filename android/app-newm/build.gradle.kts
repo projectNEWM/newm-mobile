@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+import java.util.Date
 
 apply(from = "../../gradle_include/compose.gradle")
 apply(from = "../../gradle_include/circuit.gradle")
@@ -5,7 +7,7 @@ apply(from = "../../gradle_include/flipper.gradle")
 
 plugins {
     id("com.android.application")
-    id( "com.google.gms.google-services")
+    id("com.google.gms.google-services")
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
@@ -23,8 +25,8 @@ android {
         applicationId = "io.newm"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 5
-        versionName = "0.3.0"
+        versionCode = getCurrentDateTimeVersionCode()
+        versionName = getCustomVersionName(major = 1)
         testInstrumentationRunner = "io.newm.NewmAndroidJUnitRunner"
         testApplicationId = "io.newm.test"
     }
@@ -60,7 +62,11 @@ android {
             dimension = "version"
         }
         all {
-            resValue("string", "account_type", "$applicationId${applicationIdSuffix.orEmpty()}.account")
+            resValue(
+                "string",
+                "account_type",
+                "$applicationId${applicationIdSuffix.orEmpty()}.account"
+            )
         }
     }
 
@@ -123,4 +129,52 @@ sentry {
     // disable if you don't want to expose your sources
     includeSourceContext.set(true)
     telemetry.set(true)
+}
+
+
+/**
+ * Generates a version code based on the current date and time in the format `yyMMddHH`.
+ *
+ * The version code is an integer composed of:
+ * - `yy`: The last two digits of the current year.
+ * - `MM`: The current month.
+ * - `dd`: The current day of the month.
+ * - `HH`: The current hour (24-hour format).
+ *
+ * The function formats the current date and time using `SimpleDateFormat`,
+ * converts it into a string, and then parses it as an integer.
+ *
+ * @return An integer representing the current date and time in the format `yyMMddHH`.
+ */
+fun getCurrentDateTimeVersionCode(): Int {
+    val dateFormat = SimpleDateFormat("yyMMddHH")
+    return dateFormat.format(Date()).toInt()
+}
+
+/**
+ * Generates a custom version name based on the provided major version and the current date and time.
+ *
+ * The version name follows the format: `major.YYYY.MMDDHHmm`, where:
+ * - `major`: The major version number passed as a parameter.
+ * - `YYYY`: The current year.
+ * - `MMDD`: The current month and day.
+ * - `HHmm`: The current hour and minute.
+ *
+ * The function retrieves the current date and time using `SimpleDateFormat` to format each component.
+ *
+ * @param major The major version number to be used as the first part of the version name.
+ * @return A custom version name string in the format: `major.YYYY.MMDDHHmm`.
+ */
+fun getCustomVersionName(major: Int): String {
+    val yearFormat = SimpleDateFormat("yyyy")
+    val monthDayFormat = SimpleDateFormat("MMdd")
+    val hourFormat = SimpleDateFormat("HH")
+    val minuteFormat = SimpleDateFormat("mm")
+
+    val year = yearFormat.format(Date())
+    val monthDay = monthDayFormat.format(Date())
+    val hour = hourFormat.format(Date())
+    val minute = minuteFormat.format(Date())
+
+    return "$major.$year.$monthDay$hour$minute"
 }
