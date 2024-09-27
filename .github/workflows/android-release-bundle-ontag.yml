@@ -1,4 +1,4 @@
-name: Distribute Android App
+name: Create AAB Release Bundle
 on:
   push:
     pull_request:
@@ -7,7 +7,7 @@ on:
       - "android/**"
       - "shared/**"
       - "buildSrc/**"
-      - ".github/workflows/android-preview-branch-merge.yml"
+      - ".github/workflows/android-release-bundle-ontag.yml"
 jobs:
   build_android_debug:
     runs-on: ubuntu-latest
