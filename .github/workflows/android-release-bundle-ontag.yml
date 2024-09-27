@@ -47,9 +47,6 @@ jobs:
 
       - name: build bundle production
         run: ./gradlew :android:app-newm:bundleProduction
-        
-      - name: build bundle release
-        run: ./gradlew :android:app-newm:bundleRelease
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
