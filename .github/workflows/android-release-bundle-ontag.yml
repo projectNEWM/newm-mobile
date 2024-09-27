@@ -46,7 +46,7 @@ jobs:
         run: ./gradlew :android:app-newm:assembleProductionRelease
 
       - name: build bundle production
-        run: ./gradlew :android:app-newm:bundleProduction
+        run: ./gradlew :android:app-newm:bundleProduction -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxPermSize=512m"
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
