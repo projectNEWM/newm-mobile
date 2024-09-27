@@ -42,11 +42,14 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
         run: echo $GOOGLE_SERVICES_JSON > ./android/app-newm/google-services.json
 
-      - name: build android app
+      - name: build android apk
         run: ./gradlew :android:app-newm:assembleProductionRelease
 
+      - name: build bundle production
+        run: ./gradlew :android:app-newm:bundleProduction
+        
       - name: build bundle release
-        run: ./gradlew bundleRelease
+        run: ./gradlew :android:app-newm:bundleRelease
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
