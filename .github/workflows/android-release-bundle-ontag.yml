@@ -66,7 +66,7 @@ jobs:
         # ID used to access action output
         id: sign_aab
         with:
-          releaseDirectory:  android/app-newm/build/outputs/bundle/production/release
+          releaseDirectory:  android/app-newm/build/outputs/bundle/production
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
