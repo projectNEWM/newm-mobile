@@ -3,7 +3,7 @@ package io.newm.feature.musicplayer.share
 import android.content.Context
 import io.newm.core.resources.R
 
-fun Context.getRandomSharePhrase(songTitle: String, songArtist: String): String {
+fun Context.getRandomSharePhrase(songTitle: String, songArtist: String, url: String): String {
     val phraseIds = listOf(
         R.string.share_phrase_1,
         R.string.share_phrase_2,
@@ -21,5 +21,5 @@ fun Context.getRandomSharePhrase(songTitle: String, songArtist: String): String 
         R.string.share_phrase_14,
         R.string.share_phrase_15
     )
-    return this.getString( phraseIds.random(), songTitle, songArtist)
+    return this.getString(phraseIds.random(), songTitle, songArtist, url)
 }

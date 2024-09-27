@@ -31,17 +31,14 @@ fun ShareButton(
 }
 
 fun shareSong(context: Context, songTitle: String, songArtist: String) {
-    val randomPhrase = context.getRandomSharePhrase(songTitle, songArtist)
-    val callToAction = context.getString(R.string.share_call_to_action)
-    val shareText = """
-        $randomPhrase
-        
-        $callToAction
-    """.trimIndent()
-
+    val randomPhrase = context.getRandomSharePhrase(
+        songTitle,
+        songArtist,
+        context.getString(R.string.newm_download_app_landing_page)
+    )
     val shareIntent = Intent().apply {
         action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, shareText)
+        putExtra(Intent.EXTRA_TEXT, randomPhrase)
         type = "text/plain"
     }
     val chooser = Intent.createChooser(shareIntent, "Share song via")
