@@ -16,7 +16,7 @@ internal class LoginUseCaseImpl(
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun logIn(email: String, password: String, humanVerificationCode: String) {
         return mapErrorsSuspend {
-            return@mapErrorsSuspend repository.logIn(email, password, humanVerificationCode)
+            return@mapErrorsSuspend repository.logIn(email.trim(), password.trim(), humanVerificationCode)
         }
     }
 
