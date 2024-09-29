@@ -10,6 +10,7 @@ public struct ConnectWalletToAccountScannerView: View {
 	@State private var manuallyEnteredCode: String = ""
 	@Injected private var connectWalletToAccountUseCase: any ConnectWalletUseCase
 	@State private var isLoading = false
+	@State private var showHelpSheet = true
 	@State private var error: Error? {
 		didSet {
 			error.flatMap(Resolver.resolve(ErrorReporting.self).logError)
@@ -41,6 +42,10 @@ public struct ConnectWalletToAccountScannerView: View {
 			}
 			Spacer()
 			manualEntry
+		}
+		.sheet(isPresented: $showHelpSheet) {
+			ScannerHelpSheet(showSheet: $showHelpSheet)
+				.presentationDetents([.height(322)])
 		}
 		.alert("Error", isPresented: isPresent($error)) {
 			Button {

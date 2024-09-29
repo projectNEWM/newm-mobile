@@ -46,7 +46,6 @@ public struct ConnectWalletAlertView: View {
 			}
 		}
 		.padding(16)
-		.frame(width: 358, alignment: .center)
 		.background(Color(red: 0.09, green: 0.09, blue: 0.09))
 		.cornerRadius(8)
 	}
@@ -91,8 +90,6 @@ public struct DisconnectWalletAlertView: View {
 		.cornerRadius(8)
 	}
 }
-
-
 
 #Preview {
 	ConnectWalletAlertView { }

@@ -25,6 +25,7 @@ struct LibraryView: View {
 					loadedView
 				}
 			}
+			.padding()
 			.refreshable {
 				await viewModel.refresh()
 			}
@@ -70,7 +71,7 @@ struct LibraryView: View {
 	}
 	
 	@ViewBuilder
-	private var noSongsMessage: some View {
+	fileprivate var noSongsMessage: some View {
 		ZStack {
 			VStack {
 				Text("Your library is empty.")
@@ -100,7 +101,6 @@ struct LibraryView: View {
 						.background(Gradients.mainPrimary.opacity(0.08))
 						.foregroundColor(NEWMColor.midMusic.swiftUIColor)
 						.cornerRadius(8)
-						.padding([.leading, .trailing])
 				}
 			}
 			if viewModel.walletIsConnected == false {
@@ -109,7 +109,6 @@ struct LibraryView: View {
 					ConnectWalletAlertView {
 						viewModel.connectWallet()
 					}
-					.padding()
 				}
 			}
 		}
@@ -302,13 +301,13 @@ struct LibraryView: View {
 //	//	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
 //	MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
 //	AudioPlayerModule.shared.registerAllServices()
-//	Resolver.root.register {
-//		let useCase = $0.resolve(ConnectWalletUseCase.self)
-//		Task {
-//			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
-//		}
-//		return useCase as ConnectWalletUseCase
-//	}
+//	let useCase = $0.resolve(ConnectWalletUseCase.self)
+////	Resolver.root.register {
+////		Task {
+////			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
+////		}
+////		return useCase as ConnectWalletUseCase
+////	}
 //	return Group {
 //		LibraryView()
 //		LibraryView()
@@ -319,9 +318,9 @@ struct LibraryView: View {
 //}
 
 #Preview {
-	Resolver.root = Resolver(child: .main)
-	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
-	return LibraryView(showFilter: false)
+	Resolver.root = .mock
+	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
+	return LibraryView(showFilter: false).noSongsMessage
 		.preferredColorScheme(.dark)
 		.tint(.white)
 		.background(.black)

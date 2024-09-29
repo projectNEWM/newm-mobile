@@ -46,6 +46,7 @@ extension LibraryModule {
 			MockErrorLogger() as ErrorReporting
 		}
 		
+		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
 		AudioPlayerModule.shared.registerAllServices()
 	}
 }

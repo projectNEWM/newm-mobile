@@ -106,9 +106,6 @@ extension ProfileView {
 	@ViewBuilder
 	private var bottomSection: some View {
 		VStack(alignment: .leading, spacing: 20) {
-			NEWMTextField(title: "NICKNAME", prompt: "", isSecure: false, text: .constant(viewModel.nickname), disabled: true)
-				.textContentType(.name)
-				.keyboardType(.asciiCapable)
 			NEWMTextField(title: "EMAIL", prompt: "", isSecure: false, text: .constant(viewModel.email), disabled: true).padding(.bottom)
 				.textContentType(.emailAddress)
 				.keyboardType(.asciiCapable)

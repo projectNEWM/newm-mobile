@@ -4,7 +4,6 @@ import Colors
 public func actionButton(title: String, action: @escaping () -> ()) -> some View {
 	Button(action: action) {
 		buttonText(title)
-			.background(Gradients.loginGradient.gradient)
 	}
 	.accentColor(.white)
 	.cornerRadius(4)

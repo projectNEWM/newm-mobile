@@ -1,0 +1,87 @@
+import SwiftUI
+import Colors
+import Fonts
+
+struct ScannerHelpSheet: View {
+	@Binding var showSheet: Bool
+	@State private var showToast = false
+
+	var body: some View {
+		VStack {
+			VStack {
+				VStack {
+					HStack {
+						Text("HOW TO CONNECT")
+							.font(Font.inter(ofSize: 12).bold())
+							.padding(.bottom, 16)
+							.foregroundStyle(try! Color(hex: "6F6F70"))
+						Spacer()
+					}
+					
+					VStack(alignment: .leading, spacing: 10) {
+						Group {
+							Text("1. Open your Cardano supported web3 wallet app")
+							Text("2. Use this URL to connect your wallet:")
+						}
+						.foregroundColor(.white)
+						.font(Font.inter(ofSize: 14))
+						
+						Button(action: {
+							UIPasteboard.general.string = "https://newm.tools/"
+							Task {
+								showToast = true
+								try! await Task.sleep(for: .seconds(1))
+								showToast = false
+							}
+						}) {
+							HStack {
+								Text(verbatim: "https://newm.tools/")
+								Image("Copy Icon")
+							}
+							.padding([.top, .bottom])
+							.frame(maxWidth: .infinity, idealHeight: 40)
+							.background(Gradients.mainSecondaryLight)
+							.foregroundStyle(NEWMColor.midCrypto())
+							.cornerRadius(12)
+						}
+						
+						HStack {
+							Spacer()
+							Text(verbatim: "or continue on desktop at the same address (https://newm.tools/)")
+								.foregroundColor(.gray)
+								.multilineTextAlignment(.center)
+								.font(.inter(ofSize: 14))
+							Spacer()
+						}
+					}
+				}
+				.padding()
+				.background(NEWMColor.Background.defaultLight())
+				.cornerRadius(8)
+			}
+			.presentationBackground(Color.black.opacity(0.9))
+			.presentationDetents([.medium])
+
+			Button(action: {
+				showSheet = false
+			}) {
+				Text("Got it")
+					.foregroundStyle(Gradients.libraryGradient.gradient)
+					.padding()
+					.frame(maxWidth: .infinity, idealHeight: 40)
+					.background(Gradients.mainPrimaryLight)
+					.cornerRadius(12)
+			}
+		}
+		.background(.black)
+		.padding([.leading, .trailing])
+		.toast(shouldShow: $showToast, type: .copied)
+	}
+}
+
+#Preview {
+//	VStack {}
+//		.sheet(isPresented: .constant(true)) {
+			ScannerHelpSheet(showSheet: .constant(true))
+//		}
+}

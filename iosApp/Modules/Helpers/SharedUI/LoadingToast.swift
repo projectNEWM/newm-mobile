@@ -6,6 +6,7 @@ public struct Toast: View {
 	public enum ToastType {
 		case loading
 		case complete
+		case copied
 	}
 	
 	private var toastType: ToastType
@@ -35,6 +36,12 @@ public struct Toast: View {
 		case .complete:
 			Text("✓")
 				.font(.newmTitle1)
+				.foregroundColor(.white)
+				.backgroundStyle(.white)
+				.opacity(1.0)
+		case .copied:
+			Text("Copied!")
+				.font(Font.ralewayExtraBold(ofSize: 22))
 				.foregroundColor(.white)
 				.backgroundStyle(.white)
 				.opacity(1.0)

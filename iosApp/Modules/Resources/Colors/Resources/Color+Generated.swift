@@ -36,6 +36,7 @@ public enum NEWMColor {
   public static let grey600 = ColorAsset(name: "grey600")
   public static let grey700 = ColorAsset(name: "grey700")
   public static let lightBlue = ColorAsset(name: "lightBlue")
+  public static let midCrypto = ColorAsset(name: "midCrypto")
   public static let offPink = ColorAsset(name: "offPink")
   public static let orange = ColorAsset(name: "orange")
   public static let orange1 = ColorAsset(name: "orange1")
@@ -47,6 +48,7 @@ public enum NEWMColor {
   public static let red = ColorAsset(name: "red")
   public static let yellow = ColorAsset(name: "yellow")
   public enum Background {
+    public static let defaultLight = ColorAsset(name: "Background/defaultLight")
     public static let defaultLighter = ColorAsset(name: "Background/defaultLighter")
   }
   public static let company = ColorAsset(name: "Company")

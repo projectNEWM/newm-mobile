@@ -43,6 +43,28 @@ public struct Gradients {
 			endPoint: UnitPoint(x: 1, y: 0)
 		)
 	}
+	
+	public static var mainSecondary: LinearGradient {
+		LinearGradient(
+			stops: [
+				Gradient.Stop(color: try! Color(hex: "41BE91"), location: 0),
+				Gradient.Stop(color: try! Color(hex: "5091EB"), location: 1)
+			],
+			startPoint: UnitPoint(x: 0, y: 1),
+			endPoint: UnitPoint(x: 1, y: 0)
+		)
+	}
+	
+	public static var mainSecondaryLight: LinearGradient {
+		LinearGradient(
+			stops: [
+				Gradient.Stop(color: try! Color(hex: "41BE91").opacity(0.08), location: 0),
+				Gradient.Stop(color: try! Color(hex: "5091EB").opacity(0.08), location: 1)
+			],
+			startPoint: UnitPoint(x: 0, y: 1),
+			endPoint: UnitPoint(x: 1, y: 0)
+		)
+	}
 }
 
 public extension Array where Element == String {
@@ -53,4 +75,12 @@ public extension Array where Element == String {
 
 #Preview {
 	Gradients.mainPrimary
+}
+
+#Preview {
+	Gradients.mainSecondary
+}
+
+#Preview {
+	Gradients.mainSecondaryLight
 }
