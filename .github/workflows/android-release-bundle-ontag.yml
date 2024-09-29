@@ -1,15 +1,10 @@
-name: Distribute Android App
+name: Create AAB Release Bundle
 on:
-  push:
-    branches:
-      - development
-    paths:
-      - "android/**"
-      - "shared/**"
-      - "buildSrc/**"
-      - ".github/workflows/android-preview-branch-merge.yml"
+  release:
+    types: [published]
 jobs:
-  build_android_debug:
+  build_android_release_artifacts:
+    if: ${{ startsWith(github.event.release.tag_name, 'androidRelease') }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -42,8 +37,11 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
         run: echo $GOOGLE_SERVICES_JSON > ./android/app-newm/google-services.json
 
-      - name: build android app
+      - name: build android apk
         run: ./gradlew :android:app-newm:assembleProductionRelease
+
+      - name: build bundle production
+        run: ./gradlew :android:app-newm:bundleProduction
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
@@ -58,10 +56,28 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
+      - uses: r0adkll/sign-android-release@v1
+        name: Sing app bundle
+        # ID used to access action output
+        id: sign_aab
+        with:
+          releaseDirectory:  android/app-newm/build/outputs/bundle/productionRelease
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+
       - uses: actions/upload-artifact@v4
         with:
           name: apk
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aab
+          path: ${{steps.sign_aab.outputs.signedReleaseFile}}
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
