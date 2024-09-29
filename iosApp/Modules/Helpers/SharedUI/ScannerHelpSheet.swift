@@ -4,7 +4,7 @@ import Fonts
 
 struct ScannerHelpSheet: View {
 	@Binding var showSheet: Bool
-	@State private var showToast = false
+	@Binding var showCopiedToast: Bool
 
 	var body: some View {
 		VStack {
@@ -29,9 +29,9 @@ struct ScannerHelpSheet: View {
 						Button(action: {
 							UIPasteboard.general.string = "https://newm.tools/"
 							Task {
-								showToast = true
+								showCopiedToast = true
 								try! await Task.sleep(for: .seconds(1))
-								showToast = false
+								showCopiedToast = false
 							}
 						}) {
 							HStack {
@@ -75,13 +75,12 @@ struct ScannerHelpSheet: View {
 		}
 		.background(.black)
 		.padding([.leading, .trailing])
-		.toast(shouldShow: $showToast, type: .copied)
 	}
 }
 
 #Preview {
 //	VStack {}
 //		.sheet(isPresented: .constant(true)) {
-			ScannerHelpSheet(showSheet: .constant(true))
+	ScannerHelpSheet(showSheet: .constant(true), showCopiedToast: .constant(false))
 //		}
 }

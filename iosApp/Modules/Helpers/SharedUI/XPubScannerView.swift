@@ -3,6 +3,7 @@ import shared
 import Resolver
 import ModuleLinker
 import Utilities
+import Colors
 
 @MainActor
 public struct ConnectWalletToAccountScannerView: View {
@@ -11,6 +12,7 @@ public struct ConnectWalletToAccountScannerView: View {
 	@Injected private var connectWalletToAccountUseCase: any ConnectWalletUseCase
 	@State private var isLoading = false
 	@State private var showHelpSheet = true
+	@State private var showCopiedToast = false
 	@State private var error: Error? {
 		didSet {
 			error.flatMap(Resolver.resolve(ErrorReporting.self).logError)
@@ -38,13 +40,13 @@ public struct ConnectWalletToAccountScannerView: View {
 				}
 				.frame(width: 346, height: 337)
 				.clipShape(RoundedRectangle(cornerRadius: 32))
-				aimSubtitle
 			}
-			Spacer()
 			manualEntry
+			Spacer()
+			bottomButtons
 		}
 		.sheet(isPresented: $showHelpSheet) {
-			ScannerHelpSheet(showSheet: $showHelpSheet)
+			ScannerHelpSheet(showSheet: $showHelpSheet, showCopiedToast: $showCopiedToast)
 				.presentationDetents([.height(322)])
 		}
 		.alert("Error", isPresented: isPresent($error)) {
@@ -55,6 +57,44 @@ public struct ConnectWalletToAccountScannerView: View {
 			}
 		}
 		.loadingToast(shouldShow: $isLoading)
+		.toast(shouldShow: $showCopiedToast, type: .copied)
+		.background(.black)
+	}
+	
+	@ViewBuilder
+	private var bottomButtons: some View {
+		VStack {
+			Button(action: {
+				UIPasteboard.general.string = "https://newm.tools/"
+				Task {
+					showCopiedToast = true
+					try! await Task.sleep(for: .seconds(1))
+					showCopiedToast = false
+				}
+			}) {
+				HStack {
+					Text(verbatim: "https://newm.tools/")
+					Image("Copy Icon")
+				}
+				.padding([.top, .bottom])
+				.frame(maxWidth: .infinity, idealHeight: 40)
+				.background(Gradients.mainSecondaryLight)
+				.foregroundStyle(NEWMColor.midCrypto())
+				.cornerRadius(12)
+			}
+			
+			Button(action: {
+				showHelpSheet = false
+			}) {
+				Text("How can I connect a wallet?")
+					.foregroundStyle(Gradients.libraryGradient.gradient)
+					.padding()
+					.frame(maxWidth: .infinity, idealHeight: 40)
+					.background(Gradients.mainPrimaryLight)
+					.cornerRadius(12)
+			}
+		}
+		.padding()
 	}
 	
 	@ViewBuilder
@@ -64,21 +104,13 @@ public struct ConnectWalletToAccountScannerView: View {
 				Font.custom("Inter", size: 24)
 					.weight(.bold)
 			)
-			.foregroundColor(Color(red: 0.25, green: 0.75, blue: 0.57))
+			.foregroundStyle(Gradients.mainSecondary)
 	}
-	
-	@ViewBuilder
-	private var aimSubtitle: some View {
-		Text("Go to `https://tools.newm.io` on your desktop browser to connect your wallet.")
-			.font(Font.custom("Inter", size: 20))
-			.multilineTextAlignment(.center)
-			.foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.57))
-	}
-	
+		
 	@ViewBuilder
 	private var manualEntry: some View {
 		VStack(alignment: .leading, spacing: 4) {
-			Text("SCAN THE QR CODE ABOVE, OR ENTER IT HERE.")
+			Text("OR PASTE QR CODE")
 				.font(
 					Font.custom("Inter", size: 12)
 						.weight(.bold)
@@ -86,7 +118,7 @@ public struct ConnectWalletToAccountScannerView: View {
 				.foregroundColor(Color(red: 0.44, green: 0.44, blue: 0.44))
 			
 			HStack {
-				TextField("", text: $manuallyEnteredCode, prompt: Text("Enter newm code"))
+				TextField("", text: $manuallyEnteredCode, prompt: Text("Paste here"))
 					.padding(.leading, 12)
 					.padding(.trailing, 5)
 					.padding(.vertical, 12)
@@ -102,13 +134,13 @@ public struct ConnectWalletToAccountScannerView: View {
 						.foregroundColor(
 							disabled ?
 								.gray :
-								Color(red: 0.25, green: 0.75, blue: 0.57)
+								NEWMColor.midCrypto()
 						)
 				}
 				.disabled(disabled)
 			}
 		}
-		.padding(0)
+		.padding(.top)
 		.frame(width: 358, alignment: .topLeading)
 	}
 	
@@ -127,6 +159,6 @@ public struct ConnectWalletToAccountScannerView: View {
 }
 
 #Preview {
-	ConnectWalletToAccountScannerView { }
+	let view = ConnectWalletToAccountScannerView { }
 		.preferredColorScheme(.dark)
 }

@@ -33,8 +33,9 @@ public struct QRCodeScannerView: UIViewControllerRepresentable {
 	public func makeUIViewController(context: Context) -> QRCodeReaderViewController {
 		let reader = QRCodeReaderViewController(builder: QRCodeReaderViewControllerBuilder {
 			$0.reader = QRCodeReader(metadataObjectTypes: [AVMetadataObject.ObjectType.qr])
+			$0.reader.previewLayer.backgroundColor = UIColor.white.cgColor
 			$0.showCancelButton = false
-			$0.showTorchButton = true
+			$0.showTorchButton = false
 			$0.showSwitchCameraButton = false
 		})
 		reader.delegate = context.coordinator
