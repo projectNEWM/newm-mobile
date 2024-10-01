@@ -48,14 +48,18 @@ public struct LandingView: View {
 //Landing View
 extension LandingView {
 	@ViewBuilder
-	private var landingView: some View {
+	fileprivate var landingView: some View {
 		VStack {
+			HStack {
+				Spacer()
+				createAccountButton
+					.frame(alignment: .trailing)
+			}
 			Asset.Media.logo.swiftUIImage.padding().padding(.top, 40)
 			title
 			Spacer()
 			Group {
 				loginButton
-				createAccountButton
 				googleSignInButton
 				signInWithAppleButton
 			}
@@ -72,7 +76,7 @@ extension LandingView {
 	
 	@ViewBuilder
 	private var loginButton: some View {
-		actionButton(title: .login) {
+		actionButton(title: .login, backgroundGradient: Gradients.loginGradient.gradient) {
 			viewModel.goToLogin()
 		}
 	}
@@ -82,11 +86,10 @@ extension LandingView {
 		Button {
 			viewModel.createAccount()
 		} label: {
-			buttonText(.createNewAccount)
+			buttonText(.createAccount)
 		}
-		.background(.clear)
-		.foregroundColor(NEWMColor.pink())
-		.borderOverlay(color: NEWMColor.grey500(), radius: 4, width: 2)
+		.fixedSize()
+		.foregroundColor(try! Color(hex: "DC3CAA"))
 	}
 	
 	@ViewBuilder
@@ -110,26 +113,30 @@ extension LandingView {
 	
 	@ViewBuilder
 	private var googleSignInButton: some View {
-		GoogleSignInButton {
+		actionButton(title: HStack {
+			Image("google-fill")
+			Text("Login with Google")
+		}, backgroundGradient: Gradients.mainPrimaryLight) {
 			if let rootVC = rootViewController {
 				GIDSignIn.sharedInstance.signIn(withPresenting: rootVC, completion: viewModel.handleGoogleSignIn)
 			}
 		}
 		.frame(height: socialSignInButtonHeight)
+		.foregroundStyle(NEWMColor.midMusic())
 	}
 }
 
 #if DEBUG
-struct LandingView_Previews: PreviewProvider {
-	static var previews: some View {
-		let vm = LandingViewModel()
-		vm.errors.append(NEWMError(errorDescription: "You messed up big time."))
-		return Group {
-			LandingView()
-			LandingView(viewModel: vm)
-				.previewDisplayName("Error")
-		}
+
+#Preview {
+	LandingView().landingView
 		.preferredColorScheme(.dark)
-	}
+}
+
+#Preview("Error") {
+	let vm = LandingViewModel()
+	vm.errors.append(NEWMError(errorDescription: "You messed up big time."))
+	return LandingView(viewModel: vm)
+		.preferredColorScheme(.dark)
 }
 #endif

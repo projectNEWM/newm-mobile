@@ -22,6 +22,18 @@ public final class ProfileModule: Module {
 	}
 	
 #if DEBUG
-	public func registerAllMockedServices(mockResolver: Resolver) {	}
+	public func registerAllMockedServices(mockResolver: Resolver) {
+		mockResolver.register {
+			MockHasWalletConnectionsUseCase() as HasWalletConnectionsUseCase
+		}
+		
+		mockResolver.register {
+			MockConnectWalletUseCase() as ConnectWalletUseCase
+		}
+		
+		mockResolver.register {
+			$0.resolve(ConnectWalletUseCase.self) as! DisconnectWalletUseCase
+		}
+	}
 #endif
 }

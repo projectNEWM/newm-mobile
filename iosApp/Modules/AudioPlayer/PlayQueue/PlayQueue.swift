@@ -2,6 +2,7 @@ import Foundation
 import shared
 import Utilities
 
+@MainActor
 struct PlayQueue {
 	var originalTracks: Set<NFTTrack> = [] {
 		didSet {

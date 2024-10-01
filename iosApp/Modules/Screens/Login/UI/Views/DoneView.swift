@@ -32,7 +32,7 @@ extension LandingView {
 			}
 			.font(.interMedium(ofSize: 14))
 
-			actionButton(title: .enterNewm) {
+			actionButton(title: .enterNewm, backgroundGradient: Gradients.loginGradient.gradient) {
 				viewModel.login()
 			}
 		}

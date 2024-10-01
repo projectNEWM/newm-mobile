@@ -26,6 +26,7 @@ final class ProfileViewModelTests: XCTestCase {
 		Resolver.reset()
 		Resolver.root = .mock
 		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+		ProfileModule.shared.registerAllMockedServices(mockResolver: .mock)
 		
 		userDetailsUseCase = Resolver.resolve(UserDetailsUseCase.self) as! MockUserDetailsUseCase
 		connectWalletUseCase = Resolver.resolve(ConnectWalletUseCase.self) as! MockConnectWalletUseCase

@@ -27,7 +27,7 @@ extension LandingView {
 
 			Spacer()
 			
-			actionButton(title: .next) {
+			actionButton(title: .next, backgroundGradient: Gradients.loginGradient.gradient) {
 				viewModel.registerUser()
 			}
 			.disabled(!viewModel.nicknameIsValid)

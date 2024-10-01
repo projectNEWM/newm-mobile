@@ -1,6 +1,7 @@
 import SwiftUI
 import Fonts
 import SharedUI
+import Colors
 
 extension LandingView {
 	@ViewBuilder
@@ -19,7 +20,7 @@ extension LandingView {
 			NEWMTextField(title: "CONFIRM PASSWORD", prompt: "Confirm your new password", isSecure: true, text: $viewModel.confirmPassword)
 				.textContentType(.newPassword)
 				.padding(.bottom)
-			actionButton(title: "Confirm") {
+			actionButton(title: "Confirm", backgroundGradient: Gradients.loginGradient.gradient) {
 				viewModel.resetPassword()
 			}
 		}

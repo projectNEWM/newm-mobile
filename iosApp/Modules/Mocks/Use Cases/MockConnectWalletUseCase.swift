@@ -2,7 +2,13 @@ import Foundation
 import shared
 import Utilities
 
-public class MockConnectWalletUseCase: ConnectWalletUseCase {
+public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUseCase {
+	private var walletConnections: [WalletConnection] = []
+	
+	public var throwThisError: Error?
+	
+	public init() {}
+	
 	public func connect(walletConnectionId: String) async throws -> WalletConnection? {
 		if let throwThisError {
 			throw throwThisError
@@ -13,12 +19,6 @@ public class MockConnectWalletUseCase: ConnectWalletUseCase {
 		
 		return WalletConnection(id: "", createdAt: "", stakeAddress: "")
 	}
-	
-	private var walletConnections: [WalletConnection] = []
-	
-	public var throwThisError: Error?
-	
-	public init() {}
 
 	public func disconnect(walletConnectionId: String?) async throws {
 		if let throwThisError {

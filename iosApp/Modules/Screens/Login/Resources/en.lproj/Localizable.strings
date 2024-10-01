@@ -1,6 +1,6 @@
 "WELCOME_TO_NEWM" = "Welcome to NEWM";
-"LOGIN" = "Login";
-"CREATE_NEW_ACCOUNT" = "Create new account";
+"LOGIN" = "Login with email";
+"CREATE_ACCOUNT" = "Create account";
 "ENTER_NEWM" = "Enter NEWM";
 "EMAIL" = "E-MAIL";
 "PASSWORD" = "PASSWORD";

@@ -94,13 +94,15 @@ struct LibraryView: View {
 					.frame(width: 358, alignment: .top)
 					.padding(.bottom)
 				
-				Link(destination: URL(string: "https://newm.io/recordstore")!) {
-					Text("Visit Record Store")
-						.frame(maxWidth: .infinity)
-						.padding()
-						.background(Gradients.mainPrimary.opacity(0.08))
-						.foregroundColor(NEWMColor.midMusic.swiftUIColor)
-						.cornerRadius(8)
+				if viewModel.walletIsConnected {
+					Link(destination: URL(string: "https://newm.io/recordstore")!) {
+						Text("Visit Record Store")
+							.frame(maxWidth: .infinity)
+							.padding()
+							.background(Gradients.mainPrimary.opacity(0.08))
+							.foregroundColor(NEWMColor.midMusic.swiftUIColor)
+							.cornerRadius(8)
+					}
 				}
 			}
 			if viewModel.walletIsConnected == false {

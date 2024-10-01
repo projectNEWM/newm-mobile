@@ -20,7 +20,7 @@ extension LandingView {
 					.padding(.bottom, 40)
 				NEWMTextField(title: .email, prompt: .emailPrompt, isSecure: false, text: $viewModel.email).padding(.bottom)
 					.textContentType(.emailAddress)
-				actionButton(title: "Reset password") {
+				actionButton(title: "Reset password", backgroundGradient: Gradients.loginGradient.gradient) {
 					viewModel.requestPasswordResetCode()
 				}
 			}

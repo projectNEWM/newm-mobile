@@ -1,13 +1,16 @@
 import Foundation
 import shared
 
-class MockHasWalletConnectionsUseCase: HasWalletConnectionsUseCase {
+public class MockHasWalletConnectionsUseCase: HasWalletConnectionsUseCase {
 	var hasWalletConnections: Bool = false
-	func hasWalletConnections() async throws -> KotlinBoolean {
+	
+	public init() {}
+	
+	public func hasWalletConnections() async throws -> KotlinBoolean {
 		KotlinBoolean(bool: hasWalletConnections)
 	}
 	
-	func hasWalletConnectionsFlow() throws -> any Kotlinx_coroutines_coreFlow {
+	public func hasWalletConnectionsFlow() throws -> any Kotlinx_coroutines_coreFlow {
 		fatalError()
 	}
 }

@@ -129,19 +129,15 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	private func playCurrentTrackInQueue() {
+		stop()
+
 		guard let currentTrack, let url = URL(string: currentTrack.audioUrl) else {
-			stop()
 			mediaPlayer.media = nil
 			return
 		}
 		
 		do {
 			let currentTrackVLC = currentTrack.vlcMedia(fileUrl: try fileManager.getPlaybackURL(for: url))
-			guard currentTrackVLC.url != mediaPlayer.media?.url else {
-				seek(toTime: 0)
-				return
-			}
-			
 			mediaPlayer.media = currentTrackVLC
 			mediaPlayer.play()
 		} catch {
@@ -191,7 +187,7 @@ public class VLCAudioPlayer: ObservableObject {
 	
 	public func seek(toTrack track: NFTTrack) {
 		guard track != currentTrack else {
-			mediaPlayer.time = VLCTime(int: 0)
+			seek(toTime: 0)
 			return
 		}
 		do {

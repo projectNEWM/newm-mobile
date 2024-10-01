@@ -84,7 +84,7 @@ public struct ConnectWalletToAccountScannerView: View {
 			}
 			
 			Button(action: {
-				showHelpSheet = false
+				showHelpSheet = true
 			}) {
 				Text("How can I connect a wallet?")
 					.foregroundStyle(Gradients.libraryGradient.gradient)

@@ -1,5 +1,6 @@
 import SwiftUI
 import SharedUI
+import Colors
 
 extension LandingView {
 	@ViewBuilder
@@ -18,7 +19,7 @@ extension LandingView {
 					.padding(.bottom)
 			}.padding()
 			
-			actionButton(title: .next) {
+			actionButton(title: .next, backgroundGradient: Gradients.loginGradient.gradient) {
 				viewModel.requestVerificationCode()
 			}
 			.disabled(!viewModel.createAccountFieldsAreValid)
@@ -29,4 +30,12 @@ extension LandingView {
 		.autocorrectionDisabled()
 		.autocapitalization(.none)
 	}
+}
+
+import Mocks
+
+#Preview {
+	LandingView()
+		.createAccountView
+		.preferredColorScheme(.dark)
 }

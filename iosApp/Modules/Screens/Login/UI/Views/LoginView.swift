@@ -17,7 +17,7 @@ extension LandingView {
 				NEWMTextField(title: .password, prompt: .yourPassword, isSecure: true, text: $viewModel.password)
 					.padding(.bottom)
 					.textContentType(.password)
-				actionButton(title: .next) {
+				actionButton(title: .next, backgroundGradient: Gradients.loginGradient.gradient) {
 					viewModel.login()
 				}
 				.disabled(!viewModel.loginFieldsAreValid)
