@@ -26,9 +26,9 @@ internal class SignupUseCaseImpl(private val repository: LogInRepository) : Sign
     ) {
         mapErrorsSuspend {
             val newUser = NewUser(
-                email = email,
-                newPassword = password,
-                confirmPassword = passwordConfirmation,
+                email = email.trim(),
+                newPassword = password.trim(),
+                confirmPassword = passwordConfirmation.trim(),
                 authCode = verificationCode
             )
             repository.registerUser(newUser, humanVerificationCode)
