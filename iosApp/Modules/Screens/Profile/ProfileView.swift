@@ -160,20 +160,16 @@ extension ProfileView {
 				Spacer()
 				
 				VStack(spacing: 10) {
-					Button(action: {
-						// Terms & Conditions action
-					}) {
-						Text("Terms & Conditions")
+					Link(destination: URL(string: "https://newm.io/app-tos")!) {
+						Text("Privacy & Policy")
 							.frame(maxWidth: .infinity)
 							.padding()
 							.background(Gradients.mainPrimary.opacity(0.08))
 							.foregroundColor(NEWMColor.midMusic.swiftUIColor)
 							.cornerRadius(8)
 					}
-					
-					Button(action: {
-						// Privacy & Policy action
-					}) {
+
+					Link(destination: URL(string: "https://newm.io/app-privacy")!) {
 						Text("Privacy & Policy")
 							.frame(maxWidth: .infinity)
 							.padding()

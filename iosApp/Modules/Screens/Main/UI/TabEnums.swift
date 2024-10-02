@@ -9,7 +9,7 @@ enum MainViewModelTab: CaseIterable {
 extension MainViewModelTab: CustomStringConvertible, Identifiable {
 	var description: String {
 		switch self {
-		case .profile: return "Profile"
+		case .profile: return "Account"
         case .library: return "Library"
 		}
 	}
