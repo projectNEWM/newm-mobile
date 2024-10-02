@@ -18,6 +18,7 @@ public struct ConnectWalletToAccountScannerView: View {
 			error.flatMap(Resolver.resolve(ErrorReporting.self).logError)
 		}
 	}
+	private let toolsUrl = "https://tools.newm.io/"
 	
 	public init(completion: @escaping () -> Void) {
 		self.completion = completion
@@ -65,7 +66,7 @@ public struct ConnectWalletToAccountScannerView: View {
 	private var bottomButtons: some View {
 		VStack {
 			Button(action: {
-				UIPasteboard.general.string = "https://newm.tools/"
+				UIPasteboard.general.string = toolsUrl
 				Task {
 					showCopiedToast = true
 					try! await Task.sleep(for: .seconds(1))
@@ -73,7 +74,7 @@ public struct ConnectWalletToAccountScannerView: View {
 				}
 			}) {
 				HStack {
-					Text(verbatim: "https://newm.tools/")
+					Text(verbatim: toolsUrl)
 					Image("Copy Icon")
 				}
 				.padding([.top, .bottom])

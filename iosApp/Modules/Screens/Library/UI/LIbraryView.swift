@@ -38,7 +38,7 @@ struct LibraryView: View {
 			}
 			.sheet(isPresented: $showFilter) {
 				filterView
-					.presentationDetents([.medium])
+					.presentationDetents([.height(350)])
 			}
 			.alert(isPresented: .constant(viewModel.errors.currentError != nil), error: viewModel.errors.currentError) {
 				Button {
