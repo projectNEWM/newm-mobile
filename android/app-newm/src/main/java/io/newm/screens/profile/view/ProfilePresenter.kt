@@ -11,7 +11,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
 import io.newm.screens.Screen.EditProfile
 import io.newm.screens.Screen.PrivacyPolicy
-import io.newm.screens.Screen.TermsAndConditions
+import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
@@ -82,7 +82,7 @@ class ProfilePresenter(
                         }
                         OnShowTermsAndConditions -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
-                            navigator.goTo(TermsAndConditions)
+                            navigator.goTo(TermsOfService)
                         }
                         OnShowPrivacyPolicy -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)

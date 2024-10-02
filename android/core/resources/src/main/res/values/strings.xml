@@ -32,6 +32,7 @@
     <string name="library_empty_content_title">Your library is empty.</string>
     <string name="library_filter_songs">Filter Songs Under</string>
     <string name="library_filter_songs_under_30">30 seconds</string>
+    <string name="library_no_wallet_connected_subtitle">Get started by connecting your Cardano wallet to unlock your NFT music library! 🎶</string>
     <string name="library_search">Search</string>
     <string name="library_sort_by_artist">Artist (A to Z)</string>
     <string name="library_sort_by_length">Length (Shortest to Longest)</string>

@@ -8,16 +8,31 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
+import io.newm.core.theme.GraySuit
+import io.newm.core.theme.White
+import io.newm.core.theme.inter
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
@@ -39,8 +54,10 @@ fun LinkWalletScreen(
             // Handle the returned result here
             val data = result.data
             // Do something with the data
-            val newmWalletConnectionId = data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
-            Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT).show()
+            val newmWalletConnectionId =
+                data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
+            Toast.makeText(context, "Wallet connected $newmWalletConnectionId", Toast.LENGTH_SHORT)
+                .show()
             onConnectWallet(newmWalletConnectionId)
         }
     }
@@ -70,17 +87,43 @@ fun LinkWalletScreen(
             .padding(vertical = 16.dp)
             .defaultMinSize(minHeight = 200.dp)
             .testTag(TAG_NFT_LIBRARY_SCREEN),
-        contentAlignment = Alignment.BottomCenter
+        contentAlignment = Alignment.Center
     ) {
-        ConnectWalletPanel(onButtonClick = {
-            context.run {
-                doWithPermission(
-                    onGranted = { onRequestPermissionGranted.invoke() },
-                    requestPermissionLauncher = requestPermission,
-                    appPermission = AppPermission.CAMERA
-                )
-            }
-        })
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = stringResource(id = R.string.welcome_to_newm),
+                textAlign = TextAlign.Center,
+                fontFamily = inter,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = White
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(id = R.string.library_no_wallet_connected_subtitle),
+                textAlign = TextAlign.Center,
+                fontFamily = inter,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp,
+                color = GraySuit
+            )
+            Spacer(modifier = Modifier.weight(1f))
+
+            ConnectWalletPanel(onButtonClick = {
+                context.run {
+                    doWithPermission(
+                        onGranted = { onRequestPermissionGranted.invoke() },
+                        requestPermissionLauncher = requestPermission,
+                        appPermission = AppPermission.CAMERA
+                    )
+                }
+            })
+        }
     }
 }
 

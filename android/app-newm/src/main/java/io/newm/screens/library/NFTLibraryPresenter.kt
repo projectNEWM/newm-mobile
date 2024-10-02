@@ -63,13 +63,8 @@ class NFTLibraryPresenter(
             }
         }.collectAsRetainedState(initial = emptyList())
 
-        val streamTracks by remember(isWalletConnected) {
-            if (isWalletConnected == true) {
-                walletNFTTracksUseCase.getAllStreamTokensFlow()
-            } else {
-                flowOf()
-            }
-        }.collectAsRetainedState(initial = emptyList())
+        // Do not show stream tokens in the library
+        val streamTracks = emptyList<NFTTrack>()
 
         var filters: NFTLibraryFilters by rememberRetained {
             mutableStateOf(

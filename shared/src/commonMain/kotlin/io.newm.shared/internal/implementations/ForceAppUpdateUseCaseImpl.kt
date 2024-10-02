@@ -29,7 +29,7 @@ internal class ForceAppUpdateUseCaseImpl(
     ): Boolean {
         val mobileConfig = remoteConfigRepository.getMobileConfig(humanVerificationCode)
         return mobileConfig?.let {
-            VersionUtils.isVersionGreaterThan(minSupportedVersion(it), currentAppVersion)
+            VersionUtils.isUpgradeRequired(minSupportedVersion(it), currentAppVersion)
         } ?: false
     }
 

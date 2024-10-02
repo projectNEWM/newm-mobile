@@ -17,14 +17,14 @@ object VersionUtils {
      * - "1.0.0-alpha" < "1.0.0"
      * - "1.0.0-alpha" < "1.0.0-beta"
      *
-     * @param version1 The first semantic version string.
-     * @param version2 The second semantic version string.
+     * @param minSupportedAppVersion The first semantic version string.
+     * @param currentAppVersion The second semantic version string.
      * @return True if version1 is greater than version2, otherwise false.
      */
-    fun isVersionGreaterThan(version1: String, version2: String): Boolean {
+    fun isUpgradeRequired(minSupportedAppVersion: String, currentAppVersion: String): Boolean {
         // Parse versions into main and pre-release parts
-        val mainAndPre1 = version1.split("-", limit = 2)
-        val mainAndPre2 = version2.split("-", limit = 2)
+        val mainAndPre1 = minSupportedAppVersion.split("-", limit = 2)
+        val mainAndPre2 = currentAppVersion.split("-", limit = 2)
 
         val mainParts1 = mainAndPre1[0].split(".").map { it.toInt() }
         val mainParts2 = mainAndPre2[0].split(".").map { it.toInt() }
@@ -35,10 +35,10 @@ object VersionUtils {
         val extendedParts2 = mainParts2 + List(maxParts - mainParts2.size) { 0 }
 
         // Compare major, minor, and patch versions
-        extendedParts1.zip(extendedParts2).forEach { (v1, v2) ->
+        extendedParts1.zip(extendedParts2).forEach { (minVersion, currentVersion) ->
             when {
-                v1 > v2 -> return true
-                v1 < v2 -> return false
+                minVersion > currentVersion -> return true
+                minVersion < currentVersion -> return false
             }
         }
 

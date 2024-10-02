@@ -20,14 +20,14 @@ sealed class Screen(val screenName: String) : CircuitScreen {
 
     data object ForceAppUpdate : Screen(screenName = AppScreens.ForceUpdateScreen.name)
 
-    data object TermsAndConditions : Screen(screenName = AppScreens.TermsAndConditionsScreen.name), WebBrowserScreen {
+    data object TermsOfService : Screen(screenName = AppScreens.TermsOfServiceScreen.name), WebBrowserScreen {
         @IgnoredOnParcel
-        override val url: String = "https://newm.io/terms-and-conditions"
+        override val url: String = "https://newm.io/app-tos"
     }
 
     data object PrivacyPolicy : Screen(screenName = AppScreens.PrivacyPolicyScreen.name), WebBrowserScreen {
         @IgnoredOnParcel
-        override val url: String = "https://newm.io/privacy-policy"
+        override val url: String = "https://newm.io/app-privacy"
 
     }
 }

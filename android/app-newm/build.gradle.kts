@@ -154,19 +154,22 @@ fun getCurrentDateTimeVersionCode(): Int {
 /**
  * Generates a custom version name based on the provided major version and the current date and time.
  *
- * The version name follows the format: `major.YYYY.MMDDHHmm`, where:
+ * The version name follows the format: `major.yyMMdd.HHmm`, where:
  * - `major`: The major version number passed as a parameter.
- * - `YYYY`: The current year.
- * - `MMDD`: The current month and day.
- * - `HHmm`: The current hour and minute.
+ * - `yy`: The current two-digit year.
+ * - `MMdd`: The current month and day.
+ * - `HH`: The current hour in 24-hour format.
+ * - `mm`: The current minute.
  *
  * The function retrieves the current date and time using `SimpleDateFormat` to format each component.
  *
+ * Example output for `major = 1` on October 1st, 2024 at 13:45 would be: `1.241001.1345`.
+ *
  * @param major The major version number to be used as the first part of the version name.
- * @return A custom version name string in the format: `major.YYYY.MMDDHHmm`.
+ * @return A custom version name string in the format: `major.yyMMdd.HHmm`.
  */
 fun getCustomVersionName(major: Int): String {
-    val yearFormat = SimpleDateFormat("yyyy")
+    val yearFormat = SimpleDateFormat("yy")
     val monthDayFormat = SimpleDateFormat("MMdd")
     val hourFormat = SimpleDateFormat("HH")
     val minuteFormat = SimpleDateFormat("mm")
@@ -176,5 +179,5 @@ fun getCustomVersionName(major: Int): String {
     val hour = hourFormat.format(Date())
     val minute = minuteFormat.format(Date())
 
-    return "$major.$year.$monthDay$hour$minute"
+    return "$major.$year$monthDay.$hour$minute"
 }
