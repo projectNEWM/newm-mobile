@@ -111,8 +111,8 @@ object AppScreens {
         const val CONTINUE_BUTTON: String = "Continue"
     }
 
-    object TermsAndConditionsScreen : ScreenEvents {
-        override val name = "Terms And Conditions"
+    object TermsOfServiceScreen : ScreenEvents {
+        override val name = "Terms of Service"
     }
 
     object WalletInstructionsScreen : ScreenEvents {

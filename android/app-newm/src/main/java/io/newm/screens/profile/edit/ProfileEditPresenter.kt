@@ -14,7 +14,7 @@ import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.password.isPasswordValid
 import io.newm.feature.login.screen.password.passwordValidationError
 import io.newm.screens.Screen.PrivacyPolicy
-import io.newm.screens.Screen.TermsAndConditions
+import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBack
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnLogout
@@ -169,7 +169,7 @@ class ProfileEditPresenter(
                     }
                     OnShowTermsAndConditions -> {
                         eventLogger.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
-                        navigator.goTo(TermsAndConditions)
+                        navigator.goTo(TermsOfService)
                     }
                     OnShowPrivacyPolicy -> {
                         eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
