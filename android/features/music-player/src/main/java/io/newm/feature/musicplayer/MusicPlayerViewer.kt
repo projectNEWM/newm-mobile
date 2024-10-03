@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -30,8 +31,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -142,7 +145,15 @@ internal fun MusicPlayerViewer(
                     .padding(vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = onNavigateUp) {
+                val buttonModifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .background(Color.Black.copy(alpha = 0.4f))
+
+                IconButton(
+                    modifier = buttonModifier,
+                    onClick = onNavigateUp
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "Back",
@@ -151,6 +162,7 @@ internal fun MusicPlayerViewer(
                 }
 
                 ShareButton(
+                    modifier = buttonModifier,
                     songTitle = playbackStatus.track?.title,
                     songArtist = playbackStatus.track?.artist
                 )
@@ -166,15 +178,19 @@ internal fun MusicPlayerViewer(
                     textAlign = TextAlign.Center,
                     lineHeight = 32.sp,
                     lineBreak = LineBreak.Heading,
+                    shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 3f)),
                 )
             )
             Text(
                 text = song.artist,
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                color = White,
-                fontFamily = inter,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
+                style = LocalTextStyle.current.copy(
+                    color = White,
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 0f)),
+                )
             )
             MusicPlayerControls(playbackStatus, onEvent)
             Spacer(modifier = Modifier.height(16.dp))
@@ -268,6 +284,7 @@ fun PlaybackControlPanel(
                     onClick = { onEvent(PlaybackUiEvent.Next) })
                 Spacer(modifier = Modifier.weight(1f))
                 ShuffleButton(
+                    enabled = playbackStatus.state == PlaybackState.PLAYING,
                     shuffleMode = playbackStatus.shuffleMode,
                     onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) }
                 )
@@ -279,13 +296,21 @@ fun PlaybackControlPanel(
 @Composable
 fun ShuffleButton(
     onClick: () -> Unit,
-    shuffleMode: Boolean
+    shuffleMode: Boolean,
+    enabled: Boolean
 ) {
-    IconButton(onClick = onClick) {
+    IconButton(
+        onClick = onClick,
+        enabled = enabled
+    ) {
         Icon(
             painter = painterResource(R.drawable.ic_music_player_shuffle),
             contentDescription = "Shuffle",
-            tint = if (shuffleMode) DarkViolet else White
+            tint = when {
+                enabled.not() -> Gray500
+                shuffleMode -> DarkViolet
+                else -> White
+            }
         )
     }
 }
