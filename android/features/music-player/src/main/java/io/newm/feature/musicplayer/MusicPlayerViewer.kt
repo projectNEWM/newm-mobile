@@ -1,13 +1,12 @@
 package io.newm.feature.musicplayer
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring.StiffnessLow
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -140,7 +139,8 @@ internal fun MusicPlayerViewer(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(onClick = onNavigateUp) {
                     Icon(
@@ -149,6 +149,11 @@ internal fun MusicPlayerViewer(
                         tint = White
                     )
                 }
+
+                ShareButton(
+                    songTitle = playbackStatus.track?.title,
+                    songArtist = playbackStatus.track?.artist
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -256,12 +261,26 @@ fun PlaybackControlPanel(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     onClick = { onEvent(PlaybackUiEvent.Next) })
                 Spacer(modifier = Modifier.weight(1f))
-                ShareButton(
-                    songTitle = playbackStatus.track?.title,
-                    songArtist = playbackStatus.track?.artist
+                ShuffleButton(
+                    shuffleMode = playbackStatus.shuffleMode,
+                    onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) }
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ShuffleButton(
+    onClick: () -> Unit,
+    shuffleMode: Boolean
+) {
+    IconButton(onClick = onClick) {
+        Icon(
+            painter = painterResource(R.drawable.ic_music_player_shuffle),
+            contentDescription = "Shuffle",
+            tint = if (shuffleMode) DarkViolet else White
+        )
     }
 }
 

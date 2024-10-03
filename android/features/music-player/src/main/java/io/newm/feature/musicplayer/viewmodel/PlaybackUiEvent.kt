@@ -9,4 +9,5 @@ sealed interface PlaybackUiEvent {
     data class Seek(val position: Long): PlaybackUiEvent
 
     data object Repeat : PlaybackUiEvent
+    data object ToggleShuffle : PlaybackUiEvent
 }
