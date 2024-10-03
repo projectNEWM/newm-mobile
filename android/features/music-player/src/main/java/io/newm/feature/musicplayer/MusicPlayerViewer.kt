@@ -192,19 +192,21 @@ private fun MusicPlayerControls(
             playbackStatus = playbackStatus,
             onEvent = onEvent
         )
-        MusicPlayerSlider(
-            value = if (playbackStatus.duration == 0L) 0f else playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
-            onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
-            colors = SliderDefaults.colors(
-                thumbColor = White,
-                inactiveTrackColor = Gray500
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp)
-                .height(4.dp)
+        if (playbackStatus.duration != null) {
+            MusicPlayerSlider(
+                value = playbackStatus.elapsedFraction,
+                onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration.inWholeMilliseconds).toLong())) },
+                colors = SliderDefaults.colors(
+                    thumbColor = White,
+                    inactiveTrackColor = Gray500
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(4.dp)
 
-        )
+            )
+        }
     }
 }
 
@@ -243,7 +245,11 @@ fun PlaybackControlPanel(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = playbackStatus.duration.millisToMinutesSecondsString(),
+                    text = if (playbackStatus.duration == null) {
+                        "-:--"
+                    } else {
+                        playbackStatus.duration.inWholeMilliseconds.millisToMinutesSecondsString()
+                    },
                     style = playbackTimeStyle
                 )
             }
