@@ -41,20 +41,18 @@ val viewModule = module {
             get()
         , get())
     }
-    single<GoogleSignInLauncher> {
+    single {
         val sharedBuildConfig = get<NewmSharedBuildConfig>()
-
-        GoogleSignInLauncherImpl(
-            GoogleSignIn.getClient(
-                androidContext(),
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(sharedBuildConfig.googleAuthClientId)
-                    .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
-                    .requestEmail()
-                    .build()
-            )
+        GoogleSignIn.getClient(
+            androidContext(),
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(sharedBuildConfig.googleAuthClientId)
+                .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
+                .requestEmail()
+                .build()
         )
     }
+    single<GoogleSignInLauncher> { GoogleSignInLauncherImpl(get()) }
     factory { params ->
         WelcomeScreenPresenter(
             navigator = params.get(),
@@ -109,6 +107,6 @@ val viewModule = module {
 }
 
 val androidModules = module {
-    single { Logout(get(), get(), get(), get(), get()) }
+    single { Logout(get(), get(), get(), get(), get(), get()) }
     single { RestartApp(get()) }
 }

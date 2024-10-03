@@ -3,6 +3,7 @@
 package io.newm
 
 import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.jakewharton.processphoenix.ProcessPhoenix
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.usecases.LoginUseCase
@@ -17,13 +18,15 @@ class Logout(
     private val userSessionUseCase: UserSessionUseCase,
     private val restartApp: RestartApp,
     private val scope: CoroutineScope,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
+    private val googleSignInClient: GoogleSignInClient
 ) {
 
     fun signOutUser() {
         scope.launch {
             try {
                 loginUseCase.logout()
+                googleSignInClient.signOut()
                 logger.info("Logout", "Logout successful")
                 restartApp.run()
             } catch (e: Exception) {
