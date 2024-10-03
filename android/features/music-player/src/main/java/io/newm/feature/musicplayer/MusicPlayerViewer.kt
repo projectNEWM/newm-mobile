@@ -66,6 +66,7 @@ import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.seconds
 
 private val playbackTimeStyle = TextStyle(
     fontSize = 12.sp,
@@ -192,19 +193,23 @@ private fun MusicPlayerControls(
             playbackStatus = playbackStatus,
             onEvent = onEvent
         )
-        MusicPlayerSlider(
-            value = if (playbackStatus.duration == 0L) 0f else playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
-            onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
-            colors = SliderDefaults.colors(
-                thumbColor = White,
-                inactiveTrackColor = Gray500
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp)
-                .height(4.dp)
+        if (playbackStatus.duration != null) {
+            MusicPlayerSlider(
+                value = playbackStatus.duration.takeIf { it > 0.seconds }?.let { duration ->
+                    playbackStatus.position.toFloat() / duration.inWholeMilliseconds
+                } ?: 0f,
+                onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration.inWholeMilliseconds).toLong())) },
+                colors = SliderDefaults.colors(
+                    thumbColor = White,
+                    inactiveTrackColor = Gray500
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(4.dp)
 
-        )
+            )
+        }
     }
 }
 
@@ -243,7 +248,11 @@ fun PlaybackControlPanel(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = playbackStatus.duration.millisToMinutesSecondsString(),
+                    text = if (playbackStatus.duration == null) {
+                        "-:--"
+                    } else {
+                        playbackStatus.duration.inWholeMilliseconds.millisToMinutesSecondsString()
+                    },
                     style = playbackTimeStyle
                 )
             }
