@@ -66,7 +66,6 @@ import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.time.Duration.Companion.seconds
 
 private val playbackTimeStyle = TextStyle(
     fontSize = 12.sp,
@@ -195,9 +194,7 @@ private fun MusicPlayerControls(
         )
         if (playbackStatus.duration != null) {
             MusicPlayerSlider(
-                value = playbackStatus.duration.takeIf { it > 0.seconds }?.let { duration ->
-                    playbackStatus.position.toFloat() / duration.inWholeMilliseconds
-                } ?: 0f,
+                value = playbackStatus.elapsedFraction,
                 onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration.inWholeMilliseconds).toLong())) },
                 colors = SliderDefaults.colors(
                     thumbColor = White,

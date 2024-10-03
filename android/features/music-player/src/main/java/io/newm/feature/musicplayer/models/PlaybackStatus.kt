@@ -1,6 +1,7 @@
 package io.newm.feature.musicplayer.models
 
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 data class PlaybackStatus(
     val state: PlaybackState,
@@ -10,6 +11,12 @@ data class PlaybackStatus(
     val repeatMode: PlaybackRepeatMode,
     val shuffleMode: Boolean
 ) {
+
+    val elapsedFraction : Float get()  {
+        return duration?.takeIf { it > 0.seconds }?.let { duration ->
+           position.toFloat() / duration.inWholeMilliseconds
+        } ?: 0f
+    }
     companion object {
         val EMPTY: PlaybackStatus = PlaybackStatus(
             state = PlaybackState.STOPPED,

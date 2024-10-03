@@ -50,7 +50,6 @@ import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.seconds
 
 
 @Composable
@@ -147,9 +146,7 @@ fun MiniPlayer(
         ) {
             Column {
                 MusicPlayerSlider(
-                    value = playStatus.duration?.takeIf { it > 0.seconds }
-                        ?.let { duration -> playStatus.position.toFloat() / duration.inWholeMilliseconds }
-                        ?: 0f,
+                    value = playStatus.elapsedFraction,
                     onValueChange = {},
                     colors = SliderDefaults.colors(
                         thumbColor = White,
