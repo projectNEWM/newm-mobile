@@ -145,7 +145,10 @@ internal fun MusicPlayerViewer(
                     .padding(vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                val buttonModifier = Modifier.clip(CircleShape).background(Color.Black.copy(alpha = 0.4f))
+                val buttonModifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .background(Color.Black.copy(alpha = 0.4f))
 
                 IconButton(
                     modifier = buttonModifier,
@@ -275,6 +278,7 @@ fun PlaybackControlPanel(
                     onClick = { onEvent(PlaybackUiEvent.Next) })
                 Spacer(modifier = Modifier.weight(1f))
                 ShuffleButton(
+                    enabled = playbackStatus.state == PlaybackState.PLAYING,
                     shuffleMode = playbackStatus.shuffleMode,
                     onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) }
                 )
@@ -286,13 +290,21 @@ fun PlaybackControlPanel(
 @Composable
 fun ShuffleButton(
     onClick: () -> Unit,
-    shuffleMode: Boolean
+    shuffleMode: Boolean,
+    enabled: Boolean
 ) {
-    IconButton(onClick = onClick) {
+    IconButton(
+        onClick = onClick,
+        enabled = enabled
+    ) {
         Icon(
             painter = painterResource(R.drawable.ic_music_player_shuffle),
             contentDescription = "Shuffle",
-            tint = if (shuffleMode) DarkViolet else White
+            tint = when {
+                enabled.not() -> Gray500
+                shuffleMode -> DarkViolet
+                else -> White
+            }
         )
     }
 }
