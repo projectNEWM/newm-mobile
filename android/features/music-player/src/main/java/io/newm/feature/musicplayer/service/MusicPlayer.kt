@@ -31,6 +31,7 @@ interface MusicPlayer {
     fun seekTo(index: Int, position: Long)
     fun repeat()
     fun setPlaylist(playlist: Playlist, initialTrackIndex: Int)
+    fun toggleShuffle()
 }
 
 class MusicPlayerImpl(
@@ -85,7 +86,8 @@ class MusicPlayerImpl(
                 position = player.currentPosition,
                 duration = player.duration,
                 track = player.currentMediaItem?.toTrack(),
-                repeatMode = repeatMode
+                repeatMode = repeatMode,
+                shuffleMode = player.shuffleModeEnabled
             )
         }
     }
@@ -161,6 +163,12 @@ class MusicPlayerImpl(
                 .build()
         })
         player.seekTo(initialTrackIndex, 0)
+    }
+
+    override fun toggleShuffle() {
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.TOGGLE_SHUFFLE_BUTTON)
+        Log.d("MusicPlayer", "Toggle shuffle")
+        player.shuffleModeEnabled = !player.shuffleModeEnabled
     }
 }
 

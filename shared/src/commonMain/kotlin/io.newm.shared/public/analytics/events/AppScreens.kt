@@ -64,7 +64,7 @@ object AppScreens {
         const val STOP_BUTTON: String = "Stop"
         const val REPEAT_BUTTON: String = "Repeat"
         const val SEEK_ACTION: String = "Seek Action"
-
+        const val TOGGLE_SHUFFLE_BUTTON: String = "Toggle Shuffle"
     }
 
     object NFTLibraryEmptyWalletScreen : ScreenEvents {
