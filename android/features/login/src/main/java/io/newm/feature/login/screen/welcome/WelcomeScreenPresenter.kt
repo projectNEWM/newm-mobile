@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.recaptcha.RecaptchaAction
@@ -107,11 +108,15 @@ class WelcomeScreenPresenter(
                 } catch (e: ApiException) {
                     // The ApiException status code indicates the detailed failure reason.
                     // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                    logger.error(
-                        "WelcomeScreenPresenter",
-                        "Google sign in failed: ${task.result}",
-                        e
-                    )
+                    if (e.statusCode != GoogleSignInStatusCodes.SIGN_IN_CANCELLED
+                        && e.statusCode != GoogleSignInStatusCodes.SIGN_IN_CURRENTLY_IN_PROGRESS
+                    ) {
+                        logger.error(
+                            "WelcomeScreenPresenter",
+                            "Google sign in failed",
+                            e
+                        )
+                    }
                 } catch (kmmException: KMMException) {
                     logger.error(
                         "WelcomeScreenPresenter",
