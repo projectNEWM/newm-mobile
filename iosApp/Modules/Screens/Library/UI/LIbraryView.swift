@@ -25,7 +25,6 @@ struct LibraryView: View {
 					loadedView
 				}
 			}
-			.padding()
 			.refreshable {
 				await viewModel.refresh()
 			}
@@ -112,6 +111,7 @@ struct LibraryView: View {
 						viewModel.connectWallet()
 					}
 				}
+				.padding()
 			}
 		}
 	}
@@ -300,29 +300,25 @@ struct LibraryView: View {
 #if DEBUG
 //#Preview {
 //	Resolver.root = .mock
-//	//	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
+//	LibraryModule.shared.registerAllMockedServices(mockResolver: .root)
 //	MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
 //	AudioPlayerModule.shared.registerAllServices()
 //	let useCase = $0.resolve(ConnectWalletUseCase.self)
-////	Resolver.root.register {
-////		Task {
-////			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
-////		}
-////		return useCase as ConnectWalletUseCase
-////	}
-//	return Group {
-//		LibraryView()
-//		LibraryView()
-//			.row(for: NFTTrack.mocks.first!)
+//	Resolver.root.register {
+//		Task {
+//			try await useCase.connect(walletConnectionId: "newm34r343g3g343833")
+//		}
+//		return useCase as ConnectWalletUseCase
 //	}
-//	.preferredColorScheme(.dark)
-//	.tint(.white)
+//	return LibraryView()
+//		.preferredColorScheme(.dark)
+//		.tint(.white)
 //}
 
 #Preview {
 	Resolver.root = .mock
 	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
-	return LibraryView(showFilter: false).noSongsMessage
+	return LibraryView(showFilter: false)//.noSongsMessage
 		.preferredColorScheme(.dark)
 		.tint(.white)
 		.background(.black)

@@ -22,7 +22,7 @@ public struct ProfileView: View {
 		mainView
 			.autocorrectionDisabled(true)
 			.scrollDismissesKeyboard(.immediately)
-			.padding(.bottom)
+			.padding([.bottom, .leading, .trailing])
 	}
 }
 
@@ -40,7 +40,6 @@ extension ProfileView {
 					artistName
 					walletView.padding(.bottom)
 					bottomSection
-						.addSidePadding()
 					saveButton
 				}
 			}
