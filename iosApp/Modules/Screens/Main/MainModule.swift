@@ -11,6 +11,10 @@ public final class MainModule: Module {
 		Resolver.register {
 			UserSessionUseCaseProvider().get() as UserSessionUseCase
 		}
+		
+		Resolver.register {
+			ForceAppUpdateUseCaseProvider().get() as ForceAppUpdateUseCase
+		}
 
 		// Public
 		Resolver.register {

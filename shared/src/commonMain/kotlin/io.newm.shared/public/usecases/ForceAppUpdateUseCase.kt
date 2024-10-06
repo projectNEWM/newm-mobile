@@ -1,5 +1,8 @@
 package io.newm.shared.public.usecases
 
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
 /**
  * Defines the contract for checking if a forced update is required for mobile applications.
  * This interface provides methods to determine whether the current version of the Android or iOS
@@ -28,4 +31,12 @@ interface ForceAppUpdateUseCase {
      *         that an update is required; false otherwise.
      */
     suspend fun isiOSUpdateRequired(currentAppVersion: String, humanVerificationCode: String): Boolean
+}
+
+class ForceAppUpdateUseCaseProvider : KoinComponent {
+	private val forceAppUpdateUseCase: ForceAppUpdateUseCase by inject()
+
+	fun get(): ForceAppUpdateUseCase {
+		return this.forceAppUpdateUseCase
+	}
 }

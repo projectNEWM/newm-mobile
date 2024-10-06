@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7602CECB2CB31F88009130EE /* ForceAppUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7602CEC82CB3165F009130EE /* ForceAppUpdateView.swift */; };
 		760300342836994200BBF78C /* Raleway-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B990CA2835204A00F818E4 /* Raleway-VariableFont_wght.ttf */; };
 		760300352836995100BBF78C /* Inter-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76B990BD2835204A00F818E4 /* Inter-VariableFont.ttf */; };
 		7603003A2836FCB800BBF78C /* Fonts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD3128164CE2007573B4 /* Fonts.framework */; platformFilter = ios; };
@@ -945,6 +946,7 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7602CEC82CB3165F009130EE /* ForceAppUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceAppUpdateView.swift; sourceTree = "<group>"; };
 		760808A22B2799C00015A2ED /* SentryErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryErrorReporter.swift; sourceTree = "<group>"; };
 		760808A32B2799C00015A2ED /* LoggingModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingModule.swift; sourceTree = "<group>"; };
 		760808A92B2799D20015A2ED /* Logging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Logging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2023,6 +2025,7 @@
 			children = (
 				7651D6D327DFA33100FF41B3 /* iOSApp.swift */,
 				76D09EFB27FAC4B700E2BAD3 /* iOSAppModule.swift */,
+				7602CEC82CB3165F009130EE /* ForceAppUpdateView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -2184,12 +2187,12 @@
 		76764AEC281A303B0095BEF9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				762EF9B32B21B2FA009E08D8 /* DebugView */,
-				7618FCEF28164C86007573B4 /* TabBar */,
 				76D01D8D28164AFC00305605 /* MainView.swift */,
 				76D01D8E28164AFC00305605 /* MainViewModel.swift */,
 				76D01D8F28164AFC00305605 /* TabEnums.swift */,
 				76D01D9028164AFC00305605 /* Utilities.swift */,
+				762EF9B32B21B2FA009E08D8 /* DebugView */,
+				7618FCEF28164C86007573B4 /* TabBar */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3694,6 +3697,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				761E97452B6BD8E200FDFC5E /* KingfisherErrorHandler.swift in Sources */,
+				7602CECB2CB31F88009130EE /* ForceAppUpdateView.swift in Sources */,
 				76D09EFC27FAC4B800E2BAD3 /* iOSAppModule.swift in Sources */,
 				7651D6D427DFA33100FF41B3 /* iOSApp.swift in Sources */,
 			);
@@ -4585,7 +4589,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -4601,7 +4605,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -4625,7 +4629,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -4641,7 +4645,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.newm.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

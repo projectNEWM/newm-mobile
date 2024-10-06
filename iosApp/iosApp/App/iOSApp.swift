@@ -5,11 +5,18 @@ import UIKit
 import shared
 import Kingfisher
 import Utilities
+@preconcurrency import RecaptchaEnterprise
+import Logging
 
 @main
 struct iOSApp: App {
 	private let mainViewProvider: MainViewProviding
 	private var imageErrorPlugin = KingfisherErrorHandler()
+	@Injected private var forceAppUpdateUseCase: ForceAppUpdateUseCase
+	@Injected private var errorLogger: ErrorReporting
+	
+	@State private var recaptcha: RecaptchaClient!
+	@State private var showUpdateAlert: Bool = false
 
 	init() {
 #if DEBUG
@@ -23,10 +30,27 @@ struct iOSApp: App {
 	
 	var body: some Scene {
 		WindowGroup {
-			VStack {
-				mainViewProvider.mainView()
+			Group {
+				if showUpdateAlert {
+					ForceAppUpdateView()
+				} else {
+					VStack {
+						mainViewProvider.mainView()
+					}
+				}
 			}
 			.preferredColorScheme(.dark)
+			.task {
+				do {
+					recaptcha = try await Recaptcha.fetchClient(withSiteKey: EnvironmentVariable.recaptchaKey.value)
+				} catch let error as RecaptchaError {
+					errorLogger.logError("RecaptchaClient creation error: \(String(describing: error.errorMessage)).")
+				} catch {
+					errorLogger.logError("Unknown RecaptchaClient creation error: \(String(describing: error)).")
+				}
+				
+				await checkAppUpdate()
+			}
 		}
 	}
 	
@@ -36,6 +60,15 @@ struct iOSApp: App {
 		let barAppearance = UIBarAppearance()
 		barAppearance.configureWithOpaqueBackground()
 		UITabBar.appearance().standardAppearance = UITabBarAppearance(barAppearance: barAppearance)
+	}
+	
+	private func checkAppUpdate() async {
+		showUpdateAlert = (try? await forceAppUpdateUseCase.isiOSUpdateRequired(
+			currentAppVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String,
+			humanVerificationCode: try! await recaptcha.execute(
+				withAction: RecaptchaAction(customAction: "mobile_config")
+			)
+		).boolValue) == true
 	}
 }
 
