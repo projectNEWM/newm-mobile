@@ -14,8 +14,6 @@ import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.login.LoginScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
-import io.newm.feature.musicplayer.repository.MockMusicRepository
-import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
@@ -103,7 +101,6 @@ val viewModule = module {
             params.get(),
         )
     }
-    single<MusicRepository> { MockMusicRepository(androidContext()) }
 }
 
 val androidModules = module {
