@@ -5,6 +5,8 @@ import io.newm.shared.AppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.sentry.Sentry
 import io.sentry.protocol.User
+import kotlinx.coroutines.CancellationException
+import java.io.IOException
 
 /**
  * An Android-specific implementation of [AppLogger] that logs messages
@@ -46,15 +48,23 @@ internal class AndroidNewmAppLogger(private val analyticsTracker: NewmAppEventLo
     }
 
     /**
-     * Logs an error message using Android's [Log] class and reports the exception to Sentry.
+     * Logs an error using Android's [Log] and optionally reports the exception to Sentry.
+     * Certain exceptions, like [CancellationException] and [IOException], are excluded from reporting.
      *
      * @param tag The tag identifying the source of the log message.
      * @param message The error message to log.
-     * @param exception The exception associated with the error.
+     * @param exception The exception to log and, if not excluded, report to Sentry.
      */
     override fun error(tag: String, message: String, exception: Throwable) {
         Log.e(tag, message, exception)
-        Sentry.captureException(exception)
+        val exceptionsNotToReport = setOf(CancellationException::class, IOException::class)
+        // Only send to Sentry if the exception is not in the blacklist
+        if (exceptionsNotToReport.none { it.isInstance(exception) }) {
+            Sentry.captureException(exception)
+        } else {
+            // Optionally log at a different level for known exceptions, like warnings
+            Log.w(tag, "Excluded from Sentry reporting: ${exception::class.simpleName} - $message", exception)
+        }
     }
 
     /**
