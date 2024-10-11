@@ -18,6 +18,7 @@ import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.view.ProfilePresenter
+import io.newm.screens.recordstore.RecordStorePresenter
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.utils.ForceAppUpdateViewModel
 import org.koin.android.ext.koin.androidContext
@@ -83,6 +84,12 @@ val viewModule = module {
             get(),
             get(),
             get()
+        )
+    }
+    factory { params ->
+        RecordStorePresenter(
+            params.get(),
+            get(),
         )
     }
     factory { params ->
