@@ -2,6 +2,7 @@ package io.newm.feature.musicplayer.service
 
 import android.util.Log
 import androidx.core.net.toUri
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 interface MusicPlayer {
     val playbackStatus: StateFlow<PlaybackStatus>
@@ -31,6 +33,7 @@ interface MusicPlayer {
     fun seekTo(index: Int, position: Long)
     fun repeat()
     fun setPlaylist(playlist: Playlist, initialTrackIndex: Int)
+    fun toggleShuffle()
 }
 
 class MusicPlayerImpl(
@@ -83,9 +86,10 @@ class MusicPlayerImpl(
             PlaybackStatus(
                 state = state,
                 position = player.currentPosition,
-                duration = player.duration,
+                duration = if(player.duration == C.TIME_UNSET ) null else player.duration.milliseconds,
                 track = player.currentMediaItem?.toTrack(),
-                repeatMode = repeatMode
+                repeatMode = repeatMode,
+                shuffleMode = player.shuffleModeEnabled
             )
         }
     }
@@ -161,6 +165,12 @@ class MusicPlayerImpl(
                 .build()
         })
         player.seekTo(initialTrackIndex, 0)
+    }
+
+    override fun toggleShuffle() {
+        eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.TOGGLE_SHUFFLE_BUTTON)
+        Log.d("MusicPlayer", "Toggle shuffle")
+        player.shuffleModeEnabled = !player.shuffleModeEnabled
     }
 }
 

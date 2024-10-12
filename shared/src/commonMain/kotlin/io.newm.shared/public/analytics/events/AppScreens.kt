@@ -64,7 +64,7 @@ object AppScreens {
         const val STOP_BUTTON: String = "Stop"
         const val REPEAT_BUTTON: String = "Repeat"
         const val SEEK_ACTION: String = "Seek Action"
-
+        const val TOGGLE_SHUFFLE_BUTTON: String = "Toggle Shuffle"
     }
 
     object NFTLibraryEmptyWalletScreen : ScreenEvents {
@@ -111,8 +111,8 @@ object AppScreens {
         const val CONTINUE_BUTTON: String = "Continue"
     }
 
-    object TermsAndConditionsScreen : ScreenEvents {
-        override val name = "Terms And Conditions"
+    object TermsOfServiceScreen : ScreenEvents {
+        override val name = "Terms of Service"
     }
 
     object WalletInstructionsScreen : ScreenEvents {

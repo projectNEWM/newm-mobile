@@ -14,8 +14,6 @@ import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.login.LoginScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
-import io.newm.feature.musicplayer.repository.MockMusicRepository
-import io.newm.feature.musicplayer.repository.MusicRepository
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
@@ -41,20 +39,18 @@ val viewModule = module {
             get()
         , get())
     }
-    single<GoogleSignInLauncher> {
+    single {
         val sharedBuildConfig = get<NewmSharedBuildConfig>()
-
-        GoogleSignInLauncherImpl(
-            GoogleSignIn.getClient(
-                androidContext(),
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(sharedBuildConfig.googleAuthClientId)
-                    .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
-                    .requestEmail()
-                    .build()
-            )
+        GoogleSignIn.getClient(
+            androidContext(),
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(sharedBuildConfig.googleAuthClientId)
+                .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
+                .requestEmail()
+                .build()
         )
     }
+    single<GoogleSignInLauncher> { GoogleSignInLauncherImpl(get()) }
     factory { params ->
         WelcomeScreenPresenter(
             navigator = params.get(),
@@ -105,10 +101,9 @@ val viewModule = module {
             params.get(),
         )
     }
-    single<MusicRepository> { MockMusicRepository(androidContext()) }
 }
 
 val androidModules = module {
-    single { Logout(get(), get(), get(), get(), get()) }
+    single { Logout(get(), get(), get(), get(), get(), get()) }
     single { RestartApp(get()) }
 }

@@ -1,13 +1,12 @@
 package io.newm.feature.musicplayer
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring.StiffnessLow
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -31,8 +31,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -140,15 +142,30 @@ internal fun MusicPlayerViewer(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = onNavigateUp) {
+                val buttonModifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .background(Color.Black.copy(alpha = 0.4f))
+
+                IconButton(
+                    modifier = buttonModifier,
+                    onClick = onNavigateUp
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = "Back",
                         tint = White
                     )
                 }
+
+                ShareButton(
+                    modifier = buttonModifier,
+                    songTitle = playbackStatus.track?.title,
+                    songArtist = playbackStatus.track?.artist
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -161,15 +178,19 @@ internal fun MusicPlayerViewer(
                     textAlign = TextAlign.Center,
                     lineHeight = 32.sp,
                     lineBreak = LineBreak.Heading,
+                    shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 3f)),
                 )
             )
             Text(
                 text = song.artist,
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                color = White,
-                fontFamily = inter,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
+                style = LocalTextStyle.current.copy(
+                    color = White,
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 0f)),
+                )
             )
             MusicPlayerControls(playbackStatus, onEvent)
             Spacer(modifier = Modifier.height(16.dp))
@@ -187,19 +208,21 @@ private fun MusicPlayerControls(
             playbackStatus = playbackStatus,
             onEvent = onEvent
         )
-        MusicPlayerSlider(
-            value = if (playbackStatus.duration == 0L) 0f else playbackStatus.position.toFloat() / playbackStatus.duration.toFloat(),
-            onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration).toLong())) },
-            colors = SliderDefaults.colors(
-                thumbColor = White,
-                inactiveTrackColor = Gray500
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp)
-                .height(4.dp)
+        if (playbackStatus.duration != null) {
+            MusicPlayerSlider(
+                value = playbackStatus.elapsedFraction,
+                onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration.inWholeMilliseconds).toLong())) },
+                colors = SliderDefaults.colors(
+                    thumbColor = White,
+                    inactiveTrackColor = Gray500
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(4.dp)
 
-        )
+            )
+        }
     }
 }
 
@@ -238,7 +261,11 @@ fun PlaybackControlPanel(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = playbackStatus.duration.millisToMinutesSecondsString(),
+                    text = if (playbackStatus.duration == null) {
+                        "-:--"
+                    } else {
+                        playbackStatus.duration.inWholeMilliseconds.millisToMinutesSecondsString()
+                    },
                     style = playbackTimeStyle
                 )
             }
@@ -256,12 +283,35 @@ fun PlaybackControlPanel(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     onClick = { onEvent(PlaybackUiEvent.Next) })
                 Spacer(modifier = Modifier.weight(1f))
-                ShareButton(
-                    songTitle = playbackStatus.track?.title,
-                    songArtist = playbackStatus.track?.artist
+                ShuffleButton(
+                    enabled = playbackStatus.state == PlaybackState.PLAYING,
+                    shuffleMode = playbackStatus.shuffleMode,
+                    onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) }
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ShuffleButton(
+    onClick: () -> Unit,
+    shuffleMode: Boolean,
+    enabled: Boolean
+) {
+    IconButton(
+        onClick = onClick,
+        enabled = enabled
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_music_player_shuffle),
+            contentDescription = "Shuffle",
+            tint = when {
+                enabled.not() -> Gray500
+                shuffleMode -> DarkViolet
+                else -> White
+            }
+        )
     }
 }
 

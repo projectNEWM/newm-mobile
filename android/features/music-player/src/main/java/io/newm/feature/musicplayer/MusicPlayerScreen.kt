@@ -32,6 +32,7 @@ fun MusicPlayerScreen(
                     PlaybackUiEvent.Previous -> previous()
                     PlaybackUiEvent.Repeat -> repeat()
                     is PlaybackUiEvent.Seek -> seekTo(event.position)
+                    PlaybackUiEvent.ToggleShuffle -> toggleShuffle()
                 }
             }
         },

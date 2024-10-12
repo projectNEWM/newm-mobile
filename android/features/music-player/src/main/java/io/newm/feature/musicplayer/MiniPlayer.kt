@@ -146,7 +146,7 @@ fun MiniPlayer(
         ) {
             Column {
                 MusicPlayerSlider(
-                    value = if (playStatus.duration == 0L) 0f else playStatus.position.toFloat() / playStatus.duration.toFloat(),
+                    value = playStatus.elapsedFraction,
                     onValueChange = {},
                     colors = SliderDefaults.colors(
                         thumbColor = White,
