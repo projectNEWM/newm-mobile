@@ -42,9 +42,11 @@ public struct MainView: View {
 			}
 		}
 		.animation(.easeInOut, value: viewModel.shouldShowLogin)
+#if DEBUG
 		.onShake {
 			route = .debug
 		}
+#endif 
 		.newmAlert(message: viewModel.alertMessage)
 	}
 }

@@ -3,6 +3,7 @@ import XCTest
 import shared
 import Resolver
 
+@MainActor
 final class PlayQueueTests: XCTestCase {
 	var playQueue: PlayQueue!
 	var tracks: [NFTTrack]!

@@ -5,6 +5,7 @@ import Fonts
 struct ScannerHelpSheet: View {
 	@Binding var showSheet: Bool
 	@Binding var showCopiedToast: Bool
+	private let toolsUrl = "https://tools.newm.io/"
 
 	var body: some View {
 		VStack {
@@ -27,7 +28,7 @@ struct ScannerHelpSheet: View {
 						.font(Font.inter(ofSize: 14))
 						
 						Button(action: {
-							UIPasteboard.general.string = "https://newm.tools/"
+							UIPasteboard.general.string = toolsUrl
 							Task {
 								showCopiedToast = true
 								try! await Task.sleep(for: .seconds(1))
@@ -35,7 +36,7 @@ struct ScannerHelpSheet: View {
 							}
 						}) {
 							HStack {
-								Text(verbatim: "https://newm.tools/")
+								Text(verbatim: toolsUrl)
 								Image("Copy Icon")
 							}
 							.padding([.top, .bottom])

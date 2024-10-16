@@ -22,6 +22,7 @@ public struct ProfileView: View {
 		mainView
 			.autocorrectionDisabled(true)
 			.scrollDismissesKeyboard(.immediately)
+			.padding([.bottom, .leading, .trailing])
 	}
 }
 
@@ -39,7 +40,7 @@ extension ProfileView {
 					artistName
 					walletView.padding(.bottom)
 					bottomSection
-						.addSidePadding()
+					saveButton
 				}
 			}
 			.refreshable {
@@ -89,18 +90,22 @@ extension ProfileView {
 	@ViewBuilder
 	private var saveButton: some View {
 		if viewModel.showSaveButton {
-			Button("Save", action: { Task { await viewModel.save() } })
-				.tint(Gradients.loginGradient.gradient)
-				.disabled(viewModel.enableSaveButon == false)
+			actionButton(title: "Save changes", backgroundGradient: Gradients.mainPrimary) {
+				Task { await viewModel.save() }
+			}
+			.disabled(viewModel.enableSaveButon == false)
+			.padding()
 		}
 	}
 	
 	@ViewBuilder
 	private var artistImage: some View {
-		KFImage(viewModel.pictureURL)
-			.setProcessor(DownsamplingImageProcessor(size: CGSize(width: userImageSize, height: userImageSize)))
-			.clipShape(RoundedRectangle(cornerRadius: userImageSize/2.0))
-			.padding(.top, -(sectionSpacing+userImageSize/2))
+		if let picUrl = viewModel.pictureURL {
+			KFImage(picUrl)
+				.setProcessor(DownsamplingImageProcessor(size: CGSize(width: userImageSize, height: userImageSize)))
+				.clipShape(RoundedRectangle(cornerRadius: userImageSize/2.0))
+				.padding(.top, -(sectionSpacing + (viewModel.bannerURL == nil ? -20 : (userImageSize/2))))
+		}
 	}
 	
 	@ViewBuilder
@@ -161,16 +166,16 @@ extension ProfileView {
 				
 				VStack(spacing: 10) {
 					Link(destination: URL(string: "https://newm.io/app-tos")!) {
-						Text("Privacy & Policy")
+						Text("Terms & Conditions")
 							.frame(maxWidth: .infinity)
 							.padding()
 							.background(Gradients.mainPrimary.opacity(0.08))
 							.foregroundColor(NEWMColor.midMusic.swiftUIColor)
 							.cornerRadius(8)
 					}
-
+					
 					Link(destination: URL(string: "https://newm.io/app-privacy")!) {
-						Text("Privacy & Policy")
+						Text("Privacy Policy")
 							.frame(maxWidth: .infinity)
 							.padding()
 							.background(Gradients.mainPrimary.opacity(0.08))

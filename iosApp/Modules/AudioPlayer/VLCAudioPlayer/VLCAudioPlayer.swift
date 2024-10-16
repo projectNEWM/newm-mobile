@@ -89,6 +89,13 @@ public class VLCAudioPlayer: ObservableObject {
 		}.store(in: &cancels)
 		
 		setUpDelegateHandling()
+		setupRemoteTransportControls()
+		
+		objectWillChange.sink { [weak self] _ in
+			Task {
+				await self?.updateIOSNowPlayingInfo()
+			}
+		}.store(in: &cancels)
 	}
 	
 	private func setUpDelegateHandling() {
@@ -139,7 +146,7 @@ public class VLCAudioPlayer: ObservableObject {
 		do {
 			let currentTrackVLC = currentTrack.vlcMedia(fileUrl: try fileManager.getPlaybackURL(for: url))
 			mediaPlayer.media = currentTrackVLC
-			mediaPlayer.play()
+			play()
 		} catch {
 			_errors.send(error)
 		}
@@ -181,6 +188,10 @@ public class VLCAudioPlayer: ObservableObject {
 	}
 	
 	public func prev() {
+		guard mediaPlayer.time.seconds ?? Double.infinity < 2 else {
+			mediaPlayer.time = VLCTime(int: 0)
+			return
+		}
 		playQueue.previousTrack()
 		playCurrentTrackInQueue()
 	}
