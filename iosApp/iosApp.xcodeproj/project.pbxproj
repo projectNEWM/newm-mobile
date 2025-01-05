@@ -1335,6 +1335,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		76610AA92CBB45CE009F5693 /* Analytics */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Analytics; sourceTree = "<group>"; };
+		7679128B2D2B240300EEDB85 /* Errors */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Errors; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2632,6 +2633,7 @@
 		76D01D9F28164B2100305605 /* ModuleLinker */ = {
 			isa = PBXGroup;
 			children = (
+				7679128B2D2B240300EEDB85 /* Errors */,
 				7618FCBB28164BB5007573B4 /* Protocols */,
 			);
 			path = ModuleLinker;
@@ -3394,6 +3396,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7679128B2D2B240300EEDB85 /* Errors */,
 			);
 			name = ModuleLinker;
 			packageProductDependencies = (
