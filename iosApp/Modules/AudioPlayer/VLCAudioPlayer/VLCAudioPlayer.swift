@@ -210,6 +210,7 @@ public class VLCAudioPlayer: ObservableObject {
 	public func seek(toTrack track: NFTTrack) {
 		guard track != currentTrack else {
 			seek(toTime: 0)
+			playCurrentTrackInQueue()
 			return
 		}
 		do {
