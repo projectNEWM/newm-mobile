@@ -138,7 +138,7 @@ class LibraryViewModel: ObservableObject {
 		
 		do {
 			try await walletNFTTracksUseCase.refresh()
-			tracks = try await walletNFTTracksUseCase.getAllTracks()
+			tracks = try await walletNFTTracksUseCase.getAllCollectableTracks()
 		} catch {
 			logger.logError(error)
 			errors.append(NEWMError(errorDescription: "Unable to fetch songs.  Please try again."))

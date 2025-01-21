@@ -6,7 +6,7 @@ extension NFTTrack {
 	func isAboveDurationFilter(_ durationFilter: Int?) -> Bool {
 		let trackIsAboveDurationFilter: Bool
 		if let durationFilter {
-			if duration > durationFilter {
+			if duration >= durationFilter {
 				trackIsAboveDurationFilter = true
 			} else {
 				trackIsAboveDurationFilter = false
