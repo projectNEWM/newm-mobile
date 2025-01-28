@@ -6,13 +6,15 @@ import kotlinx.parcelize.Parcelize
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
 @Parcelize
-sealed class Screen(val screenName: String) : CircuitScreen {
+sealed class Screen(val screenName: String, val showBottomBar: Boolean = false, val showMiniPlayer: Boolean = false) : CircuitScreen {
 
-    data object UserAccount : Screen(screenName = AppScreens.AccountScreen.name)
+    data object UserAccount : Screen(screenName = AppScreens.AccountScreen.name, showBottomBar = true, showMiniPlayer = true)
 
-    data object RecordStore : Screen(screenName = AppScreens.RecordStoreScreen.name)
+    data object RecordStore : Screen(screenName = AppScreens.RecordStoreScreen.name, showBottomBar = true, showMiniPlayer = true)
 
-    data object NFTLibrary : Screen(screenName = AppScreens.NFTLibraryScreen.name)
+    data object NFTLibrary : Screen(screenName = AppScreens.NFTLibraryScreen.name, showBottomBar = true, showMiniPlayer = true)
+
+    data object InvestmentPortfolio : Screen(screenName = AppScreens.InvestmentPortfolioScreen.name)
 
     data object Welcome : Screen(screenName = AppScreens.WelcomeScreen.name)
 
@@ -30,7 +32,6 @@ sealed class Screen(val screenName: String) : CircuitScreen {
     data object PrivacyPolicy : Screen(screenName = AppScreens.PrivacyPolicyScreen.name), WebBrowserScreen {
         @IgnoredOnParcel
         override val url: String = "https://newm.io/app-privacy"
-
     }
 }
 

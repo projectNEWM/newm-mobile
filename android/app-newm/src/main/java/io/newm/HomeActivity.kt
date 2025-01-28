@@ -21,6 +21,9 @@ import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
+import io.newm.screens.investment.portfolio.InvestmentPortfolioPresenter
+import io.newm.screens.investment.portfolio.InvestmentPortfolioState
+import io.newm.screens.investment.portfolio.InvestmentPortfolioUi
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
@@ -48,7 +51,7 @@ class HomeActivity : ComponentActivity() {
     private val logger: NewmAppLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
     private val eventLogger: NewmAppEventLogger by inject()
-    private val featureFlagManager : FeatureFlagManager by inject()
+    private val featureFlagManager: FeatureFlagManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -70,7 +73,8 @@ class HomeActivity : ComponentActivity() {
                         NewmApp(
                             logger = logger,
                             eventLogger = eventLogger,
-                            showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore))
+                            showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore),
+                        )
                     }
                 }
             }
@@ -127,6 +131,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.InvestmentPortfolio -> ui<InvestmentPortfolioState> { state, modifier ->
+                    InvestmentPortfolioUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
                 else -> null
 
             }
@@ -161,6 +173,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.ForceAppUpdate -> inject<ForceAppUpdatePresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.InvestmentPortfolio -> inject<InvestmentPortfolioPresenter> {
                     parametersOf(
                         navigator
                     )

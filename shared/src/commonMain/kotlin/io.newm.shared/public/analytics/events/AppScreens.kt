@@ -27,6 +27,7 @@ object AppScreens {
         const val LOGOUT_BUTTON: String = "Logout"
         const val TERMS_AND_CONDITIONS_BUTTON: String = "Terms and Conditions"
         const val PRIVACY_POLICY_BUTTON: String = "Privacy Policy"
+        const val STREAM_TOKENS_BUTTON: String = "Investments Portfolio"
     }
 
     object ConnectWalletScannerScreen : ScreenEvents {
@@ -79,6 +80,11 @@ object AppScreens {
 
     object NFTLibraryLinkWalletScreen : ScreenEvents {
         override val name = "NFT Library Link Wallet"
+    }
+
+    object InvestmentPortfolioScreen : ScreenEvents {
+        override val name = "Investment Portfolio"
+
     }
 
     object NFTLibraryScreen : ScreenEvents {

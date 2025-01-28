@@ -12,4 +12,9 @@ object FeatureFlags {
     object DownloadTracks : FeatureFlag {
         override val key = "mobile-app-track-downloads"
     }
+
+    object ShowInvestmentPortfolio : FeatureFlag {
+        override val key = "mobile-app-show-investments-portfolio"
+    }
 }
+

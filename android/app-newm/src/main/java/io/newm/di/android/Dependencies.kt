@@ -26,6 +26,7 @@ import io.newm.feature.musicplayer.service.DownloadManagerImpl
 import io.newm.feature.musicplayer.service.DownloadStateManager
 import io.newm.feature.musicplayer.service.DownloadStateManagerImpl
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
+import io.newm.screens.investment.portfolio.InvestmentPortfolioPresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.view.ProfilePresenter
@@ -89,6 +90,7 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }
@@ -108,6 +110,14 @@ val viewModule = module {
     factory { params ->
         RecordStorePresenter(
             params.get(),
+            get(),
+        )
+    }
+    factory { params ->
+        InvestmentPortfolioPresenter(
+            params.get(),
+            get(),
+            get(),
             get(),
         )
     }

@@ -9,6 +9,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
+import io.newm.screens.Screen
 import io.newm.screens.Screen.EditProfile
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
@@ -18,8 +19,11 @@ import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
+import io.newm.screens.profile.OnInvestmentPortfolio
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
@@ -34,6 +38,7 @@ class ProfilePresenter(
     private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
+    private val featureFlagManager: FeatureFlagManager,
     private val logout: Logout,
     private val eventLogger: NewmAppEventLogger
 ) : Presenter<ProfileUiState> {
@@ -53,6 +58,8 @@ class ProfilePresenter(
         val user by remember { userDetailsUseCase.fetchLoggedInUserDetailsFlow() }.collectAsState(
             null
         )
+        val showInvestmentPortfolio = featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
+        val showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore)
 
         return if (user == null) {
             ProfileUiState.Loading
@@ -60,6 +67,8 @@ class ProfilePresenter(
             ProfileUiState.Content(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,
+                showInvestmentPortfolio = showInvestmentPortfolio,
+                showRecordStore = showRecordStore,
                 eventSink = { event ->
                     when (event) {
                         is OnConnectWallet -> coroutineScope.launch {
@@ -87,6 +96,11 @@ class ProfilePresenter(
                         OnShowPrivacyPolicy -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
                             navigator.goTo(PrivacyPolicy)
+                        }
+
+                        OnInvestmentPortfolio -> {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.STREAM_TOKENS_BUTTON)
+                            navigator.goTo(Screen.InvestmentPortfolio)
                         }
                     }
                 }

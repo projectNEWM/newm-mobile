@@ -3,7 +3,6 @@ package io.newm.screens.profile.view
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -68,6 +67,7 @@ import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
+import io.newm.screens.profile.OnInvestmentPortfolio
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
@@ -173,6 +173,14 @@ private fun ProfileUiContent(
                 onClick = { onEvent(OnEditProfile) },
             )
             Spacer(Modifier.height(12.dp))
+            if(state.showInvestmentPortfolio) {
+                ProfileButton(
+                    labelResId = R.string.profile_investment_portfolio_button_label,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onClick = { onEvent(OnInvestmentPortfolio) },
+                )
+            }
+            Spacer(Modifier.height(12.dp))
             WalletButton(
                 openWalletDialog = openWalletDialog,
                 isWalletConnected = state.isWalletConnected,
@@ -180,7 +188,10 @@ private fun ProfileUiContent(
                 disconnectWallet = { onEvent(OnDisconnectWallet) }
             ) { newmWalletConnectionId -> onEvent(OnConnectWallet(newmWalletConnectionId)) }
             Spacer(Modifier.weight(1f))
-            RecordStorePanel(eventLogger)
+            // Hide record store button when RecordStore tab is showing
+            if(!state.showRecordStore) {
+                RecordStorePanel(eventLogger)
+            }
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -354,6 +365,8 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUi
                 ),
                 isWalletConnected = false,
                 eventSink = {},
+                showInvestmentPortfolio = false,
+                showRecordStore = false
             ),
             ProfileUiState.Content(
                 profile = User(
@@ -362,6 +375,8 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUi
                 ),
                 isWalletConnected = true,
                 eventSink = {},
+                showInvestmentPortfolio = true,
+                showRecordStore = false
             )
         )
 }

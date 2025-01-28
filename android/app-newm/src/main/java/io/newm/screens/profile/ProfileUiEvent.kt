@@ -8,6 +8,7 @@ sealed interface ProfileEditUiEvent : CircuitUiEvent
 /** Profile UI Events */
 data object OnDisconnectWallet : ProfileUiEvent
 data object OnEditProfile : ProfileUiEvent
+data object OnInvestmentPortfolio : ProfileUiEvent
 
 /** Profile Edit UI Events */
 data object OnBack : ProfileEditUiEvent

@@ -1,0 +1,17 @@
+package io.newm.screens.investment.portfolio
+
+import com.slack.circuit.runtime.CircuitUiState
+import io.newm.shared.public.models.NFTTrack
+
+sealed class InvestmentPortfolioState : CircuitUiState {
+    data class Content(
+        val streamTokens: List<NFTTrack>,
+        val eventSink: (InvestmentPortfolioEvent) -> Unit
+    ) : InvestmentPortfolioState()
+
+    data object Loading : InvestmentPortfolioState()
+
+    data object Error : InvestmentPortfolioState()
+
+    data object ZeroState : InvestmentPortfolioState()
+}
