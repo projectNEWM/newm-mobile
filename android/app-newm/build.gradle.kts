@@ -105,6 +105,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.material)
     implementation(libs.androidx.media3.datasource)
+    implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.database)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.launchdarkly.client)
