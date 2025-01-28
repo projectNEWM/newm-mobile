@@ -19,12 +19,15 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -66,6 +69,7 @@ import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.textGradient
+import io.newm.feature.musicplayer.service.DownloadState
 import io.newm.screens.library.NFTLibraryEvent.OnApplyFilters
 import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
 import io.newm.screens.library.NFTLibraryEvent.OnQueryChange
@@ -128,8 +132,9 @@ fun NFTLibraryScreenUi(
                     eventLogger.logPageLoad(AppScreens.ErrorScreen.name)
                 }
                 ErrorScreen(
-                    title = "Oops, something went wrong!",
-                    message =state.message)
+                    title = stringResource(R.string.nft_library_error_message),
+                    message = state.message
+                )
             }
 
             is NFTLibraryState.Content -> {
@@ -157,12 +162,14 @@ fun NFTLibraryScreenUi(
                     filters = state.filters,
                     onQueryChange = { query -> eventSink(OnQueryChange(query)) },
                     onPlaySong = { track -> eventSink(PlaySong(track)) },
-                    onDownloadSong = { trackId -> eventSink(OnDownloadTrack(trackId)) },
+                    onDownloadSong = { track -> eventSink(OnDownloadTrack(track)) },
                     refresh = { eventSink(NFTLibraryEvent.OnRefresh) },
                     refreshing = state.refreshing,
                     eventLogger = eventLogger,
                     onApplyFilters = { filters -> eventSink(OnApplyFilters(filters)) },
-                    currentTrackId = state.currentTrackId
+                    currentTrackId = state.currentTrackId,
+                    downloadsEnabled = state.downloadsEnabled,
+                    downloadStates = state.downloadStates,
                 )
             }
         }
@@ -180,12 +187,14 @@ private fun NFTTracks(
     filters: NFTLibraryFilters,
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
-    onDownloadSong: (String) -> Unit,
+    onDownloadSong: (NFTTrack) -> Unit,
     refresh: () -> Unit,
     refreshing: Boolean,
     eventLogger: NewmAppEventLogger,
     onApplyFilters: (NFTLibraryFilters) -> Unit,
-    currentTrackId: String?
+    currentTrackId: String?,
+    downloadsEnabled: Boolean,
+    downloadStates: Map<String, DownloadState>,
 ) {
     val scope = rememberCoroutineScope()
     val filterSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -219,7 +228,7 @@ private fun NFTTracks(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_library_filter),
-                            contentDescription = "Filter",
+                            contentDescription = stringResource(R.string.filter_description),
                             modifier = Modifier.drawWithBrush(LibraryBrush)
                         )
                     }
@@ -229,19 +238,17 @@ private fun NFTTracks(
                 showZeroResultsFound -> item { ZeroSearchResults() }
 
                 nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
-                    items(nftTracks + streamTokenTracks, key = { track ->
-                        // Use the unique ID as the key
-                        track.id
-                    }) { track ->
+                    items(nftTracks + streamTokenTracks, key = { track -> track.id }) { track ->
                         Box(
-                            modifier = Modifier
-                                .background(Gray16)
+                            modifier = Modifier.background(Gray16)
                         ) {
                             TrackRowItemWrapper(
                                 track = track,
                                 onPlaySong = onPlaySong,
-                                onDownloadSong = { onDownloadSong(track.id) },
-                                isSelected = track.id == currentTrackId
+                                onDownloadSong = { onDownloadSong(track) },
+                                isSelected = track.id == currentTrackId,
+                                downloadsEnabled = downloadsEnabled,
+                                downloadState = downloadStates[track.id] ?: DownloadState.None,
                             )
                         }
                     }
@@ -259,16 +266,15 @@ private fun NFTTracks(
     }
 }
 
-// TODO: Remove this flag once the download functionality is implemented
-private const val DOWNLOAD_UI_ENABLED = false
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun TrackRowItemWrapper(
     track: NFTTrack,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: () -> Unit,
-    isSelected: Boolean
+    isSelected: Boolean,
+    downloadsEnabled: Boolean,
+    downloadState: DownloadState,
 ) {
     val swipeableState = rememberSwipeableState(initialValue = false)
     val deltaX = with(LocalDensity.current) { 82.dp.toPx() }
@@ -288,19 +294,29 @@ private fun TrackRowItemWrapper(
                 ),
             )
     ) {
-        if (!track.isDownloaded && DOWNLOAD_UI_ENABLED) {
-            RevealedPanel(onDownloadSong)
+        if (downloadsEnabled) {
+            val coroutineScope = rememberCoroutineScope()
+
+            RevealedPanel(
+                onDownloadClick = {
+                    coroutineScope.launch {
+                        swipeableState.animateTo(false)
+                    }
+                    onDownloadSong()
+                }
+            )
         }
         TrackRowItem(
             track = track,
             onClick = onPlaySong,
-            modifier = if (DOWNLOAD_UI_ENABLED) Modifier.offset {
+            modifier = if (downloadsEnabled) Modifier.offset {
                 IntOffset(
                     x = -swipeableState.offset.value.roundToInt(),
                     y = 0
                 )
             } else Modifier,
-            isSelected = isSelected
+            isSelected = isSelected,
+            downloadState = downloadState,
         )
     }
 }
@@ -310,7 +326,8 @@ private fun TrackRowItem(
     track: NFTTrack,
     onClick: (NFTTrack) -> Unit,
     modifier: Modifier,
-    isSelected: Boolean
+    isSelected: Boolean,
+    downloadState: DownloadState,
 ) {
     Row(
         modifier = modifier
@@ -318,7 +335,6 @@ private fun TrackRowItem(
             .clickable(onClick = { onClick(track) })
             .fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically
-
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -344,14 +360,41 @@ private fun TrackRowItem(
                 color = if (isSelected) StatusGreen else White
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (track.isDownloaded) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_downloaded),
-                        contentDescription = "Downloaded",
-                        tint = StatusGreen
-                    )
-                    Spacer(modifier = Modifier.size(4.dp))
+                when (downloadState) {
+                    is DownloadState.Downloading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(16.dp),
+                            strokeWidth = 2.dp,
+                            color = StatusGreen
+                        )
+                        Spacer(modifier = Modifier.size(4.dp))
+                    }
+
+                    is DownloadState.Failed -> {
+                        Icon(
+                            imageVector = Icons.Default.Warning,
+                            contentDescription = "Failed",
+                            tint = MaterialTheme.colors.error,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.size(4.dp))
+                    }
+
+                    is DownloadState.Completed -> {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_downloaded),
+                            contentDescription = stringResource(R.string.downloaded_description),
+                            tint = StatusGreen,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.size(4.dp))
+                    }
+
+                    DownloadState.None -> {
+                        // Show nothing
+                    }
                 }
+
                 Text(
                     text = track.artists.joinToString(","),
                     fontFamily = inter,
@@ -378,8 +421,14 @@ fun PreviewNftLibrary() {
                     showShortTracks = false
                 ),
                 refreshing = false,
+                downloadStates = mapOf(
+                    "track1" to DownloadState.Downloading(0.5f),
+                    "track2" to DownloadState.Completed,
+                    "track3" to DownloadState.Failed("Error message")
+                ),
                 eventSink = {},
-                currentTrackId = null
+                currentTrackId = null,
+                downloadsEnabled = true,
             ),
             eventLogger = NewmAppEventLogger()
         )

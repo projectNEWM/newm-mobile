@@ -1,6 +1,7 @@
 package io.newm.screens.library
 
 import com.slack.circuit.runtime.CircuitUiState
+import io.newm.feature.musicplayer.service.DownloadState
 import io.newm.shared.public.models.NFTTrack
 
 sealed interface NFTLibraryState : CircuitUiState {
@@ -16,8 +17,10 @@ sealed interface NFTLibraryState : CircuitUiState {
         val showZeroResultFound: Boolean,
         val filters: NFTLibraryFilters,
         val refreshing: Boolean,
+        val downloadStates: Map<String, DownloadState>,
         val eventSink: (NFTLibraryEvent) -> Unit,
-        val currentTrackId: String?
+        val currentTrackId: String?,
+        val downloadsEnabled: Boolean
     ) : NFTLibraryState
 
     data class Error(val message: String) : NFTLibraryState

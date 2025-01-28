@@ -1,6 +1,13 @@
 package io.newm.di.android
 
+import android.annotation.SuppressLint
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.media3.database.DatabaseProvider
+import androidx.media3.database.StandaloneDatabaseProvider
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.datasource.cache.Cache
+import androidx.media3.datasource.cache.NoOpCacheEvictor
+import androidx.media3.datasource.cache.SimpleCache
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
@@ -14,6 +21,10 @@ import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.login.LoginScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
+import io.newm.feature.musicplayer.service.DownloadManager
+import io.newm.feature.musicplayer.service.DownloadManagerImpl
+import io.newm.feature.musicplayer.service.DownloadStateManager
+import io.newm.feature.musicplayer.service.DownloadStateManagerImpl
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
@@ -25,7 +36,10 @@ import io.newm.utils.AndroidFeatureFlagManager
 import io.newm.utils.ForceAppUpdateViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import java.util.concurrent.Executor
+import androidx.media3.exoplayer.offline.DownloadManager as ExoDownloadManager
 
+@SuppressLint("UnsafeOptInUsageError")
 val viewModule = module {
     single<FeatureFlagManager> { AndroidFeatureFlagManager(get(), get()) }
     single { ForceAppUpdateViewModel(get(), get()) }
@@ -86,7 +100,9 @@ val viewModule = module {
             get(),
             get(),
             get(),
-            get()
+            get(),
+            get(),
+            get(),
         )
     }
     factory { params ->
@@ -109,6 +125,22 @@ val viewModule = module {
     factory { params ->
         ForceAppUpdatePresenter(
             params.get(),
+        )
+    }
+    single<DatabaseProvider> { StandaloneDatabaseProvider(androidContext()) }
+    single<Cache> {
+        val downloadDirectory = androidContext().getExternalFilesDir(null)!!
+        SimpleCache(downloadDirectory, NoOpCacheEvictor(), get())
+    }
+    single<DownloadManager> { DownloadManagerImpl(androidContext(), get()) }
+    single<DownloadStateManager> { DownloadStateManagerImpl(get(), get(), get()) }
+    single<ExoDownloadManager> {
+        ExoDownloadManager(
+            androidContext(),
+            get(),
+            get(),
+            DefaultHttpDataSource.Factory(),
+            Executor(Runnable::run)
         )
     }
 }

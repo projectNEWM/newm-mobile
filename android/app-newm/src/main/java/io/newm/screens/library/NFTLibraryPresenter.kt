@@ -16,16 +16,21 @@ import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.Playlist
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.rememberMediaPlayer
+import io.newm.feature.musicplayer.service.DownloadManager
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class NFTLibraryPresenter(
@@ -35,11 +40,16 @@ class NFTLibraryPresenter(
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
     private val walletNFTTracksUseCase: WalletNFTTracksUseCase,
     private val scope: CoroutineScope,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
+    private val downloadManager: DownloadManager,
+    private val featureFlagManager: FeatureFlagManager,
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger)
+
+        val downloadsEnabled =
+            remember { featureFlagManager.isEnabled(FeatureFlags.DownloadTracks) }
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
@@ -126,6 +136,16 @@ class NFTLibraryPresenter(
             }
         }
 
+        // Collect download states through DownloadManager
+        val downloadStates by remember(nftTracks) {
+            combine(
+                nftTracks.map { track ->
+                    downloadManager.getDownloadState(track.id)
+                        .map { state -> track.id to state }
+                }
+            ) { states -> states.toMap() }
+        }.collectAsRetainedState(initial = emptyMap())
+
         return when {
             isLoading -> NFTLibraryState.Loading
             isWalletConnected == false -> NFTLibraryState.LinkWallet { newmWalletConnectionId ->
@@ -133,7 +153,6 @@ class NFTLibraryPresenter(
                     connectWalletUseCase.connect(newmWalletConnectionId)
                 }
             }
-
             isWalletEmpty -> NFTLibraryState.EmptyWallet
             else -> {
                 NFTLibraryState.Content(
@@ -142,9 +161,16 @@ class NFTLibraryPresenter(
                     showZeroResultFound = showZeroResultFound,
                     filters = filters,
                     refreshing = refreshing,
+                    downloadStates = downloadStates,
                     eventSink = { event ->
                         when (event) {
-                            is NFTLibraryEvent.OnDownloadTrack -> TODO("Not implemented yet")
+                            is NFTLibraryEvent.OnDownloadTrack -> {
+                                downloadManager.download(
+                                    id = event.track.id,
+                                    url = event.track.audioUrl
+                                )
+                            }
+
                             is NFTLibraryEvent.OnQueryChange -> {
                                 eventLogger.logEvent(
                                     AppScreens.NFTLibraryScreen.SEARCH_BUTTON,
@@ -176,7 +202,8 @@ class NFTLibraryPresenter(
                             }
                         }
                     },
-                    currentTrackId = currentTrackId
+                    currentTrackId = currentTrackId,
+                    downloadsEnabled = downloadsEnabled,
                 )
             }
         }
