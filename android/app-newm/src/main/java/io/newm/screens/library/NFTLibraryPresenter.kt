@@ -28,7 +28,9 @@ import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class NFTLibraryPresenter(
@@ -134,6 +136,16 @@ class NFTLibraryPresenter(
             }
         }
 
+        // Collect download states through DownloadManager
+        val downloadStates by remember(nftTracks) {
+            combine(
+                nftTracks.map { track ->
+                    downloadManager.getDownloadState(track.id)
+                        .map { state -> track.id to state }
+                }
+            ) { states -> states.toMap() }
+        }.collectAsRetainedState(initial = emptyMap())
+
         return when {
             isLoading -> NFTLibraryState.Loading
             isWalletConnected == false -> NFTLibraryState.LinkWallet { newmWalletConnectionId ->
@@ -141,7 +153,6 @@ class NFTLibraryPresenter(
                     connectWalletUseCase.connect(newmWalletConnectionId)
                 }
             }
-
             isWalletEmpty -> NFTLibraryState.EmptyWallet
             else -> {
                 NFTLibraryState.Content(
@@ -150,6 +161,7 @@ class NFTLibraryPresenter(
                     showZeroResultFound = showZeroResultFound,
                     filters = filters,
                     refreshing = refreshing,
+                    downloadStates = downloadStates,
                     eventSink = { event ->
                         when (event) {
                             is NFTLibraryEvent.OnDownloadTrack -> {
