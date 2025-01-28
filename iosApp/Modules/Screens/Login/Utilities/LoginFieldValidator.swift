@@ -1,23 +1,5 @@
 import Foundation
-
-enum LoginValidationError: Error {
-	case invalidPassword
-	case invalidEmail
-	case passwordsDoNotMatch
-}
-
-extension LoginValidationError: LocalizedError {
-	var errorDescription: String? {
-		switch self {
-		case .invalidPassword:
-			return "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number."
-		case .invalidEmail:
-			return "Invalid email format"
-		case .passwordsDoNotMatch:
-			return "Passwords do not match"
-		}
-	}
-}
+import ModuleLinker
 
 struct LoginFieldValidator {
 	private let passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$"

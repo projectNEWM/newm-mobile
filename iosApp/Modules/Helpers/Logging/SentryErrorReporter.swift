@@ -3,10 +3,9 @@ import Sentry
 import ModuleLinker
 import shared
 
-class SentryErrorReporter: ErrorReporting {
+final class SentryErrorReporter: ErrorReporting {
 	func logError(_ error: String) {
 #if !DEBUG
-		print("ERROR: \(error)")
 		SentrySDK.capture(error: error)
 #endif
 	}
@@ -14,7 +13,6 @@ class SentryErrorReporter: ErrorReporting {
 	func logError(_ error: Error) {
 #if !DEBUG
 		guard reportError(error) else { return }
-		print("ERROR: \(error.kmmException?.description() ?? error)")
 		SentrySDK.capture(error: error.kmmException ?? error)
 #endif
 	}
@@ -25,6 +23,8 @@ class SentryErrorReporter: ErrorReporting {
 			case "Invalid login.  Please try again.": false
 			default: true
 			}
+		} else if let error = error as? LoginValidationError {
+			return false
 		}
 		return true
 	}
