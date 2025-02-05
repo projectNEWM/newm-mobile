@@ -45,6 +45,7 @@
     <string name="library_filter_songs">Filtrar canciones por</string>
     <string name="library_filter_songs_under_30">30 segundos</string>
     <string name="library_no_wallet_connected_subtitle">Empieza conectando tu billetera Cardano para desbloquear tu biblioteca de música NFT. 🎶</string>
+    <string name="library_remove_description">Eliminar</string>
     <string name="library_search">Buscar</string>
     <string name="library_sort_by_artist">Artista (A a Z)</string>
     <string name="library_sort_by_length">Duración (de menor a mayor)</string>

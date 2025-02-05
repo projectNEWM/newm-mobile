@@ -72,6 +72,10 @@ class DownloadStateManagerImpl(
                     download: Download
                 ) {
                     super.onDownloadRemoved(downloadManager, download)
+                    updateDownloadState(
+                        download.request.id,
+                        DownloadState.None
+                    )
                     println("Download removed: $download")
                 }
 
