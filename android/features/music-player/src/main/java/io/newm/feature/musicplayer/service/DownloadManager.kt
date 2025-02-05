@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface DownloadManager {
     fun download(id: String, url: String)
+    fun remove(id: String)
     fun getDownloadState(id: String): Flow<DownloadState>
 }
 
@@ -28,6 +29,17 @@ class DownloadManagerImpl(
             NewmDownloadService::class.java,
             downloadRequest,
             true
+        )
+    }
+
+
+    @UnstableApi
+    override fun remove(id: String) {
+        DownloadService.sendRemoveDownload(
+            context,
+            NewmDownloadService::class.java,
+            id,
+            true,
         )
     }
 

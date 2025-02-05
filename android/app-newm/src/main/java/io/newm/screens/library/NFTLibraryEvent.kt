@@ -12,5 +12,7 @@ sealed interface NFTLibraryEvent : CircuitUiEvent {
 
     data class OnDownloadTrack(val track: NFTTrack) : NFTLibraryEvent
 
+    data class OnRemoveDownload(val track: NFTTrack) : NFTLibraryEvent
+
     data class OnApplyFilters(val filters: NFTLibraryFilters) : NFTLibraryEvent
 }

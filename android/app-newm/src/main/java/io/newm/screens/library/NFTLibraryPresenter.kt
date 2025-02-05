@@ -200,6 +200,10 @@ class NFTLibraryPresenter(
                                 eventLogger.logClickEvent(AppScreens.NFTLibraryScreen.REFRESH_BUTTON)
                                 refresh()
                             }
+
+                            is NFTLibraryEvent.OnRemoveDownload -> {
+                                downloadManager.remove(event.track.id)
+                            }
                         }
                     },
                     currentTrackId = currentTrackId,

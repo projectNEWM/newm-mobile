@@ -45,6 +45,7 @@
     <string name="library_filter_songs">Nummers filteren onder</string>
     <string name="library_filter_songs_under_30">30 seconden</string>
     <string name="library_no_wallet_connected_subtitle">Ga aan de slag door je Cardano-wallet te verbinden om je NFT-muziekbibliotheek te ontgrendelen! 🎶</string>
+    <string name="library_remove_description">Verwijder</string>
     <string name="library_search">Zoeken</string>
     <string name="library_sort_by_artist">Artiest (A tot Z)</string>
     <string name="library_sort_by_length">Lengte (Kortste tot Langste)</string>

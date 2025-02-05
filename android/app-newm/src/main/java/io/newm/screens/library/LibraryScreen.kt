@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
@@ -34,8 +37,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import io.newm.core.resources.R
@@ -137,7 +140,11 @@ fun LibraryScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun LibraryItem(songModel: SongModel, onPlaySong: () -> Unit, onDownloadSong: () -> Unit) {
+private fun LibraryItem(
+    songModel: SongModel,
+    onPlaySong: () -> Unit,
+    onDownloadSong: () -> Unit
+) {
     val swipeableState = rememberSwipeableState(initialValue = false)
     val deltaX = with(LocalDensity.current) { 82.dp.toPx() }
     Box(
@@ -148,7 +155,6 @@ private fun LibraryItem(songModel: SongModel, onPlaySong: () -> Unit, onDownload
             .swipeable(
                 state = swipeableState,
                 orientation = Orientation.Horizontal,
-                enabled = !songModel.isDownloaded,
                 reverseDirection = true,
                 anchors = mapOf(
                     0f to false,
@@ -157,7 +163,9 @@ private fun LibraryItem(songModel: SongModel, onPlaySong: () -> Unit, onDownload
             )
     ) {
         if (!songModel.isDownloaded) {
-            RevealedPanel(onDownloadSong)
+            RevealedPanel {
+                DownloadButton( onClick =  { onDownloadSong() } )
+            }
         }
         LibraryCard(
             songModel = songModel,
@@ -173,7 +181,9 @@ private fun LibraryItem(songModel: SongModel, onPlaySong: () -> Unit, onDownload
 }
 
 @Composable
-fun RevealedPanel(onDownloadClick: () -> Unit) {
+fun RevealedPanel(
+    content: @Composable RowScope.() -> Unit
+) {
     Row(
         modifier = Modifier
             .background(Purple)
@@ -181,29 +191,59 @@ fun RevealedPanel(onDownloadClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.weight(1f))
-        Column(
-            modifier = Modifier.padding(horizontal = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            IconButton(onClick = onDownloadClick, modifier = Modifier.size(16.dp)) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_download),
-                    contentDescription = stringResource(R.string.library_download_description)
-                )
-            }
-            Text(
-                text = stringResource(id = R.string.library_download),
-                style = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 12.sp,
-                    color = White
-                )
-            )
-        }
-
+        content()
     }
 }
+
+@Composable
+fun DownloadButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(horizontal = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_download),
+                contentDescription = stringResource(R.string.library_download_description)
+            )
+        }
+        Text(
+            text = stringResource(id = R.string.library_download),
+            style = TextStyle(
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp,
+                color = White
+            )
+        )
+    }
+}
+
+@Composable
+fun RemoveButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(horizontal = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.library_remove_description)
+            )
+        }
+        Text(
+            text = stringResource(id = R.string.library_remove_description),
+            style = TextStyle(
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp,
+                color = White
+            )
+        )
+    }
+}
+
+
 
 @Composable
 private fun LibraryCard(
