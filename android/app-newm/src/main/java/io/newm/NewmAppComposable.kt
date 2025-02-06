@@ -107,7 +107,7 @@ internal fun NewmApp(
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }, eventLogger)
 
-    val currentRootScreen = backstack.topRecord?.screen as? Screen
+    val currentRootScreen = backstack.topRecord?.screen as Screen
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
