@@ -100,6 +100,7 @@
     <string name="profile_disconnect_wallet_button_label">Disconnect Wallet</string>
     <string name="profile_documents">Documents</string>
     <string name="profile_edit_button_label">Edit Profile</string>
+    <string name="profile_investment_portfolio_button_label">Investment Portfolio</string>
     <string name="profile_enter_current_password">Please enter your current password</string>
     <string name="profile_enter_first_name">Please enter your first name</string>
     <string name="profile_enter_last_name">Please enter your last name</string>
@@ -163,6 +164,7 @@
     <string name="title_just_released_music_carousel">JUST RELEASED</string>
     <string name="title_library">Library</string>
     <string name="title_nft_library">NFT Library</string>
+    <string name="title_investment_portfolio">Investment Portfolio</string>">
     <string name="title_recently_played_music_carousel">RECENTLY PLAYED</string>
     <string name="title_saved_song_list">SAVED SONGS</string>
     <string name="title_this_week">THIS WEEK</string>
@@ -186,4 +188,6 @@
     <string name="wallet_link_connected_message">Wallet connected %1$s</string>
     <string name="welcome">Hey %s 👋</string>
     <string name="welcome_to_newm">Welcome to NEWM</string>
+    <string name="you_have_royalties_to_claim">You have royalties to claim.</string>
+    <string name="claim">Claim</string>
 </resources>

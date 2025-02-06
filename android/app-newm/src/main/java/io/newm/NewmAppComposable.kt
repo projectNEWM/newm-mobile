@@ -107,7 +107,7 @@ internal fun NewmApp(
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }, eventLogger)
 
-    val currentRootScreen = backstack.topRecord?.screen
+    val currentRootScreen = backstack.topRecord?.screen as? Screen
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -149,31 +149,37 @@ internal fun NewmApp(
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        MiniPlayer(
-                            modifier = Modifier.clickable {
-                                coroutineScope.launch {
-                                    eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
-                                    sheetState.show()
+                        if (currentRootScreen.showMiniPlayer) {
+                            MiniPlayer(
+                                modifier = Modifier.clickable {
+                                    coroutineScope.launch {
+                                        eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
+                                        sheetState.show()
+                                    }
+                                },
+                                eventLogger = eventLogger
+                            )
+                            Spacer(
+                                modifier = Modifier
+                                    .height(2.dp)
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colors.surface)
+                            )
+                        }
+                        if (currentRootScreen.showBottomBar) {
+                            NewmBottomNavigation(
+                                currentRootScreen = currentRootScreen,
+                                eventLogger = eventLogger,
+                                showRecordStore = showRecordStore,
+                                onNavigationSelected = {
+                                    circuitNavigator.resetRoot(it)
                                 }
-                            },
-                            eventLogger = eventLogger
-                        )
-                        Spacer(
-                            modifier = Modifier
-                                .height(2.dp)
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colors.surface)
-                        )
-                        NewmBottomNavigation(
-                            currentRootScreen = currentRootScreen,
-                            eventLogger = eventLogger,
-                            showRecordStore = showRecordStore,
-                            onNavigationSelected = {
-                                circuitNavigator.resetRoot(it)
-                            }
-                        )
+                            )
+                        }
+
                     }
                 }
+
             }
         ) { padding ->
             NavigableCircuitContent(
