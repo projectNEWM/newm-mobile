@@ -28,6 +28,7 @@ object AppScreens {
         const val TERMS_AND_CONDITIONS_BUTTON: String = "Terms and Conditions"
         const val PRIVACY_POLICY_BUTTON: String = "Privacy Policy"
         const val STREAM_TOKENS_BUTTON: String = "Investments Portfolio"
+        const val WALLETS_BUTTON: String = "Wallets Button"
     }
 
     object ConnectWalletScannerScreen : ScreenEvents {
@@ -124,6 +125,16 @@ object AppScreens {
 
     object WalletInstructionsScreen : ScreenEvents {
         override val name = "Wallet Instructions"
+    }
+
+    object WalletsScreen : ScreenEvents {
+        override val name = "Wallets"
+        const val BACK_BUTTON: String = "Back"
+        const val PULL_TO_REFRESH: String = "Pull to Refresh"
+        const val WALLET_OPTIONS_BUTTON: String = "Wallet Options"
+        const val ADD_WALLET_BUTTON: String = "Add Wallet"
+        const val DELETE_WALLET_BUTTON: String = "Delete Wallet"
+        const val DELETE_ALL_WALLETS_BUTTON: String = "Delete All Wallets"
     }
 
     object WelcomeScreen : ScreenEvents {

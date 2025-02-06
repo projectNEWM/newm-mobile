@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -23,7 +21,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -39,6 +36,7 @@ import io.newm.core.theme.Pinkish
 import io.newm.core.theme.Purple
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
+import io.newm.core.ui.buttons.NewmButton
 import io.newm.core.ui.utils.iconGradient
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
@@ -46,6 +44,8 @@ import io.newm.shared.public.analytics.events.AppScreens
 
 private val buttonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
+
+private val purpleBrush = iconGradient(Purple, Purple)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -136,20 +136,17 @@ private fun SongFilterButton(
     labelRes: Int,
     isSelected: Boolean
 ) {
-    val modifier = Modifier
-        .clip(RoundedCornerShape(8.dp))
-        .fillMaxWidth()
-        .height(40.dp)
-    Button(
+    NewmButton(
+        modifier = Modifier.fillMaxWidth(),
+        isSelected = isSelected,
+        selectedBrush = purpleBrush,
+        unselectedBrush = buttonGradient,
         onClick = onClick,
-        modifier = if (isSelected) modifier.background(Purple) else modifier.background(
-            buttonGradient
-        ),
-        elevation = null,
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-    )
-    {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text = stringResource(id = labelRes),
                 fontFamily = inter,

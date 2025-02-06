@@ -31,6 +31,7 @@ import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.view.ProfilePresenter
 import io.newm.screens.recordstore.RecordStorePresenter
+import io.newm.screens.wallets.WalletsPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.featureflags.FeatureFlagManager
 import io.newm.utils.AndroidFeatureFlagManager
@@ -91,9 +92,23 @@ val viewModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }
+
+    factory { params ->
+        WalletsPresenter(
+            params.get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+        )
+    }
+
     factory { params ->
         NFTLibraryPresenter(
             params.get(),

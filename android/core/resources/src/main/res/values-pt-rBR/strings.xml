@@ -93,6 +93,7 @@
     <string name="profile_company_related">RELACIONADO À EMPRESA</string>
     <string name="profile_confirm_new_password">Confirme sua nova senha</string>
     <string name="profile_connect_wallet_button_label">Conectar Carteira</string>
+    <string name="profile_connected_wallets_button_label">Carteiras conectadas: %1$d</string>
     <string name="profile_disconnect_wallet_button_label">Desconectar Carteira</string>
     <string name="profile_documents">Documentos</string>
     <string name="profile_edit_button_label">Editar Perfil</string>
@@ -181,4 +182,9 @@
     <string name="wallet_link_connected_message">Carteira conectada %1$s</string>
     <string name="welcome">Olá %s 👋</string>
     <string name="welcome_to_newm">Bem-vindo(a) ao NEWM</string>
+    <string name="profile_connect_new_wallet_button_label">Nova carteira</string>
+    <string name="wallets_screen_connect_new_wallet">Nova carteira</string>
+    <string name="wallets_screen_disconnect_all_wallets">Desconectar tudo</string>
+    <string name="wallets_screen_wallet_options_desc">Opções da carteira</string>
+    <string name="wallets_screen_topbar_title">Carteiras conectadas</string>
 </resources>

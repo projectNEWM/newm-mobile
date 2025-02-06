@@ -19,6 +19,16 @@ interface DisconnectWalletUseCase {
      */
     @Throws(KMMException::class, CancellationException::class)
     suspend fun disconnect(walletConnectionId: String? = null)
+
+    /**
+     * Disconnects single wallet
+     *
+     * @param walletConnectionId The ID of the wallet connection to disconnect
+     * @throws KMMException If an application-specific error occurs.
+     * @throws CancellationException If the operation is cancelled.
+     */
+    @Throws(KMMException::class, CancellationException::class)
+    suspend fun disconnectSingleWallet(walletConnectionId: String)
 }
 
 class DisconnectWalletUseCaseProvider : KoinComponent {

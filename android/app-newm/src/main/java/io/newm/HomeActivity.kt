@@ -3,11 +3,11 @@ package io.newm
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.core.view.WindowCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.retained.LocalRetainedStateRegistry
@@ -30,12 +30,15 @@ import io.newm.screens.library.NFTLibraryState
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
-import io.newm.screens.recordstore.RecordStorePresenter
-import io.newm.screens.recordstore.RecordStoreScreenUi
-import io.newm.screens.recordstore.RecordStoreState
 import io.newm.screens.profile.view.ProfilePresenter
 import io.newm.screens.profile.view.ProfileUi
 import io.newm.screens.profile.view.ProfileUiState
+import io.newm.screens.recordstore.RecordStorePresenter
+import io.newm.screens.recordstore.RecordStoreScreenUi
+import io.newm.screens.recordstore.RecordStoreState
+import io.newm.screens.wallets.WalletsPresenter
+import io.newm.screens.wallets.view.WalletsUi
+import io.newm.screens.wallets.WalletsUiState
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
@@ -54,7 +57,7 @@ class HomeActivity : ComponentActivity() {
     private val featureFlagManager: FeatureFlagManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
         setContent {
@@ -139,6 +142,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.Wallets -> ui<WalletsUiState> { state, modifier ->
+                    WalletsUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
                 else -> null
 
             }
@@ -179,6 +190,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.InvestmentPortfolio -> inject<InvestmentPortfolioPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.Wallets -> inject<WalletsPresenter> {
                     parametersOf(
                         navigator
                     )

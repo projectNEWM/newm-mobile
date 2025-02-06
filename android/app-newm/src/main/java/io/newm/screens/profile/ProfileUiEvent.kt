@@ -9,13 +9,14 @@ sealed interface ProfileEditUiEvent : CircuitUiEvent
 data object OnDisconnectWallet : ProfileUiEvent
 data object OnEditProfile : ProfileUiEvent
 data object OnInvestmentPortfolio : ProfileUiEvent
+data object OnWalletsScreen : ProfileUiEvent
+data class OnConnectWallet(val newmCode: String) : ProfileUiEvent
 
 /** Profile Edit UI Events */
 data object OnBack : ProfileEditUiEvent
 data object OnSaveProfile : ProfileEditUiEvent
 
 /** Profile edit and view UI Events */
-data class OnConnectWallet(val newmCode: String) : ProfileEditUiEvent, ProfileUiEvent
 data object OnLogout : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowTermsAndConditions : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowPrivacyPolicy : ProfileEditUiEvent, ProfileUiEvent

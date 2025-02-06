@@ -92,6 +92,7 @@
     <string name="profile_company_related">COMPANY RELATED</string>
     <string name="profile_confirm_new_password">Please confirm your new password</string>
     <string name="profile_connect_wallet_button_label">Connect Wallet</string>
+    <string name="profile_connected_wallets_button_label">Connected Wallets: %1$d</string>
     <string name="profile_disconnect_wallet_button_label">Disconnect Wallet</string>
     <string name="profile_documents">Documents</string>
     <string name="profile_edit_button_label">Edit Profile</string>
@@ -180,4 +181,9 @@
     <string name="wallet_link_connected_message">Wallet connected %1$s</string>
     <string name="welcome">Hey %s 👋</string>
     <string name="welcome_to_newm">Welcome to NEWM</string>
+    <string name="profile_connect_new_wallet_button_label">Connect New Wallet</string>
+    <string name="wallets_screen_connect_new_wallet">Connect New Wallet</string>
+    <string name="wallets_screen_disconnect_all_wallets">Disconnect All Wallets</string>
+    <string name="wallets_screen_wallet_options_desc">Wallet Options</string>
+    <string name="wallets_screen_topbar_title">Connected Wallets</string>
 </resources>
