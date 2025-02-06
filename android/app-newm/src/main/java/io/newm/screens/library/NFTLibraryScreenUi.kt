@@ -25,6 +25,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
@@ -170,7 +171,7 @@ fun NFTLibraryScreenUi(
                     currentTrackId = state.currentTrackId,
                     downloadsEnabled = state.downloadsEnabled,
                     downloadStates = state.downloadStates,
-                )
+                    onRemoveSong = { track -> eventSink(NFTLibraryEvent.OnRemoveDownload(track)) })
             }
         }
     }
@@ -188,6 +189,7 @@ private fun NFTTracks(
     onQueryChange: (String) -> Unit,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: (NFTTrack) -> Unit,
+    onRemoveSong: (NFTTrack) -> Unit,
     refresh: () -> Unit,
     refreshing: Boolean,
     eventLogger: NewmAppEventLogger,
@@ -249,6 +251,7 @@ private fun NFTTracks(
                                 isSelected = track.id == currentTrackId,
                                 downloadsEnabled = downloadsEnabled,
                                 downloadState = downloadStates[track.id] ?: DownloadState.None,
+                                onRemoveSong = { onRemoveSong(track) },
                             )
                         }
                     }
@@ -272,6 +275,7 @@ private fun TrackRowItemWrapper(
     track: NFTTrack,
     onPlaySong: (NFTTrack) -> Unit,
     onDownloadSong: () -> Unit,
+    onRemoveSong: () -> Unit,
     isSelected: Boolean,
     downloadsEnabled: Boolean,
     downloadState: DownloadState,
@@ -295,15 +299,11 @@ private fun TrackRowItemWrapper(
             )
     ) {
         if (downloadsEnabled) {
-            val coroutineScope = rememberCoroutineScope()
-
-            RevealedPanel(
-                onDownloadClick = {
-                    coroutineScope.launch {
-                        swipeableState.animateTo(false)
-                    }
-                    onDownloadSong()
-                }
+            DownloadPanel(
+                swipeableState = swipeableState,
+                downloadState = downloadState,
+                onRemoveSong = onRemoveSong,
+                onDownloadSong = onDownloadSong
             )
         }
         TrackRowItem(
@@ -318,6 +318,41 @@ private fun TrackRowItemWrapper(
             isSelected = isSelected,
             downloadState = downloadState,
         )
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterialApi::class)
+private fun DownloadPanel(
+    swipeableState: SwipeableState<Boolean>,
+    downloadState: DownloadState,
+    onRemoveSong: () -> Unit,
+    onDownloadSong: () -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+
+    fun closeSwipeView() {
+        coroutineScope.launch {
+            swipeableState.animateTo(false)
+        }
+    }
+
+    RevealedPanel {
+        if (downloadState is DownloadState.Completed || downloadState is DownloadState.Downloading) {
+            RemoveButton(
+                onClick = {
+                    closeSwipeView()
+                    onRemoveSong()
+                }
+            )
+        } else {
+            DownloadButton(
+                onClick = {
+                    closeSwipeView()
+                    onDownloadSong()
+                }
+            )
+        }
     }
 }
 

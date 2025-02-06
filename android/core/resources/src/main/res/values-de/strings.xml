@@ -45,6 +45,7 @@
     <string name="library_filter_songs">Songs filtern unter</string>
     <string name="library_filter_songs_under_30">30 Sekunden</string>
     <string name="library_no_wallet_connected_subtitle">Legen Sie los, indem Sie Ihre Cardano-Wallet verbinden, um Ihre NFT-Musikbibliothek freizuschalten! 🎶</string>
+    <string name="library_remove_description">löschen</string>
     <string name="library_search">Suchen</string>
     <string name="library_sort_by_artist">Künstler (A-Z)</string>
     <string name="library_sort_by_length">Länge (kürzeste bis längste)</string>
