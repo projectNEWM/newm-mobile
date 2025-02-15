@@ -74,6 +74,7 @@ kotlin {
 			dependencies {
 				implementation(libs.android.driver)
 				implementation(libs.ktor.client.android)
+				implementation(libs.cloudinary.android)
 			}
 		}
 

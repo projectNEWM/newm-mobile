@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
@@ -47,42 +48,36 @@ fun ProfileBottomSheetLayout(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        MaterialTheme.colors.surface,
-                        shape = MaterialTheme.shapes.medium
-                    )
+                    .background(MaterialTheme.colors.surface)
+                    .padding(16.dp)
             ) {
-                Divider(
-                    thickness = 1.dp,
-                    color = Gray400
+                SecondaryButton(
+                    labelResId = R.string.privacy_policy,
+                    onClick = onShowPrivacyPolicy
                 )
-                Column(modifier = Modifier.padding(16.dp)) {
-                    SecondaryButton(
-                        labelResId = R.string.privacy_policy,
-                        onClick = onShowPrivacyPolicy
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    SecondaryButton(
-                        labelResId = R.string.profile_terms_and_condition,
-                        onClick = onShowTermsAndConditions
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    PrimaryButton(
-                        text = stringResource(id = R.string.user_account_logout),
-                        onClick = onLogout
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    AppVersion()
-                }
+                Spacer(modifier = Modifier.height(16.dp))
+                SecondaryButton(
+                    labelResId = R.string.profile_terms_and_condition,
+                    onClick = onShowTermsAndConditions
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                PrimaryButton(
+                    text = stringResource(id = R.string.user_account_logout),
+                    onClick = onLogout
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                AppVersion()
             }
+
         },
+        sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
         scrimColor = Black90,
         content = content
     )
 }
 
 @Composable
-private fun AppVersion(){
+private fun AppVersion() {
     Column {
         Text(
             modifier = Modifier

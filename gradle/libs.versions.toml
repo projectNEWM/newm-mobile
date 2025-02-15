@@ -14,6 +14,8 @@ barcodeScanning = "17.3.0"
 browser = "1.8.0"
 cameraView = "1.4.1"
 circuitFoundation = "0.25.0"
+cloudinaryAndroid = "3.0.2"
+cmpImagePickNCrop = "1.0.8"
 coil = "3.1.0"
 compose-multiplatform = "1.7.0"
 coreSplashscreen = "1.0.1"
@@ -26,6 +28,7 @@ googleServices = "4.4.2"
 gradle = "8.8.1"
 gradlePlugin = "1.5.5"
 gradleVersionsPlugin = "0.51.0"
+guava = "33.3.1-android"
 junit = "4.13.2"
 koin = "3.5.0"
 kotlin = "2.1.10"
@@ -86,6 +89,8 @@ barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref =
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuitFoundation" }
 circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "circuitFoundation" }
 circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuitFoundation" }
+cloudinary-android = { module = "com.cloudinary:cloudinary-android", version.ref = "cloudinaryAndroid" }
+cmp-image-pick-n-crop = { module = "network.chaintech:cmp-image-pick-n-crop", version.ref = "cmpImagePickNCrop" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
 coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
@@ -98,6 +103,7 @@ flipper-noop = { module = "com.facebook.flipper:flipper-noop", version.ref = "fl
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }

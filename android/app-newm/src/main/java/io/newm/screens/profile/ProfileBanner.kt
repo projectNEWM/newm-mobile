@@ -1,10 +1,14 @@
 package io.newm.screens.profile
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,12 +25,14 @@ import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
 import io.newm.core.resources.R
+import io.newm.core.theme.White50
 
 @Composable
 fun ProfileBanner(
     modifier: Modifier = Modifier,
     bannerUrl: String,
     avatarUrl: String,
+    onAvatarClick: (() -> Unit)?,
 ) {
     Box(
         modifier = modifier
@@ -55,12 +61,25 @@ fun ProfileBanner(
             modifier = Modifier
                 .size(140.dp)
                 .align(Alignment.BottomCenter)
-                .clip(CircleShape),
+                .clip(CircleShape)
+                .then(if (onAvatarClick != null) Modifier.clickable(onClick = onAvatarClick) else Modifier),
             placeholder = painterResource(R.drawable.ic_default_moster),
             error = painterResource(R.drawable.ic_default_moster),
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
+        if (onAvatarClick != null) {
+            Icon(
+                painter = painterResource(R.drawable.ic_add_circle),
+                contentDescription = null,
+                tint = White50,
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.Center)
+                    .offset(x = 54.dp, y = 90.dp)
+                    .background(Color.Transparent)
+            )
+        }
     }
 }
 

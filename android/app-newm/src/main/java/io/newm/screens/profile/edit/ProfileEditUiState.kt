@@ -8,6 +8,7 @@ sealed class ProfileEditUiState : CircuitUiState {
     data object Loading : ProfileEditUiState()
     data class Content(
         val profile: Profile,
+        val avatarUrl: String,
         val firstName: TextFieldState,
         val lastName: TextFieldState,
         val canUserEditName: Boolean,
