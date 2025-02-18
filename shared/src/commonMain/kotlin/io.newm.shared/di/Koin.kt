@@ -4,6 +4,7 @@ import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.config.NewmSharedBuildConfigImpl
+import io.newm.shared.internal.EarningsAPI
 import io.newm.shared.internal.TokenManager
 import io.newm.shared.internal.api.CardanoWalletAPI
 import io.newm.shared.internal.api.GenresAPI
@@ -18,6 +19,7 @@ import io.newm.shared.internal.implementations.DeleteCurrentUserUseCaseImpl
 import io.newm.shared.internal.implementations.DisconnectWalletUseCaseImpl
 import io.newm.shared.internal.implementations.ForceAppUpdateUseCaseImpl
 import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
+import io.newm.shared.internal.implementations.GetInvestmentPortfolioDataUseCaseImpl
 import io.newm.shared.internal.implementations.GetWalletConnectionsUseCaseImpl
 import io.newm.shared.internal.implementations.HasWalletConnectionsUseCaseImpl
 import io.newm.shared.internal.implementations.LoginUseCaseImpl
@@ -27,6 +29,7 @@ import io.newm.shared.internal.implementations.SyncWalletConnectionsUseCaseImpl
 import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
+import io.newm.shared.internal.repositories.EarningsRepository
 import io.newm.shared.internal.repositories.GenresRepository
 import io.newm.shared.internal.repositories.LogInRepository
 import io.newm.shared.internal.repositories.NFTRepository
@@ -37,6 +40,7 @@ import io.newm.shared.internal.repositories.UserRepository
 import io.newm.shared.internal.repositories.WalletRepository
 import io.newm.shared.internal.services.cache.NFTCacheService
 import io.newm.shared.internal.services.cache.WalletConnectionCacheService
+import io.newm.shared.internal.services.network.EarningsNetworkService
 import io.newm.shared.internal.services.network.NFTNetworkService
 import io.newm.shared.internal.services.network.WalletConnectionNetworkService
 import io.newm.shared.internal.store.NftTrackStore
@@ -47,6 +51,7 @@ import io.newm.shared.public.usecases.DeleteCurrentUserUseCase
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
 import io.newm.shared.public.usecases.ForceAppUpdateUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
+import io.newm.shared.public.usecases.GetInvestmentPortfolioDataUseCase
 import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.LoginUseCase
@@ -96,6 +101,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { NewmAppEventLogger() }
     // Internal API Services
     single { CardanoWalletAPI(get()) }
+    single { EarningsAPI(get(), get()) }
     single { GenresAPI(get()) }
     single { LoginAPI(get(), get()) }
     single { NEWMWalletConnectionAPI(get()) }
@@ -103,19 +109,21 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { RemoteConfigAPI(get()) }
     single { UserAPI(get(), get()) }
     // Internal Services
-    single { WalletConnectionNetworkService(get()) }
-    single { WalletConnectionCacheService(get()) }
-    single { NFTNetworkService(get()) }
+    single { EarningsNetworkService(get()) }
     single { NFTCacheService(get()) }
+    single { NFTNetworkService(get()) }
     single { NftTrackStore(get(), get()) }
+    single { WalletConnectionCacheService(get()) }
+    single { WalletConnectionNetworkService(get()) }
     // Internal Repositories
-    single { WalletRepository(get(), get(), get()) }
-    single { NFTRepository(get()) }
+    single { EarningsRepository(get(), get()) }
     single { GenresRepository() }
     single { LogInRepository() }
+    single { NFTRepository(get()) }
     single { PlaylistRepository() }
-    single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get(), get()) }
     single { UserRepository(get(), get(), get()) }
+    single { WalletRepository(get(), get(), get()) }
+    single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get(), get()) }
     // External Use Cases to be consumed outside of KMM
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
@@ -135,6 +143,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
     single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
     single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
+    single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {
