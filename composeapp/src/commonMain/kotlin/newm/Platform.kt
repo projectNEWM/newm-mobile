@@ -1,4 +1,4 @@
-package io.newm
+package newm
 
 interface Platform {
     val name: String

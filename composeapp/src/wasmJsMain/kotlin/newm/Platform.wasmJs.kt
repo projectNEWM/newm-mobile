@@ -1,4 +1,4 @@
-package io.newm
+package newm
 
 class WasmPlatform: Platform {
     override val name: String = "Web with Kotlin/Wasm"
