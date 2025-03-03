@@ -20,12 +20,14 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.OnInvestmentPortfolio
+import io.newm.screens.profile.OnWalletsScreen
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.featureflags.FeatureFlagManager
 import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
+import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
@@ -34,6 +36,7 @@ import kotlinx.coroutines.launch
 class ProfilePresenter(
     private val navigator: Navigator,
     private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
+    private val getWalletConnectionsUseCase: GetWalletConnectionsUseCase,
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
     private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
@@ -47,19 +50,31 @@ class ProfilePresenter(
 
         val coroutineScope = rememberStableCoroutineScope()
 
-        val isWalletConnected by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }.collectAsState(
+        val isWalletConnected by remember {
+            hasWalletConnectionsUseCase.hasWalletConnectionsFlow()
+        }.collectAsState(
             false
+        )
+
+        val userConnectedWallets by remember {
+            getWalletConnectionsUseCase.getWalletConnectionsFromCacheFlow()
+        }.collectAsState(
+            emptyList()
         )
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
         }
 
-        val user by remember { userDetailsUseCase.fetchLoggedInUserDetailsFlow() }.collectAsState(
+        val user by remember {
+            userDetailsUseCase.fetchLoggedInUserDetailsFlow()
+        }.collectAsState(
             null
         )
-        val showInvestmentPortfolio = featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
+        val showInvestmentPortfolio =
+            featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
         val showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore)
+        val showMultiWallets = featureFlagManager.isEnabled(FeatureFlags.ShowMultiWallets)
 
         return if (user == null) {
             ProfileUiState.Loading
@@ -67,8 +82,10 @@ class ProfilePresenter(
             ProfileUiState.Content(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,
+                userConnectedWallets = userConnectedWallets,
                 showInvestmentPortfolio = showInvestmentPortfolio,
                 showRecordStore = showRecordStore,
+                showMultiWallets = showMultiWallets,
                 eventSink = { event ->
                     when (event) {
                         is OnConnectWallet -> coroutineScope.launch {
@@ -85,14 +102,17 @@ class ProfilePresenter(
                             eventLogger.logClickEvent(AppScreens.AccountScreen.EDIT_PROFILE_BUTTON)
                             navigator.goTo(EditProfile)
                         }
+
                         OnLogout -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.LOGOUT_BUTTON)
                             logout.signOutUser()
                         }
+
                         OnShowTermsAndConditions -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
                             navigator.goTo(TermsOfService)
                         }
+
                         OnShowPrivacyPolicy -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
                             navigator.goTo(PrivacyPolicy)
@@ -101,6 +121,11 @@ class ProfilePresenter(
                         OnInvestmentPortfolio -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.STREAM_TOKENS_BUTTON)
                             navigator.goTo(Screen.InvestmentPortfolio)
+                        }
+
+                        OnWalletsScreen -> {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.WALLETS_BUTTON)
+                            navigator.goTo(Screen.Wallets)
                         }
                     }
                 }

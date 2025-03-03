@@ -43,6 +43,37 @@ private val disabledButtonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.4f), Pinkish.copy(alpha = 0.4f))
 
 @Composable
+fun NewmButton(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    selectedBrush: Brush = enabledButtonGradient,
+    unselectedBrush: Brush = disabledButtonGradient,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    val newmModifier = modifier.then(
+        Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .height(40.dp)
+            .then(
+                if (isSelected) {
+                    Modifier.background(selectedBrush)
+                } else {
+                    Modifier.background(unselectedBrush)
+                }
+            )
+    )
+
+    Button(
+        onClick = onClick,
+        modifier = newmModifier,
+        elevation = null,
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+        content = { content() }
+    )
+}
+
+@Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,

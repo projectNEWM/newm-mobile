@@ -16,5 +16,9 @@ object FeatureFlags {
     object ShowInvestmentPortfolio : FeatureFlag {
         override val key = "mobile-app-show-investments-portfolio"
     }
+
+    object ShowMultiWallets : FeatureFlag {
+        override val key = "mobile-app-show-connected-wallets-flow"
+    }
 }
 

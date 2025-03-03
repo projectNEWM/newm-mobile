@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -30,9 +33,7 @@ import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.feature.login.screen.TextFieldState
-import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.profile.OnBack
-import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
@@ -134,7 +135,7 @@ private fun ProfileEditUiContent(
                 onClick = { onEvent(OnSaveProfile) },
                 enabledIconRes = R.drawable.ic_library_filter_check,
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars))
         }
     }
 }

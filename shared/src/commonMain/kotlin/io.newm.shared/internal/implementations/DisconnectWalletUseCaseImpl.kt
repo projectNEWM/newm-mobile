@@ -42,4 +42,12 @@ internal class DisconnectWalletUseCaseImpl(
             postNotification(Notification.walletConnectionStateChanged)
         }
     }
+
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun disconnectSingleWallet(walletConnectionId: String) {
+        mapErrorsSuspend {
+            walletRepository.disconnectWallet(walletConnectionId)
+        }
+        postNotification(Notification.walletConnectionStateChanged)
+    }
 }

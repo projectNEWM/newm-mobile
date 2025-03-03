@@ -93,6 +93,7 @@
     <string name="profile_company_related">CONCERNANT L\'ENTREPRISE</string>
     <string name="profile_confirm_new_password">Veuillez confirmer votre nouveau mot de passe</string>
     <string name="profile_connect_wallet_button_label">Connecter le portefeuille</string>
+    <string name="profile_connected_wallets_button_label">Portefeuilles connectés : %1$d</string>
     <string name="profile_disconnect_wallet_button_label">Déconnecter le portefeuille</string>
     <string name="profile_documents">Documents</string>
     <string name="profile_edit_button_label">Modifier le profil</string>
@@ -181,4 +182,9 @@
     <string name="wallet_link_connected_message">Portefeuille connecté %1$s</string>
     <string name="welcome">Salut %s 👋</string>
     <string name="welcome_to_newm">Bienvenue sur NEWM</string>
+    <string name="profile_connect_new_wallet_button_label">Nouveau portefeuille</string>
+    <string name="wallets_screen_connect_new_wallet">Nouveau portefeuille</string>
+    <string name="wallets_screen_disconnect_all_wallets">Déconnecter tout</string>
+    <string name="wallets_screen_wallet_options_desc">Options du portefeuille</string>
+    <string name="wallets_screen_topbar_title">Portefeuilles connectés</string>
 </resources>
