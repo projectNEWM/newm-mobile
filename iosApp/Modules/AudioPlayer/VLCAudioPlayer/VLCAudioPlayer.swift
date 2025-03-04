@@ -80,9 +80,11 @@ public class VLCAudioPlayer: ObservableObject {
 				self?.update()
 			}.store(in: &cancels)
 		
-		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged)).sink { [weak self] _ in
-			self?.handleWalletDisconnect()
-		}.store(in: &cancels)
+		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged))
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] _ in
+				self?.handleWalletDisconnect()
+			}.store(in: &cancels)
 		
 		setUpDelegateHandling()
 		setupRemoteTransportControls()
