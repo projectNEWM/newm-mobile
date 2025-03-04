@@ -12,6 +12,10 @@ public struct QRCodeScannerView: UIViewControllerRepresentable {
 		}
 
 		public func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+			guard result.value.starts(with: "newm", by: { $0 == $1 }) else {
+				return
+			}
+			reader.stopScanning()
 			parent.completion(.success(result.value))
 		}
 
@@ -37,6 +41,7 @@ public struct QRCodeScannerView: UIViewControllerRepresentable {
 			$0.showCancelButton = false
 			$0.showTorchButton = false
 			$0.showSwitchCameraButton = false
+			$0.reader.stopScanningWhenCodeIsFound = false
 		})
 		reader.delegate = context.coordinator
 		return reader
