@@ -15,6 +15,7 @@ browser = "1.8.0"
 cameraView = "1.4.0-beta02"
 circuitFoundation = "0.17.0"
 coil = "2.6.0"
+compose-multiplatform = "1.7.0"
 compose-plugin = "1.6.11"
 coreSplashscreen = "1.0.1"
 coroutinesExtensions = "1.5.5"
@@ -139,6 +140,6 @@ test-parameter-injector = { module = "com.google.testparameterinjector:test-para
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
