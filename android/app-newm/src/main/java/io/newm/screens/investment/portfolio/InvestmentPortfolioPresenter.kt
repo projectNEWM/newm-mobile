@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,33 +34,20 @@ class InvestmentPortfolioPresenter(
 ) : Presenter<InvestmentPortfolioState> {
     @Composable
     override fun present(): InvestmentPortfolioState {
-        val coroutineScope = rememberCoroutineScope()
-
-        // State to hold claimable token amount
-        var claimableTokenAmount by remember { mutableStateOf(0L) }
-
-        LaunchedEffect(Unit) {
+        // State to hold claimable token amount using produceState
+        val claimableTokenAmount by produceState(initialValue = 0L) {
             val wallets = syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
             if (wallets.isNotEmpty()) {
-                coroutineScope.launch {
-                    recaptchaClientProvider.get()
-                        .execute(RecaptchaAction.custom("get_earnings"))
-                        .onSuccess { token ->
-                            val totalClaimableTokens =
-                                getPortfolioDataUseCase.getInvestmentPortfolio(
-                                    walletAddress = wallets.first().stakeAddress,
-                                    humanVerificationCode = token
-                                )
-                            // Store value in state
-                            claimableTokenAmount = totalClaimableTokens
-                        }.onFailure {
-                            logger.error(
-                                "InvestmentPortfolioPresenter",
-                                "Error getting recaptcha token",
-                                it
-                            )
-                        }
-                }
+                recaptchaClientProvider.get()
+                    .execute(RecaptchaAction.custom("get_earnings"))
+                    .onSuccess { token ->
+                        value = getPortfolioDataUseCase.getInvestmentPortfolio(
+                            walletAddress = wallets.first().stakeAddress,
+                            humanVerificationCode = token
+                        )
+                    }.onFailure {
+                        logger.error("InvestmentPortfolioPresenter", "Error getting recaptcha token", it)
+                    }
             }
         }
 
