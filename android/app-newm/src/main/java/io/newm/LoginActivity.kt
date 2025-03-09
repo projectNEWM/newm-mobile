@@ -148,7 +148,7 @@ fun WelcomeToNewm(
 ) {
     val context = LocalContext.current
 
-    val backstack = rememberSaveableBackStack { push(Welcome) }
+    val backstack = rememberSaveableBackStack(Welcome)
     val circuitNavigator = rememberCircuitNavigator(backstack)
     val newmNavigator =
         rememberNewmNavigator(

@@ -9,7 +9,7 @@ plugins {
 	id("kotlinx-serialization")
 	id("com.android.library")
 	id("com.squareup.sqldelight")
-	id("com.google.devtools.ksp") version "2.0.0-1.0.22"
+	alias(libs.plugins.ksp)
 	id("com.github.gmazzo.buildconfig") version "5.3.5"
 }
 

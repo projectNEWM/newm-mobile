@@ -82,7 +82,7 @@ val LocalIsBottomBarVisible = compositionLocalOf { mutableStateOf(true) }
 @Composable
 internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
 
-val initialScreen = Screen.NFTLibrary
+private val initialScreen = Screen.NFTLibrary
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -92,9 +92,7 @@ internal fun NewmApp(
     showRecordStore: Boolean
 ) {
     val context = LocalContext.current
-    val backstack = rememberSaveableBackStack {
-        push(initialScreen)
-    }
+    val backstack = rememberSaveableBackStack(initialScreen)
 
     val circuitNavigator = rememberCircuitNavigator(
         backstack,
@@ -185,7 +183,7 @@ internal fun NewmApp(
             NavigableCircuitContent(
                 modifier = Modifier.padding(padding),
                 navigator = newmNavigator,
-                backstack = backstack
+                backStack = backstack
             )
         }
 
