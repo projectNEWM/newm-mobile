@@ -1,4 +1,4 @@
-package io.newm
+package newm
 
 import android.os.Build
 
