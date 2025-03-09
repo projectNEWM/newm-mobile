@@ -26,7 +26,7 @@ import io.newm.shared.public.models.WalletConnection
 @Composable
 fun WalletRow(
     connection: WalletConnection,
-    onOptionsClick: () -> Unit
+    onOptionsClick: (String) -> Unit
 ) {
     val halfScreenWidth = LocalConfiguration.current.screenWidthDp.dp / 2
     Row(
@@ -54,7 +54,7 @@ fun WalletRow(
         Spacer(modifier = Modifier.weight(1f))
         ScrimCircle {
             IconButton(
-                onClick = onOptionsClick,
+                onClick = { onOptionsClick(connection.id) },
             ) {
                 Icon(
                     imageVector = Icons.Rounded.MoreVert,

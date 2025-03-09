@@ -133,8 +133,12 @@ object AppScreens {
         const val PULL_TO_REFRESH: String = "Pull to Refresh"
         const val WALLET_OPTIONS_BUTTON: String = "Wallet Options"
         const val ADD_WALLET_BUTTON: String = "Add Wallet"
-        const val DELETE_WALLET_BUTTON: String = "Delete Wallet"
-        const val DELETE_ALL_WALLETS_BUTTON: String = "Delete All Wallets"
+        const val DISCONNECT_WALLET_BUTTON: String = "Disconnect Wallet"
+        const val DISCONNECT_ALL_WALLETS_BUTTON: String = "Disconnect All Wallets"
+    }
+
+    object WalletOptionsScreen : ScreenEvents {
+        override val name = "Wallet Options"
     }
 
     object WelcomeScreen : ScreenEvents {

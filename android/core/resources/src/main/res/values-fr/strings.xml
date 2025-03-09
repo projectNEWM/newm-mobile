@@ -187,4 +187,5 @@
     <string name="wallets_screen_disconnect_all_wallets">Déconnecter tout</string>
     <string name="wallets_screen_wallet_options_desc">Options du portefeuille</string>
     <string name="wallets_screen_topbar_title">Portefeuilles connectés</string>
+    <string name="wallets_screen_disconnect_wallet_modal_title">Déconnexion du portefeuille?</string>
 </resources>

@@ -196,4 +196,5 @@
     <string name="wallets_screen_disconnect_all_wallets">Disconnect All Wallets</string>
     <string name="wallets_screen_wallet_options_desc">Wallet Options</string>
     <string name="wallets_screen_topbar_title">Connected Wallets</string>
+    <string name="wallets_screen_disconnect_wallet_modal_title">Disconnect Wallet?</string>
 </resources>
