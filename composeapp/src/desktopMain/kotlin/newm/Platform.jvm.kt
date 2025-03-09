@@ -1,4 +1,4 @@
-package io.newm
+package newm
 
 class JVMPlatform: Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"
