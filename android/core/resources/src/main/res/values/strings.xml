@@ -190,7 +190,7 @@
     <string name="wallet_link_connected_message">Wallet connected %1$s</string>
     <string name="welcome">Hey %s 👋</string>
     <string name="welcome_to_newm">Welcome to NEWM</string>
-    <string name="you_have_royalties_to_claim">You have royalties to claim.</string>
+    <string name="you_have_royalties_to_claim">You have royalties to claim!</string>
     <string name="claim">Claim</string>
     <string name="wallets_screen_connect_new_wallet">Connect New Wallet</string>
     <string name="wallets_screen_disconnect_all_wallets">Disconnect All Wallets</string>

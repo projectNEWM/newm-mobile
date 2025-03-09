@@ -5,6 +5,7 @@ import io.newm.shared.public.models.NFTTrack
 
 sealed class InvestmentPortfolioState : CircuitUiState {
     data class Content(
+        val claimableTokenAmount: Long,
         val streamTokens: List<NFTTrack>,
         val eventSink: (InvestmentPortfolioEvent) -> Unit
     ) : InvestmentPortfolioState()
