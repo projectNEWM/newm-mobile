@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -81,12 +82,7 @@ fun PortfolioScreen(
         Text(
             text = stringResource(id = R.string.title_investment_portfolio),
             modifier = Modifier.padding(16.dp),
-            style = TextStyle(
-                fontFamily = raleway,
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                brush = textGradient(SteelPink, CerisePink)
-            )
+            style = MaterialTheme.typography.h1.copy(textGradient(SteelPink, CerisePink))
         )
 
         Box(
@@ -101,13 +97,12 @@ fun PortfolioScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.you_have_royalties_to_claim),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.h6
                 )
+
                 Text(
                     text = "NEWM Tokens: $${content.claimableTokenAmount}",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.body1
                 )
                 SecondaryButton(
                     modifier = Modifier.padding(vertical = 32.dp),
