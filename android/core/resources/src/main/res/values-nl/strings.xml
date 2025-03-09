@@ -187,4 +187,5 @@
     <string name="wallets_screen_disconnect_all_wallets">Alles ontkoppelen</string>
     <string name="wallets_screen_wallet_options_desc">Walletopties</string>
     <string name="wallets_screen_topbar_title">Verbonden wallets</string>
+    <string name="wallets_screen_disconnect_wallet_modal_title">Portemonnee ontkoppelen?</string>
 </resources>
