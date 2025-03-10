@@ -85,6 +85,13 @@ object AppScreens {
 
     object InvestmentPortfolioScreen : ScreenEvents {
         override val name = "Investment Portfolio"
+        const val RECORD_STORE_BUTTON: String = "Investment Portfolio"
+
+    }
+
+    object MarketplaceScreen : ScreenEvents {
+        override val name = "Marketplace"
+        const val MARKETPLACE_BUTTON: String = "Marketplace"
 
     }
 

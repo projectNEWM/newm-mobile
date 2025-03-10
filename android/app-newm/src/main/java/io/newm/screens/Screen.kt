@@ -16,7 +16,9 @@ sealed class Screen(val screenName: String, val showBottomBar: Boolean = false, 
 
     data object NFTLibrary : Screen(screenName = AppScreens.NFTLibraryScreen.name, showBottomBar = true, showMiniPlayer = true)
 
-    data object InvestmentPortfolio : Screen(screenName = AppScreens.InvestmentPortfolioScreen.name)
+    data object InvestmentPortfolio : Screen(screenName = AppScreens.InvestmentPortfolioScreen.name, showBottomBar = true, showMiniPlayer = true)
+
+    data object Marketplace : Screen(screenName = AppScreens.MarketplaceScreen.name, showBottomBar = true, showMiniPlayer = true)
 
     data object Welcome : Screen(screenName = AppScreens.WelcomeScreen.name)
 

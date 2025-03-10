@@ -32,6 +32,9 @@ import io.newm.screens.investment.portfolio.InvestmentPortfolioUi
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
+import io.newm.screens.marketplace.MarketplacePresenter
+import io.newm.screens.marketplace.MarketplaceScreenUi
+import io.newm.screens.marketplace.MarketplaceState
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
@@ -84,6 +87,7 @@ class HomeActivity : ComponentActivity() {
                             logger = logger,
                             eventLogger = eventLogger,
                             showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore),
+                            showInvestmentPortfolio = featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
                         )
                     }
                 }
@@ -110,6 +114,14 @@ class HomeActivity : ComponentActivity() {
 
                 is Screen.RecordStore -> ui<RecordStoreState> { state, modifier ->
                     RecordStoreScreenUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
+                is Screen.Marketplace -> ui<MarketplaceState> { state, modifier ->
+                    MarketplaceScreenUi(
                         state = state,
                         modifier = modifier,
                         eventLogger = eventLogger
@@ -177,6 +189,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.RecordStore -> inject<RecordStorePresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.Marketplace -> inject<MarketplacePresenter> {
                     parametersOf(
                         navigator
                     )
