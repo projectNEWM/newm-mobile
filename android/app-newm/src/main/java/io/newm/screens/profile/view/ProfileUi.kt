@@ -30,7 +30,6 @@ import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
-import io.newm.screens.profile.OnInvestmentPortfolio
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
@@ -118,13 +117,6 @@ private fun ProfileUiContent(
                     onClick = { onEvent(OnEditProfile) },
                 )
 
-                if (state.showInvestmentPortfolio) {
-                    ProfileButton(
-                        label = stringResource(id = R.string.profile_investment_portfolio_button_label),
-                        onClick = { onEvent(OnInvestmentPortfolio) },
-                    )
-                }
-
                 if (!state.showMultiWallets) {
                     WalletButton(
                         openWalletDialog = openWalletDialog,
@@ -192,7 +184,6 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUi
                 ),
                 isWalletConnected = false,
                 eventSink = {},
-                showInvestmentPortfolio = false,
                 showRecordStore = false,
                 showMultiWallets = false
             ),
@@ -203,7 +194,6 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUi
                 ),
                 isWalletConnected = true,
                 eventSink = {},
-                showInvestmentPortfolio = true,
                 showRecordStore = true,
                 showMultiWallets = true
             )

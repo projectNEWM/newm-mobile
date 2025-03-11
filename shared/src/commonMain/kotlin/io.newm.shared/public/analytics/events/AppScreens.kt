@@ -27,7 +27,6 @@ object AppScreens {
         const val LOGOUT_BUTTON: String = "Logout"
         const val TERMS_AND_CONDITIONS_BUTTON: String = "Terms and Conditions"
         const val PRIVACY_POLICY_BUTTON: String = "Privacy Policy"
-        const val STREAM_TOKENS_BUTTON: String = "Investments Portfolio"
         const val WALLETS_BUTTON: String = "Wallets Button"
     }
 

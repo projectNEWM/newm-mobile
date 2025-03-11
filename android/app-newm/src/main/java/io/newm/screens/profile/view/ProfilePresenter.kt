@@ -20,7 +20,6 @@ import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
-import io.newm.screens.profile.OnInvestmentPortfolio
 import io.newm.screens.profile.OnVisitRecordStore
 import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
@@ -74,8 +73,7 @@ class ProfilePresenter(
         }.collectAsState(
             null
         )
-        val showInvestmentPortfolio =
-            featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
+
         val showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore)
         val showMultiWallets = featureFlagManager.isEnabled(FeatureFlags.ShowMultiWallets)
 
@@ -86,7 +84,6 @@ class ProfilePresenter(
                 profile = user!!,
                 isWalletConnected = isWalletConnected,
                 userConnectedWallets = userConnectedWallets,
-                showInvestmentPortfolio = showInvestmentPortfolio,
                 showRecordStore = showRecordStore,
                 showMultiWallets = showMultiWallets,
                 eventSink = { event ->
@@ -119,11 +116,6 @@ class ProfilePresenter(
                         OnShowPrivacyPolicy -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
                             navigator.goTo(PrivacyPolicy)
-                        }
-
-                        OnInvestmentPortfolio -> {
-                            eventLogger.logClickEvent(AppScreens.AccountScreen.STREAM_TOKENS_BUTTON)
-                            navigator.goTo(Screen.InvestmentPortfolio)
                         }
 
                         OnWalletsScreen -> {

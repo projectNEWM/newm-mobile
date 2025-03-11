@@ -1,7 +1,6 @@
 package io.newm
 
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -221,7 +220,7 @@ internal fun NewmBottomNavigation(
             HomeBottomNavigationItem(
                 selected = currentRootScreen == Screen.NFTLibrary,
                 iconResId = R.drawable.ic_library,
-                labelResId = R.string.nft_library,
+                labelResId = R.string.bottom_nav_nft_tab,
                 selectedIconBrush = LibraryIconGradient,
                 selectedLabelColor = DarkPink,
                 onClick = {
@@ -233,7 +232,7 @@ internal fun NewmBottomNavigation(
                 HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.InvestmentPortfolio,
                     iconResId = R.drawable.ic_wallet,
-                    labelResId = R.string.title_portfolio,
+                    labelResId = R.string.bottom_nav_portfolio_tab,
                     selectedIconBrush = AccountIconGradient,
                     selectedLabelColor = DarkPink,
                     onClick = {
@@ -246,7 +245,7 @@ internal fun NewmBottomNavigation(
                 HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.Marketplace,
                     iconResId = R.drawable.ic_marketplace,
-                    labelResId = R.string.title_marketplace,
+                    labelResId = R.string.bottom_nav_marketplace_tab,
                     selectedIconBrush = AccountIconGradient,
                     selectedLabelColor = DarkPink,
                     onClick = {
@@ -260,7 +259,7 @@ internal fun NewmBottomNavigation(
                 HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.RecordStore,
                     iconResId = R.drawable.ic_recordstore_active,
-                    labelResId = R.string.record_store,
+                    labelResId = R.string.bottom_nav_record_store_tab,
                     selectedIconBrush = AccountIconGradient,
                     selectedLabelColor = DarkPink,
                     onClick = {
@@ -289,8 +288,10 @@ internal fun NewmBottomNavigation(
 @Preview(showBackground = true)
 @Composable
 fun BottomNavigationBarPreview() {
-    NewmBottomNavigation(Screen.NFTLibrary, NewmAppEventLogger(),
-        showRecordStore = false, showInvestmentPortfolio = false) {}
+    NewmBottomNavigation(
+        Screen.NFTLibrary, NewmAppEventLogger(),
+        showRecordStore = false, showInvestmentPortfolio = false
+    ) {}
 }
 
 // Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
@@ -323,7 +324,8 @@ private fun RowScope.HomeBottomNavigationItem(
                 text = label,
                 fontFamily = inter,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 10.sp,
+                fontSize = 9.sp,
+                maxLines = 1,
                 color = if (selected) selectedLabelColor else Color.Unspecified
             )
         },
