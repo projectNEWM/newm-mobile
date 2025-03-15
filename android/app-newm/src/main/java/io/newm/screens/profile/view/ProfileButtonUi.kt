@@ -103,8 +103,12 @@ fun WalletsButton(
     }
 
     val requestPermission = rememberRequestPermissionIntent(
-        onGranted = { /*TODO*/ },
-        onDismiss = { /*TODO*/ })
+        onGranted = {
+            val intent = Intent(context, BarcodeScannerActivity::class.java)
+            launcher.launch(intent)
+        },
+        onDismiss = { /*TODO*/ }
+    )
 
     val label = if (isWalletConnected) {
         R.string.profile_connect_new_wallet_button_label
@@ -115,16 +119,14 @@ fun WalletsButton(
     ProfileButton(
         label = stringResource(id = label),
         onClick = {
-            context.run {
-                doWithPermission(
-                    onGranted = {
-                        val intent = Intent(this, BarcodeScannerActivity::class.java)
-                        launcher.launch(intent)
-                    },
-                    requestPermissionLauncher = requestPermission,
-                    appPermission = AppPermission.CAMERA
-                )
-            }
+            context.doWithPermission(
+                onGranted = {
+                    val intent = Intent(context, BarcodeScannerActivity::class.java)
+                    launcher.launch(intent)
+                },
+                requestPermissionLauncher = requestPermission,
+                appPermission = AppPermission.CAMERA
+            )
         },
     )
 }

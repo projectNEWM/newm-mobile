@@ -1,5 +1,11 @@
 package io.newm.screens.wallets.view
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -14,6 +20,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -22,10 +29,17 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -37,12 +51,19 @@ import io.newm.core.theme.SteelPink
 import io.newm.core.theme.raleway
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.permissions.AppPermission
+import io.newm.core.ui.permissions.doWithPermission
+import io.newm.core.ui.permissions.rememberRequestPermissionIntent
+import io.newm.core.ui.utils.shortToast
 import io.newm.core.ui.utils.textGradient
+import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsEvent.OnBack
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.analytics.events.AppScreens
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -51,74 +72,113 @@ fun WalletsUi(
     modifier: Modifier = Modifier,
     eventLogger: NewmAppEventLogger
 ) {
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                windowInsets = WindowInsets.statusBars,
-                backgroundColor = Color.Transparent,
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.wallets_screen_topbar_title),
-                        style = TextStyle(
-                            fontFamily = raleway,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp,
-                            brush = textGradient(SteelPink, CerisePink)
-                        )
-                    )
-                },
-                navigationIcon = {
-                    ScrimCircle {
-                        IconButton(
-                            onClick = { state.eventSink(OnBack) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back_description),
+    var selectedWalletId by remember { mutableStateOf<String?>(null) }
+    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
 
-                                )
+    WalletsBottomSheetLayout(
+        modifier = Modifier.fillMaxSize(),
+        state = bottomSheetState,
+        eventLogger = eventLogger,
+        onDisconnectWallet = {
+            scope.launch {
+                state.eventSink(
+                    WalletsEvent.OnDisconnectWallet(
+                        requireNotNull(selectedWalletId) { "selectedWalletId should not be null" }
+                    )
+                )
+                bottomSheetState.hide()
+            }
+        },
+        onCancel = {
+            scope.launch {
+                selectedWalletId = null
+                bottomSheetState.hide()
+            }
+        }
+    ) {
+        Scaffold(
+            modifier = modifier.fillMaxSize(),
+            topBar = {
+                TopAppBar(
+                    windowInsets = WindowInsets.statusBars,
+                    backgroundColor = Color.Transparent,
+                    title = {
+                        Text(
+                            text = stringResource(id = R.string.wallets_screen_topbar_title),
+                            style = TextStyle(
+                                fontFamily = raleway,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 24.sp,
+                                brush = textGradient(SteelPink, CerisePink)
+                            )
+                        )
+                    },
+                    navigationIcon = {
+                        ScrimCircle {
+                            IconButton(
+                                onClick = { state.eventSink(OnBack) }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                    contentDescription = stringResource(id = R.string.back_description),
+
+                                    )
+                            }
                         }
                     }
-                }
-            )
-        }
-    ) { padding ->
-
-        val pullRefreshState = rememberPullRefreshState(
-            refreshing = state.isRefreshing,
-            onRefresh = { state.eventSink(WalletsEvent.OnRefresh) }
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .pullRefresh(pullRefreshState),
-            contentAlignment = Alignment.Center
-        ) {
-            when (state) {
-                is WalletsUiState.Loading -> CircularProgressIndicator()
-                is WalletsUiState.Empty -> {
-                    /* TODO */
-                    Text(text = "No wallets connected")
-                }
-
-                is WalletsUiState.Content -> {
-                    Content(state)
-                }
+                )
             }
-            PullRefreshIndicator(
-                state = pullRefreshState,
+        ) { padding ->
+
+            val pullRefreshState = rememberPullRefreshState(
                 refreshing = state.isRefreshing,
-                modifier = Modifier.align(Alignment.TopCenter)
+                onRefresh = { state.eventSink(WalletsEvent.OnRefresh) }
             )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .pullRefresh(pullRefreshState),
+                contentAlignment = Alignment.Center
+            ) {
+                when (state) {
+                    is WalletsUiState.Loading -> CircularProgressIndicator()
+                    is WalletsUiState.Empty -> {
+                        /* TODO */
+                        Text(text = "No wallets connected")
+                    }
+
+                    is WalletsUiState.Content -> {
+                        Content(
+                            state = state,
+                            eventLogger = eventLogger,
+                            onOptionsClick = {
+                                scope.launch {
+                                    selectedWalletId = it
+                                    bottomSheetState.show()
+                                }
+                            }
+                        )
+                    }
+                }
+                PullRefreshIndicator(
+                    state = pullRefreshState,
+                    refreshing = state.isRefreshing,
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun BoxScope.Content(state: WalletsUiState.Content) {
+private fun BoxScope.Content(
+    state: WalletsUiState.Content,
+    eventLogger: NewmAppEventLogger,
+    onOptionsClick: (String) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -137,17 +197,63 @@ private fun BoxScope.Content(state: WalletsUiState.Content) {
             ) {
                 WalletRow(
                     connection = it,
-                    onOptionsClick = {} // TODO open bottom sheet
+                    onOptionsClick = {
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.WALLET_OPTIONS_BUTTON)
+                        onOptionsClick(it)
+                    }
                 )
             }
         }
         SecondaryButton(
             labelResId = R.string.wallets_screen_disconnect_all_wallets,
-            onClick = {} // TODO disconnect all wallets
+            onClick = { state.eventSink(WalletsEvent.OnDisconnectAllWallets) }
         )
-        PrimaryButton(
-            text = stringResource(R.string.wallets_screen_connect_new_wallet),
-            onClick = {} // TODO open connect wallet screen
-        )
+        ConnectNewWalletButton { state.eventSink(WalletsEvent.OnConnectWallet(it)) }
     }
+}
+
+@Composable
+private fun ConnectNewWalletButton(onConnectWalletClick: (String) -> Unit) {
+    val context = LocalContext.current
+    val intent = Intent(context, BarcodeScannerActivity::class.java)
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            onActivityResultOk(result, context, onConnectWalletClick)
+        }
+    }
+
+    val requestPermission = rememberRequestPermissionIntent(
+        onGranted = { launcher.launch(intent) },
+        onDismiss = { /*TODO*/ }
+    )
+
+    PrimaryButton(
+        text = stringResource(R.string.wallets_screen_connect_new_wallet),
+        onClick = {
+            context.doWithPermission(
+                onGranted = { launcher.launch(intent) },
+                requestPermissionLauncher = requestPermission,
+                appPermission = AppPermission.CAMERA
+            )
+        }
+    )
+}
+
+private fun onActivityResultOk(
+    result: ActivityResult,
+    context: Context,
+    onConnectWalletClick: (String) -> Unit
+) {
+    // Handle the returned result here
+    val data = result.data
+    // Do something with the data
+    val newmWalletConnectionId =
+        data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
+    // create message
+    val message = context.getString(R.string.wallet_link_connected_message, newmWalletConnectionId)
+    // show message
+    context.shortToast(message)
+    onConnectWalletClick(newmWalletConnectionId)
 }

@@ -1,10 +1,10 @@
 package io.newm.screens.investment.portfolio
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,6 +39,7 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
+import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
@@ -52,6 +54,25 @@ fun InvestmentPortfolioUi(
     modifier: Modifier = Modifier,
     eventLogger: NewmAppEventLogger
 ) {
+    when (state) {
+        is InvestmentPortfolioState.Content -> PortfolioScreen(modifier, state)
+        InvestmentPortfolioState.Error -> ErrorScreen(
+            title = stringResource(R.string.nft_library_error_message),
+            message = "Something went wrong"
+        )
+
+        InvestmentPortfolioState.Loading -> LoadingScreen()
+        InvestmentPortfolioState.ZeroState -> ZeroStateScreen()
+    }
+
+}
+
+@Composable
+fun PortfolioScreen(
+    modifier: Modifier = Modifier,
+    content: InvestmentPortfolioState.Content
+) {
+    val currentContext = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -61,12 +82,7 @@ fun InvestmentPortfolioUi(
         Text(
             text = stringResource(id = R.string.title_investment_portfolio),
             modifier = Modifier.padding(16.dp),
-            style = TextStyle(
-                fontFamily = raleway,
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                brush = textGradient(SteelPink, CerisePink)
-            )
+            style = MaterialTheme.typography.h1.copy(textGradient(SteelPink, CerisePink))
         )
 
         Box(
@@ -79,35 +95,33 @@ fun InvestmentPortfolioUi(
                 modifier = Modifier
                     .padding(all = 16.dp)
             ) {
-                Text(text = stringResource(id = R.string.you_have_royalties_to_claim))
-                Text(text = "$45.44")
-                Spacer(modifier = Modifier.height(16.dp))
-                SecondaryButton(
-                    labelResId = R.string.claim,
-                    onClick = { /*TODO*/ })
-            }
-        }
-        when (state) {
-            is InvestmentPortfolioState.Content -> ContentScreen(state)
-            InvestmentPortfolioState.Error -> {
-                ErrorScreen(
-                    title = stringResource(R.string.nft_library_error_message),
-                    message = "Something went wrong"
+                Text(
+                    text = stringResource(id = R.string.you_have_royalties_to_claim),
+                    style = MaterialTheme.typography.h6
                 )
+
+                Text(
+                    text = "NEWM Tokens: $${content.claimableTokenAmount}",
+                    style = MaterialTheme.typography.body1
+                )
+                SecondaryButton(
+                    modifier = Modifier.padding(vertical = 32.dp),
+                    labelResId = R.string.claim,
+                    onClick = {
+                        Toast.makeText(currentContext, "Coming soon!", Toast.LENGTH_SHORT).show()
+                    })
+                ListOfStreamTokens(content)
             }
-            InvestmentPortfolioState.Loading -> LoadingScreen()
-            InvestmentPortfolioState.ZeroState -> ZeroStateScreen()
         }
     }
 }
 
 @Composable
-private fun ContentScreen(content: InvestmentPortfolioState.Content) {
+private fun ListOfStreamTokens(content: InvestmentPortfolioState.Content) {
     Box {
         LazyColumn(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxSize()
+            modifier = Modifier.padding(bottom = 32.dp)
+                .fillMaxSize(),
         ) {
             when {
                 content.streamTokens.isNotEmpty() -> {

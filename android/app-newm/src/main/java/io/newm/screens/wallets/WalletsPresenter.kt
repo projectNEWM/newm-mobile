@@ -63,14 +63,14 @@ class WalletsPresenter(
                     }
 
                     is WalletsEvent.OnDisconnectWallet -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DELETE_WALLET_BUTTON)
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DISCONNECT_WALLET_BUTTON)
                         scope.launch {
                             disconnectWalletUseCase.disconnectSingleWallet(it.walletId)
                         }
                     }
 
                     is WalletsEvent.OnDisconnectAllWallets -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DELETE_ALL_WALLETS_BUTTON)
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DISCONNECT_ALL_WALLETS_BUTTON)
                         scope.launch {
                             disconnectWalletUseCase.disconnect()
                         }
