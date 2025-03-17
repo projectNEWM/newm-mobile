@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
@@ -33,7 +34,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material)
+    implementation(compose.material)
 
     testImplementation(libs.junit)
 

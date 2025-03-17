@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
@@ -32,6 +33,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.material)
     implementation(libs.androidx.material.icons.extended)
+    implementation(compose.material)
     implementation(project(":shared"))
     implementation(project(Modules.coreTheme))
 }

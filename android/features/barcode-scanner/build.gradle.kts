@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
@@ -33,6 +34,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.barcode.scanning)
     implementation(libs.play.services.auth)
+    implementation(compose.material)
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))

@@ -11,8 +11,8 @@ plugins {
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
-
     id("io.sentry.android.gradle") version "4.9.0"
+    alias(libs.plugins.compose.multiplatform)
 }
 
 
@@ -103,7 +103,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.material)
+    implementation(compose.material)
     implementation(libs.androidx.media3.datasource)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.database)
@@ -122,6 +122,7 @@ dependencies {
     implementation(project(Modules.login))
     implementation(project(Modules.musicPlayer))
     implementation(project(Modules.shared))
+    implementation(project(Modules.sharedComposeFeatures))
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
