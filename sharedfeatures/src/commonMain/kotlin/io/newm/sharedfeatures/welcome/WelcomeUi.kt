@@ -1,4 +1,4 @@
-package newm.ui.screens.welcome
+package io.newm.sharedfeatures.welcome
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import me.tatarka.inject.annotations.Inject
-import newm.ui.screens.welcome.WelcomeScreen.UiState
+import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
 
 
 @Composable

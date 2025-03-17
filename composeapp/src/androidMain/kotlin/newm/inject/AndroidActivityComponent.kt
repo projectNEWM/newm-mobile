@@ -1,8 +1,8 @@
-package inject
+package newm.inject
 
+import io.newm.sharedfeatures.CommonActivityComponent
 import me.tatarka.inject.annotations.Component
-import newm.inject.ActivityScope
-import newm.inject.CommonActivityComponent
+import io.newm.sharedfeatures.ActivityScope
 
 @Component
 @ActivityScope

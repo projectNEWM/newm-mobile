@@ -1,4 +1,4 @@
-package newm.ui.screens.welcome
+package io.newm.sharedfeatures.welcome
 
 import androidx.compose.runtime.Composable
 import com.slack.circuit.runtime.CircuitContext
@@ -7,7 +7,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import newm.ui.screens.welcome.WelcomeScreen.UiState
+import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
 
 class WelcomePresenter @Inject constructor(
     @Assisted private val navigator: Navigator,

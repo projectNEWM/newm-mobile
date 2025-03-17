@@ -1,4 +1,4 @@
-package newm.parceling
+package io.newm.sharedfeatures.parceling
 
 // For Android @Parcelize
 @Target(AnnotationTarget.CLASS)

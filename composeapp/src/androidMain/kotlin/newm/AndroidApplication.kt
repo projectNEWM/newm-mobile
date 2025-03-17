@@ -1,9 +1,9 @@
 package newm
 
 import android.app.Application
-import inject.AndroidApplicationComponent
-import inject.ApplicationComponentProvider
-import inject.create
+import newm.inject.AndroidApplicationComponent
+import newm.inject.ApplicationComponentProvider
+import newm.inject.create
 
 class AndroidApplication : Application(), ApplicationComponentProvider {
     override val component by lazy(LazyThreadSafetyMode.NONE) {

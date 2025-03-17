@@ -51,6 +51,9 @@ soloader = "0.10.5"
 store5 = "5.1.0-alpha04"
 testParameterInjector = "1.16"
 uiUtil = "1.7.8"
+jetbrainsKotlinJvm = "1.9.24"
+runner = "1.5.2"
+core = "1.5.0"
 
 [libraries]
 android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "coroutinesExtensions" }

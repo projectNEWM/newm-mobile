@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import inject.InjectAndroidActivityComponent
-import inject.applicationComponent
+import newm.inject.InjectAndroidActivityComponent
+import newm.inject.applicationComponent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

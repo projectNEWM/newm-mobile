@@ -1,8 +1,8 @@
-package newm.ui.screens.welcome
+package io.newm.sharedfeatures.welcome
 
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
-import newm.inject.ActivityScope
+import io.newm.sharedfeatures.ActivityScope
 import me.tatarka.inject.annotations.IntoSet
 import me.tatarka.inject.annotations.Provides
 
