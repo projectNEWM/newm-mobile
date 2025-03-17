@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,15 +25,11 @@ import io.newm.core.theme.Gray400
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.versionTextStyle
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileBottomSheetLayout(
     modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
-    eventLogger: NewmAppEventLogger,
     onLogout: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
@@ -45,11 +39,6 @@ fun ProfileBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
         sheetContent = {
-            if(sheetState.isVisible) {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.AccountOptionsScreen.name)
-                }
-            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
@@ -37,7 +36,6 @@ import io.newm.screens.profile.OnWalletsScreen
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
-import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.launch
 
@@ -46,27 +44,23 @@ internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
 @Composable
 fun ProfileUi(
     state: ProfileUiState,
-    modifier: Modifier = Modifier,
-    eventLogger: NewmAppEventLogger
+    modifier: Modifier = Modifier
 ) {
     when (state) {
         ProfileUiState.Loading -> LoadingScreen()
         is ProfileUiState.Content -> {
             ProfileUiContent(
                 state = state,
-                modifier = modifier,
-                eventLogger = eventLogger
+                modifier = modifier
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ProfileUiContent(
     state: ProfileUiState.Content,
-    modifier: Modifier,
-    eventLogger: NewmAppEventLogger
+    modifier: Modifier
 ) {
     val onEvent = state.eventSink
     val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
@@ -77,7 +71,6 @@ private fun ProfileUiContent(
     ProfileBottomSheetLayout(
         modifier = modifier.fillMaxSize(),
         sheetState = sheetState,
-        eventLogger = eventLogger,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
@@ -126,7 +119,6 @@ private fun ProfileUiContent(
                     WalletButton(
                         openWalletDialog = openWalletDialog,
                         isWalletConnected = state.isWalletConnected,
-                        eventLogger = eventLogger,
                         disconnectWallet = { onEvent(OnDisconnectWallet) }
                     ) { newmWalletConnectionId -> onEvent(OnConnectWallet(newmWalletConnectionId)) }
                 }
@@ -134,7 +126,7 @@ private fun ProfileUiContent(
                 Spacer(modifier = Modifier.weight(1F))
 
                 if (!state.showRecordStore) {
-                    RecordStorePanel(eventLogger = eventLogger)
+                    RecordStorePanel()
                 }
 
                 if (state.showMultiWallets) {
@@ -168,8 +160,7 @@ internal fun UserAccountScreenPreview(
     NewmTheme(darkTheme = true) {
         ProfileUi(
             state = state,
-            modifier = Modifier,
-            eventLogger = NewmAppEventLogger()
+            modifier = Modifier
         )
     }
 }

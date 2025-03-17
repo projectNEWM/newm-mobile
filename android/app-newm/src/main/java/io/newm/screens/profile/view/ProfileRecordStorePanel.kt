@@ -25,8 +25,6 @@ import io.newm.core.resources.R
 import io.newm.core.theme.Gray16
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
 
 private val recordStoreLabelStyle = TextStyle(
     fontSize = 14.sp,
@@ -38,9 +36,7 @@ private val recordStoreLabelStyle = TextStyle(
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 
 @Composable
-fun RecordStorePanel(
-    eventLogger: NewmAppEventLogger
-) {
+fun RecordStorePanel() {
     val context = LocalContext.current
 
     Box(
@@ -59,8 +55,6 @@ fun RecordStorePanel(
             ProfileButton(
                 label = stringResource(id = R.string.profile_visit_store),
                 onClick = {
-                    eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
-                    eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_RECORDS_BUTTON)
                     context.startActivity(
                         Intent(
                             Intent.ACTION_VIEW,
