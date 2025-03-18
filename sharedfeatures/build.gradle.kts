@@ -40,6 +40,7 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.circuit.foundation)
+                implementation(project(Modules.coreUiUtils))
             }
         }
 

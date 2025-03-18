@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.feature.login.screen.LoginPageMainImage
+import io.newm.feature.login.screen.OnboardingMainImage
 import io.newm.shared.public.analytics.NewmAppEventLogger
 
 @Composable
@@ -59,7 +59,7 @@ fun ForceAppUpdateContent(
         ) {
             Spacer(modifier = Modifier.weight(.25f))
 
-            LoginPageMainImage(R.drawable.ic_newm_logo)
+            OnboardingMainImage(R.drawable.ic_newm_logo)
 
             Text(
                 text = stringResource(id = R.string.force_app_update_title),

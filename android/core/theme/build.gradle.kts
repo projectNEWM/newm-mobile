@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
 plugins {
     id("com.android.library")
-    kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.compose.multiplatform)
 }
 
@@ -23,21 +25,35 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
 
-    kotlinOptions {
-        jvmTarget = "11"
+kotlin {
+    androidTarget()
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser {}
+    }
+    jvm("desktop")
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(compose.material)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.material)
+            }
+        }
     }
 }
 
-dependencies {
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.core.ktx)
-    implementation(compose.material)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.test.junit)
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }

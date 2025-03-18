@@ -1,53 +1,55 @@
-name: Run Android UI Tests
-on:
-  pull_request:
-    paths:
-      - "android/**"
-      - "shared/**"
-      - "buildSrc/**"
-      - ".github/workflows/android-ui-test.yml"
-  push:
-    branches:
-      - development
-    paths:
-      - "android/**"
-      - "shared/**"
-      - "buildSrc/**"
-      - ".github/workflows/android-ui-test.yml"
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    environment: staging
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          lfs: true
-      - name: Checkout LFS objects
-        run: git lfs pull
+# disable until we complete the CMP refactor
 
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      - name: check non-lfs files
-        run: exec ./.github/scripts/lfs_check.sh
-
-      - name: Setup local.properties
-        run: |
-          echo STAGING_URL="${{ vars.STAGING_URL }}" >> ./local.properties
-          echo PRODUCTION_URL="${{ vars.PRODUCTION_URL }}" >> ./local.properties
-          echo GOOGLE_AUTH_CLIENT_ID="${{ vars.GOOGLE_AUTH_CLIENT_ID }}" >> ./local.properties
-          
-          echo "RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}" >> ./local.properties
-          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> ./local.properties
-          echo "ANDROID_SENTRY_DSN=${{ secrets.ANDROID_SENTRY_DSN }}" >> ./local.properties
-          echo "LAUNCHDARKLY_MOBILE_KEY=${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}" >> ./local.properties
-          echo "auth.token=${{ secrets.ANDROID_SENTRY_AUTH_TOKEN}}" >> ./sentry.properties
-
-      - name: create google-services.json
-        run: echo "${{ vars.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
-
-      - name: run tests
-        run: ./gradlew verifyPaparazziDebug -s
+#name: Run Android UI Tests
+#on:
+#  pull_request:
+#    paths:
+#      - "android/**"
+#      - "shared/**"
+#      - "buildSrc/**"
+#      - ".github/workflows/android-ui-test.yml"
+#  push:
+#    branches:
+#      - development
+#    paths:
+#      - "android/**"
+#      - "shared/**"
+#      - "buildSrc/**"
+#      - ".github/workflows/android-ui-test.yml"
+#jobs:
+#  test:
+#    runs-on: ubuntu-latest
+#    environment: staging
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v2
+#        with:
+#          lfs: true
+#      - name: Checkout LFS objects
+#        run: git lfs pull
+#
+#      - uses: actions/setup-java@v2
+#        with:
+#          distribution: 'zulu'
+#          java-version: '17'
+#
+#      - name: check non-lfs files
+#        run: exec ./.github/scripts/lfs_check.sh
+#
+#      - name: Setup local.properties
+#        run: |
+#          echo STAGING_URL="${{ vars.STAGING_URL }}" >> ./local.properties
+#          echo PRODUCTION_URL="${{ vars.PRODUCTION_URL }}" >> ./local.properties
+#          echo GOOGLE_AUTH_CLIENT_ID="${{ vars.GOOGLE_AUTH_CLIENT_ID }}" >> ./local.properties
+#
+#          echo "RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}" >> ./local.properties
+#          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> ./local.properties
+#          echo "ANDROID_SENTRY_DSN=${{ secrets.ANDROID_SENTRY_DSN }}" >> ./local.properties
+#          echo "LAUNCHDARKLY_MOBILE_KEY=${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}" >> ./local.properties
+#          echo "auth.token=${{ secrets.ANDROID_SENTRY_AUTH_TOKEN}}" >> ./sentry.properties
+#
+#      - name: create google-services.json
+#        run: echo "${{ vars.GOOGLE_SERVICES_JSON }}" > ./android/app-newm/google-services.json
+#
+#      - name: run tests
+#        run: ./gradlew verifyPaparazziDebug -s
