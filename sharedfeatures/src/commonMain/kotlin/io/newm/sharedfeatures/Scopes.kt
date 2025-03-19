@@ -1,4 +1,4 @@
-package newm.inject
+package io.newm.sharedfeatures
 
 import me.tatarka.inject.annotations.Scope
 

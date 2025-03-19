@@ -1,10 +1,10 @@
-package newm.inject
+package io.newm.sharedfeatures
 
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
+import io.newm.sharedfeatures.welcome.WelcomeComponent
 import me.tatarka.inject.annotations.Provides
-import newm.ui.screens.welcome.WelcomeComponent
 
 interface CircuitComponent : WelcomeComponent {
     val circuit: Circuit

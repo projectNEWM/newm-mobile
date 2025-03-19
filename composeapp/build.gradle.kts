@@ -60,6 +60,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinInject.runtime)
             implementation(libs.circuit.foundation)
+            implementation(project(":sharedfeatures"))
         }
 
         desktopMain.dependencies {
@@ -82,7 +83,7 @@ kotlin {
                     compilerOptions {
                         freeCompilerArgs.addAll(
                             "-P",
-                            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=newm.parceling.CommonParcelize",
+                            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=io.newm.sharedfeatures.parceling.CommonParcelize",
                         )
                     }
                 }

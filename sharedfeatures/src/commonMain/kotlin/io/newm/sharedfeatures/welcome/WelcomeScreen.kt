@@ -1,10 +1,10 @@
-package newm.ui.screens.welcome
+package io.newm.sharedfeatures.welcome
 
 
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
-import newm.parceling.CommonParcelize
+import io.newm.sharedfeatures.parceling.CommonParcelize
 
 @CommonParcelize
 data object WelcomeScreen : Screen {

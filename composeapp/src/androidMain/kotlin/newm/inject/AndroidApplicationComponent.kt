@@ -1,9 +1,9 @@
-package inject
+package newm.inject
 
 import android.app.Application
 import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
-import newm.inject.ApplicationScope
+import io.newm.sharedfeatures.ApplicationScope
 import newm.inject.CommonApplicationComponent
 
 @Component

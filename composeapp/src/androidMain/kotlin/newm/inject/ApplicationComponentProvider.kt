@@ -1,4 +1,4 @@
-package inject
+package newm.inject
 
 import android.content.Context
 

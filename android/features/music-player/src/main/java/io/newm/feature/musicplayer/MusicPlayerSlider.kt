@@ -57,7 +57,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.contentColorFor
 import androidx.compose.material.minimumInteractiveComponentSize
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -479,7 +479,7 @@ private fun BoxScope.SliderThumb(
                 .size(thumbSize, thumbSize)
                 .indication(
                     interactionSource = interactionSource,
-                    indication = rememberRipple(bounded = false, radius = ThumbRippleRadius)
+                    indication = ripple(bounded = false, radius = ThumbRippleRadius)
                 )
                 .hoverable(interactionSource = interactionSource)
                 .shadow(if (enabled) elevation else 0.dp, CircleShape, clip = false)

@@ -1,4 +1,4 @@
-package newm.parceling
+package io.newm.sharedfeatures.parceling
 
 import android.os.Parcelable
 
