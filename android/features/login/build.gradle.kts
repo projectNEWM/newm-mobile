@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     id("kotlin-parcelize")
     id("app.cash.paparazzi")
+    alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
@@ -41,6 +42,7 @@ dependencies {
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.shared))
+    implementation(compose.material)
 
     testImplementation(libs.junit)
     testImplementation(libs.test.parameter.injector)
