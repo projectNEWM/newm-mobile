@@ -10,6 +10,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
+import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
@@ -32,6 +34,8 @@ import io.newm.screens.profile.OnInvestmentPortfolio
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
+import io.newm.screens.profile.OnVisitRecordStore
+import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
@@ -64,6 +68,11 @@ private fun ProfileUiContent(
 ) {
     val onEvent = state.eventSink
     val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
+    LaunchedEffect(openWalletDialog) {
+        if(openWalletDialog.value) {
+            onEvent(OnWalletDialogOpened)
+        }
+    }
     val user = state.profile
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -73,7 +82,8 @@ private fun ProfileUiContent(
         sheetState = sheetState,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
-        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
+        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
+        onBottomSheetVisible = { onEvent(OnBottomSheetVisible) },
     ) {
         Scaffold(
             modifier = Modifier
@@ -126,7 +136,9 @@ private fun ProfileUiContent(
                 Spacer(modifier = Modifier.weight(1F))
 
                 if (!state.showRecordStore) {
-                    RecordStorePanel()
+                    RecordStorePanel(
+                        onClick = { onEvent(OnVisitRecordStore) },
+                    )
                 }
 
                 if (state.showMultiWallets) {

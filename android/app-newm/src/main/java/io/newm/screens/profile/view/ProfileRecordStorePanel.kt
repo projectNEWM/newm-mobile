@@ -36,11 +36,14 @@ private val recordStoreLabelStyle = TextStyle(
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 
 @Composable
-fun RecordStorePanel() {
+fun RecordStorePanel(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .background(Gray16)
             .fillMaxWidth()
@@ -54,14 +57,7 @@ fun RecordStorePanel() {
             Spacer(modifier = Modifier.height(16.dp))
             ProfileButton(
                 label = stringResource(id = R.string.profile_visit_store),
-                onClick = {
-                    context.startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(RECORD_STORE_URL)
-                        )
-                    )
-                },
+                onClick = onClick,
             )
         }
     }

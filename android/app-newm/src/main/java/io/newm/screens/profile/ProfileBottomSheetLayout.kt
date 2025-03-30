@@ -13,6 +13,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,6 +32,7 @@ fun ProfileBottomSheetLayout(
     modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
     onLogout: () -> Unit,
+    onBottomSheetVisible: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
     content: @Composable () -> Unit
@@ -39,6 +41,9 @@ fun ProfileBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
         sheetContent = {
+            LaunchedEffect(Unit) {
+                onBottomSheetVisible()
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -13,6 +13,7 @@ import io.newm.screens.Screen
 import io.newm.screens.Screen.EditProfile
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
+import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
@@ -20,6 +21,8 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.OnInvestmentPortfolio
+import io.newm.screens.profile.OnVisitRecordStore
+import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
@@ -126,6 +129,20 @@ class ProfilePresenter(
                         OnWalletsScreen -> {
                             eventLogger.logClickEvent(AppScreens.AccountScreen.WALLETS_BUTTON)
                             navigator.goTo(Screen.Wallets)
+                        }
+
+                        OnBottomSheetVisible ->  {
+                            eventLogger.logClickEvent(AppScreens.AccountOptionsScreen.name)
+                        }
+
+                        OnVisitRecordStore -> {
+                            eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_RECORDS_BUTTON)
+                            navigator.goTo(Screen.RecordStore)
+                        }
+
+                        OnWalletDialogOpened -> {
+                            eventLogger.logPageLoad(AppScreens.LogoutConfirmationDialogScreen.name)
                         }
                     }
                 }

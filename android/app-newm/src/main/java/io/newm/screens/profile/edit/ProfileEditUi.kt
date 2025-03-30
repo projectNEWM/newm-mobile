@@ -33,6 +33,7 @@ import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.screens.profile.OnBack
+import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
@@ -82,7 +83,8 @@ private fun ProfileEditUiContent(
         sheetState = sheetState,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
-        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) }
+        onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
+        onBottomSheetVisible = { onEvent(OnBottomSheetVisible)}
     ) {
         Column(
             modifier = Modifier
