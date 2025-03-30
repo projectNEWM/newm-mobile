@@ -19,6 +19,7 @@ import io.newm.feature.login.screen.password.passwordValidationError
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBack
+import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnSaveProfile
@@ -187,6 +188,10 @@ class ProfileEditPresenter(
                     OnBack -> {
                         eventLogger.logClickEvent(AppScreens.EditProfileScreen.BACK_BUTTON)
                         navigator.pop()
+                    }
+
+                    OnBottomSheetVisible ->  {
+                        eventLogger.logClickEvent(AppScreens.AccountOptionsScreen.name)
                     }
                 }
             }

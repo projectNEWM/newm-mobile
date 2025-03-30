@@ -32,7 +32,6 @@ import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.iconGradient
 import io.newm.core.ui.utils.shortToast
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
-import io.newm.shared.public.analytics.NewmAppEventLogger
 
 private val defaultProfileButtonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
@@ -135,7 +134,6 @@ fun WalletsButton(
 fun WalletButton(
     openWalletDialog: MutableState<Boolean>,
     isWalletConnected: Boolean,
-    eventLogger: NewmAppEventLogger,
     disconnectWallet: () -> Unit,
     onConnectWalletClick: (String) -> Unit
 ) {
@@ -181,7 +179,6 @@ fun WalletButton(
         ConfirmationDialog(
             title = stringResource(R.string.profile_unlink_dialog_title),
             message = stringResource(R.string.profile_unlink_dialog_message),
-            eventLogger = eventLogger,
             isOpen = openWalletDialog,
             onConfirm = {
                 disconnectWallet()

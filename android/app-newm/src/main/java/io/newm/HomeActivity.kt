@@ -97,8 +97,7 @@ class HomeActivity : ComponentActivity() {
                 is Screen.UserAccount -> ui<ProfileUiState> { state, modifier ->
                     ProfileUi(
                         state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
+                        modifier = modifier
                     )
                 }
 
@@ -120,9 +119,8 @@ class HomeActivity : ComponentActivity() {
 
                 is Screen.EditProfile -> ui<ProfileEditUiState> { state, modifier ->
                     ProfileEditUi(
-                        state = state,
                         modifier = modifier,
-                        eventLogger = eventLogger
+                        state = state
                     )
                 }
 
