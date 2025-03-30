@@ -1,6 +1,8 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
 plugins {
     id("com.android.library")
-    kotlin("android")
+    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.compose.multiplatform)
 }
 
@@ -20,20 +22,53 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
 
+kotlin {
+    androidTarget()
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(libs.kotlin.stdlib)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(project(Modules.coreTheme))
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                api(project(Modules.coreResources))
+                implementation(libs.androidx.browser)
+            }
+        }
+
+        jvm("desktop")
+
+        @OptIn(ExperimentalWasmDsl::class)
+        wasmJs {
+            browser {}
+        }
+
+    }
+
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "11"
     }
 }
 
-dependencies {
-    api(project(Modules.coreResources))
-
-    implementation(libs.androidx.browser)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material)
-    implementation(libs.androidx.material.icons.extended)
-    implementation(compose.material)
-    implementation(project(":shared"))
-    implementation(project(Modules.coreTheme))
-}

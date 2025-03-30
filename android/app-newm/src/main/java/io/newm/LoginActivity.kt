@@ -84,7 +84,7 @@ class LoginActivity : ComponentActivity() {
                 }
 
                 is Welcome -> ui<WelcomeScreenUiState> { state, modifier ->
-                    WelcomeScreenUi(modifier, state, eventLogger)
+                    WelcomeScreenUi(modifier, state)
                 }
 
                 is LoginScreen -> ui<LoginScreenUiState> { state, modifier ->
