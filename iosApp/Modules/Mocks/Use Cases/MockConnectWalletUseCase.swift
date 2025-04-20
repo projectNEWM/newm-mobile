@@ -48,8 +48,6 @@ public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUse
 
 		return try! await KotlinBoolean(bool: getWalletConnections().isEmpty == false)
 	}
-		
-	public func disconnectSingleWallet(walletConnectionId: String) async throws {}
 }
 
 extension MockConnectWalletUseCase {

@@ -22,9 +22,7 @@ public class VLCAudioPlayer: ObservableObject {
 	private var mediaPlayer: VLCMediaPlayer
 	private var playQueue = PlayQueue() {
 		didSet {
-			Task { @MainActor in
-				await update()
-			}
+			update()
 		}
 	}
 	@Published private var fileManager = FileManagerService()
@@ -79,9 +77,7 @@ public class VLCAudioPlayer: ObservableObject {
 		fileManager.objectWillChange
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] in
-				Task {
-					await self?.update()
-				}
+				self?.update()
 			}.store(in: &cancels)
 		
 		NotificationCenter.default.publisher(for: Notification.Name(Notification().walletConnectionStateChanged))
@@ -92,6 +88,12 @@ public class VLCAudioPlayer: ObservableObject {
 		
 		setUpDelegateHandling()
 		setupRemoteTransportControls()
+		
+		objectWillChange.sink { [weak self] _ in
+			Task {
+				await self?.updateIOSNowPlayingInfo()
+			}
+		}.store(in: &cancels)
 	}
 	
 	private func setUpDelegateHandling() {
@@ -102,17 +104,18 @@ public class VLCAudioPlayer: ObservableObject {
 				} else if mediaPlayer.state == .error {
 					_errors.send("Unable to load \(currentTrack?.title ?? "song")")
 				} else {
-					await update()
+					update()
 				}
 			}
 		}
 	}
 	
-	private func update() async {
+	private func update() {
 		title = mediaPlayer.media?.metaData.title
 		duration = mediaPlayer.media?.length.seconds
 		currentTime = mediaPlayer.time
 		percentPlayed = mediaPlayer.position
+		title = mediaPlayer.media?.metaData.title
 		artist = mediaPlayer.media?.metaData.artist
 		artworkUrl = mediaPlayer.media?.metaData.artworkURL
 		currentTrack = try? playQueue.currentTrack()
@@ -126,7 +129,6 @@ public class VLCAudioPlayer: ObservableObject {
 		} else {
 			.stopped
 		}
-		await updateIOSNowPlayingInfo()
 	}
 
 	public var hasNextTrack: Bool {
