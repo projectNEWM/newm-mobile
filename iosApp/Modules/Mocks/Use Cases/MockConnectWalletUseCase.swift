@@ -2,7 +2,7 @@ import Foundation
 import shared
 import Utilities
 
-public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUseCase {
+public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUseCase, HasWalletConnectionsUseCase {
 	private var walletConnections: [WalletConnection] = []
 	
 	public var throwThisError: Error?

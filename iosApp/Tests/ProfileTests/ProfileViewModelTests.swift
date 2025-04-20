@@ -29,7 +29,7 @@ final class ProfileViewModelTests: XCTestCase {
 		ProfileModule.shared.registerAllMockedServices(mockResolver: .mock)
 		
 		userDetailsUseCase = Resolver.resolve(UserDetailsUseCase.self) as! MockUserDetailsUseCase
-		connectWalletUseCase = Resolver.resolve(ConnectWalletUseCase.self) as! MockConnectWalletUseCase
+        connectWalletUseCase = Resolver.resolve(ConnectWalletUseCase.self) as! MockConnectWalletUseCase
 		changePasswordUseCase = Resolver.resolve(ChangePasswordUseCase.self) as! MockChangePasswordUseCase
 		errorLogger = Resolver.resolve(ErrorReporting.self) as! MockErrorLogger
 		mockUser = try! await userDetailsUseCase.fetchLoggedInUserDetails()
