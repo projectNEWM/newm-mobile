@@ -14,7 +14,7 @@ barcodeScanning = "17.3.0"
 browser = "1.8.0"
 cameraView = "1.4.1"
 circuitFoundation = "0.25.0"
-coil = "2.6.0"
+coil = "3.1.0"
 compose-multiplatform = "1.7.0"
 coreSplashscreen = "1.0.1"
 coroutinesExtensions = "1.5.5"
@@ -86,9 +86,10 @@ barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref =
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuitFoundation" }
 circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "circuitFoundation" }
 circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuitFoundation" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
-coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
+coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coil" }
+coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

@@ -46,8 +46,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.palette.graphics.Palette
-import coil.compose.AsyncImagePainter
-import coil.request.ImageRequest
+import coil3.compose.AsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.request.error
+import coil3.toBitmap
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.DarkPink
@@ -107,23 +110,26 @@ internal fun MusicPlayerViewer(
             modifier = Modifier.align(Alignment.Center),
             onSwipe = onSwipe
         ) {
-            ZoomableImage(
-                modifier = Modifier.align(Alignment.Center),
-                model = ImageRequest.Builder(context)
+            val imageModel = remember(song.artworkUri) {
+                ImageRequest.Builder(context)
                     .data(song.artworkUri)
                     .error(R.drawable.ic_default_track_cover_art)
                     .allowHardware(false) // Disable hardware bitmaps.
-                    .build(),
+                    .build()
+            }
+
+            ZoomableImage(
+                modifier = Modifier.align(Alignment.Center),
+                model = imageModel,
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 onState = { state ->
                     when (state) {
                         is AsyncImagePainter.State.Success -> {
                             coroutineScope.launch {
-                                val drawable = state.result.drawable as? BitmapDrawable
-                                drawable?.let {
-                                    palette = it.bitmap.getPalletColors()
-                                }
+                                val bitmap = state.result.image.toBitmap(100, 100)
+                                palette = bitmap.getPalletColors()
+                                println("coil Loading palette: $palette")
                             }
                         }
 

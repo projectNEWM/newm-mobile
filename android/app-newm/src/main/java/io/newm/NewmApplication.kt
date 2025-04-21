@@ -2,8 +2,9 @@ package io.newm
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import coil.ImageLoader
-import coil.ImageLoaderFactory
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
 import com.google.android.recaptcha.Recaptcha
 import com.google.firebase.FirebaseApp
 import io.newm.BuildConfig.*
@@ -31,12 +32,12 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 
-open class NewmApplication : Application(), ImageLoaderFactory {
+open class NewmApplication : Application(), SingletonImageLoader.Factory {
 
     private val analyticsTracker: NewmAppEventLogger by inject()
     private val config: NewmSharedBuildConfig by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
-    private val imageLoaderFactory by lazy { NewmImageLoaderFactory(this@NewmApplication) }
+    private val imageLoaderFactory by lazy { NewmImageLoaderFactory() }
     private val logger: NewmAppLogger by inject()
     private val logout: Logout by inject()
     private val recaptchaClientProvider: RecaptchaClientProvider by inject()
@@ -100,7 +101,7 @@ open class NewmApplication : Application(), ImageLoaderFactory {
         analyticsTracker.setClientAnalyticsTracker(AndroidEventLoggerImpl(logger))
     }
 
-    override fun newImageLoader(): ImageLoader {
-        return imageLoaderFactory.newImageLoader()
+    override fun newImageLoader(context: PlatformContext): ImageLoader {
+        return imageLoaderFactory.newImageLoader(context)
     }
 }

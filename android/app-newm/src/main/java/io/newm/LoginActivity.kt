@@ -5,10 +5,16 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.slack.circuit.backstack.rememberSaveableBackStack
@@ -21,6 +27,7 @@ import com.slack.circuit.retained.continuityRetainedStateRegistry
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
+import io.newm.core.ui.LocalSnackBarHostState
 import io.newm.feature.login.screen.LoginScreen
 import io.newm.feature.login.screen.LoginScreenUi
 import io.newm.feature.login.screen.ResetPasswordScreen
@@ -160,6 +167,17 @@ fun WelcomeToNewm(
             },
             eventLogger = eventLogger)
 
-    NavigableCircuitContent(newmNavigator, backstack)
+    val snackbarHostState = remember { SnackbarHostState() }
+    Scaffold(
+        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
+    ) { contentPadding ->
+
+        CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState)  {
+            NavigableCircuitContent(
+                modifier = Modifier.padding(contentPadding),
+                navigator = newmNavigator, backStack = backstack
+            )
+        }
+    }
 }
 

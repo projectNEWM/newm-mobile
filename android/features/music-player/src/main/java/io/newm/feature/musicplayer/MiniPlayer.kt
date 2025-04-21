@@ -39,9 +39,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.palette.graphics.Palette
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.toBitmap
 import io.newm.core.theme.White
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
@@ -181,8 +183,8 @@ fun MiniPlayer(
                                 .clip(shape = RoundedCornerShape(size = 4.dp)),
                             painter = rememberAsyncImagePainter(model = model, onState = {
                                 if (it is AsyncImagePainter.State.Success) {
-                                    val bitmap = (it.result.drawable as? BitmapDrawable)?.bitmap
-                                    bitmap?.let {
+                                    val bitmap = (it.result.image.toBitmap(100, 100))
+                                    bitmap.let {
                                         coroutineScope.launch {
                                             palette.value = bitmap.getPalletColors()
                                         }

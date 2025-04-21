@@ -8,8 +8,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import io.newm.core.resources.R
+import newm_mobile.android.core.ui_utils.generated.resources.dialog_cancel
+import newm_mobile.android.core.ui_utils.generated.resources.dialog_confirm
+import newm_mobile.android.core.ui_utils.generated.resources.Res as R
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ConfirmationDialog(
@@ -21,8 +23,8 @@ fun ConfirmationDialog(
     positiveButtonColor: Color = MaterialTheme.colors.primary,
     negativeButtonColor: Color = MaterialTheme.colors.background,
 ) {
-    val confirmationText = stringResource(id = R.string.dialog_confirm)
-    val cancelText = stringResource(id = R.string.dialog_cancel)
+    val confirmationText = stringResource(R.string.dialog_confirm)
+    val cancelText = stringResource(R.string.dialog_cancel)
     if (isOpen.value) {
         AlertDialog(
             onDismissRequest = {
