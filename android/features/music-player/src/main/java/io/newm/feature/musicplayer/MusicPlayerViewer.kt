@@ -126,10 +126,10 @@ internal fun MusicPlayerViewer(
                 onState = { state ->
                     when (state) {
                         is AsyncImagePainter.State.Success -> {
-                            coroutineScope.launch {
-                                val bitmap = state.result.image.toBitmap(100, 100)
+                            coroutineScope.launch(Dispatchers.Default) {
+                                val image = state.result.image
+                                val bitmap = image.toBitmap(image.width, image.height)
                                 palette = bitmap.getPalletColors()
-                                println("coil Loading palette: $palette")
                             }
                         }
 
@@ -427,7 +427,7 @@ val Palette.dominantColor: Color?
     }
 
 suspend fun Bitmap.getPalletColors(): Palette =
-    withContext(Dispatchers.Unconfined) {
+    withContext(Dispatchers.Default) {
         val palette = Palette.from(this@getPalletColors).generate()
         palette
     }

@@ -52,6 +52,7 @@ import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import io.newm.core.resources.R as CoreR
 
@@ -183,11 +184,10 @@ fun MiniPlayer(
                                 .clip(shape = RoundedCornerShape(size = 4.dp)),
                             painter = rememberAsyncImagePainter(model = model, onState = {
                                 if (it is AsyncImagePainter.State.Success) {
-                                    val bitmap = (it.result.image.toBitmap(100, 100))
-                                    bitmap.let {
-                                        coroutineScope.launch {
-                                            palette.value = bitmap.getPalletColors()
-                                        }
+                                    coroutineScope.launch(Dispatchers.Default) {
+                                        val image = it.result.image
+                                        val bitmap = image.toBitmap(image.width, image.height)
+                                        palette.value = bitmap.getPalletColors()
                                     }
                                 }
                             }),
