@@ -42,14 +42,14 @@ private val disconnectWalletButtonGradient =
 private val disconnectWalletButtonTextGradient =
     iconGradient(OceanGreen, LightSkyBlue)
 
-private val defaultButtonLabelStyle = TextStyle(
+private val defaultButtonLabelStyle @Composable get() = TextStyle(
     fontSize = 14.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Medium,
     color = Purple
 )
 
-private val disconnectButtonLabelStyle = TextStyle(
+private val disconnectButtonLabelStyle @Composable get() = TextStyle(
     fontSize = 14.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Medium,

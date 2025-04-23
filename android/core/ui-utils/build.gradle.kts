@@ -37,7 +37,6 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.ui)
                 implementation(libs.coil.compose)
-                implementation(libs.coil.gif)
                 implementation(libs.coil.ktor)
                 implementation(libs.coil.svg)
                 implementation(libs.kotlin.stdlib)
@@ -55,6 +54,7 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.androidx.browser)
+                implementation(libs.coil.gif)
                 implementation(libs.ktor.client.android)
                 api(project(Modules.coreResources))
             }

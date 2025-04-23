@@ -1,6 +1,5 @@
 package io.newm.feature.musicplayer
 
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring.StiffnessLow
 import androidx.compose.animation.core.spring

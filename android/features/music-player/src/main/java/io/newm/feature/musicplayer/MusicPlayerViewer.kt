@@ -1,7 +1,6 @@
 package io.newm.feature.musicplayer
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring.StiffnessLow
 import androidx.compose.animation.core.spring
@@ -74,7 +73,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val playbackTimeStyle = TextStyle(
+private val playbackTimeStyle @Composable get() = TextStyle(
     fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Normal,
