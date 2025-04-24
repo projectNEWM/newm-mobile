@@ -32,7 +32,7 @@ kotlin = "2.1.10"
 kotlin-inject = "0.7.2"
 kotlinxCoroutines = "1.10.1"
 ksp = "2.1.10-1.0.30"
-ktor = "2.3.12"
+ktor = "3.0.3"
 kvault = "1.12.0"
 launchdarklyAndroidClientSdk = "5.6.1"
 lifecycleRuntimeKtx = "2.8.7"
@@ -88,7 +88,7 @@ circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref 
 circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuitFoundation" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
-coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coil" }
+coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
