@@ -86,14 +86,14 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.concurrent.Executors
 
-val qrLabelStyle = TextStyle(
+val qrLabelStyle @Composable get() = TextStyle(
     fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Bold,
     color = Gray6F
 )
 
-val placeholderStyle = TextStyle(
+val placeholderStyle @Composable get() = TextStyle(
     fontSize = 16.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Normal,
@@ -288,7 +288,7 @@ class BarcodeScannerActivity : ComponentActivity() {
         ) {
             Text(
                 text = stringResource(id = R.string.newm_connect_wallet_instruction_title).uppercase(),
-                style = TextStyle(
+                style  = TextStyle(
                     fontFamily = inter,
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.sp,
@@ -314,7 +314,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = getString(R.string.wallet_desktop_option),
-                style = TextStyle(
+                style  = TextStyle(
                     fontFamily = inter,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,

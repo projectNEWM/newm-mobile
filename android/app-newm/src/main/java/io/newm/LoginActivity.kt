@@ -50,6 +50,7 @@ import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -111,6 +112,7 @@ class LoginActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             NewmTheme(darkTheme = true) {
+                DynamicStatusBarSideEffect(darkTheme = true)
                 CircuitDependencies {
                     val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
 
@@ -123,7 +125,7 @@ class LoginActivity : ComponentActivity() {
                             eventLogger
                         )
                     } else {
-                        WelcomeToNewm(logger, eventLogger,  ::launchHomeActivity)
+                        WelcomeToNewm(logger, eventLogger, ::launchHomeActivity)
                     }
                 }
             }
@@ -165,14 +167,15 @@ fun WelcomeToNewm(
             launchBrowser = { url ->
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             },
-            eventLogger = eventLogger)
+            eventLogger = eventLogger
+        )
 
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
     ) { contentPadding ->
 
-        CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState)  {
+        CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
             NavigableCircuitContent(
                 modifier = Modifier.padding(contentPadding),
                 navigator = newmNavigator, backStack = backstack

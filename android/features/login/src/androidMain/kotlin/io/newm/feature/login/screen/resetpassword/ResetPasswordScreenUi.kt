@@ -214,7 +214,7 @@ private fun SetNewPasswordContent(
             onClick = {
                 onEvent(EnterNewPasswordUiEvent.OnSubmit)
             },
-            enabled = state.submitButtonEnabled
+            enabled = state.submitButtonEnabled,
         )
         Spacer(modifier = Modifier.weight(1f))
     }

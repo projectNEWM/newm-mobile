@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -18,7 +17,6 @@ import io.newm.feature.login.screen.password.Password
 import io.newm.core.resources.R
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.feature.login.screen.PreLoginArtistBackgroundContentTemplate
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
@@ -76,7 +74,7 @@ fun EmailAndPasswordUi(
             onClick = {
                 onEvent(SignupFormUiEvent.Next)
             },
-            enabled = state.submitButtonEnabled
+            enabled = state.submitButtonEnabled,
         )
     }
 }
