@@ -24,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
@@ -125,10 +124,10 @@ private fun ProfileEditUiContent(
             }
             PrimaryButton(
                 enabled = state.submitButtonEnabled,
-                text = stringResource(id = R.string.profile_save_button_label),
+                labelResId =  R.string.profile_save_button_label,
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onClick = { onEvent(OnSaveProfile) },
-                enabledIconRes = R.drawable.ic_library_filter_check,
+                iconResId = R.drawable.ic_library_filter_check,
             )
             Spacer(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars))
         }

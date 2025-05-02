@@ -1,17 +1,22 @@
 package io.newm.core.ui
 
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import io.newm.core.ui.utils.shortToast
 
 @Composable
-fun ToastSideEffect(message: String?) {
-    val context = LocalContext.current
+fun ToastSideEffect(
+    message: String?
+) {
+    val snackbarHostState = LocalSnackBarHostState.current
 
     LaunchedEffect(message) {
         if (!message.isNullOrBlank()) {
-            context.shortToast(message)
+            snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = null,
+                duration = SnackbarDuration.Short
+            )
         }
     }
 }

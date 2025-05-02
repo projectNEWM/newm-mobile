@@ -42,41 +42,41 @@ import io.newm.core.theme.Gray100
 import io.newm.core.theme.Gray500
 import io.newm.core.theme.inter
 
-val formTitleStyle = TextStyle(
+val formTitleStyle @Composable get() = TextStyle(
     fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Bold,
     color = White
 )
 
-val formLabelStyle = TextStyle(
+val formLabelStyle @Composable get() = TextStyle(
     fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Bold,
     color = Gray100
 )
 
-val formTextFieldStyle = TextStyle(
+val formTextFieldStyle @Composable get() = TextStyle(
     fontSize = 16.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Normal,
 )
 
-val formNameStyle = TextStyle(
+val formNameStyle @Composable get() = TextStyle(
     fontSize = 24.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Bold,
     color = White
 )
 
-val formEmailStyle = TextStyle(
+val formEmailStyle @Composable get() = TextStyle(
     fontSize = 14.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Normal,
     color = Gray100
 )
 
-val versionTextStyle = TextStyle(
+val versionTextStyle @Composable get() = TextStyle(
     fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Light,

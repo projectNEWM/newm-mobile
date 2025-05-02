@@ -1,13 +1,18 @@
 package io.newm
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.retained.LocalRetainedStateRegistry
@@ -44,6 +49,7 @@ import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.featureflags.FeatureFlagManager
 import io.newm.shared.public.featureflags.FeatureFlags
+import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
 import org.koin.android.ext.android.inject
@@ -62,6 +68,7 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewmTheme(darkTheme = true) {
+                DynamicStatusBarSideEffect(darkTheme = true)
                 CircuitDependencies {
                     val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
                     if (updateRequired) {

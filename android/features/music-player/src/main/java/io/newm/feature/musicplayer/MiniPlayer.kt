@@ -1,6 +1,5 @@
 package io.newm.feature.musicplayer
 
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring.StiffnessLow
 import androidx.compose.animation.core.spring
@@ -39,9 +38,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.palette.graphics.Palette
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.toBitmap
 import io.newm.core.theme.White
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
@@ -50,6 +51,7 @@ import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import io.newm.core.resources.R as CoreR
 
@@ -181,11 +183,10 @@ fun MiniPlayer(
                                 .clip(shape = RoundedCornerShape(size = 4.dp)),
                             painter = rememberAsyncImagePainter(model = model, onState = {
                                 if (it is AsyncImagePainter.State.Success) {
-                                    val bitmap = (it.result.drawable as? BitmapDrawable)?.bitmap
-                                    bitmap?.let {
-                                        coroutineScope.launch {
-                                            palette.value = bitmap.getPalletColors()
-                                        }
+                                    coroutineScope.launch(Dispatchers.Default) {
+                                        val image = it.result.image
+                                        val bitmap = image.toBitmap(image.width, image.height)
+                                        palette.value = bitmap.getPalletColors()
                                     }
                                 }
                             }),

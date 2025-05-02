@@ -74,6 +74,7 @@ kotlin {
 
         @OptIn(ExperimentalWasmDsl::class)
         wasmJs {
+            moduleName = "sharedfeatures"
             browser {}
         }
 

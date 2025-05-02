@@ -24,12 +24,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.error
+import coil3.request.placeholder
 import io.newm.core.resources.R
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.Gray16
@@ -37,9 +38,7 @@ import io.newm.core.theme.GraySuit
 import io.newm.core.theme.SteelPink
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
-import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
-import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient

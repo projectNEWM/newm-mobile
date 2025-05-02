@@ -39,6 +39,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(compose.components.resources)
                 implementation(compose.material)
             }
         }

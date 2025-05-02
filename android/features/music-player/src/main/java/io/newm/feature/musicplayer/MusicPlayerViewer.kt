@@ -1,7 +1,6 @@
 package io.newm.feature.musicplayer
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring.StiffnessLow
 import androidx.compose.animation.core.spring
@@ -46,8 +45,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.palette.graphics.Palette
-import coil.compose.AsyncImagePainter
-import coil.request.ImageRequest
+import coil3.compose.AsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.request.error
+import coil3.toBitmap
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
 import io.newm.core.theme.DarkPink
@@ -71,7 +73,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val playbackTimeStyle = TextStyle(
+private val playbackTimeStyle @Composable get() = TextStyle(
     fontSize = 12.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Normal,
@@ -107,23 +109,26 @@ internal fun MusicPlayerViewer(
             modifier = Modifier.align(Alignment.Center),
             onSwipe = onSwipe
         ) {
-            ZoomableImage(
-                modifier = Modifier.align(Alignment.Center),
-                model = ImageRequest.Builder(context)
+            val imageModel = remember(song.artworkUri) {
+                ImageRequest.Builder(context)
                     .data(song.artworkUri)
                     .error(R.drawable.ic_default_track_cover_art)
                     .allowHardware(false) // Disable hardware bitmaps.
-                    .build(),
+                    .build()
+            }
+
+            ZoomableImage(
+                modifier = Modifier.align(Alignment.Center),
+                model = imageModel,
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 onState = { state ->
                     when (state) {
                         is AsyncImagePainter.State.Success -> {
-                            coroutineScope.launch {
-                                val drawable = state.result.drawable as? BitmapDrawable
-                                drawable?.let {
-                                    palette = it.bitmap.getPalletColors()
-                                }
+                            coroutineScope.launch(Dispatchers.Default) {
+                                val image = state.result.image
+                                val bitmap = image.toBitmap(image.width, image.height)
+                                palette = bitmap.getPalletColors()
                             }
                         }
 
@@ -421,7 +426,7 @@ val Palette.dominantColor: Color?
     }
 
 suspend fun Bitmap.getPalletColors(): Palette =
-    withContext(Dispatchers.Unconfined) {
+    withContext(Dispatchers.Default) {
         val palette = Palette.from(this@getPalletColors).generate()
         palette
     }

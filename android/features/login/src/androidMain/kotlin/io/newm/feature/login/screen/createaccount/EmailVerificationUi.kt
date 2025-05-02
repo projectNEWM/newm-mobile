@@ -105,7 +105,7 @@ internal fun EmailVerificationContent(
                 enabled = nextButtonEnabled,
                 onClick = {
                     onNextClicked()
-                }
+                },
             )
         }
     }
