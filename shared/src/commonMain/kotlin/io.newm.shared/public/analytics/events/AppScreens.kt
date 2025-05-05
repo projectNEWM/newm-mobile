@@ -132,7 +132,8 @@ object AppScreens {
         const val BACK_BUTTON: String = "Back"
         const val PULL_TO_REFRESH: String = "Pull to Refresh"
         const val WALLET_OPTIONS_BUTTON: String = "Wallet Options"
-        const val ADD_WALLET_BUTTON: String = "Add Wallet"
+        const val CONTENT_ADD_WALLET_BUTTON: String = "Content Add Wallet"
+        const val EMPTY_ADD_WALLET_BUTTON: String = "Empty Add Wallet"
         const val DISCONNECT_WALLET_BUTTON: String = "Disconnect Wallet"
         const val DISCONNECT_ALL_WALLETS_BUTTON: String = "Disconnect All Wallets"
     }

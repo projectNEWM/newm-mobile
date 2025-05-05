@@ -77,7 +77,6 @@ class WalletsPresenter(
                     }
 
                     is WalletsEvent.OnConnectWallet -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.ADD_WALLET_BUTTON)
                         scope.launch {
                             connectWalletUseCase.connect(it.newmCode)
                         }
