@@ -123,6 +123,8 @@
     <string name="profile_unlink_dialog_message">Are you sure you want to disconnect your wallet?</string>
     <string name="profile_unlink_dialog_title">Unlink Cardano Wallet</string>
     <string name="profile_visit_store">Visit Record Store</string>
+    <string name="profile_error_message">An error occurred. Please try again.</string>
+    <string name="profile_error_image_size_message">Image size must be less than 10MB.</string>
     <string name="record_store" translatable="false">RecordStore</string>
     <string name="record_store_error_message">It looks like you\'re not connected to the internet. Please check your connection and try again.</string>
     <string name="record_store_error_title">Connection Lost</string>
@@ -197,4 +199,7 @@
     <string name="wallets_screen_wallet_options_desc">Wallet Options</string>
     <string name="wallets_screen_topbar_title">Connected Wallets</string>
     <string name="wallets_screen_disconnect_wallet_modal_title">Disconnect Wallet?</string>
+    <string name="profile_replace_picture">Replace picture</string>
+    <string name="profile_remove_picture">Remove picture</string>
+    <string name="title_profile_picture">Profile picture</string>
 </resources>

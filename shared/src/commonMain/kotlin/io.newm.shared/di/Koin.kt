@@ -10,6 +10,7 @@ import io.newm.shared.internal.api.CardanoWalletAPI
 import io.newm.shared.internal.api.GenresAPI
 import io.newm.shared.internal.api.LoginAPI
 import io.newm.shared.internal.api.NEWMWalletConnectionAPI
+import io.newm.shared.internal.api.NewmCloudinaryAPI
 import io.newm.shared.internal.api.PlaylistAPI
 import io.newm.shared.internal.api.RemoteConfigAPI
 import io.newm.shared.internal.api.UserAPI
@@ -26,6 +27,7 @@ import io.newm.shared.internal.implementations.LoginUseCaseImpl
 import io.newm.shared.internal.implementations.ResetPasswordUseCaseImpl
 import io.newm.shared.internal.implementations.SignupUseCaseImpl
 import io.newm.shared.internal.implementations.SyncWalletConnectionsUseCaseImpl
+import io.newm.shared.internal.implementations.UpdateProfilePictureUseCaseImpl
 import io.newm.shared.internal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.internal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.internal.implementations.WalletNFTTracksUseCaseImpl
@@ -58,6 +60,7 @@ import io.newm.shared.public.usecases.LoginUseCase
 import io.newm.shared.public.usecases.ResetPasswordUseCase
 import io.newm.shared.public.usecases.SignupUseCase
 import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.public.usecases.UpdateProfilePictureUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
 import io.newm.shared.public.usecases.UserSessionUseCase
 import io.newm.shared.public.usecases.WalletNFTTracksUseCase
@@ -108,6 +111,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { PlaylistAPI(get()) }
     single { RemoteConfigAPI(get()) }
     single { UserAPI(get(), get()) }
+    single { NewmCloudinaryAPI(get()) }
     // Internal Services
     single { EarningsNetworkService(get()) }
     single { NFTCacheService(get()) }
@@ -144,6 +148,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
     single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
     single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
+    single<UpdateProfilePictureUseCase> { UpdateProfilePictureUseCaseImpl(get(), get()) }
 }
 
 fun createJson() = Json {

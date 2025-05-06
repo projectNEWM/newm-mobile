@@ -160,4 +160,15 @@ internal class UserRepository(
             dbWrapper().userQueries.deleteAll() // invalidate cache
         }
     }
+
+    suspend fun updateUserPicture(url: String?) {
+        service.updateUserProfile(
+            UserProfileUpdateRequest(
+                pictureUrl = url.orEmpty(), // Sending empty string to the server, remove the picture
+            )
+        )
+        dbWrapper().transaction {
+            dbWrapper().userQueries.deleteAll() // invalidate cache
+        }
+    }
 }

@@ -20,7 +20,11 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -34,6 +38,8 @@ import io.newm.feature.login.screen.TextFieldState
 import io.newm.screens.profile.OnBack
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnLogout
+import io.newm.screens.profile.OnRemoveProfilePicture
+import io.newm.screens.profile.OnReplaceProfilePicture
 import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
@@ -41,12 +47,14 @@ import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileForm
 import io.newm.screens.profile.ProfileHeader
+import io.newm.screens.profile.ProfilePictureUpdateSheet
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
 import io.newm.shared.public.models.User
 import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.models.mocks.mockUsers
 import kotlinx.coroutines.launch
+import network.chaintech.cmpimagepickncrop.CMPImagePickNCropDialog
 
 internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 
@@ -74,12 +82,14 @@ private fun ProfileEditUiContent(
     val onEvent = state.eventSink
     val profile = state.profile
 
-    val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val profilePictureSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
+    var openImagePicker by remember { mutableStateOf(value = false) }
 
     ProfileBottomSheetLayout(
         modifier = modifier,
-        sheetState = sheetState,
+        sheetState = bottomSheetState,
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
@@ -95,9 +105,10 @@ private fun ProfileEditUiContent(
         ) {
             ProfileAppBar(
                 bannerUrl = profile.bannerUrl,
-                avatarUrl = profile.pictureUrl,
-                onOverflowTapped = { scope.launch { sheetState.show() } },
-                onNavigationClick = { onEvent(OnBack) }
+                avatarUrl = state.avatarUrl,
+                onOverflowTapped = { scope.launch { bottomSheetState.show() } },
+                onNavigationClick = { onEvent(OnBack) },
+                onAvatarClick = { scope.launch { profilePictureSheetState.show() } }
             )
             ProfileHeader(
                 firstName = profile.firstName,
@@ -132,6 +143,30 @@ private fun ProfileEditUiContent(
             Spacer(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars))
         }
     }
+    ProfilePictureUpdateSheet(
+        sheetState = profilePictureSheetState,
+        onReplacePicture = {
+            scope.launch {
+                profilePictureSheetState.hide()
+                openImagePicker = true
+            }
+        },
+        onRemovePicture = {
+            scope.launch {
+                profilePictureSheetState.hide()
+                onEvent(OnRemoveProfilePicture)
+            }
+        }
+    )
+    CMPImagePickNCropDialog(
+        openImagePicker = openImagePicker,
+        autoZoom = true,
+        imagePickerDialogHandler = {
+            openImagePicker = it
+        },
+        selectedImageCallback = {
+            onEvent(OnReplaceProfilePicture(it))
+        })
 }
 
 @Composable
@@ -160,6 +195,7 @@ private fun ProfileScreenPreview() {
         ProfileEditUiContent(
             state = Content(
                 profile = mockUsers.first().toProfile(),
+                avatarUrl = "",
                 submitButtonEnabled = true,
                 showConnectWallet = true,
                 canUserEditName = true,
