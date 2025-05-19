@@ -3,7 +3,7 @@ import shared
 import Utilities
 
 public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUseCase, HasWalletConnectionsUseCase {
-	private var walletConnections: [WalletConnection] = []
+	private var walletConnections: [WalletConnection] = [WalletConnection(id: "1", createdAt: "", stakeAddress: "")]
 	
 	public var throwThisError: Error?
 	

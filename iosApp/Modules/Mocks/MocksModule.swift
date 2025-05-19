@@ -11,9 +11,25 @@ final public class MocksModule: Module {
 	}
 #if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
+        mockResolver.register {
+            MockForceAppUpdateUseCase() as ForceAppUpdateUseCase
+        }.scope(.cached)
+
 		mockResolver.register {
 			MockUserDetailsUseCase() as UserDetailsUseCase
 		}.scope(.cached)
+        
+        mockResolver.register {
+            MockLoginUseCase() as LoginUseCase
+        }.scope(.cached)
+
+        mockResolver.register {
+            MockSignupUseCase() as SignupUseCase
+        }.scope(.cached)
+
+        mockResolver.register {
+            $0.resolve(LoginUseCase.self) as! UserSessionUseCase
+        }.scope(.cached)
 		
 		mockResolver.register {
 			MockConnectWalletUseCase() as ConnectWalletUseCase

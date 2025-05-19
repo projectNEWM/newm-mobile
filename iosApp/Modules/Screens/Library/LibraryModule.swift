@@ -50,7 +50,7 @@ extension LibraryModule {
 			MockErrorLogger() as ErrorReporting
 		}
 		
-		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+		MocksModule.shared.registerAllMockedServices(mockResolver: mockResolver)
 		AudioPlayerModule.shared.registerAllServices()
 	}
 }

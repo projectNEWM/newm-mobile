@@ -90,6 +90,7 @@
 		7639E6732AEB347F00254D71 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6722AEB347F00254D71 /* GoogleSignInSwift */; };
 		7639E6752AEB348800254D71 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7639E6742AEB348800254D71 /* GoogleSignIn */; };
 		763B987D2B28644B00E6F492 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		764301662DD9DD55001ECC9A /* MockForceAppUpdateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764301652DD9DD55001ECC9A /* MockForceAppUpdateUseCase.swift */; };
 		76452A382B5A2C760001F47E /* ModuleLinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D01D9E28164B2100305605 /* ModuleLinker.framework */; };
 		76452A4E2B5A37D50001F47E /* SharedExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A482B5A37D50001F47E /* SharedExtensions.framework */; };
 		76452A4F2B5A37D50001F47E /* SharedExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A482B5A37D50001F47E /* SharedExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1089,6 +1090,7 @@
 		762EF9B42B21B30C009E08D8 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 		762EF9B62B21B412009E08D8 /* ShakeResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShakeResponder.swift; sourceTree = "<group>"; };
 		76308A872B7B1D16002FDC50 /* UserDefaultsPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPropertyWrapper.swift; sourceTree = "<group>"; };
+		764301652DD9DD55001ECC9A /* MockForceAppUpdateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockForceAppUpdateUseCase.swift; sourceTree = "<group>"; };
 		76452A342B5A2C760001F47E /* ModuleLinkerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModuleLinkerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76452A362B5A2C760001F47E /* ErrorSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorSetTests.swift; sourceTree = "<group>"; };
 		76452A3E2B5A31740001F47E /* BindingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingTests.swift; sourceTree = "<group>"; };
@@ -1858,6 +1860,7 @@
 				761E97132B6A7CAA00FDFC5E /* MockSignUpUseCase.swift */,
 				768C69C22B5CDA30001A1B1A /* MockUserDetailsUseCase.swift */,
 				76F8E9302BA7F0EA0013595D /* MockWalletNFTTracksUseCase.swift */,
+				764301652DD9DD55001ECC9A /* MockForceAppUpdateUseCase.swift */,
 			);
 			path = "Use Cases";
 			sourceTree = "<group>";
@@ -4076,6 +4079,7 @@
 				76F8E92F2BA7EF670013595D /* MockNFTTracks.swift in Sources */,
 				761E97122B6A7C0500FDFC5E /* MockLoginUseCase.swift in Sources */,
 				76F8E9312BA7F0EA0013595D /* MockWalletNFTTracksUseCase.swift in Sources */,
+				764301662DD9DD55001ECC9A /* MockForceAppUpdateUseCase.swift in Sources */,
 				768C69C32B5CDA30001A1B1A /* MockUserDetailsUseCase.swift in Sources */,
 				769BB6882B5E0B85007CA421 /* MockChangePasswordUseCase.swift in Sources */,
 				761E971B2B6A8EDA00FDFC5E /* MocksModule.swift in Sources */,

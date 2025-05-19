@@ -3,6 +3,7 @@ import Resolver
 import SwiftUI
 import ModuleLinker
 import shared
+import Mocks
 
 public final class MainModule: Module {
 	public static let shared = MainModule()
@@ -32,9 +33,7 @@ extension MainModule: MainViewProviding {
 #if DEBUG
 extension MainModule {
 	public func registerAllMockedServices(mockResolver: Resolver) {
-		mockResolver.register {
-			MockWalletNFTTracksUseCase() as WalletNFTTracksUseCase
-		}
+        MocksModule.shared.registerAllMockedServices(mockResolver: mockResolver)
 	}
 }
 #endif
