@@ -245,7 +245,6 @@
 		768C69BB2B5CD9CE001A1B1A /* MockErrorLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768C69BA2B5CD9CE001A1B1A /* MockErrorLogger.swift */; };
 		768C69BC2B5CD9DF001A1B1A /* Mocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C69AC2B5CD971001A1B1A /* Mocks.framework */; };
 		768C69C32B5CDA30001A1B1A /* MockUserDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768C69C22B5CDA30001A1B1A /* MockUserDetailsUseCase.swift */; };
-		76982B492DB4F0BA00127210 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76982B482DB4F0BA00127210 /* shared.xcframework */; };
 		769BB6882B5E0B85007CA421 /* MockChangePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769BB6872B5E0B85007CA421 /* MockChangePasswordUseCase.swift */; };
 		769BB6892B60B8C6007CA421 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76452A5F2B5A395A0001F47E /* Utilities.framework */; };
 		76A223FE281FB43900F7188A /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A223FD281FB43900F7188A /* MockData.swift */; };
@@ -307,6 +306,8 @@
 		76EAFC582A09087A00ACD862 /* DMSerifText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76EAFC542A0907FB00ACD862 /* DMSerifText-Regular.ttf */; };
 		76EAFC592A09087A00ACD862 /* DMSerifText-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76EAFC552A0907FB00ACD862 /* DMSerifText-Italic.ttf */; };
 		76EAFC742A11657800ACD862 /* HeaderImageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7648DE04292C69EF006F7259 /* HeaderImageSection.swift */; };
+		76F196B52DDB216D00273417 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76982B482DB4F0BA00127210 /* shared.xcframework */; };
+		76F196B62DDB216D00273417 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76982B482DB4F0BA00127210 /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76F5F2E42CD2D64D00143640 /* VLCKitSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 76F5F2E32CD2D64D00143640 /* VLCKitSPM */; };
 		76F823C528BEC2B3003A524C /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 76F823C428BEC2B3003A524C /* Resolver */; };
 		76F8E8F62BA42E470013595D /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F8E8F52BA42E470013595D /* Filters.swift */; };
@@ -970,6 +971,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				76F196B62DDB216D00273417 /* shared.xcframework in Embed Frameworks */,
 				76452A4F2B5A37D50001F47E /* SharedExtensions.framework in Embed Frameworks */,
 				7618FCD428164C5C007573B4 /* SharedUI.framework in Embed Frameworks */,
 				76452A662B5A395A0001F47E /* Utilities.framework in Embed Frameworks */,
@@ -1338,7 +1340,7 @@
 				76452A652B5A395A0001F47E /* Utilities.framework in Frameworks */,
 				7618FD7728164DA2007573B4 /* Login.framework in Frameworks */,
 				7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */,
-				76982B492DB4F0BA00127210 /* shared.xcframework in Frameworks */,
+				76F196B52DDB216D00273417 /* shared.xcframework in Frameworks */,
 				76C8502C2AEB37E200C2C388 /* Library.framework in Frameworks */,
 				7650E1762B17CB3600D686B8 /* QRCodeReader in Frameworks */,
 				76610AD82CBB46D6009F5693 /* Analytics.framework in Frameworks */,
