@@ -71,7 +71,7 @@ public class VLCAudioPlayer: ObservableObject {
 		set { playQueue.sortCriteria = newValue }
 	}
 	
-	private init() {
+	init() {
 		mediaPlayer = VLCMediaPlayer()
 		mediaPlayer.delegate = delegate
 		fileManager.objectWillChange
