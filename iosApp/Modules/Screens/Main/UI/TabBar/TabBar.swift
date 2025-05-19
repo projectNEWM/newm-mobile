@@ -24,6 +24,9 @@ struct TabBar: View {
 					.padding(.bottom, bottomPadding)
 			}
 		}
+        .safeAreaInset(edge: .bottom, spacing: bottomPadding) {
+            Color.clear.frame(height: 44)
+        }
 	}
 }
 

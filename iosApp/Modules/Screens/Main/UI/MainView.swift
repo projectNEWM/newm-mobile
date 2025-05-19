@@ -21,24 +21,25 @@ public struct MainView: View {
 	@State private var showDebugView: Bool = false
 	@State private var tab: MainViewModelTab = .library
 	
-	private let keyboardObserver = KeyboardObserver()
-	
-	public var body: some View {
-		GeometryReader { geometry in
-			if viewModel.shouldShowLogin {
-				loginViewProvider.loginView().transition(.move(edge: .bottom))
-			} else {
-				TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
-					.preferredColorScheme(.dark)
-					.sheet(isPresented: isPresent($route), onDismiss: { route = nil }) {
-						sheetView
-					}
-					.overlay {
-						Spacer()
-						miniPlayerView
-							.offset(x: 0, y: keyboardObserver.isKeyboardShown ? 0 : -geometry.safeAreaInsets.bottom+1)
-							.transition(.move(edge: .bottom))
-					}
+    private let keyboardObserver = KeyboardObserver()
+    
+    public var body: some View {
+        GeometryReader { geometry in
+            if viewModel.shouldShowLogin {
+                loginViewProvider.loginView().transition(.move(edge: .bottom))
+            } else {
+                TabBar(tabProviders: tabProviders, bottomPadding: miniPlayerHeight)
+                    .preferredColorScheme(.dark)
+                    .sheet(isPresented: isPresent($route), onDismiss: { route = nil }) {
+                        sheetView
+                    }
+                    .overlay {
+                        Spacer()
+                        let _ = print("bottom: \(geometry.safeAreaInsets.bottom)")
+                        miniPlayerView
+                            .offset(x: 0, y: keyboardObserver.isKeyboardShown ? 0 : -33)
+                            .transition(.move(edge: .bottom))
+                    }
 					.transition(.move(edge: .bottom))
 					.tint(tabTint)
 			}
@@ -69,7 +70,7 @@ extension MainView {
 	}
 	
 	private var miniPlayerHeight: CGFloat {
-		return showMiniAudioPlayer ? 42 : 0
+		return showMiniAudioPlayer ? 50 : 0
 	}
 	
 	private var showMiniAudioPlayer: Bool {
@@ -111,13 +112,11 @@ extension MainView {
 }
 
 #if DEBUG
-struct MainView_Previews: PreviewProvider {
-	static var previews: some View {
-		Resolver.root = Resolver(child: .main)
-		MainModule.shared.registerAllServices()
-		AudioPlayerModule.shared.registerAllServices()
-		return MainView()
-	}
+import Mocks
+#Preview {
+    Resolver.root = .mock
+    MainModule.shared.registerAllMockedServices(mockResolver: .mock)
+    return MainView()
 }
 #endif
 
