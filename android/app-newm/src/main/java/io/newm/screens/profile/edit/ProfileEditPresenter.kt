@@ -16,12 +16,15 @@ import io.newm.core.resources.R
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.password.isPasswordValid
 import io.newm.feature.login.screen.password.passwordValidationError
+import io.newm.screens.Screen
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBack
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
 import io.newm.screens.profile.OnLogout
+import io.newm.screens.profile.OnRemoveProfilePicture
+import io.newm.screens.profile.OnReplaceProfilePicture
 import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
@@ -32,7 +35,9 @@ import io.newm.shared.public.models.User
 import io.newm.shared.public.models.canEditName
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.public.usecases.UpdateProfilePictureUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
+import io.newm.utils.toTempFile
 import kotlinx.coroutines.launch
 
 class ProfileEditPresenter(
@@ -40,6 +45,7 @@ class ProfileEditPresenter(
     private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
+    private val updateProfilePictureUseCase: UpdateProfilePictureUseCase,
     private val logout: Logout,
     private val logger: NewmAppLogger,
     private val eventLogger: NewmAppEventLogger
@@ -93,6 +99,16 @@ class ProfileEditPresenter(
             mutableStateOf<String?>(null)
         }
 
+        var avatarFilePath by remember {
+            mutableStateOf("")
+        }
+
+        var avatarUrl by remember(profile?.pictureUrl) {
+            mutableStateOf(profile?.pictureUrl.orEmpty())
+        }
+
+        val isAvatarDirty = avatarUrl != profile?.pictureUrl.orEmpty()
+
         val isFormDirty =
             remember(
                 firstNameState.isFocusedDirty,
@@ -117,8 +133,9 @@ class ProfileEditPresenter(
         } else {
             ProfileEditUiState.Content(
                 profile = profile,
+                avatarUrl = avatarUrl,
                 errorMessage = errorMessage,
-                submitButtonEnabled = isFormDirty,
+                submitButtonEnabled = isFormDirty || isAvatarDirty,
                 firstName = firstNameState,
                 lastName = lastNameState,
                 canUserEditName = profile.canUserEditName,
@@ -132,35 +149,46 @@ class ProfileEditPresenter(
                         eventLogger.logClickEvent(AppScreens.EditProfileScreen.SAVE_CHANGES_BUTTON)
                         coroutineScope.launch {
                             try {
-                                val error = getFormErrorOrNull(
-                                    context,
-                                    currentPasswordState,
-                                    newPasswordState,
-                                    confirmPasswordState,
-                                    firstNameState,
-                                    lastNameState
-                                )
+                                if (isFormDirty) {
+                                    val error = getFormErrorOrNull(
+                                        context,
+                                        currentPasswordState,
+                                        newPasswordState,
+                                        confirmPasswordState,
+                                        firstNameState,
+                                        lastNameState
+                                    )
 
-                                errorMessage = error
+                                    errorMessage = error
 
-                                if (error != null) {
-                                    return@launch
+                                    if (error != null) {
+                                        return@launch
+                                    }
+
+                                    val updatedProfile = User(
+                                        newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
+                                        currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
+                                        confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
+                                        firstName = firstNameState.text,
+                                        lastName = lastNameState.text,
+                                        createdAt = "",
+                                        id = ""
+                                    )
+                                    userDetailsUseCase.updateUserDetails(updatedProfile)
                                 }
-
-                                val updatedProfile = User(
-                                    newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
-                                    currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
-                                    confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
-                                    firstName = firstNameState.text,
-                                    lastName = lastNameState.text,
-                                    createdAt = "",
-                                    id = ""
-                                )
-                                userDetailsUseCase.updateUserDetails(updatedProfile)
+                                if (isAvatarDirty) {
+                                    if (avatarUrl.isEmpty()) {
+                                        updateProfilePictureUseCase.removeProfilePicture()
+                                    } else {
+                                        updateProfilePictureUseCase.updateProfilePicture(
+                                            avatarFilePath
+                                        )
+                                    }
+                                }
                                 navigator.pop()
                             } catch (e: Throwable) {
                                 logger.error("ProfileEditPresenter", "An error occurred", e)
-                                errorMessage = "An error occurred. Please try again."
+                                errorMessage = context.getString(R.string.profile_error_message)
                             }
                         }
                     }
@@ -192,6 +220,28 @@ class ProfileEditPresenter(
 
                     OnBottomSheetVisible ->  {
                         eventLogger.logClickEvent(AppScreens.AccountOptionsScreen.name)
+                    }
+
+                    OnRemoveProfilePicture -> {
+                        avatarUrl = ""
+                    }
+
+                    is OnReplaceProfilePicture -> {
+                        coroutineScope.launch {
+                            try {
+                                val file = event.image.toTempFile(context)
+                                if (file.length() > 10 * 1024 * 1024) {
+                                    errorMessage =
+                                        context.getString(R.string.profile_error_image_size_message)
+                                } else {
+                                    avatarFilePath = file.path
+                                    avatarUrl = file.toURI().toString()
+                                }
+                            } catch (e: Throwable) {
+                                logger.error("ProfileEditPresenter", "An error occurred", e)
+                                errorMessage = context.getString(R.string.profile_error_message)
+                            }
+                        }
                     }
                 }
             }

@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.barcode.scanning)
     implementation(libs.play.services.auth)
     implementation(compose.material)
+    implementation(libs.guava)
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))

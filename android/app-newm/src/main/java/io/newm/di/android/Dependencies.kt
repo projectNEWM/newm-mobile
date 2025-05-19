@@ -93,7 +93,7 @@ val viewModule = module {
             get(),
             get(),
             get(),
-            get()
+            get(),
         )
     }
 
@@ -147,7 +147,8 @@ val viewModule = module {
             get(),
             get(),
             get(),
-            get()
+            get(),
+            get(),
         )
     }
     factory { params ->

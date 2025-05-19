@@ -23,21 +23,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.core.resources.R
 import io.newm.core.theme.DarkViolet
 import io.newm.core.theme.Pinkish
 import io.newm.core.theme.Purple
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.iconGradient
-import newm_mobile.android.core.ui_utils.generated.resources.Res
-import org.jetbrains.compose.resources.painterResource
+import newm_mobile.android.core.ui_utils.generated.resources.check_icon_description
+import org.jetbrains.compose.resources.stringResource
+import newm_mobile.android.core.ui_utils.generated.resources.Res as R
 
 private val enabledButtonGradient =
     iconGradient(DarkViolet, Pinkish)
@@ -78,11 +76,11 @@ fun NewmButton(
 
 @Composable
 fun PrimaryButton(
-    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    enabledIconRes: Int? = null,
+    iconPainter: Painter? = null
 ) {
     Row(
         modifier = modifier
@@ -97,9 +95,9 @@ fun PrimaryButton(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        enabledIconRes?.takeIf { enabled }?.let {
+        iconPainter?.takeIf { enabled }?.let {
             Icon(
-                painter = painterResource(id = it),
+                painter = it,
                 contentDescription = stringResource(R.string.check_icon_description),
                 tint = White,
             )
@@ -113,27 +111,6 @@ fun PrimaryButton(
             fontWeight = FontWeight.Medium,
         )
     }
-}
-
-@Composable
-fun SecondaryButton(
-    labelResId: Int,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    backgroundBrush: Brush = defaultButtonGradient,
-    textStyle: TextStyle = defaultButtonLabelStyle,
-    enabled: Boolean = true,
-    iconResId: Int? = null
-) {
-    SecondaryButton(
-        label = stringResource(id = labelResId),
-        modifier = modifier,
-        onClick = onClick,
-        backgroundBrush = backgroundBrush,
-        textStyle = textStyle,
-        enabled = enabled,
-        iconPainter = iconResId?.let { painterResource(id = it) }
-    )
 }
 
 @Composable
@@ -180,7 +157,7 @@ fun SecondaryButton(
 private val defaultButtonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
 
-private val defaultButtonLabelStyle = TextStyle(
+private val defaultButtonLabelStyle @Composable get() = TextStyle(
     fontSize = 16.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Medium,

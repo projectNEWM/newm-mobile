@@ -1,25 +1,18 @@
 package io.newm.utils
 
-import android.content.Context
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import coil.decode.SvgDecoder
-import coil.decode.ImageDecoderDecoder
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
+import coil3.disk.DiskCache
+import coil3.memory.MemoryCache
+import coil3.disk.directory
 
-class NewmImageLoaderFactory(
-    private val context: Context
-) : ImageLoaderFactory {
-    override fun newImageLoader(): ImageLoader {
+class NewmImageLoaderFactory : SingletonImageLoader.Factory {
+    override fun newImageLoader(context: PlatformContext): ImageLoader {
         return ImageLoader.Builder(context)
-            .components {
-                add(SvgDecoder.Factory())
-                add(ImageDecoderDecoder.Factory())
-            }
             .memoryCache {
-                MemoryCache.Builder(context)
-                    .maxSizePercent(0.25)
+                MemoryCache.Builder()
+                    .maxSizePercent(context, 0.25)
                     .build()
             }
             .diskCache {

@@ -22,11 +22,13 @@ fun ProfileAppBar(
     avatarUrl: String,
     onOverflowTapped: () -> Unit,
     onNavigationClick: (() -> Unit)? = null,
+    onAvatarClick: (() -> Unit)? = null,
 ) {
     Box {
         ProfileBanner(
             bannerUrl = bannerUrl,
-            avatarUrl = avatarUrl
+            avatarUrl = avatarUrl,
+            onAvatarClick = onAvatarClick
         )
         TopAppBar(
             modifier = Modifier.systemBarsPadding(),

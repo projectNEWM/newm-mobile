@@ -26,7 +26,7 @@ import io.newm.core.theme.Gray16
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 
-private val recordStoreLabelStyle = TextStyle(
+private val recordStoreLabelStyle @Composable get() = TextStyle(
     fontSize = 14.sp,
     fontFamily = inter,
     fontWeight = FontWeight.Medium,

@@ -114,6 +114,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.koin.android)
     implementation(libs.kotlin.reflect)
+    implementation(libs.cmp.image.pick.n.crop)
     implementation(platform(libs.firebase.bom))
     implementation(project(Modules.barcodeScanner))
     implementation(project(Modules.coreResources))

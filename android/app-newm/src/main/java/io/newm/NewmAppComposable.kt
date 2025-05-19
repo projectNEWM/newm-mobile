@@ -25,9 +25,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,6 +60,7 @@ import io.newm.core.theme.LightSkyBlue
 import io.newm.core.theme.OceanGreen
 import io.newm.core.theme.YellowJacket
 import io.newm.core.theme.inter
+import io.newm.core.ui.LocalSnackBarHostState
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.iconGradient
 import io.newm.feature.musicplayer.MiniPlayer
@@ -124,6 +128,8 @@ internal fun NewmApp(
         }
     }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
     ModalBottomSheetLayout(
         modifier = Modifier,
         sheetState = sheetState,
@@ -178,13 +184,16 @@ internal fun NewmApp(
                     }
                 }
 
-            }
+            },
+            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
         ) { padding ->
-            NavigableCircuitContent(
-                modifier = Modifier.padding(padding),
-                navigator = newmNavigator,
-                backStack = backstack
-            )
+            CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
+                NavigableCircuitContent(
+                    modifier = Modifier.padding(padding),
+                    navigator = newmNavigator,
+                    backStack = backstack
+                )
+            }
         }
 
     }
