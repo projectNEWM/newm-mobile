@@ -7,7 +7,8 @@ import coil3.PlatformContext
 import coil3.SingletonImageLoader
 import com.google.android.recaptcha.Recaptcha
 import com.google.firebase.FirebaseApp
-import io.newm.BuildConfig.*
+import io.newm.BuildConfig.DEBUG
+import io.newm.BuildConfig.VERSION_NAME
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
@@ -56,7 +57,7 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
             Recaptcha.getClient(this@NewmApplication, config.recaptchaSiteKey, timeout = 50000L)
                 .onSuccess { client ->
                     recaptchaClientProvider.setRecaptchaClient(client)
-                    forceAppUpdateViewModel.checkForUpdates(currentVersion = BuildConfig.VERSION_NAME)
+                    forceAppUpdateViewModel.checkForUpdates(currentVersion = VERSION_NAME)
                 }.onFailure { exception ->
                     logger.error(
                         tag = "RecaptchaClient",

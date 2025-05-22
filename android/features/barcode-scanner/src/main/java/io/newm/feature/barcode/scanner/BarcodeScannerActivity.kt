@@ -1,8 +1,5 @@
-@file:kotlin.OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
-
 package io.newm.feature.barcode.scanner
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -38,6 +35,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -120,7 +118,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             putExtra(NEWM_WALLET_CONNECTION_ID, newmCode)
         }
         this.apply {
-            setResult(Activity.RESULT_OK, resultIntent)
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
     }
@@ -199,7 +197,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                 modifier = Modifier.padding(vertical = 16.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back_description),
                     tint = White
                 )

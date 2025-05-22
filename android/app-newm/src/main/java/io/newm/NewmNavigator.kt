@@ -1,7 +1,6 @@
 package io.newm
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.PopResult

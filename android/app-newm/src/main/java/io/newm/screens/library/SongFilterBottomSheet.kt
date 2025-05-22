@@ -47,7 +47,6 @@ private val buttonGradient =
 
 private val purpleBrush = iconGradient(Purple, Purple)
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SongFilterBottomSheet(
     sheetState: ModalBottomSheetState,

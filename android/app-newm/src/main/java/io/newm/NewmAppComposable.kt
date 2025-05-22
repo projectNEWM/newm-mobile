@@ -46,6 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
@@ -70,7 +71,6 @@ import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
-import androidx.core.net.toUri
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
