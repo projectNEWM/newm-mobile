@@ -88,14 +88,14 @@ object TextFieldWithLabelDefaults {
         @Stable
         val PASSWORD = KeyboardOptions(
             capitalization = KeyboardCapitalization.None,
-            keyboardType = KeyboardType.Password,
-            autoCorrect = false,
+            autoCorrectEnabled = false,
+            keyboardType = KeyboardType.Password
         )
 
         @Stable
         val EMAIL = KeyboardOptions(
-            autoCorrect = false,
-            keyboardType = KeyboardType.Email,
+            autoCorrectEnabled = false,
+            keyboardType = KeyboardType.Email
         )
 
         @Stable
@@ -103,7 +103,7 @@ object TextFieldWithLabelDefaults {
 
         @Stable
         val Digits =
-            KeyboardOptions(keyboardType = KeyboardType.NumberPassword, autoCorrect = false)
+            KeyboardOptions(autoCorrectEnabled = false, keyboardType = KeyboardType.NumberPassword)
     }
 }
 

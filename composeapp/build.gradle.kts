@@ -22,7 +22,7 @@ kotlin {
 
     jvm("desktop")
 
-    @kotlin.OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
         browser {

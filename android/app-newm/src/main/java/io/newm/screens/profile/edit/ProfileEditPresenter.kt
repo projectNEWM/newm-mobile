@@ -16,7 +16,6 @@ import io.newm.core.resources.R
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.password.isPasswordValid
 import io.newm.feature.login.screen.password.passwordValidationError
-import io.newm.screens.Screen
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBack

@@ -7,13 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.webview.FullScreenWebView
-import io.newm.screens.library.TAG_NFT_LIBRARY_SCREEN
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 
