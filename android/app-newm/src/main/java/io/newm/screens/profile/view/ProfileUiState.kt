@@ -12,8 +12,8 @@ sealed class ProfileUiState : CircuitUiState {
         val isWalletConnected: Boolean,
         val userConnectedWallets: List<WalletConnection> = emptyList(),
         val eventSink: (ProfileUiEvent) -> Unit,
-        val showInvestmentPortfolio: Boolean,
         val showRecordStore: Boolean,
-        val showMultiWallets: Boolean
+        val showMultiWallets: Boolean,
+        val showStudio: Boolean
     ) : ProfileUiState()
 }

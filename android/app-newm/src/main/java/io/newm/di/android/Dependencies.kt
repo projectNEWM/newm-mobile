@@ -28,9 +28,11 @@ import io.newm.feature.musicplayer.service.DownloadStateManagerImpl
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.investment.portfolio.InvestmentPortfolioPresenter
 import io.newm.screens.library.NFTLibraryPresenter
+import io.newm.screens.marketplace.MarketplacePresenter
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.view.ProfilePresenter
 import io.newm.screens.recordstore.RecordStorePresenter
+import io.newm.screens.studio.StudioPresenter
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.featureflags.FeatureFlagManager
@@ -43,11 +45,20 @@ import androidx.media3.exoplayer.offline.DownloadManager as ExoDownloadManager
 
 @SuppressLint("UnsafeOptInUsageError")
 val viewModule = module {
-    single<FeatureFlagManager> { AndroidFeatureFlagManager(get(), get()) }
+    single<FeatureFlagManager> { AndroidFeatureFlagManager(get(), get(), get()) }
     single { ForceAppUpdateViewModel(get(), get()) }
     single { RecaptchaClientProvider() }
 
-    factory { params -> CreateAccountScreenPresenter(params.get(), get(), get(), get(), get(), get()) }
+    factory { params ->
+        CreateAccountScreenPresenter(
+            params.get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     factory { params -> LoginScreenPresenter(params.get(), get(), get(), get(), get()) }
     factory { params ->
         ResetPasswordScreenPresenter(
@@ -56,8 +67,8 @@ val viewModule = module {
             get(),
             get(),
             get(),
-            get()
-        , get())
+            get(), get()
+        )
     }
     single {
         val sharedBuildConfig = get<NewmSharedBuildConfig>()
@@ -129,6 +140,12 @@ val viewModule = module {
         )
     }
     factory { params ->
+        MarketplacePresenter(
+            params.get(),
+            get(),
+        )
+    }
+    factory { params ->
         InvestmentPortfolioPresenter(
             params.get(),
             get(),
@@ -139,6 +156,15 @@ val viewModule = module {
             get(),
         )
     }
+
+    factory { params ->
+        StudioPresenter(
+            params.get(),
+            get(),
+            get()
+        )
+    }
+
     factory { params ->
         ProfileEditPresenter(
             params.get(),

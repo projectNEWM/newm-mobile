@@ -9,10 +9,10 @@ sealed interface ProfileEditUiEvent : CircuitUiEvent
 /** Profile UI Events */
 data object OnDisconnectWallet : ProfileUiEvent
 data object OnEditProfile : ProfileUiEvent
-data object OnInvestmentPortfolio : ProfileUiEvent
 data object OnWalletsScreen : ProfileUiEvent
 data object OnVisitRecordStore : ProfileUiEvent
 data object OnWalletDialogOpened : ProfileUiEvent
+data object OnVisitStudio : ProfileUiEvent
 
 /** Profile Edit UI Events */
 data object OnBack : ProfileEditUiEvent

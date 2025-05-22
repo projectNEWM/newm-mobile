@@ -32,6 +32,9 @@ import io.newm.screens.investment.portfolio.InvestmentPortfolioUi
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
+import io.newm.screens.marketplace.MarketplacePresenter
+import io.newm.screens.marketplace.MarketplaceScreenUi
+import io.newm.screens.marketplace.MarketplaceState
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
@@ -41,6 +44,9 @@ import io.newm.screens.profile.view.ProfileUiState
 import io.newm.screens.recordstore.RecordStorePresenter
 import io.newm.screens.recordstore.RecordStoreScreenUi
 import io.newm.screens.recordstore.RecordStoreState
+import io.newm.screens.studio.StudioPresenter
+import io.newm.screens.studio.StudioScreenUi
+import io.newm.screens.studio.StudioState
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.screens.wallets.view.WalletsUi
 import io.newm.screens.wallets.WalletsUiState
@@ -84,6 +90,7 @@ class HomeActivity : ComponentActivity() {
                             logger = logger,
                             eventLogger = eventLogger,
                             showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore),
+                            showInvestmentPortfolio = featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
                         )
                     }
                 }
@@ -110,6 +117,14 @@ class HomeActivity : ComponentActivity() {
 
                 is Screen.RecordStore -> ui<RecordStoreState> { state, modifier ->
                     RecordStoreScreenUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
+                is Screen.Marketplace -> ui<MarketplaceState> { state, modifier ->
+                    MarketplaceScreenUi(
                         state = state,
                         modifier = modifier,
                         eventLogger = eventLogger
@@ -155,6 +170,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.Studio -> ui<StudioState> { state, modifier ->
+                    StudioScreenUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
                 else -> null
 
             }
@@ -182,6 +205,12 @@ class HomeActivity : ComponentActivity() {
                     )
                 }.value
 
+                is Screen.Marketplace -> inject<MarketplacePresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
                 is Screen.EditProfile -> inject<ProfileEditPresenter> {
                     parametersOf(
                         navigator
@@ -201,6 +230,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.Wallets -> inject<WalletsPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.Studio -> inject<StudioPresenter> {
                     parametersOf(
                         navigator
                     )

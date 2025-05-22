@@ -1,7 +1,6 @@
 package io.newm
 
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -71,6 +70,7 @@ import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
+import androidx.core.net.toUri
 
 internal const val TAG_BOTTOM_NAVIGATION = "TAG_BOTTOM_NAVIGATION"
 
@@ -93,7 +93,8 @@ private val initialScreen = Screen.NFTLibrary
 internal fun NewmApp(
     logger: NewmAppLogger,
     eventLogger: NewmAppEventLogger,
-    showRecordStore: Boolean
+    showRecordStore: Boolean,
+    showInvestmentPortfolio: Boolean,
 ) {
     val context = LocalContext.current
     val backstack = rememberSaveableBackStack(initialScreen)
@@ -106,7 +107,7 @@ internal fun NewmApp(
 
     val newmNavigator =
         rememberNewmNavigator(circuitNavigator, logger, {}, launchBrowser = { url ->
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
         }, eventLogger)
 
     val currentRootScreen = backstack.topRecord?.screen as Screen
@@ -175,6 +176,7 @@ internal fun NewmApp(
                                 currentRootScreen = currentRootScreen,
                                 eventLogger = eventLogger,
                                 showRecordStore = showRecordStore,
+                                showInvestmentPortfolio = showInvestmentPortfolio,
                                 onNavigationSelected = {
                                     circuitNavigator.resetRoot(it)
                                 }
@@ -204,6 +206,7 @@ internal fun NewmBottomNavigation(
     currentRootScreen: CircuitScreen?,
     eventLogger: NewmAppEventLogger,
     showRecordStore: Boolean,
+    showInvestmentPortfolio: Boolean,
     onNavigationSelected: (Screen) -> Unit
 ) {
     Column(Modifier.height(76.dp)) {
@@ -217,7 +220,7 @@ internal fun NewmBottomNavigation(
             HomeBottomNavigationItem(
                 selected = currentRootScreen == Screen.NFTLibrary,
                 iconResId = R.drawable.ic_library,
-                labelResId = R.string.nft_library,
+                labelResId = R.string.bottom_nav_nft_tab,
                 selectedIconBrush = LibraryIconGradient,
                 selectedLabelColor = DarkPink,
                 onClick = {
@@ -225,11 +228,38 @@ internal fun NewmBottomNavigation(
                     onNavigationSelected(Screen.NFTLibrary)
                 },
             )
+            if (showInvestmentPortfolio) {
+                HomeBottomNavigationItem(
+                    selected = currentRootScreen == Screen.InvestmentPortfolio,
+                    iconResId = R.drawable.ic_wallet,
+                    labelResId = R.string.bottom_nav_portfolio_tab,
+                    selectedIconBrush = AccountIconGradient,
+                    selectedLabelColor = DarkPink,
+                    onClick = {
+                        eventLogger.logClickEvent(AppScreens.InvestmentPortfolioScreen.RECORD_STORE_BUTTON)
+                        eventLogger.logPageLoad(AppScreens.InvestmentPortfolioScreen.name)
+                        onNavigationSelected(Screen.InvestmentPortfolio)
+                    },
+                )
+
+                HomeBottomNavigationItem(
+                    selected = currentRootScreen == Screen.Marketplace,
+                    iconResId = R.drawable.ic_marketplace,
+                    labelResId = R.string.bottom_nav_marketplace_tab,
+                    selectedIconBrush = AccountIconGradient,
+                    selectedLabelColor = DarkPink,
+                    onClick = {
+                        eventLogger.logClickEvent(AppScreens.MarketplaceScreen.MARKETPLACE_BUTTON)
+                        eventLogger.logPageLoad(AppScreens.MarketplaceScreen.name)
+                        onNavigationSelected(Screen.Marketplace)
+                    },
+                )
+            }
             if (showRecordStore) {
                 HomeBottomNavigationItem(
                     selected = currentRootScreen == Screen.RecordStore,
                     iconResId = R.drawable.ic_recordstore_active,
-                    labelResId = R.string.record_store,
+                    labelResId = R.string.bottom_nav_record_store_tab,
                     selectedIconBrush = AccountIconGradient,
                     selectedLabelColor = DarkPink,
                     onClick = {
@@ -258,7 +288,10 @@ internal fun NewmBottomNavigation(
 @Preview(showBackground = true)
 @Composable
 fun BottomNavigationBarPreview() {
-    NewmBottomNavigation(Screen.NFTLibrary, NewmAppEventLogger(), showRecordStore = false) {}
+    NewmBottomNavigation(
+        Screen.NFTLibrary, NewmAppEventLogger(),
+        showRecordStore = false, showInvestmentPortfolio = false
+    ) {}
 }
 
 // Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
@@ -291,7 +324,8 @@ private fun RowScope.HomeBottomNavigationItem(
                 text = label,
                 fontFamily = inter,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 10.sp,
+                fontSize = 9.sp,
+                maxLines = 1,
                 color = if (selected) selectedLabelColor else Color.Unspecified
             )
         },
