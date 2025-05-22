@@ -12,6 +12,7 @@ data object OnEditProfile : ProfileUiEvent
 data object OnWalletsScreen : ProfileUiEvent
 data object OnVisitRecordStore : ProfileUiEvent
 data object OnWalletDialogOpened : ProfileUiEvent
+data object OnVisitStudio : ProfileUiEvent
 
 /** Profile Edit UI Events */
 data object OnBack : ProfileEditUiEvent

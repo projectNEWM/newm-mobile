@@ -6,9 +6,11 @@ import com.launchdarkly.sdk.LDContext
 import com.launchdarkly.sdk.android.LDClient
 import com.launchdarkly.sdk.android.LDConfig
 import com.launchdarkly.sdk.android.LDConfig.Builder.AutoEnvAttributes
+import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.featureflags.FeatureFlag
 import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
@@ -19,6 +21,7 @@ import java.util.concurrent.Future
 class AndroidFeatureFlagManager(
     private val application: Application,
     private val sharedBuildConfig: NewmSharedBuildConfig,
+    private val log: NewmAppLogger
 ) : FeatureFlagManager {
 
     private val client: LDClient = buildClient()
@@ -36,6 +39,11 @@ class AndroidFeatureFlagManager(
     }
 
     override fun isEnabled(flag: FeatureFlag, default: Boolean): Boolean {
+        val advancedAccessEnabled = client.boolVariation(FeatureFlags.AdvancedAccess.key, false)
+        if (flag != FeatureFlags.AdvancedAccess && advancedAccessEnabled) {
+            log.breadcrumb("AdvancedAccess", "Override: $flag enabled due to AdvancedAccess")
+            return true
+        }
         return client.boolVariation(flag.key, default)
     }
 

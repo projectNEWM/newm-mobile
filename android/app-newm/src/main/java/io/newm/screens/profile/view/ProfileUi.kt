@@ -34,6 +34,7 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.OnVisitRecordStore
+import io.newm.screens.profile.OnVisitStudio
 import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.screens.profile.ProfileAppBar
@@ -68,7 +69,7 @@ private fun ProfileUiContent(
     val onEvent = state.eventSink
     val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
     LaunchedEffect(openWalletDialog) {
-        if(openWalletDialog.value) {
+        if (openWalletDialog.value) {
             onEvent(OnWalletDialogOpened)
         }
     }
@@ -117,14 +118,6 @@ private fun ProfileUiContent(
                     onClick = { onEvent(OnEditProfile) },
                 )
 
-                if (!state.showMultiWallets) {
-                    WalletButton(
-                        openWalletDialog = openWalletDialog,
-                        isWalletConnected = state.isWalletConnected,
-                        disconnectWallet = { onEvent(OnDisconnectWallet) }
-                    ) { newmWalletConnectionId -> onEvent(OnConnectWallet(newmWalletConnectionId)) }
-                }
-
                 Spacer(modifier = Modifier.weight(1F))
 
                 if (!state.showRecordStore) {
@@ -133,6 +126,12 @@ private fun ProfileUiContent(
                     )
                 }
 
+                if(state.showStudio) {
+                    ProfileButton(
+                        label = stringResource(id = R.string.profile_studio),
+                        onClick = { onEvent(OnVisitStudio) },
+                    )
+                }
                 if (state.showMultiWallets) {
                     if (state.isWalletConnected) {
                         ProfileButton(
@@ -149,6 +148,12 @@ private fun ProfileUiContent(
                             onEvent(OnConnectWallet(newmWalletConnectionId))
                         }
                     )
+                } else {
+                    WalletButton(
+                        openWalletDialog = openWalletDialog,
+                        isWalletConnected = state.isWalletConnected,
+                        disconnectWallet = { onEvent(OnDisconnectWallet) }
+                    ) { newmWalletConnectionId -> onEvent(OnConnectWallet(newmWalletConnectionId)) }
                 }
             }
         }
@@ -185,7 +190,8 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUi
                 isWalletConnected = false,
                 eventSink = {},
                 showRecordStore = false,
-                showMultiWallets = false
+                showMultiWallets = false,
+                showStudio = false
             ),
             ProfileUiState.Content(
                 profile = User(
@@ -195,7 +201,8 @@ internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUi
                 isWalletConnected = true,
                 eventSink = {},
                 showRecordStore = true,
-                showMultiWallets = true
+                showMultiWallets = true,
+                showStudio = true
             )
         )
 }

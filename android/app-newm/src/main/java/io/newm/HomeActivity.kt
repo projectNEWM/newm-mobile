@@ -44,6 +44,9 @@ import io.newm.screens.profile.view.ProfileUiState
 import io.newm.screens.recordstore.RecordStorePresenter
 import io.newm.screens.recordstore.RecordStoreScreenUi
 import io.newm.screens.recordstore.RecordStoreState
+import io.newm.screens.studio.StudioPresenter
+import io.newm.screens.studio.StudioScreenUi
+import io.newm.screens.studio.StudioState
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.screens.wallets.view.WalletsUi
 import io.newm.screens.wallets.WalletsUiState
@@ -167,6 +170,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.Studio -> ui<StudioState> { state, modifier ->
+                    StudioScreenUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
                 else -> null
 
             }
@@ -219,6 +230,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.Wallets -> inject<WalletsPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.Studio -> inject<StudioPresenter> {
                     parametersOf(
                         navigator
                     )

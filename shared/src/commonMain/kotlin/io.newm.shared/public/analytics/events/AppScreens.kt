@@ -28,6 +28,7 @@ object AppScreens {
         const val TERMS_AND_CONDITIONS_BUTTON: String = "Terms and Conditions"
         const val PRIVACY_POLICY_BUTTON: String = "Privacy Policy"
         const val WALLETS_BUTTON: String = "Wallets Button"
+        const val VISIT_STUDIO_BUTTON: String = "Visit NEWM Studio"
     }
 
     object ConnectWalletScannerScreen : ScreenEvents {
@@ -85,7 +86,11 @@ object AppScreens {
     object InvestmentPortfolioScreen : ScreenEvents {
         override val name = "Investment Portfolio"
         const val RECORD_STORE_BUTTON: String = "Investment Portfolio"
+    }
 
+    object StudioScreen : ScreenEvents {
+        override val name: String = "Studio"
+        const val STUDIO_BUTTON: String = "Studio"
     }
 
     object MarketplaceScreen : ScreenEvents {

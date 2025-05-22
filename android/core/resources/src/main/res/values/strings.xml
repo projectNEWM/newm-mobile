@@ -104,6 +104,7 @@
     <string name="profile_connect_wallet_button_label">Connect Wallet</string>
     <string name="profile_connected_wallets_button_label">Connected Wallets: %1$d</string>
     <string name="profile_disconnect_wallet_button_label">Disconnect Wallet</string>
+    <string name="profile_studio">Studio</string>
     <string name="profile_documents">Documents</string>
     <string name="profile_edit_button_label">Edit Profile</string>
     <string name="profile_enter_current_password">Please enter your current password</string>

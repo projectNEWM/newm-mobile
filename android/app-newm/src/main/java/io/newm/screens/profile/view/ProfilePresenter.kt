@@ -21,6 +21,7 @@ import io.newm.screens.profile.OnLogout
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.screens.profile.OnVisitRecordStore
+import io.newm.screens.profile.OnVisitStudio
 import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.shared.public.analytics.NewmAppEventLogger
@@ -76,6 +77,8 @@ class ProfilePresenter(
 
         val showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore)
         val showMultiWallets = featureFlagManager.isEnabled(FeatureFlags.ShowMultiWallets)
+        val hasAdvancedAccess = featureFlagManager.isEnabled(FeatureFlags.ShowMultiWallets)
+
 
         return if (user == null) {
             ProfileUiState.Loading
@@ -86,6 +89,7 @@ class ProfilePresenter(
                 userConnectedWallets = userConnectedWallets,
                 showRecordStore = showRecordStore,
                 showMultiWallets = showMultiWallets,
+                showStudio = hasAdvancedAccess,
                 eventSink = { event ->
                     when (event) {
                         is OnConnectWallet -> coroutineScope.launch {
@@ -135,6 +139,11 @@ class ProfilePresenter(
 
                         OnWalletDialogOpened -> {
                             eventLogger.logPageLoad(AppScreens.LogoutConfirmationDialogScreen.name)
+                        }
+
+                        OnVisitStudio -> {
+                            navigator.goTo(Screen.Studio)
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_STUDIO_BUTTON)
                         }
                     }
                 }
