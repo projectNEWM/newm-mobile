@@ -16,10 +16,14 @@ public final class ProfileModule: Module {
 			HasWalletConnectionsUseCaseProvider().get() as HasWalletConnectionsUseCase
 		}
 		
-		Resolver.register {
-			DisconnectWalletUseCaseProvider().get() as DisconnectWalletUseCase
-		}
-		
+        Resolver.register {
+            DisconnectWalletUseCaseProvider().get() as DisconnectWalletUseCase
+        }
+
+        Resolver.register {
+            ConnectWalletUseCaseProvider().get() as ConnectWalletUseCase
+        }
+
 		Resolver.register {
 			DeleteCurrentUserUseCaseProvider().get() as DeleteCurrentUserUseCase
 		}
@@ -27,17 +31,17 @@ public final class ProfileModule: Module {
 	
 #if DEBUG
 	public func registerAllMockedServices(mockResolver: Resolver) {
-		mockResolver.register {
-			MockHasWalletConnectionsUseCase() as HasWalletConnectionsUseCase
-		}
-		
+        mockResolver.register {
+            $0.resolve(ConnectWalletUseCase.self) as! HasWalletConnectionsUseCase
+        }.scope(.cached)
+
 		mockResolver.register {
 			MockConnectWalletUseCase() as ConnectWalletUseCase
-		}
+		}.scope(.cached)
 		
 		mockResolver.register {
 			$0.resolve(ConnectWalletUseCase.self) as! DisconnectWalletUseCase
-		}
+		}.scope(.cached)
 	}
 #endif
 }

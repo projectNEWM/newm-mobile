@@ -5,11 +5,11 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 	var walletSynced: any Kotlinx_coroutines_coreFlow { fatalError() }
 	
 	func getNFTTrack(id: String) -> NFTTrack? {
-		nil
+        NFTTrack.mocks.first { $0.id == id }
 	}
 
 	func getAllTracks() async throws -> [NFTTrack] {
-		[]
+        NFTTrack.mocks
 	}
 		
 	func getAllTracksFlow() async throws -> any Kotlinx_coroutines_coreFlow {
@@ -17,7 +17,7 @@ class MockWalletNFTTracksUseCase: WalletNFTTracksUseCase {
 	}
 	
 	func getAllCollectableTracks() async throws -> [NFTTrack] {
-		[]
+        NFTTrack.mocks
 	}
 	
 	func getAllCollectableTracksFlow() -> any Kotlinx_coroutines_coreFlow {

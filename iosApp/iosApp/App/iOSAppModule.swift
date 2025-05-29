@@ -22,7 +22,7 @@ enum MockMode {
 	case fallback
 	case dontUse
 }
-let mockMode: MockMode = .dontUse
+let mockMode: MockMode = .use
 #endif
 
 struct iOSAppModule: Module {

@@ -2,8 +2,8 @@ import Foundation
 import shared
 import Utilities
 
-public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUseCase {
-	private var walletConnections: [WalletConnection] = []
+public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUseCase, HasWalletConnectionsUseCase {
+	private var walletConnections: [WalletConnection] = [WalletConnection(id: "1", createdAt: "", stakeAddress: "")]
 	
 	public var throwThisError: Error?
 	
@@ -48,8 +48,10 @@ public class MockConnectWalletUseCase: ConnectWalletUseCase, DisconnectWalletUse
 
 		return try! await KotlinBoolean(bool: getWalletConnections().isEmpty == false)
 	}
-		
-	public func disconnectSingleWallet(walletConnectionId: String) async throws {}
+    
+    public func disconnectSingleWallet(walletConnectionId: String) async throws {
+        walletConnections = walletConnections.filter { $0.id != walletConnectionId }
+    }
 }
 
 extension MockConnectWalletUseCase {
