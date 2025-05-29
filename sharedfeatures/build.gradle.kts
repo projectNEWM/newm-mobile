@@ -26,7 +26,11 @@ android {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
+    }
 
     sourceSets {
         commonMain {
@@ -78,12 +82,5 @@ kotlin {
             browser {}
         }
 
-    }
-
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
