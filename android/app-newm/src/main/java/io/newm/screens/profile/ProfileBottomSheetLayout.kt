@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import io.newm.BuildConfig
 import io.newm.core.resources.R
 import io.newm.core.theme.Black90
-import io.newm.core.theme.Gray400
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.versionTextStyle

@@ -1,4 +1,4 @@
-package io.newm.screens.recordstore
+package io.newm.screens.marketplace
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -12,12 +12,12 @@ import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 
-class RecordStorePresenter(
+class MarketplacePresenter(
     private val navigator: Navigator,
     private val eventLogger: NewmAppEventLogger
-) : Presenter<RecordStoreState> {
+) : Presenter<MarketplaceState> {
     @Composable
-    override fun present(): RecordStoreState {
+    override fun present(): MarketplaceState {
         val context = LocalContext.current
         val connectivityManager = remember {
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -26,10 +26,10 @@ class RecordStorePresenter(
             mutableStateOf(connectivityManager.activeNetwork != null)
         }
         return when {
-            !isNetworkAvailable -> RecordStoreState.Error
+            !isNetworkAvailable -> MarketplaceState.Error
             else -> {
-                eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
-                RecordStoreState.Content(
+                eventLogger.logPageLoad(AppScreens.MarketplaceScreen.name)
+                MarketplaceState.Content(
                     eventSink = {}
                 )
             }

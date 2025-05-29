@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,6 +29,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -41,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -59,9 +62,12 @@ import coil3.request.error
 import coil3.request.placeholder
 import io.newm.core.resources.R
 import io.newm.core.theme.CerisePink
+import io.newm.core.theme.DarkPink
+import io.newm.core.theme.DarkViolet
 import io.newm.core.theme.Gray16
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.NewmTheme
+import io.newm.core.theme.Purple
 import io.newm.core.theme.StatusGreen
 import io.newm.core.theme.SteelPink
 import io.newm.core.theme.White
@@ -87,7 +93,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
-
+internal val LibraryBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink))
 
 @Composable
 fun NFTLibraryScreenUi(
@@ -441,6 +447,69 @@ private fun TrackRowItem(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun RevealedPanel(
+    content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .background(Purple)
+            .fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(modifier = Modifier.weight(1f))
+        content()
+    }
+}
+
+@Composable
+fun DownloadButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(horizontal = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_download),
+                contentDescription = stringResource(R.string.library_download_description)
+            )
+        }
+        Text(
+            text = stringResource(id = R.string.library_download),
+            style = TextStyle(
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp,
+                color = White
+            )
+        )
+    }
+}
+
+@Composable
+fun RemoveButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(horizontal = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.library_remove_description)
+            )
+        }
+        Text(
+            text = stringResource(id = R.string.library_remove_description),
+            style = TextStyle(
+                fontFamily = inter,
+                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp,
+                color = White
+            )
+        )
     }
 }
 

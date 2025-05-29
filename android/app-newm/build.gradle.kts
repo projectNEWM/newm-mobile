@@ -11,7 +11,7 @@ plugins {
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
-    id("io.sentry.android.gradle") version "4.9.0"
+    id("io.sentry.android.gradle") version "5.6.0"
     alias(libs.plugins.compose.multiplatform)
 }
 
@@ -116,6 +116,7 @@ dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.cmp.image.pick.n.crop)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.androidx.material.icons.extended)
     implementation(project(Modules.barcodeScanner))
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))

@@ -1,4 +1,4 @@
-package io.newm.screens.recordstore
+package io.newm.screens.studio
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -9,15 +9,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import io.newm.shared.internal.TokenManager
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 
-class RecordStorePresenter(
+class StudioPresenter(
     private val navigator: Navigator,
-    private val eventLogger: NewmAppEventLogger
-) : Presenter<RecordStoreState> {
+    private val eventLogger: NewmAppEventLogger,
+    private val tokenManager: TokenManager
+) : Presenter<StudioState> {
     @Composable
-    override fun present(): RecordStoreState {
+    override fun present(): StudioState {
         val context = LocalContext.current
         val connectivityManager = remember {
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -26,11 +28,13 @@ class RecordStorePresenter(
             mutableStateOf(connectivityManager.activeNetwork != null)
         }
         return when {
-            !isNetworkAvailable -> RecordStoreState.Error
+            !isNetworkAvailable -> StudioState.Error
             else -> {
-                eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
-                RecordStoreState.Content(
-                    eventSink = {}
+                eventLogger.logPageLoad(AppScreens.MarketplaceScreen.name)
+                StudioState.Content(
+                    eventSink = {},
+                    accessToken = tokenManager.getAccessToken(),
+                    refreshToken = tokenManager.getRefreshToken()
                 )
             }
         }

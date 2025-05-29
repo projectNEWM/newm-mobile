@@ -5,6 +5,11 @@ interface FeatureFlag {
 }
 
 object FeatureFlags {
+    object AdvancedAccess : FeatureFlag {
+        override val key: String
+            get() = "mobile-app-advanced-access"
+    }
+
     object ShowRecordStore : FeatureFlag {
         override val key = "mobile-app-show-recordstore"
     }

@@ -1,18 +1,13 @@
 package io.newm
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.retained.LocalRetainedStateRegistry
@@ -32,6 +27,9 @@ import io.newm.screens.investment.portfolio.InvestmentPortfolioUi
 import io.newm.screens.library.NFTLibraryPresenter
 import io.newm.screens.library.NFTLibraryScreenUi
 import io.newm.screens.library.NFTLibraryState
+import io.newm.screens.marketplace.MarketplacePresenter
+import io.newm.screens.marketplace.MarketplaceScreenUi
+import io.newm.screens.marketplace.MarketplaceState
 import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.edit.ProfileEditUi
 import io.newm.screens.profile.edit.ProfileEditUiState
@@ -41,9 +39,12 @@ import io.newm.screens.profile.view.ProfileUiState
 import io.newm.screens.recordstore.RecordStorePresenter
 import io.newm.screens.recordstore.RecordStoreScreenUi
 import io.newm.screens.recordstore.RecordStoreState
+import io.newm.screens.studio.StudioPresenter
+import io.newm.screens.studio.StudioScreenUi
+import io.newm.screens.studio.StudioState
 import io.newm.screens.wallets.WalletsPresenter
-import io.newm.screens.wallets.view.WalletsUi
 import io.newm.screens.wallets.WalletsUiState
+import io.newm.screens.wallets.view.WalletsUi
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
@@ -84,6 +85,7 @@ class HomeActivity : ComponentActivity() {
                             logger = logger,
                             eventLogger = eventLogger,
                             showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore),
+                            showInvestmentPortfolio = featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
                         )
                     }
                 }
@@ -110,6 +112,14 @@ class HomeActivity : ComponentActivity() {
 
                 is Screen.RecordStore -> ui<RecordStoreState> { state, modifier ->
                     RecordStoreScreenUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
+                is Screen.Marketplace -> ui<MarketplaceState> { state, modifier ->
+                    MarketplaceScreenUi(
                         state = state,
                         modifier = modifier,
                         eventLogger = eventLogger
@@ -155,6 +165,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.Studio -> ui<StudioState> { state, modifier ->
+                    StudioScreenUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
                 else -> null
 
             }
@@ -182,6 +200,12 @@ class HomeActivity : ComponentActivity() {
                     )
                 }.value
 
+                is Screen.Marketplace -> inject<MarketplacePresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
                 is Screen.EditProfile -> inject<ProfileEditPresenter> {
                     parametersOf(
                         navigator
@@ -201,6 +225,12 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.Wallets -> inject<WalletsPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is Screen.Studio -> inject<StudioPresenter> {
                     parametersOf(
                         navigator
                     )

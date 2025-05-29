@@ -1,6 +1,6 @@
 package io.newm.shared.internal
 
-internal interface TokenManager {
+interface TokenManager {
 
     fun getAccessToken(): String?
 
