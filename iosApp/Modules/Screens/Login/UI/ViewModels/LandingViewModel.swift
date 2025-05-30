@@ -63,6 +63,7 @@ class LandingViewModel: ObservableObject {
 				handleError(error)
 			}
 			isLoading = false
+			NotificationCenter.default.post(name: Notification.Name(shared.Notification().loginStateChanged), object: nil)
 		}
 	}
 	
@@ -165,6 +166,7 @@ class LandingViewModel: ObservableObject {
 				handleError(error)
 			}
 			isLoading = false
+			NotificationCenter.default.post(name: Notification.Name(shared.Notification().loginStateChanged), object: nil)
 		}
 	}
 	
@@ -186,6 +188,7 @@ class LandingViewModel: ObservableObject {
 					handleError(error)
 				}
 				isLoading = false
+				NotificationCenter.default.post(name: Notification.Name(shared.Notification().loginStateChanged), object: nil)
 			}
 		case .failure(let error):
 			handleError(error)
