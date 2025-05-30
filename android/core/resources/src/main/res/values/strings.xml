@@ -103,7 +103,7 @@
     <string name="profile_connect_new_wallet_button_label">Connect New Wallet</string>
     <string name="profile_connect_wallet_button_label">Connect Wallet</string>
     <string name="profile_connected_wallets_button_label">Connected Wallets: %1$d</string>
-    <string name="profile_disconnect_wallet_button_label">Disconnect Wallet</string>
+    <string name="profile_disconnect_wallet_button_label">Disconnect</string>
     <string name="profile_studio">Studio</string>
     <string name="profile_documents">Documents</string>
     <string name="profile_edit_button_label">Edit Profile</string>
@@ -194,8 +194,7 @@
     <string name="wallet_empty_title">No NFTs yet?</string>
     <string name="wallet_link_camera_is_needed">NEWM needs access to your camera in order to connect a wallet</string>
     <string name="wallet_link_connected_message">Wallet connected %1$s</string>
-    <string name="wallets_screen_connect_new_wallet">Connect New Wallet</string>
-    <string name="wallets_screen_disconnect_all_wallets">Disconnect All Wallets</string>
+    <string name="wallets_screen_connect_new_wallet">Connect Wallet</string>
     <string name="wallets_screen_disconnect_wallet_modal_title">Disconnect Wallet?</string>
     <string name="wallets_screen_topbar_title">Connected Wallets</string>
     <string name="wallets_screen_wallet_options_desc">Wallet Options</string>
@@ -205,4 +204,15 @@
     <string name="profile_replace_picture">Replace picture</string>
     <string name="profile_remove_picture">Remove picture</string>
     <string name="title_profile_picture">Profile picture</string>
+    <string name="wallet_menu_details">View Details</string>
+    <string name="wallet_menu_rename">Rename</string>
+    <string name="wallet_menu_copy">Copy Address</string>
+    <string name="wallet_menu_disconnect">Disconnect</string>
+    <string name="wallets_screen_disconnect_wallet_modal_desc">Doing so will remove any NFTs and Stream Tokens accessible within the app.</string>
+    <string name="wallets_screen_rename_modal_title">Rename Wallet</string>
+    <string name="done">Done</string>
+    <string name="wallets_copy_address_label">%s address</string>
+    <string name="wallets_rename_text_label">new wallet name</string>
+    <string name="address">Address</string>
+    <string name="tokens">Tokens</string>
 </resources>

@@ -18,6 +18,7 @@ import io.newm.shared.internal.implementations.ChangePasswordUseCaseImpl
 import io.newm.shared.internal.implementations.ConnectWalletUseCaseImpl
 import io.newm.shared.internal.implementations.DeleteCurrentUserUseCaseImpl
 import io.newm.shared.internal.implementations.DisconnectWalletUseCaseImpl
+import io.newm.shared.internal.implementations.FindWalletConnectionUseCaseImpl
 import io.newm.shared.internal.implementations.ForceAppUpdateUseCaseImpl
 import io.newm.shared.internal.implementations.GetGenresUseCaseImpl
 import io.newm.shared.internal.implementations.GetInvestmentPortfolioDataUseCaseImpl
@@ -51,6 +52,7 @@ import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.DeleteCurrentUserUseCase
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
+import io.newm.shared.public.usecases.FindWalletConnectionUseCase
 import io.newm.shared.public.usecases.ForceAppUpdateUseCase
 import io.newm.shared.public.usecases.GetGenresUseCase
 import io.newm.shared.public.usecases.GetInvestmentPortfolioDataUseCase
@@ -149,6 +151,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
     single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
     single<UpdateProfilePictureUseCase> { UpdateProfilePictureUseCaseImpl(get(), get()) }
+    single<FindWalletConnectionUseCase> { FindWalletConnectionUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

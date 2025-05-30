@@ -93,7 +93,7 @@
     <string name="profile_confirm_new_password">Bitte bestätigen Sie Ihr neues Passwort</string>
     <string name="profile_connect_wallet_button_label">Wallet verbinden</string>
     <string name="profile_connected_wallets_button_label">Verbundene Wallets: %1$d</string>
-    <string name="profile_disconnect_wallet_button_label">Wallet trennen</string>
+    <string name="profile_disconnect_wallet_button_label">Trennen</string>
     <string name="profile_documents">Dokumente</string>
     <string name="profile_edit_button_label">Profil bearbeiten</string>
     <string name="profile_enter_current_password">Bitte geben Sie Ihr aktuelles Passwort ein</string>
@@ -182,9 +182,19 @@
     <string name="welcome">Hey %s 👋</string>
     <string name="welcome_to_newm">Willkommen bei NEWM</string>
     <string name="profile_connect_new_wallet_button_label">Neue Wallet</string>
-    <string name="wallets_screen_connect_new_wallet">Neue Wallet</string>
-    <string name="wallets_screen_disconnect_all_wallets">Alle trennen</string>
+    <string name="wallets_screen_connect_new_wallet">Wallet verbinden</string>
     <string name="wallets_screen_wallet_options_desc">Wallet-Optionen</string>
     <string name="wallets_screen_topbar_title">Verbundene Wallets</string>
-    <string name="wallets_screen_disconnect_wallet_modal_title">Wallet trennen?</string>
+    <string name="wallets_screen_disconnect_wallet_modal_title">Brieftasche trennen?</string>
+    <string name="wallet_menu_details">Details anzeigen</string>
+    <string name="wallet_menu_rename">Umbenennen</string>
+    <string name="wallet_menu_copy">Adresse kopieren</string>
+    <string name="wallet_menu_disconnect">Trennen</string>
+    <string name="wallets_screen_disconnect_wallet_modal_desc">Dadurch werden alle in der App zugänglichen NFTs und Stream Tokens entfernt.</string>
+    <string name="wallets_screen_rename_modal_title">Brieftasche umbenennen</string>
+    <string name="done">Fertig</string>
+    <string name="wallets_copy_address_label">Adresse von %s</string>
+    <string name="wallets_rename_text_label">neuer Name</string>
+    <string name="address">Adresse</string>
+    <string name="tokens">Tokens</string>
 </resources>

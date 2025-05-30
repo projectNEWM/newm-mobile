@@ -42,6 +42,9 @@ import io.newm.screens.recordstore.RecordStoreState
 import io.newm.screens.studio.StudioPresenter
 import io.newm.screens.studio.StudioScreenUi
 import io.newm.screens.studio.StudioState
+import io.newm.screens.walletdetail.WalletDetailPresenter
+import io.newm.screens.walletdetail.WalletDetailUiState
+import io.newm.screens.walletdetail.view.WalletDetailUi
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.view.WalletsUi
@@ -165,6 +168,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is Screen.WalletDetail -> ui<WalletDetailUiState> { state, modifier ->
+                    WalletDetailUi(
+                        state = state,
+                        modifier = modifier,
+                        eventLogger = eventLogger
+                    )
+                }
+
                 is Screen.Studio -> ui<StudioState> { state, modifier ->
                     StudioScreenUi(
                         state = state,
@@ -227,6 +238,14 @@ class HomeActivity : ComponentActivity() {
                 is Screen.Wallets -> inject<WalletsPresenter> {
                     parametersOf(
                         navigator
+                    )
+                }.value
+
+                is Screen.WalletDetail -> inject<WalletDetailPresenter> {
+                    parametersOf(
+                        navigator,
+                        screen.walletId,
+                        screen.walletName
                     )
                 }.value
 

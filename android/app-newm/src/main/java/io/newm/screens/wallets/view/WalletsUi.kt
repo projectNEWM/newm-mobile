@@ -35,12 +35,13 @@ import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
 import io.newm.core.theme.CerisePink
 import io.newm.core.theme.SteelPink
-import io.newm.core.theme.raleway
+import io.newm.core.theme.inter
 import io.newm.core.ui.utils.textGradient
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -50,31 +51,18 @@ fun WalletsUi(
     modifier: Modifier = Modifier,
     eventLogger: NewmAppEventLogger
 ) {
-    var isAlertVisible by remember { mutableStateOf(false) }
-    var selectedWalletId by remember { mutableStateOf<String?>(null) }
+    var selectedWalletConnection by remember { mutableStateOf<WalletConnection?>(null) }
+    var bottomSheetType by remember { mutableStateOf(BottomSheetType.DISCONNECT) }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
 
     WalletsBottomSheetLayout(
         modifier = Modifier.fillMaxSize(),
         state = bottomSheetState,
-        eventLogger = eventLogger,
-        onDisconnectWallet = {
-            scope.launch {
-                state.eventSink(
-                    WalletsEvent.OnDisconnectWallet(
-                        requireNotNull(selectedWalletId) { "selectedWalletId should not be null" }
-                    )
-                )
-                bottomSheetState.hide()
-            }
-        },
-        onCancel = {
-            scope.launch {
-                selectedWalletId = null
-                bottomSheetState.hide()
-            }
-        }
+        walletState = state,
+        type = bottomSheetType,
+        selectedWalletConnection = selectedWalletConnection,
+        eventLogger = eventLogger
     ) {
         Scaffold(
             modifier = modifier.fillMaxSize(),
@@ -85,6 +73,9 @@ fun WalletsUi(
                     title = { WalletsTopBarTitle() },
                     navigationIcon = { WalletsBackNav { state.eventSink(WalletsEvent.OnBack) } }
                 )
+            },
+            snackbarHost = {
+                // TODO add snackbars for renaming success and disconnecting success
             }
         ) { padding ->
 
@@ -108,13 +99,20 @@ fun WalletsUi(
                         Content(
                             state = state,
                             eventLogger = eventLogger,
-                            onOptionsClick = {
+                            onDisconnectWallet = {
                                 scope.launch {
-                                    selectedWalletId = it
+                                    selectedWalletConnection = it
+                                    bottomSheetType = BottomSheetType.DISCONNECT
                                     bottomSheetState.show()
                                 }
                             },
-                            onDisconnectAllClick = { isAlertVisible = true }
+                            onRenameWallet = {
+                                scope.launch {
+                                    selectedWalletConnection = it
+                                    bottomSheetType = BottomSheetType.RENAME
+                                    bottomSheetState.show()
+                                }
+                            }
                         )
                     }
                 }
@@ -122,18 +120,6 @@ fun WalletsUi(
                     state = pullRefreshState,
                     refreshing = state.isRefreshing,
                     modifier = Modifier.align(Alignment.TopCenter)
-                )
-            }
-
-            if (isAlertVisible) {
-                WalletsAlertDialog(
-                    onConfirm = {
-                        state.eventSink(WalletsEvent.OnDisconnectAllWallets)
-                        isAlertVisible = false
-                    },
-                    onDismiss = {
-                        isAlertVisible = false
-                    }
                 )
             }
         }
@@ -157,7 +143,7 @@ private fun WalletsTopBarTitle() {
     Text(
         text = stringResource(id = R.string.wallets_screen_topbar_title),
         style = TextStyle(
-            fontFamily = raleway,
+            fontFamily = inter,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
             brush = textGradient(SteelPink, CerisePink)

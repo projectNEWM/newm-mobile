@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
+import io.newm.screens.Screen
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
 import io.newm.shared.public.models.WalletConnection
@@ -63,16 +64,8 @@ class WalletsPresenter(
                     }
 
                     is WalletsEvent.OnDisconnectWallet -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DISCONNECT_WALLET_BUTTON)
                         scope.launch {
                             disconnectWalletUseCase.disconnectSingleWallet(it.walletId)
-                        }
-                    }
-
-                    is WalletsEvent.OnDisconnectAllWallets -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DISCONNECT_ALL_WALLETS_BUTTON)
-                        scope.launch {
-                            disconnectWalletUseCase.disconnect()
                         }
                     }
 
@@ -80,6 +73,15 @@ class WalletsPresenter(
                         scope.launch {
                             connectWalletUseCase.connect(it.newmCode)
                         }
+                    }
+
+                    is WalletsEvent.OnRenameWallet -> {
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.WALLET_RENAME_CONFIRM)
+                        //TODO logic to rename wallet
+                    }
+
+                    is WalletsEvent.OnWalletDetailView -> {
+                        navigator.goTo(Screen.WalletDetail(it.walletId, "Wallet Name"))
                     }
                 }
             }
