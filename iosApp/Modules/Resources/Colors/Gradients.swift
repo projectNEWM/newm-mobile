@@ -73,14 +73,14 @@ public extension Array where Element == String {
 	}
 }
 
-#Preview {
+#Preview("main primary") {
 	Gradients.mainPrimary
 }
 
-#Preview {
+#Preview("main secondary") {
 	Gradients.mainSecondary
 }
 
-#Preview {
+#Preview("main secondary light") {
 	Gradients.mainSecondaryLight
 }

@@ -192,6 +192,7 @@
 		765D1615293EF8F70021FEC7 /* Gradients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765D1614293EF8F70021FEC7 /* Gradients.swift */; };
 		765D1616293EFAE70021FEC7 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
 		765E35262B3245C000AB3AF1 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35252B3245C000AB3AF1 /* Sentry */; };
+		765EE27D2DEE245F00AF18DA /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76982B482DB4F0BA00127210 /* shared.xcframework */; };
 		76610ABB2CBB45EB009F5693 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76610AA82CBB45CE009F5693 /* Analytics.framework */; };
 		76610AC02CBB45F3009F5693 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76610AA82CBB45CE009F5693 /* Analytics.framework */; };
 		76610AC52CBB45F8009F5693 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76610AA82CBB45CE009F5693 /* Analytics.framework */; };
@@ -1461,6 +1462,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				765EE27D2DEE245F00AF18DA /* shared.xcframework in Frameworks */,
 				76308A8F2B7B7A77002FDC50 /* Resolver in Frameworks */,
 				761E97432B6BCCA600FDFC5E /* Kingfisher in Frameworks */,
 				76308A902B7B7A7E002FDC50 /* ModuleLinker.framework in Frameworks */,

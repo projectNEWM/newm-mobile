@@ -20,11 +20,10 @@ public struct ProfileView: View {
 	public init() {}
 	
 	public var body: some View {
-		mainView
-			.autocorrectionDisabled(true)
-			.scrollDismissesKeyboard(.immediately)
-			.padding([.bottom, .leading, .trailing])
-			.analyticsScreen(name: AppScreens.AccountScreen().name)
+		NavigationView {
+			mainView
+				.analyticsScreen(name: AppScreens.AccountScreen().name)
+		}
 	}
 }
 
@@ -40,9 +39,7 @@ extension ProfileView {
 					}
 					artistImage
 					artistName
-					walletView.padding(.bottom)
-					bottomSection
-					saveButton
+					optionButtons.padding(.top, -20)
 				}
 			}
 			.refreshable {
@@ -57,15 +54,60 @@ extension ProfileView {
 		.moreButtonTopRight {
 			showBottomSheet = true
 		}
-		.sheet(isPresented: $showXPubScanner, onDismiss: {
-			showXPubScanner = false
-		}) {
-			ConnectWalletToAccountScannerView {
-				showXPubScanner = false
-			}
-		}
 		.sheet(isPresented: $showBottomSheet) {
 			bottomSheet
+		}
+	}
+}
+
+extension ProfileView {
+	@ViewBuilder
+	private var optionButtons: some View {
+		VStack(alignment: .center, spacing: 16) {
+			NavigationLink {
+				editView
+			} label: {
+				buttonText(Text("Edit profile").foregroundStyle(NEWMColor.midMusic()), backgroundGradient: Gradients.mainPrimaryLight)
+			}
+			
+			NavigationLink {
+				EmptyView()
+					.backButton()
+			} label: {
+				buttonText(Text("Manage wallets").foregroundStyle(NEWMColor.midMusic()), backgroundGradient: Gradients.mainPrimaryLight)
+			}
+		}
+		.padding()
+	}
+	
+	@ViewBuilder
+	private var editView: some View {
+		ZStack {
+			ScrollView {
+				VStack(alignment: .center) {
+					if let bannerURL = viewModel.bannerURL {
+						HeaderImageSection(bannerURL.absoluteString)
+							.padding(.top, 177)
+					}
+					Group {
+						artistImage
+						artistName
+							.padding(.top, -30)
+						bottomSection
+							.padding(.top, -30)
+						saveButton
+					}
+					.padding()
+				}
+			}
+			.refreshable {
+				await viewModel.loadUser()
+			}
+			.errorAlert(message: viewModel.errorAlert) {
+				viewModel.alertDismissed()
+			}
+			.toast(shouldShow: $viewModel.showLoadingToast, type: .loading)
+			.toast(shouldShow: $viewModel.showCompletionToast, type: .complete)
 		}
 		.confirmationDialog(
 			"Are you sure?",
@@ -81,6 +123,7 @@ extension ProfileView {
 		} message: {
 			Text("This action cannot be undone.")
 		}
+		.backButton(withToolbar: true)
 	}
 	
 	@ViewBuilder
@@ -106,7 +149,7 @@ extension ProfileView {
 	@ViewBuilder
 	private var saveButton: some View {
 		if viewModel.showSaveButton {
-			actionButton(title: "Save changes", backgroundGradient: Gradients.mainPrimary) {
+			actionButton(title: "Save changes", backgroundGradient: Gradients.mainPrimaryLight) {
 				Task { await viewModel.save() }
 			}
 			.disabled(viewModel.enableSaveButon == false)
@@ -157,16 +200,7 @@ extension ProfileView {
 			}
 		}
 	}
-	
-	@ViewBuilder
-	private var walletView: some View {
-		if viewModel.isWalletConnected {
-			disconnectWalletView
-		} else {
-			connectWalletView
-		}
-	}
-	
+		
 	@ViewBuilder
 	private func bottomSectionHeader(_ text: String) -> some View {
 		Text(text).font(.inter(ofSize: 16).bold())
@@ -232,32 +266,10 @@ extension ProfileView {
 }
 
 #if DEBUG
-struct ProfileView_Previews: PreviewProvider {
-	static var previews: some View {
-		Resolver.root = .mock
-		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
-		return ProfileView()
-			.preferredColorScheme(.dark)
-	}
+#Preview {
+	Resolver.root = .mock
+	MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
+	return ProfileView()
+		.preferredColorScheme(.dark)
 }
 #endif
-
-//#if DEBUG
-//struct ProfileView_Previews_2: PreviewProvider {
-//	static var previews: some View {
-//		MocksModule.shared.registerAllMockedServices(mockResolver: .mock)
-//		Resolver.root = .mock
-//		Resolver.root.register {
-//			MockUserDetailsUseCase(mockUser: .bannerlessUser) as UserDetailsUseCase
-//		}
-//		return Group {
-//			NavigationView {
-//				NavigationLink(destination: ProfileView().backButton(withToolbar: true), isActive: .constant(true), label: { EmptyView() })
-//			}
-//		}
-//		.preferredColorScheme(.dark)
-//		.previewDisplayName("no banner")
-//	}
-//}
-//#endif
-//
