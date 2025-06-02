@@ -35,7 +35,6 @@ public struct MainView: View {
                     }
                     .overlay {
                         Spacer()
-                        let _ = print("bottom: \(geometry.safeAreaInsets.bottom)")
                         miniPlayerView
                             .offset(x: 0, y: keyboardObserver.isKeyboardShown ? 0 : -33)
                             .transition(.move(edge: .bottom))
