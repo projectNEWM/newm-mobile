@@ -150,12 +150,16 @@ class LandingViewModel: ObservableObject {
 	}
 		
 	func handleGoogleSignIn(result: GIDSignInResult?, error: Error?) {
-		guard let idToken = result?.user.idToken?.tokenString else {
-			handleError("Failed to sign in with Google"); return
+		guard error == nil else {
+			if let error = error as? NSError, error.domain == "com.google.GIDSignIn", error.code == -5 {
+				return
+			}
+			handleError(error!)
+			return
 		}
 		
-		guard error == nil else {
-			handleError(error!); return
+		guard let idToken = result?.user.idToken?.tokenString else {
+			handleError(NEWMError(errorDescription: "Failed to sign in with Google")); return
 		}
 		
 		isLoading = true
@@ -191,6 +195,10 @@ class LandingViewModel: ObservableObject {
 				NotificationCenter.default.post(name: Notification.Name(shared.Notification().loginStateChanged), object: nil)
 			}
 		case .failure(let error):
+			let error = error as NSError
+			if error.domain == "com.apple.AuthenticationServices.AuthorizationError", error.code == 1001 {
+				return
+			}
 			handleError(error)
 		}
 	}

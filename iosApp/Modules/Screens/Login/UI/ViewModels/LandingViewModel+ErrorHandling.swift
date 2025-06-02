@@ -10,6 +10,8 @@ extension LandingViewModel {
 		Resolver.resolve(ErrorReporting.self).logError(error)
 		if let error = error.kmmException {
 			handleKotlinError(error)
+		} else if let error = error as? NEWMError {
+			errors.append(error)
 		} else {
 			errors.append(error.newmError)
 		}
