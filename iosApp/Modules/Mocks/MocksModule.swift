@@ -50,6 +50,18 @@ final public class MocksModule: Module {
 		mockResolver.register {
             $0.resolve(ConnectWalletUseCase.self) as! HasWalletConnectionsUseCase
         }.scope(.cached)
+		
+		mockResolver.register {
+			MockSyncWalletConnectionsUseCase() as SyncWalletConnectionsUseCase
+		}.scope(.cached)
+
+		mockResolver.register {
+			MockGetWalletConnectionsUseCase() as GetWalletConnectionsUseCase
+		}.scope(.cached)
+
+		mockResolver.register {
+			$0.resolve(ConnectWalletUseCase.self) as! DisconnectWalletUseCase
+		}.scope(.cached)
 	}
 #endif
 }

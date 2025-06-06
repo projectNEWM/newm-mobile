@@ -23,9 +23,9 @@ struct HomeView: View {
 			.navigationDestination(for: HomeRoute.self) { route in
 				switch route {
 				case .artist(let id):
-					artistViewProvider.artistView(id: id).backButton(withToolbar: true)
+					artistViewProvider.artistView(id: id).backButtonBar(withToolbar: true)
 				case .profile:
-					ProfileView().backButton(withToolbar: true)
+					ProfileView().backButtonBar(withToolbar: true)
 				default:
 					EmptyView()
 				}

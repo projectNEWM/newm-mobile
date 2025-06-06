@@ -2,46 +2,53 @@ import Foundation
 import ModuleLinker
 import Resolver
 import shared
-import Mocks
 
 public final class ProfileModule: Module {
 	public static let shared = ProfileModule()
 	
 	public func registerAllServices() {
 		Resolver.register {
-			ChangePasswordUseCaseProvider().get() as ChangePasswordUseCase
+			ChangePasswordUseCaseProvider().get()
 		}
 		
 		Resolver.register {
-			HasWalletConnectionsUseCaseProvider().get() as HasWalletConnectionsUseCase
+			HasWalletConnectionsUseCaseProvider().get()
 		}
 		
-        Resolver.register {
-            DisconnectWalletUseCaseProvider().get() as DisconnectWalletUseCase
-        }
-
-        Resolver.register {
-            ConnectWalletUseCaseProvider().get() as ConnectWalletUseCase
-        }
-
 		Resolver.register {
-			DeleteCurrentUserUseCaseProvider().get() as DeleteCurrentUserUseCase
+			DisconnectWalletUseCaseProvider().get()
+		}
+		
+		Resolver.register {
+			ConnectWalletUseCaseProvider().get()
+		}
+		
+		Resolver.register {
+			DeleteCurrentUserUseCaseProvider().get()
+		}
+		
+		Resolver.register {
+			SyncWalletConnectionsUseCaseProvider().get()
+		}
+		
+		Resolver.register {
+			SyncWalletConnectionsUseCaseProvider().get()
+		}
+		
+		Resolver.register {
+			GetWalletConnectionsUseCaseProvider().get()
+		}
+		
+		Resolver.register {
+			DisconnectWalletUseCaseProvider().get()
 		}
 	}
-	
-#if DEBUG
-	public func registerAllMockedServices(mockResolver: Resolver) {
-        mockResolver.register {
-            $0.resolve(ConnectWalletUseCase.self) as! HasWalletConnectionsUseCase
-        }.scope(.cached)
-
-		mockResolver.register {
-			MockConnectWalletUseCase() as ConnectWalletUseCase
-		}.scope(.cached)
-		
-		mockResolver.register {
-			$0.resolve(ConnectWalletUseCase.self) as! DisconnectWalletUseCase
-		}.scope(.cached)
-	}
-#endif
 }
+#if DEBUG
+import Mocks
+extension ProfileModule {
+	public func registerAllMockedServices(mockResolver: Resolver) {
+		MocksModule.shared.registerAllMockedServices(mockResolver: mockResolver)
+	}
+}
+#endif

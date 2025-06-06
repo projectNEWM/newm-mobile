@@ -193,6 +193,11 @@
 		765D1616293EFAE70021FEC7 /* Colors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7618FD1728164CBD007573B4 /* Colors.framework */; };
 		765E35262B3245C000AB3AF1 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 765E35252B3245C000AB3AF1 /* Sentry */; };
 		765EE27D2DEE245F00AF18DA /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76982B482DB4F0BA00127210 /* shared.xcframework */; };
+		765EE2812DEE2E0900AF18DA /* WalletManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765EE2802DEE2E0900AF18DA /* WalletManagementView.swift */; };
+		765EE2832DEE340500AF18DA /* MockSyncWalletConnectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765EE2822DEE340500AF18DA /* MockSyncWalletConnectionsUseCase.swift */; };
+		765EE2852DEE34DE00AF18DA /* MockGetWalletConnectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765EE2842DEE34DE00AF18DA /* MockGetWalletConnectionsUseCase.swift */; };
+		765EE2872DEE350700AF18DA /* MockWalletConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765EE2862DEE350700AF18DA /* MockWalletConnections.swift */; };
+		765EE2972DF2DD3500AF18DA /* WalletManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765EE2962DF2DD3500AF18DA /* WalletManagementViewModel.swift */; };
 		76610ABB2CBB45EB009F5693 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76610AA82CBB45CE009F5693 /* Analytics.framework */; };
 		76610AC02CBB45F3009F5693 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76610AA82CBB45CE009F5693 /* Analytics.framework */; };
 		76610AC52CBB45F8009F5693 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76610AA82CBB45CE009F5693 /* Analytics.framework */; };
@@ -1186,6 +1191,11 @@
 		765D1605293EF22F0021FEC7 /* MarketplaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceView.swift; sourceTree = "<group>"; };
 		765D1612293EF6DD0021FEC7 /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
 		765D1614293EF8F70021FEC7 /* Gradients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradients.swift; sourceTree = "<group>"; };
+		765EE2802DEE2E0900AF18DA /* WalletManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletManagementView.swift; sourceTree = "<group>"; };
+		765EE2822DEE340500AF18DA /* MockSyncWalletConnectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSyncWalletConnectionsUseCase.swift; sourceTree = "<group>"; };
+		765EE2842DEE34DE00AF18DA /* MockGetWalletConnectionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetWalletConnectionsUseCase.swift; sourceTree = "<group>"; };
+		765EE2862DEE350700AF18DA /* MockWalletConnections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWalletConnections.swift; sourceTree = "<group>"; };
+		765EE2962DF2DD3500AF18DA /* WalletManagementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletManagementViewModel.swift; sourceTree = "<group>"; };
 		76610AA82CBB45CE009F5693 /* Analytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Analytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7669071229088D2A00D9F989 /* VLCAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCAudioPlayer.swift; sourceTree = "<group>"; };
 		766B1EC62A15C74B0083DE3E /* KeyboardObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
@@ -1858,6 +1868,8 @@
 		761E971C2B6A8FF500FDFC5E /* Use Cases */ = {
 			isa = PBXGroup;
 			children = (
+				765EE2842DEE34DE00AF18DA /* MockGetWalletConnectionsUseCase.swift */,
+				765EE2822DEE340500AF18DA /* MockSyncWalletConnectionsUseCase.swift */,
 				769BB6872B5E0B85007CA421 /* MockChangePasswordUseCase.swift */,
 				76F8E9272BA7EA2A0013595D /* MockConnectWalletUseCase.swift */,
 				761E97112B6A7C0500FDFC5E /* MockLoginUseCase.swift */,
@@ -1874,6 +1886,7 @@
 			children = (
 				76F8E92E2BA7EF670013595D /* MockNFTTracks.swift */,
 				761E97242B6A947100FDFC5E /* MockUsers.swift */,
+				765EE2862DEE350700AF18DA /* MockWalletConnections.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2096,9 +2109,9 @@
 		7650E14C2B17B3FA00D686B8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				76EAFC722A11652000ACD862 /* ProfileView.swift */,
-				76EAFC752A1165D900ACD862 /* ProfileViewModel.swift */,
 				7650E1602B17B51300D686B8 /* ProfileModule.swift */,
+				765EE2982DF2DD5F00AF18DA /* ProfileView */,
+				765EE2952DF2DD2900AF18DA /* WalletManagement */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -2273,6 +2286,24 @@
 				761837A129479F7E0033250B /* MarketplaceTitleSectionModel.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		765EE2952DF2DD2900AF18DA /* WalletManagement */ = {
+			isa = PBXGroup;
+			children = (
+				765EE2962DF2DD3500AF18DA /* WalletManagementViewModel.swift */,
+				765EE2802DEE2E0900AF18DA /* WalletManagementView.swift */,
+			);
+			path = WalletManagement;
+			sourceTree = "<group>";
+		};
+		765EE2982DF2DD5F00AF18DA /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				76EAFC722A11652000ACD862 /* ProfileView.swift */,
+				76EAFC752A1165D900ACD862 /* ProfileViewModel.swift */,
+			);
+			path = ProfileView;
 			sourceTree = "<group>";
 		};
 		766E8FF62856483400F18779 /* Sections */ = {
@@ -2900,6 +2931,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7618FCD528164C5C007573B4 /* Build configuration list for PBXNativeTarget "SharedUI" */;
 			buildPhases = (
+				765EE2942DF2D09600AF18DA /* ShellScript */,
 				7618FCC828164C5C007573B4 /* Headers */,
 				7618FCC928164C5C007573B4 /* Sources */,
 				7618FCCA28164C5C007573B4 /* Frameworks */,
@@ -3841,6 +3873,23 @@
 			shellPath = /bin/sh;
 			shellScript = "#cd \"$SRCROOT/Modules/Resources/Colors\"\n#swiftgen\n";
 		};
+		765EE2942DF2D09600AF18DA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT/Modules/Helpers/SharedUI\"\nswiftgen\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -4032,6 +4081,8 @@
 				7650E1622B17B5CC00D686B8 /* ProfileViewModel.swift in Sources */,
 				7650E1652B17B5CC00D686B8 /* ProfileView.swift in Sources */,
 				7650E1612B17B51300D686B8 /* ProfileModule.swift in Sources */,
+				765EE2812DEE2E0900AF18DA /* WalletManagementView.swift in Sources */,
+				765EE2972DF2DD3500AF18DA /* WalletManagementViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4084,9 +4135,12 @@
 				761E97122B6A7C0500FDFC5E /* MockLoginUseCase.swift in Sources */,
 				76F8E9312BA7F0EA0013595D /* MockWalletNFTTracksUseCase.swift in Sources */,
 				764301662DD9DD55001ECC9A /* MockForceAppUpdateUseCase.swift in Sources */,
+				765EE2852DEE34DE00AF18DA /* MockGetWalletConnectionsUseCase.swift in Sources */,
 				768C69C32B5CDA30001A1B1A /* MockUserDetailsUseCase.swift in Sources */,
 				769BB6882B5E0B85007CA421 /* MockChangePasswordUseCase.swift in Sources */,
+				765EE2872DEE350700AF18DA /* MockWalletConnections.swift in Sources */,
 				761E971B2B6A8EDA00FDFC5E /* MocksModule.swift in Sources */,
+				765EE2832DEE340500AF18DA /* MockSyncWalletConnectionsUseCase.swift in Sources */,
 				761E97252B6A947100FDFC5E /* MockUsers.swift in Sources */,
 				76F8E9282BA7EA2A0013595D /* MockConnectWalletUseCase.swift in Sources */,
 			);

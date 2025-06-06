@@ -22,15 +22,15 @@ public struct LandingView: View {
 				.navigationDestination(for: LandingRoute.self) { route in
 					switch route {
 					case .createAccount:
-						createAccountView.backButton()
+						createAccountView.backButtonBar()
 					case .codeConfirmation:
-						codeConfirmationView.backButton()
+						codeConfirmationView.backButtonBar()
 					case .login:
-						loginView.backButton()
+						loginView.backButtonBar()
 					case .forgotPassword:
-						forgotPasswordView.backButton()
+						forgotPasswordView.backButtonBar()
 					case .enterNewPassword:
-						enterNewPasswordView.backButton()
+						enterNewPasswordView.backButtonBar()
 					}
 				}
 		}

@@ -24,7 +24,7 @@ public struct NowPlayingView: View {
 			.padding()
 		}
 		.background(background)
-		.backButton()
+		.backButtonBar()
 		.analyticsScreen(name: AppScreens.MusicPlayerScreen().name)
 		//TODO: make an "ErrorProviding" protocol, replace all these.
 //		.alert(isPresented: .constant(audioPlayer.errors.currentError != nil), error: audioPlayer.errors.currentError) {

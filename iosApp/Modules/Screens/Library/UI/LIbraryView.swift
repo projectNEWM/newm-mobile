@@ -51,7 +51,6 @@ struct LibraryView: View {
 						Text("Ok")
 					}
 				}
-				.navigationBarTitleDisplayMode(.inline)
 				.toolbar {
 					ToolbarItem(placement: .topBarLeading) {
 						Text(String.library)
@@ -284,7 +283,7 @@ struct LibraryView: View {
 #Preview {
 	Resolver.root = .mock
 	LibraryModule.shared.registerAllMockedServices(mockResolver: .mock)
-	return LibraryView()//.noSongsMessage
+	return LibraryView()
 		.preferredColorScheme(.dark)
 		.tint(.white)
 		.background(.black)

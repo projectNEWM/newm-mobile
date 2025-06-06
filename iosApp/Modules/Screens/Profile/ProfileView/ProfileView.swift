@@ -71,8 +71,7 @@ extension ProfileView {
 			}
 			
 			NavigationLink {
-				EmptyView()
-					.backButton()
+				WalletManagementView()
 			} label: {
 				buttonText(Text("Manage wallets").foregroundStyle(NEWMColor.midMusic()), backgroundGradient: Gradients.mainPrimaryLight)
 			}
@@ -123,7 +122,7 @@ extension ProfileView {
 		} message: {
 			Text("This action cannot be undone.")
 		}
-		.backButton(withToolbar: true)
+		.backButtonBar(withToolbar: true)
 	}
 	
 	@ViewBuilder
