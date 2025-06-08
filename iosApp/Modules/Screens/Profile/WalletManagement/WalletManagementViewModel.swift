@@ -8,7 +8,6 @@ class WalletManagementViewModel: ObservableObject {
 	@Published var walletConnections: [WalletConnection] = []
 	@Published var errors = ErrorSet()
 	@Published var isLoading = false
-	@Published var showWalletPopover: WalletConnection?
 	
 	@LazyInjected private var syncWalletConnectionsUseCase: any SyncWalletConnectionsUseCase
 	@LazyInjected private var connectedWalletsUseCase: any GetWalletConnectionsUseCase

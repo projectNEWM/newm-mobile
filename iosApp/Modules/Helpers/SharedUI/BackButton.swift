@@ -29,6 +29,7 @@ public struct BackButton: View {
 			HStack {
 				Asset.Media.backArrow()
 					.aspectRatio(contentMode: .fit)
+					.foregroundStyle(.white)
 			}
 		}
 	}

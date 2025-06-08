@@ -7,11 +7,16 @@ import shared
 struct WalletManagementView: View {
 	@StateObject private var viewModel = WalletManagementViewModel()
 	@State private var showConnectWalletSheet: Bool = false
-	
+	@State private var showCopiedAlert: Bool = false
+	@State private var showWalletPopover: WalletConnection?
+
 	var body: some View {
 		NavigationView {
 			VStack {
 				connectionList
+				if showCopiedAlert {
+					copiedAlert
+				}
 				connectWalletButton
 			}
 			.padding(.horizontal, 16)
@@ -33,7 +38,6 @@ struct WalletManagementView: View {
 			Group {
 				ToolbarItem(placement: .topBarLeading) {
 					BackButton()
-						.foregroundStyle(Gradients.libraryGradient.gradient)
 				}
 				ToolbarItem(placement: .topBarLeading) {
 					Text("Connected Wallets")
@@ -70,7 +74,7 @@ struct WalletManagementView: View {
 						Spacer()
 						
 						Button {
-							viewModel.showWalletPopover = walletConnection
+							showWalletPopover = walletConnection
 						} label: {
 							HStack(alignment: .center, spacing: 8) {
 								Image(systemName: "ellipsis").rotationEffect(.degrees(90))
@@ -80,8 +84,8 @@ struct WalletManagementView: View {
 							.background(Color(red: 0.09, green: 0.09, blue: 0.09))
 							.cornerRadius(8)
 							.tint(.white)
-							.popover(item: $viewModel.showWalletPopover) { walletConnection in
-								makePopover(for: walletConnection)
+							.popover(item: $showWalletPopover) { walletConnection in
+								popover(for: walletConnection)
 							}
 						}
 					}
@@ -102,10 +106,12 @@ struct WalletManagementView: View {
 	}
 	
 	@ViewBuilder
-	private func makePopover(for walletConnection: WalletConnection) -> some View {
+	private func popover(for walletConnection: WalletConnection) -> some View {
 		VStack(spacing: 0) {
 			Button {
 				UIPasteboard.general.string = walletConnection.stakeAddress
+				showWalletPopover = nil
+				showCopiedAlert = true
 			} label: {
 				HStack {
 					Asset.Media.fileCopyFill()
@@ -133,6 +139,45 @@ struct WalletManagementView: View {
 		.presentationCompactAdaptation(.popover)
 	}
 	
+	@ViewBuilder
+	private var copiedAlert: some View {
+		HStack(spacing: 12) {
+			Image(systemName: "checkmark")
+				.font(.system(size: 12, weight: .bold))
+				.foregroundColor(.black)
+				.padding(8)
+				.background(Circle().fill(Color.green))
+			
+			Text("Wallet address copied successfully!")
+				.minimumScaleFactor(0.5)
+				.font(.inter(ofSize: 12))
+				.bold()
+				.foregroundColor(.white)
+				.lineLimit(1)
+			
+			Spacer(minLength: 0)
+			
+			Button {
+				showCopiedAlert = false
+			} label: {
+				Image(systemName: "xmark")
+					.font(.system(size: 13, weight: .bold))
+			}
+			.buttonStyle(.plain)
+			.foregroundColor(.white)
+		}
+		.padding(.vertical, 12)
+		.padding(.horizontal, 16)
+		.background(
+			RoundedRectangle(cornerRadius: 8, style: .continuous)
+				.fill(Color.black)
+		)
+		.overlay(
+			RoundedRectangle(cornerRadius: 8, style: .continuous)
+				.stroke(Color.green, lineWidth: 1)
+		)
+	}
+
 	private func shortenAddress(_ address: String, prefixLength: Int = 6, suffixLength: Int = 4) -> String {
 		guard address.count > prefixLength + suffixLength else { return address }
 		let prefix = address.prefix(prefixLength)
