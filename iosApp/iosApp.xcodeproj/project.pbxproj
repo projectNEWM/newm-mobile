@@ -235,6 +235,7 @@
 		7682E0892DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7682E08A2DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7682E08B2DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
+		7682E0982DF54817002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7684E24E27DACBC400BDD21B /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7684E24D27DACBC400BDD21B /* SplashScreen.storyboard */; };
 		768B49912903B89F0099911D /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B49822903B89F0099911D /* LibraryViewModel.swift */; };
 		768B49942903B89F0099911D /* LIbraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768B49862903B89F0099911D /* LIbraryView.swift */; };
@@ -1572,6 +1573,7 @@
 				76829E232B5775D7007BCED5 /* Kingfisher in Frameworks */,
 				76610AFA2CBB4C6A009F5693 /* Analytics.framework in Frameworks */,
 				76699D0A2CD2BA5400A0182C /* VLCKitSPM in Frameworks */,
+				7682E0982DF54817002377F3 /* shared.xcframework in Frameworks */,
 				76C7614E291F56DF0054D2F3 /* Resolver in Frameworks */,
 				76FFD1142B95492F00D77309 /* OrderedCollections in Frameworks */,
 				76C7614F291F56F30054D2F3 /* ModuleLinker.framework in Frameworks */,
