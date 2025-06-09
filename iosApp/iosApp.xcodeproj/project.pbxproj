@@ -3828,7 +3828,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\nset -euo pipefail\n\n# Choose a location that exists on both local and CI machines\nCLI_DIR=\"$HOME/.sentry-cli\"\nCLI_BIN=\"$CLI_DIR/sentry-cli\"\n\n# 1. Install only if it isn’t there yet\nif [ ! -x \"$CLI_BIN\" ]; then\n  echo \"▶︎ Installing sentry-cli into $CLI_DIR\"\n  mkdir -p \"$CLI_DIR\"\n  # The get-cli script supports “-b <path>” for custom install dir\n  curl -sLf https://sentry.io/get-cli/ | bash -s -- -b \"$CLI_DIR\"\nfi\n\n# 2. Make sure it’s on PATH for the rest of this script\nexport PATH=\"$CLI_DIR:$PATH\"\n\n# 3. Upload debug info files (replace with your usual command)\necho \"▶︎ Uploading dSYMs…\"\nsentry-cli upload-dif \"$DW_DSYM_FOLDER_PATH\"\n";
+			shellScript = "if [ \"$CONFIGURATION\" == \"Release\" ]; then\n    if [[ \"$(uname -m)\" == arm64 ]]; then\n        export PATH=\"/opt/homebrew/bin:$PATH\"\n    fi\n\n    if which sentry-cli >/dev/null; then\n        ERROR=$(sentry-cli debug-files upload \\\n          --include-sources \\\n          \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\n        if [ ! $? -eq 0 ]; then\n            echo \"warning: sentry-cli - $ERROR\"\n        fi\n    else\n        echo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\n    fi\nfi\n";
 		};
 		762515292CA8DA210039C8BD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
