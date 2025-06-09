@@ -47,3 +47,5 @@ playground.xcworkspace
 # .swiftpm
 
 .build/
+
+!iosApp/shared.xcframework/**/dSYMs/**   # keeps the directory *and* every file/dir under it
