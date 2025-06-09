@@ -3828,7 +3828,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Only run for Release configuration\nif [ \"$CONFIGURATION\" != \"Release\" ]; then\n  echo \"Skipping Sentry upload for $CONFIGURATION build\"\n  exit 0\nfi\n\n# Set environment variables\nexport SENTRY_AUTH_TOKEN=your_token_here\nexport SENTRY_ORG=your_org_slug\nexport SENTRY_PROJECT=your_project_slug\n\n# Download sentry-cli temporarily\ncurl -sL https://sentry.io/get-cli/ | bash\n\n# Add to PATH\nexport PATH=$PATH:$HOME/.sentrycli\n\n# Upload symbols\nsentry-cli upload-dif \\\n  --include-sources \\\n  \"$DWARF_DSYM_FOLDER_PATH\"\n";
+			shellScript = "# Only run for Release configuration\nif [ \"$CONFIGURATION\" != \"Release\" ]; then\n  echo \"Skipping Sentry upload for $CONFIGURATION build\"\n  exit 0\nfi\n\n# Download sentry-cli temporarily\ncurl -sL https://sentry.io/get-cli/ | bash\n\n# Add to PATH\nexport PATH=$PATH:$HOME/.sentrycli\n\n# Upload symbols\nsentry-cli upload-dif \\\n  --include-sources \\\n  \"$DWARF_DSYM_FOLDER_PATH\"\n";
 		};
 		762515292CA8DA210039C8BD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
