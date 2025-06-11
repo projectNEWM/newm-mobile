@@ -66,6 +66,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>RECAPTCHA_KEY_ID</key>
+	<string>$(RECAPTCHA_KEY_ID)</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
