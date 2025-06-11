@@ -76,6 +76,8 @@
 		762514EF2CA3ACAB0039C8BD /* ScannerHelpSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762514EE2CA3AC9C0039C8BD /* ScannerHelpSheet.swift */; };
 		7625152C2CA91FAD0039C8BD /* VLCAudioPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625152B2CA91FAD0039C8BD /* VLCAudioPlayerTests.swift */; };
 		7625D1532942B0740033C669 /* LibraryRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625D1512942B0740033C669 /* LibraryRoutes.swift */; };
+		7628AD752DF961F500F434B1 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
+		7628AD762DF961F500F434B1 /* shared.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		762B1CD72CCF28390093BD86 /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B1CD62CCF28390093BD86 /* TrackRow.swift */; };
 		762B1CD92CCF28660093BD86 /* TrackRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B1CD82CCF28660093BD86 /* TrackRowModel.swift */; };
 		762EF9A92B1F90C7009E08D8 /* AudioPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C76132291F445B0054D2F3 /* AudioPlayer.framework */; };
@@ -231,7 +233,6 @@
 		76829E232B5775D7007BCED5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 76829E222B5775D7007BCED5 /* Kingfisher */; };
 		7682E0862DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7682E0872DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
-		7682E0882DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7682E0892DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7682E08A2DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
 		7682E08B2DF54602002377F3 /* shared.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7682E0852DF54602002377F3 /* shared.xcframework */; };
@@ -976,6 +977,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7628AD762DF961F500F434B1 /* shared.xcframework in Embed Frameworks */,
 				76452A4F2B5A37D50001F47E /* SharedExtensions.framework in Embed Frameworks */,
 				7618FCD428164C5C007573B4 /* SharedUI.framework in Embed Frameworks */,
 				76452A662B5A395A0001F47E /* Utilities.framework in Embed Frameworks */,
@@ -1343,7 +1345,7 @@
 				76452A652B5A395A0001F47E /* Utilities.framework in Frameworks */,
 				7618FD7728164DA2007573B4 /* Login.framework in Frameworks */,
 				7618FD3728164CE2007573B4 /* Fonts.framework in Frameworks */,
-				7682E0882DF54602002377F3 /* shared.xcframework in Frameworks */,
+				7628AD752DF961F500F434B1 /* shared.xcframework in Frameworks */,
 				76C8502C2AEB37E200C2C388 /* Library.framework in Frameworks */,
 				7650E1762B17CB3600D686B8 /* QRCodeReader in Frameworks */,
 				76610AD82CBB46D6009F5693 /* Analytics.framework in Frameworks */,
@@ -4806,7 +4808,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
@@ -4844,7 +4846,7 @@
 				CLANG_WARN_COMPLETION_HANDLER_MISUSE = YES;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = TM6M46M9D2;
 				ENABLE_PREVIEWS = YES;
