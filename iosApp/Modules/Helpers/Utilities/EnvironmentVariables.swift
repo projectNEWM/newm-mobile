@@ -9,7 +9,7 @@ public enum EnvironmentVariable: String {
 		if let value = ProcessInfo.processInfo.environment[rawValue] {
 			return value
 		} else {
-			Resolver.resolve(ErrorReporting.self).logError("Config var not found: \(rawValue)")
+			Resolver.resolve(ErrorReporting.self).logError("Config var not found: \(rawValue).\nEnvironment: \(ProcessInfo.processInfo.environment)")
 			return ""
 		}
 	}
