@@ -22,6 +22,7 @@ fun WelcomeScreenUi(
         onGoogleSignIn = { onEvent(WelcomeScreenUiEvent.OnGoogleSignInClicked) },
         onPrivacyPolicyClicked = { onEvent(WelcomeScreenUiEvent.OnPrivacyPolicyClicked) },
         onTermsOfServiceClicked = { onEvent(WelcomeScreenUiEvent.OnTermsOfServiceClicked) },
+        onDebugMenu = { onEvent(WelcomeScreenUiEvent.OnDebugMenuClicked) }
     )
 }
 

@@ -51,8 +51,14 @@ import io.newm.screens.wallets.view.WalletsUi
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlagDataSource
 import io.newm.shared.public.featureflags.FeatureFlags
+import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
+import io.newm.sharedfeatures.devmenu.DevMenuPresenter
+import io.newm.sharedfeatures.devmenu.DevMenuUi
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListScreen
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
@@ -64,7 +70,7 @@ class HomeActivity : ComponentActivity() {
     private val logger: NewmAppLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
     private val eventLogger: NewmAppEventLogger by inject()
-    private val featureFlagManager: FeatureFlagManager by inject()
+    private val featureFlagManager: FeatureFlagDataSource by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -87,8 +93,12 @@ class HomeActivity : ComponentActivity() {
                         NewmApp(
                             logger = logger,
                             eventLogger = eventLogger,
-                            showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore),
-                            showInvestmentPortfolio = featureFlagManager.isEnabled(FeatureFlags.ShowInvestmentPortfolio)
+                            showRecordStore = featureFlagManager.getBooleanVariation(
+                                FeatureFlags.ShowRecordStore
+                            ),
+                            showInvestmentPortfolio = featureFlagManager.getBooleanVariation(
+                                FeatureFlags.ShowInvestmentPortfolio
+                            )
                         )
                     }
                 }
@@ -184,6 +194,14 @@ class HomeActivity : ComponentActivity() {
                     )
                 }
 
+                is DevMenuMainScreen -> ui<DevMenuMainScreen.UiState> { state, modifier ->
+                    DevMenuUi(state, modifier)
+                }
+
+                is FeatureFlagsListScreen -> ui<FeatureFlagsListScreen.UiState> { state, modifier ->
+                    FeatureFlagsListUi(state, modifier)
+                }
+
                 else -> null
 
             }
@@ -250,6 +268,13 @@ class HomeActivity : ComponentActivity() {
                 }.value
 
                 is Screen.Studio -> inject<StudioPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
+                is DevMenuMainScreen -> inject<DevMenuPresenter> { parametersOf(navigator) }.value
+                is FeatureFlagsListScreen -> inject<FeatureFlagsListPresenter> {
                     parametersOf(
                         navigator
                     )

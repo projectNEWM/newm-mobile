@@ -88,7 +88,6 @@ internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
 
 private val initialScreen = Screen.NFTLibrary
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun NewmApp(
     logger: NewmAppLogger,
@@ -101,16 +100,20 @@ internal fun NewmApp(
 
     val circuitNavigator = rememberCircuitNavigator(
         backstack,
-        // Disabling back handler because we are using our own
         enableBackHandler = false
     )
 
-    val newmNavigator =
-        rememberNewmNavigator(circuitNavigator, logger, {}, launchBrowser = { url ->
+    val newmNavigator = rememberNewmNavigator(
+        circuitNavigator = circuitNavigator,
+        logger = logger,
+        launchBrowser = { url ->
             context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-        }, eventLogger)
+        },
+        eventLogger = eventLogger
+    )
 
-    val currentRootScreen = backstack.topRecord?.screen as Screen
+    val currentRootScreen = backstack.topRecord?.screen
+    val currentNewmScreen = currentRootScreen as? Screen
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -120,12 +123,12 @@ internal fun NewmApp(
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler(
-        enabled = backstack.size > 1 || currentRootScreen != initialScreen || sheetState.isVisible
+        enabled = backstack.size > 1 || currentNewmScreen != initialScreen || sheetState.isVisible
     ) {
         when {
             sheetState.isVisible -> coroutineScope.launch { sheetState.hide() }
             backstack.size > 1 -> newmNavigator.pop()
-            currentRootScreen != initialScreen -> newmNavigator.resetRoot(initialScreen)
+            currentNewmScreen != initialScreen && currentNewmScreen != null -> newmNavigator.resetRoot(initialScreen)
         }
     }
 
@@ -141,7 +144,8 @@ internal fun NewmApp(
                     coroutineScope.launch {
                         sheetState.hide()
                     }
-                })
+                }
+            )
         },
     ) {
         Scaffold(
@@ -154,7 +158,7 @@ internal fun NewmApp(
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        if (currentRootScreen.showMiniPlayer) {
+                        if (currentNewmScreen?.showMiniPlayer == true) {
                             MiniPlayer(
                                 modifier = Modifier.clickable {
                                     coroutineScope.launch {
@@ -171,9 +175,10 @@ internal fun NewmApp(
                                     .background(MaterialTheme.colors.surface)
                             )
                         }
-                        if (currentRootScreen.showBottomBar) {
+
+                        if (currentNewmScreen?.showBottomBar == true) {
                             NewmBottomNavigation(
-                                currentRootScreen = currentRootScreen,
+                                currentRootScreen = currentNewmScreen,
                                 eventLogger = eventLogger,
                                 showRecordStore = showRecordStore,
                                 showInvestmentPortfolio = showInvestmentPortfolio,
@@ -182,10 +187,8 @@ internal fun NewmApp(
                                 }
                             )
                         }
-
                     }
                 }
-
             },
             scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
         ) { padding ->
@@ -197,7 +200,6 @@ internal fun NewmApp(
                 )
             }
         }
-
     }
 }
 

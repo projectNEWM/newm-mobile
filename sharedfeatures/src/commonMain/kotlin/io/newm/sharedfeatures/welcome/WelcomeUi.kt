@@ -44,26 +44,32 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
         is UiState.Content -> {
             WelcomeScreenContent(
                 modifier = modifier,
-                onCreateAccount = {  },
+                onCreateAccount = { },
                 onLoginWithEmail = {},
                 onGoogleSignIn = {},
                 onPrivacyPolicyClicked = {},
                 onTermsOfServiceClicked = {},
+                onDebugMenu = {
+                    state.onEvent.invoke(WelcomeScreen.UiEvent.OnDevMenu)
+                }
             )
         }
+
         UiState.Loading -> {
             Text("Welcome to Newm!")
         }
     }
 }
 
-@Composable fun WelcomeScreenContent(
+@Composable
+fun WelcomeScreenContent(
     modifier: Modifier,
     onCreateAccount: () -> Unit,
     onLoginWithEmail: () -> Unit,
     onGoogleSignIn: () -> Unit,
     onPrivacyPolicyClicked: () -> Unit,
-    onTermsOfServiceClicked: () -> Unit
+    onTermsOfServiceClicked: () -> Unit,
+    onDebugMenu: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -86,7 +92,7 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
                     .clickable(onClick = onCreateAccount)
             )
 
-            OnboardingMainImage(painterResource( Res.drawable.ic_newm_logo))
+            OnboardingMainImage(painterResource(Res.drawable.ic_newm_logo))
             Text(
                 text = stringResource(R.string.welcome_to_newm),
                 fontSize = 30.sp,
@@ -115,6 +121,15 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
                     .padding(vertical = 32.dp, horizontal = 16.dp),
                 onPrivacyPolicyClicked = onPrivacyPolicyClicked,
                 onTermsOfServiceClicked = onTermsOfServiceClicked,
+            )
+            Text(
+                text = "Developer Menu",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .clickable(onClick = onDebugMenu)
             )
         }
     }

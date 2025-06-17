@@ -20,7 +20,7 @@ import io.newm.feature.musicplayer.service.DownloadManager
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlagDataSource
 import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.models.NFTTrack
 import io.newm.shared.public.usecases.ConnectWalletUseCase
@@ -42,14 +42,14 @@ class NFTLibraryPresenter(
     private val scope: CoroutineScope,
     private val eventLogger: NewmAppEventLogger,
     private val downloadManager: DownloadManager,
-    private val featureFlagManager: FeatureFlagManager,
+    private val featureFlagManager: FeatureFlagDataSource,
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger)
 
         val downloadsEnabled =
-            remember { featureFlagManager.isEnabled(FeatureFlags.DownloadTracks) }
+            remember { featureFlagManager.getBooleanVariation(FeatureFlags.DownloadTracks) }
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()

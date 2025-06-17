@@ -16,7 +16,7 @@ import kotlinx.collections.immutable.ImmutableList
 fun rememberNewmNavigator(
     circuitNavigator: Navigator,
     logger: NewmAppLogger,
-    startHomeActivity: () -> Unit,
+    startHomeActivity: () -> Unit = {},
     launchBrowser: (String) -> Unit,
     eventLogger: NewmAppEventLogger
 ): Navigator = remember {

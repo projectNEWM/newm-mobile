@@ -9,7 +9,7 @@ import com.launchdarkly.sdk.android.LDConfig.Builder.AutoEnvAttributes
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.featureflags.FeatureFlag
-import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlagDataSource
 import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.models.User
 import kotlinx.coroutines.CompletableDeferred
@@ -22,7 +22,7 @@ class AndroidFeatureFlagManager(
     private val application: Application,
     private val sharedBuildConfig: NewmSharedBuildConfig,
     private val log: NewmAppLogger
-) : FeatureFlagManager {
+) : FeatureFlagDataSource {
 
     private val client: LDClient = buildClient()
 
@@ -38,16 +38,16 @@ class AndroidFeatureFlagManager(
         return LDClient.init(application, ldConfig, context, 0)
     }
 
-    override fun isEnabled(flag: FeatureFlag, default: Boolean): Boolean {
+    override fun getBooleanVariation(featureFlag: FeatureFlag): Boolean {
         val advancedAccessEnabled = client.boolVariation(FeatureFlags.AdvancedAccess.key, false)
-        if (flag != FeatureFlags.AdvancedAccess && advancedAccessEnabled) {
-            log.breadcrumb("AdvancedAccess", "Override: $flag enabled due to AdvancedAccess")
+        if (featureFlag != FeatureFlags.AdvancedAccess && advancedAccessEnabled) {
+            log.breadcrumb("AdvancedAccess", "Override: ${featureFlag.key} enabled due to AdvancedAccess")
             return true
         }
-        return client.boolVariation(flag.key, default)
+        return client.boolVariation(featureFlag.key, featureFlag.defaultUiValue)
     }
 
-    override suspend fun setUser(user: User) {
+    override suspend fun identifyUser(user: User) {
         val ldContext = LDContext.builder(ContextKind.DEFAULT, user.id)
             .set("email", user.email)
             .build()

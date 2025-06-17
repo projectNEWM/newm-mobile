@@ -48,6 +48,8 @@ import io.newm.shared.internal.services.network.NFTNetworkService
 import io.newm.shared.internal.services.network.WalletConnectionNetworkService
 import io.newm.shared.internal.store.NftTrackStore
 import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.public.featureflags.DefaultFeatureFlagService
+import io.newm.shared.public.featureflags.FeatureFlagService
 import io.newm.shared.public.usecases.ChangePasswordUseCase
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.DeleteCurrentUserUseCase
@@ -104,6 +106,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl() }
     single { NewmAppLogger() }
     single { NewmAppEventLogger() }
+    single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get()) }
     // Internal API Services
     single { CardanoWalletAPI(get()) }
     single { EarningsAPI(get(), get()) }

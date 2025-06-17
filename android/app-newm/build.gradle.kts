@@ -118,6 +118,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.androidx.material.icons.extended)
     implementation(project(Modules.barcodeScanner))
+    implementation(project(Modules.coreAndroidImplementations))
     implementation(project(Modules.coreResources))
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))

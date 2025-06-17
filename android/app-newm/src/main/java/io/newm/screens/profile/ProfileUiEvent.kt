@@ -25,6 +25,7 @@ data object OnLogout : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowTermsAndConditions : ProfileEditUiEvent, ProfileUiEvent
 data object OnShowPrivacyPolicy : ProfileEditUiEvent, ProfileUiEvent
 data object OnBottomSheetVisible : ProfileEditUiEvent, ProfileUiEvent
+data object OnDeveloperMenu : ProfileUiEvent
 data class OnConnectWallet(val newmCode: String) : ProfileEditUiEvent, ProfileUiEvent
 
 

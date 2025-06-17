@@ -15,6 +15,7 @@ import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
+import io.newm.screens.profile.OnDeveloperMenu
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
@@ -26,7 +27,7 @@ import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.public.featureflags.FeatureFlagDataSource
 import io.newm.shared.public.featureflags.FeatureFlags
 import io.newm.shared.public.usecases.ConnectWalletUseCase
 import io.newm.shared.public.usecases.DisconnectWalletUseCase
@@ -34,6 +35,7 @@ import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
 import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.public.usecases.UserDetailsUseCase
+import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
 import kotlinx.coroutines.launch
 
 class ProfilePresenter(
@@ -44,7 +46,7 @@ class ProfilePresenter(
     private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
-    private val featureFlagManager: FeatureFlagManager,
+    private val featureFlagManager: FeatureFlagDataSource,
     private val logout: Logout,
     private val eventLogger: NewmAppEventLogger
 ) : Presenter<ProfileUiState> {
@@ -75,9 +77,9 @@ class ProfilePresenter(
             null
         )
 
-        val showRecordStore = featureFlagManager.isEnabled(FeatureFlags.ShowRecordStore)
-        val showMultiWallets = featureFlagManager.isEnabled(FeatureFlags.ShowMultiWallets)
-        val hasAdvancedAccess = featureFlagManager.isEnabled(FeatureFlags.ShowMultiWallets)
+        val showRecordStore = featureFlagManager.getBooleanVariation(FeatureFlags.ShowRecordStore)
+        val showMultiWallets = featureFlagManager.getBooleanVariation(FeatureFlags.ShowMultiWallets)
+        val hasAdvancedAccess = featureFlagManager.getBooleanVariation(FeatureFlags.ShowMultiWallets)
 
 
         return if (user == null) {
@@ -144,6 +146,10 @@ class ProfilePresenter(
                         OnVisitStudio -> {
                             navigator.goTo(Screen.Studio)
                             eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_STUDIO_BUTTON)
+                        }
+
+                        OnDeveloperMenu -> {
+                            navigator.goTo(DevMenuMainScreen)
                         }
                     }
                 }

@@ -5,6 +5,7 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
+import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
@@ -20,6 +21,10 @@ class WelcomePresenter @Inject constructor(
                 when (event) {
                     WelcomeScreen.UiEvent.OnBack -> {
                         navigator.pop()
+                    }
+
+                    WelcomeScreen.UiEvent.OnDevMenu -> {
+                        navigator.goTo(DevMenuMainScreen)
                     }
                 }
             },
