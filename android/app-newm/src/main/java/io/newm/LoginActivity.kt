@@ -48,8 +48,8 @@ import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
 import io.newm.sharedfeatures.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.devmenu.DevMenuUi

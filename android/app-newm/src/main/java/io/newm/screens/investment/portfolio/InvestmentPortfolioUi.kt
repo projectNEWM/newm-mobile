@@ -42,8 +42,8 @@ import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.models.NFTTrack
 
 internal const val TAG_INVESTMENT_PORTFOLIO_SCREEN = "TAG_INVESTMENT_PORTFOLIO_SCREEN"
 

@@ -1,11 +1,17 @@
 package io.newm.sharedfeatures.devmenu
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
@@ -15,20 +21,16 @@ class DevMenuPresenter @Inject constructor(
 
     @Composable
     override fun present(): DevMenuMainScreen.UiState {
-        // Using produceState to create the static list of menu items.
-        // This could be made dynamic if menu items needed to be loaded asynchronously.
-        val menuItems = produceState(initialValue = emptyList<DevMenuItem>()) {
+        var navigationInProgress by remember { mutableStateOf(false) }
+
+        val menuItems = produceState(initialValue = emptyList()) {
             value = listOf(
                 DevMenuItem(
                     title = "Feature Flags",
-                    screen = FeatureFlagsListScreen
+                    screen = FeatureFlagsListScreen,
+                    description = "Manage and test feature flags"
                 ),
-                // To add another debug option, simply add a new DevMenuItem here.
-                // For example:
-                // DevMenuItem(
-                //     title = "Log Viewer",
-                //     screen = LogViewerScreen
-                // )
+                // Add more items as needed
             )
         }.value
 
@@ -37,10 +39,25 @@ class DevMenuPresenter @Inject constructor(
             onEvent = { event ->
                 when (event) {
                     is DevMenuMainScreen.UiEvent.OnItemClick -> {
-                        navigator.goTo(event.screen)
+                        // Fix navigation issue with debouncing
+                        if (!navigationInProgress) {
+                            navigationInProgress = true
+                            try {
+                                navigator.goTo(event.screen)
+                            } catch (e: Exception) {
+                                println("Navigation error: ${e.message}")
+                            }
+                            // Reset navigation state after delay
+                            kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
+                                delay(1000)
+                                navigationInProgress = false
+                            }
+                        }
                     }
                     DevMenuMainScreen.UiEvent.OnBack -> {
-                        navigator.pop()
+                        if (!navigationInProgress) {
+                            navigator.pop()
+                        }
                     }
                 }
             },
@@ -51,7 +68,7 @@ class DevMenuPresenter @Inject constructor(
 class DevMenuPresenterFactory @Inject constructor(
     private val presenter: (Navigator) -> DevMenuPresenter,
     private val featureFlagsListPresenter: (Navigator) -> FeatureFlagsListPresenter,
-    ) : Presenter.Factory {
+) : Presenter.Factory {
     override fun create(
         screen: Screen,
         navigator: Navigator,

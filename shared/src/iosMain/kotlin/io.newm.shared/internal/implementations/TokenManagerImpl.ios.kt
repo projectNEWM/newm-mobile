@@ -2,8 +2,8 @@ package io.newm.shared.internal.implementations
 
 
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.db.PreferencesDataStore
+import io.newm.shared.commonInternal.TokenManager
+import io.newm.shared.commonInternal.db.PreferencesDataStore
 
 internal class TokenManagerImpl(
     private val storage: PreferencesDataStore,

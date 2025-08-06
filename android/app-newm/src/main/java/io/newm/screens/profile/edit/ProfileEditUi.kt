@@ -50,9 +50,9 @@ import io.newm.screens.profile.ProfileHeader
 import io.newm.screens.profile.ProfilePictureUpdateSheet
 import io.newm.screens.profile.edit.ProfileEditUiState.Content
 import io.newm.screens.profile.edit.ProfileEditUiState.Loading
-import io.newm.shared.public.models.User
-import io.newm.shared.public.models.canEditName
-import io.newm.shared.public.models.mocks.mockUsers
+import io.newm.shared.commonPublic.models.User
+import io.newm.shared.commonPublic.models.canEditName
+import io.newm.shared.commonPublic.models.mocks.mockUsers
 import kotlinx.coroutines.launch
 import network.chaintech.cmpimagepickncrop.CMPImagePickNCropDialog
 

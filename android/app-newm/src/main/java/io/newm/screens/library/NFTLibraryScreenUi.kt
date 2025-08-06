@@ -86,9 +86,9 @@ import io.newm.screens.library.NFTLibraryEvent.PlaySong
 import io.newm.screens.library.screens.EmptyWalletScreen
 import io.newm.screens.library.screens.LinkWalletScreen
 import io.newm.screens.library.screens.ZeroSearchResults
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.NFTTrack
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 

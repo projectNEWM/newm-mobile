@@ -11,7 +11,7 @@ plugins {
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
-    id("io.sentry.android.gradle") version "5.6.0"
+    id("io.sentry.android.gradle") version "5.8.0"
     alias(libs.plugins.compose.multiplatform)
 }
 

@@ -1,6 +1,6 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.db.PreferencesDataStore
+import io.newm.shared.commonInternal.db.PreferencesDataStore
 import android.content.Context
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore

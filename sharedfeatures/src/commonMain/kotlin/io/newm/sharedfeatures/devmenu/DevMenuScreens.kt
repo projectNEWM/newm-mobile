@@ -3,7 +3,7 @@ package io.newm.sharedfeatures.devmenu
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
-import io.newm.shared.public.analytics.ScreenEvents
+import io.newm.shared.commonPublic.analytics.ScreenEvents
 import io.newm.sharedfeatures.parceling.CommonParcelize
 
 @CommonParcelize
@@ -27,5 +27,6 @@ object DevMenuMainScreen : Screen, ScreenEvents {
 
 data class DevMenuItem(
     val title: String,
-    val screen: Screen
+    val screen: Screen,
+    val description: String = ""
 )

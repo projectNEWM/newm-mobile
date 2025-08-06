@@ -49,10 +49,11 @@ import io.newm.screens.wallets.WalletsPresenter
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.view.WalletsUi
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.featureflags.FeatureFlagDataSource
-import io.newm.shared.public.featureflags.FeatureFlags
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.shared.commonPublic.featureflags.FeatureFlagService
+import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
 import io.newm.sharedfeatures.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.devmenu.DevMenuUi
@@ -62,6 +63,7 @@ import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -70,7 +72,7 @@ class HomeActivity : ComponentActivity() {
     private val logger: NewmAppLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
     private val eventLogger: NewmAppEventLogger by inject()
-    private val featureFlagManager: FeatureFlagDataSource by inject()
+    private val featureFlagService: FeatureFlagService by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -90,15 +92,17 @@ class HomeActivity : ComponentActivity() {
                             eventLogger
                         )
                     } else {
+                        val showRecordStore by featureFlagService.observeFlag(FeatureFlags.ShowRecordStore)
+                            .collectAsState(initial = FeatureFlags.ShowRecordStore.defaultValue)
+
+                        val showInvestmentPortfolio by featureFlagService.observeFlag(FeatureFlags.ShowInvestmentPortfolio)
+                            .collectAsState(initial = FeatureFlags.ShowInvestmentPortfolio.defaultValue)
+
                         NewmApp(
                             logger = logger,
                             eventLogger = eventLogger,
-                            showRecordStore = featureFlagManager.getBooleanVariation(
-                                FeatureFlags.ShowRecordStore
-                            ),
-                            showInvestmentPortfolio = featureFlagManager.getBooleanVariation(
-                                FeatureFlags.ShowInvestmentPortfolio
-                            )
+                            showRecordStore = showRecordStore,
+                            showInvestmentPortfolio = showInvestmentPortfolio
                         )
                     }
                 }

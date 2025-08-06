@@ -9,7 +9,7 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenContent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterEmail
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterVerificationCode
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.EnterNewPassword
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import org.junit.Test
 import org.junit.runner.RunWith
 

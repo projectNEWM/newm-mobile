@@ -9,12 +9,13 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.WalletConnection
-import io.newm.shared.public.models.mocks.EmptyWallet
-import io.newm.shared.public.usecases.FindWalletConnectionUseCase
-import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.commonPublic.models.mocks.EmptyWallet
+import io.newm.screens.library.NFTLibraryState
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.WalletConnection
+import io.newm.shared.commonPublic.usecases.FindWalletConnectionUseCase
+import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
@@ -66,7 +67,7 @@ class WalletDetailPresenter(
         }
 
         return when (walletConnection) {
-            EmptyWallet -> WalletDetailUiState.Loading(eventSink, isSyncing, walletName)
+            NFTLibraryState.EmptyWallet -> WalletDetailUiState.Loading(eventSink, isSyncing, walletName)
             null -> WalletDetailUiState.Error(eventSink, isSyncing, walletName)
             else -> WalletDetailUiState.Content(
                 eventSink,

@@ -23,7 +23,7 @@ import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.feature.login.screen.OnboardingMainImage
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 @Composable
 fun ForceAppUpdateUi(

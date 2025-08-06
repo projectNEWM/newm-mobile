@@ -1,7 +1,7 @@
 package io.newm.screens.library
 
 import com.slack.circuit.runtime.CircuitUiEvent
-import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.commonPublic.models.NFTTrack
 
 sealed interface NFTLibraryEvent : CircuitUiEvent {
     data object OnRefresh : NFTLibraryEvent

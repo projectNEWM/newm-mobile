@@ -36,9 +36,9 @@ import io.newm.core.resources.R
 import io.newm.core.theme.Gray16
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.inter
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.WalletConnection
 
 @Composable
 fun WalletRowItem(

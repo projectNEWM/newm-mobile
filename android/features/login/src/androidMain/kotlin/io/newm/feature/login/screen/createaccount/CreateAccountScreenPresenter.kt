@@ -19,10 +19,10 @@ import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.feature.login.screen.password.VerificationCodeState
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.usecases.LoginUseCase
-import io.newm.shared.public.usecases.SignupUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.usecases.LoginUseCase
+import io.newm.shared.commonPublic.usecases.SignupUseCase
 import kotlinx.coroutines.launch
 
 class CreateAccountScreenPresenter(

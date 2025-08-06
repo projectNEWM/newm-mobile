@@ -8,7 +8,7 @@ import com.slack.circuit.runtime.screen.Screen
 import io.newm.feature.login.screen.HomeScreen
 import io.newm.screens.WebBrowserScreen
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import kotlinx.collections.immutable.ImmutableList
 
 

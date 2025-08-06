@@ -1,15 +1,12 @@
-@file:OptIn(DelicateCoroutinesApi::class)
-
 package io.newm
 
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.jakewharton.processphoenix.ProcessPhoenix
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.usecases.LoginUseCase
-import io.newm.shared.public.usecases.UserSessionUseCase
+import io.newm.shared.commonPublic.usecases.LoginUseCase
+import io.newm.shared.commonPublic.usecases.UserSessionUseCase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 

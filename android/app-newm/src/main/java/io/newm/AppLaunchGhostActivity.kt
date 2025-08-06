@@ -6,9 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.featureflags.FeatureFlagDataSource
-import io.newm.shared.public.usecases.UserDetailsUseCase
-import io.newm.shared.public.usecases.UserSessionUseCase
+import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
+import io.newm.shared.commonPublic.usecases.UserSessionUseCase
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first

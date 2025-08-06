@@ -40,8 +40,8 @@ import io.newm.core.ui.utils.textGradient
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.models.WalletConnection
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)

@@ -1,7 +1,7 @@
 package io.newm.screens.investment.portfolio
 
 import com.slack.circuit.runtime.CircuitUiState
-import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.commonPublic.models.NFTTrack
 
 sealed class InvestmentPortfolioState : CircuitUiState {
     data class Content(

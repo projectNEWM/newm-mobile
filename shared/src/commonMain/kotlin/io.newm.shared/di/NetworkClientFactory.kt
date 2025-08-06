@@ -20,12 +20,12 @@ import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.api.models.LoginResponse
-import io.newm.shared.internal.repositories.LogInRepository
+import io.newm.shared.commonInternal.TokenManager
+import io.newm.shared.commonInternal.api.models.LoginResponse
+import io.newm.shared.commonInternal.repositories.LogInRepository
 import kotlinx.serialization.json.Json
 
-internal class NetworkClientFactory(
+class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
     private val repository: LogInRepository,

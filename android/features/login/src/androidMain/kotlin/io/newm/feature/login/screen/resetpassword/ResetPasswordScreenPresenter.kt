@@ -22,11 +22,11 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmai
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.usecases.LoginUseCase
-import io.newm.shared.public.usecases.ResetPasswordUseCase
-import io.newm.shared.public.usecases.SignupUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.usecases.LoginUseCase
+import io.newm.shared.commonPublic.usecases.ResetPasswordUseCase
+import io.newm.shared.commonPublic.usecases.SignupUseCase
 import kotlinx.coroutines.launch
 
 private enum class ResetPasswordStep {

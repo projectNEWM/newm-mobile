@@ -7,9 +7,9 @@ import com.cloudinary.android.callback.UploadCallback
 import com.cloudinary.android.signed.Signature
 import com.cloudinary.android.signed.SignatureProvider
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.internal.CloudinaryManager
-import io.newm.shared.internal.api.NewmCloudinaryAPI
-import io.newm.shared.public.models.error.KMMException
+import io.newm.shared.commonInternal.CloudinaryManager
+import io.newm.shared.commonInternal.api.NewmCloudinaryAPI
+import io.newm.shared.commonPublic.models.error.KMMException
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume

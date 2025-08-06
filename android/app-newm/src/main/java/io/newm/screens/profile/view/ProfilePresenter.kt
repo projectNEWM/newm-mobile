@@ -25,16 +25,17 @@ import io.newm.screens.profile.OnVisitRecordStore
 import io.newm.screens.profile.OnVisitStudio
 import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.featureflags.FeatureFlagDataSource
-import io.newm.shared.public.featureflags.FeatureFlags
-import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.DisconnectWalletUseCase
-import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
-import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
-import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
-import io.newm.shared.public.usecases.UserDetailsUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.shared.commonPublic.featureflags.FeatureFlagService
+import io.newm.shared.commonPublic.featureflags.FeatureFlags
+import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
+import io.newm.shared.commonPublic.usecases.DisconnectWalletUseCase
+import io.newm.shared.commonPublic.usecases.GetWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
 import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
 import kotlinx.coroutines.launch
 
@@ -46,26 +47,22 @@ class ProfilePresenter(
     private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val userDetailsUseCase: UserDetailsUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
-    private val featureFlagManager: FeatureFlagDataSource,
+    private val featureFlagService: FeatureFlagService,
     private val logout: Logout,
     private val eventLogger: NewmAppEventLogger
 ) : Presenter<ProfileUiState> {
+
     @Composable
     override fun present(): ProfileUiState {
-
         val coroutineScope = rememberStableCoroutineScope()
 
         val isWalletConnected by remember {
             hasWalletConnectionsUseCase.hasWalletConnectionsFlow()
-        }.collectAsState(
-            false
-        )
+        }.collectAsState(false)
 
         val userConnectedWallets by remember {
             getWalletConnectionsUseCase.getWalletConnectionsFromCacheFlow()
-        }.collectAsState(
-            emptyList()
-        )
+        }.collectAsState(emptyList())
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
@@ -73,14 +70,16 @@ class ProfilePresenter(
 
         val user by remember {
             userDetailsUseCase.fetchLoggedInUserDetailsFlow()
-        }.collectAsState(
-            null
-        )
+        }.collectAsState(null)
 
-        val showRecordStore = featureFlagManager.getBooleanVariation(FeatureFlags.ShowRecordStore)
-        val showMultiWallets = featureFlagManager.getBooleanVariation(FeatureFlags.ShowMultiWallets)
-        val hasAdvancedAccess = featureFlagManager.getBooleanVariation(FeatureFlags.ShowMultiWallets)
+        val showRecordStore by featureFlagService.observeFlag(FeatureFlags.ShowRecordStore)
+            .collectAsState(initial = FeatureFlags.ShowRecordStore.defaultValue)
 
+        val showMultiWallets by featureFlagService.observeFlag(FeatureFlags.ShowMultiWallets)
+            .collectAsState(initial = FeatureFlags.ShowMultiWallets.defaultValue)
+
+        val showStudio by featureFlagService.observeFlag(FeatureFlags.ShowNEWMStudio)
+            .collectAsState(initial = FeatureFlags.ShowNEWMStudio.defaultValue)
 
         return if (user == null) {
             ProfileUiState.Loading
@@ -91,7 +90,7 @@ class ProfilePresenter(
                 userConnectedWallets = userConnectedWallets,
                 showRecordStore = showRecordStore,
                 showMultiWallets = showMultiWallets,
-                showStudio = hasAdvancedAccess,
+                showStudio = showStudio,
                 eventSink = { event ->
                     when (event) {
                         is OnConnectWallet -> coroutineScope.launch {
@@ -129,7 +128,7 @@ class ProfilePresenter(
                             navigator.goTo(Screen.Wallets)
                         }
 
-                        OnBottomSheetVisible ->  {
+                        OnBottomSheetVisible -> {
                             eventLogger.logClickEvent(AppScreens.AccountOptionsScreen.name)
                         }
 
@@ -157,4 +156,3 @@ class ProfilePresenter(
         }
     }
 }
-

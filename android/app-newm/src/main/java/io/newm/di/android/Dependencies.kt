@@ -36,7 +36,7 @@ import io.newm.screens.studio.StudioPresenter
 import io.newm.screens.walletdetail.WalletDetailPresenter
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.public.featureflags.FeatureFlagDataSource
+import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.sharedfeatures.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
 import io.newm.utils.AndroidFeatureFlagManager

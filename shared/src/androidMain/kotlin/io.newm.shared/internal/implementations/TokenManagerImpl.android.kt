@@ -4,7 +4,7 @@ package io.newm.shared.internal.implementations
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
-import io.newm.shared.internal.TokenManager
+import io.newm.shared.commonInternal.TokenManager
 
 internal class TokenManagerImpl(
     context: Context,

@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 @Composable
 fun MusicPlayerScreen(

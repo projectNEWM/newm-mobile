@@ -18,15 +18,16 @@ import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.rememberMediaPlayer
 import io.newm.feature.musicplayer.service.DownloadManager
 import io.newm.feature.musicplayer.service.MusicPlayer
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.featureflags.FeatureFlagDataSource
-import io.newm.shared.public.featureflags.FeatureFlags
-import io.newm.shared.public.models.NFTTrack
-import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
-import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
-import io.newm.shared.public.usecases.WalletNFTTracksUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.shared.commonPublic.featureflags.FeatureFlagService
+import io.newm.shared.commonPublic.featureflags.FeatureFlags
+import io.newm.shared.commonPublic.models.NFTTrack
+import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
+import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
@@ -42,14 +43,23 @@ class NFTLibraryPresenter(
     private val scope: CoroutineScope,
     private val eventLogger: NewmAppEventLogger,
     private val downloadManager: DownloadManager,
-    private val featureFlagManager: FeatureFlagDataSource,
+    private val featureFlagService: FeatureFlagService,
 ) : Presenter<NFTLibraryState> {
     @Composable
     override fun present(): NFTLibraryState {
         val musicPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger)
 
-        val downloadsEnabled =
-            remember { featureFlagManager.getBooleanVariation(FeatureFlags.DownloadTracks) }
+        // Updated to use the reactive feature flag observing
+        var downloadsEnabled by remember { mutableStateOf(FeatureFlags.DownloadTracks.defaultValue) }
+
+        // Observe the download tracks flag reactively
+        val downloadTracksState by featureFlagService.observeFlag(FeatureFlags.DownloadTracks)
+            .collectAsState(initial = FeatureFlags.DownloadTracks.defaultValue)
+
+        // Update local state when flag changes
+        LaunchedEffect(downloadTracksState) {
+            downloadsEnabled = downloadTracksState
+        }
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()

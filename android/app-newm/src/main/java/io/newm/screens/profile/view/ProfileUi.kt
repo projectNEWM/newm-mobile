@@ -41,7 +41,7 @@ import io.newm.screens.profile.OnWalletsScreen
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
-import io.newm.shared.public.models.User
+import io.newm.shared.commonPublic.models.User
 import kotlinx.coroutines.launch
 
 internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"

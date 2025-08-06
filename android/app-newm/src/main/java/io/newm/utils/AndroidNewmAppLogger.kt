@@ -2,7 +2,7 @@ package io.newm.utils
 
 import android.util.Log
 import io.newm.shared.AppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.sentry.Sentry
 import io.sentry.protocol.User
 import kotlinx.coroutines.CancellationException

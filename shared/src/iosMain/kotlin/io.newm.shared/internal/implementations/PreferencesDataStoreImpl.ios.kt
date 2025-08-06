@@ -1,7 +1,7 @@
 package io.newm.shared.internal.implementations
 
 import com.liftric.kvault.KVault
-import io.newm.shared.internal.db.PreferencesDataStore
+import io.newm.shared.commonInternal.db.PreferencesDataStore
 
 class PreferencesDataStoreImpl : PreferencesDataStore {
     private val vault: KVault = KVault("newm_ios_preferences")
