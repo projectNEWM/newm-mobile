@@ -9,11 +9,7 @@ import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 sealed class Screen(val screenName: String, val showBottomBar: Boolean = false, val showMiniPlayer: Boolean = false) : CircuitScreen {
 
     data object Wallets : Screen(screenName = AppScreens.WalletsScreen.name, showBottomBar = true, showMiniPlayer = true)
-    data class WalletDetail(val walletId: String, val walletName: String) : Screen(
-        screenName = AppScreens.WalletDetailScreen.name,
-        showBottomBar = true,
-        showMiniPlayer = true
-    )
+    data class WalletDetail(val walletId: String, val walletName: String) : Screen(screenName = AppScreens.WalletDetailScreen.name)
     data object UserAccount : Screen(screenName = AppScreens.AccountScreen.name, showBottomBar = true, showMiniPlayer = true)
 
     data object RecordStore : Screen(screenName = AppScreens.RecordStoreScreen.name, showBottomBar = true, showMiniPlayer = true)
