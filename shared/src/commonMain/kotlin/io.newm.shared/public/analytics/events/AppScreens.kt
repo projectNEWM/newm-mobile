@@ -145,12 +145,25 @@ object AppScreens {
         const val WALLET_OPTIONS_BUTTON: String = "Wallet Options"
         const val CONTENT_ADD_WALLET_BUTTON: String = "Content Add Wallet"
         const val EMPTY_ADD_WALLET_BUTTON: String = "Empty Add Wallet"
+        const val VIEW_DETAILS_WALLET_BUTTON: String = "View Details Wallet"
+        const val RENAME_WALLET_BUTTON: String = "Rename Wallet"
+        const val COPY_ADDRESS_WALLET_BUTTON: String = "Copy Address Wallet"
         const val DISCONNECT_WALLET_BUTTON: String = "Disconnect Wallet"
-        const val DISCONNECT_ALL_WALLETS_BUTTON: String = "Disconnect All Wallets"
+        const val WALLET_RENAME_CONFIRM = "Wallet Rename Confirm"
     }
 
-    object WalletOptionsScreen : ScreenEvents {
-        override val name = "Wallet Options"
+    object WalletDisconnectScreen : ScreenEvents {
+        override val name = "Wallet Disconnect"
+    }
+
+    object WalletRenameScreen : ScreenEvents {
+        override val name = "Wallet Rename"
+    }
+
+    object WalletDetailScreen : ScreenEvents {
+        override val name = "Wallet Detail"
+        const val BACK_BUTTON: String = "Back"
+        const val PULL_TO_REFRESH: String = "Pull to Refresh"
     }
 
     object WelcomeScreen : ScreenEvents {

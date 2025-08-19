@@ -1,32 +1,43 @@
 package io.newm.screens.wallets.view
 
+import android.content.ClipData
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import io.newm.core.resources.R
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.util.rememberBarcodeScannerLauncher
 import io.newm.shared.public.analytics.NewmAppEventLogger
 import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.public.models.WalletConnection
+import kotlinx.coroutines.launch
 
 @Composable
-internal fun BoxScope.Content(
+internal fun Content(
     state: WalletsUiState.Content,
     eventLogger: NewmAppEventLogger,
-    onOptionsClick: (String) -> Unit,
-    onDisconnectAllClick: () -> Unit
+    onDisconnectWallet: (WalletConnection) -> Unit,
+    onRenameWallet: (WalletConnection) -> Unit
 ) {
     val launchBarcodeScanner = rememberBarcodeScannerLauncher {
         state.eventSink(WalletsEvent.OnConnectWallet(it))
     }
+
+    val clipboard = LocalClipboard.current
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -44,16 +55,40 @@ internal fun BoxScope.Content(
                 items = state.wallets,
                 key = { it.id }
             ) {
-                WalletRow(
+                WalletRowItem(
                     connection = it,
-                    onOptionsClick = {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.WALLET_OPTIONS_BUTTON)
-                        onOptionsClick(it)
+                    eventLogger = eventLogger,
+                    onViewDetailsClick = {
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.VIEW_DETAILS_WALLET_BUTTON)
+                        state.eventSink(WalletsEvent.OnWalletDetailView(it.id))
+                    },
+                    onRenameClick = {
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.RENAME_WALLET_BUTTON)
+                        onRenameWallet(it)
+                    },
+                    onCopyAddressClick = {
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.COPY_ADDRESS_WALLET_BUTTON)
+                        scope.launch {
+                            clipboard.setClipEntry(
+                                ClipEntry(
+                                    ClipData.newPlainText(
+                                        context.getString(
+                                            R.string.wallets_copy_address_label,
+                                            it.id // TODO ID should be replaced with wallet name
+                                        ),
+                                        it.stakeAddress
+                                    )
+                                )
+                            )
+                        }
+                    },
+                    onDisconnectClick = {
+                        eventLogger.logClickEvent(AppScreens.WalletsScreen.DISCONNECT_WALLET_BUTTON)
+                        onDisconnectWallet(it)
                     }
                 )
             }
         }
-        DisconnectAllWalletsButton(onClick = onDisconnectAllClick)
         ConnectNewWalletButton(
             onClick = {
                 eventLogger.logClickEvent(AppScreens.WalletsScreen.CONTENT_ADD_WALLET_BUTTON)

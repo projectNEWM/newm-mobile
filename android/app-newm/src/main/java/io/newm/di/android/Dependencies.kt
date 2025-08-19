@@ -33,6 +33,7 @@ import io.newm.screens.profile.edit.ProfileEditPresenter
 import io.newm.screens.profile.view.ProfilePresenter
 import io.newm.screens.recordstore.RecordStorePresenter
 import io.newm.screens.studio.StudioPresenter
+import io.newm.screens.walletdetail.WalletDetailPresenter
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.public.featureflags.FeatureFlagManager
@@ -117,6 +118,17 @@ val viewModule = module {
             get(),
             get(),
             get(),
+        )
+    }
+
+    factory { params ->
+        WalletDetailPresenter(
+            navigator = params[0],
+            walletID = params[1],
+            walletName = params[2],
+            eventLogger = get(),
+            findWalletConnectionUseCase = get(),
+            syncWalletConnectionsUseCase = get(),
         )
     }
 

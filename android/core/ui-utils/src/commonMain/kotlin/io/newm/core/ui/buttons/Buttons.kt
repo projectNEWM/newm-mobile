@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,7 +51,7 @@ fun NewmButton(
     selectedBrush: Brush = enabledButtonGradient,
     unselectedBrush: Brush = disabledButtonGradient,
     onClick: () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable (RowScope.() -> Unit)
 ) {
     val newmModifier = modifier.then(
         Modifier
@@ -70,7 +71,7 @@ fun NewmButton(
         modifier = newmModifier,
         elevation = null,
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-        content = { content() }
+        content = content
     )
 }
 

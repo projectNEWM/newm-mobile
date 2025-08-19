@@ -15,6 +15,9 @@ internal class WalletRepository(
     fun getWalletConnectionsCache(): Flow<List<WalletConnection>> =
         cacheService.getWalletConnections()
 
+    fun findWalletConnectionByID(walletID: String): Flow<WalletConnection?> =
+        cacheService.findWalletConnectionByID(walletID)
+
     suspend fun syncWalletConnectionsFromNetworkToDB(): List<WalletConnection> {
         return try {
             val connections = networkService.getWalletConnections()

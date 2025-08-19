@@ -4,15 +4,19 @@ import io.newm.shared.internal.services.db.NewmDatabaseWrapper
 import io.newm.shared.internal.services.db.cacheWalletConnections
 import io.newm.shared.internal.services.db.deleteAllWalletConnections
 import io.newm.shared.internal.services.db.deleteWalletConnectionById
+import io.newm.shared.internal.services.db.findWalletConnectionByID
 import io.newm.shared.internal.services.db.getWalletConnections
 import io.newm.shared.public.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
 
 class WalletConnectionCacheService(
     private val db: NewmDatabaseWrapper
-)  {
+) {
     fun getWalletConnections(): Flow<List<WalletConnection>> =
         db.getWalletConnections()
+
+    fun findWalletConnectionByID(id: String): Flow<WalletConnection?> =
+        db.findWalletConnectionByID(id)
 
     suspend fun cacheWalletConnections(connections: List<WalletConnection>) =
         db.cacheWalletConnections(connections)

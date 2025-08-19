@@ -93,7 +93,7 @@
     <string name="profile_confirm_new_password">Veuillez confirmer votre nouveau mot de passe</string>
     <string name="profile_connect_wallet_button_label">Connecter le portefeuille</string>
     <string name="profile_connected_wallets_button_label">Portefeuilles connectés : %1$d</string>
-    <string name="profile_disconnect_wallet_button_label">Déconnecter le portefeuille</string>
+    <string name="profile_disconnect_wallet_button_label">Déconnecter</string>
     <string name="profile_documents">Documents</string>
     <string name="profile_edit_button_label">Modifier le profil</string>
     <string name="profile_enter_current_password">Veuillez entrer votre mot de passe actuel</string>
@@ -182,9 +182,19 @@
     <string name="welcome">Salut %s 👋</string>
     <string name="welcome_to_newm">Bienvenue sur NEWM</string>
     <string name="profile_connect_new_wallet_button_label">Nouveau portefeuille</string>
-    <string name="wallets_screen_connect_new_wallet">Nouveau portefeuille</string>
-    <string name="wallets_screen_disconnect_all_wallets">Déconnecter tout</string>
+    <string name="wallets_screen_connect_new_wallet">Connecter le portefeuille</string>
     <string name="wallets_screen_wallet_options_desc">Options du portefeuille</string>
     <string name="wallets_screen_topbar_title">Portefeuilles connectés</string>
-    <string name="wallets_screen_disconnect_wallet_modal_title">Déconnexion du portefeuille?</string>
+    <string name="wallets_screen_disconnect_wallet_modal_title">Déconnecter le portefeuille?</string>
+    <string name="wallet_menu_details">Voir les détails</string>
+    <string name="wallet_menu_rename">Renommer</string>
+    <string name="wallet_menu_copy">Copier l\'adresse</string>
+    <string name="wallet_menu_disconnect">Déconnecter</string>
+    <string name="wallets_screen_disconnect_wallet_modal_desc">Cela supprimera tous les NFT et Stream Tokens accessibles dans l\'application.</string>
+    <string name="wallets_screen_rename_modal_title">Renommer le portefeuille</string>
+    <string name="done">Terminé</string>
+    <string name="wallets_copy_address_label">Adresse de %s</string>
+    <string name="wallets_rename_text_label">nouveau nom</string>
+    <string name="address">Adresse</string>
+    <string name="tokens">Jetons</string>
 </resources>
