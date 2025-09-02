@@ -50,7 +50,7 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
                 onPrivacyPolicyClicked = {},
                 onTermsOfServiceClicked = {},
                 onDebugMenu = {
-                    state.onEvent.invoke(WelcomeScreen.UiEvent.OnDevMenu)
+                    state.onEvent(WelcomeScreen.UiEvent.OnDevMenu)
                 }
             )
         }
