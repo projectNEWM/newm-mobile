@@ -18,7 +18,7 @@ import com.google.common.util.concurrent.MoreExecutors
 import io.newm.feature.musicplayer.service.MediaService
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.service.MusicPlayerImpl
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 /**
  * Get a [MusicPlayer] instance that is scoped to the lifecycle of the current [LifecycleOwner].

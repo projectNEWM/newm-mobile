@@ -10,14 +10,14 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.screens.Screen
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.WalletConnection
-import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.DisconnectWalletUseCase
-import io.newm.shared.public.usecases.GetWalletConnectionsUseCase
-import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
-import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.WalletConnection
+import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
+import io.newm.shared.commonPublic.usecases.DisconnectWalletUseCase
+import io.newm.shared.commonPublic.usecases.GetWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import kotlinx.coroutines.launch
 
 class WalletsPresenter(

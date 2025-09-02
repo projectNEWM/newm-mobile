@@ -48,8 +48,14 @@ import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
+import io.newm.sharedfeatures.devmenu.DevMenuPresenter
+import io.newm.sharedfeatures.devmenu.DevMenuUi
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListScreen
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
@@ -80,6 +86,13 @@ class LoginActivity : ComponentActivity() {
                     )
                 }.value
 
+                is DevMenuMainScreen -> inject<DevMenuPresenter> { parametersOf(navigator) }.value
+                is FeatureFlagsListScreen -> inject<FeatureFlagsListPresenter> {
+                    parametersOf(
+                        navigator
+                    )
+                }.value
+
                 else -> null
             }
         }
@@ -101,6 +114,14 @@ class LoginActivity : ComponentActivity() {
 
                 is ResetPasswordScreen -> ui<ResetPasswordScreenUiState> { state, modifier ->
                     ResetPasswordScreenUi(eventLogger).Content(state = state, modifier = modifier)
+                }
+
+                is DevMenuMainScreen -> ui<DevMenuMainScreen.UiState> { state, modifier ->
+                    DevMenuUi(state, modifier)
+                }
+
+                is FeatureFlagsListScreen -> ui<FeatureFlagsListScreen.UiState> { state, modifier ->
+                    FeatureFlagsListUi(state, modifier)
                 }
 
                 else -> null

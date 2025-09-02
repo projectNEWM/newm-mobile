@@ -36,7 +36,9 @@ import io.newm.screens.studio.StudioPresenter
 import io.newm.screens.walletdetail.WalletDetailPresenter
 import io.newm.screens.wallets.WalletsPresenter
 import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.public.featureflags.FeatureFlagManager
+import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.sharedfeatures.devmenu.DevMenuPresenter
+import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
 import io.newm.utils.AndroidFeatureFlagManager
 import io.newm.utils.ForceAppUpdateViewModel
 import org.koin.android.ext.koin.androidContext
@@ -46,7 +48,7 @@ import androidx.media3.exoplayer.offline.DownloadManager as ExoDownloadManager
 
 @SuppressLint("UnsafeOptInUsageError")
 val viewModule = module {
-    single<FeatureFlagManager> { AndroidFeatureFlagManager(get(), get(), get()) }
+    single<FeatureFlagDataSource> { AndroidFeatureFlagManager(get(), get(), get()) }
     single { ForceAppUpdateViewModel(get(), get()) }
     single { RecaptchaClientProvider() }
 
@@ -210,6 +212,8 @@ val viewModule = module {
             Executor(Runnable::run)
         )
     }
+    single<DevMenuPresenter> { DevMenuPresenter(get()) }
+    single<FeatureFlagsListPresenter> { FeatureFlagsListPresenter(get(), get()) }
 }
 
 val androidModules = module {

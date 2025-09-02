@@ -7,7 +7,7 @@ import com.google.firebase.analytics.logEvent
 import com.google.firebase.ktx.Firebase
 import io.newm.BuildConfig
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.IEventLogger
+import io.newm.shared.commonPublic.analytics.IEventLogger
 
 /**
  * Implementation of [IEventLogger] for Android using Firebase Analytics.

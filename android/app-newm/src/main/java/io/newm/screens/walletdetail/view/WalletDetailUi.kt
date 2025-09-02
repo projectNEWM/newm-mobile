@@ -34,7 +34,7 @@ import io.newm.core.theme.inter
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.walletdetail.WalletDetailEvent
 import io.newm.screens.walletdetail.WalletDetailUiState
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

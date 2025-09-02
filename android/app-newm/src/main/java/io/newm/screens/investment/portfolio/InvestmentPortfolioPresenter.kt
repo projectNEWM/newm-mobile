@@ -11,10 +11,10 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.usecases.GetInvestmentPortfolioDataUseCase
-import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
-import io.newm.shared.public.usecases.SyncWalletConnectionsUseCase
-import io.newm.shared.public.usecases.WalletNFTTracksUseCase
+import io.newm.shared.commonPublic.usecases.GetInvestmentPortfolioDataUseCase
+import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
 import kotlinx.coroutines.flow.flowOf
 
 class InvestmentPortfolioPresenter(

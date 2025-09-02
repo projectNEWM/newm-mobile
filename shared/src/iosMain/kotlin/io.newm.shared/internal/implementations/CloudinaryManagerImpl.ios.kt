@@ -1,7 +1,7 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.internal.CloudinaryManager
-import io.newm.shared.internal.api.NewmCloudinaryAPI
+import io.newm.shared.commonInternal.CloudinaryManager
+import io.newm.shared.commonInternal.api.NewmCloudinaryAPI
 
 
 internal class CloudinaryManagerImpl(

@@ -22,8 +22,8 @@ import io.newm.core.theme.NewmTheme
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.util.rememberBarcodeScannerLauncher
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
 
 @Composable
 internal fun BoxScope.Empty(

@@ -2,8 +2,8 @@ package io.newm.screens.profile.view
 
 import com.slack.circuit.runtime.CircuitUiState
 import io.newm.screens.profile.ProfileUiEvent
-import io.newm.shared.public.models.User
-import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.commonPublic.models.User
+import io.newm.shared.commonPublic.models.WalletConnection
 
 sealed class ProfileUiState : CircuitUiState {
     data object Loading : ProfileUiState()

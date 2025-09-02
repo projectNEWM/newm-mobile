@@ -18,9 +18,9 @@ import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.PasswordState
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.usecases.LoginUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.usecases.LoginUseCase
 import kotlinx.coroutines.launch
 
 class LoginScreenPresenter(

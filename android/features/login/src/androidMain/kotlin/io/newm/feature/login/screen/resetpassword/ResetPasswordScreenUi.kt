@@ -44,8 +44,8 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState.Ent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
 
 class ResetPasswordScreenUi(val eventLogger: NewmAppEventLogger) : Ui<ResetPasswordScreenUiState> {
     @Composable

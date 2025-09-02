@@ -28,14 +28,14 @@ import io.newm.screens.profile.OnSaveProfile
 import io.newm.screens.profile.OnShowPrivacyPolicy
 import io.newm.screens.profile.OnShowTermsAndConditions
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.User
-import io.newm.shared.public.models.canEditName
-import io.newm.shared.public.usecases.ConnectWalletUseCase
-import io.newm.shared.public.usecases.HasWalletConnectionsUseCase
-import io.newm.shared.public.usecases.UpdateProfilePictureUseCase
-import io.newm.shared.public.usecases.UserDetailsUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.User
+import io.newm.shared.commonPublic.models.canEditName
+import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
+import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.UpdateProfilePictureUseCase
+import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
 import io.newm.utils.toTempFile
 import kotlinx.coroutines.launch
 

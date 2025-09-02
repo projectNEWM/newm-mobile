@@ -45,9 +45,9 @@ import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.formLabelStyle
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.WalletConnection
 import kotlinx.coroutines.launch
 import java.util.Locale
 

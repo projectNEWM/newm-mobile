@@ -28,6 +28,7 @@ import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
+import io.newm.screens.profile.OnDeveloperMenu
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
@@ -40,7 +41,7 @@ import io.newm.screens.profile.OnWalletsScreen
 import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
-import io.newm.shared.public.models.User
+import io.newm.shared.commonPublic.models.User
 import kotlinx.coroutines.launch
 
 internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
@@ -84,6 +85,7 @@ private fun ProfileUiContent(
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
         onBottomSheetVisible = { onEvent(OnBottomSheetVisible) },
+        onDeveloperMenu = { onEvent(OnDeveloperMenu) }
     ) {
         Scaffold(
             modifier = Modifier

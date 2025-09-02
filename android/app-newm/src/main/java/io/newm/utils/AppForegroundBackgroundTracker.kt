@@ -5,7 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import io.newm.BuildConfig
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 class AppForegroundBackgroundTracker(
     private val analyticsTracker: NewmAppEventLogger,

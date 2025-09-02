@@ -1,6 +1,6 @@
 package io.newm.screens
 
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.events.AppScreens
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen

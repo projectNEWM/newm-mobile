@@ -2,7 +2,6 @@ package io.newm.feature.login.screen.welcome
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -29,10 +28,12 @@ import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
-import io.newm.shared.public.models.error.KMMException
-import io.newm.shared.public.usecases.LoginUseCase
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.error.KMMException
+import io.newm.shared.commonPublic.usecases.LoginUseCase
+import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
+import androidx.core.net.toUri
 
 class WelcomeScreenPresenter(
     private val navigator: Navigator,
@@ -80,12 +81,16 @@ class WelcomeScreenPresenter(
                     analyticsTracker.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
                     context.launchUrl("https://newm.io/app-privacy")
                 }
+
+                WelcomeScreenUiEvent.OnDebugMenuClicked -> {
+                    navigator.goTo(DevMenuMainScreen)
+                }
             }
         }
     }
 
     private fun Context.launchUrl(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         startActivity(intent)
     }
 

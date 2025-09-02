@@ -18,5 +18,6 @@ data object WelcomeScreen : Screen {
 
     sealed interface UiEvent : CircuitUiEvent {
         data object OnBack : UiEvent
+        data object OnDevMenu : UiEvent
     }
 }

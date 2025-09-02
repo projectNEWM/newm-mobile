@@ -1,10 +1,10 @@
 
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.internal.api.models.MobileClientConfig
-import io.newm.shared.internal.api.models.MobileConfig
-import io.newm.shared.internal.implementations.ForceAppUpdateUseCaseImpl
-import io.newm.shared.internal.repositories.RemoteConfigRepository
-import io.newm.shared.public.usecases.ForceAppUpdateUseCase
+import io.newm.shared.commonInternal.api.models.MobileClientConfig
+import io.newm.shared.commonInternal.api.models.MobileConfig
+import io.newm.shared.commonInternal.implementations.ForceAppUpdateUseCaseImpl
+import io.newm.shared.commonInternal.repositories.RemoteConfigRepository
+import io.newm.shared.commonPublic.usecases.ForceAppUpdateUseCase
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertFalse

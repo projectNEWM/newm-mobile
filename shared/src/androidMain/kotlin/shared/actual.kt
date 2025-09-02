@@ -3,11 +3,11 @@ package shared
 import android.accounts.AccountManager
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.ktor.client.engine.android.Android
-import io.newm.shared.internal.services.db.NewmDatabaseWrapper
+import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
 import io.newm.shared.db.cache.NewmDatabase
-import io.newm.shared.internal.CloudinaryManager
-import io.newm.shared.internal.TokenManager
-import io.newm.shared.internal.db.PreferencesDataStore
+import io.newm.shared.commonInternal.CloudinaryManager
+import io.newm.shared.commonInternal.TokenManager
+import io.newm.shared.commonInternal.db.PreferencesDataStore
 import io.newm.shared.internal.implementations.CloudinaryManagerImpl
 import io.newm.shared.internal.implementations.PreferencesDataStoreImpl
 import io.newm.shared.internal.implementations.TokenManagerImpl

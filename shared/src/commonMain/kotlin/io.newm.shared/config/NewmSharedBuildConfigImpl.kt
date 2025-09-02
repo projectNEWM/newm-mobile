@@ -1,7 +1,7 @@
 package io.newm.shared.config
 
 import io.newm.shared.generated.BuildConfig
-import io.newm.shared.internal.db.PreferencesDataStore
+import io.newm.shared.commonInternal.db.PreferencesDataStore
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -12,14 +12,13 @@ enum class Mode {
 }
 
 // BuildConfiguration class to manage app configurations based on the mode
-class NewmSharedBuildConfigImpl: NewmSharedBuildConfig, KoinComponent {
+class NewmSharedBuildConfigImpl(val storage: PreferencesDataStore): NewmSharedBuildConfig {
 
     private val APP_MODE = "app_mode"
 
     private val defaultMode
         get() = Mode.PRODUCTION
 
-    private val storage: PreferencesDataStore by inject()
     var mode: Mode
         get() {
             val modeString = storage.getString(APP_MODE) ?: defaultMode.name

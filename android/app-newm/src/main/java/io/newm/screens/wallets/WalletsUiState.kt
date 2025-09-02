@@ -1,7 +1,7 @@
 package io.newm.screens.wallets
 
 import com.slack.circuit.runtime.CircuitUiState
-import io.newm.shared.public.models.WalletConnection
+import io.newm.shared.commonPublic.models.WalletConnection
 
 sealed interface WalletsUiState : CircuitUiState {
     val eventSink: (WalletsEvent) -> Unit

@@ -1,0 +1,41 @@
+package shared
+
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.darwin.Darwin
+import io.newm.shared.NewmAppLogger
+import io.newm.shared.commonInternal.TokenManager
+import io.newm.shared.commonInternal.db.PreferencesDataStore
+import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
+import io.newm.shared.db.cache.NewmDatabase
+import io.newm.shared.internal.implementations.PreferencesDataStoreImpl
+import io.newm.shared.internal.implementations.TokenManagerImpl
+import me.tatarka.inject.annotations.Provides
+
+
+actual interface OSDependencyProvider {
+
+    actual val preferencesDataStore: PreferencesDataStore
+
+    @Provides
+    fun providePreferencesDataStore(): PreferencesDataStore = PreferencesDataStoreImpl()
+
+    @Provides
+    fun providesNewmDatabaseWrapper(): NewmDatabaseWrapper {
+        val driver = NativeSqliteDriver(NewmDatabase.Schema, "newm.db")
+        return NewmDatabaseWrapper(NewmDatabase(driver))
+    }
+
+    @Provides
+    fun providesHttpClientEngine(): HttpClientEngine {
+        return Darwin.create()
+    }
+
+    @Provides
+    fun providesTokenManager(storage: PreferencesDataStore, logger: NewmAppLogger): TokenManager {
+        return TokenManagerImpl(storage, logger)
+    }
+
+    @Provides
+    fun providePlatformName(): String = "IOS"
+}

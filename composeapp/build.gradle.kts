@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -24,7 +25,7 @@ kotlin {
 
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        outputModuleName = "composeApp"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -48,6 +49,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.launchdarkly.client)
         }
 
         commonMain.dependencies {
@@ -59,6 +61,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinInject.runtime)
             implementation(libs.circuit.foundation)
+            implementation(project(Modules.shared))
             implementation(project(Modules.sharedComposeFeatures))
         }
 

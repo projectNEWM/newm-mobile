@@ -2,7 +2,7 @@ package io.newm.screens.library
 
 import com.slack.circuit.runtime.CircuitUiState
 import io.newm.feature.musicplayer.service.DownloadState
-import io.newm.shared.public.models.NFTTrack
+import io.newm.shared.commonPublic.models.NFTTrack
 
 sealed interface NFTLibraryState : CircuitUiState {
     data object Loading : NFTLibraryState

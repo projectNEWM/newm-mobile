@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
@@ -65,6 +66,7 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.ktor.client.auth)
+                implementation(libs.kotlinInject.runtime)
                 implementation(libs.androidx.datastore.preferences)
                 implementation(libs.store5)
                 implementation(libs.kvault)
@@ -113,6 +115,12 @@ kotlin {
         all {
             languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
         }
+
+        @OptIn(ExperimentalWasmDsl::class)
+        wasmJs {
+            outputModuleName = "shared"
+            browser {}
+        }
     }
 }
 
@@ -160,6 +168,7 @@ buildConfig {
     )
 }
 
+
 sqldelight {
     database("NewmDatabase") {
         packageName = "io.newm.shared.db.cache"
@@ -170,4 +179,10 @@ sqldelight {
 
 kotlin.sourceSets.all {
     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+}
+
+dependencies {
+    add("kspAndroid", libs.kotlinInject.compiler)
+//    add("kspDesktop", libs.kotlinInject.compiler)
+    add("kspWasmJs", libs.kotlinInject.compiler)
 }

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.plugin.parcelize)
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -45,6 +46,7 @@ kotlin {
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.circuit.foundation)
                 implementation(project(Modules.coreUiUtils))
+                implementation(project(Modules.shared))
             }
         }
 
@@ -78,7 +80,7 @@ kotlin {
 
         @OptIn(ExperimentalWasmDsl::class)
         wasmJs {
-            moduleName = "sharedfeatures"
+            outputModuleName = "sharedfeatures"
             browser {}
         }
 

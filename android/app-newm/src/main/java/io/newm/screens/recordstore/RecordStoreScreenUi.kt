@@ -14,8 +14,8 @@ import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.webview.FullScreenWebView
 import io.newm.screens.library.TAG_NFT_LIBRARY_SCREEN
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
 
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 

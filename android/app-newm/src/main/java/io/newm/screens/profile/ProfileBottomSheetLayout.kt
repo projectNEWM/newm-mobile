@@ -1,6 +1,7 @@
 package io.newm.screens.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,11 +15,18 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import io.newm.BuildConfig
 import io.newm.core.resources.R
 import io.newm.core.theme.Black90
@@ -34,8 +42,11 @@ fun ProfileBottomSheetLayout(
     onBottomSheetVisible: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
+    onDeveloperMenu: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
+    var showDevMenu by rememberSaveable { mutableStateOf(false) }
+
     ModalBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
@@ -64,7 +75,11 @@ fun ProfileBottomSheetLayout(
                     onClick = onLogout
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                AppVersion()
+                AppVersion(
+                    showDevMenu = showDevMenu,
+                    onUnlockDevMenu = { showDevMenu = true },
+                    onDeveloperMenu = onDeveloperMenu
+                )
             }
 
         },
@@ -75,8 +90,24 @@ fun ProfileBottomSheetLayout(
 }
 
 @Composable
-private fun AppVersion() {
-    Column {
+private fun AppVersion(
+    showDevMenu: Boolean,
+    onUnlockDevMenu: () -> Unit,
+    onDeveloperMenu: () -> Unit
+) {
+    var tapCount by remember { mutableIntStateOf(0) }
+
+    Column(
+        modifier = Modifier
+            .clickable {
+                if (!showDevMenu) {
+                    tapCount++
+                    if (tapCount == 7) {
+                        onUnlockDevMenu()
+                    }
+                }
+            }
+    ) {
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -93,5 +124,18 @@ private fun AppVersion() {
             text = "Build: " + BuildConfig.VERSION_CODE,
             style = versionTextStyle
         )
+        if (showDevMenu) {
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Developer Menu",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colors.primary,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .clickable(onClick = onDeveloperMenu)
+            )
+        }
     }
 }

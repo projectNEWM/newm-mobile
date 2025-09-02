@@ -12,8 +12,8 @@ import io.newm.core.resources.R
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.webview.FullScreenWebView
-import io.newm.shared.public.analytics.NewmAppEventLogger
-import io.newm.shared.public.analytics.events.AppScreens
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.events.AppScreens
 
 private const val MARKETPLACE_URL = "https://marketplace.newm.io/"
 

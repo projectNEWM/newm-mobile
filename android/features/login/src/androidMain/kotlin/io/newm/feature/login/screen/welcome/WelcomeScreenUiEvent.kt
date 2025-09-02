@@ -8,4 +8,5 @@ sealed interface WelcomeScreenUiEvent : CircuitUiEvent{
     data object OnGoogleSignInClicked : WelcomeScreenUiEvent
     data object OnPrivacyPolicyClicked : WelcomeScreenUiEvent
     data object OnTermsOfServiceClicked : WelcomeScreenUiEvent
+    data object OnDebugMenuClicked : WelcomeScreenUiEvent
 }

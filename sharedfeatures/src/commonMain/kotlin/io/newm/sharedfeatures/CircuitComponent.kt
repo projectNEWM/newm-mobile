@@ -3,10 +3,11 @@ package io.newm.sharedfeatures
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
+import io.newm.sharedfeatures.devmenu.DevMenuComponent
 import io.newm.sharedfeatures.welcome.WelcomeComponent
 import me.tatarka.inject.annotations.Provides
 
-interface CircuitComponent : WelcomeComponent {
+interface CircuitComponent : WelcomeComponent, DevMenuComponent {
     val circuit: Circuit
 
     @Provides

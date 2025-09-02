@@ -50,7 +50,7 @@ import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
-import io.newm.shared.public.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import io.newm.core.resources.R as CoreR
