@@ -54,9 +54,5 @@ internal class LoginUseCaseImpl(
             repository.logout()
             dataStore.clearAll()
         }
-        fun crashApp() {
-            crashApp()
-        }
-        crashApp()
     }
 }
