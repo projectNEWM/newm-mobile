@@ -27,7 +27,6 @@ import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
-import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
@@ -75,8 +74,9 @@ class ProfilePresenter(
         val showRecordStore by featureFlagService.observeFlag(FeatureFlags.ShowRecordStore)
             .collectAsState(initial = FeatureFlags.ShowRecordStore.defaultValue)
 
-        val showMultiWallets by featureFlagService.observeFlag(FeatureFlags.ShowMultiWallets)
-            .collectAsState(initial = FeatureFlags.ShowMultiWallets.defaultValue)
+//        val showMultiWallets by featureFlagService.observeFlag(FeatureFlags.ShowMultiWallets)
+//            .collectAsState(initial = FeatureFlags.ShowMultiWallets.defaultValue)
+        val showMultiWallets = true
 
         val showStudio by featureFlagService.observeFlag(FeatureFlags.ShowNEWMStudio)
             .collectAsState(initial = FeatureFlags.ShowNEWMStudio.defaultValue)

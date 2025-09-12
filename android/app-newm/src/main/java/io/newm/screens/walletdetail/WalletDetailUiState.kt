@@ -1,6 +1,7 @@
 package io.newm.screens.walletdetail
 
 import com.slack.circuit.runtime.CircuitUiState
+import io.newm.shared.commonPublic.models.NFTTrack
 import io.newm.shared.commonPublic.models.WalletConnection
 
 sealed interface WalletDetailUiState : CircuitUiState {
@@ -24,6 +25,9 @@ sealed interface WalletDetailUiState : CircuitUiState {
         override val eventSink: (WalletDetailEvent) -> Unit,
         override val isSyncing: Boolean,
         override val walletName: String,
-        val walletConnection: WalletConnection
+        val walletConnection: WalletConnection,
+        val nftTracks: List<NFTTrack>,
+        val streamTokens: List<NFTTrack>,
+        val claimableTokenAmount: Long
     ) : WalletDetailUiState
 }
