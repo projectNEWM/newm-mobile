@@ -74,9 +74,8 @@ class ProfilePresenter(
         val showRecordStore by featureFlagService.observeFlag(FeatureFlags.ShowRecordStore)
             .collectAsState(initial = FeatureFlags.ShowRecordStore.defaultValue)
 
-//        val showMultiWallets by featureFlagService.observeFlag(FeatureFlags.ShowMultiWallets)
-//            .collectAsState(initial = FeatureFlags.ShowMultiWallets.defaultValue)
-        val showMultiWallets = true
+        val showMultiWallets by featureFlagService.observeFlag(FeatureFlags.ShowMultiWallets)
+            .collectAsState(initial = FeatureFlags.ShowMultiWallets.defaultValue)
 
         val showStudio by featureFlagService.observeFlag(FeatureFlags.ShowNEWMStudio)
             .collectAsState(initial = FeatureFlags.ShowNEWMStudio.defaultValue)
