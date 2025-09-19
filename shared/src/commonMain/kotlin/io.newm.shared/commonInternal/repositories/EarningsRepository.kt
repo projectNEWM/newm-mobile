@@ -14,11 +14,11 @@ internal class EarningsRepository(
         humanVerificationCode: String
     ): EarningsResponse? {
         return try {
-            val reponse =
+            val response =
                 networkService.getEarningsForWalletId(walletAddress, humanVerificationCode)
-            logger.info("EarningsRepository", "Earnings fetched from network: $reponse")
+            logger.info("EarningsRepository", "Earnings fetched from network: $response")
             //TODO: Serialize the response and return it
-            reponse
+            response
         } catch (e: Exception) {
             logger.error(
                 "EarningsRepository",

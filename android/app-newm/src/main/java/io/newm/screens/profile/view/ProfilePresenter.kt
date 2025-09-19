@@ -27,7 +27,6 @@ import io.newm.screens.profile.OnWalletDialogOpened
 import io.newm.screens.profile.OnWalletsScreen
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
-import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase

@@ -197,4 +197,6 @@
     <string name="wallets_rename_text_label">neuer Name</string>
     <string name="address">Adresse</string>
     <string name="tokens">Tokens</string>
+    <string name="wallet_detail_music_header">Musik-NFTs</string>
+    <string name="wallet_detail_stream_tokens_header">Stream-Token</string>
 </resources>

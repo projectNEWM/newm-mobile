@@ -35,8 +35,8 @@ import io.newm.screens.recordstore.RecordStorePresenter
 import io.newm.screens.studio.StudioPresenter
 import io.newm.screens.walletdetail.WalletDetailPresenter
 import io.newm.screens.wallets.WalletsPresenter
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.sharedfeatures.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
 import io.newm.utils.AndroidFeatureFlagManager
@@ -131,6 +131,10 @@ val viewModule = module {
             eventLogger = get(),
             findWalletConnectionUseCase = get(),
             syncWalletConnectionsUseCase = get(),
+            logger = get(),
+            nftTracksUseCase = get(),
+            getPortfolioDataUseCase = get(),
+            recaptchaClientProvider = get(),
         )
     }
 

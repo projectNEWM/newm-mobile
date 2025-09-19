@@ -9,5 +9,4 @@ class EarningsNetworkService(
     suspend fun getEarningsForWalletId(walletAddress: String, humanVerificationCode: String): EarningsResponse {
          return api.getEarningsForWalletId(walletAddress, humanVerificationCode)
     }
-
 }

@@ -51,7 +51,6 @@ import io.newm.screens.wallets.view.WalletsUi
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
-import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
@@ -63,7 +62,6 @@ import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -185,8 +183,7 @@ class HomeActivity : ComponentActivity() {
                 is Screen.WalletDetail -> ui<WalletDetailUiState> { state, modifier ->
                     WalletDetailUi(
                         state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
+                        modifier = modifier
                     )
                 }
 

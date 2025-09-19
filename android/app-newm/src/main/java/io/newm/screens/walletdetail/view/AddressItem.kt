@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -34,10 +35,12 @@ import io.newm.core.resources.R
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
-import io.newm.screens.walletdetail.WalletDetailUiState
 import kotlinx.coroutines.launch
 
-fun LazyListScope.addressItem(state: WalletDetailUiState.Content) {
+fun LazyListScope.addressItem(address: String) {
+    item {
+        Spacer(modifier = Modifier.height(8.dp))
+    }
     item {
         val clipboard = LocalClipboard.current
         val scope = rememberCoroutineScope()
@@ -60,7 +63,7 @@ fun LazyListScope.addressItem(state: WalletDetailUiState.Content) {
                         )
                     )
                     Text(
-                        text = state.walletConnection.stakeAddress,
+                        text = address,
                         maxLines = 1,
                         overflow = TextOverflow.MiddleEllipsis,
                         style = TextStyle(
@@ -86,10 +89,9 @@ fun LazyListScope.addressItem(state: WalletDetailUiState.Content) {
                                         ClipData.newPlainText(
                                             context.getString(
                                                 R.string.wallets_copy_address_label,
-                                                // TODO add wallet name
-                                                state.walletConnection.id
+                                                address
                                             ),
-                                            state.walletConnection.stakeAddress
+                                            address
                                         )
                                     )
                                 )
