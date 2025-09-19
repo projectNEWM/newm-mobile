@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
@@ -10,7 +11,7 @@ plugins {
     id("com.android.library")
     id("com.squareup.sqldelight")
     alias(libs.plugins.ksp)
-    id("com.github.gmazzo.buildconfig") version "5.6.5"
+    id("com.github.gmazzo.buildconfig") version "5.6.8"
 }
 
 android {
@@ -32,12 +33,12 @@ android {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
     jvm {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
@@ -127,45 +128,21 @@ kotlin {
 buildConfig {
     packageName("io.newm.shared.generated")
 
-    val properties = Properties().apply {
+    val props = Properties().apply {
         load(FileInputStream(File(rootProject.rootDir, "local.properties")))
     }
 
-    buildConfigField(
-        type = "String",
-        name = "STAGING_URL",
-        expression = properties.getProperty("STAGING_URL")
-    )
-    buildConfigField(
-        type = "String",
-        name = "PRODUCTION_URL",
-        properties.getProperty("PRODUCTION_URL")
-    )
-    buildConfigField(
-        type = "String",
-        name = "GOOGLE_AUTH_CLIENT_ID",
-        properties.getProperty("GOOGLE_AUTH_CLIENT_ID")
-    )
-    buildConfigField(
-        type = "String",
-        name = "RECAPTCHA_SITE_KEY",
-        properties.getProperty("RECAPTCHA_SITE_KEY")
-    )
-    buildConfigField(
-        type = "String",
-        name = "SENTRY_AUTH_TOKEN",
-        properties.getProperty("SENTRY_AUTH_TOKEN")
-    )
-    buildConfigField(
-        type = "String",
-        name = "ANDROID_SENTRY_DSN",
-        properties.getProperty("ANDROID_SENTRY_DSN")
-    )
-    buildConfigField(
-        type = "String",
-        name = "LAUNCHDARKLY_MOBILE_KEY",
-        properties.getProperty("LAUNCHDARKLY_MOBILE_KEY")
-    )
+    // Helper: fail fast if a required key is missing
+    fun req(name: String): String =
+        props.getProperty(name)?.trim('"') ?: error("Missing '$name' in local.properties")
+
+    buildConfigField<String>("STAGING_URL", req("STAGING_URL"))
+    buildConfigField<String>("PRODUCTION_URL", req("PRODUCTION_URL"))
+    buildConfigField<String>("GOOGLE_AUTH_CLIENT_ID", req("GOOGLE_AUTH_CLIENT_ID"))
+    buildConfigField<String>("RECAPTCHA_SITE_KEY", req("RECAPTCHA_SITE_KEY"))
+    buildConfigField<String>("SENTRY_AUTH_TOKEN", req("SENTRY_AUTH_TOKEN"))
+    buildConfigField<String>("ANDROID_SENTRY_DSN", req("ANDROID_SENTRY_DSN"))
+    buildConfigField<String>("LAUNCHDARKLY_MOBILE_KEY", req("LAUNCHDARKLY_MOBILE_KEY"))
 }
 
 
@@ -183,6 +160,6 @@ kotlin.sourceSets.all {
 
 dependencies {
     add("kspAndroid", libs.kotlinInject.compiler)
-//    add("kspDesktop", libs.kotlinInject.compiler)
+    add("kspJvm", libs.kotlinInject.compiler)
     add("kspWasmJs", libs.kotlinInject.compiler)
 }
