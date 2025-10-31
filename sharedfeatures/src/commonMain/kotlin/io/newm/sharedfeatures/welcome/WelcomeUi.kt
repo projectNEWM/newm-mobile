@@ -24,6 +24,7 @@ import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.PrivacyPolicyAndTermsSection
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
 import me.tatarka.inject.annotations.Inject
 import newm_mobile.sharedfeatures.generated.resources.Res
@@ -75,7 +76,7 @@ fun WelcomeScreenContent(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
-            .padding(16.dp)
+            .padding(top = 24.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -89,6 +90,7 @@ fun WelcomeScreenContent(
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier
                     .align(Alignment.End)
+                    .padding(16.dp)
                     .clickable(onClick = onCreateAccount)
             )
 
@@ -121,15 +123,6 @@ fun WelcomeScreenContent(
                     .padding(vertical = 32.dp, horizontal = 16.dp),
                 onPrivacyPolicyClicked = onPrivacyPolicyClicked,
                 onTermsOfServiceClicked = onTermsOfServiceClicked,
-            )
-            Text(
-                text = "Developer Menu",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .clickable(onClick = onDebugMenu)
             )
         }
     }
