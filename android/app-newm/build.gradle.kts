@@ -36,6 +36,9 @@ android {
             merges += "META-INF/LICENSE.md"
             merges += "META-INF/LICENSE-notice.md"
         }
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
 
     buildTypes {
