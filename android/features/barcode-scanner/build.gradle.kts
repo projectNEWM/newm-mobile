@@ -19,10 +19,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
@@ -40,4 +36,10 @@ dependencies {
     implementation(project(Modules.coreTheme))
     implementation(project(Modules.coreUiUtils))
     implementation(project(Modules.shared))
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
 }

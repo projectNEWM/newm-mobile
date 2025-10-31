@@ -166,7 +166,11 @@ private fun ProfileEditUiContent(
         },
         selectedImageCallback = {
             onEvent(OnReplaceProfilePicture(it))
-        })
+        },
+        selectedImageFileCallback = {
+            onEvent(OnRemoveProfilePicture)
+        },
+    )
 }
 
 @Composable

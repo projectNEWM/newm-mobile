@@ -11,7 +11,7 @@ plugins {
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
-    id("io.sentry.android.gradle") version "5.8.0"
+    id("io.sentry.android.gradle") version "5.12.1"
     alias(libs.plugins.compose.multiplatform)
 }
 
@@ -89,10 +89,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
     kapt {
         correctErrorTypes = true
     }
@@ -138,6 +134,11 @@ dependencies {
     androidTestImplementation(libs.mockk.android)
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
+}
 
 sentry {
     org.set("project-newm")
