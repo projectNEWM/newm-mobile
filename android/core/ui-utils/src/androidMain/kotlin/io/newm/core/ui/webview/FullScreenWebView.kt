@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,7 +52,7 @@ fun FullScreenWebView(
                         request: WebResourceRequest?
                     ): Boolean {
                         val currentUrl = request?.url.toString()
-                        return if (currentUrl.startsWith("https://newm.studio/") || currentUrl.startsWith("https://newm.io/")) {
+                        return if (isInternalUrl(currentUrl)) {
                             // Load the URL in the current WebView
                             false
                         } else {
@@ -64,12 +65,18 @@ fun FullScreenWebView(
 
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
+                settings.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
 
                 loadUrl(url)
             }
         },
         modifier = Modifier.fillMaxSize()
     )
+}
+
+private fun isInternalUrl(url: String): Boolean {
+    return listOf("newm.studio", "newm.io", "recordstore.newm.io")
+        .any { domain -> url.contains(domain, ignoreCase = true) }
 }
 
 fun launchExternalUrl(context: Context, url: String) {
