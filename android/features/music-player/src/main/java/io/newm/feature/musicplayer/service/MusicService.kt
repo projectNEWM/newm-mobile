@@ -141,7 +141,9 @@ class MediaService : MediaSessionService() {
             playBackAuthorized = when (focusRequestResult) {
                 AudioManager.AUDIOFOCUS_REQUEST_FAILED -> false
                 AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-                    player.play()
+                    if (player.playWhenReady) {
+                        player.play()
+                    }
                     true
                 }
 
