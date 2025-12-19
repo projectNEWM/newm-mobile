@@ -50,7 +50,6 @@ import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
-import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import io.newm.core.resources.R as CoreR
@@ -58,9 +57,8 @@ import io.newm.core.resources.R as CoreR
 
 @Composable
 fun MiniPlayer(
-    eventLogger: NewmAppEventLogger,
     modifier: Modifier = Modifier,
-    mediaPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger),
+    mediaPlayer: MusicPlayer? = observeMusicPlayer(),
 ) {
     mediaPlayer ?: return
     val playbackStatus by mediaPlayer.playbackStatus.collectAsState()

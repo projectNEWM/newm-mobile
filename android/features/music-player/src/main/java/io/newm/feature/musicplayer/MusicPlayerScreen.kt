@@ -7,14 +7,12 @@ import androidx.compose.ui.Modifier
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.feature.musicplayer.service.MusicPlayer
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 @Composable
 fun MusicPlayerScreen(
-    eventLogger: NewmAppEventLogger,
     onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
-    mediaPlayer: MusicPlayer? = rememberMediaPlayer(eventLogger),
+    mediaPlayer: MusicPlayer? = observeMusicPlayer(),
 ) {
     mediaPlayer ?: return
     val playbackStatus by mediaPlayer.playbackStatus.collectAsState()
