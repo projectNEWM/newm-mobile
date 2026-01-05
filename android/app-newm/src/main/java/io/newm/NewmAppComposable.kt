@@ -138,7 +138,6 @@ internal fun NewmApp(
         sheetState = sheetState,
         sheetContent = {
             MusicPlayerScreen(
-                eventLogger = eventLogger,
                 onNavigateUp = {
                     coroutineScope.launch {
                         sheetState.hide()
@@ -164,8 +163,7 @@ internal fun NewmApp(
                                         eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
                                         sheetState.show()
                                     }
-                                },
-                                eventLogger = eventLogger
+                                }
                             )
                             Spacer(
                                 modifier = Modifier

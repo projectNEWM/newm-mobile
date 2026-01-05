@@ -25,6 +25,7 @@ import io.newm.feature.musicplayer.service.DownloadManager
 import io.newm.feature.musicplayer.service.DownloadManagerImpl
 import io.newm.feature.musicplayer.service.DownloadStateManager
 import io.newm.feature.musicplayer.service.DownloadStateManagerImpl
+import io.newm.feature.musicplayer.service.MediaSessionConnection
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter
 import io.newm.screens.investment.portfolio.InvestmentPortfolioPresenter
 import io.newm.screens.library.NFTLibraryPresenter
@@ -207,6 +208,7 @@ val viewModule = module {
     }
     single<DownloadManager> { DownloadManagerImpl(androidContext(), get()) }
     single<DownloadStateManager> { DownloadStateManagerImpl(get(), get(), get()) }
+    single { MediaSessionConnection(androidContext(), get(), get()) }
     single<ExoDownloadManager> {
         ExoDownloadManager(
             androidContext(),

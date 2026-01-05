@@ -14,11 +14,13 @@ import io.newm.feature.musicplayer.models.Track
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -58,12 +60,12 @@ class MusicPlayerImpl(
                 updatePlaybackStatus()
             }
         })
-        scope.launch {
-            while (true) {
+        scope.launch (Dispatchers.Main){ // main required by the media controller
+            while (isActive) {
                 if (player.currentPosition != _playbackStatus.value.position) {
                     updatePlaybackStatus()
                 }
-                delay(500)
+                delay(500.milliseconds)
             }
         }
     }
