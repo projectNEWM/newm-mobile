@@ -1,7 +1,7 @@
 package shared
 
 import android.accounts.AccountManager
-import com.squareup.sqldelight.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import io.ktor.client.engine.android.Android
 import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
 import io.newm.shared.db.cache.NewmDatabase

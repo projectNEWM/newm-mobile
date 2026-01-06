@@ -1,8 +1,7 @@
 package shared
 
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.darwin.Darwin
+import io.ktor.client.engine.js.Js
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.TokenManager
 import io.newm.shared.commonInternal.db.PreferencesDataStore
@@ -11,7 +10,6 @@ import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.internal.implementations.PreferencesDataStoreImpl
 import io.newm.shared.internal.implementations.TokenManagerImpl
 import me.tatarka.inject.annotations.Provides
-
 
 actual interface OSDependencyProvider {
 
@@ -22,13 +20,14 @@ actual interface OSDependencyProvider {
 
     @Provides
     fun providesNewmDatabaseWrapper(): NewmDatabaseWrapper {
-        val driver = NativeSqliteDriver(NewmDatabase.Schema, "newm.db")
-        return NewmDatabaseWrapper(NewmDatabase(driver))
+        // SQLDelight doesn't support wasmJs drivers yet - null database will throw
+        // KMMException if any code tries to access it
+        return NewmDatabaseWrapper(null)
     }
 
     @Provides
     fun providesHttpClientEngine(): HttpClientEngine {
-        return Darwin.create()
+        return Js.create()
     }
 
     @Provides
@@ -37,5 +36,5 @@ actual interface OSDependencyProvider {
     }
 
     @Provides
-    fun providePlatformName(): String = "IOS"
+    fun providePlatformName(): String = "WasmJS"
 }

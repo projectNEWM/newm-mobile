@@ -1,6 +1,6 @@
 package shared
 
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import io.ktor.client.engine.darwin.Darwin
 import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.commonInternal.TokenManager

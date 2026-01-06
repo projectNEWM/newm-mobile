@@ -60,6 +60,41 @@
 <p> Clone the repo, open in Android Studio or XCode and get to building! You will need to setup your own firebase instance and apply your google-services.json file to get things working. <p> You will also need to install <a href="https://github.com/SwiftGen/SwiftGen"><strong>SwiftGen</strong></a>.<p> Reach out to the team with any questions.<p>
 <p> NOTE: You may have trouble building the project if you're on a VPN.<p>
 
+### Running on Different Platforms
+
+#### Android
+Run the Android app on a connected device or emulator:
+```bash
+./gradlew :composeapp:installDebug
+```
+
+#### iOS
+Open the project in Xcode and run on a simulator or connected device.
+
+#### Desktop (JVM)
+Run the desktop application:
+```bash
+./gradlew :composeapp:run
+```
+
+Or create a distributable package:
+```bash
+./gradlew :composeapp:runDistributable
+```
+
+#### Web (WebAssembly)
+Run the web application in development mode:
+```bash
+./gradlew composeapp:wasmJsBrowserDevelopmentRun
+```
+
+The webapp will be available at `http://localhost:8080` (default port).
+
+For production build:
+```bash
+./gradlew composeapp:wasmJsBrowserProductionRun
+```
+
 <!-- ROADMAP -->
 
 ## 🚀 MVP Roadmap
