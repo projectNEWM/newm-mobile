@@ -19,7 +19,7 @@ interface UserSessionUseCase {
      *
      * @return Boolean - Returns `true` if the user is currently logged in, otherwise returns `false`.
      */
-    fun isLoggedIn(): Boolean
+    suspend fun isLoggedIn(): Boolean
 
     /**
      * Provides a stream (Flow) of the user login state changes.

@@ -5,6 +5,8 @@ import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
 import io.newm.shared.commonInternal.TokenManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class TokenManagerImpl(
     context: Context,
@@ -13,26 +15,30 @@ internal class TokenManagerImpl(
 
     private val accountType = "${context.packageName}.account"
 
-    override fun getAccessToken(): String? {
-        return getAccount()?.let { accountManager.peekAuthToken(it, ACCESS_TOKEN_KEY) }
+    override suspend fun getAccessToken(): String? = withContext(Dispatchers.IO) {
+        getAccount()?.let { accountManager.peekAuthToken(it, ACCESS_TOKEN_KEY) }
     }
 
-    override fun getRefreshToken(): String? {
-        return getAccount()?.let { accountManager.peekAuthToken(it, REFRESH_TOKEN_KEY) }
+    override suspend fun getRefreshToken(): String? = withContext(Dispatchers.IO) {
+        getAccount()?.let { accountManager.peekAuthToken(it, REFRESH_TOKEN_KEY) }
     }
 
-    override fun clearToken() {
-        getAccount()?.let { accountManager.removeAccountExplicitly(it) }
-    }
-
-    override fun setAuthTokens(accessToken: String, refreshToken: String) {
-        val account = getAccount() ?: Account(ACCOUNT_NAME, accountType).apply {
-            if (!accountManager.addAccountExplicitly(this, null, null)) {
-                throw IllegalStateException("Failed to create account")
-            }
+    override suspend fun clearToken() {
+        withContext(Dispatchers.IO) {
+            getAccount()?.let { accountManager.removeAccountExplicitly(it) }
         }
-        accountManager.setAuthToken(account, ACCESS_TOKEN_KEY, accessToken)
-        accountManager.setAuthToken(account, REFRESH_TOKEN_KEY, refreshToken)
+    }
+
+    override suspend fun setAuthTokens(accessToken: String, refreshToken: String) {
+        withContext(Dispatchers.IO) {
+            val account = getAccount() ?: Account(ACCOUNT_NAME, accountType).apply {
+                if (!accountManager.addAccountExplicitly(this, null, null)) {
+                    throw IllegalStateException("Failed to create account")
+                }
+            }
+            accountManager.setAuthToken(account, ACCESS_TOKEN_KEY, accessToken)
+            accountManager.setAuthToken(account, REFRESH_TOKEN_KEY, refreshToken)
+        }
     }
 
     private fun getAccount(): Account? =

@@ -49,7 +49,7 @@ import androidx.media3.exoplayer.offline.DownloadManager as ExoDownloadManager
 
 @SuppressLint("UnsafeOptInUsageError")
 val viewModule = module {
-    single<FeatureFlagDataSource> { AndroidFeatureFlagManager(get(), get(), get()) }
+    single<FeatureFlagDataSource> { AndroidFeatureFlagManager(get(), get(), get(), get(), get()) }
     single { ForceAppUpdateViewModel(get(), get()) }
     single { RecaptchaClientProvider() }
 
@@ -219,7 +219,7 @@ val viewModule = module {
         )
     }
     single<DevMenuPresenter> { DevMenuPresenter(get()) }
-    single<FeatureFlagsListPresenter> { FeatureFlagsListPresenter(get(), get()) }
+    single<FeatureFlagsListPresenter> { FeatureFlagsListPresenter(get(), get(), get()) }
 }
 
 val androidModules = module {

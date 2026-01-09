@@ -138,7 +138,7 @@ class LogInRepository : KoinComponent {
         )
     }
 
-    private fun storeAccessToken(response: LoginResponse) {
+    private suspend fun storeAccessToken(response: LoginResponse) {
         if (response.isValid()) {
             logger.debug("LogInRepository", "logIn: LoginStatus Valid Response")
             tokenManager.setAuthTokens(
@@ -151,7 +151,7 @@ class LogInRepository : KoinComponent {
         }
     }
 
-    fun logout() {
+    suspend fun logout() {
         tokenManager.clearToken()
         db.clear()
         postNotification(Notification.loginStateChanged)

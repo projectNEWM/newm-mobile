@@ -5,12 +5,12 @@ package io.newm.shared.commonPublic.featureflags
 import io.newm.shared.commonPublic.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlin.time.ExperimentalTime
-import kotlin.time.Instant
 
 interface FeatureFlagService {
     // Core business methods
     suspend fun isEnabled(flag: FeatureFlag): FlagResult<Boolean>
     suspend fun setUser(user: User): FlagResult<Unit>
+    suspend fun prefetchAllFlags(): FlagResult<Unit>
 
     // Reactive state observation
     fun observeFlag(flag: FeatureFlag): Flow<Boolean>
@@ -22,6 +22,8 @@ interface FeatureFlagService {
     suspend fun setLocalOverride(flagKey: String, value: Boolean?): FlagResult<Unit>
     suspend fun resetAllOverrides(): FlagResult<Unit>
     suspend fun getEffectiveValue(flag: FeatureFlag): FlagResult<Boolean>
+    suspend fun getRemoteValue(flag: FeatureFlag): FlagResult<Boolean>
+    suspend fun getLastSyncTimestamp(): kotlin.time.Instant?
 
     // Debug utilities
     suspend fun exportDebugState(): Map<String, Any>
@@ -33,7 +35,7 @@ data class FlagEvaluation(
     val flagKey: String,
     val result: Boolean,
     val source: EvaluationSource,
-    val timestamp: Instant,
+    val timestamp: kotlin.time.Instant,
     val userId: String?
 )
 

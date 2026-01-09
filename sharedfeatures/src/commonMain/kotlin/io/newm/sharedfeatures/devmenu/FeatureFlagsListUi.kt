@@ -2,6 +2,8 @@
 
 package io.newm.sharedfeatures.devmenu
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -81,7 +84,7 @@ fun LoadingState(
     message: String = "Loading feature flags..."
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().statusBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -111,7 +114,7 @@ fun ErrorState(
     title: String = "Error Loading Flags"
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().statusBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
         Card(
@@ -260,6 +263,14 @@ private fun EnvironmentInfoCard(environmentInfo: FeatureFlagsListScreen.Environm
                     style = MaterialTheme.typography.caption,
                     color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
                 )
+                environmentInfo.lastSync?.let { lastSync ->
+                    Text(
+                        text = "Last synced: ${formatTimestamp(lastSync)}",
+                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             }
 
             Text(
@@ -279,6 +290,7 @@ private fun ClearTopAppBar(state: FeatureFlagsListScreen.UiState.Content) {
     var showMenu by remember { mutableStateOf(false) }
 
     TopAppBar(
+        modifier = Modifier.statusBarsPadding(),
         title = {
             Column {
                 Text("Feature Flags")
@@ -351,13 +363,41 @@ private fun ClearFeatureFlagRow(
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = if (item.isOverridden) 4.dp else 2.dp,
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        border = if (item.isOverridden) BorderStroke(2.dp, MaterialTheme.colors.secondary) else null
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+            // Override badge
+            if (item.isOverridden) {
+                Row(
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colors.secondary.copy(alpha = 0.15f),
+                            RoundedCornerShape(4.dp)
+                        )
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = "⚠",
+                        style = MaterialTheme.typography.caption,
+                        color = MaterialTheme.colors.secondary
+                    )
+                    Text(
+                        text = "LOCALLY OVERRIDDEN",
+                        style = MaterialTheme.typography.caption,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colors.secondary
+                    )
+                }
+                Spacer(Modifier.height(8.dp))
+            }
+
             // Header row with name and switch
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -406,7 +446,7 @@ private fun ClearFeatureFlagRow(
             ) {
                 // Remote value chip
                 ValueChip(
-                    label = "Remote",
+                    label = "Remote Flag",
                     value = if (item.remoteValue) "ON" else "OFF",
                     color = if (item.remoteValue) Color(0xFF4CAF50) else Color(0xFF757575),
                     isHighlighted = !item.isOverridden
@@ -571,4 +611,21 @@ private fun CategoryHeader(category: FlagCategory, count: Int) {
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
         )
     }
+}
+
+/**
+ * Format timestamp to a more readable format
+ * Converts from ISO instant format to relative time (e.g., "2 minutes ago")
+ */
+private fun formatTimestamp(timestamp: String): String {
+    try {
+        val parts = timestamp.split("T")
+        if (parts.size == 2) {
+            val time = parts[1].substringBefore(".").substringBefore("Z")
+            return "Today at $time UTC"
+        }
+    } catch (e: Exception) {
+        // Fall back to showing the raw timestamp
+    }
+    return timestamp
 }

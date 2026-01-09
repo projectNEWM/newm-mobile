@@ -5,12 +5,20 @@ package io.newm.shared.commonPublic.featureflags
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.db.PreferencesDataStore
 import io.newm.shared.commonPublic.models.User
+import io.newm.shared.config.NewmSharedBuildConfig
 import kotlinx.atomicfu.atomic
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.time.Clock
@@ -22,7 +30,9 @@ import kotlin.time.ExperimentalTime
 class DefaultFeatureFlagService(
     private val dataSource: FeatureFlagDataSource,
     private val preferencesStore: PreferencesDataStore,
+    private val buildConfig: NewmSharedBuildConfig,
     private val logger: NewmAppLogger,
+    private val serviceScope: CoroutineScope,
     private val cacheConfig: CacheConfig = CacheConfig()
 ) : FeatureFlagService {
 
@@ -47,6 +57,29 @@ class DefaultFeatureFlagService(
     private val _flagStates = MutableStateFlow<Map<String, Boolean>>(emptyMap())
     private val _userState = MutableStateFlow<User?>(null)
 
+    init {
+        // Observe flag changes from data source and re-evaluate
+        dataSource.observeFlagChanges()
+            .onEach { flagKey ->
+                logger.breadcrumb(TAG, "Flag change detected for $flagKey, re-evaluating")
+
+                // Find the flag by key
+                val flag = FeatureFlags.ALL_FLAGS.find { it.key == flagKey }
+                if (flag != null) {
+                    // Re-evaluate the flag to update _flagStates
+                    serviceScope.launch {
+                        try {
+                            isEnabled(flag)
+                            logger.breadcrumb(TAG, "Flag $flagKey re-evaluated and UI notified")
+                        } catch (e: Exception) {
+                            logger.error(TAG, "Error re-evaluating flag $flagKey", e)
+                        }
+                    }
+                }
+            }
+            .launchIn(serviceScope)
+    }
+
     override suspend fun setUser(user: User): FlagResult<Unit> {
         return try {
             logger.breadcrumb("FeatureFlagService", "Setting user: ${user.id}")
@@ -67,6 +100,28 @@ class DefaultFeatureFlagService(
             }
         } catch (e: Exception) {
             logger.error(TAG, "Unexpected error setting user", e)
+            FlagResult.Error(e)
+        }
+    }
+
+    override suspend fun prefetchAllFlags(): FlagResult<Unit> {
+        return try {
+            logger.breadcrumb("FeatureFlagService", "Prefetching all flags")
+
+            // Evaluate all flags to populate caches and state flows
+            FeatureFlags.ALL_FLAGS.forEach { flag ->
+                try {
+                    isEnabled(flag) // This will update caches and _flagStates
+                } catch (e: Exception) {
+                    logger.error(TAG, "Error prefetching flag ${flag.key}", e)
+                    // Continue with other flags even if one fails
+                }
+            }
+
+            logger.breadcrumb("FeatureFlagService", "All flags prefetched successfully")
+            FlagResult.Success(Unit)
+        } catch (e: Exception) {
+            logger.error(TAG, "Error during flag prefetch", e)
             FlagResult.Error(e)
         }
     }
@@ -192,6 +247,8 @@ class DefaultFeatureFlagService(
     override suspend fun exportDebugState(): Map<String, Any> {
         return mutex.withLock {
             mapOf(
+                "environment" to if (buildConfig.isStagingMode) "Testing/Staging" else "Production",
+                "launchDarklyEnvironment" to if (buildConfig.isStagingMode) "Testing/Staging" else "Production",
                 "currentUser" to (currentUser.value?.id ?: "none"),
                 "cacheSize" to cache.size,
                 "evaluationHistorySize" to evaluationHistory.size,
@@ -210,6 +267,16 @@ class DefaultFeatureFlagService(
 
     override fun getEvaluationHistory(): List<FlagEvaluation> {
         return evaluationHistory.toList() // Return defensive copy
+    }
+
+    override suspend fun getRemoteValue(flag: FeatureFlag): FlagResult<Boolean> {
+        // Delegate to data source to get the raw remote value
+        return dataSource.getRemoteValueDirect(flag)
+    }
+
+    override suspend fun getLastSyncTimestamp(): kotlin.time.Instant? {
+        // Get global sync timestamp from data source
+        return dataSource.getLastSyncTimestamp()
     }
 
     // Private helper methods
@@ -250,9 +317,10 @@ class DefaultFeatureFlagService(
     }
 
     private fun updateFlagState(flagKey: String, value: Boolean) {
-        val currentStates = _flagStates.value.toMutableMap()
-        currentStates[flagKey] = value
-        _flagStates.value = currentStates
+        // Use atomic update to prevent race conditions with concurrent updates
+        _flagStates.update { currentStates ->
+            currentStates + (flagKey to value)
+        }
     }
 
     private fun recordEvaluation(flagKey: String, result: Boolean, source: EvaluationSource) {
