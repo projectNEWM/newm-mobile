@@ -9,7 +9,7 @@ plugins {
     kotlin("plugin.serialization")
     id("kotlinx-serialization")
     id("com.android.library")
-    id("com.squareup.sqldelight")
+    id("app.cash.sqldelight") version "2.1.0"
     alias(libs.plugins.ksp)
     id("com.github.gmazzo.buildconfig") version "5.6.8"
 }
@@ -58,19 +58,16 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.runtime)
-                implementation(libs.coroutines.extensions)
                 api(libs.koin.core)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.cio)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.ktor.client.auth)
                 implementation(libs.kotlinInject.runtime)
-                implementation(libs.androidx.datastore.preferences)
                 implementation(libs.store5)
-                implementation(libs.kvault)
+                implementation("app.cash.sqldelight:runtime:${libs.versions.runtime.get()}")
+                implementation("app.cash.sqldelight:coroutines-extensions:${libs.versions.runtime.get()}")
             }
         }
         val commonTest by getting {
@@ -83,9 +80,10 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.android.driver)
+                implementation("app.cash.sqldelight:android-driver:${libs.versions.runtime.get()}")
                 implementation(libs.ktor.client.android)
                 implementation(libs.cloudinary.android)
+                implementation(libs.androidx.datastore.preferences)
             }
         }
 
@@ -104,7 +102,8 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(libs.ktor.client.darwin)
-                implementation(libs.native.driver)
+                implementation("app.cash.sqldelight:native-driver:${libs.versions.runtime.get()}")
+                implementation(libs.kvault)
             }
         }
         val iosSimulatorArm64Test by getting
@@ -113,14 +112,29 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
 
+        val jvmMain by getting {
+            dependencies {
+                implementation("app.cash.sqldelight:sqlite-driver:${libs.versions.runtime.get()}")
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
         all {
             languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
         }
 
         @OptIn(ExperimentalWasmDsl::class)
         wasmJs {
-            outputModuleName = "shared"
             browser {}
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-js:${libs.versions.ktor.get()}")
+                implementation("org.jetbrains.kotlinx:kotlinx-browser:0.2")
+                // Note: SQLDelight and DataStore don't have wasmJs support yet
+                // Database and preferences are handled via browser localStorage
+            }
         }
     }
 }
@@ -147,10 +161,13 @@ buildConfig {
 
 
 sqldelight {
-    database("NewmDatabase") {
-        packageName = "io.newm.shared.db.cache"
-        sourceFolders = listOf("sqldelight")
-        version = 4
+    databases {
+        create("NewmDatabase") {
+            packageName.set("io.newm.shared.db.cache")
+            // srcDirs defaults to "sqldelight" relative to source sets
+            // Exclude wasmJs from SQLDelight code generation since it's not supported
+            // This means database functionality won't be available for wasmJs
+        }
     }
 }
 

@@ -1,8 +1,8 @@
 package shared
 
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.darwin.Darwin
+import io.ktor.client.engine.cio.CIO
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.TokenManager
 import io.newm.shared.commonInternal.db.PreferencesDataStore
@@ -11,7 +11,6 @@ import io.newm.shared.db.cache.NewmDatabase
 import io.newm.shared.internal.implementations.PreferencesDataStoreImpl
 import io.newm.shared.internal.implementations.TokenManagerImpl
 import me.tatarka.inject.annotations.Provides
-
 
 actual interface OSDependencyProvider {
 
@@ -22,13 +21,14 @@ actual interface OSDependencyProvider {
 
     @Provides
     fun providesNewmDatabaseWrapper(): NewmDatabaseWrapper {
-        val driver = NativeSqliteDriver(NewmDatabase.Schema, "newm.db")
+        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        NewmDatabase.Schema.create(driver)
         return NewmDatabaseWrapper(NewmDatabase(driver))
     }
 
     @Provides
     fun providesHttpClientEngine(): HttpClientEngine {
-        return Darwin.create()
+        return CIO.create()
     }
 
     @Provides
@@ -37,5 +37,5 @@ actual interface OSDependencyProvider {
     }
 
     @Provides
-    fun providePlatformName(): String = "IOS"
+    fun providePlatformName(): String = "JVM"
 }

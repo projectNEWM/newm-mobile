@@ -15,6 +15,13 @@ google-services.json
 *.jks
 .kotlin
 
+# Kotlin/JS and Kotlin/Wasm
+kotlin-js-store/
+node_modules/
+
+# Claude Code local settings
+.claude/*.local.json
+
 # Sentry Config File
 sentry.properties
 

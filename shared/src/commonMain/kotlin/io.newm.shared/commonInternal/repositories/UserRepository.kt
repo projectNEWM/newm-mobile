@@ -1,7 +1,7 @@
 package io.newm.shared.commonInternal.repositories
 
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
 import io.newm.shared.commonInternal.api.UserAPI
@@ -31,7 +31,7 @@ internal class UserRepository(
 
     fun fetchUserDetailsFlow() = dbWrapper().userQueries.getAnyUser()
         .asFlow()
-        .mapToOneOrNull() // This will emit either one user or null
+        .mapToOneOrNull(kotlinx.coroutines.Dispatchers.Default) // This will emit either one user or null
         .onStart {
             if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null) {
                 logger.debug("UserRepository","No Users found in DB, fetching from network" )

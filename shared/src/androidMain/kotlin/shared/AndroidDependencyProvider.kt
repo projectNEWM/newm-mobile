@@ -3,7 +3,7 @@ package shared
 import android.accounts.AccountManager
 import android.app.Application
 import android.content.Context
-import com.squareup.sqldelight.android.AndroidSqliteDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.android.Android
 import io.newm.shared.NewmAppLogger
