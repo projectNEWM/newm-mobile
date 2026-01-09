@@ -77,7 +77,7 @@ interface LoginUseCase {
      * such as clearing session tokens, disconnecting from external services, or restoring app state.
      */
     @Throws(KMMException::class, CancellationException::class)
-    fun logout()
+    suspend fun logout()
 }
 
 

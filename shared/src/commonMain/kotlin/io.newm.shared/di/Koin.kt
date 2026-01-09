@@ -101,12 +101,11 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
         )
     }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
-    single { createJson() }
     // Internal Configurations
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl(get()) }
     single { NewmAppLogger() }
     single { NewmAppEventLogger() }
-    single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get()) }
+    single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get(), get(), get()) }
     // Internal API Services
     single { CardanoWalletAPI(get()) }
     single { EarningsAPI(get(), get()) }
@@ -136,25 +135,22 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     // External Use Cases to be consumed outside of KMM
     single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
     single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
+    single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
+    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
+    single<FindWalletConnectionUseCase> { FindWalletConnectionUseCaseImpl(get()) }
     single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get()) }
     single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
+    single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
+    single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
+    single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
     single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
     single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
-    single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
-    single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
     single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
-    single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
-    single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
-    single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
-    single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
     single<UpdateProfilePictureUseCase> { UpdateProfilePictureUseCaseImpl(get(), get()) }
-    single<FindWalletConnectionUseCase> { FindWalletConnectionUseCaseImpl(get()) }
+    single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
+    single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
+    single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
 }
 
 fun createJson() = Json {

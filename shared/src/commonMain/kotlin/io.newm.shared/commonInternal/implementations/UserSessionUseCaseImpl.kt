@@ -10,13 +10,13 @@ internal class UserSessionUseCaseImpl(
     private val tokenManager: TokenManager
     ) : KoinComponent, UserSessionUseCase {
 
-    override fun isLoggedIn(): Boolean {
+    override suspend fun isLoggedIn(): Boolean {
         return tokenManager.getAccessToken()?.isEmpty()?.not() == true
     }
 
     override fun isLoggedInFlow(): Flow<Boolean> {
         return flow {
-            tokenManager.getAccessToken()?.isNotEmpty()
+            emit(tokenManager.getAccessToken()?.isNotEmpty() == true)
         }
     }
 }

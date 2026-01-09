@@ -16,6 +16,7 @@ import io.newm.shared.commonPublic.featureflags.EvaluationSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlag
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
+import io.newm.shared.config.NewmSharedBuildConfig
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -25,6 +26,7 @@ import kotlin.time.ExperimentalTime
 class FeatureFlagsListPresenter @Inject constructor(
     @Assisted private val navigator: Navigator,
     private val featureFlagService: FeatureFlagService,
+    private val buildConfig: NewmSharedBuildConfig,
 ) : Presenter<FeatureFlagsListScreen.UiState> {
     @Composable
     override fun present(): FeatureFlagsListScreen.UiState {
@@ -34,26 +36,35 @@ class FeatureFlagsListPresenter @Inject constructor(
         var isRefreshing by remember { mutableStateOf(false) }
         var debugMode by remember { mutableStateOf(false) }
         var debugInfo by remember { mutableStateOf<FeatureFlagsListScreen.DebugInfo?>(null) }
+        var lastSyncTimestamp by remember { mutableStateOf<String?>(null) }
 
         val scope = rememberCoroutineScope()
 
         // Observe all flags reactively
         val allFlagsState by featureFlagService.observeAllFlags().collectAsState(initial = emptyMap())
 
-        // Environment info - you can get this from your build config or feature flag service
-        val environmentInfo = remember {
-            FeatureFlagsListScreen.EnvironmentInfo(
-                environment = "Production",//if (BuildConfig.DEBUG) "Development" else "Production",
-                clientStatus = "Connected", // You can make this dynamic
-                lastSync = Clock.System.now().toString()
-            )
+        // Fetch the global last sync timestamp
+        LaunchedEffect(Unit) {
+            val timestamp = featureFlagService.getLastSyncTimestamp()
+            lastSyncTimestamp = timestamp?.toString()
         }
+
+        // Environment info from build config
+        val environmentInfo = FeatureFlagsListScreen.EnvironmentInfo(
+            environment = if (buildConfig.isStagingMode) "Development" else "Production",
+            clientStatus = "Connected",
+            lastSync = lastSyncTimestamp ?: "Never"
+        )
 
         // Load and refresh flag data
         suspend fun loadFlags() {
             try {
                 val flags = buildEnhancedFlagListItems()
                 flagItems = flags
+
+                // Update the global last sync timestamp
+                val timestamp = featureFlagService.getLastSyncTimestamp()
+                lastSyncTimestamp = timestamp?.toString()
 
                 if (debugMode) {
                     debugInfo = buildDebugInfo(flags)
@@ -211,9 +222,12 @@ class FeatureFlagsListPresenter @Inject constructor(
     }
 
     private suspend fun calculateTrueRemoteValue(flag: FeatureFlag): Boolean {
-        // This should get the raw value from LaunchDarkly without any local overrides
-        // You might need to add a method to your AndroidFeatureFlagManager for this
-        return flag.defaultValue // Placeholder - implement with actual remote fetch
+        // Get the actual raw value from LaunchDarkly without any local overrides
+        val result = featureFlagService.getRemoteValue(flag)
+        return result.fold(
+            onSuccess = { it },
+            onError = { _, fallback -> fallback ?: flag.defaultValue }
+        )
     }
 
     private suspend fun buildDebugInfo(flags: List<FeatureFlagsListScreen.FeatureFlagListItem>): FeatureFlagsListScreen.DebugInfo {

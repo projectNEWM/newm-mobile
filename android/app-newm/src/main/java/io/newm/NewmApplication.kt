@@ -16,6 +16,7 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.utils.AndroidEventLoggerImpl
 import io.newm.utils.AndroidNewmAppLogger
 import io.newm.utils.AppForegroundBackgroundTracker
@@ -27,6 +28,9 @@ import io.sentry.SentryLevel
 import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import io.sentry.android.core.SentryAndroidOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -37,11 +41,15 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
 
     private val analyticsTracker: NewmAppEventLogger by inject()
     private val config: NewmSharedBuildConfig by inject()
+    private val featureFlagService: FeatureFlagService by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
     private val imageLoaderFactory by lazy { NewmImageLoaderFactory() }
     private val logger: NewmAppLogger by inject()
     private val logout: Logout by inject()
     private val recaptchaClientProvider: RecaptchaClientProvider by inject()
+
+    // Application-level coroutine scope
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onCreate() {
         super.onCreate()
@@ -50,6 +58,23 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
         logout.register()
         bindClientImplementations()
         initializeRecaptchaClient()
+        prefetchFeatureFlags()
+    }
+
+    private fun prefetchFeatureFlags() {
+        applicationScope.launch {
+            try {
+                logger.breadcrumb("Application", "Prefetching feature flags on app launch")
+                featureFlagService.prefetchAllFlags()
+                logger.breadcrumb("Application", "Feature flags prefetched successfully")
+            } catch (e: Exception) {
+                logger.error(
+                    tag = "Application",
+                    message = "Failed to prefetch feature flags",
+                    exception = e
+                )
+            }
+        }
     }
 
     private fun initializeRecaptchaClient() {

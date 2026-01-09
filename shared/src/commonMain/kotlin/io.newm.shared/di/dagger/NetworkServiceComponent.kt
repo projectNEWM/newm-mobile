@@ -16,6 +16,8 @@ import io.newm.shared.commonInternal.services.network.NFTNetworkService
 import io.newm.shared.commonPublic.featureflags.DefaultFeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
+import io.newm.shared.config.NewmSharedBuildConfig
+import kotlinx.coroutines.CoroutineScope
 import me.tatarka.inject.annotations.Provides
 
 interface NetworkServiceComponent {
@@ -42,8 +44,10 @@ interface NetworkServiceComponent {
     fun providesFeatureFlagService(
         dataSource: FeatureFlagDataSource,
         preferencesStore: PreferencesDataStore,
-        logger: NewmAppLogger
-    ): FeatureFlagService = DefaultFeatureFlagService(dataSource, preferencesStore, logger)
+        buildConfig: NewmSharedBuildConfig,
+        logger: NewmAppLogger,
+        scope: CoroutineScope
+    ): FeatureFlagService = DefaultFeatureFlagService(dataSource, preferencesStore, buildConfig, logger, scope)
 
     @Provides
     fun provideLoginAPI(

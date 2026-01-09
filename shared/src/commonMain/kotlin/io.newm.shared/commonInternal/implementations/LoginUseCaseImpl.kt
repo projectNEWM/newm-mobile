@@ -49,8 +49,8 @@ internal class LoginUseCaseImpl(
     }
 
     @Throws(KMMException::class, CancellationException::class)
-    override fun logout() {
-        mapErrors {
+    override suspend fun logout() {
+        mapErrorsSuspend {
             repository.logout()
             dataStore.clearAll()
         }

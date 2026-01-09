@@ -32,8 +32,10 @@ class AppLaunchGhostActivity : ComponentActivity() {
             setKeepOnScreenCondition { true }
         }
 
-        if (userSession.isLoggedIn()) {
-            lifecycleScope.launch {
+        lifecycleScope.launch {
+            val isLoggedIn = userSession.isLoggedIn()
+
+            if (isLoggedIn) {
                 try {
                     userDetailsUseCase.fetchLoggedInUserDetailsFlow()
                         .filterNotNull()
@@ -49,9 +51,9 @@ class AppLaunchGhostActivity : ComponentActivity() {
                 } finally {
                     launchHomeActivity()
                 }
+            } else {
+                launchLoginActivity()
             }
-        } else {
-            launchLoginActivity()
         }
     }
 
