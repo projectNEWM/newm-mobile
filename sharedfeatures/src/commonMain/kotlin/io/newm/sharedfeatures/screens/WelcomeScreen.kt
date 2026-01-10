@@ -1,5 +1,4 @@
-package io.newm.sharedfeatures.welcome
-
+package io.newm.sharedfeatures.screens
 
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState

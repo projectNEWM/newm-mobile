@@ -15,6 +15,9 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
+import io.newm.sharedfeatures.screens.HomeScreen
+import io.newm.sharedfeatures.screens.LoginScreen
+import io.newm.sharedfeatures.screens.ResetPasswordScreen
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -69,7 +72,7 @@ class LoginPresenter(
                                             password.text,
                                             humanVerificationCode = token
                                         )
-                                        // TODO go home
+                                        navigator.goTo(HomeScreen)
                                     }.onFailure {
                                         errorMessage = Res.string.invalid_recaptcha_message
                                         isLoading = false
@@ -86,7 +89,7 @@ class LoginPresenter(
 
                     LoginScreen.UiEvent.ForgotPasswordClick -> {
                         analyticsTracker.logClickEvent(AppScreens.LogInWithEmailScreen.FORGOT_PASSWORD_BUTTON)
-                        // TODO go to reset password screen
+                        navigator.goTo(ResetPasswordScreen(email.text))
                     }
                 }
             }

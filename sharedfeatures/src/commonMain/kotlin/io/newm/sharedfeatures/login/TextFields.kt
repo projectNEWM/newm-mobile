@@ -124,7 +124,7 @@ fun TextFieldWithLabel(
     isError: Boolean = false,
     keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    helperText: StringResource? = null,
+    helperText: String? = null,
     textfieldBackgroundColor: Color = MaterialTheme.colors.surface,
     singleLine: Boolean = false,
 ) {
@@ -184,7 +184,7 @@ fun TextFieldWithLabel(
             singleLine = singleLine,
         )
         Text(
-            text = helperText?.let { stringResource(it) }.orEmpty(),
+            text = helperText.orEmpty(),
             style = formLabelStyle,
             color = if (isError) MaterialTheme.colors.error else Color.Unspecified
         )

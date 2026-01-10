@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
+import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.feature.login.screen.OnboardingMainImage
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 @Composable
@@ -59,7 +60,7 @@ fun ForceAppUpdateContent(
         ) {
             Spacer(modifier = Modifier.weight(.25f))
 
-            OnboardingMainImage(R.drawable.ic_newm_logo)
+            OnboardingMainImage(painterResource(R.drawable.ic_newm_logo))
 
             Text(
                 text = stringResource(id = R.string.force_app_update_title),

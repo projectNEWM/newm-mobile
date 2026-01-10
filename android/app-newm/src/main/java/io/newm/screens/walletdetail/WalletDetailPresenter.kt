@@ -12,7 +12,7 @@ import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.screens.library.NFTLibraryState
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger

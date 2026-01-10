@@ -9,6 +9,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.password
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun Password(
@@ -34,7 +35,7 @@ fun Password(
         isError = passwordState.showErrors(),
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
-        helperText = passwordState.getError(),
+        helperText = passwordState.getError()?.let { stringResource(it) },
         singleLine = true,
     )
 }

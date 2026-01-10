@@ -11,7 +11,7 @@ import io.newm.BuildConfig.DEBUG
 import io.newm.BuildConfig.VERSION_NAME
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin

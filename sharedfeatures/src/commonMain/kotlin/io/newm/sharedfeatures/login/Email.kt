@@ -9,6 +9,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.email
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun Email(
@@ -33,7 +34,7 @@ fun Email(
         isError = emailState.showErrors(),
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
-        helperText = emailState.getError(),
+        helperText = emailState.getError()?.let { stringResource(it, emailState.text) },
         singleLine = true,
     )
 }
