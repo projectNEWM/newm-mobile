@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
+import me.tatarka.inject.annotations.Inject
 
 private val Context.dataStore by preferencesDataStore(name = "settings")
 
@@ -12,6 +13,7 @@ private val Context.dataStore by preferencesDataStore(name = "settings")
  * Android implementation of PreferencesDataStore using Jetpack DataStore.
  * All operations are non-blocking suspend functions.
  */
+@Inject
 class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataStore {
 
     override suspend fun saveString(key: String, value: String) {

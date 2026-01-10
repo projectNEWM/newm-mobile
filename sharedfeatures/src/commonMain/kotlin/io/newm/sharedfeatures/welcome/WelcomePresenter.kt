@@ -9,6 +9,7 @@ import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
+import io.newm.sharedfeatures.login.LoginScreen
 
 class WelcomePresenter @Inject constructor(
     @Assisted private val navigator: Navigator,
@@ -25,6 +26,10 @@ class WelcomePresenter @Inject constructor(
 
                     WelcomeScreen.UiEvent.OnDevMenu -> {
                         navigator.goTo(DevMenuMainScreen)
+                    }
+
+                    WelcomeScreen.UiEvent.OnLogin -> {
+                        navigator.goTo(LoginScreen)
                     }
                 }
             },

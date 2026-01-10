@@ -50,6 +50,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.launchdarkly.client)
+            implementation(libs.android.driver)
+            implementation(libs.ktor.client.android)
         }
 
         commonMain.dependencies {

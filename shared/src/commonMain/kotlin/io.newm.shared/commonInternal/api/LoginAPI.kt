@@ -30,11 +30,9 @@ import shared.getPlatformName
 
 
 class LoginAPI(
-    networkClient: NetworkClientFactory,
+    private val httpClient: HttpClient,
     private val logger: NewmAppLogger
 ) {
-
-    private val httpClient: HttpClient = networkClient.httpClient()
 
     suspend fun requestEmailConfirmationCode(
         email: String,

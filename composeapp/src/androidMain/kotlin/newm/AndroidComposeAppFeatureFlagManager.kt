@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package newm
 
 import android.app.Application
@@ -13,11 +15,12 @@ import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.featureflags.FlagResult
 import io.newm.shared.commonPublic.models.User
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Deferred
+import io.newm.shared.util.asDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Future
+import kotlin.time.Instant
 
 class AndroidComposeAppFeatureFlagManager(
     private val application: Application,
@@ -43,6 +46,22 @@ class AndroidComposeAppFeatureFlagManager(
 
         return LDClient.init(application, ldConfig, context, 0)
     }
+
+    override fun observeFlagChanges(): Flow<String> = emptyFlow()
+
+    override suspend fun getRemoteValueDirect(featureFlag: FeatureFlag): FlagResult<Boolean> {
+        return try {
+            withContext(Dispatchers.IO) {
+                val value = client.boolVariation(featureFlag.key, featureFlag.defaultValue)
+                FlagResult.Success(value)
+            }
+        } catch (e: Exception) {
+            log.error(TAG, "Error getting feature flag direct ${featureFlag.key}", e)
+            FlagResult.Error(e, featureFlag.defaultValue)
+        }
+    }
+
+    override suspend fun getLastSyncTimestamp(): Instant? = null
 
     override suspend fun getBooleanVariation(featureFlag: FeatureFlag): FlagResult<Boolean> {
         return try {
@@ -137,17 +156,3 @@ class AndroidComposeAppFeatureFlagManager(
     }
 }
 
-// Extension function for Future to Deferred conversion
-private suspend fun <V> Future<V>.asDeferred(): Deferred<V> {
-    val deferred = CompletableDeferred<V>()
-
-    withContext(Dispatchers.IO) {
-        try {
-            deferred.complete(get())
-        } catch (e: Exception) {
-            deferred.completeExceptionally(e)
-        }
-    }
-
-    return deferred
-}

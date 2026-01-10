@@ -11,9 +11,7 @@ import io.newm.shared.commonInternal.api.models.CloudinarySignResponse
 import io.newm.shared.di.NetworkClientFactory
 import org.koin.core.component.KoinComponent
 
-class NewmCloudinaryAPI(networkClient: NetworkClientFactory) : KoinComponent {
-
-    private val authClient: HttpClient  = networkClient.authHttpClient()
+class NewmCloudinaryAPI(private val authClient: HttpClient) : KoinComponent {
 
     suspend fun sign(options: Map<String, Any>): CloudinarySignResponse =
         authClient.post("/v1/cloudinary/sign") {

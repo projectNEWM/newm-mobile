@@ -10,9 +10,7 @@ import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.commonPublic.models.WalletConnection
 import org.koin.core.component.KoinComponent
 
-class NEWMWalletConnectionAPI(private val networkClient: NetworkClientFactory): KoinComponent {
-    private val authClient: HttpClient
-        get() = networkClient.authHttpClient()
+class NEWMWalletConnectionAPI(private val authClient: HttpClient): KoinComponent {
 
     suspend fun connectWallet(connectionId: String): WalletConnection =
         authClient.get("/v1/wallet-connections/$connectionId") {

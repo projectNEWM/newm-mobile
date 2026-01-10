@@ -18,9 +18,7 @@ import io.newm.shared.commonPublic.models.error.KMMException
 import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 
-class UserAPI(networkClient: NetworkClientFactory, val logger: NewmAppLogger) : KoinComponent {
-
-    private val authHttpClient: HttpClient  = networkClient.authHttpClient()
+class UserAPI(private val authHttpClient: HttpClient, val logger: NewmAppLogger) : KoinComponent {
 
     suspend fun getCurrentUser(): User = authHttpClient.get("/v1/users/me") {
         contentType(ContentType.Application.Json)

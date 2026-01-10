@@ -46,7 +46,9 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
             WelcomeScreenContent(
                 modifier = modifier,
                 onCreateAccount = { },
-                onLoginWithEmail = {},
+                onLoginWithEmail = {
+                   state.onEvent(WelcomeScreen.UiEvent.OnLogin)
+                },
                 onGoogleSignIn = {},
                 onPrivacyPolicyClicked = {},
                 onTermsOfServiceClicked = {},
