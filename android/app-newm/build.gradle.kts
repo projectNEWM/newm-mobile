@@ -113,6 +113,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.koin.android)
     implementation(libs.kotlin.reflect)
+    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.cmp.image.pick.n.crop)
     implementation(platform(libs.firebase.bom))
     implementation(libs.androidx.material.icons.extended)

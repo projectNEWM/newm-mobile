@@ -48,19 +48,18 @@ private class NewmNavigator(
     }
 
     override fun pop(result: PopResult?): Screen? {
-        val screen = circuitNavigator.pop()
+        val screen = circuitNavigator.pop(result)
         logger.debug(tag = "NewmNavigator", message = "Popping screen: $screen")
         return screen
     }
 
     override fun resetRoot(
         newRoot: Screen,
-        saveState: Boolean,
-        restoreState: Boolean
-    ): ImmutableList<Screen> {
+        options: Navigator.StateOptions
+    ): List<Screen> {
         logger.debug(tag = "NewmNavigator", message = "Resetting root to $newRoot")
         logPageViewEvent(newRoot)
-        return circuitNavigator.resetRoot(newRoot)
+        return circuitNavigator.resetRoot(newRoot, options)
     }
     private fun logPageViewEvent(screen: Screen) {
         if(screen is io.newm.screens.Screen) {

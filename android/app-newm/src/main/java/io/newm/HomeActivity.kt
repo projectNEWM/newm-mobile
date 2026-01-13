@@ -11,7 +11,7 @@ import androidx.compose.runtime.getValue
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.retained.LocalRetainedStateRegistry
-import com.slack.circuit.retained.continuityRetainedStateRegistry
+import com.slack.circuit.retained.lifecycleRetainedStateRegistry
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
@@ -292,7 +292,7 @@ class HomeActivity : ComponentActivity() {
     ) {
         CircuitCompositionLocals(circuit) {
             CompositionLocalProvider(
-                LocalRetainedStateRegistry provides continuityRetainedStateRegistry(),
+                LocalRetainedStateRegistry provides lifecycleRetainedStateRegistry(),
                 LocalIsBottomBarVisible provides isBottomBarVisible()
             ) {
                 content()
