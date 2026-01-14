@@ -11,6 +11,7 @@ data object WelcomeScreen : Screen {
         data object Loading : UiState
 
         data class Content(
+            val errorMessage: String? = null,
             val onEvent: (UiEvent) -> Unit,
         ) : UiState
     }
@@ -19,5 +20,6 @@ data object WelcomeScreen : Screen {
         data object OnBack : UiEvent
         data object OnDevMenu : UiEvent
         data object OnLogin : UiEvent
+        data object OnGoogleSignIn : UiEvent
     }
 }

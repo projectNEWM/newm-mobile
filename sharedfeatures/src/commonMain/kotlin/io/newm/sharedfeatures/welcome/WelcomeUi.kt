@@ -22,6 +22,7 @@ import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.PrivacyPolicyAndTermsSection
+import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.sharedfeatures.screens.WelcomeScreen
@@ -43,13 +44,18 @@ import newm_mobile.sharedfeatures.generated.resources.Res as R
 fun WelcomeUi(state: UiState, modifier: Modifier) {
     when (state) {
         is UiState.Content -> {
+            state.errorMessage?.let { msg ->
+                ToastSideEffect(msg)
+            }
             WelcomeScreenContent(
                 modifier = modifier,
                 onCreateAccount = { },
                 onLoginWithEmail = {
                    state.onEvent(WelcomeScreen.UiEvent.OnLogin)
                 },
-                onGoogleSignIn = {},
+                onGoogleSignIn = {
+                    state.onEvent(WelcomeScreen.UiEvent.OnGoogleSignIn)
+                },
                 onPrivacyPolicyClicked = {},
                 onTermsOfServiceClicked = {},
                 onDebugMenu = {

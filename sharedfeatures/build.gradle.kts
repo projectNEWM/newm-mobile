@@ -55,12 +55,16 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.circuit.test)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
 
         androidMain {
             dependencies {
                 api(libs.recaptcha)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.play.services.auth)
             }
         }
 
