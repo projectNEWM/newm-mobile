@@ -21,13 +21,11 @@ enum class Mode {
  * asynchronously to storage. The initial value defaults to PRODUCTION and is
  * loaded from storage asynchronously during initialization.
  */
-class NewmSharedBuildConfigImpl(private val storage: PreferencesDataStore): NewmSharedBuildConfig {
+class NewmSharedBuildConfigImpl(private val storage: PreferencesDataStore, private val scope: CoroutineScope): NewmSharedBuildConfig {
 
     companion object {
         private const val APP_MODE = "app_mode"
     }
-
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val defaultMode = Mode.PRODUCTION
 

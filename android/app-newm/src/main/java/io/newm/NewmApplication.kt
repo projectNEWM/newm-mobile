@@ -36,6 +36,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
+import org.koin.core.qualifier.named
 
 open class NewmApplication : Application(), SingletonImageLoader.Factory {
 
@@ -49,7 +50,7 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
     private val recaptchaClientProvider: RecaptchaClientProvider by inject()
 
     // Application-level coroutine scope
-    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val applicationScope: CoroutineScope by inject(named("mainScope"))
 
     override fun onCreate() {
         super.onCreate()
@@ -79,7 +80,7 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
 
     private fun initializeRecaptchaClient() {
         forceAppUpdateViewModel.viewModelScope.launch {
-            Recaptcha.getClient(this@NewmApplication, config.recaptchaSiteKey, timeout = 50000L)
+            runCatching { Recaptcha.fetchClient(this@NewmApplication, config.recaptchaSiteKey) }
                 .onSuccess { client ->
                     recaptchaClientProvider.setRecaptchaClient(client)
                     forceAppUpdateViewModel.checkForUpdates(currentVersion = VERSION_NAME)

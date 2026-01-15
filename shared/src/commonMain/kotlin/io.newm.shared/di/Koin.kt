@@ -74,9 +74,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
+import org.koin.core.qualifier.named
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import org.koin.core.qualifier.named
 import shared.platformModule
 
 fun initKoin(enableNetworkLogs: Boolean = true, appDeclaration: KoinAppDeclaration = {}) =
@@ -95,18 +95,17 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
         createHttpClient(
             httpClientEngine = get(),
             json = get(),
-            tokenManager = get(),
             sessionManager = get(),
-            enableNetworkLogs = enableNetworkLogs,
+            tokenManager = get(),
             buildConfig = get(),
+            enableNetworkLogs = enableNetworkLogs,
             appLogger = get()
         )
     }
-    single(named("auth")) { get<NetworkClientFactory>().authHttpClient() }
-    single(named("public")) { get<NetworkClientFactory>().httpClient() }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
+    single(named("mainScope")) { CoroutineScope(Dispatchers.Main + SupervisorJob()) }
     // Internal Configurations
-    single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl(get()) }
+    single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl(get(), get(named("mainScope"))) }
     single { NewmAppLogger() }
     single { NewmAppEventLogger() }
     single { SessionManager(get(), get(), get()) }

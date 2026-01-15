@@ -6,6 +6,7 @@ import io.newm.shared.commonInternal.db.PreferencesDataStore
 import io.newm.shared.commonInternal.services.cache.NFTCacheService
 import io.newm.shared.commonInternal.services.network.NFTNetworkService
 import io.newm.shared.commonInternal.store.NftTrackStore
+import kotlinx.coroutines.CoroutineScope
 import me.tatarka.inject.annotations.Provides
 
 interface StorageComponent {
@@ -15,7 +16,7 @@ interface StorageComponent {
     }
 
     @Provides
-    fun providesNewmSharedBuildConfig(storage: PreferencesDataStore): NewmSharedBuildConfig {
-        return NewmSharedBuildConfigImpl(storage)
+    fun providesNewmSharedBuildConfig(storage: PreferencesDataStore, scope: CoroutineScope): NewmSharedBuildConfig {
+        return NewmSharedBuildConfigImpl(storage, scope)
     }
 }
