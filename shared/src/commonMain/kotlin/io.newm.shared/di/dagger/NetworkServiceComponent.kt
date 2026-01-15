@@ -1,7 +1,6 @@
 package io.newm.shared.di.dagger
 
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.commonInternal.EarningsAPI
 import io.newm.shared.commonInternal.api.CardanoWalletAPI
 import io.newm.shared.commonInternal.api.LoginAPI
@@ -23,17 +22,17 @@ import me.tatarka.inject.annotations.Provides
 interface NetworkServiceComponent {
 
     @Provides
-    fun provideCardanoWalletAPI(networkClient: NetworkClientFactory): CardanoWalletAPI =
-        CardanoWalletAPI(networkClient)
+    fun provideCardanoWalletAPI(authHttpClient: AuthHttpClient): CardanoWalletAPI =
+        CardanoWalletAPI(authHttpClient.client)
 
     @Provides
     fun providesNFTNetworkService(api: CardanoWalletAPI): NFTNetworkService = NFTNetworkService(api)
 
     @Provides
     fun provideEarningsAPI(
-        networkClient: NetworkClientFactory,
+        authHttpClient: AuthHttpClient,
         logger: NewmAppLogger
-    ): EarningsAPI = EarningsAPI(networkClient, logger)
+    ): EarningsAPI = EarningsAPI(authHttpClient.client, logger)
 
     @Provides
     fun provideEarningsNetworkService(
@@ -51,30 +50,30 @@ interface NetworkServiceComponent {
 
     @Provides
     fun provideLoginAPI(
-        networkClient: NetworkClientFactory,
+        baseHttpClient: BaseHttpClient,
         logger: NewmAppLogger
-    ): LoginAPI = LoginAPI(networkClient, logger)
+    ): LoginAPI = LoginAPI(baseHttpClient.client, logger)
 
     @Provides
     fun providesNEWMWalletConnectionAPI(
-        networkClient: NetworkClientFactory,
-    ): NEWMWalletConnectionAPI = NEWMWalletConnectionAPI(networkClient)
+        authHttpClient: AuthHttpClient,
+    ): NEWMWalletConnectionAPI = NEWMWalletConnectionAPI(authHttpClient.client)
 
     @Provides
-    fun providesPlaylistAPI(networkClient: NetworkClientFactory): PlaylistAPI =
-        PlaylistAPI(networkClient)
+    fun providesPlaylistAPI(authHttpClient: AuthHttpClient): PlaylistAPI =
+        PlaylistAPI(authHttpClient.client)
 
     @Provides
-    fun providesRemoteConfigAPI(networkClient: NetworkClientFactory): RemoteConfigAPI =
-        RemoteConfigAPI(networkClient)
+    fun providesRemoteConfigAPI(baseHttpClient: BaseHttpClient): RemoteConfigAPI =
+        RemoteConfigAPI(baseHttpClient.client)
 
     @Provides
-    fun providesUserAPI(networkClient: NetworkClientFactory, logger: NewmAppLogger): UserAPI {
-        return UserAPI(networkClient, logger)
+    fun providesUserAPI(authHttpClient: AuthHttpClient, logger: NewmAppLogger): UserAPI {
+        return UserAPI(authHttpClient.client, logger)
     }
 
     @Provides
-    fun providesNewmCloudinaryAPI(networkClient: NetworkClientFactory): NewmCloudinaryAPI {
-        return NewmCloudinaryAPI(networkClient)
+    fun providesNewmCloudinaryAPI(authHttpClient: AuthHttpClient): NewmCloudinaryAPI {
+        return NewmCloudinaryAPI(authHttpClient.client)
     }
 }

@@ -14,11 +14,9 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import io.newm.Logout
 import io.newm.RestartApp
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncherImpl
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
-import io.newm.feature.login.screen.login.LoginScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.musicplayer.service.DownloadManager
@@ -40,6 +38,10 @@ import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.sharedfeatures.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
+import io.newm.sharedfeatures.login.LoginPresenter
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
+import io.newm.sharedfeatures.login.RecaptchaManager
+import io.newm.sharedfeatures.login.RecaptchaManagerImpl
 import io.newm.utils.AndroidFeatureFlagManager
 import io.newm.utils.ForceAppUpdateViewModel
 import org.koin.android.ext.koin.androidContext
@@ -52,6 +54,9 @@ val viewModule = module {
     single<FeatureFlagDataSource> { AndroidFeatureFlagManager(get(), get(), get(), get(), get()) }
     single { ForceAppUpdateViewModel(get(), get()) }
     single { RecaptchaClientProvider() }
+    single<RecaptchaManager> {
+        RecaptchaManagerImpl(get())
+    }
 
     factory { params ->
         CreateAccountScreenPresenter(
@@ -63,7 +68,7 @@ val viewModule = module {
             get()
         )
     }
-    factory { params -> LoginScreenPresenter(params.get(), get(), get(), get(), get()) }
+    
     factory { params ->
         ResetPasswordScreenPresenter(
             params.get(),
@@ -93,6 +98,15 @@ val viewModule = module {
             recaptchaClientProvider = get(),
             loginUseCase = get(),
             activityResultContract = ActivityResultContracts.StartActivityForResult(),
+            logger = get(),
+            analyticsTracker = get()
+        )
+    }
+    factory { params ->
+        LoginPresenter(
+            navigator = params.get(),
+            loginUseCase = { get() },
+            recaptchaManager = get(),
             logger = get(),
             analyticsTracker = get()
         )

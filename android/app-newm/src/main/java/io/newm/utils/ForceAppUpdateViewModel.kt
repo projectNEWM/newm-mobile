@@ -2,7 +2,7 @@ package io.newm.utils
 
 import androidx.lifecycle.ViewModel
 import com.google.android.recaptcha.RecaptchaAction
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.shared.commonPublic.usecases.ForceAppUpdateUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

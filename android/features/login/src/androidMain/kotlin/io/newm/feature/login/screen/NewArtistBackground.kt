@@ -9,8 +9,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
+import io.newm.core.ui.OnboardingMainImage
 
 @Composable
 fun PreLoginArtistBackgroundContentTemplate(
@@ -29,7 +31,7 @@ fun PreLoginArtistBackgroundContentTemplate(
     ) {
         header()
         Spacer(modifier = Modifier.height(70.dp))
-        OnboardingMainImage(R.drawable.ic_newm_logo)
+        OnboardingMainImage(painterResource(R.drawable.ic_newm_logo))
         Spacer(modifier = Modifier.height(16.dp))
         content()
     }

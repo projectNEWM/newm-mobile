@@ -2,7 +2,7 @@ package io.newm.sharedfeatures.devmenu
 
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
-import io.newm.sharedfeatures.ActivityScope
+import io.newm.shared.di.dagger.ActivityScope
 import me.tatarka.inject.annotations.IntoSet
 import me.tatarka.inject.annotations.Provides
 

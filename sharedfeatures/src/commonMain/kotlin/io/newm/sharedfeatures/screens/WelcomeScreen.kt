@@ -1,5 +1,4 @@
-package io.newm.sharedfeatures.welcome
-
+package io.newm.sharedfeatures.screens
 
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -19,5 +18,6 @@ data object WelcomeScreen : Screen {
     sealed interface UiEvent : CircuitUiEvent {
         data object OnBack : UiEvent
         data object OnDevMenu : UiEvent
+        data object OnLogin : UiEvent
     }
 }

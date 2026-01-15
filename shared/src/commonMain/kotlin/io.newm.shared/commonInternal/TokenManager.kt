@@ -4,11 +4,11 @@ package io.newm.shared.commonInternal
  * Token manager interface for handling authentication tokens.
  * All operations are suspend functions to support async storage implementations.
  */
-interface TokenManager {
+interface TokenManager : TokenProvider {
 
-    suspend fun getAccessToken(): String?
+    override suspend fun getAccessToken(): String?
 
-    suspend fun getRefreshToken(): String?
+    override suspend fun getRefreshToken(): String?
 
     suspend fun clearToken()
 

@@ -19,17 +19,21 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.commonInternal.SessionManager
 import io.newm.shared.commonInternal.TokenManager
 import io.newm.shared.commonInternal.api.models.LoginResponse
-import io.newm.shared.commonInternal.repositories.LogInRepository
+import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.di.dagger.ApplicationScope
 import kotlinx.serialization.json.Json
+import me.tatarka.inject.annotations.Inject
 
+@ApplicationScope
+@Inject
 class NetworkClientFactory(
     private val httpClientEngine: HttpClientEngine,
     private val json: Json,
-    private val repository: LogInRepository,
     private val tokenManager: TokenManager,
+    private val sessionManager: SessionManager,
     private val enableNetworkLogs: Boolean,
     private val buildConfig: NewmSharedBuildConfig,
     private val appLogger: NewmAppLogger
@@ -133,11 +137,11 @@ class NetworkClientFactory(
                                     "Auth",
                                     "Refresh tokens invalid response: $renewTokens"
                                 )
-                                repository.logout()
+                                sessionManager.logout()
                                 null
                             }
                         } catch (e: Exception) {
-                            repository.logout()
+                            sessionManager.logout()
                             appLogger.error("Auth", "refreshTokens: Exception: $e", e)
                             null
                         }

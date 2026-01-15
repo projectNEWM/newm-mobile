@@ -1,4 +1,4 @@
-package io.newm.feature.login.screen.login
+package io.newm.sharedfeatures.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,44 +6,46 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.core.resources.R
-import io.newm.feature.login.screen.HomeScreen
-import io.newm.feature.login.screen.ResetPasswordScreen
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
-import io.newm.feature.login.screen.email.EmailState
-import io.newm.feature.login.screen.password.PasswordState
+import com.slack.circuit.runtime.screen.Screen
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
+import io.newm.sharedfeatures.screens.HomeScreen
+import io.newm.sharedfeatures.screens.LoginScreen
+import io.newm.sharedfeatures.screens.ResetPasswordScreen
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
+import newm_mobile.sharedfeatures.generated.resources.Res
+import newm_mobile.sharedfeatures.generated.resources.invalid_recaptcha_message
+import newm_mobile.sharedfeatures.generated.resources.login_invalid_form_message
 
-class LoginScreenPresenter(
-    private val navigator: Navigator,
-    private val loginUseCase: LoginUseCase,
-    private val recaptchaClientProvider: RecaptchaClientProvider,
+@Inject
+class LoginPresenter(
+    @Assisted private val navigator: Navigator,
+    private val loginUseCase: () -> LoginUseCase,
+    private val recaptchaManager: RecaptchaManager,
     private val logger: NewmAppLogger,
     private val analyticsTracker: NewmAppEventLogger
-) : Presenter<LoginScreenUiState> {
+) : Presenter<LoginScreen.UiState> {
     @Composable
-    override fun present(): LoginScreenUiState {
+    override fun present(): LoginScreen.UiState {
         val email = rememberRetained { EmailState() }
         val password = rememberRetained { PasswordState() }
         val isFormValid = remember(email.isValid, password.isValid) {
             email.isValid && password.isValid
         }
-        var errorMessage by remember { mutableStateOf<String?>(null) }
+        var errorMessage by remember { mutableStateOf<org.jetbrains.compose.resources.StringResource?>(null) }
         var isLoading by remember { mutableStateOf(false) }
 
         val coroutineScope = rememberCoroutineScope()
-        val context = LocalContext.current
 
-        return LoginScreenUiState(
+        return LoginScreen.UiState(
             emailState = email,
             passwordState = password,
             submitButtonEnabled = isFormValid && isLoading.not(),
@@ -51,45 +53,41 @@ class LoginScreenPresenter(
             isLoading = isLoading,
             eventSink = { event ->
                 when (event) {
-                    LoginUiEvent.OnLoginClick -> {
+                    LoginScreen.UiEvent.OnLoginClick -> {
                         analyticsTracker.logClickEvent(AppScreens.LogInWithEmailScreen.LOGIN_BUTTON)
                         coroutineScope.launch {
                             errorMessage = null
 
                             if (!isFormValid) {
-                                // todo update with proper error message
-                                errorMessage = context.getString(
-                                    R.string.login_invalid_form_message
-                                )
+                                errorMessage = Res.string.login_invalid_form_message
                                 return@launch
                             }
 
                             isLoading = true
                             try {
-                                recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN)
+                                recaptchaManager.executeLogin()
                                     .onSuccess { token ->
-                                        loginUseCase.logIn(
+                                        loginUseCase().logIn(
                                             email.text,
                                             password.text,
                                             humanVerificationCode = token
                                         )
                                         navigator.goTo(HomeScreen)
                                     }.onFailure {
-                                        errorMessage = context.getString(
-                                            R.string.invalid_recaptcha_message
-                                        )
+                                        errorMessage = Res.string.invalid_recaptcha_message
                                         isLoading = false
                                     }
 
                             } catch (e: Throwable) {
                                 logger.error("LoginScreenPresenter", "Login failed", e)
                                 isLoading = false
-                                errorMessage = e.message
+                                // TODO: Map throwable to user friendly message if possible
+                                // errorMessage = e.message // StringResource needed
                             }
                         }
                     }
 
-                    LoginUiEvent.ForgotPasswordClick -> {
+                    LoginScreen.UiEvent.ForgotPasswordClick -> {
                         analyticsTracker.logClickEvent(AppScreens.LogInWithEmailScreen.FORGOT_PASSWORD_BUTTON)
                         navigator.goTo(ResetPasswordScreen(email.text))
                     }
@@ -99,3 +97,18 @@ class LoginScreenPresenter(
     }
 }
 
+@Inject
+class LoginPresenterFactory(
+    private val presenter: (Navigator) -> LoginPresenter,
+) : Presenter.Factory {
+    override fun create(
+        screen: Screen,
+        navigator: Navigator,
+        context: CircuitContext,
+    ): Presenter<*>? {
+        return when (screen) {
+            is LoginScreen -> presenter(navigator)
+            else -> null
+        }
+    }
+}

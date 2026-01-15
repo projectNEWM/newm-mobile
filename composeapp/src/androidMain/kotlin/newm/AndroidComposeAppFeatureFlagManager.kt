@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package newm
 
 import android.app.Application
@@ -13,16 +15,21 @@ import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.featureflags.FlagResult
 import io.newm.shared.commonPublic.models.User
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Deferred
+import io.newm.shared.util.asDeferred
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Future
+import kotlin.time.Instant
 
 class AndroidComposeAppFeatureFlagManager(
     private val application: Application,
     private val sharedBuildConfig: NewmSharedBuildConfig,
-    private val log: NewmAppLogger
+    private val log: NewmAppLogger,
+    private val scope: CoroutineScope
 ) : FeatureFlagDataSource {
 
     private val client: LDClient = buildClient()
@@ -31,6 +38,8 @@ class AndroidComposeAppFeatureFlagManager(
     private val flagCache = mutableMapOf<String, Pair<Boolean, Long>>()
     private val cacheTimeout = 30_000L // 30 seconds
     private val TAG = "AndroidFeatureFlagManager"
+
+    private val _flagChanges = MutableSharedFlow<String>(replay = 0, extraBufferCapacity = 64)
 
     private fun buildClient(): LDClient {
         val context = LDContext.builder(ContextKind.DEFAULT, "anonymous")
@@ -41,8 +50,22 @@ class AndroidComposeAppFeatureFlagManager(
             .mobileKey(sharedBuildConfig.launchDarklyKey)
             .build()
 
-        return LDClient.init(application, ldConfig, context, 0)
+        val ldClient = LDClient.init(application, ldConfig, context, 0)
+        registerFlagListeners(ldClient)
+        return ldClient
     }
+
+    private fun registerFlagListeners(client: LDClient) {
+        FeatureFlags.ALL_FLAGS.forEach { flag ->
+            client.registerFeatureFlagListener(flag.key) {
+                scope.launch {
+                    _flagChanges.emit(flag.key)
+                }
+            }
+        }
+    }
+
+    override fun observeFlagChanges(): Flow<String> = _flagChanges.asSharedFlow()
 
     override suspend fun getBooleanVariation(featureFlag: FeatureFlag): FlagResult<Boolean> {
         return try {
@@ -131,23 +154,22 @@ class AndroidComposeAppFeatureFlagManager(
         }
     }
 
+    override suspend fun getRemoteValueDirect(featureFlag: FeatureFlag): FlagResult<Boolean> {
+        return try {
+            withContext(Dispatchers.IO) {
+                val value = client.boolVariation(featureFlag.key, featureFlag.defaultValue)
+                FlagResult.Success(value)
+            }
+        } catch (e: Exception) {
+            log.error(TAG, "Error getting feature flag direct ${featureFlag.key}", e)
+            FlagResult.Error(e, featureFlag.defaultValue)
+        }
+    }
+
+    override suspend fun getLastSyncTimestamp(): Instant? = null
+
     fun clearCache() {
         flagCache.clear()
         log.breadcrumb("FeatureFlag", "Flag cache cleared")
     }
-}
-
-// Extension function for Future to Deferred conversion
-private suspend fun <V> Future<V>.asDeferred(): Deferred<V> {
-    val deferred = CompletableDeferred<V>()
-
-    withContext(Dispatchers.IO) {
-        try {
-            deferred.complete(get())
-        } catch (e: Exception) {
-            deferred.completeExceptionally(e)
-        }
-    }
-
-    return deferred
 }

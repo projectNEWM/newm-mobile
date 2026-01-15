@@ -50,6 +50,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.launchdarkly.client)
+            implementation(libs.android.driver)
+            implementation(libs.ktor.client.android)
         }
 
         commonMain.dependencies {
@@ -63,6 +65,7 @@ kotlin {
             implementation(libs.circuit.foundation)
             implementation(project(Modules.shared))
             implementation(project(Modules.sharedComposeFeatures))
+            implementation(project(Modules.coreTheme))
         }
 
         desktopMain.dependencies {
@@ -128,10 +131,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     add("kspAndroid", libs.kotlinInject.compiler)
     add("kspDesktop", libs.kotlinInject.compiler)
     add("kspWasmJs", libs.kotlinInject.compiler)

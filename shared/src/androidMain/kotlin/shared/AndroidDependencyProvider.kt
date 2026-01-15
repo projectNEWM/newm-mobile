@@ -16,11 +16,20 @@ import io.newm.shared.commonInternal.db.PreferencesDataStore
 import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
 import io.newm.shared.internal.implementations.CloudinaryManagerImpl
 import io.newm.shared.internal.implementations.TokenManagerImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import me.tatarka.inject.annotations.Provides
 
 actual interface OSDependencyProvider {
 
     actual val preferencesDataStore: PreferencesDataStore
+    actual val tokenManager: TokenManager
+    actual val db: NewmDatabaseWrapper
+    actual val coroutineScope: CoroutineScope
+
+    @Provides
+    fun provideCoroutineScope(): CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     @Provides
     fun providePreferencesDataStore(application: Application): PreferencesDataStore = PreferencesDataStoreImpl(application)

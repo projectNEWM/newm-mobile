@@ -1,7 +1,11 @@
-package io.newm.feature.login.screen.authproviders
+package io.newm.sharedfeatures.login
 
 import com.google.android.recaptcha.RecaptchaClient
+import io.newm.shared.di.dagger.ApplicationScope
+import me.tatarka.inject.annotations.Inject
 
+@ApplicationScope
+@Inject
 class RecaptchaClientProvider {
 
     private var recaptchaClient: RecaptchaClient? = null
@@ -12,4 +16,3 @@ class RecaptchaClientProvider {
 
     fun get(): RecaptchaClient = recaptchaClient ?: throw IllegalStateException("RecaptchaClient was not initialized")
 }
-

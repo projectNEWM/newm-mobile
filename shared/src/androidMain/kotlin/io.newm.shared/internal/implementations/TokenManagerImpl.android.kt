@@ -1,14 +1,15 @@
 package io.newm.shared.internal.implementations
 
-
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
 import io.newm.shared.commonInternal.TokenManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.tatarka.inject.annotations.Inject
 
-internal class TokenManagerImpl(
+@Inject
+class TokenManagerImpl(
     context: Context,
     private val accountManager: AccountManager
 ) : TokenManager {

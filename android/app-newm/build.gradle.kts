@@ -18,6 +18,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    ndkVersion = "27.0.12077973"
 
     namespace = "io.newm"
     testNamespace = "io.newm.test"
@@ -37,7 +38,7 @@ android {
             merges += "META-INF/LICENSE-notice.md"
         }
         jniLibs {
-            useLegacyPackaging = false
+            useLegacyPackaging = true
         }
     }
 
@@ -87,6 +88,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kapt {
@@ -97,10 +99,11 @@ android {
 dependencies {
 
     implementation(libs.process.phoenix)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.analytics)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(compose.material)
     implementation(libs.androidx.media3.datasource)

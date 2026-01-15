@@ -5,10 +5,12 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
-import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
+import io.newm.sharedfeatures.screens.LoginScreen
+import io.newm.sharedfeatures.screens.WelcomeScreen
+import io.newm.sharedfeatures.screens.WelcomeScreen.UiState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
 
 class WelcomePresenter @Inject constructor(
     @Assisted private val navigator: Navigator,
@@ -25,6 +27,10 @@ class WelcomePresenter @Inject constructor(
 
                     WelcomeScreen.UiEvent.OnDevMenu -> {
                         navigator.goTo(DevMenuMainScreen)
+                    }
+
+                    WelcomeScreen.UiEvent.OnLogin -> {
+                        navigator.goTo(LoginScreen)
                     }
                 }
             },
