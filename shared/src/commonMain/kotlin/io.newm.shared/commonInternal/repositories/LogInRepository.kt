@@ -2,9 +2,8 @@ package io.newm.shared.commonInternal.repositories
 
 import io.ktor.client.plugins.ClientRequestException
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.commonInternal.SessionManager
 import io.newm.shared.commonInternal.TokenManager
-import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
-import io.newm.shared.commonInternal.repositories.models.OAuthData
 import io.newm.shared.commonInternal.api.LoginAPI
 import io.newm.shared.commonInternal.api.models.AppleSignInRequest
 import io.newm.shared.commonInternal.api.models.FacebookSignInRequest
@@ -18,17 +17,18 @@ import io.newm.shared.commonInternal.api.models.LoginResponse
 import io.newm.shared.commonInternal.api.models.NewUser
 import io.newm.shared.commonInternal.api.models.ResetPasswordRequest
 import io.newm.shared.commonInternal.api.models.isValid
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import io.newm.shared.commonInternal.repositories.models.OAuthData
+import me.tatarka.inject.annotations.Inject
 import shared.Notification
 import shared.postNotification
 
-class LogInRepository : KoinComponent {
-    private val service: LoginAPI by inject()
-    private val tokenManager: TokenManager by inject()
-    private val db: NewmDatabaseWrapper by inject()
-    private val logger: NewmAppLogger by inject()
-
+@Inject
+class LogInRepository(
+    private val service: LoginAPI,
+    private val tokenManager: TokenManager,
+    private val sessionManager: SessionManager,
+    private val logger: NewmAppLogger
+) {
 
     suspend fun requestEmailConfirmationCode(
         email: String,
@@ -152,9 +152,7 @@ class LogInRepository : KoinComponent {
     }
 
     suspend fun logout() {
-        tokenManager.clearToken()
-        db.clear()
-        postNotification(Notification.loginStateChanged)
+        sessionManager.logout()
     }
 
     suspend fun resetPassword(

@@ -16,11 +16,11 @@ import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.featureflags.FlagResult
 import io.newm.shared.commonPublic.models.User
+import io.newm.shared.util.asDeferred
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Future
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.pow
@@ -533,19 +532,3 @@ class AndroidFeatureFlagManager(
     }
 }
 
-/**
- * Extension function for Future to Deferred conversion.
- */
-private suspend fun <V> Future<V>.asDeferred(): Deferred<V> {
-    val deferred = CompletableDeferred<V>()
-
-    withContext(Dispatchers.IO) {
-        try {
-            deferred.complete(get())
-        } catch (e: Exception) {
-            deferred.completeExceptionally(e)
-        }
-    }
-
-    return deferred
-}

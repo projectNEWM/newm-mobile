@@ -7,4 +7,5 @@ interface CommonApplicationComponent:
     LoggingComponent,
     NetworkServiceComponent,
     StorageComponent,
+    UseCaseComponent,
     OSDependencyProvider

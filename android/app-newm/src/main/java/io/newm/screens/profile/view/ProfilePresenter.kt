@@ -35,7 +35,7 @@ import io.newm.shared.commonPublic.usecases.GetWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
-import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import kotlinx.coroutines.launch
 
 class ProfilePresenter(

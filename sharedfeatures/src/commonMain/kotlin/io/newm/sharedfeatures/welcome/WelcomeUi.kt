@@ -24,8 +24,8 @@ import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.PrivacyPolicyAndTermsSection
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
-import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.sharedfeatures.welcome.WelcomeScreen.UiState
+import io.newm.sharedfeatures.screens.WelcomeScreen
+import io.newm.sharedfeatures.screens.WelcomeScreen.UiState
 import me.tatarka.inject.annotations.Inject
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.create_account
@@ -46,7 +46,9 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
             WelcomeScreenContent(
                 modifier = modifier,
                 onCreateAccount = { },
-                onLoginWithEmail = {},
+                onLoginWithEmail = {
+                   state.onEvent(WelcomeScreen.UiEvent.OnLogin)
+                },
                 onGoogleSignIn = {},
                 onPrivacyPolicyClicked = {},
                 onTermsOfServiceClicked = {},

@@ -1,6 +1,5 @@
-package io.newm.feature.login.screen
+package io.newm.sharedfeatures.login
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -15,51 +14,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.slack.circuit.runtime.CircuitContext
+import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
-import io.newm.core.resources.R
-import io.newm.core.theme.NewmTheme
+import com.slack.circuit.runtime.ui.ui
 import io.newm.core.theme.inter
-import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.text.TextFieldWithLabelDefaults
-import io.newm.feature.login.screen.email.Email
-import io.newm.feature.login.screen.login.LoginScreenUiState
-import io.newm.feature.login.screen.login.LoginUiEvent.ForgotPasswordClick
-import io.newm.feature.login.screen.login.LoginUiEvent.OnLoginClick
-import io.newm.feature.login.screen.password.Password
+import io.newm.sharedfeatures.screens.LoginScreen
+import me.tatarka.inject.annotations.Inject
+import newm_mobile.sharedfeatures.generated.resources.Res
+import newm_mobile.sharedfeatures.generated.resources.login
+import newm_mobile.sharedfeatures.generated.resources.password
+import newm_mobile.sharedfeatures.generated.resources.reset_password_forgot_your_password
+import org.jetbrains.compose.resources.stringResource
 
-internal const val TAG_LOGIN_SCREEN = "TAG_LOGIN_SCREEN"
-
-class LoginScreenUi : Ui<LoginScreenUiState> {
-    @Composable
-    override fun Content(state: LoginScreenUiState, modifier: Modifier) {
-        LoginScreenContent(state = state)
-    }
+@Composable
+fun LoginUi(state: LoginScreen.UiState, modifier: Modifier) {
+    LoginScreenContent(state = state, modifier = modifier)
 }
 
 @Composable
 internal fun LoginScreenContent(
-    state: LoginScreenUiState,
+    state: LoginScreen.UiState,
+    modifier: Modifier = Modifier
 ) {
     val eventSink = state.eventSink
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    ToastSideEffect(state.errorMessage)
+    state.errorMessage?.let { msg ->
+        ToastSideEffect(stringResource(msg))
+    }
 
     PreLoginArtistBackgroundContentTemplate(
+        modifier = modifier,
         isLoading = state.isLoading,
         header = {
             Text(
-                text = stringResource(id = R.string.reset_password_forgot_your_password),
+                text = stringResource(Res.string.reset_password_forgot_your_password),
                 fontSize = 16.sp,
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
@@ -67,7 +64,7 @@ internal fun LoginScreenContent(
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(16.dp)
-                    .clickable { eventSink(ForgotPasswordClick) }
+                    .clickable { eventSink(LoginScreen.UiEvent.ForgotPasswordClick) }
             )
         }
     ) {
@@ -80,7 +77,7 @@ internal fun LoginScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         Password(
-            label = R.string.password,
+            label = Res.string.password,
             passwordState = state.passwordState,
             keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(
                 imeAction = ImeAction.Go,
@@ -89,7 +86,7 @@ internal fun LoginScreenContent(
                 onGo = {
                     keyboardController?.hide()
                     if (state.submitButtonEnabled) {
-                        eventSink(OnLoginClick)
+                        eventSink(LoginScreen.UiEvent.OnLoginClick)
                     }
                 }
             ),
@@ -98,49 +95,21 @@ internal fun LoginScreenContent(
         Spacer(modifier = Modifier.height(32.dp))
 
         PrimaryButton(
-            text = stringResource(id = R.string.login),
-            onClick = { eventSink(OnLoginClick) },
+            text = stringResource(Res.string.login),
+            onClick = { eventSink(LoginScreen.UiEvent.OnLoginClick) },
             enabled = state.submitButtonEnabled,
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
-@Composable
-fun OnboardingMainImage(@DrawableRes mainImage: Int) {
-    OnboardingMainImage(painter = painterResource(mainImage))
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun DefaultLightLoginScreenPreview() {
-    NewmTheme(darkTheme = false) {
-        LoginScreenContent(
-            state = LoginScreenUiState(
-                emailState = TextFieldState(),
-                passwordState = TextFieldState(),
-                submitButtonEnabled = true,
-                errorMessage = null,
-                isLoading = true,
-                eventSink = {}
-            ),
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun DefaultDarkLoginScreenPreview() {
-    NewmTheme(darkTheme = true) {
-        LoginScreenContent(
-            state = LoginScreenUiState(
-                emailState = TextFieldState(),
-                passwordState = TextFieldState(),
-                submitButtonEnabled = true,
-                errorMessage = null,
-                isLoading = true,
-                eventSink = {}
-            ),
-        )
+class LoginUiFactory @Inject constructor() : Ui.Factory {
+    override fun create(screen: Screen, context: CircuitContext): Ui<*>? {
+        return when (screen) {
+            LoginScreen -> ui<LoginScreen.UiState> { state, modifier ->
+                LoginUi(state, modifier)
+            }
+            else -> null
+        }
     }
 }

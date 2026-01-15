@@ -25,7 +25,6 @@ class Logout(
                 loginUseCase.logout()
                 googleSignInClient.signOut()
                 logger.info("Logout", "Logout successful")
-                restartApp.run()
             } catch (e: Exception) {
                 logger.error("Logout", "Logout failed", e)
             }

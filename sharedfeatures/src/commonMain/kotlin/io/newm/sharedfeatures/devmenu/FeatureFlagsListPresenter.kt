@@ -15,8 +15,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.shared.commonPublic.featureflags.EvaluationSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlag
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
-import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

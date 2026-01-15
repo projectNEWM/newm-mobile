@@ -12,8 +12,7 @@ import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.core.resources.R
-import io.newm.feature.login.screen.HomeScreen
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
@@ -27,6 +26,7 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
 import io.newm.shared.commonPublic.usecases.ResetPasswordUseCase
 import io.newm.shared.commonPublic.usecases.SignupUseCase
+import io.newm.sharedfeatures.screens.HomeScreen
 import kotlinx.coroutines.launch
 
 private enum class ResetPasswordStep {

@@ -11,7 +11,7 @@ import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
-import io.newm.sharedfeatures.welcome.WelcomeScreen
+import io.newm.sharedfeatures.screens.WelcomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

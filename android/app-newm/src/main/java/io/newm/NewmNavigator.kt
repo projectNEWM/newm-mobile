@@ -5,10 +5,10 @@ import androidx.compose.runtime.remember
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
-import io.newm.feature.login.screen.HomeScreen
 import io.newm.screens.WebBrowserScreen
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.sharedfeatures.screens.HomeScreen
 import kotlinx.collections.immutable.ImmutableList
 
 

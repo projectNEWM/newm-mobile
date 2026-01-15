@@ -2,7 +2,7 @@ package newm.inject
 
 import io.newm.sharedfeatures.CommonActivityComponent
 import me.tatarka.inject.annotations.Component
-import io.newm.sharedfeatures.ActivityScope
+import io.newm.shared.di.dagger.ActivityScope
 
 @Component
 @ActivityScope

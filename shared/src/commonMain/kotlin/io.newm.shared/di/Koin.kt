@@ -5,6 +5,7 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.commonInternal.EarningsAPI
+import io.newm.shared.commonInternal.SessionManager
 import io.newm.shared.commonInternal.TokenManager
 import io.newm.shared.commonInternal.api.CardanoWalletAPI
 import io.newm.shared.commonInternal.api.GenresAPI
@@ -75,6 +76,7 @@ import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import org.koin.core.qualifier.named
 import shared.platformModule
 
 fun initKoin(enableNetworkLogs: Boolean = true, appDeclaration: KoinAppDeclaration = {}) =
@@ -93,29 +95,32 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
         createHttpClient(
             httpClientEngine = get(),
             json = get(),
-            logInRepository = get(),
             tokenManager = get(),
-            buildConfig = get(),
+            sessionManager = get(),
             enableNetworkLogs = enableNetworkLogs,
+            buildConfig = get(),
             appLogger = get()
         )
     }
+    single(named("auth")) { get<NetworkClientFactory>().authHttpClient() }
+    single(named("public")) { get<NetworkClientFactory>().httpClient() }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     // Internal Configurations
     single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl(get()) }
     single { NewmAppLogger() }
     single { NewmAppEventLogger() }
+    single { SessionManager(get(), get(), get()) }
     single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get(), get(), get()) }
     // Internal API Services
-    single { CardanoWalletAPI(get()) }
-    single { EarningsAPI(get(), get()) }
+    single { CardanoWalletAPI(get(named("auth"))) }
+    single { EarningsAPI(get(named("auth")), get()) }
     single { GenresAPI(get()) }
-    single { LoginAPI(get(), get()) }
-    single { NEWMWalletConnectionAPI(get()) }
-    single { PlaylistAPI(get()) }
-    single { RemoteConfigAPI(get()) }
-    single { UserAPI(get(), get()) }
-    single { NewmCloudinaryAPI(get()) }
+    single { LoginAPI(get(named("public")), get()) }
+    single { NEWMWalletConnectionAPI(get(named("auth"))) }
+    single { PlaylistAPI(get(named("auth"))) }
+    single { RemoteConfigAPI(get(named("public"))) }
+    single { UserAPI(get(named("auth")), get()) }
+    single { NewmCloudinaryAPI(get(named("auth"))) }
     // Internal Services
     single { EarningsNetworkService(get()) }
     single { NFTCacheService(get()) }
@@ -126,7 +131,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     // Internal Repositories
     single { EarningsRepository(get(), get()) }
     single { GenresRepository() }
-    single { LogInRepository() }
+    single { LogInRepository(get(), get(), get(), get()) }
     single { NFTRepository(get()) }
     single { PlaylistRepository() }
     single { UserRepository(get(), get(), get()) }
@@ -143,7 +148,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
     single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
     single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
-    single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
+    single<LoginUseCase> { LoginUseCaseImpl( get(), get()) }
     single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
     single<SignupUseCase> { SignupUseCaseImpl(get()) }
     single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
@@ -162,8 +167,8 @@ fun createJson() = Json {
 internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
     json: Json,
-    logInRepository: LogInRepository,
     tokenManager: TokenManager,
+    sessionManager: SessionManager,
     enableNetworkLogs: Boolean,
     buildConfig: NewmSharedBuildConfig,
     appLogger: NewmAppLogger
@@ -171,8 +176,8 @@ internal fun createHttpClient(
     NetworkClientFactory(
         httpClientEngine,
         json,
-        logInRepository,
         tokenManager,
+        sessionManager,
         enableNetworkLogs,
         buildConfig,
         appLogger

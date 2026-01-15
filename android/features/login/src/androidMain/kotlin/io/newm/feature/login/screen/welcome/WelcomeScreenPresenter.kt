@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
@@ -21,10 +22,8 @@ import com.google.android.gms.tasks.Task
 import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.feature.login.screen.HomeScreen
 import io.newm.feature.login.screen.LoginGoogle
-import io.newm.feature.login.screen.LoginScreen
-import io.newm.feature.login.screen.authproviders.RecaptchaClientProvider
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.shared.NewmAppLogger
@@ -32,8 +31,9 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.error.KMMException
 import io.newm.shared.commonPublic.usecases.LoginUseCase
-import io.newm.sharedfeatures.devmenu.DevMenuMainScreen
-import androidx.core.net.toUri
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
+import io.newm.sharedfeatures.screens.HomeScreen
+import io.newm.sharedfeatures.screens.LoginScreen
 
 class WelcomeScreenPresenter(
     private val navigator: Navigator,

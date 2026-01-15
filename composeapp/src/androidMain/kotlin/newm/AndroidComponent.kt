@@ -1,9 +1,10 @@
 package newm
 
 import android.app.Application
+import android.content.Context
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
+import io.newm.shared.config.NewmSharedBuildConfig
 import me.tatarka.inject.annotations.Provides
 
 interface AndroidComponent {
@@ -16,4 +17,7 @@ interface AndroidComponent {
     ): FeatureFlagDataSource {
         return AndroidComposeAppFeatureFlagManager(application, sharedBuildConfig, log)
     }
+
+    @Provides
+    fun provideContext(application: Application): Context = application
 }

@@ -16,6 +16,8 @@ import me.tatarka.inject.annotations.Provides
 actual interface OSDependencyProvider {
 
     actual val preferencesDataStore: PreferencesDataStore
+    actual val tokenManager: TokenManager
+    actual val db: NewmDatabaseWrapper
 
     @Provides
     fun providePreferencesDataStore(): PreferencesDataStore = PreferencesDataStoreImpl()
