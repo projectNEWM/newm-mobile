@@ -22,10 +22,6 @@ interface NetworkComponent {
 
     @Provides
     @ApplicationScope
-    fun provideCoroutineScope(): CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-
-    @Provides
-    @ApplicationScope
     fun provideSessionManager(
         tokenManager: TokenManager,
         db: NewmDatabaseWrapper,

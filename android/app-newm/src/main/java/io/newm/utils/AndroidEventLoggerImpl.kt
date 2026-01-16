@@ -1,10 +1,8 @@
 package io.newm.utils
 
 import androidx.core.os.bundleOf
+import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.logEvent
-import com.google.firebase.ktx.Firebase
 import io.newm.BuildConfig
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.IEventLogger
@@ -14,7 +12,7 @@ import io.newm.shared.commonPublic.analytics.IEventLogger
  */
 internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger {
 
-    private val firebaseAnalytics = Firebase.analytics
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(FirebaseApp.getInstance().applicationContext)
 
     private val defaultProperties = mapOf(
         "app_version" to BuildConfig.VERSION_NAME,
@@ -54,12 +52,14 @@ internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger 
             message = "screen: $screenName"
         )
 
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-            properties?.forEach { (key, value) ->
-                param(key, value.toString())
-            }
+        val params = mutableListOf<Pair<String, Any?>>(
+            FirebaseAnalytics.Param.SCREEN_NAME to screenName
+        )
+        properties?.forEach { (key, value) ->
+            params.add(key to value.toString())
         }
+        val bundle = bundleOf(*params.toTypedArray())
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     override fun logClickEvent(

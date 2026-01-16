@@ -65,6 +65,7 @@ kotlin {
             implementation(libs.circuit.foundation)
             implementation(project(Modules.shared))
             implementation(project(Modules.sharedComposeFeatures))
+            implementation(project(Modules.coreTheme))
         }
 
         desktopMain.dependencies {
