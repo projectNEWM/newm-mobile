@@ -26,22 +26,18 @@ jobs:
           echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
           echo Last build tool version is: $BUILD_TOOL_VERSION
 
-      - name: Setup local.properties
-        run: |
-          echo STAGING_URL="${{ vars.STAGING_URL }}" >> ./local.properties
-          echo PRODUCTION_URL="${{ vars.PRODUCTION_URL }}" >> ./local.properties
-          echo GOOGLE_AUTH_CLIENT_ID="${{ vars.GOOGLE_AUTH_CLIENT_ID }}" >> ./local.properties
-          
-          echo "RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}" >> ./local.properties
-          echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> ./local.properties
-          echo "LAUNCHDARKLY_MOBILE_KEY=${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}" >> ./local.properties
-          echo "ANDROID_SENTRY_DSN=${{ secrets.ANDROID_SENTRY_DSN }}" >> ./local.properties
-          echo "auth.token=${{ secrets.ANDROID_SENTRY_AUTH_TOKEN}}" >> ./sentry.properties
-
-      - name: create google-services.json
-        env:
-          GOOGLE_SERVICES_JSON: ${{ vars.GOOGLE_SERVICES_JSON }}
-        run: echo $GOOGLE_SERVICES_JSON > ./android/app-newm/google-services.json
+      - name: Setup Android Properties
+        uses: ./.github/actions/setup-android-properties
+        with:
+          staging_url: ${{ vars.STAGING_URL }}
+          production_url: ${{ vars.PRODUCTION_URL }}
+          google_auth_client_id: ${{ vars.GOOGLE_AUTH_CLIENT_ID }}
+          recaptcha_site_key: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          launchdarkly_mobile_key: ${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}
+          android_sentry_dsn: ${{ secrets.ANDROID_SENTRY_DSN }}
+          android_sentry_auth_token: ${{ secrets.ANDROID_SENTRY_AUTH_TOKEN }}
+          google_services_json: ${{ vars.GOOGLE_SERVICES_JSON }}
 
       - name: build android app
         run: ./gradlew :android:app-newm:assembleProductionRelease

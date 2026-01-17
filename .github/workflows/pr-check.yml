@@ -7,6 +7,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    environment: staging
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +28,19 @@ jobs:
 
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses || true
+
+      - name: Setup Android Properties
+        uses: ./.github/actions/setup-android-properties
+        with:
+          staging_url: ${{ vars.STAGING_URL }}
+          production_url: ${{ vars.PRODUCTION_URL }}
+          google_auth_client_id: ${{ vars.GOOGLE_AUTH_CLIENT_ID }}
+          recaptcha_site_key: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          launchdarkly_mobile_key: ${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}
+          android_sentry_dsn: ${{ secrets.ANDROID_SENTRY_DSN }}
+          android_sentry_auth_token: ${{ secrets.ANDROID_SENTRY_AUTH_TOKEN }}
+          google_services_json: ${{ vars.GOOGLE_SERVICES_JSON }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
