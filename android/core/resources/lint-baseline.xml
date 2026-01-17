@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.2)" variant="all" version="8.13.2">
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more"
+        errorLine1="&lt;vector xmlns:aapt=&quot;http://schemas.android.com/aapt&quot; xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:alpha=&quot;0.9&quot; android:autoMirrored=&quot;true&quot; android:height=&quot;136dp&quot; android:viewportHeight=&quot;136&quot; android:viewportWidth=&quot;390&quot; android:width=&quot;390dp&quot;>"
+        errorLine2="                                                                                                                                                                                                                                                               ~~~~~">
+        <location
+            file="src/main/res/drawable/ic_banner_placeholder.xml"
+            line="1"
+            column="256"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;claim&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;claim&quot;>Claim&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="83"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;profile_studio&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;profile_studio&quot;>Studio&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="107"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;profile_error_message&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;profile_error_message&quot;>An error occurred. Please try again.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="130"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;profile_error_image_size_message&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;profile_error_image_size_message&quot;>Image size must be less than 10MB.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="131"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;title_investment_portfolio&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;title_investment_portfolio&quot;>Investment Portfolio&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="171"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;you_have_royalties_to_claim&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;you_have_royalties_to_claim&quot;>You have royalties to claim!&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="203"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;profile_replace_picture&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;profile_replace_picture&quot;>Replace picture&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="204"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;profile_remove_picture&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;profile_remove_picture&quot;>Remove picture&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="205"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;title_profile_picture&quot; is not translated in &quot;de&quot; (German), &quot;pt&quot; (Portuguese), &quot;en&quot; (English), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;nl&quot; (Dutch)"
+        errorLine1="    &lt;string name=&quot;title_profile_picture&quot;>Profile picture&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="206"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;characters&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;code_verification_error_message&quot;>Verification code must be at least %1$d characters&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-en-rGB/strings.xml"
+            line="12"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="PluralsCandidate"
+        message="Formatting %d followed by words (&quot;characters&quot;): This should probably be a plural rather than a string"
+        errorLine1="    &lt;string name=&quot;code_verification_error_message&quot;>Verification code must be at least %1$d characters&lt;/string>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/ic_default_moster.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/ic_default_moster.png"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+    </issue>
+
+</issues>

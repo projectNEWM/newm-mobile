@@ -19,7 +19,6 @@ abstract class SnapshotTest(
         paparazzi.snapshot {
             NewmTheme(
                 darkTheme = snapshotTestConfiguration.isDarkMode,
-                dynamicStatusBar = false,
                 content = content,
             )
         }

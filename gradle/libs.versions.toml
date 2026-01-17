@@ -7,9 +7,9 @@ androidx-activityCompose = "1.11.0"
 androidx-appcompat = "1.7.1"
 androidx-constraintlayout = "2.2.1"
 androidx-core-ktx = "1.17.0"
-androidx-espresso-core = "3.6.1"
+androidx-espresso-core = "3.5.0"
 androidx-material = "1.12.0"
-androidx-test-junit = "1.2.1"
+androidx-test-junit = "1.1.5"
 barcodeScanning = "17.3.0"
 browser = "1.9.0"
 cameraView = "1.5.1"
@@ -54,6 +54,7 @@ runtime = "2.1.0"
 soloader = "0.12.1"
 store5 = "5.1.0-alpha07"
 testParameterInjector = "1.18"
+truthish = "1.0.4"
 uiUtil = "1.9.4"
 jetbrainsKotlinJvm = "1.9.24"
 runner = "1.5.2"
@@ -152,6 +153,7 @@ soloader = { module = "com.facebook.soloader:soloader", version.ref = "soloader"
 sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "gradlePlugin" }
 store5 = { module = "org.mobilenativefoundation.store:store5", version.ref = "store5" }
 test-parameter-injector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
+truthish = { module = "com.varabyte.truthish:truthish", version.ref = "truthish" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -24,6 +24,10 @@ android {
         resourcePrefix = "login"
     }
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -68,6 +72,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.test.parameter.injector)
     testImplementation(project(Modules.testUtils))
+    testImplementation(compose.components.resources)
 
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.test.junit)

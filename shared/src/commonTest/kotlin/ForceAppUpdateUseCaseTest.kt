@@ -5,7 +5,7 @@ import io.newm.shared.commonInternal.api.models.MobileConfig
 import io.newm.shared.commonInternal.implementations.ForceAppUpdateUseCaseImpl
 import io.newm.shared.commonInternal.repositories.RemoteConfigRepository
 import io.newm.shared.commonPublic.usecases.ForceAppUpdateUseCase
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -30,7 +30,7 @@ class ForceAppUpdateUseCaseTest {
     }
 
     @Test
-    fun `test Android update required when current version is less`() = runBlocking {
+    fun `test Android update required when current version is less`() = runTest {
         setUp()
         assertTrue(
             useCase.isAndroidUpdateRequired("1.0.0", "anyString"),
@@ -39,7 +39,7 @@ class ForceAppUpdateUseCaseTest {
     }
 
     @Test
-    fun `test iOS update not required when current version is greater`() = runBlocking {
+    fun `test iOS update not required when current version is greater`() = runTest {
         setUp()
         assertFalse(
             useCase.isiOSUpdateRequired("2.0.0", "anyString"),
