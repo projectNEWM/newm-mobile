@@ -131,10 +131,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     add("kspAndroid", libs.kotlinInject.compiler)
     add("kspDesktop", libs.kotlinInject.compiler)
     add("kspWasmJs", libs.kotlinInject.compiler)

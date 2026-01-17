@@ -102,6 +102,8 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
             appLogger = get()
         )
     }
+    single(named("auth")) { get<NetworkClientFactory>().authHttpClient() }
+    single(named("public")) { get<NetworkClientFactory>().httpClient() }
     single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
     single(named("mainScope")) { CoroutineScope(Dispatchers.Main + SupervisorJob()) }
     // Internal Configurations
