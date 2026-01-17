@@ -7,7 +7,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -34,11 +34,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Run Lint
-        run: ./gradlew lint
+        run: ./gradlew lintDebug
 
   unit-tests:
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -65,11 +65,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Run Android/JVM Unit Tests
-        run: ./gradlew test
+        run: ./gradlew testDebugUnitTest
 
   desktop-tests:
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -100,7 +100,7 @@ jobs:
 
   wasm-tests:
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
