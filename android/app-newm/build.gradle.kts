@@ -32,6 +32,10 @@ android {
         testApplicationId = "io.newm.test"
     }
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     packaging {
         resources {
             merges += "META-INF/LICENSE.md"

@@ -1,0 +1,130 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
+      - name: Setup Android Properties
+        uses: ./.github/actions/setup-android-properties
+        with:
+          staging_url: ${{ vars.STAGING_URL }}
+          production_url: ${{ vars.PRODUCTION_URL }}
+          google_auth_client_id: ${{ vars.GOOGLE_AUTH_CLIENT_ID }}
+          recaptcha_site_key: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          launchdarkly_mobile_key: ${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}
+          android_sentry_dsn: ${{ secrets.ANDROID_SENTRY_DSN }}
+          android_sentry_auth_token: ${{ secrets.ANDROID_SENTRY_AUTH_TOKEN }}
+          google_services_json: ${{ vars.GOOGLE_SERVICES_JSON }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Lint
+        run: ./gradlew lintDebug
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
+      - name: Setup Android Properties
+        uses: ./.github/actions/setup-android-properties
+        with:
+          staging_url: ${{ vars.STAGING_URL }}
+          production_url: ${{ vars.PRODUCTION_URL }}
+          google_auth_client_id: ${{ vars.GOOGLE_AUTH_CLIENT_ID }}
+          recaptcha_site_key: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          launchdarkly_mobile_key: ${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}
+          android_sentry_dsn: ${{ secrets.ANDROID_SENTRY_DSN }}
+          android_sentry_auth_token: ${{ secrets.ANDROID_SENTRY_AUTH_TOKEN }}
+          google_services_json: ${{ vars.GOOGLE_SERVICES_JSON }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Android/JVM Unit Tests
+        run: ./gradlew testDebugUnitTest
+
+  desktop-tests:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
+      - name: Setup Android Properties
+        uses: ./.github/actions/setup-android-properties
+        with:
+          staging_url: ${{ vars.STAGING_URL }}
+          production_url: ${{ vars.PRODUCTION_URL }}
+          google_auth_client_id: ${{ vars.GOOGLE_AUTH_CLIENT_ID }}
+          recaptcha_site_key: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          launchdarkly_mobile_key: ${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}
+          android_sentry_dsn: ${{ secrets.ANDROID_SENTRY_DSN }}
+          android_sentry_auth_token: ${{ secrets.ANDROID_SENTRY_AUTH_TOKEN }}
+          google_services_json: ${{ vars.GOOGLE_SERVICES_JSON }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Desktop Tests
+        run: ./gradlew desktopTest
+
+  wasm-tests:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
+      - name: Setup Android Properties
+        uses: ./.github/actions/setup-android-properties
+        with:
+          staging_url: ${{ vars.STAGING_URL }}
+          production_url: ${{ vars.PRODUCTION_URL }}
+          google_auth_client_id: ${{ vars.GOOGLE_AUTH_CLIENT_ID }}
+          recaptcha_site_key: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          launchdarkly_mobile_key: ${{ secrets.LAUNCHDARKLY_MOBILE_KEY }}
+          android_sentry_dsn: ${{ secrets.ANDROID_SENTRY_DSN }}
+          android_sentry_auth_token: ${{ secrets.ANDROID_SENTRY_AUTH_TOKEN }}
+          google_services_json: ${{ vars.GOOGLE_SERVICES_JSON }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Wasm Tests
+        run: ./gradlew wasmJsTest

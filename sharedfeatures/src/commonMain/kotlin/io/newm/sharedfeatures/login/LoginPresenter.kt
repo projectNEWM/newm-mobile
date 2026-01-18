@@ -24,6 +24,7 @@ import me.tatarka.inject.annotations.Inject
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.invalid_recaptcha_message
 import newm_mobile.sharedfeatures.generated.resources.login_invalid_form_message
+import newm_mobile.sharedfeatures.generated.resources.nft_library_error_message
 
 @Inject
 class LoginPresenter(
@@ -81,8 +82,7 @@ class LoginPresenter(
                             } catch (e: Throwable) {
                                 logger.error("LoginScreenPresenter", "Login failed", e)
                                 isLoading = false
-                                // TODO: Map throwable to user friendly message if possible
-                                // errorMessage = e.message // StringResource needed
+                                errorMessage = Res.string.nft_library_error_message
                             }
                         }
                     }

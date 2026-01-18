@@ -1,0 +1,52 @@
+name: 'Setup Android Properties'
+description: 'Sets up local.properties and google-services.json for Android build'
+inputs:
+  staging_url:
+    description: 'Staging URL'
+    required: true
+  production_url:
+    description: 'Production URL'
+    required: true
+  google_auth_client_id:
+    description: 'Google Auth Client ID'
+    required: true
+  recaptcha_site_key:
+    description: 'Recaptcha Site Key'
+    required: true
+  sentry_auth_token:
+    description: 'Sentry Auth Token'
+    required: true
+  launchdarkly_mobile_key:
+    description: 'LaunchDarkly Mobile Key'
+    required: true
+  android_sentry_dsn:
+    description: 'Android Sentry DSN'
+    required: true
+  android_sentry_auth_token:
+    description: 'Android Sentry Auth Token'
+    required: true
+  google_services_json:
+    description: 'Content of google-services.json'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup local.properties
+      shell: bash
+      run: |
+        echo STAGING_URL="${{ inputs.staging_url }}" >> ./local.properties
+        echo PRODUCTION_URL="${{ inputs.production_url }}" >> ./local.properties
+        echo GOOGLE_AUTH_CLIENT_ID="${{ inputs.google_auth_client_id }}" >> ./local.properties
+        
+        echo "RECAPTCHA_SITE_KEY=${{ inputs.recaptcha_site_key }}" >> ./local.properties
+        echo "SENTRY_AUTH_TOKEN=${{ inputs.sentry_auth_token }}" >> ./local.properties
+        echo "LAUNCHDARKLY_MOBILE_KEY=${{ inputs.launchdarkly_mobile_key }}" >> ./local.properties
+        echo "ANDROID_SENTRY_DSN=${{ inputs.android_sentry_dsn }}" >> ./local.properties
+        echo "auth.token=${{ inputs.android_sentry_auth_token}}" >> ./sentry.properties
+
+    - name: create google-services.json
+      shell: bash
+      env:
+        GOOGLE_SERVICES_JSON: ${{ inputs.google_services_json }}
+      run: echo $GOOGLE_SERVICES_JSON > ./android/app-newm/google-services.json
