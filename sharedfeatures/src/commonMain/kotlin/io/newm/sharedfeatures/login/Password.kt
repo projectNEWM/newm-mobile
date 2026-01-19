@@ -20,9 +20,8 @@ fun Password(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     TextFieldWithLabel(
-        modifier = modifier
-            .fillMaxWidth()
-            .onFocusChanged { focusState ->
+        modifier =
+            modifier.fillMaxWidth().onFocusChanged { focusState ->
                 passwordState.onFocusChange(focusState.isFocused)
                 if (!focusState.isFocused) {
                     passwordState.enableShowErrors()

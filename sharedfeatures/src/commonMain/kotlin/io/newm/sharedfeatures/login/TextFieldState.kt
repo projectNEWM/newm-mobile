@@ -14,7 +14,7 @@ import org.jetbrains.compose.resources.StringResource
 open class TextFieldState(
     defaultValue: String = "",
     private val validator: (String) -> Boolean = { true },
-    private val errorFor: (String) -> StringResource? = { null }
+    private val errorFor: (String) -> StringResource? = { null },
 ) {
     var text: String by mutableStateOf(defaultValue)
 
@@ -40,72 +40,63 @@ open class TextFieldState(
 
     fun showErrors() = !isValid && displayErrors
 
-    open fun getError(): StringResource? {
-        return if (showErrors()) {
+    open fun getError(): StringResource? =
+        if (showErrors()) {
             errorFor(text)
         } else {
             null
         }
-    }
 }
-
 
 class EmailState : TextFieldState(validator = ::isEmailValid, errorFor = ::emailValidationError)
 
 private fun emailValidationError(email: String): StringResource {
-    // Note: The original android code passed the email into the string resource. 
-    // Compose Multiplatform resources don't support format args in the resource object itself easily without the `stringResource` composable.
+    // Note: The original android code passed the email into the string resource.
+    // Compose Multiplatform resources don't support format args in the resource object itself
+    // easily
+    // without the `stringResource` composable.
     // We will return the resource ID and handle formatting in the UI or use a simpler message.
     return Res.string.email_validation_error_message
 }
 
 private val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
 
-private fun isEmailValid(email: String): Boolean {
-    return EMAIL_REGEX.matches(email)
-}
+private fun isEmailValid(email: String): Boolean = EMAIL_REGEX.matches(email)
 
+class PasswordState : TextFieldState(validator = ::isPasswordValid, errorFor = { passwordValidationError() })
 
-class PasswordState : TextFieldState(
-    validator = ::isPasswordValid,
-    errorFor = { passwordValidationError() }
-)
-
-class ConfirmPasswordState(private val passwordState: PasswordState) : TextFieldState() {
+class ConfirmPasswordState(
+    private val passwordState: PasswordState,
+) : TextFieldState() {
     override val isValid
         get() = passwordAndConfirmationValid(passwordState.text, text)
 
-    override fun getError(): StringResource? {
-        return if (showErrors()) {
+    override fun getError(): StringResource? =
+        if (showErrors()) {
             passwordConfirmationError()
         } else {
             null
         }
-    }
 }
 
 private const val MINIMUM_VERIFICATION_CODE_LENGTH = 6
 
-class VerificationCodeState : TextFieldState(
-    validator = { it.length >= MINIMUM_VERIFICATION_CODE_LENGTH },
-    errorFor = {
-        // format arg needed: MINIMUM_VERIFICATION_CODE_LENGTH
-        Res.string.code_verification_error_message
-    },
-)
+class VerificationCodeState :
+    TextFieldState(
+        validator = { it.length >= MINIMUM_VERIFICATION_CODE_LENGTH },
+        errorFor = {
+            // format arg needed: MINIMUM_VERIFICATION_CODE_LENGTH
+            Res.string.code_verification_error_message
+        },
+    )
 
-private fun passwordAndConfirmationValid(password: String, confirmedPassword: String): Boolean {
-    return isPasswordValid(password) && password == confirmedPassword
-}
+private fun passwordAndConfirmationValid(
+    password: String,
+    confirmedPassword: String,
+): Boolean = isPasswordValid(password) && password == confirmedPassword
 
-fun isPasswordValid(password: String): Boolean {
-    return LoginFieldValidator.isPasswordValid(password)
-}
+fun isPasswordValid(password: String): Boolean = LoginFieldValidator.isPasswordValid(password)
 
-fun passwordValidationError(): StringResource {
-    return Res.string.password_validation_error_message
-}
+fun passwordValidationError(): StringResource = Res.string.password_validation_error_message
 
-private fun passwordConfirmationError(): StringResource {
-    return Res.string.password_confirmation_error_message
-}
+private fun passwordConfirmationError(): StringResource = Res.string.password_confirmation_error_message

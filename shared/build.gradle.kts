@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.FileInputStream
 
 plugins {
     kotlin("multiplatform")
@@ -31,22 +30,11 @@ android {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-    jvm {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    androidTarget { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
+    jvm { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
 
     val xcf = XCFramework()
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
+    listOf(iosArm64(), iosSimulatorArm64()).forEach {
         it.binaries.framework {
             baseName = "shared"
             xcf.add(this)
@@ -68,7 +56,9 @@ kotlin {
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.store5)
                 implementation("app.cash.sqldelight:runtime:${libs.versions.runtime.get()}")
-                implementation("app.cash.sqldelight:coroutines-extensions:${libs.versions.runtime.get()}")
+                implementation(
+                    "app.cash.sqldelight:coroutines-extensions:${libs.versions.runtime.get()}"
+                )
             }
         }
         val commonTest by getting {
@@ -119,14 +109,9 @@ kotlin {
             }
         }
 
-        all {
-            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-        }
+        all { languageSettings.optIn("kotlin.experimental.ExperimentalObjCName") }
 
-        @OptIn(ExperimentalWasmDsl::class)
-        wasmJs {
-            browser {}
-        }
+        @OptIn(ExperimentalWasmDsl::class) wasmJs { browser {} }
 
         val wasmJsMain by getting {
             dependencies {
@@ -142,16 +127,16 @@ kotlin {
 buildConfig {
     packageName("io.newm.shared.generated")
 
-    val props = Properties().apply {
-        val localPropertiesFile = File(rootProject.rootDir, "local.properties")
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.inputStream().use { load(it) }
+    val props =
+        Properties().apply {
+            val localPropertiesFile = File(rootProject.rootDir, "local.properties")
+            if (localPropertiesFile.exists()) {
+                localPropertiesFile.inputStream().use { load(it) }
+            }
         }
-    }
 
     // Helper: return empty string if key is missing to avoid build failure
-    fun req(name: String): String =
-        props.getProperty(name)?.trim('"') ?: ""
+    fun req(name: String): String = props.getProperty(name)?.trim('"') ?: ""
 
     buildConfigField<String>("STAGING_URL", req("STAGING_URL"))
     buildConfigField<String>("PRODUCTION_URL", req("PRODUCTION_URL"))
@@ -162,7 +147,6 @@ buildConfig {
     buildConfigField<String>("LAUNCHDARKLY_MOBILE_KEY", req("LAUNCHDARKLY_MOBILE_KEY"))
     buildConfigField<Boolean>("IS_DEBUG", req("IS_DEBUG").toBoolean())
 }
-
 
 sqldelight {
     databases {
@@ -175,9 +159,7 @@ sqldelight {
     }
 }
 
-kotlin.sourceSets.all {
-    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-}
+kotlin.sourceSets.all { languageSettings.optIn("kotlin.experimental.ExperimentalObjCName") }
 
 dependencies {
     add("kspAndroid", libs.kotlinInject.compiler)

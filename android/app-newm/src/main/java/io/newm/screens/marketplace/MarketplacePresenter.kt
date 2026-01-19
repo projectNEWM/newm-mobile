@@ -14,24 +14,26 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 
 class MarketplacePresenter(
     private val navigator: Navigator,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
 ) : Presenter<MarketplaceState> {
     @Composable
     override fun present(): MarketplaceState {
         val context = LocalContext.current
-        val connectivityManager = remember {
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        }
+        val connectivityManager =
+            remember {
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            }
         val isNetworkAvailable by remember {
             mutableStateOf(connectivityManager.activeNetwork != null)
         }
         return when {
-            !isNetworkAvailable -> MarketplaceState.Error
+            !isNetworkAvailable -> {
+                MarketplaceState.Error
+            }
+
             else -> {
                 eventLogger.logPageLoad(AppScreens.MarketplaceScreen.name)
-                MarketplaceState.Content(
-                    eventSink = {}
-                )
+                MarketplaceState.Content(eventSink = {})
             }
         }
     }

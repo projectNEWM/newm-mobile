@@ -16,12 +16,10 @@ fun LazyListScope.streamTokensItem(
     isExpanded: Boolean,
     headerShape: RoundedCornerShape,
     onExitFinished: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     if (tokens.isNotEmpty()) {
-        item {
-            Spacer(modifier = Modifier.height(8.dp))
-        }
+        item { Spacer(modifier = Modifier.height(8.dp)) }
         collapsibleCard(
             items = tokens,
             isExpanded = isExpanded,
@@ -31,10 +29,10 @@ fun LazyListScope.streamTokensItem(
                     title = stringResource(R.string.wallet_detail_stream_tokens_header),
                     headerShape = headerShape,
                     expanded = isExpanded,
-                    onClick = onClick
+                    onClick = onClick,
                 )
             },
-            content = { WalletItem(it) }
+            content = { WalletItem(it) },
         )
     }
 }

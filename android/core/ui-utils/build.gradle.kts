@@ -41,15 +41,11 @@ kotlin {
                 implementation(libs.coil.ktor)
                 implementation(libs.coil.svg)
                 implementation(libs.kotlin.stdlib)
-                implementation(project(Modules.coreTheme))
+                implementation(project(Modules.CORE_THEME))
             }
         }
 
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
+        commonTest { dependencies { implementation(libs.kotlin.test) } }
 
         androidMain {
             dependencies {
@@ -57,24 +53,16 @@ kotlin {
                 implementation(libs.androidx.browser)
                 implementation(libs.coil.gif)
                 implementation(libs.ktor.client.android)
-                api(project(Modules.coreResources))
+                api(project(Modules.CORE_RESOURCES))
             }
         }
 
         jvm("desktop")
 
-        @OptIn(ExperimentalWasmDsl::class)
-        wasmJs {
-            browser {}
-        }
-
+        @OptIn(ExperimentalWasmDsl::class) wasmJs { browser {} }
     }
-
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
-    }
+    compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
 }
-

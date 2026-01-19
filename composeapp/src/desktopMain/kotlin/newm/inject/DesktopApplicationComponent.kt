@@ -7,4 +7,6 @@ import newm.DesktopComponent
 
 @Component
 @ApplicationScope
-abstract class DesktopApplicationComponent : CommonApplicationComponent, DesktopComponent
+abstract class DesktopApplicationComponent :
+    CommonApplicationComponent,
+    DesktopComponent

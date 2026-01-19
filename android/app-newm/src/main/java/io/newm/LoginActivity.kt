@@ -61,69 +61,88 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class LoginActivity : ComponentActivity() {
-
     private val logger: NewmAppLogger by inject()
     private val config: io.newm.shared.config.NewmSharedBuildConfig by inject()
     private val eventLogger: NewmAppEventLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
 
     // TODO inject
-    private val circuit: Circuit = Circuit.Builder()
-        .addPresenterFactory(buildPresenterFactory())
-        .addUiFactory(buildUiFactory())
-        .build()
+    private val circuit: Circuit =
+        Circuit
+            .Builder()
+            .addPresenterFactory(buildPresenterFactory())
+            .addUiFactory(buildUiFactory())
+            .build()
 
     private fun buildPresenterFactory(): Presenter.Factory =
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
-                is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
-                is WelcomeScreen -> inject<WelcomePresenter> { parametersOf(navigator) }.value
-                is LoginScreen -> inject<LoginPresenter> { parametersOf(navigator) }.value
-                is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is CreateAccountScreen -> {
+                    inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }
+                        .value
+                }
 
-                is DevMenuMainScreen -> inject<DevMenuPresenter> { parametersOf(navigator) }.value
-                is FeatureFlagsListScreen -> inject<FeatureFlagsListPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is WelcomeScreen -> {
+                    inject<WelcomePresenter> { parametersOf(navigator) }.value
+                }
 
-                else -> null
+                is LoginScreen -> {
+                    inject<LoginPresenter> { parametersOf(navigator) }.value
+                }
+
+                is ResetPasswordScreen -> {
+                    inject<ResetPasswordScreenPresenter> { parametersOf(navigator) }.value
+                }
+
+                is DevMenuMainScreen -> {
+                    inject<DevMenuPresenter> { parametersOf(navigator) }.value
+                }
+
+                is FeatureFlagsListScreen -> {
+                    inject<FeatureFlagsListPresenter> { parametersOf(navigator) }.value
+                }
+
+                else -> {
+                    null
+                }
             }
         }
 
     private fun buildUiFactory(): Ui.Factory =
         Ui.Factory { screen, _ ->
             when (screen) {
-                is CreateAccountScreen -> ui<CreateAccountUiState> { state, modifier ->
-                    CreateAccountUi(state, modifier)
+                is CreateAccountScreen -> {
+                    ui<CreateAccountUiState> { state, modifier -> CreateAccountUi(state, modifier) }
                 }
 
-                is WelcomeScreen -> ui<WelcomeScreen.UiState> { state, modifier ->
-                    WelcomeUi(state, modifier)
+                is WelcomeScreen -> {
+                    ui<WelcomeScreen.UiState> { state, modifier -> WelcomeUi(state, modifier) }
                 }
 
-                is LoginScreen -> ui<LoginScreen.UiState> { state, modifier ->
-                    LoginUi(state, modifier)
+                is LoginScreen -> {
+                    ui<LoginScreen.UiState> { state, modifier -> LoginUi(state, modifier) }
                 }
 
-                is ResetPasswordScreen -> ui<ResetPasswordScreenUiState> { state, modifier ->
-                    ResetPasswordScreenUi(eventLogger).Content(state = state, modifier = modifier)
+                is ResetPasswordScreen -> {
+                    ui<ResetPasswordScreenUiState> { state, modifier ->
+                        ResetPasswordScreenUi(eventLogger)
+                            .Content(state = state, modifier = modifier)
+                    }
                 }
 
-                is DevMenuMainScreen -> ui<DevMenuMainScreen.UiState> { state, modifier ->
-                    DevMenuUi(state, modifier)
+                is DevMenuMainScreen -> {
+                    ui<DevMenuMainScreen.UiState> { state, modifier -> DevMenuUi(state, modifier) }
                 }
 
-                is FeatureFlagsListScreen -> ui<FeatureFlagsListScreen.UiState> { state, modifier ->
-                    FeatureFlagsListUi(state, modifier)
+                is FeatureFlagsListScreen -> {
+                    ui<FeatureFlagsListScreen.UiState> { state, modifier ->
+                        FeatureFlagsListUi(state, modifier)
+                    }
                 }
 
-                else -> null
+                else -> {
+                    null
+                }
             }
         }
 
@@ -134,15 +153,20 @@ class LoginActivity : ComponentActivity() {
             NewmTheme(darkTheme = true) {
                 DynamicStatusBarSideEffect(darkTheme = true)
                 CircuitDependencies {
-                    val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
+                    val updateRequired by
+                        forceAppUpdateViewModel.updateRequiredState.collectAsState()
 
                     if (updateRequired) {
                         ForceAppUpdateUi(
-                            ForceAppUpdateState.Content(eventSink = {
-                                eventLogger.logClickEvent(AppScreens.ForceUpdateScreen.UPDATE_BUTTON)
-                                openAppPlayStore()
-                            }),
-                            eventLogger
+                            ForceAppUpdateState.Content(
+                                eventSink = {
+                                    eventLogger.logClickEvent(
+                                        AppScreens.ForceUpdateScreen.UPDATE_BUTTON,
+                                    )
+                                    openAppPlayStore()
+                                },
+                            ),
+                            eventLogger,
                         )
                     } else {
                         WelcomeToNewm(config, logger, eventLogger, ::launchHomeActivity)
@@ -153,11 +177,11 @@ class LoginActivity : ComponentActivity() {
     }
 
     @Composable
-    fun CircuitDependencies(
-        content: @Composable () -> Unit
-    ) {
+    fun CircuitDependencies(content: @Composable () -> Unit) {
         CircuitCompositionLocals(circuit) {
-            CompositionLocalProvider(LocalRetainedStateRegistry provides continuityRetainedStateRegistry()) {
+            CompositionLocalProvider(
+                LocalRetainedStateRegistry provides continuityRetainedStateRegistry(),
+            ) {
                 content()
             }
         }
@@ -188,25 +212,22 @@ fun WelcomeToNewm(
             launchBrowser = { url ->
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             },
-            eventLogger = eventLogger
+            eventLogger = eventLogger,
         )
 
     val snackbarHostState = remember { SnackbarHostState() }
     io.newm.sharedfeatures.devmenu.DebugOverlay(
         buildConfig = config,
-        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) }
+        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) },
     ) {
-        Scaffold(
-            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
-        ) { contentPadding ->
-
+        Scaffold(scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)) { contentPadding ->
             CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
                 NavigableCircuitContent(
                     modifier = Modifier.padding(contentPadding),
-                    navigator = newmNavigator, backStack = backstack
+                    navigator = newmNavigator,
+                    backStack = backstack,
                 )
             }
         }
     }
 }
-

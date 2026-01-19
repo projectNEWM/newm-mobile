@@ -23,6 +23,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlin.plugin.parcelize) apply false
+    alias(libs.plugins.spotless)
 }
 
 allprojects {
@@ -33,15 +34,17 @@ allprojects {
     }
 
     afterEvaluate {
-        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
+        project.extensions
+            .findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
             .let { kmpExt ->
                 kmpExt?.sourceSets?.removeAll {
                     setOf(
-                        "androidAndroidTestRelease",
-                        "androidTestFixtures",
-                        "androidTestFixturesDebug",
-                        "androidTestFixturesRelease",
-                    ).contains(it.name)
+                            "androidAndroidTestRelease",
+                            "androidTestFixtures",
+                            "androidTestFixturesDebug",
+                            "androidTestFixturesRelease",
+                        )
+                        .contains(it.name)
                 }
             }
     }
@@ -49,15 +52,13 @@ allprojects {
 
 /**
  * Run with `./gradlew dependencyUpdates` and the report will be in:
- *      /build/dependencyUpdates/versionsReport.html
+ * /build/dependencyUpdates/versionsReport.html
  */
 apply(plugin = "com.github.ben-manes.versions")
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any {
-        version.uppercase(Locale.getDefault())
-            .contains(it)
-    }
+    val stableKeyword =
+        listOf("RELEASE", "FINAL", "GA").any { version.uppercase(Locale.getDefault()).contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
@@ -76,4 +77,23 @@ tasks.withType<DependencyUpdatesTask> {
     checkForGradleUpdate = true
     outputFormatter = "html"
     reportfileName = "versionsReport"
+}
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    lineEndings = com.diffplug.spotless.LineEnding.UNIX
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**/*.kt")
+        ktfmt(libs.versions.ktfmt.get()).kotlinlangStyle()
+        ktlint(libs.versions.ktlint.get())
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    kotlinGradle {
+        target("**/*.gradle.kts", "*.gradle.kts")
+        targetExclude("**/build/**/*.gradle.kts")
+        ktfmt(libs.versions.ktfmt.get()).kotlinlangStyle()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }

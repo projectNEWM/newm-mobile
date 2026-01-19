@@ -4,7 +4,6 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
-
 val White = Color.White
 val White50 = Color(0x80FFFFFF)
 
@@ -35,28 +34,26 @@ val SteelPink = Color(0xFFD841F0)
 val CerisePink = Color(0xFFF53C74)
 val GlassSmith = Color(0xFF46B5C0)
 
+val LightColorPalette =
+    lightColors(
+        primary = Purple,
+        primaryVariant = Pinkish,
+        background = White,
+        surface = White,
+        onPrimary = White,
+        onBackground = Black,
+        onSurface = Black,
+        onError = White,
+    )
 
-
-
-val LightColorPalette = lightColors(
-    primary = Purple,
-    primaryVariant = Pinkish,
-    background = White,
-    surface = White,
-    onPrimary = White,
-    onBackground = Black,
-    onSurface = Black,
-    onError = White
-)
-
-val DarkColorPalette = darkColors(
-    primary = Purple,
-    primaryVariant = Pinkish,
-    background = Black,
-    surface = Gray600,
-    onPrimary = White,
-    onBackground = White,
-    onSurface = White,
-    onError = White
-)
-
+val DarkColorPalette =
+    darkColors(
+        primary = Purple,
+        primaryVariant = Pinkish,
+        background = Black,
+        surface = Gray600,
+        onPrimary = White,
+        onBackground = White,
+        onSurface = White,
+        onError = White,
+    )

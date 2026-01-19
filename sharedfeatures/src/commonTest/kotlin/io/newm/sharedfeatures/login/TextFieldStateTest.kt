@@ -4,7 +4,6 @@ import com.varabyte.truthish.assertThat
 import kotlin.test.Test
 
 class TextFieldStateTest {
-
     @Test
     fun `initial state is valid and not dirty`() {
         val state = TextFieldState(validator = { it.length >= 3 })
@@ -25,7 +24,7 @@ class TextFieldStateTest {
     fun `show errors only after focus dirty and invalid`() {
         val state = TextFieldState(validator = { it.isNotEmpty() })
         state.text = ""
-        
+
         // Not dirty yet
         state.enableShowErrors()
         assertThat(state.showErrors()).isFalse()
@@ -34,7 +33,7 @@ class TextFieldStateTest {
         state.onFocusChange(true)
         state.onFocusChange(false)
         state.enableShowErrors()
-        
+
         assertThat(state.showErrors()).isTrue()
     }
 

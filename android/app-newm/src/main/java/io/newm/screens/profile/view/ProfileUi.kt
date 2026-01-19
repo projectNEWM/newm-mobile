@@ -48,15 +48,15 @@ internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"
 @Composable
 fun ProfileUi(
     state: ProfileUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     when (state) {
-        ProfileUiState.Loading -> LoadingScreen()
+        ProfileUiState.Loading -> {
+            LoadingScreen()
+        }
+
         is ProfileUiState.Content -> {
-            ProfileUiContent(
-                state = state,
-                modifier = modifier
-            )
+            ProfileUiContent(state = state, modifier = modifier)
         }
     }
 }
@@ -64,7 +64,7 @@ fun ProfileUi(
 @Composable
 private fun ProfileUiContent(
     state: ProfileUiState.Content,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val onEvent = state.eventSink
     val openWalletDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
@@ -83,12 +83,10 @@ private fun ProfileUiContent(
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
-        onBottomSheetVisible = { onEvent(OnBottomSheetVisible) }
+        onBottomSheetVisible = { onEvent(OnBottomSheetVisible) },
     ) {
         Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .testTag(TAG_USER_ACCOUNT_VIEW_SCREEN),
+            modifier = Modifier.fillMaxSize().testTag(TAG_USER_ACCOUNT_VIEW_SCREEN),
             topBar = {
                 Column {
                     ProfileAppBar(
@@ -102,15 +100,12 @@ private fun ProfileUiContent(
                         email = user.email.orEmpty(),
                     )
                 }
-            }
+            },
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(16.dp),
+                modifier = Modifier.fillMaxSize().padding(it).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(24.dp))
                 ProfileButton(
@@ -121,12 +116,10 @@ private fun ProfileUiContent(
                 Spacer(modifier = Modifier.weight(1F))
 
                 if (!state.showRecordStore) {
-                    RecordStorePanel(
-                        onClick = { onEvent(OnVisitRecordStore) },
-                    )
+                    RecordStorePanel(onClick = { onEvent(OnVisitRecordStore) })
                 }
 
-                if(state.showStudio) {
+                if (state.showStudio) {
                     ProfileButton(
                         label = stringResource(id = R.string.profile_studio),
                         onClick = { onEvent(OnVisitStudio) },
@@ -135,25 +128,28 @@ private fun ProfileUiContent(
                 if (state.showMultiWallets) {
                     if (state.isWalletConnected) {
                         ProfileButton(
-                            label = stringResource(
-                                id = R.string.profile_connected_wallets_button_label,
-                                state.userConnectedWallets.size
-                            ),
-                            onClick = { onEvent(OnWalletsScreen) }
+                            label =
+                                stringResource(
+                                    id = R.string.profile_connected_wallets_button_label,
+                                    state.userConnectedWallets.size,
+                                ),
+                            onClick = { onEvent(OnWalletsScreen) },
                         )
                     }
                     WalletsButton(
                         isWalletConnected = state.isWalletConnected,
                         onConnectWalletClick = { newmWalletConnectionId ->
                             onEvent(OnConnectWallet(newmWalletConnectionId))
-                        }
+                        },
                     )
                 } else {
                     WalletButton(
                         openWalletDialog = openWalletDialog,
                         isWalletConnected = state.isWalletConnected,
-                        disconnectWallet = { onEvent(OnDisconnectWallet) }
-                    ) { newmWalletConnectionId -> onEvent(OnConnectWallet(newmWalletConnectionId)) }
+                        disconnectWallet = { onEvent(OnDisconnectWallet) },
+                    ) { newmWalletConnectionId ->
+                        onEvent(OnConnectWallet(newmWalletConnectionId))
+                    }
                 }
             }
         }
@@ -163,46 +159,39 @@ private fun ProfileUiContent(
 @Preview(showBackground = true)
 @Composable
 internal fun UserAccountScreenPreview(
-    @PreviewParameter(AccountScreenPreviewProvider::class)
-    state: ProfileUiState,
+    @PreviewParameter(AccountScreenPreviewProvider::class) state: ProfileUiState,
 ) {
-    NewmTheme(darkTheme = true) {
-        ProfileUi(
-            state = state,
-            modifier = Modifier
-        )
-    }
+    NewmTheme(darkTheme = true) { ProfileUi(state = state, modifier = Modifier) }
 }
 
 internal class AccountScreenPreviewProvider : PreviewParameterProvider<ProfileUiState> {
     override val values: Sequence<ProfileUiState>
-        get() = sequenceOf(
-            ProfileUiState.Loading,
-            ProfileUiState.Content(
-                profile = User(
-                    id = "",
-                    createdAt = "",
-                    firstName = "John",
-                    lastName = "Doe",
-                    email = "john@doe.com",
-                    biography = "I love music."
+        get() =
+            sequenceOf(
+                ProfileUiState.Loading,
+                ProfileUiState.Content(
+                    profile =
+                        User(
+                            id = "",
+                            createdAt = "",
+                            firstName = "John",
+                            lastName = "Doe",
+                            email = "john@doe.com",
+                            biography = "I love music.",
+                        ),
+                    isWalletConnected = false,
+                    eventSink = {},
+                    showRecordStore = false,
+                    showMultiWallets = false,
+                    showStudio = false,
                 ),
-                isWalletConnected = false,
-                eventSink = {},
-                showRecordStore = false,
-                showMultiWallets = false,
-                showStudio = false
-            ),
-            ProfileUiState.Content(
-                profile = User(
-                    id = "",
-                    createdAt = "",
+                ProfileUiState.Content(
+                    profile = User(id = "", createdAt = ""),
+                    isWalletConnected = true,
+                    eventSink = {},
+                    showRecordStore = true,
+                    showMultiWallets = true,
+                    showStudio = true,
                 ),
-                isWalletConnected = true,
-                eventSink = {},
-                showRecordStore = true,
-                showMultiWallets = true,
-                showStudio = true
             )
-        )
 }

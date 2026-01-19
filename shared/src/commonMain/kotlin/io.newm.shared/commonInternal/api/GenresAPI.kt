@@ -6,16 +6,16 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.commonPublic.models.Genre
 import io.newm.shared.commonPublic.models.error.KMMException
+import io.newm.shared.di.NetworkClientFactory
 import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 
 class GenresAPI(
-    networkClient: NetworkClientFactory
+    networkClient: NetworkClientFactory,
 ) : KoinComponent {
-    private val authClient: HttpClient  = networkClient.authHttpClient()
+    private val authClient: HttpClient = networkClient.authHttpClient()
 
     @Throws(KMMException::class, CancellationException::class)
     suspend fun getGenres(
@@ -27,17 +27,18 @@ class GenresAPI(
         genres: String? = null,
         moods: String? = null,
         olderThan: String? = null,
-        newerThan: String? = null
-    ) = authClient.get("/v1/distribution/genres") {
-        contentType(ContentType.Application.Json)
-        parameter("offset", offset)
-        parameter("limit", limit)
-        parameter("phrase", phrase)
-        parameter("ids", ids)
-        parameter("ownerIds", ownerIds)
-        parameter("genres", genres)
-        parameter("moods", moods)
-        parameter("olderThan", olderThan)
-        parameter("newerThan", newerThan)
-    }.body<List<Genre>>()
+        newerThan: String? = null,
+    ) = authClient
+        .get("/v1/distribution/genres") {
+            contentType(ContentType.Application.Json)
+            parameter("offset", offset)
+            parameter("limit", limit)
+            parameter("phrase", phrase)
+            parameter("ids", ids)
+            parameter("ownerIds", ownerIds)
+            parameter("genres", genres)
+            parameter("moods", moods)
+            parameter("olderThan", olderThan)
+            parameter("newerThan", newerThan)
+        }.body<List<Genre>>()
 }

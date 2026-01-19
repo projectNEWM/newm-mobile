@@ -16,18 +16,35 @@ interface DevMenuComponent {
     @ActivityScope
     fun devMenuPresenterFactory(
         config: NewmSharedBuildConfig,
-        factory: DevMenuPresenterFactory
-    ): Presenter.Factory = if (config.isDebug) factory else object : Presenter.Factory {
-        override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? = null
-    }
+        factory: DevMenuPresenterFactory,
+    ): Presenter.Factory =
+        if (config.isDebug) {
+            factory
+        } else {
+            object : Presenter.Factory {
+                override fun create(
+                    screen: Screen,
+                    navigator: Navigator,
+                    context: CircuitContext,
+                ): Presenter<*>? = null
+            }
+        }
 
     @Provides
     @IntoSet
     @ActivityScope
     fun devMenuUiFactory(
         config: NewmSharedBuildConfig,
-        factory: DevMenuUiFactory
-    ): Ui.Factory = if (config.isDebug) factory else object : Ui.Factory {
-        override fun create(screen: Screen, context: CircuitContext): Ui<*>? = null
-    }
+        factory: DevMenuUiFactory,
+    ): Ui.Factory =
+        if (config.isDebug) {
+            factory
+        } else {
+            object : Ui.Factory {
+                override fun create(
+                    screen: Screen,
+                    context: CircuitContext,
+                ): Ui<*>? = null
+            }
+        }
 }

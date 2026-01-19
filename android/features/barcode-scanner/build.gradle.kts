@@ -32,14 +32,10 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(compose.material)
     implementation(libs.guava)
-    implementation(project(Modules.coreResources))
-    implementation(project(Modules.coreTheme))
-    implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.shared))
+    implementation(project(Modules.CORE_RESOURCES))
+    implementation(project(Modules.CORE_THEME))
+    implementation(project(Modules.CORE_UI_UTILS))
+    implementation(project(Modules.SHARED))
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-    }
-}
+kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) } }

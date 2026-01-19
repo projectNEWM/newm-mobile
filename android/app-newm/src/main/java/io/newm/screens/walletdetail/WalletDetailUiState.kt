@@ -12,13 +12,13 @@ sealed interface WalletDetailUiState : CircuitUiState {
     data class Loading(
         override val eventSink: (WalletDetailEvent) -> Unit,
         override val isSyncing: Boolean,
-        override val walletName: String
+        override val walletName: String,
     ) : WalletDetailUiState
 
     data class Error(
         override val eventSink: (WalletDetailEvent) -> Unit,
         override val isSyncing: Boolean,
-        override val walletName: String
+        override val walletName: String,
     ) : WalletDetailUiState
 
     data class Content(
@@ -28,6 +28,6 @@ sealed interface WalletDetailUiState : CircuitUiState {
         val walletConnection: WalletConnection,
         val nftTracks: List<NFTTrack>,
         val streamTokens: List<NFTTrack>,
-        val claimableTokenAmount: Long
+        val claimableTokenAmount: Long,
     ) : WalletDetailUiState
 }

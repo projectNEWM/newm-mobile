@@ -28,35 +28,22 @@ fun ZoomableImage(
     contentScale: ContentScale = ContentScale.Fit,
     contentDescription: String? = null,
     initialZoomed: Boolean = true,
-    onState: ((AsyncImagePainter.State) -> Unit)? = null
+    onState: ((AsyncImagePainter.State) -> Unit)? = null,
 ) {
-
     var zoomed by remember { mutableStateOf(initialZoomed) }
 
-    AnimatedContent(
-        modifier = modifier,
-        targetState = zoomed,
-        label = "zoom animation"
-    ) { isZoomed ->
-        Crossfade(
-            targetState = model,
-            label = "artwork crossfade"
-        ) { imageModel ->
+    AnimatedContent(modifier = modifier, targetState = zoomed, label = "zoom animation") { isZoomed ->
+        Crossfade(targetState = model, label = "artwork crossfade") { imageModel ->
             if (isZoomed) {
                 AsyncImage(
                     model = imageModel,
                     onState = onState,
                     contentDescription = contentDescription,
                     contentScale = contentScale,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .pointerInput(Unit) {
-                            detectTapGestures(
-                                onDoubleTap = {
-                                    zoomed = false
-                                }
-                            )
-                        }
+                    modifier =
+                        Modifier.fillMaxSize().pointerInput(Unit) {
+                            detectTapGestures(onDoubleTap = { zoomed = false })
+                        },
                 )
             } else {
                 AsyncImage(
@@ -64,21 +51,17 @@ fun ZoomableImage(
                     onState = onState,
                     contentDescription = contentDescription,
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                        .padding(24.dp)
-                        .clip(MaterialTheme.shapes.medium)
-                        .pointerInput(Unit) {
-                            detectTapGestures(
-                                onDoubleTap = {
-                                    zoomed = true
-                                }
-                            )
-                        }
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .padding(24.dp)
+                            .clip(MaterialTheme.shapes.medium)
+                            .pointerInput(Unit) {
+                                detectTapGestures(onDoubleTap = { zoomed = true })
+                            },
                 )
             }
         }
     }
 }
-

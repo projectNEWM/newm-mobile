@@ -11,12 +11,12 @@ import io.newm.BuildConfig.DEBUG
 import io.newm.BuildConfig.VERSION_NAME
 import io.newm.di.android.androidModules
 import io.newm.di.android.viewModule
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.di.initKoin
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
+import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.di.initKoin
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.utils.AndroidEventLoggerImpl
 import io.newm.utils.AndroidNewmAppLogger
 import io.newm.utils.AppForegroundBackgroundTracker
@@ -29,8 +29,6 @@ import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import io.sentry.android.core.SentryAndroidOptions
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -38,8 +36,9 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
 import org.koin.core.qualifier.named
 
-open class NewmApplication : Application(), SingletonImageLoader.Factory {
-
+open class NewmApplication :
+    Application(),
+    SingletonImageLoader.Factory {
     private val analyticsTracker: NewmAppEventLogger by inject()
     private val config: NewmSharedBuildConfig by inject()
     private val featureFlagService: FeatureFlagService by inject()
@@ -72,7 +71,7 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
                 logger.error(
                     tag = "Application",
                     message = "Failed to prefetch feature flags",
-                    exception = e
+                    exception = e,
                 )
             }
         }
@@ -88,7 +87,7 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
                     logger.error(
                         tag = "RecaptchaClient",
                         message = "Failed to initialize Recaptcha client.",
-                        exception = exception
+                        exception = exception,
                     )
                 }
         }
@@ -99,10 +98,7 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
         initKoin(enableNetworkLogs = enableLogs) {
             androidLogger(if (enableLogs) Level.INFO else Level.NONE)
             androidContext(this@NewmApplication)
-            modules(
-                androidModules,
-                viewModule
-            )
+            modules(androidModules, viewModule)
         }
     }
 
@@ -128,7 +124,5 @@ open class NewmApplication : Application(), SingletonImageLoader.Factory {
         analyticsTracker.setClientAnalyticsTracker(AndroidEventLoggerImpl(logger))
     }
 
-    override fun newImageLoader(context: PlatformContext): ImageLoader {
-        return imageLoaderFactory.newImageLoader(context)
-    }
+    override fun newImageLoader(context: PlatformContext): ImageLoader = imageLoaderFactory.newImageLoader(context)
 }

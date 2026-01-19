@@ -4,9 +4,10 @@ import io.newm.shared.commonInternal.EarningsAPI
 import io.newm.shared.commonInternal.api.models.EarningsResponse
 
 class EarningsNetworkService(
-    private val api: EarningsAPI
+    private val api: EarningsAPI,
 ) {
-    suspend fun getEarningsForWalletId(walletAddress: String, humanVerificationCode: String): EarningsResponse {
-         return api.getEarningsForWalletId(walletAddress, humanVerificationCode)
-    }
+    suspend fun getEarningsForWalletId(
+        walletAddress: String,
+        humanVerificationCode: String,
+    ): EarningsResponse = api.getEarningsForWalletId(walletAddress, humanVerificationCode)
 }

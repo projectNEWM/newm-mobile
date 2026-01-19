@@ -2,23 +2,26 @@ package io.newm.shared.commonInternal.api.models
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class LogInUser(
+@Serializable data class LogInUser(
     val email: String,
-    val password: String
+    val password: String,
 )
 
-@Serializable
-data class GoogleSignInRequest(val idToken: String)
+@Serializable data class GoogleSignInRequest(
+    val idToken: String,
+)
 
-@Serializable
-data class AppleSignInRequest(val idToken: String)
+@Serializable data class AppleSignInRequest(
+    val idToken: String,
+)
 
-@Serializable
-data class FacebookSignInRequest(val accessToken: String)
+@Serializable data class FacebookSignInRequest(
+    val accessToken: String,
+)
 
-@Serializable
-data class LinkedInSignInRequest(val accessToken: String)
+@Serializable data class LinkedInSignInRequest(
+    val accessToken: String,
+)
 
 @Serializable
 data class NewUser(
@@ -28,7 +31,7 @@ data class NewUser(
     val email: String,
     val newPassword: String,
     val confirmPassword: String,
-    val authCode: String
+    val authCode: String,
 )
 
 @Serializable
@@ -57,7 +60,7 @@ data class UserProfileUpdateRequest(
     val newPassword: String? = null,
     val confirmPassword: String? = null,
     val currentPassword: String? = null,
-    val authCode: String? = null
+    val authCode: String? = null,
 )
 
 @Serializable
@@ -65,5 +68,5 @@ data class ResetPasswordRequest(
     val email: String,
     val newPassword: String,
     val confirmPassword: String,
-    val authCode: String
+    val authCode: String,
 )

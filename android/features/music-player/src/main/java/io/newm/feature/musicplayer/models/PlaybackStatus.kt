@@ -9,26 +9,37 @@ data class PlaybackStatus(
     val position: Long,
     val duration: Duration?,
     val repeatMode: PlaybackRepeatMode,
-    val shuffleMode: Boolean
+    val shuffleMode: Boolean,
 ) {
+    val elapsedFraction: Float
+        get() {
+            return duration
+                ?.takeIf { it > 0.seconds }
+                ?.let { duration -> position.toFloat() / duration.inWholeMilliseconds } ?: 0f
+        }
 
-    val elapsedFraction : Float get()  {
-        return duration?.takeIf { it > 0.seconds }?.let { duration ->
-           position.toFloat() / duration.inWholeMilliseconds
-        } ?: 0f
-    }
     companion object {
-        val EMPTY: PlaybackStatus = PlaybackStatus(
-            state = PlaybackState.STOPPED,
-            position = 0,
-            duration = null,
-            track = null,
-            repeatMode = PlaybackRepeatMode.REPEAT_OFF,
-            shuffleMode = false,
-        )
+        val EMPTY: PlaybackStatus =
+            PlaybackStatus(
+                state = PlaybackState.STOPPED,
+                position = 0,
+                duration = null,
+                track = null,
+                repeatMode = PlaybackRepeatMode.REPEAT_OFF,
+                shuffleMode = false,
+            )
     }
 }
 
-enum class PlaybackState { PLAYING, PAUSED, BUFFERING, STOPPED }
+enum class PlaybackState {
+    PLAYING,
+    PAUSED,
+    BUFFERING,
+    STOPPED,
+}
 
-enum class PlaybackRepeatMode { REPEAT_OFF, REPEAT_ONE, REPEAT_ALL }
+enum class PlaybackRepeatMode {
+    REPEAT_OFF,
+    REPEAT_ONE,
+    REPEAT_ALL,
+}

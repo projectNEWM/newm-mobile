@@ -6,4 +6,5 @@ interface ApplicationComponentProvider {
     val component: AndroidApplicationComponent
 }
 
-val Context.applicationComponent get() = (applicationContext as ApplicationComponentProvider).component
+val Context.applicationComponent
+    get() = (applicationContext as ApplicationComponentProvider).component

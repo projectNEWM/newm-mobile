@@ -4,9 +4,7 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.api.RemoteConfigAPI
 import io.newm.shared.commonInternal.api.models.MobileConfig
 
-/**
- * Interface for fetching remote mobile configuration.
- */
+/** Interface for fetching remote mobile configuration. */
 interface RemoteConfigRepository {
     /**
      * Fetches the mobile configuration.
@@ -24,15 +22,13 @@ interface RemoteConfigRepository {
  */
 internal class RemoteConfigRepositoryImpl(
     private val mobileConfigAPI: RemoteConfigAPI,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
 ) : RemoteConfigRepository {
-
-    override suspend fun getMobileConfig(humanVerificationCode: String): MobileConfig? {
-        return try {
+    override suspend fun getMobileConfig(humanVerificationCode: String): MobileConfig? =
+        try {
             mobileConfigAPI.getMobileConfig(humanVerificationCode)
         } catch (e: Exception) {
             logger.error("RemoteConfigRepositoryImpl", "Error fetching mobile config", e)
             null
         }
-    }
 }

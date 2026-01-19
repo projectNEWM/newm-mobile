@@ -29,56 +29,44 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.utils.iconGradient
 
-val buttonGradient =
-    iconGradient(OceanGreen.copy(alpha = 0.08f), LightSkyBlue.copy(alpha = 0.08f))
+val buttonGradient = iconGradient(OceanGreen.copy(alpha = 0.08f), LightSkyBlue.copy(alpha = 0.08f))
 
 @Composable
-fun ConnectWalletPanel(
-    onButtonClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(Gray16)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+fun ConnectWalletPanel(onButtonClick: () -> Unit) {
+    Box(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).background(Gray16)) {
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             Text(
                 text = stringResource(id = R.string.connect_wallet_label1),
                 fontFamily = inter,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
-                color = White
+                color = White,
             )
             Text(
                 text = stringResource(id = R.string.connect_wallet_label2),
                 fontFamily = inter,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
-                color = GraySuit
+                color = GraySuit,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = onButtonClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .background(buttonGradient)
-                    .clip(RoundedCornerShape(8.dp)),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .background(buttonGradient)
+                        .clip(RoundedCornerShape(8.dp)),
                 elevation = null,
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-            )
-            {
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+            ) {
                 Text(
                     text = stringResource(id = R.string.connect_wallet_button_label),
                     fontFamily = inter,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
-                    color = GlassSmith
+                    color = GlassSmith,
                 )
             }
         }

@@ -2,7 +2,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 apply(from = "../../gradle_include/compose.gradle")
+
 apply(from = "../../gradle_include/circuit.gradle")
+
 apply(from = "../../gradle_include/flipper.gradle")
 
 plugins {
@@ -14,7 +16,6 @@ plugins {
     id("io.sentry.android.gradle") version "5.12.1"
     alias(libs.plugins.compose.multiplatform)
 }
-
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -32,18 +33,14 @@ android {
         testApplicationId = "io.newm.test"
     }
 
-    lint {
-        baseline = file("lint-baseline.xml")
-    }
+    lint { baseline = file("lint-baseline.xml") }
 
     packaging {
         resources {
             merges += "META-INF/LICENSE.md"
             merges += "META-INF/LICENSE-notice.md"
         }
-        jniLibs {
-            useLegacyPackaging = true
-        }
+        jniLibs { useLegacyPackaging = true }
     }
 
     buildTypes {
@@ -53,7 +50,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         debug {
@@ -80,14 +77,12 @@ android {
             resValue(
                 "string",
                 "account_type",
-                "$applicationId${applicationIdSuffix.orEmpty()}.account"
+                "$applicationId${applicationIdSuffix.orEmpty()}.account",
             )
         }
     }
 
-    buildFeatures {
-        buildConfig = true
-    }
+    buildFeatures { buildConfig = true }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -95,13 +90,10 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    kapt {
-        correctErrorTypes = true
-    }
+    kapt { correctErrorTypes = true }
 }
 
 dependencies {
-
     implementation(libs.process.phoenix)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.androidx.core.ktx)
@@ -123,15 +115,15 @@ dependencies {
     implementation(libs.cmp.image.pick.n.crop)
     implementation(platform(libs.firebase.bom))
     implementation(libs.androidx.material.icons.extended)
-    implementation(project(Modules.barcodeScanner))
-    implementation(project(Modules.coreAndroidImplementations))
-    implementation(project(Modules.coreResources))
-    implementation(project(Modules.coreTheme))
-    implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.login))
-    implementation(project(Modules.musicPlayer))
-    implementation(project(Modules.shared))
-    implementation(project(Modules.sharedComposeFeatures))
+    implementation(project(Modules.BARCODE_SCANNER))
+    implementation(project(Modules.CORE_ANDROID_IMPLEMENTATIONS))
+    implementation(project(Modules.CORE_RESOURCES))
+    implementation(project(Modules.CORE_THEME))
+    implementation(project(Modules.CORE_UI_UTILS))
+    implementation(project(Modules.LOGIN))
+    implementation(project(Modules.MUSIC_PLAYER))
+    implementation(project(Modules.SHARED))
+    implementation(project(Modules.SHARED_COMPOSE_FEATURES))
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
@@ -141,11 +133,7 @@ dependencies {
     androidTestImplementation(libs.mockk.android)
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-    }
-}
+kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) } }
 
 sentry {
     org.set("project-newm")
@@ -157,7 +145,6 @@ sentry {
     telemetry.set(true)
 }
 
-
 /**
  * Generates a version code based on the current date and time in the format `yyMMddHH`.
  *
@@ -167,8 +154,8 @@ sentry {
  * - `dd`: The current day of the month.
  * - `HH`: The current hour (24-hour format).
  *
- * The function formats the current date and time using `SimpleDateFormat`,
- * converts it into a string, and then parses it as an integer.
+ * The function formats the current date and time using `SimpleDateFormat`, converts it into a
+ * string, and then parses it as an integer.
  *
  * @return An integer representing the current date and time in the format `yyMMddHH`.
  */
@@ -178,7 +165,8 @@ fun getCurrentDateTimeVersionCode(): Int {
 }
 
 /**
- * Generates a custom version name based on the provided major version and the current date and time.
+ * Generates a custom version name based on the provided major version and the current date and
+ * time.
  *
  * The version name follows the format: `major.yyMMdd.HHmm`, where:
  * - `major`: The major version number passed as a parameter.
@@ -187,7 +175,8 @@ fun getCurrentDateTimeVersionCode(): Int {
  * - `HH`: The current hour in 24-hour format.
  * - `mm`: The current minute.
  *
- * The function retrieves the current date and time using `SimpleDateFormat` to format each component.
+ * The function retrieves the current date and time using `SimpleDateFormat` to format each
+ * component.
  *
  * Example output for `major = 1` on October 1st, 2024 at 13:45 would be: `1.241001.1345`.
  *

@@ -30,15 +30,8 @@ android {
 kotlin {
     androidTarget()
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser {}
-    }
-    jvm("desktop") {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    @OptIn(ExperimentalWasmDsl::class) wasmJs { browser {} }
+    jvm("desktop") { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
 
     sourceSets {
         commonMain {
@@ -58,9 +51,7 @@ kotlin {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
-    }
+    compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
 }
 
 tasks.withType<JavaCompile> {

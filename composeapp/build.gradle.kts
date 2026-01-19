@@ -1,6 +1,5 @@
 import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -15,11 +14,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    androidTarget { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
 
     jvm("desktop")
 
@@ -31,13 +26,15 @@ kotlin {
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(rootDirPath)
-                        add(projectDirPath)
+                devServer =
+                    (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                        static =
+                            (static ?: mutableListOf()).apply {
+                                // Serve sources to debug inside browser
+                                add(rootDirPath)
+                                add(projectDirPath)
+                            }
                     }
-                }
             }
         }
         binaries.executable()
@@ -63,22 +60,18 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinInject.runtime)
             implementation(libs.circuit.foundation)
-            implementation(project(Modules.shared))
-            implementation(project(Modules.sharedComposeFeatures))
-            implementation(project(Modules.coreTheme))
+            implementation(project(Modules.SHARED))
+            implementation(project(Modules.SHARED_COMPOSE_FEATURES))
+            implementation(project(Modules.CORE_THEME))
         }
 
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-        }
+        desktopMain.dependencies { implementation(compose.desktop.currentOs) }
     }
 
     targets.configureEach {
         compilations.configureEach {
             compileTaskProvider.configure {
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
+                compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
             }
         }
     }
@@ -116,18 +109,10 @@ android {
         versionName = "1.0"
     }
     packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-        jniLibs {
-            useLegacyPackaging = false
-        }
+        resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" }
+        jniLibs { useLegacyPackaging = false }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
+    buildTypes { getByName("release") { isMinifyEnabled = false } }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

@@ -6,11 +6,13 @@ import io.newm.shared.commonPublic.models.NFTTrack
 
 sealed interface NFTLibraryState : CircuitUiState {
     data object Loading : NFTLibraryState
+
     data class LinkWallet(
         val onConnectWallet: (String) -> Unit,
     ) : NFTLibraryState
 
     data object EmptyWallet : NFTLibraryState
+
     data class Content(
         val nftTracks: List<NFTTrack>,
         val streamTokenTracks: List<NFTTrack>,
@@ -20,20 +22,22 @@ sealed interface NFTLibraryState : CircuitUiState {
         val downloadStates: Map<String, DownloadState>,
         val eventSink: (NFTLibraryEvent) -> Unit,
         val currentTrackId: String?,
-        val downloadsEnabled: Boolean
+        val downloadsEnabled: Boolean,
     ) : NFTLibraryState
 
-    data class Error(val message: String) : NFTLibraryState
+    data class Error(
+        val message: String,
+    ) : NFTLibraryState
 }
 
 data class NFTLibraryFilters(
     val sortType: NFTLibrarySortType,
-    val showShortTracks: Boolean
+    val showShortTracks: Boolean,
 )
 
 enum class NFTLibrarySortType {
     None,
     ByTitle,
     ByArtist,
-    ByLength
+    ByLength,
 }

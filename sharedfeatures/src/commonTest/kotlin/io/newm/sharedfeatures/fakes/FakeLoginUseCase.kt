@@ -9,7 +9,11 @@ class FakeLoginUseCase : LoginUseCase {
     var lastHumanVerificationCode = ""
     var logInResult: Result<Unit> = Result.success(Unit)
 
-    override suspend fun logIn(email: String, password: String, humanVerificationCode: String) {
+    override suspend fun logIn(
+        email: String,
+        password: String,
+        humanVerificationCode: String,
+    ) {
         logInCalled = true
         lastEmail = email
         lastPassword = password
@@ -21,7 +25,10 @@ class FakeLoginUseCase : LoginUseCase {
     var lastIdToken = ""
     var logInWithGoogleResult: Result<Unit> = Result.success(Unit)
 
-    override suspend fun logInWithGoogle(idToken: String, humanVerificationCode: String) {
+    override suspend fun logInWithGoogle(
+        idToken: String,
+        humanVerificationCode: String,
+    ) {
         logInWithGoogleCalled = true
         lastIdToken = idToken
         lastHumanVerificationCode = humanVerificationCode
@@ -36,7 +43,10 @@ class FakeLoginUseCase : LoginUseCase {
         TODO("Not yet implemented")
     }
 
-    override suspend fun logInWithApple(idToken: String, humanVerificationCode: String) {
+    override suspend fun logInWithApple(
+        idToken: String,
+        humanVerificationCode: String,
+    ) {
         TODO("Not yet implemented")
     }
 

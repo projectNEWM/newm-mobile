@@ -49,120 +49,137 @@ class NFTLibraryPresenter(
         val musicPlayer: MusicPlayer? = observeMusicPlayer()
 
         // Updated to use the reactive feature flag observing
-        var downloadsEnabled by remember { mutableStateOf(FeatureFlags.DownloadTracks.defaultValue) }
+        var downloadsEnabled by remember {
+            mutableStateOf(FeatureFlags.DownloadTracks.defaultValue)
+        }
 
         // Observe the download tracks flag reactively
-        val downloadTracksState by featureFlagService.observeFlag(FeatureFlags.DownloadTracks)
-            .collectAsState(initial = FeatureFlags.DownloadTracks.defaultValue)
+        val downloadTracksState by
+            featureFlagService
+                .observeFlag(FeatureFlags.DownloadTracks)
+                .collectAsState(initial = FeatureFlags.DownloadTracks.defaultValue)
 
         // Update local state when flag changes
-        LaunchedEffect(downloadTracksState) {
-            downloadsEnabled = downloadTracksState
-        }
+        LaunchedEffect(downloadTracksState) { downloadsEnabled = downloadTracksState }
 
         LaunchedEffect(Unit) {
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
         }
 
-        val isWalletConnected: Boolean? by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }.collectAsRetainedState(
-            null
-        )
+        val isWalletConnected: Boolean? by
+            remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }
+                .collectAsRetainedState(null)
 
-        val isWalletSynced by remember { walletNFTTracksUseCase.walletSynced }.collectAsState(
-            false
-        )
+        val isWalletSynced by remember { walletNFTTracksUseCase.walletSynced }.collectAsState(false)
 
         var query by rememberSaveable { mutableStateOf("") }
 
-        val nftTracks by remember(isWalletConnected) {
-            if (isWalletConnected == true) {
-                walletNFTTracksUseCase.getAllCollectableTracksFlow()
-            } else {
-                flowOf()
-            }
-        }.collectAsRetainedState(initial = emptyList())
+        val nftTracks by
+            remember(isWalletConnected) {
+                if (isWalletConnected == true) {
+                    walletNFTTracksUseCase.getAllCollectableTracksFlow()
+                } else {
+                    flowOf()
+                }
+            }.collectAsRetainedState(initial = emptyList())
 
         // Do not show stream tokens in the library
         val streamTracks = emptyList<NFTTrack>()
 
         var filters: NFTLibraryFilters by rememberRetained {
             mutableStateOf(
-                NFTLibraryFilters(
-                    sortType = NFTLibrarySortType.None,
-                    showShortTracks = false
-                )
+                NFTLibraryFilters(sortType = NFTLibrarySortType.None, showShortTracks = false),
             )
         }
 
-        val filteredNftTracks = remember(nftTracks, query, filters) {
-            nftTracks.filterAndSort(query, filters)
-        }
+        val filteredNftTracks =
+            remember(nftTracks, query, filters) { nftTracks.filterAndSort(query, filters) }
 
-        val filteredStreamTokens = remember(streamTracks, query, filters) {
-            streamTracks.filterAndSort(query, filters)
-        }
+        val filteredStreamTokens =
+            remember(streamTracks, query, filters) { streamTracks.filterAndSort(query, filters) }
 
-        val playList = remember(
-            filteredNftTracks,
-            filteredStreamTokens
-        ) { Playlist(filteredNftTracks.toTrack() + filteredStreamTokens.toTrack()) }
-
-        val currentTrackId = musicPlayer?.let {
-            val playbackStatus by musicPlayer.playbackStatus.collectAsState()
-            remember(playbackStatus) { playbackStatus.track?.id.takeIf { playbackStatus.state != PlaybackState.BUFFERING } }
-        }
-
-        val showZeroResultFound = remember(query, nftTracks, streamTracks) {
-            (query.isNotEmpty()
-                    && nftTracks.none { it.matches(query) }
-                    && streamTracks.none { it.matches(query) })
-        }
-
-        val isLoading = remember(isWalletConnected, isWalletSynced, playList.tracks) {
-            when (isWalletConnected) {
-                // if playlist is empty and wallet is not synced, show loading
-                true -> playList.tracks.isEmpty() && isWalletSynced.not()
-                // if wallet is not connected, don't show loading
-                false -> false
-                // Wallet connection state is unknown, show loading
-                null -> true
+        val playList =
+            remember(filteredNftTracks, filteredStreamTokens) {
+                Playlist(filteredNftTracks.toTrack() + filteredStreamTokens.toTrack())
             }
-        }
+
+        val currentTrackId =
+            musicPlayer?.let {
+                val playbackStatus by musicPlayer.playbackStatus.collectAsState()
+                remember(playbackStatus) {
+                    playbackStatus.track?.id.takeIf {
+                        playbackStatus.state != PlaybackState.BUFFERING
+                    }
+                }
+            }
+
+        val showZeroResultFound =
+            remember(query, nftTracks, streamTracks) {
+                (
+                    query.isNotEmpty() &&
+                        nftTracks.none { it.matches(query) } &&
+                        streamTracks.none { it.matches(query) }
+                )
+            }
+
+        val isLoading =
+            remember(isWalletConnected, isWalletSynced, playList.tracks) {
+                when (isWalletConnected) {
+                    // if playlist is empty and wallet is not synced, show loading
+                    true -> playList.tracks.isEmpty() && isWalletSynced.not()
+
+                    // if wallet is not connected, don't show loading
+                    false -> false
+
+                    // Wallet connection state is unknown, show loading
+                    null -> true
+                }
+            }
 
         val isWalletEmpty = isWalletSynced && playList.tracks.isEmpty() && !showZeroResultFound
 
         var refreshing by remember { mutableStateOf(false) }
 
-        fun refresh() = scope.launch {
-            refreshing = true
-            walletNFTTracksUseCase.refresh()
-            refreshing = false
-        }
+        fun refresh() =
+            scope.launch {
+                refreshing = true
+                walletNFTTracksUseCase.refresh()
+                refreshing = false
+            }
 
         if (isWalletConnected == true) {
-            LaunchedEffect(Unit) {
-                refresh()
-            }
+            LaunchedEffect(Unit) { refresh() }
         }
 
         // Collect download states through DownloadManager
-        val downloadStates by remember(nftTracks) {
-            combine(
-                nftTracks.map { track ->
-                    downloadManager.getDownloadState(track.id)
-                        .map { state -> track.id to state }
+        val downloadStates by
+            remember(nftTracks) {
+                combine(
+                    nftTracks.map { track ->
+                        downloadManager.getDownloadState(track.id).map { state ->
+                            track.id to state
+                        }
+                    },
+                ) { states ->
+                    states.toMap()
                 }
-            ) { states -> states.toMap() }
-        }.collectAsRetainedState(initial = emptyMap())
+            }.collectAsRetainedState(initial = emptyMap())
 
         return when {
-            isLoading -> NFTLibraryState.Loading
-            isWalletConnected == false -> NFTLibraryState.LinkWallet { newmWalletConnectionId ->
-                scope.launch {
-                    connectWalletUseCase.connect(newmWalletConnectionId)
+            isLoading -> {
+                NFTLibraryState.Loading
+            }
+
+            isWalletConnected == false -> {
+                NFTLibraryState.LinkWallet { newmWalletConnectionId ->
+                    scope.launch { connectWalletUseCase.connect(newmWalletConnectionId) }
                 }
             }
-            isWalletEmpty -> NFTLibraryState.EmptyWallet
+
+            isWalletEmpty -> {
+                NFTLibraryState.EmptyWallet
+            }
+
             else -> {
                 NFTLibraryState.Content(
                     nftTracks = filteredNftTracks,
@@ -176,14 +193,14 @@ class NFTLibraryPresenter(
                             is NFTLibraryEvent.OnDownloadTrack -> {
                                 downloadManager.download(
                                     id = event.track.id,
-                                    url = event.track.audioUrl
+                                    url = event.track.audioUrl,
                                 )
                             }
 
                             is NFTLibraryEvent.OnQueryChange -> {
                                 eventLogger.logEvent(
                                     AppScreens.NFTLibraryScreen.SEARCH_BUTTON,
-                                    mapOf("query" to event.newQuery)
+                                    mapOf("query" to event.newQuery),
                                 )
                                 query = event.newQuery
                             }
@@ -201,12 +218,16 @@ class NFTLibraryPresenter(
                             }
 
                             is NFTLibraryEvent.OnApplyFilters -> {
-                                eventLogger.logClickEvent(AppScreens.NFTLibraryFilterScreen.APPLY_BUTTON)
+                                eventLogger.logClickEvent(
+                                    AppScreens.NFTLibraryFilterScreen.APPLY_BUTTON,
+                                )
                                 filters = event.filters
                             }
 
                             NFTLibraryEvent.OnRefresh -> {
-                                eventLogger.logClickEvent(AppScreens.NFTLibraryScreen.REFRESH_BUTTON)
+                                eventLogger.logClickEvent(
+                                    AppScreens.NFTLibraryScreen.REFRESH_BUTTON,
+                                )
                                 refresh()
                             }
 
@@ -224,11 +245,12 @@ class NFTLibraryPresenter(
 
     private fun List<NFTTrack>.filterAndSort(
         query: String,
-        filters: NFTLibraryFilters
+        filters: NFTLibraryFilters,
     ): List<NFTTrack> {
-        val filteredTracks = filter {
-            it.matches(query) && (filters.showShortTracks || it.duration >= 30)
-        }
+        val filteredTracks =
+            filter {
+                it.matches(query) && (filters.showShortTracks || it.duration >= 30)
+            }
         return when (filters.sortType) {
             NFTLibrarySortType.None -> filteredTracks
             NFTLibrarySortType.ByTitle -> filteredTracks.sortedBy { it.title }
@@ -243,13 +265,13 @@ private fun NFTTrack.matches(query: String): Boolean {
     return (artists + title).any { it.contains(query, ignoreCase = true) }
 }
 
-
-private fun List<NFTTrack>.toTrack(): List<Track> = map { nftTrack ->
-    Track(
-        id = nftTrack.id,
-        title = nftTrack.title,
-        url = nftTrack.audioUrl,
-        artist = nftTrack.artists.firstOrNull() ?: "",
-        artworkUri = nftTrack.imageUrl,
-    )
-}
+private fun List<NFTTrack>.toTrack(): List<Track> =
+    map { nftTrack ->
+        Track(
+            id = nftTrack.id,
+            title = nftTrack.title,
+            url = nftTrack.audioUrl,
+            artist = nftTrack.artists.firstOrNull() ?: "",
+            artworkUri = nftTrack.imageUrl,
+        )
+    }

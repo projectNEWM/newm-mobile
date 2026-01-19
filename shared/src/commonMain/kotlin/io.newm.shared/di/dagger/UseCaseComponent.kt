@@ -5,6 +5,5 @@ import io.newm.shared.commonPublic.usecases.LoginUseCase
 import me.tatarka.inject.annotations.Provides
 
 interface UseCaseComponent {
-    @Provides
-    fun provideLoginUseCase(impl: LoginUseCaseImpl): LoginUseCase = impl
+    @Provides fun provideLoginUseCase(impl: LoginUseCaseImpl): LoginUseCase = impl
 }

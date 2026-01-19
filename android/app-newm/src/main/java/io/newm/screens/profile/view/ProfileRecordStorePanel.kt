@@ -24,12 +24,15 @@ import io.newm.core.theme.Gray16
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 
-private val recordStoreLabelStyle @Composable get() = TextStyle(
-    fontSize = 14.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Medium,
-    color = White
-)
+private val recordStoreLabelStyle
+    @Composable
+    get() =
+        TextStyle(
+            fontSize = 14.sp,
+            fontFamily = inter,
+            fontWeight = FontWeight.Medium,
+            color = White,
+        )
 
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 
@@ -40,17 +43,12 @@ fun RecordStorePanel(
 ) {
     val context = LocalContext.current
 
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(Gray16)
-            .fillMaxWidth()
-    ) {
+    Box(modifier = modifier.clip(RoundedCornerShape(8.dp)).background(Gray16).fillMaxWidth()) {
         Column(modifier = Modifier.padding(all = 16.dp)) {
             Text(
                 text = stringResource(id = R.string.profile_add_music),
                 style = recordStoreLabelStyle,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(16.dp))
             ProfileButton(

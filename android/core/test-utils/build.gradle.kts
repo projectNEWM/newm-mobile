@@ -4,6 +4,7 @@ plugins {
 }
 
 apply(from = "../../../gradle_include/circuit.gradle")
+
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
@@ -21,14 +22,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+    kotlinOptions { jvmTarget = "11" }
 }
 
 dependencies {
     implementation(libs.paparazzi)
-    implementation(project(Modules.coreTheme))
+    implementation(project(Modules.CORE_THEME))
 
     testImplementation(libs.test.parameter.injector)
     testImplementation(libs.junit)

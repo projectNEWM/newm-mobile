@@ -35,9 +35,7 @@ android {
 
 kotlin {
     androidTarget {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-        }
+        compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) }
     }
 
     sourceSets {
@@ -53,9 +51,9 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.circuit.foundation)
-                implementation(project(Modules.coreTheme))
-                implementation(project(Modules.coreUiUtils))
-                implementation(project(Modules.shared))
+                implementation(project(Modules.CORE_THEME))
+                implementation(project(Modules.CORE_UI_UTILS))
+                implementation(project(Modules.SHARED))
             }
         }
 
@@ -98,6 +96,5 @@ kotlin {
             outputModuleName = "sharedfeatures"
             browser {}
         }
-
     }
 }

@@ -23,34 +23,26 @@ private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 fun RecordStoreScreenUi(
     modifier: Modifier = Modifier,
     state: RecordStoreState,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     val context = LocalContext.current
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .testTag(TAG_NFT_LIBRARY_SCREEN),
-    ) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding().testTag(TAG_NFT_LIBRARY_SCREEN)) {
         when (state) {
             is RecordStoreState.Content -> {
                 FullScreenWebView(context, RECORD_STORE_URL)
             }
 
             RecordStoreState.Loading -> {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.LoadingScreen.name) }
                 LoadingScreen()
             }
 
             RecordStoreState.Error -> {
                 ErrorScreen(
                     title = stringResource(R.string.record_store_error_title),
-                    message = stringResource(R.string.record_store_error_message)
+                    message = stringResource(R.string.record_store_error_message),
                 )
             }
         }
     }
 }
-

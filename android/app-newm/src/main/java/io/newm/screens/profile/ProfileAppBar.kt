@@ -25,38 +25,35 @@ fun ProfileAppBar(
     onAvatarClick: (() -> Unit)? = null,
 ) {
     Box {
-        ProfileBanner(
-            bannerUrl = bannerUrl,
-            avatarUrl = avatarUrl,
-            onAvatarClick = onAvatarClick
-        )
+        ProfileBanner(bannerUrl = bannerUrl, avatarUrl = avatarUrl, onAvatarClick = onAvatarClick)
         TopAppBar(
             modifier = Modifier.systemBarsPadding(),
             elevation = 0.dp,
             title = {},
             backgroundColor = Color.Transparent,
-            navigationIcon = onNavigationClick?.let {
-                {
-                    ScrimCircle {
-                        IconButton(onClick = onNavigationClick) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.back_description)
-                            )
+            navigationIcon =
+                onNavigationClick?.let {
+                    {
+                        ScrimCircle {
+                            IconButton(onClick = onNavigationClick) {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.back_description),
+                                )
+                            }
                         }
                     }
-                }
-            },
+                },
             actions = {
                 ScrimCircle {
                     IconButton(onClick = onOverflowTapped) {
                         Icon(
                             Icons.Default.MoreVert,
-                            contentDescription = stringResource(R.string.overflow_description)
+                            contentDescription = stringResource(R.string.overflow_description),
                         )
                     }
                 }
-            }
+            },
         )
     }
 }

@@ -8,10 +8,10 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
- * `GetWalletConnectionsUseCase` defines the contract for retrieving wallet connections from the cache.
+ * `GetWalletConnectionsUseCase` defines the contract for retrieving wallet connections from the
+ * cache.
  */
 interface GetWalletConnectionsUseCase {
-
     /**
      * Retrieves a flow of wallet connections from the cache.
      *
@@ -36,7 +36,5 @@ interface GetWalletConnectionsUseCase {
 class GetWalletConnectionsUseCaseProvider : KoinComponent {
     private val getWalletConnectionsUseCase: GetWalletConnectionsUseCase by inject()
 
-    fun get(): GetWalletConnectionsUseCase {
-        return this.getWalletConnectionsUseCase
-    }
+    fun get(): GetWalletConnectionsUseCase = this.getWalletConnectionsUseCase
 }

@@ -7,8 +7,8 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.Future
 
 /**
- * Converts a Java Future to a Kotlin Deferred.
- * Useful for bridging Java concurrent APIs with Kotlin coroutines.
+ * Converts a Java Future to a Kotlin Deferred. Useful for bridging Java concurrent APIs with Kotlin
+ * coroutines.
  */
 suspend fun <V> Future<V>.asDeferred(): Deferred<V> {
     val deferred = CompletableDeferred<V>()

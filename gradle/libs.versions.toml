@@ -59,6 +59,9 @@ uiUtil = "1.9.4"
 jetbrainsKotlinJvm = "1.9.24"
 runner = "1.5.2"
 core = "1.5.0"
+spotless = "8.1.0"
+ktfmt = "0.61"
+ktlint = "1.8.0"
 
 [libraries]
 android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "coroutinesExtensions" }
@@ -164,3 +167,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

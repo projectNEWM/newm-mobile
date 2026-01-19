@@ -7,4 +7,6 @@ import newm.WasmComponent
 
 @Component
 @ApplicationScope
-abstract class WasmApplicationComponent : CommonApplicationComponent, WasmComponent
+abstract class WasmApplicationComponent :
+    CommonApplicationComponent,
+    WasmComponent

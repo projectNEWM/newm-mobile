@@ -4,11 +4,10 @@ import com.varabyte.truthish.assertThat
 import kotlin.test.Test
 
 class EmailStateTest {
-
     @Test
     fun `validate emails correctly`() {
         val state = EmailState()
-        
+
         val validEmails = listOf("test@newm.io", "user.name+tag@gmail.com", "123@abc.co")
         val invalidEmails = listOf("test", "test@", "@test.com")
 

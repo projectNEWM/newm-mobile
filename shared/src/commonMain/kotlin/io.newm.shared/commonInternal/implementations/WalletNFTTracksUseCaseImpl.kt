@@ -12,12 +12,9 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class WalletNFTTracksUseCaseImpl(
     private val nftRepository: NFTRepository,
 ) : WalletNFTTracksUseCase {
-
     override val walletSynced: Flow<Boolean> = nftRepository.isSynced
 
-    override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> {
-        return nftRepository.getAllCollectableTracksFlow()
-    }
+    override fun getAllCollectableTracksFlow(): Flow<List<NFTTrack>> = nftRepository.getAllCollectableTracksFlow()
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun getAllCollectableTracks(): List<NFTTrack> {
@@ -26,9 +23,7 @@ internal class WalletNFTTracksUseCaseImpl(
         }
     }
 
-    override fun getAllStreamTokensFlow(): Flow<List<NFTTrack>> {
-        return nftRepository.getAllStreamTokensFlow()
-    }
+    override fun getAllStreamTokensFlow(): Flow<List<NFTTrack>> = nftRepository.getAllStreamTokensFlow()
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun getAllStreamTokens(): List<NFTTrack> {
@@ -39,22 +34,20 @@ internal class WalletNFTTracksUseCaseImpl(
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun refresh() {
-        mapErrorsSuspend {
-            nftRepository.syncNFTTracksFromNetworkToDevice()
+        mapErrorsSuspend { nftRepository.syncNFTTracksFromNetworkToDevice() }
+    }
+
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun getAllTracksFlow(): Flow<List<NFTTrack>> {
+        return mapErrorsSuspend {
+            return@mapErrorsSuspend nftRepository.getAll()
         }
     }
 
-	@Throws(KMMException::class, CancellationException::class)
-	override suspend fun getAllTracksFlow(): Flow<List<NFTTrack>> {
-		return mapErrorsSuspend {
-			return@mapErrorsSuspend nftRepository.getAll()
-		}
-	}
-
-	@Throws(KMMException::class, CancellationException::class)
-	override suspend fun getAllTracks(): List<NFTTrack> {
-		return mapErrorsSuspend {
-			return@mapErrorsSuspend getAllTracksFlow().first()
-		}
-	}
+    @Throws(KMMException::class, CancellationException::class)
+    override suspend fun getAllTracks(): List<NFTTrack> {
+        return mapErrorsSuspend {
+            return@mapErrorsSuspend getAllTracksFlow().first()
+        }
+    }
 }

@@ -9,11 +9,13 @@ import io.ktor.http.contentType
 import io.newm.shared.commonPublic.models.NFTTrack
 import org.koin.core.component.KoinComponent
 
-class CardanoWalletAPI(private val authClient: HttpClient) : KoinComponent {
-
+class CardanoWalletAPI(
+    private val authClient: HttpClient,
+) : KoinComponent {
     suspend fun getWalletNFTs(): List<NFTTrack> =
-        authClient.get("/v1/cardano/nft/songs") {
-            contentType(ContentType.Application.Json)
-            parameter("legacy", true)
-        }.body()
+        authClient
+            .get("/v1/cardano/nft/songs") {
+                contentType(ContentType.Application.Json)
+                parameter("legacy", true)
+            }.body()
 }

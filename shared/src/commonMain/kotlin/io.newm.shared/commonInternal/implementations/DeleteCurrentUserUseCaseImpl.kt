@@ -7,8 +7,9 @@ import org.koin.core.component.KoinComponent
 
 internal class DeleteCurrentUserUseCaseImpl(
     private val userRepository: UserRepository,
-    private val logoutUseCase: LoginUseCase
-): DeleteCurrentUserUseCase, KoinComponent {
+    private val logoutUseCase: LoginUseCase,
+) : DeleteCurrentUserUseCase,
+    KoinComponent {
     override suspend fun delete() {
         userRepository.deleteCurrentUser()
         logoutUseCase.logout()

@@ -6,11 +6,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
-/**
- * `ConnectWalletUseCase` defines the contract for connecting to a wallet.
- */
+/** `ConnectWalletUseCase` defines the contract for connecting to a wallet. */
 interface ConnectWalletUseCase {
-
     /**
      * Connects to a wallet using the given wallet connection ID.
      *
@@ -26,7 +23,5 @@ interface ConnectWalletUseCase {
 class ConnectWalletUseCaseProvider : KoinComponent {
     private val connectWalletUseCase: ConnectWalletUseCase by inject()
 
-    fun get(): ConnectWalletUseCase {
-        return this.connectWalletUseCase
-    }
+    fun get(): ConnectWalletUseCase = this.connectWalletUseCase
 }

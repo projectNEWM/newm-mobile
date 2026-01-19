@@ -53,6 +53,26 @@
 * [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html)
 * Native Android/iOS View and ViewModel layer
 
+### Code Quality & Formatting
+
+We use **Spotless** to maintain a consistent code style across the project. It integrates two main tools:
+- **ktfmt (Google Style):** A deterministic formatter that ensures all Kotlin code follows a unified structure.
+- **ktlint:** A linter that enforces additional best practices and code smells (e.g., forbidding wildcard imports).
+
+#### Formatting Commands
+- **Check formatting:** `./gradlew spotlessCheck`
+- **Apply formatting:** `./gradlew spotlessApply`
+
+#### Git Hooks
+To ensure code is formatted before every commit, we use a pre-commit hook. You can install it by running:
+```bash
+./scripts/install-git-hooks.sh
+```
+This hook will automatically run `spotlessApply` and stage any formatting changes whenever you commit.
+
+#### CI Integration
+Formatting is automatically verified on every Pull Request via GitHub Actions.
+
 <!-- GETTING STARTED -->
 
 ## 📖 Getting Started
