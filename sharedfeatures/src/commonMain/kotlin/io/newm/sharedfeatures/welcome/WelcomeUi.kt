@@ -1,12 +1,9 @@
 package io.newm.sharedfeatures.welcome
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -20,17 +17,16 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.PrivacyPolicyAndTermsSection
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.sharedfeatures.login.PreLoginArtistBackgroundContentTemplate
 import io.newm.sharedfeatures.screens.WelcomeScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiState
 import me.tatarka.inject.annotations.Inject
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.create_account
 import newm_mobile.sharedfeatures.generated.resources.ic_google_g
-import newm_mobile.sharedfeatures.generated.resources.ic_newm_logo
 import newm_mobile.sharedfeatures.generated.resources.login_with_email
 import newm_mobile.sharedfeatures.generated.resources.login_with_google
 import newm_mobile.sharedfeatures.generated.resources.welcome_to_newm
@@ -49,8 +45,7 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
                 onLoginWithEmail = { state.onEvent(WelcomeScreen.UiEvent.OnLogin) },
                 onGoogleSignIn = { state.onEvent(WelcomeScreen.UiEvent.OnGoogleSignInClicked) },
                 onPrivacyPolicyClicked = { state.onEvent(WelcomeScreen.UiEvent.OnPrivacyPolicyClicked) },
-                onTermsOfServiceClicked = { state.onEvent(WelcomeScreen.UiEvent.OnTermsOfServiceClicked) },
-                onDebugMenu = { state.onEvent(WelcomeScreen.UiEvent.OnDevMenu) }
+                onTermsOfServiceClicked = { state.onEvent(WelcomeScreen.UiEvent.OnTermsOfServiceClicked) }
             )
         }
 
@@ -67,20 +62,11 @@ fun WelcomeScreenContent(
     onLoginWithEmail: () -> Unit,
     onGoogleSignIn: () -> Unit,
     onPrivacyPolicyClicked: () -> Unit,
-    onTermsOfServiceClicked: () -> Unit,
-    onDebugMenu: () -> Unit
+    onTermsOfServiceClicked: () -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .padding(top = 24.dp)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    PreLoginArtistBackgroundContentTemplate(
+        modifier = modifier,
+        header = {
             Text(
                 text = stringResource(R.string.create_account),
                 fontSize = 16.sp,
@@ -91,38 +77,37 @@ fun WelcomeScreenContent(
                     .padding(16.dp)
                     .clickable(onClick = onCreateAccount)
             )
-
-            OnboardingMainImage(painterResource(Res.drawable.ic_newm_logo))
-            Text(
-                text = stringResource(R.string.welcome_to_newm),
-                fontSize = 30.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colors.onBackground
+        }
+    ) {
+        Text(
+            text = stringResource(R.string.welcome_to_newm),
+            fontSize = 30.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = MaterialTheme.colors.onBackground
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(all = 16.dp)
+        ) {
+            PrimaryButton(
+                text = stringResource(R.string.login_with_email),
+                onClick = onLoginWithEmail,
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(all = 16.dp)
-            ) {
-                PrimaryButton(
-                    text = stringResource(R.string.login_with_email),
-                    onClick = onLoginWithEmail,
-                )
-                SecondaryButton(
-                    label = stringResource(Res.string.login_with_google),
-                    onClick = onGoogleSignIn,
-                    iconPainter = painterResource(Res.drawable.ic_google_g)
-                )
-            }
-
-            PrivacyPolicyAndTermsSection(
-                modifier = Modifier
-                    .padding(vertical = 32.dp, horizontal = 16.dp),
-                onPrivacyPolicyClicked = onPrivacyPolicyClicked,
-                onTermsOfServiceClicked = onTermsOfServiceClicked,
+            SecondaryButton(
+                label = stringResource(Res.string.login_with_google),
+                onClick = onGoogleSignIn,
+                iconPainter = painterResource(Res.drawable.ic_google_g)
             )
         }
+
+        PrivacyPolicyAndTermsSection(
+            modifier = Modifier
+                .padding(vertical = 32.dp, horizontal = 16.dp),
+            onPrivacyPolicyClicked = onPrivacyPolicyClicked,
+            onTermsOfServiceClicked = onTermsOfServiceClicked,
+        )
     }
 }
 
