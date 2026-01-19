@@ -17,7 +17,7 @@ fun main() {
         App(
             circuit = activityComponent.circuit,
             config = activityComponent.config,
-            onRootPop = { window.close() }
+            onRootPop = { window.close() },
         )
     }
 }

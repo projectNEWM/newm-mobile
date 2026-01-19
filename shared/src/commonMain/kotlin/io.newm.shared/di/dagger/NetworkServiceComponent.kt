@@ -20,10 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 import me.tatarka.inject.annotations.Provides
 
 interface NetworkServiceComponent {
-
     @Provides
-    fun provideCardanoWalletAPI(authHttpClient: AuthHttpClient): CardanoWalletAPI =
-        CardanoWalletAPI(authHttpClient.client)
+    fun provideCardanoWalletAPI(authHttpClient: AuthHttpClient): CardanoWalletAPI = CardanoWalletAPI(authHttpClient.client)
 
     @Provides
     fun providesNFTNetworkService(api: CardanoWalletAPI): NFTNetworkService = NFTNetworkService(api)
@@ -31,13 +29,11 @@ interface NetworkServiceComponent {
     @Provides
     fun provideEarningsAPI(
         authHttpClient: AuthHttpClient,
-        logger: NewmAppLogger
+        logger: NewmAppLogger,
     ): EarningsAPI = EarningsAPI(authHttpClient.client, logger)
 
     @Provides
-    fun provideEarningsNetworkService(
-        api: EarningsAPI
-    ): EarningsNetworkService = EarningsNetworkService(api)
+    fun provideEarningsNetworkService(api: EarningsAPI): EarningsNetworkService = EarningsNetworkService(api)
 
     @Provides
     fun providesFeatureFlagService(
@@ -45,35 +41,31 @@ interface NetworkServiceComponent {
         preferencesStore: PreferencesDataStore,
         buildConfig: NewmSharedBuildConfig,
         logger: NewmAppLogger,
-        scope: CoroutineScope
+        scope: CoroutineScope,
     ): FeatureFlagService = DefaultFeatureFlagService(dataSource, preferencesStore, buildConfig, logger, scope)
 
     @Provides
     fun provideLoginAPI(
         baseHttpClient: BaseHttpClient,
-        logger: NewmAppLogger
+        logger: NewmAppLogger,
     ): LoginAPI = LoginAPI(baseHttpClient.client, logger)
 
     @Provides
-    fun providesNEWMWalletConnectionAPI(
+    fun providesNEWMWalletConnectionAPI(authHttpClient: AuthHttpClient): NEWMWalletConnectionAPI =
+        NEWMWalletConnectionAPI(authHttpClient.client)
+
+    @Provides
+    fun providesPlaylistAPI(authHttpClient: AuthHttpClient): PlaylistAPI = PlaylistAPI(authHttpClient.client)
+
+    @Provides
+    fun providesRemoteConfigAPI(baseHttpClient: BaseHttpClient): RemoteConfigAPI = RemoteConfigAPI(baseHttpClient.client)
+
+    @Provides
+    fun providesUserAPI(
         authHttpClient: AuthHttpClient,
-    ): NEWMWalletConnectionAPI = NEWMWalletConnectionAPI(authHttpClient.client)
+        logger: NewmAppLogger,
+    ): UserAPI = UserAPI(authHttpClient.client, logger)
 
     @Provides
-    fun providesPlaylistAPI(authHttpClient: AuthHttpClient): PlaylistAPI =
-        PlaylistAPI(authHttpClient.client)
-
-    @Provides
-    fun providesRemoteConfigAPI(baseHttpClient: BaseHttpClient): RemoteConfigAPI =
-        RemoteConfigAPI(baseHttpClient.client)
-
-    @Provides
-    fun providesUserAPI(authHttpClient: AuthHttpClient, logger: NewmAppLogger): UserAPI {
-        return UserAPI(authHttpClient.client, logger)
-    }
-
-    @Provides
-    fun providesNewmCloudinaryAPI(authHttpClient: AuthHttpClient): NewmCloudinaryAPI {
-        return NewmCloudinaryAPI(authHttpClient.client)
-    }
+    fun providesNewmCloudinaryAPI(authHttpClient: AuthHttpClient): NewmCloudinaryAPI = NewmCloudinaryAPI(authHttpClient.client)
 }

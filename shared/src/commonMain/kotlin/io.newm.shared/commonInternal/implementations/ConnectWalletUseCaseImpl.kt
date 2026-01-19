@@ -14,15 +14,13 @@ internal class ConnectWalletUseCaseImpl(
     private val walletRepository: WalletRepository,
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
 ) : ConnectWalletUseCase {
-
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun connect(walletConnectionId: String): WalletConnection? {
-        return mapErrorsSuspend {
+    override suspend fun connect(walletConnectionId: String): WalletConnection? =
+        mapErrorsSuspend {
             val walletConnection = walletRepository.connectWallet(walletConnectionId)
             postNotification(Notification.walletConnectionStateChanged)
             // Sync wallet connections after connecting
             syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
             walletConnection
         }
-    }
 }

@@ -26,22 +26,38 @@ import kotlin.time.Duration.Companion.milliseconds
 
 interface MusicPlayer {
     val playbackStatus: StateFlow<PlaybackStatus>
+
     fun play()
+
     fun pause()
+
     fun stop()
+
     fun next()
+
     fun previous()
+
     fun seekTo(position: Long)
-    fun seekTo(index: Int, position: Long)
+
+    fun seekTo(
+        index: Int,
+        position: Long,
+    )
+
     fun repeat()
-    fun setPlaylist(playlist: Playlist, initialTrackIndex: Int)
+
+    fun setPlaylist(
+        playlist: Playlist,
+        initialTrackIndex: Int,
+    )
+
     fun toggleShuffle()
 }
 
 class MusicPlayerImpl(
     private val player: Player,
     scope: CoroutineScope,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
 ) : MusicPlayer {
     private val _playbackStatus = MutableStateFlow(PlaybackStatus.EMPTY)
 
@@ -49,18 +65,24 @@ class MusicPlayerImpl(
         get() = _playbackStatus.asStateFlow()
 
     init {
-        player.addListener(object : Player.Listener {
-            override fun onPlaybackStateChanged(state: Int) {
-                super.onPlaybackStateChanged(state)
-                updatePlaybackStatus()
-            }
+        player.addListener(
+            object : Player.Listener {
+                override fun onPlaybackStateChanged(state: Int) {
+                    super.onPlaybackStateChanged(state)
+                    updatePlaybackStatus()
+                }
 
-            override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-                super.onPlayWhenReadyChanged(playWhenReady, reason)
-                updatePlaybackStatus()
-            }
-        })
-        scope.launch (Dispatchers.Main){ // main required by the media controller
+                override fun onPlayWhenReadyChanged(
+                    playWhenReady: Boolean,
+                    reason: Int,
+                ) {
+                    super.onPlayWhenReadyChanged(playWhenReady, reason)
+                    updatePlaybackStatus()
+                }
+            },
+        )
+        scope.launch(Dispatchers.Main) {
+            // main required by the media controller
             while (isActive) {
                 if (player.currentPosition != _playbackStatus.value.position) {
                     updatePlaybackStatus()
@@ -72,26 +94,28 @@ class MusicPlayerImpl(
 
     private fun updatePlaybackStatus() {
         _playbackStatus.update {
-            val state = when (player.playbackState) {
-                Player.STATE_BUFFERING -> PlaybackState.BUFFERING
-                Player.STATE_READY -> {
-                    if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
+            val state =
+                when (player.playbackState) {
+                    Player.STATE_BUFFERING -> PlaybackState.BUFFERING
+                    Player.STATE_READY -> {
+                        if (player.playWhenReady) PlaybackState.PLAYING else PlaybackState.PAUSED
+                    }
+                    else -> PlaybackState.STOPPED
                 }
-                else -> PlaybackState.STOPPED
-            }
-            val repeatMode = when (player.repeatMode) {
-                Player.REPEAT_MODE_ALL -> PlaybackRepeatMode.REPEAT_ALL
-                Player.REPEAT_MODE_ONE -> PlaybackRepeatMode.REPEAT_ONE
-                else -> PlaybackRepeatMode.REPEAT_OFF
-            }
+            val repeatMode =
+                when (player.repeatMode) {
+                    Player.REPEAT_MODE_ALL -> PlaybackRepeatMode.REPEAT_ALL
+                    Player.REPEAT_MODE_ONE -> PlaybackRepeatMode.REPEAT_ONE
+                    else -> PlaybackRepeatMode.REPEAT_OFF
+                }
 
             PlaybackStatus(
                 state = state,
                 position = player.currentPosition,
-                duration = if(player.duration == C.TIME_UNSET ) null else player.duration.milliseconds,
+                duration = if (player.duration == C.TIME_UNSET) null else player.duration.milliseconds,
                 track = player.currentMediaItem?.toTrack(),
                 repeatMode = repeatMode,
-                shuffleMode = player.shuffleModeEnabled
+                shuffleMode = player.shuffleModeEnabled,
             )
         }
     }
@@ -130,11 +154,12 @@ class MusicPlayerImpl(
     override fun repeat() {
         eventLogger.logClickEvent(AppScreens.MusicPlayerScreen.REPEAT_BUTTON)
         Log.d("MusicPlayer", "Repeat")
-        player.repeatMode = when (player.repeatMode) {
-            Player.REPEAT_MODE_OFF -> Player.REPEAT_MODE_ALL
-            Player.REPEAT_MODE_ALL -> Player.REPEAT_MODE_ONE
-            else -> Player.REPEAT_MODE_OFF
-        }
+        player.repeatMode =
+            when (player.repeatMode) {
+                Player.REPEAT_MODE_OFF -> Player.REPEAT_MODE_ALL
+                Player.REPEAT_MODE_ALL -> Player.REPEAT_MODE_ONE
+                else -> Player.REPEAT_MODE_OFF
+            }
         updatePlaybackStatus()
     }
 
@@ -144,28 +169,43 @@ class MusicPlayerImpl(
         player.seekTo(position)
     }
 
-    override fun seekTo(index: Int, position: Long) {
-        eventLogger.logEvent(AppScreens.MusicPlayerScreen.SEEK_ACTION, mapOf("position" to position, "index" to index))
+    override fun seekTo(
+        index: Int,
+        position: Long,
+    ) {
+        eventLogger.logEvent(
+            AppScreens.MusicPlayerScreen.SEEK_ACTION,
+            mapOf("position" to position, "index" to index),
+        )
         Log.d("MusicPlayer", "Seek to $index, $position")
         player.seekTo(index, position)
     }
 
-    override fun setPlaylist(playlist: Playlist, initialTrackIndex: Int) {
-        eventLogger.logEvent(AppScreens.NFTLibraryScreen.PLAYLIST_SIZE_EVENT, mapOf("size" to playlist.tracks.size))
+    override fun setPlaylist(
+        playlist: Playlist,
+        initialTrackIndex: Int,
+    ) {
+        eventLogger.logEvent(
+            AppScreens.NFTLibraryScreen.PLAYLIST_SIZE_EVENT,
+            mapOf("size" to playlist.tracks.size),
+        )
         Log.d("MusicPlayer", "Setting playlist with ${playlist.tracks.size} tracks")
-        player.setMediaItems(playlist.tracks.map { track ->
-            MediaItem.Builder()
-                .setUri(track.url)
-                .setMediaId(track.id)
-                .setMediaMetadata(
-                    MediaMetadata.Builder()
-                        .setTitle(track.title)
-                        .setArtist(track.artist)
-                        .setArtworkUri(track.artworkUri?.toUri())
-                        .build()
-                )
-                .build()
-        })
+        player.setMediaItems(
+            playlist.tracks.map { track ->
+                MediaItem
+                    .Builder()
+                    .setUri(track.url)
+                    .setMediaId(track.id)
+                    .setMediaMetadata(
+                        MediaMetadata
+                            .Builder()
+                            .setTitle(track.title)
+                            .setArtist(track.artist)
+                            .setArtworkUri(track.artworkUri?.toUri())
+                            .build(),
+                    ).build()
+            },
+        )
         player.seekTo(initialTrackIndex, 0)
     }
 
@@ -176,12 +216,11 @@ class MusicPlayerImpl(
     }
 }
 
-private fun MediaItem.toTrack(): Track {
-    return Track(
+private fun MediaItem.toTrack(): Track =
+    Track(
         id = mediaId,
         title = mediaMetadata.title.toString(),
         artist = mediaMetadata.artist.toString(),
         url = requestMetadata.mediaUri.toString(),
-        artworkUri = mediaMetadata.artworkUri?.toString()
+        artworkUri = mediaMetadata.artworkUri?.toString(),
     )
-}

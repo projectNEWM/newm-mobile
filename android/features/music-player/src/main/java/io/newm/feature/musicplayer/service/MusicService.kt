@@ -36,53 +36,54 @@ class MediaService : MediaSessionService() {
         private const val NORMAL_VOLUME = 1.0f
     }
 
-    private val focusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
-        when (focusChange) {
-            AudioManager.AUDIOFOCUS_GAIN -> {
-                restoreVolume()
-                if (playbackDelayed || resumeOnFocusGain) {
-                    synchronized(focusLock) {
-                        playbackDelayed = false
-                        resumeOnFocusGain = false
+    private val focusChangeListener =
+        AudioManager.OnAudioFocusChangeListener { focusChange ->
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_GAIN -> {
+                    restoreVolume()
+                    if (playbackDelayed || resumeOnFocusGain) {
+                        synchronized(focusLock) {
+                            playbackDelayed = false
+                            resumeOnFocusGain = false
+                        }
+                        player.play()
                     }
-                    player.play()
                 }
-            }
 
-            AudioManager.AUDIOFOCUS_LOSS -> {
-                synchronized(focusLock) {
-                    resumeOnFocusGain = false
-                    playbackDelayed = false
+                AudioManager.AUDIOFOCUS_LOSS -> {
+                    synchronized(focusLock) {
+                        resumeOnFocusGain = false
+                        playbackDelayed = false
+                    }
+                    player.stop()
                 }
-                player.stop()
-            }
 
-            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                synchronized(focusLock) {
-                    // only resume if playback is being interrupted
-                    resumeOnFocusGain = player.playWhenReady
-                    playbackDelayed = false
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    synchronized(focusLock) {
+                        // only resume if playback is being interrupted
+                        resumeOnFocusGain = player.playWhenReady
+                        playbackDelayed = false
+                    }
+                    player.pause()
                 }
-                player.pause()
-            }
 
-            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
-                lowerVolume()
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
+                    lowerVolume()
+                }
             }
         }
-    }
-
 
     private val focusRequest by lazy {
-        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+        AudioFocusRequest
+            .Builder(AudioManager.AUDIOFOCUS_GAIN)
             .setAcceptsDelayedFocusGain(true)
             .setAudioAttributes(
-                AudioAttributes.Builder()
+                AudioAttributes
+                    .Builder()
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
-            )
-            .setOnAudioFocusChangeListener(focusChangeListener)
+                    .build(),
+            ).setOnAudioFocusChangeListener(focusChangeListener)
             .build()
     }
 
@@ -91,26 +92,26 @@ class MediaService : MediaSessionService() {
         super.onCreate()
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-        player = ExoPlayer.Builder(this)
-            .setMediaSourceFactory(buildMediaSourceFactory())
-            .build()
+        player = ExoPlayer.Builder(this).setMediaSourceFactory(buildMediaSourceFactory()).build()
 
-        mediaSession = MediaSession.Builder(this, player)
-            .setSessionActivity()
-            .setCallback(MediaSessionCallback())
-            .build()
-
+        mediaSession =
+            MediaSession
+                .Builder(this, player)
+                .setSessionActivity()
+                .setCallback(MediaSessionCallback())
+                .build()
     }
 
     private fun buildMediaSourceFactory(): DefaultMediaSourceFactory {
         val httpDataSourceFactory = DefaultHttpDataSource.Factory()
 
         val cacheDataSourceFactory: DataSource.Factory =
-            CacheDataSource.Factory()
+            CacheDataSource
+                .Factory()
                 .setCache(downloadCache)
                 .setUpstreamDataSourceFactory(httpDataSourceFactory)
                 .setCacheWriteDataSinkFactory(null) // Disable writing.
-        
+
         return DefaultMediaSourceFactory(this).setDataSourceFactory(cacheDataSourceFactory)
     }
 
@@ -119,41 +120,45 @@ class MediaService : MediaSessionService() {
 
         launchIntentForPackage ?: return this
 
-        val pendingIntent = PendingIntent.getActivity(
-            this@MediaService,
-            21000000,
-            launchIntentForPackage,
-            PendingIntent.FLAG_IMMUTABLE
-        )
+        val pendingIntent =
+            PendingIntent.getActivity(
+                this@MediaService,
+                21000000,
+                launchIntentForPackage,
+                PendingIntent.FLAG_IMMUTABLE,
+            )
 
         return setSessionActivity(pendingIntent)
     }
 
-    override fun onGetSession(
-        controllerInfo: MediaSession.ControllerInfo
-    ): MediaSession = mediaSession
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession = mediaSession
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         super.onStartCommand(intent, flags, startId)
         val focusRequestResult = audioManager.requestAudioFocus(focusRequest)
 
         synchronized(focusLock) {
-            playBackAuthorized = when (focusRequestResult) {
-                AudioManager.AUDIOFOCUS_REQUEST_FAILED -> false
-                AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-                    if (player.playWhenReady) {
-                        player.play()
+            playBackAuthorized =
+                when (focusRequestResult) {
+                    AudioManager.AUDIOFOCUS_REQUEST_FAILED -> false
+                    AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
+                        if (player.playWhenReady) {
+                            player.play()
+                        }
+                        true
                     }
-                    true
-                }
 
-                AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
-                    playbackDelayed = true
-                    false
-                }
+                    AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
+                        playbackDelayed = true
+                        false
+                    }
 
-                else -> false
-            }
+                    else -> false
+                }
         }
 
         return START_NOT_STICKY
@@ -177,13 +182,14 @@ class MediaService : MediaSessionService() {
     private inner class MediaSessionCallback : MediaSession.Callback {
         override fun onConnect(
             session: MediaSession,
-            controller: MediaSession.ControllerInfo
+            controller: MediaSession.ControllerInfo,
         ): MediaSession.ConnectionResult {
             val connectionResult = super.onConnect(session, controller)
             val sessionCommands = connectionResult.availableSessionCommands
 
             return MediaSession.ConnectionResult.accept(
-                sessionCommands, connectionResult.availablePlayerCommands
+                sessionCommands,
+                connectionResult.availablePlayerCommands,
             )
         }
     }

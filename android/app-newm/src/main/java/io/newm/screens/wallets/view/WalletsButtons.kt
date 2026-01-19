@@ -32,27 +32,21 @@ fun ConnectNewWalletButton(
     onClick: () -> Unit,
 ) {
     NewmButton(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .then(modifier),
+        modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min).then(modifier),
         unselectedBrush = walletButtonGradient,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Icon(
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .fillMaxHeight(),
+            modifier = Modifier.align(Alignment.CenterVertically).fillMaxHeight(),
             imageVector = Icons.Sharp.Add,
             tint = Purple,
-            contentDescription = null
+            contentDescription = null,
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
-            modifier = Modifier
-                .align(Alignment.CenterVertically),
+            modifier = Modifier.align(Alignment.CenterVertically),
             text = stringResource(R.string.wallets_screen_connect_new_wallet),
-            style = defaultButtonLabelStyle
+            style = defaultButtonLabelStyle,
         )
     }
 }

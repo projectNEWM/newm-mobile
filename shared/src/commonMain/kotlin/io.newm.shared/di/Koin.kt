@@ -2,8 +2,6 @@ package io.newm.shared.di
 
 import io.ktor.client.engine.HttpClientEngine
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.shared.config.NewmSharedBuildConfigImpl
 import io.newm.shared.commonInternal.EarningsAPI
 import io.newm.shared.commonInternal.SessionManager
 import io.newm.shared.commonInternal.TokenManager
@@ -69,6 +67,8 @@ import io.newm.shared.commonPublic.usecases.UpdateProfilePictureUseCase
 import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
 import io.newm.shared.commonPublic.usecases.UserSessionUseCase
 import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
+import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.shared.config.NewmSharedBuildConfigImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -79,91 +79,95 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 import shared.platformModule
 
-fun initKoin(enableNetworkLogs: Boolean = true, appDeclaration: KoinAppDeclaration = {}) =
-    startKoin {
-        appDeclaration()
-        modules(commonModule(enableNetworkLogs = enableNetworkLogs), platformModule())
-    }
+fun initKoin(
+    enableNetworkLogs: Boolean = true,
+    appDeclaration: KoinAppDeclaration = {},
+) = startKoin {
+    appDeclaration()
+    modules(commonModule(enableNetworkLogs = enableNetworkLogs), platformModule())
+}
 
 // called by iOS etc
-//https://johnoreilly.dev/posts/kotlinmultiplatform-koin/
+// https://johnoreilly.dev/posts/kotlinmultiplatform-koin/
 fun initKoin(enableNetworkLogs: Boolean) = initKoin(enableNetworkLogs = enableNetworkLogs) {}
 
-fun commonModule(enableNetworkLogs: Boolean) = module {
-    single { createJson() }
-    single {
-        createHttpClient(
-            httpClientEngine = get(),
-            json = get(),
-            sessionManager = get(),
-            tokenManager = get(),
-            buildConfig = get(),
-            enableNetworkLogs = enableNetworkLogs,
-            appLogger = get()
-        )
+fun commonModule(enableNetworkLogs: Boolean) =
+    module {
+        single { createJson() }
+        single {
+            createHttpClient(
+                httpClientEngine = get(),
+                json = get(),
+                sessionManager = get(),
+                tokenManager = get(),
+                buildConfig = get(),
+                enableNetworkLogs = enableNetworkLogs,
+                appLogger = get(),
+            )
+        }
+        single(named("auth")) { get<NetworkClientFactory>().authHttpClient() }
+        single(named("public")) { get<NetworkClientFactory>().httpClient() }
+        single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
+        single(named("mainScope")) { CoroutineScope(Dispatchers.Main + SupervisorJob()) }
+        // Internal Configurations
+        single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl(get(), get(named("mainScope"))) }
+        single { NewmAppLogger() }
+        single { NewmAppEventLogger() }
+        single { SessionManager(get(), get(), get()) }
+        single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get(), get(), get()) }
+        // Internal API Services
+        single { CardanoWalletAPI(get(named("auth"))) }
+        single { EarningsAPI(get(named("auth")), get()) }
+        single { GenresAPI(get()) }
+        single { LoginAPI(get(named("public")), get()) }
+        single { NEWMWalletConnectionAPI(get(named("auth"))) }
+        single { PlaylistAPI(get(named("auth"))) }
+        single { RemoteConfigAPI(get(named("public"))) }
+        single { UserAPI(get(named("auth")), get()) }
+        single { NewmCloudinaryAPI(get(named("auth"))) }
+        // Internal Services
+        single { EarningsNetworkService(get()) }
+        single { NFTCacheService(get()) }
+        single { NFTNetworkService(get()) }
+        single { NftTrackStore(get(), get()) }
+        single { WalletConnectionCacheService(get()) }
+        single { WalletConnectionNetworkService(get()) }
+        // Internal Repositories
+        single { EarningsRepository(get(), get()) }
+        single { GenresRepository() }
+        single { LogInRepository(get(), get(), get(), get()) }
+        single { NFTRepository(get()) }
+        single { PlaylistRepository() }
+        single { UserRepository(get(), get(), get()) }
+        single { WalletRepository(get(), get(), get()) }
+        single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get(), get()) }
+        // External Use Cases to be consumed outside of KMM
+        single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
+        single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
+        single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
+        single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
+        single<FindWalletConnectionUseCase> { FindWalletConnectionUseCaseImpl(get()) }
+        single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get()) }
+        single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
+        single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
+        single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
+        single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
+        single<LoginUseCase> { LoginUseCaseImpl(get(), get()) }
+        single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
+        single<SignupUseCase> { SignupUseCaseImpl(get()) }
+        single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
+        single<UpdateProfilePictureUseCase> { UpdateProfilePictureUseCaseImpl(get(), get()) }
+        single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
+        single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
+        single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
     }
-    single(named("auth")) { get<NetworkClientFactory>().authHttpClient() }
-    single(named("public")) { get<NetworkClientFactory>().httpClient() }
-    single { CoroutineScope(Dispatchers.Default + SupervisorJob()) }
-    single(named("mainScope")) { CoroutineScope(Dispatchers.Main + SupervisorJob()) }
-    // Internal Configurations
-    single<NewmSharedBuildConfig> { NewmSharedBuildConfigImpl(get(), get(named("mainScope"))) }
-    single { NewmAppLogger() }
-    single { NewmAppEventLogger() }
-    single { SessionManager(get(), get(), get()) }
-    single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get(), get(), get()) }
-    // Internal API Services
-    single { CardanoWalletAPI(get(named("auth"))) }
-    single { EarningsAPI(get(named("auth")), get()) }
-    single { GenresAPI(get()) }
-    single { LoginAPI(get(named("public")), get()) }
-    single { NEWMWalletConnectionAPI(get(named("auth"))) }
-    single { PlaylistAPI(get(named("auth"))) }
-    single { RemoteConfigAPI(get(named("public"))) }
-    single { UserAPI(get(named("auth")), get()) }
-    single { NewmCloudinaryAPI(get(named("auth"))) }
-    // Internal Services
-    single { EarningsNetworkService(get()) }
-    single { NFTCacheService(get()) }
-    single { NFTNetworkService(get()) }
-    single { NftTrackStore(get(), get()) }
-    single { WalletConnectionCacheService(get()) }
-    single { WalletConnectionNetworkService(get()) }
-    // Internal Repositories
-    single { EarningsRepository(get(), get()) }
-    single { GenresRepository() }
-    single { LogInRepository(get(), get(), get(), get()) }
-    single { NFTRepository(get()) }
-    single { PlaylistRepository() }
-    single { UserRepository(get(), get(), get()) }
-    single { WalletRepository(get(), get(), get()) }
-    single<RemoteConfigRepository> { RemoteConfigRepositoryImpl(get(), get()) }
-    // External Use Cases to be consumed outside of KMM
-    single<ChangePasswordUseCase> { ChangePasswordUseCaseImpl(get()) }
-    single<ConnectWalletUseCase> { ConnectWalletUseCaseImpl(get(), get()) }
-    single<DeleteCurrentUserUseCase> { DeleteCurrentUserUseCaseImpl(get(), get()) }
-    single<DisconnectWalletUseCase> { DisconnectWalletUseCaseImpl(get(), get()) }
-    single<FindWalletConnectionUseCase> { FindWalletConnectionUseCaseImpl(get()) }
-    single<ForceAppUpdateUseCase> { ForceAppUpdateUseCaseImpl(get()) }
-    single<GetGenresUseCase> { GetGenresUseCaseImpl(get()) }
-    single<GetInvestmentPortfolioDataUseCase> { GetInvestmentPortfolioDataUseCaseImpl(get()) }
-    single<GetWalletConnectionsUseCase> { GetWalletConnectionsUseCaseImpl(get()) }
-    single<HasWalletConnectionsUseCase> { HasWalletConnectionsUseCaseImpl(get()) }
-    single<LoginUseCase> { LoginUseCaseImpl( get(), get()) }
-    single<ResetPasswordUseCase> { ResetPasswordUseCaseImpl(get()) }
-    single<SignupUseCase> { SignupUseCaseImpl(get()) }
-    single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
-    single<UpdateProfilePictureUseCase> { UpdateProfilePictureUseCaseImpl(get(), get()) }
-    single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
-    single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
-    single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
-}
 
-fun createJson() = Json {
-    isLenient = true
-    ignoreUnknownKeys = true
-    encodeDefaults = true
-}
+fun createJson() =
+    Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+        encodeDefaults = true
+    }
 
 internal fun createHttpClient(
     httpClientEngine: HttpClientEngine,
@@ -172,7 +176,7 @@ internal fun createHttpClient(
     sessionManager: SessionManager,
     enableNetworkLogs: Boolean,
     buildConfig: NewmSharedBuildConfig,
-    appLogger: NewmAppLogger
+    appLogger: NewmAppLogger,
 ): NetworkClientFactory =
     NetworkClientFactory(
         httpClientEngine,
@@ -181,5 +185,5 @@ internal fun createHttpClient(
         sessionManager,
         enableNetworkLogs,
         buildConfig,
-        appLogger
+        appLogger,
     )

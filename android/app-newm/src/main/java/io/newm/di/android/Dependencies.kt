@@ -1,7 +1,6 @@
 package io.newm.di.android
 
 import android.annotation.SuppressLint
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.media3.database.DatabaseProvider
 import androidx.media3.database.StandaloneDatabaseProvider
 import androidx.media3.datasource.DefaultHttpDataSource
@@ -50,193 +49,112 @@ import java.util.concurrent.Executor
 import androidx.media3.exoplayer.offline.DownloadManager as ExoDownloadManager
 
 @SuppressLint("UnsafeOptInUsageError")
-val viewModule = module {
-    single<FeatureFlagDataSource> { AndroidFeatureFlagManager(get(), get(), get(), get(), get()) }
-    single { ForceAppUpdateViewModel(get(), get()) }
-    single { RecaptchaClientProvider() }
-    single<RecaptchaManager> {
-        RecaptchaManagerImpl(get())
+val viewModule =
+    module {
+        single<FeatureFlagDataSource> { AndroidFeatureFlagManager(get(), get(), get(), get(), get()) }
+        single { ForceAppUpdateViewModel(get(), get()) }
+        single { RecaptchaClientProvider() }
+        single<RecaptchaManager> { RecaptchaManagerImpl(get()) }
+
+        factory { params ->
+            CreateAccountScreenPresenter(params.get(), get(), get(), get(), get(), get())
+        }
+
+        factory { params ->
+            ResetPasswordScreenPresenter(params.get(), get(), get(), get(), get(), get(), get())
+        }
+        single {
+            val sharedBuildConfig = get<NewmSharedBuildConfig>()
+            GoogleSignIn.getClient(
+                androidContext(),
+                GoogleSignInOptions
+                    .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(sharedBuildConfig.googleAuthClientId)
+                    .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
+                    .requestEmail()
+                    .build(),
+            )
+        }
+        single<SocialLoginManager> { SocialLoginManagerImpl(get()) }
+
+        factory { params ->
+            WelcomePresenter(
+                navigator = params.get(),
+                loginUseCase = get(),
+                socialLoginManager = get(),
+                recaptchaManager = get(),
+                analyticsTracker = get(),
+                logger = get(),
+            )
+        }
+        factory { params ->
+            LoginPresenter(
+                navigator = params.get(),
+                loginUseCase = { get() },
+                recaptchaManager = get(),
+                logger = get(),
+                analyticsTracker = get(),
+            )
+        }
+        factory { params ->
+            ProfilePresenter(params.get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        }
+
+        factory { params -> WalletsPresenter(params.get(), get(), get(), get(), get(), get(), get()) }
+
+        factory { params ->
+            WalletDetailPresenter(
+                navigator = params[0],
+                walletID = params[1],
+                walletName = params[2],
+                eventLogger = get(),
+                findWalletConnectionUseCase = get(),
+                syncWalletConnectionsUseCase = get(),
+                logger = get(),
+                nftTracksUseCase = get(),
+                getPortfolioDataUseCase = get(),
+                recaptchaClientProvider = get(),
+            )
+        }
+
+        factory { params ->
+            NFTLibraryPresenter(params.get(), get(), get(), get(), get(), get(), get(), get(), get())
+        }
+        factory { params -> RecordStorePresenter(params.get(), get()) }
+        factory { params -> MarketplacePresenter(params.get(), get()) }
+        factory { params ->
+            InvestmentPortfolioPresenter(params.get(), get(), get(), get(), get(), get(), get())
+        }
+
+        factory { params -> StudioPresenter(params.get(), get(), get()) }
+
+        factory { params ->
+            ProfileEditPresenter(params.get(), get(), get(), get(), get(), get(), get(), get())
+        }
+        factory { params -> ForceAppUpdatePresenter(params.get()) }
+        single<DatabaseProvider> { StandaloneDatabaseProvider(androidContext()) }
+        single<Cache> {
+            val downloadDirectory = androidContext().getExternalFilesDir(null)!!
+            SimpleCache(downloadDirectory, NoOpCacheEvictor(), get())
+        }
+        single<DownloadManager> { DownloadManagerImpl(androidContext(), get()) }
+        single<DownloadStateManager> { DownloadStateManagerImpl(get(), get(), get()) }
+        single { MediaSessionConnection(androidContext(), get(), get()) }
+        single<ExoDownloadManager> {
+            ExoDownloadManager(
+                androidContext(),
+                get(),
+                get(),
+                DefaultHttpDataSource.Factory(),
+                Executor(Runnable::run),
+            )
+        }
+        single<DevMenuPresenter> { DevMenuPresenter(get()) }
+        single<FeatureFlagsListPresenter> { FeatureFlagsListPresenter(get(), get(), get()) }
     }
 
-    factory { params ->
-        CreateAccountScreenPresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
-        )
+val androidModules =
+    module {
+        single { Logout(get(), get(), get(), get(), get(), get()) }
+        single { RestartApp(get()) }
     }
-    
-    factory { params ->
-        ResetPasswordScreenPresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(), get()
-        )
-    }
-    single {
-        val sharedBuildConfig = get<NewmSharedBuildConfig>()
-        GoogleSignIn.getClient(
-            androidContext(),
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(sharedBuildConfig.googleAuthClientId)
-                .requestScopes(Scope(Scopes.EMAIL), Scope(Scopes.PROFILE))
-                .requestEmail()
-                .build()
-        )
-    }
-    single<SocialLoginManager> { SocialLoginManagerImpl(get()) }
-
-    factory { params ->
-        WelcomePresenter(
-            navigator = params.get(),
-            loginUseCase = get(),
-            socialLoginManager = get(),
-            recaptchaManager = get(),
-            analyticsTracker = get(),
-            logger = get(),
-        )
-    }
-    factory { params ->
-        LoginPresenter(
-            navigator = params.get(),
-            loginUseCase = { get() },
-            recaptchaManager = get(),
-            logger = get(),
-            analyticsTracker = get()
-        )
-    }
-    factory { params ->
-        ProfilePresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-        )
-    }
-
-    factory { params ->
-        WalletsPresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-        )
-    }
-
-    factory { params ->
-        WalletDetailPresenter(
-            navigator = params[0],
-            walletID = params[1],
-            walletName = params[2],
-            eventLogger = get(),
-            findWalletConnectionUseCase = get(),
-            syncWalletConnectionsUseCase = get(),
-            logger = get(),
-            nftTracksUseCase = get(),
-            getPortfolioDataUseCase = get(),
-            recaptchaClientProvider = get(),
-        )
-    }
-
-    factory { params ->
-        NFTLibraryPresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-        )
-    }
-    factory { params ->
-        RecordStorePresenter(
-            params.get(),
-            get(),
-        )
-    }
-    factory { params ->
-        MarketplacePresenter(
-            params.get(),
-            get(),
-        )
-    }
-    factory { params ->
-        InvestmentPortfolioPresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-        )
-    }
-
-    factory { params ->
-        StudioPresenter(
-            params.get(),
-            get(),
-            get()
-        )
-    }
-
-    factory { params ->
-        ProfileEditPresenter(
-            params.get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-        )
-    }
-    factory { params ->
-        ForceAppUpdatePresenter(
-            params.get(),
-        )
-    }
-    single<DatabaseProvider> { StandaloneDatabaseProvider(androidContext()) }
-    single<Cache> {
-        val downloadDirectory = androidContext().getExternalFilesDir(null)!!
-        SimpleCache(downloadDirectory, NoOpCacheEvictor(), get())
-    }
-    single<DownloadManager> { DownloadManagerImpl(androidContext(), get()) }
-    single<DownloadStateManager> { DownloadStateManagerImpl(get(), get(), get()) }
-    single { MediaSessionConnection(androidContext(), get(), get()) }
-    single<ExoDownloadManager> {
-        ExoDownloadManager(
-            androidContext(),
-            get(),
-            get(),
-            DefaultHttpDataSource.Factory(),
-            Executor(Runnable::run)
-        )
-    }
-    single<DevMenuPresenter> { DevMenuPresenter(get()) }
-    single<FeatureFlagsListPresenter> { FeatureFlagsListPresenter(get(), get(), get()) }
-}
-
-val androidModules = module {
-    single { Logout(get(), get(), get(), get(), get(), get()) }
-    single { RestartApp(get()) }
-}

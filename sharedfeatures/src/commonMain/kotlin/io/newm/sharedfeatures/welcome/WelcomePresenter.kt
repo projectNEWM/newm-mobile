@@ -29,103 +29,101 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-class WelcomePresenter @Inject constructor(
-    @Assisted private val navigator: Navigator,
-    private val loginUseCase: LoginUseCase,
-    private val socialLoginManager: SocialLoginManager,
-    private val recaptchaManager: RecaptchaManager,
-    private val analyticsTracker: NewmAppEventLogger,
-    private val logger: NewmAppLogger,
-) : Presenter<UiState> {
+class WelcomePresenter
+    @Inject
+    constructor(
+        @Assisted private val navigator: Navigator,
+        private val loginUseCase: LoginUseCase,
+        private val socialLoginManager: SocialLoginManager,
+        private val recaptchaManager: RecaptchaManager,
+        private val analyticsTracker: NewmAppEventLogger,
+        private val logger: NewmAppLogger,
+    ) : Presenter<UiState> {
+        private val logTag = "WelcomeScreen"
 
-    private val logTag = "WelcomeScreen"
+        @Composable
+        override fun present(): UiState {
+            val uriHandler = LocalUriHandler.current
 
-    @Composable
-    override fun present(): UiState {
-        val uriHandler = LocalUriHandler.current
+            LaunchedEffect(Unit) { analyticsTracker.logPageLoad(AppScreens.WelcomeScreen.name) }
 
-        LaunchedEffect(Unit) {
-            analyticsTracker.logPageLoad(AppScreens.WelcomeScreen.name)
+            val launchGoogleSignIn = rememberGoogleSignInLauncher()
+
+            return Content(
+                onEvent = { event ->
+                    when (event) {
+                        CreateAccountClicked -> {
+                            analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.CREATE_ACCOUNT_BUTTON)
+                            navigator.goTo(CreateAccountScreen)
+                        }
+                        OnLogin -> {
+                            analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.LOGIN_WITH_EMAIL_BUTTON)
+                            navigator.goTo(LoginScreen)
+                        }
+                        OnGoogleSignInClicked -> {
+                            analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.LOGIN_WITH_GOOGLE_BUTTON)
+                            launchGoogleSignIn()
+                        }
+                        OnTermsOfServiceClicked -> {
+                            analyticsTracker.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
+                            uriHandler.openUri("https://newm.io/app-tos")
+                        }
+                        OnPrivacyPolicyClicked -> {
+                            analyticsTracker.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
+                            uriHandler.openUri("https://newm.io/app-privacy")
+                        }
+                        OnBack -> {
+                            navigator.pop()
+                        }
+                    }
+                },
+            )
         }
 
-        val launchGoogleSignIn = rememberGoogleSignInLauncher()
+        @Composable
+        private fun rememberGoogleSignInLauncher(): () -> Unit {
+            val scope = rememberCoroutineScope()
 
-        return Content(
-            onEvent = { event ->
-                when (event) {
-                    CreateAccountClicked -> {
-                        analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.CREATE_ACCOUNT_BUTTON)
-                        navigator.goTo(CreateAccountScreen)
+            return socialLoginManager.rememberGoogleSignInLauncher { result ->
+                when (result) {
+                    is GoogleSignInResult.Success -> {
+                        scope.launch {
+                            recaptchaManager
+                                .executeLogin()
+                                .onSuccess { code ->
+                                    try {
+                                        loginUseCase.logInWithGoogle(
+                                            idToken = result.idToken,
+                                            humanVerificationCode = code,
+                                        )
+                                        navigator.goTo(HomeScreen)
+                                    } catch (e: Exception) {
+                                        logger.error(logTag, "Sign in failed", e)
+                                    }
+                                }.onFailure { logger.error(logTag, "Recaptcha failed", it) }
+                        }
                     }
-                    OnLogin -> {
-                        analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.LOGIN_WITH_EMAIL_BUTTON)
-                        navigator.goTo(LoginScreen)
-                    }
-                    OnGoogleSignInClicked -> {
-                        analyticsTracker.logClickEvent(AppScreens.WelcomeScreen.LOGIN_WITH_GOOGLE_BUTTON)
-                        launchGoogleSignIn()
-                    }
-                    OnTermsOfServiceClicked -> {
-                        analyticsTracker.logClickEvent(AppScreens.AccountScreen.TERMS_AND_CONDITIONS_BUTTON)
-                        uriHandler.openUri("https://newm.io/app-tos")
-                    }
-                    OnPrivacyPolicyClicked -> {
-                        analyticsTracker.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
-                        uriHandler.openUri("https://newm.io/app-privacy")
-                    }
-                    OnBack -> {
-                        navigator.pop()
-                    }
-                }
-            },
-        )
-    }
 
-    @Composable
-    private fun rememberGoogleSignInLauncher(): () -> Unit {
-        val scope = rememberCoroutineScope()
-
-        return socialLoginManager.rememberGoogleSignInLauncher { result ->
-            when (result) {
-                is GoogleSignInResult.Success -> {
-                    scope.launch {
-                        recaptchaManager.executeLogin()
-                            .onSuccess { code ->
-                                try {
-                                    loginUseCase.logInWithGoogle(
-                                        idToken = result.idToken,
-                                        humanVerificationCode = code
-                                    )
-                                    navigator.goTo(HomeScreen)
-                                } catch (e: Exception) {
-                                    logger.error(logTag, "Sign in failed", e)
-                                }
-                            }
-                            .onFailure {
-                                logger.error(logTag, "Recaptcha failed", it)
-                            }
+                    is GoogleSignInResult.Failure -> {
+                        logger.error(logTag, "Google sign in failed", result.error)
                     }
-                }
-
-                is GoogleSignInResult.Failure -> {
-                    logger.error(logTag, "Google sign in failed", result.error)
                 }
             }
         }
     }
-}
 
-class WelcomePresenterFactory @Inject constructor(
-    private val presenter: (Navigator) -> WelcomePresenter,
-) : Presenter.Factory {
-    override fun create(
-        screen: Screen,
-        navigator: Navigator,
-        context: CircuitContext,
-    ): Presenter<*>? {
-        return when (screen) {
-            is WelcomeScreen -> presenter(navigator)
-            else -> null
-        }
+class WelcomePresenterFactory
+    @Inject
+    constructor(
+        private val presenter: (Navigator) -> WelcomePresenter,
+    ) : Presenter.Factory {
+        override fun create(
+            screen: Screen,
+            navigator: Navigator,
+            context: CircuitContext,
+        ): Presenter<*>? =
+            when (screen) {
+                is WelcomeScreen -> presenter(navigator)
+                else -> null
+            }
     }
-}

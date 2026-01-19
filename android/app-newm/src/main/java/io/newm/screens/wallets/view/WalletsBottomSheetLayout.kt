@@ -51,7 +51,10 @@ import io.newm.shared.commonPublic.models.WalletConnection
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-enum class BottomSheetType { DISCONNECT, RENAME }
+enum class BottomSheetType {
+    DISCONNECT,
+    RENAME,
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -62,15 +65,16 @@ fun WalletsBottomSheetLayout(
     selectedWalletConnection: WalletConnection?,
     walletState: WalletsUiState,
     eventLogger: NewmAppEventLogger,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val screenName = remember(type) {
-        if (type == BottomSheetType.DISCONNECT) {
-            AppScreens.WalletDisconnectScreen.name
-        } else {
-            AppScreens.WalletRenameScreen.name
+    val screenName =
+        remember(type) {
+            if (type == BottomSheetType.DISCONNECT) {
+                AppScreens.WalletDisconnectScreen.name
+            } else {
+                AppScreens.WalletRenameScreen.name
+            }
         }
-    }
 
     val keyboardController = LocalSoftwareKeyboardController.current
     LaunchedEffect(state.isVisible) {
@@ -85,28 +89,24 @@ fun WalletsBottomSheetLayout(
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
         sheetContent = {
             if (state.isVisible) {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(screenName)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(screenName) }
             }
             if (type == BottomSheetType.DISCONNECT) {
                 DisconnectContent(
                     walletState = walletState,
                     state = state,
-                    walletId = selectedWalletConnection?.id
+                    walletId = selectedWalletConnection?.id,
                 )
             } else {
                 RenameContent(
                     walletState = walletState,
                     state = state,
-                    wallet = requireNotNull(selectedWalletConnection) {
-                        "selectedWallet should not be null"
-                    }
+                    wallet = requireNotNull(selectedWalletConnection) { "selectedWallet should not be null" },
                 )
             }
         },
         scrimColor = Gray23.copy(alpha = 0.7F),
-        content = content
+        content = content,
     )
 }
 
@@ -119,37 +119,23 @@ private fun RenameContent(
     val scope = rememberCoroutineScope()
     var newName by remember { mutableStateOf("") }
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.background),
-        horizontalAlignment = Alignment.Start
+        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background),
+        horizontalAlignment = Alignment.Start,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 16.dp),
+                modifier = Modifier.weight(1f).padding(start = 16.dp),
                 text = stringResource(id = R.string.wallets_screen_rename_modal_title),
-                style = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                )
+                style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Bold, fontSize = 24.sp),
             )
-            IconButton(onClick = {
-                scope.launch {
-                    state.hide()
-                }
-            }) {
+            IconButton(onClick = { scope.launch { state.hide() } }) {
                 Icon(imageVector = Icons.Default.Close, null)
             }
         }
         Row(
-            modifier = Modifier
-                .width(IntrinsicSize.Min)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.width(IntrinsicSize.Min).padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             WalletRowItemDetails(wallet)
             Spacer(modifier = Modifier.weight(2f))
@@ -157,28 +143,24 @@ private fun RenameContent(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             text = stringResource(R.string.wallets_rename_text_label).uppercase(Locale.getDefault()),
-            style = formLabelStyle.copy(color = Gray6F)
+            style = formLabelStyle.copy(color = Gray6F),
         )
         WalletsTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             value = newName,
             onValueChange = { newName = it },
             onDone = {
                 scope.launch {
                     walletState.eventSink(
                         WalletsEvent.OnRenameWallet(
-                            walletId = requireNotNull(wallet.id) {
-                                "selectedWalletId should not be null"
-                            },
-                            newName = newName
-                        )
+                            walletId = requireNotNull(wallet.id) { "selectedWalletId should not be null" },
+                            newName = newName,
+                        ),
                     )
                     state.hide()
                     newName = ""
                 }
-            }
+            },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
@@ -188,16 +170,14 @@ private fun RenameContent(
                 scope.launch {
                     walletState.eventSink(
                         WalletsEvent.OnRenameWallet(
-                            walletId = requireNotNull(wallet.id) {
-                                "selectedWalletId should not be null"
-                            },
-                            newName = newName
-                        )
+                            walletId = requireNotNull(wallet.id) { "selectedWalletId should not be null" },
+                            newName = newName,
+                        ),
                     )
                     state.hide()
                     newName = ""
                 }
-            }
+            },
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -207,32 +187,21 @@ private fun RenameContent(
 private fun DisconnectContent(
     walletState: WalletsUiState,
     state: ModalBottomSheetState,
-    walletId: String?
+    walletId: String?,
 ) {
     val scope = rememberCoroutineScope()
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.background)
-            .padding(16.dp),
+        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
     ) {
         Text(
             text = stringResource(id = R.string.wallets_screen_disconnect_wallet_modal_title),
-            style = TextStyle(
-                fontFamily = inter,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-            )
+            style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Bold, fontSize = 24.sp),
         )
         Text(
             text = stringResource(R.string.wallets_screen_disconnect_wallet_modal_desc),
-            style = TextStyle(
-                fontFamily = inter,
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-            )
+            style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Normal, fontSize = 14.sp),
         )
         Spacer(modifier = Modifier.height(8.dp))
         PrimaryButton(
@@ -241,22 +210,16 @@ private fun DisconnectContent(
                 scope.launch {
                     walletState.eventSink(
                         WalletsEvent.OnDisconnectWallet(
-                            requireNotNull(walletId) {
-                                "selectedWalletId should not be null"
-                            }
-                        )
+                            requireNotNull(walletId) { "selectedWalletId should not be null" },
+                        ),
                     )
                     state.hide()
                 }
-            }
+            },
         )
         SecondaryButton(
             labelResId = R.string.dialog_cancel,
-            onClick = {
-                scope.launch {
-                    state.hide()
-                }
-            }
+            onClick = { scope.launch { state.hide() } },
         )
     }
 }

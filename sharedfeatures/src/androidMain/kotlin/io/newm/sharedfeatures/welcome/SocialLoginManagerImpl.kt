@@ -15,39 +15,43 @@ import me.tatarka.inject.annotations.Inject
 
 @Inject
 actual class SocialLoginManagerImpl(
-    private val sharedBuildConfig: NewmSharedBuildConfig
+    private val sharedBuildConfig: NewmSharedBuildConfig,
 ) : SocialLoginManager {
-
     @Composable
-    override fun rememberGoogleSignInLauncher(
-        onResult: (GoogleSignInResult) -> Unit
-    ): () -> Unit {
+    override fun rememberGoogleSignInLauncher(onResult: (GoogleSignInResult) -> Unit): () -> Unit {
         val context = LocalContext.current
-        
-        val launcher = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            try {
-                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
-                val idToken = account.idToken
-                if (idToken != null) {
-                    onResult(GoogleSignInResult.Success(idToken))
-                } else {
-                    onResult(GoogleSignInResult.Failure(IllegalStateException("Google sign in failed. idToken is null")))
+
+        val launcher =
+            rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartActivityForResult(),
+            ) { result ->
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                try {
+                    val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+                    val idToken = account.idToken
+                    if (idToken != null) {
+                        onResult(GoogleSignInResult.Success(idToken))
+                    } else {
+                        onResult(
+                            GoogleSignInResult.Failure(
+                                IllegalStateException("Google sign in failed. idToken is null"),
+                            ),
+                        )
+                    }
+                } catch (e: ApiException) {
+                    onResult(GoogleSignInResult.Failure(e))
                 }
-            } catch (e: ApiException) {
-                onResult(GoogleSignInResult.Failure(e))
             }
-        }
 
         return remember {
             {
-                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(sharedBuildConfig.googleAuthClientId)
-                    .requestEmail()
-                    .build()
-                
+                val gso =
+                    GoogleSignInOptions
+                        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(sharedBuildConfig.googleAuthClientId)
+                        .requestEmail()
+                        .build()
+
                 val googleSignInClient = GoogleSignIn.getClient(context, gso)
                 launcher.launch(googleSignInClient.signInIntent)
             }

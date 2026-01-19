@@ -51,64 +51,52 @@ internal const val TAG_INVESTMENT_PORTFOLIO_SCREEN = "TAG_INVESTMENT_PORTFOLIO_S
 fun InvestmentPortfolioUi(
     state: InvestmentPortfolioState,
     modifier: Modifier = Modifier,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     when (state) {
         is InvestmentPortfolioState.Content -> PortfolioScreen(modifier, state)
-        InvestmentPortfolioState.Error -> ErrorScreen(
-            title = stringResource(R.string.nft_library_error_message),
-            message = "Something went wrong"
-        )
+        InvestmentPortfolioState.Error ->
+            ErrorScreen(
+                title = stringResource(R.string.nft_library_error_message),
+                message = "Something went wrong",
+            )
 
         InvestmentPortfolioState.Loading -> LoadingScreen()
         InvestmentPortfolioState.ZeroState -> ZeroStateScreen()
     }
-
 }
 
 @Composable
 fun PortfolioScreen(
     modifier: Modifier = Modifier,
-    content: InvestmentPortfolioState.Content
+    content: InvestmentPortfolioState.Content,
 ) {
     val currentContext = LocalContext.current
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .testTag(TAG_INVESTMENT_PORTFOLIO_SCREEN),
+        modifier = modifier.fillMaxSize().statusBarsPadding().testTag(TAG_INVESTMENT_PORTFOLIO_SCREEN),
     ) {
         Text(
             text = stringResource(id = R.string.title_investment_portfolio),
             modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.h1.copy(textGradient(SteelPink, CerisePink))
+            style = MaterialTheme.typography.h1.copy(textGradient(SteelPink, CerisePink)),
         )
 
-        Box(
-            modifier = Modifier
-                .padding(all = 16.dp)
-                .background(color = Gray16)
-                .fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(all = 16.dp)
-            ) {
+        Box(modifier = Modifier.padding(all = 16.dp).background(color = Gray16).fillMaxWidth()) {
+            Column(modifier = Modifier.padding(all = 16.dp)) {
                 Text(
                     text = stringResource(id = R.string.you_have_royalties_to_claim),
-                    style = MaterialTheme.typography.h6
+                    style = MaterialTheme.typography.h6,
                 )
 
                 Text(
                     text = "NEWM Tokens: $${content.claimableTokenAmount}",
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.body1,
                 )
                 SecondaryButton(
                     modifier = Modifier.padding(vertical = 32.dp),
                     labelResId = R.string.claim,
-                    onClick = {
-                        Toast.makeText(currentContext, "Coming soon!", Toast.LENGTH_SHORT).show()
-                    })
+                    onClick = { Toast.makeText(currentContext, "Coming soon!", Toast.LENGTH_SHORT).show() },
+                )
                 ListOfStreamTokens(content)
             }
         }
@@ -118,19 +106,17 @@ fun PortfolioScreen(
 @Composable
 private fun ListOfStreamTokens(content: InvestmentPortfolioState.Content) {
     Box {
-        LazyColumn(
-            modifier = Modifier.padding(bottom = 32.dp)
-                .fillMaxSize(),
-        ) {
+        LazyColumn(modifier = Modifier.padding(bottom = 32.dp).fillMaxSize()) {
             when {
                 content.streamTokens.isNotEmpty() -> {
-                    items(content.streamTokens, key = { track ->
-                        // Use the unique ID as the key
-                        track.id
-                    }) { track ->
-                        StreamTokenRowItem(
-                            track = track
-                        )
+                    items(
+                        content.streamTokens,
+                        key = { track ->
+                            // Use the unique ID as the key
+                            track.id
+                        },
+                    ) { track ->
+                        StreamTokenRowItem(track = track)
                     }
                 }
             }
@@ -138,48 +124,31 @@ private fun ListOfStreamTokens(content: InvestmentPortfolioState.Content) {
     }
 }
 
-@Composable
-private fun ZeroStateScreen() {
-
-}
+@Composable private fun ZeroStateScreen() {}
 
 @Composable
-private fun StreamTokenRowItem(
-    track: NFTTrack,
-) {
-    Box(
-        Modifier
-            .height(64.dp)
-            .fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically
-
-        ) {
+private fun StreamTokenRowItem(track: NFTTrack) {
+    Box(Modifier.height(64.dp).fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(track.imageUrl)
-                    .error(R.drawable.ic_default_track_cover_art)
-                    .placeholder(R.drawable.ic_default_track_cover_art)
-                    .build(),
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(4.dp)),
+                model =
+                    ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(track.imageUrl)
+                        .error(R.drawable.ic_default_track_cover_art)
+                        .placeholder(R.drawable.ic_default_track_cover_art)
+                        .build(),
+                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(4.dp)),
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
             )
-            Column(
-                modifier = Modifier
-                    .padding(start = 12.dp)
-            ) {
+            Column(modifier = Modifier.padding(start = 12.dp)) {
                 Text(
                     text = track.title,
                     fontFamily = inter,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
-                    color = White
+                    color = White,
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -187,7 +156,7 @@ private fun StreamTokenRowItem(
                         fontFamily = inter,
                         fontWeight = FontWeight.Normal,
                         fontSize = 12.sp,
-                        color = GraySuit
+                        color = GraySuit,
                     )
                 }
             }

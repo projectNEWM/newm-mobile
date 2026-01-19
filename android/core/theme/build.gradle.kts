@@ -2,68 +2,59 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("com.android.library")
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.compose.multiplatform)
+  id("com.android.library")
+  alias(libs.plugins.kotlinMultiplatform)
+  alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+  compileSdk = libs.versions.android.compileSdk.get().toInt()
 
-    namespace = "io.newm.core.theme"
+  namespace = "io.newm.core.theme"
 
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+  defaultConfig {
+    minSdk = libs.versions.android.minSdk.get().toInt()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles("consumer-rules.pro")
+  }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+  }
 }
 
 kotlin {
-    androidTarget()
+  androidTarget()
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser {}
-    }
-    jvm("desktop") {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
+  @OptIn(ExperimentalWasmDsl::class) wasmJs { browser {} }
+  jvm("desktop") { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
+
+  sourceSets {
+    commonMain {
+      dependencies {
+        implementation(compose.components.resources)
+        implementation(compose.material)
+      }
     }
 
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(compose.components.resources)
-                implementation(compose.material)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.appcompat)
-                implementation(libs.androidx.material)
-            }
-        }
+    androidMain {
+      dependencies {
+        implementation(libs.androidx.appcompat)
+        implementation(libs.androidx.material)
+      }
     }
+  }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
-    }
+  compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
 }
 
 tasks.withType<JavaCompile> {
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
+  sourceCompatibility = "11"
+  targetCompatibility = "11"
 }

@@ -29,32 +29,28 @@ internal fun Content(
     state: WalletsUiState.Content,
     eventLogger: NewmAppEventLogger,
     onDisconnectWallet: (WalletConnection) -> Unit,
-    onRenameWallet: (WalletConnection) -> Unit
+    onRenameWallet: (WalletConnection) -> Unit,
 ) {
-    val launchBarcodeScanner = rememberBarcodeScannerLauncher {
-        state.eventSink(WalletsEvent.OnConnectWallet(it))
-    }
+    val launchBarcodeScanner =
+        rememberBarcodeScannerLauncher {
+            state.eventSink(WalletsEvent.OnConnectWallet(it))
+        }
 
     val clipboard = LocalClipboard.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top)
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
     ) {
         LazyColumn(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(
-                items = state.wallets,
-                key = { it.id }
-            ) {
+            items(items = state.wallets, key = { it.id }) {
                 WalletRowItem(
                     connection = it,
                     eventLogger = eventLogger,
@@ -74,18 +70,18 @@ internal fun Content(
                                     ClipData.newPlainText(
                                         context.getString(
                                             R.string.wallets_copy_address_label,
-                                            it.id // TODO ID should be replaced with wallet name
+                                            it.id, // TODO ID should be replaced with wallet name
                                         ),
-                                        it.stakeAddress
-                                    )
-                                )
+                                        it.stakeAddress,
+                                    ),
+                                ),
                             )
                         }
                     },
                     onDisconnectClick = {
                         eventLogger.logClickEvent(AppScreens.WalletsScreen.DISCONNECT_WALLET_BUTTON)
                         onDisconnectWallet(it)
-                    }
+                    },
                 )
             }
         }
@@ -93,7 +89,7 @@ internal fun Content(
             onClick = {
                 eventLogger.logClickEvent(AppScreens.WalletsScreen.CONTENT_ADD_WALLET_BUTTON)
                 launchBarcodeScanner()
-            }
+            },
         )
     }
 }

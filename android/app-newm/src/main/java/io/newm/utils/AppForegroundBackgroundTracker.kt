@@ -9,14 +9,16 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 class AppForegroundBackgroundTracker(
     private val analyticsTracker: NewmAppEventLogger,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
 ) : Application.ActivityLifecycleCallbacks {
-
     private val TAG: String = AppForegroundBackgroundTracker::class.java.simpleName
     private var activityReferences = 0
     private var isActivityChangingConfigurations = false
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+    override fun onActivityCreated(
+        activity: Activity,
+        savedInstanceState: Bundle?,
+    ) {
         if (activityReferences == 0 && !isActivityChangingConfigurations) {
             // Track initial app launch when first activity is created
             try {
@@ -24,8 +26,8 @@ class AppForegroundBackgroundTracker(
                     "app_launch",
                     mapOf(
                         "app_version" to BuildConfig.VERSION_NAME,
-                        "timestamp" to System.currentTimeMillis()
-                    )
+                        "timestamp" to System.currentTimeMillis(),
+                    ),
                 )
             } catch (e: Exception) {
                 logger.error(TAG, "Error tracking app launch", e)
@@ -52,8 +54,8 @@ class AppForegroundBackgroundTracker(
                     "app_close",
                     mapOf(
                         "app_version" to BuildConfig.VERSION_NAME,
-                        "timestamp" to System.currentTimeMillis()
-                    )
+                        "timestamp" to System.currentTimeMillis(),
+                    ),
                 )
             } catch (e: Exception) {
                 logger.error(TAG, "Error tracking app close", e)
@@ -61,7 +63,10 @@ class AppForegroundBackgroundTracker(
         }
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+    override fun onActivitySaveInstanceState(
+        activity: Activity,
+        outState: Bundle,
+    ) {}
 
     override fun onActivityDestroyed(activity: Activity) {}
 }

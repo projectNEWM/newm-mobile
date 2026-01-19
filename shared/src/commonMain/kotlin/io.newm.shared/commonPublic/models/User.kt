@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 /**
  * A data class representing a user, annotated with `@Serializable` for serialization purposes.
  *
- * This class encapsulates various properties of a user, including personal details,
- * social media links, location, role, and account information. Optional properties are nullable.
+ * This class encapsulates various properties of a user, including personal details, social media
+ * links, location, role, and account information. Optional properties are nullable.
  *
  * @property id Unique identifier of the user.
  * @property createdAt Timestamp of when the user account was created.
@@ -60,13 +60,9 @@ data class User(
     val verificationStatus: String? = null,
     val currentPassword: String? = null,
     val newPassword: String? = null,
-    val confirmPassword: String? = null
+    val confirmPassword: String? = null,
 )
 
-fun User.fullName(): String {
-    return "${firstName.orEmpty().trim()} ${lastName.orEmpty().trim()}".trim()
-}
+fun User.fullName(): String = "${firstName.orEmpty().trim()} ${lastName.orEmpty().trim()}".trim()
 
-fun User.canEditName(): Boolean {
-    return verificationStatus == "Unverified"
-}
+fun User.canEditName(): Boolean = verificationStatus == "Unverified"

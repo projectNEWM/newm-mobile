@@ -14,24 +14,21 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 
 class RecordStorePresenter(
     private val navigator: Navigator,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
 ) : Presenter<RecordStoreState> {
     @Composable
     override fun present(): RecordStoreState {
         val context = LocalContext.current
-        val connectivityManager = remember {
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        }
-        val isNetworkAvailable by remember {
-            mutableStateOf(connectivityManager.activeNetwork != null)
-        }
+        val connectivityManager =
+            remember {
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            }
+        val isNetworkAvailable by remember { mutableStateOf(connectivityManager.activeNetwork != null) }
         return when {
             !isNetworkAvailable -> RecordStoreState.Error
             else -> {
                 eventLogger.logPageLoad(AppScreens.RecordStoreScreen.name)
-                RecordStoreState.Content(
-                    eventSink = {}
-                )
+                RecordStoreState.Content(eventSink = {})
             }
         }
     }

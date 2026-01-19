@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 open class TextFieldState(
     defaultValue: String = "",
     private val validator: (String) -> Boolean = { true },
-    private val errorFor: (Context, String) -> String = { _, _ -> "" }
+    private val errorFor: (Context, String) -> String = { _, _ -> "" },
 ) {
     var text: String by mutableStateOf(defaultValue)
 
@@ -36,14 +36,13 @@ open class TextFieldState(
 
     /**
      * Gets error string
-     * @param context   needed for fetching string resource
+     *
+     * @param context needed for fetching string resource
      */
-    open fun getError(context: Context): String? {
-        return if (showErrors()) {
+    open fun getError(context: Context): String? =
+        if (showErrors()) {
             errorFor(context, text)
         } else {
             null
         }
-    }
 }
-

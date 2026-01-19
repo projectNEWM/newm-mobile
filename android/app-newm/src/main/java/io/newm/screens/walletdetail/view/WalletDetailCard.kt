@@ -12,11 +12,9 @@ import io.newm.core.theme.Gray16
 @Composable
 fun WalletDetailCard(content: @Composable () -> Unit) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 64.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
         shape = RoundedCornerShape(4.dp),
-        backgroundColor = Gray16
+        backgroundColor = Gray16,
     ) {
         content()
     }

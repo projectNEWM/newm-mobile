@@ -27,17 +27,10 @@ import io.newm.core.resources.R as CoreR
 @Composable
 fun ToBeImplemented(
     text: String = stringResource(CoreR.string.to_be_implemented_message),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
-    Box(
-        modifier = Modifier
-            .clickable {
-                context.shortToast(text)
-            },
-    ) {
-        content()
-    }
+    Box(modifier = Modifier.clickable { context.shortToast(text) }) { content() }
 }
 
 /**
@@ -49,21 +42,19 @@ inline fun CollapsibleView(
     isVisible: Boolean,
     crossinline onEnterFinished: () -> Unit = {},
     crossinline onExitFinished: () -> Unit = {},
-    crossinline content: @Composable () -> Unit
+    crossinline content: @Composable () -> Unit,
 ) {
-    val transitionState = remember {
-        MutableTransitionState(isVisible).apply {
-            targetState = isVisible
+    val transitionState =
+        remember {
+            MutableTransitionState(isVisible).apply { targetState = isVisible }
         }
-    }
 
-    LaunchedEffect(isVisible) {
-        transitionState.targetState = isVisible
-    }
+    LaunchedEffect(isVisible) { transitionState.targetState = isVisible }
 
     LaunchedEffect(transitionState) {
-        snapshotFlow { transitionState.isIdle && transitionState.currentState == transitionState.targetState }
-            .distinctUntilChanged()
+        snapshotFlow {
+            transitionState.isIdle && transitionState.currentState == transitionState.targetState
+        }.distinctUntilChanged()
             .filter { it }
             .collect {
                 if (transitionState.currentState) {
@@ -78,45 +69,36 @@ inline fun CollapsibleView(
         visibleState = transitionState,
         enter = expandVertically(),
         exit = shrinkVertically(),
-        content = {
-            content()
-        }
+        content = { content() },
     )
 }
 
-/**
- * You can't put a LazyColumn inside a Column/Card
- */
+/** You can't put a LazyColumn inside a Column/Card */
 inline fun <T> LazyListScope.collapsibleCard(
     items: List<T>,
     isExpanded: Boolean,
     crossinline onEnterFinished: () -> Unit = {},
     crossinline onExitFinished: () -> Unit = {},
     crossinline header: @Composable () -> Unit,
-    crossinline content: @Composable (T) -> Unit
+    crossinline content: @Composable (T) -> Unit,
 ) {
-    item {
-        header()
-    }
+    item { header() }
     itemsIndexed(
         items = items,
         key = { i, item -> "$i+${item.hashCode()}" },
-        contentType = { _, item -> item }
+        contentType = { _, item -> item },
     ) { i, item ->
-        val itemShape = when (i) {
-            items.size - 1 -> RoundedCornerShape(bottomEnd = 4.dp, bottomStart = 4.dp)
-            else -> RoundedCornerShape(0.dp)
-        }
+        val itemShape =
+            when (i) {
+                items.size - 1 -> RoundedCornerShape(bottomEnd = 4.dp, bottomStart = 4.dp)
+                else -> RoundedCornerShape(0.dp)
+            }
         CollapsibleView(
             isVisible = isExpanded,
             onEnterFinished = onEnterFinished,
             onExitFinished = onExitFinished,
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Gray16, shape = itemShape)
-            ) {
+            Box(modifier = Modifier.fillMaxWidth().background(color = Gray16, shape = itemShape)) {
                 content(item)
             }
         }

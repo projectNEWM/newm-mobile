@@ -9,18 +9,15 @@ abstract class SnapshotTest(
     private val snapshotTestConfiguration: SnapshotTestConfiguration,
 ) {
     @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = snapshotTestConfiguration.deviceConfig.copy(fontScale = snapshotTestConfiguration.fontScale),
-    )
+    val paparazzi =
+        Paparazzi(
+            deviceConfig =
+                snapshotTestConfiguration.deviceConfig.copy(fontScale = snapshotTestConfiguration.fontScale),
+        )
 
-    fun snapshot(
-        content: @Composable () -> Unit,
-    ) {
+    fun snapshot(content: @Composable () -> Unit) {
         paparazzi.snapshot {
-            NewmTheme(
-                darkTheme = snapshotTestConfiguration.isDarkMode,
-                content = content,
-            )
+            NewmTheme(darkTheme = snapshotTestConfiguration.isDarkMode, content = content)
         }
     }
 }

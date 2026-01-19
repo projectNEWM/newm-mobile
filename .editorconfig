@@ -1,0 +1,5 @@
+[*.{kt,kts}]
+# Compose allows PascalCase for @Composable functions
+ktlint_standard_function-naming = disabled
+# Filename should match class name is not always desired
+ktlint_standard_filename = disabled

@@ -6,7 +6,6 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 interface DeleteCurrentUserUseCase {
-
     @Throws(KMMException::class, CancellationException::class)
     suspend fun delete()
 }
@@ -14,7 +13,5 @@ interface DeleteCurrentUserUseCase {
 class DeleteCurrentUserUseCaseProvider : KoinComponent {
     private val deleteCurrentUserUseCase: DeleteCurrentUserUseCase by inject()
 
-    fun get(): DeleteCurrentUserUseCase {
-        return this.deleteCurrentUserUseCase
-    }
+    fun get(): DeleteCurrentUserUseCase = this.deleteCurrentUserUseCase
 }

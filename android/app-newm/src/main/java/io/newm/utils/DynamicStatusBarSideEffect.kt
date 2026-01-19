@@ -8,9 +8,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 @Composable
-fun DynamicStatusBarSideEffect(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-) {
+fun DynamicStatusBarSideEffect(darkTheme: Boolean = isSystemInDarkTheme()) {
     val view = LocalView.current
 
     if (!view.isInEditMode) {

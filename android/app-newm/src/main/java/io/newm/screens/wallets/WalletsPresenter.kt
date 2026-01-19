@@ -27,65 +27,59 @@ class WalletsPresenter(
     private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
 ) : Presenter<WalletsUiState> {
     @Composable
     override fun present(): WalletsUiState {
-        /**
-         * In case user removes all of their wallets while on this screen,
-         * we show an empty state.
-         */
-        val userHasWalletsConnected: Boolean? by remember {
-            hasWalletConnectionsUseCase.hasWalletConnectionsFlow()
-        }.collectAsState(initial = null)
+        /** In case user removes all of their wallets while on this screen, we show an empty state. */
+        val userHasWalletsConnected: Boolean? by
+            remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }
+                .collectAsState(initial = null)
 
-        val userConnectedWallets: List<WalletConnection>? by remember {
-            getWalletConnectionsUseCase.getWalletConnectionsFromCacheFlow()
-        }.collectAsState(initial = null)
+        val userConnectedWallets: List<WalletConnection>? by
+            remember { getWalletConnectionsUseCase.getWalletConnectionsFromCacheFlow() }
+                .collectAsState(initial = null)
 
         var isSyncing by remember { mutableStateOf(false) }
         val scope = rememberStableCoroutineScope()
 
-        val eventSink: (WalletsEvent) -> Unit = remember {
-            {
-                when (it) {
-                    is WalletsEvent.OnBack -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.BACK_BUTTON)
-                        navigator.pop()
-                    }
-
-                    is WalletsEvent.OnRefresh -> {
-                        eventLogger.logEvent(AppScreens.WalletsScreen.PULL_TO_REFRESH)
-                        scope.launch {
-                            isSyncing = true
-                            syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
-                            isSyncing = false
+        val eventSink: (WalletsEvent) -> Unit =
+            remember {
+                {
+                    when (it) {
+                        is WalletsEvent.OnBack -> {
+                            eventLogger.logClickEvent(AppScreens.WalletsScreen.BACK_BUTTON)
+                            navigator.pop()
                         }
-                    }
 
-                    is WalletsEvent.OnDisconnectWallet -> {
-                        scope.launch {
-                            disconnectWalletUseCase.disconnectSingleWallet(it.walletId)
+                        is WalletsEvent.OnRefresh -> {
+                            eventLogger.logEvent(AppScreens.WalletsScreen.PULL_TO_REFRESH)
+                            scope.launch {
+                                isSyncing = true
+                                syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+                                isSyncing = false
+                            }
                         }
-                    }
 
-                    is WalletsEvent.OnConnectWallet -> {
-                        scope.launch {
-                            connectWalletUseCase.connect(it.newmCode)
+                        is WalletsEvent.OnDisconnectWallet -> {
+                            scope.launch { disconnectWalletUseCase.disconnectSingleWallet(it.walletId) }
                         }
-                    }
 
-                    is WalletsEvent.OnRenameWallet -> {
-                        eventLogger.logClickEvent(AppScreens.WalletsScreen.WALLET_RENAME_CONFIRM)
-                        //TODO logic to rename wallet
-                    }
+                        is WalletsEvent.OnConnectWallet -> {
+                            scope.launch { connectWalletUseCase.connect(it.newmCode) }
+                        }
 
-                    is WalletsEvent.OnWalletDetailView -> {
-                        navigator.goTo(Screen.WalletDetail(it.walletId, "Wallet Name"))
+                        is WalletsEvent.OnRenameWallet -> {
+                            eventLogger.logClickEvent(AppScreens.WalletsScreen.WALLET_RENAME_CONFIRM)
+                            // TODO logic to rename wallet
+                        }
+
+                        is WalletsEvent.OnWalletDetailView -> {
+                            navigator.goTo(Screen.WalletDetail(it.walletId, "Wallet Name"))
+                        }
                     }
                 }
             }
-        }
 
         return when {
             userConnectedWallets == null || userHasWalletsConnected == null -> {
@@ -100,7 +94,7 @@ class WalletsPresenter(
                 WalletsUiState.Content(
                     wallets = requireNotNull(userConnectedWallets) { "Wallets should not be null!" },
                     eventSink = eventSink,
-                    isRefreshing = isSyncing
+                    isRefreshing = isSyncing,
                 )
             }
         }

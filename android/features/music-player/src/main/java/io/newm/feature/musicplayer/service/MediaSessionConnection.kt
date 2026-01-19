@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class MediaSessionConnection(
     context: Context,
     private val scope: CoroutineScope,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
 ) {
     private val _musicPlayer = MutableStateFlow<MusicPlayer?>(null)
     val musicPlayer = _musicPlayer.asStateFlow()
@@ -22,18 +22,18 @@ class MediaSessionConnection(
         val sessionToken = SessionToken(context, ComponentName(context, MediaService::class.java))
         val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
 
-        controllerFuture.addListener({
-            try {
-                val player = controllerFuture.get()
-                // MusicPlayerImpl interacts with MediaController which requires Main thread.
-                // We create a new scope based on the application scope but confined to Main dispatcher.
-                _musicPlayer.value = MusicPlayerImpl(player, scope, eventLogger)
-            } catch (e: Exception) {
-                eventLogger.logEvent(
-                    "MediaSessionConnectionError",
-                    mapOf("message" to e.message)
-                )
-            }
-        }, MoreExecutors.directExecutor())
+        controllerFuture.addListener(
+            {
+                try {
+                    val player = controllerFuture.get()
+                    // MusicPlayerImpl interacts with MediaController which requires Main thread.
+                    // We create a new scope based on the application scope but confined to Main dispatcher.
+                    _musicPlayer.value = MusicPlayerImpl(player, scope, eventLogger)
+                } catch (e: Exception) {
+                    eventLogger.logEvent("MediaSessionConnectionError", mapOf("message" to e.message))
+                }
+            },
+            MoreExecutors.directExecutor(),
+        )
     }
 }

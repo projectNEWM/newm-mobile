@@ -22,25 +22,20 @@ class ForceAppUpdatePresenter(
                         context.openPlayStore()
                     }
                 }
-            }
+            },
         )
     }
 
     private fun Context.openPlayStore() {
         val appPackageName = this.packageName
         try {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=$appPackageName")
-                )
-            )
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
         } catch (e: Exception) {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                )
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"),
+                ),
             )
         }
     }

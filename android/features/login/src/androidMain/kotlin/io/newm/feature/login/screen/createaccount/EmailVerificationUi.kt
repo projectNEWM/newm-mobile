@@ -54,10 +54,7 @@ internal fun EmailVerificationContent(
     ToastSideEffect(errorMessage)
 
     Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.background),
+        modifier = modifier.fillMaxHeight().fillMaxWidth().background(MaterialTheme.colors.background),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -68,20 +65,20 @@ internal fun EmailVerificationContent(
             Text(
                 text = stringResource(id = R.string.login_check_your_email),
                 color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h1
+                style = MaterialTheme.typography.h1,
             )
             Text(
                 text = stringResource(id = R.string.login_enter_verification_code_below),
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.h1,
                 textAlign = TextAlign.Center,
-                fontStyle = FontStyle.Italic
+                fontStyle = FontStyle.Italic,
             )
             Spacer(modifier = Modifier.height(100.dp))
             Text(
                 text = stringResource(id = R.string.login_receive_email),
                 color = MaterialTheme.colors.primary,
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.caption,
             )
             Spacer(modifier = Modifier.height(36.dp))
 
@@ -89,23 +86,23 @@ internal fun EmailVerificationContent(
                 labelResId = R.string.login_enter_verification_code,
                 value = verificationCode.text,
                 onValueChange = verificationCode::text::set,
-                keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.Digits.copy(imeAction = ImeAction.Go),
-                keyboardActions = KeyboardActions(
-                    onGo = {
-                        if (nextButtonEnabled) {
-                            onNextClicked()
-                        }
-                    }
-                ),
+                keyboardOptions =
+                    TextFieldWithLabelDefaults.KeyboardOptions.Digits.copy(imeAction = ImeAction.Go),
+                keyboardActions =
+                    KeyboardActions(
+                        onGo = {
+                            if (nextButtonEnabled) {
+                                onNextClicked()
+                            }
+                        },
+                    ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
             PrimaryButton(
                 text = stringResource(id = R.string.login_continue),
                 enabled = nextButtonEnabled,
-                onClick = {
-                    onNextClicked()
-                },
+                onClick = { onNextClicked() },
             )
         }
     }

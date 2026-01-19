@@ -8,25 +8,28 @@ import kotlin.coroutines.cancellation.CancellationException
 /**
  * `SignupUseCase` defines the contract for handling user registration.
  *
- * This interface provides methods for initiating the registration process by requesting
- * an email confirmation code, and for completing the registration with user details.
+ * This interface provides methods for initiating the registration process by requesting an email
+ * confirmation code, and for completing the registration with user details.
  */
 interface SignupUseCase {
-
     /**
-     * Requests an email confirmation code to be sent to the user's email address.
-     * This is typically the first step in the user registration process.
+     * Requests an email confirmation code to be sent to the user's email address. This is typically
+     * the first step in the user registration process.
      *
      * @param email The email address where the confirmation code will be sent.
      * @throws KMMException if there is an issue during the email confirmation request process.
      * @throws CancellationException if the request process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun requestEmailConfirmationCode(email: String, humanVerificationCode: String, mustExists: Boolean = false)
+    suspend fun requestEmailConfirmationCode(
+        email: String,
+        humanVerificationCode: String,
+        mustExists: Boolean = false,
+    )
 
     /**
-     * Registers a new user with the provided details.
-     * This method completes the user registration process.
+     * Registers a new user with the provided details. This method completes the user registration
+     * process.
      *
      * @param email The email address of the user.
      * @param password The password chosen by the user.
@@ -41,14 +44,12 @@ interface SignupUseCase {
         password: String,
         passwordConfirmation: String,
         verificationCode: String,
-        humanVerificationCode: String
+        humanVerificationCode: String,
     )
 }
 
 class SignupUseCaseProvider : KoinComponent {
     private val signUpUseCase: SignupUseCase by inject()
 
-    fun get(): SignupUseCase {
-        return signUpUseCase
-    }
+    fun get(): SignupUseCase = signUpUseCase
 }

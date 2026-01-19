@@ -49,17 +49,17 @@ import io.newm.screens.wallets.WalletsPresenter
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.view.WalletsUi
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
-import io.newm.sharedfeatures.screens.DevMenuMainScreen
-import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.sharedfeatures.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.devmenu.DevMenuUi
 import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
 import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
+import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
@@ -85,25 +85,32 @@ class HomeActivity : ComponentActivity() {
                     val updateRequired by forceAppUpdateViewModel.updateRequiredState.collectAsState()
                     if (updateRequired) {
                         ForceAppUpdateUi(
-                            state = ForceAppUpdateState.Content(eventSink = {
-                                eventLogger.logClickEvent(AppScreens.ForceUpdateScreen.UPDATE_BUTTON)
-                                openAppPlayStore()
-                            }),
-                            eventLogger
+                            state =
+                                ForceAppUpdateState.Content(
+                                    eventSink = {
+                                        eventLogger.logClickEvent(AppScreens.ForceUpdateScreen.UPDATE_BUTTON)
+                                        openAppPlayStore()
+                                    },
+                                ),
+                            eventLogger,
                         )
                     } else {
-                        val showRecordStore by featureFlagService.observeFlag(FeatureFlags.ShowRecordStore)
-                            .collectAsState(initial = FeatureFlags.ShowRecordStore.defaultValue)
+                        val showRecordStore by
+                            featureFlagService
+                                .observeFlag(FeatureFlags.ShowRecordStore)
+                                .collectAsState(initial = FeatureFlags.ShowRecordStore.defaultValue)
 
-                        val showInvestmentPortfolio by featureFlagService.observeFlag(FeatureFlags.ShowInvestmentPortfolio)
-                            .collectAsState(initial = FeatureFlags.ShowInvestmentPortfolio.defaultValue)
+                        val showInvestmentPortfolio by
+                            featureFlagService
+                                .observeFlag(FeatureFlags.ShowInvestmentPortfolio)
+                                .collectAsState(initial = FeatureFlags.ShowInvestmentPortfolio.defaultValue)
 
                         NewmApp(
                             config = config,
                             logger = logger,
                             eventLogger = eventLogger,
                             showRecordStore = showRecordStore,
-                            showInvestmentPortfolio = showInvestmentPortfolio
+                            showInvestmentPortfolio = showInvestmentPortfolio,
                         )
                     }
                 }
@@ -111,192 +118,118 @@ class HomeActivity : ComponentActivity() {
         }
     }
 
-    private fun createCircuit(): Circuit {
-        return Circuit.Builder()
+    private fun createCircuit(): Circuit =
+        Circuit
+            .Builder()
             .addPresenterFactory(buildPresenterFactory())
             .addUiFactory(buildUiFactory())
             .build()
-    }
 
-    private fun buildUiFactory(): Ui.Factory {
-        return Ui.Factory { screen, _ ->
+    private fun buildUiFactory(): Ui.Factory =
+        Ui.Factory { screen, _ ->
             when (screen) {
-                is Screen.UserAccount -> ui<ProfileUiState> { state, modifier ->
-                    ProfileUi(
-                        state = state,
-                        modifier = modifier
-                    )
-                }
+                is Screen.UserAccount ->
+                    ui<ProfileUiState> { state, modifier -> ProfileUi(state = state, modifier = modifier) }
 
-                is Screen.RecordStore -> ui<RecordStoreState> { state, modifier ->
-                    RecordStoreScreenUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is Screen.RecordStore ->
+                    ui<RecordStoreState> { state, modifier ->
+                        RecordStoreScreenUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is Screen.Marketplace -> ui<MarketplaceState> { state, modifier ->
-                    MarketplaceScreenUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is Screen.Marketplace ->
+                    ui<MarketplaceState> { state, modifier ->
+                        MarketplaceScreenUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is NFTLibrary -> ui<NFTLibraryState> { state, modifier ->
-                    NFTLibraryScreenUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is NFTLibrary ->
+                    ui<NFTLibraryState> { state, modifier ->
+                        NFTLibraryScreenUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is Screen.EditProfile -> ui<ProfileEditUiState> { state, modifier ->
-                    ProfileEditUi(
-                        modifier = modifier,
-                        state = state
-                    )
-                }
+                is Screen.EditProfile ->
+                    ui<ProfileEditUiState> { state, modifier ->
+                        ProfileEditUi(modifier = modifier, state = state)
+                    }
 
-                is Screen.ForceAppUpdate -> ui<ForceAppUpdateState> { state, modifier ->
-                    ForceAppUpdateUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is Screen.ForceAppUpdate ->
+                    ui<ForceAppUpdateState> { state, modifier ->
+                        ForceAppUpdateUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is Screen.InvestmentPortfolio -> ui<InvestmentPortfolioState> { state, modifier ->
-                    InvestmentPortfolioUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is Screen.InvestmentPortfolio ->
+                    ui<InvestmentPortfolioState> { state, modifier ->
+                        InvestmentPortfolioUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is Screen.Wallets -> ui<WalletsUiState> { state, modifier ->
-                    WalletsUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is Screen.Wallets ->
+                    ui<WalletsUiState> { state, modifier ->
+                        WalletsUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is Screen.WalletDetail -> ui<WalletDetailUiState> { state, modifier ->
-                    WalletDetailUi(
-                        state = state,
-                        modifier = modifier
-                    )
-                }
+                is Screen.WalletDetail ->
+                    ui<WalletDetailUiState> { state, modifier ->
+                        WalletDetailUi(state = state, modifier = modifier)
+                    }
 
-                is Screen.Studio -> ui<StudioState> { state, modifier ->
-                    StudioScreenUi(
-                        state = state,
-                        modifier = modifier,
-                        eventLogger = eventLogger
-                    )
-                }
+                is Screen.Studio ->
+                    ui<StudioState> { state, modifier ->
+                        StudioScreenUi(state = state, modifier = modifier, eventLogger = eventLogger)
+                    }
 
-                is DevMenuMainScreen -> ui<DevMenuMainScreen.UiState> { state, modifier ->
-                    DevMenuUi(state, modifier)
-                }
+                is DevMenuMainScreen ->
+                    ui<DevMenuMainScreen.UiState> { state, modifier -> DevMenuUi(state, modifier) }
 
-                is FeatureFlagsListScreen -> ui<FeatureFlagsListScreen.UiState> { state, modifier ->
-                    FeatureFlagsListUi(state, modifier)
-                }
+                is FeatureFlagsListScreen ->
+                    ui<FeatureFlagsListScreen.UiState> { state, modifier ->
+                        FeatureFlagsListUi(state, modifier)
+                    }
 
                 else -> null
-
             }
         }
-    }
 
-    private fun buildPresenterFactory(): Presenter.Factory {
-        return Presenter.Factory { screen, navigator, _ ->
+    private fun buildPresenterFactory(): Presenter.Factory =
+        Presenter.Factory { screen, navigator, _ ->
             when (screen) {
-                is Screen.UserAccount -> inject<ProfilePresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.UserAccount -> inject<ProfilePresenter> { parametersOf(navigator) }.value
 
-                is NFTLibrary -> inject<NFTLibraryPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is NFTLibrary -> inject<NFTLibraryPresenter> { parametersOf(navigator) }.value
 
-                is Screen.RecordStore -> inject<RecordStorePresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.RecordStore -> inject<RecordStorePresenter> { parametersOf(navigator) }.value
 
-                is Screen.Marketplace -> inject<MarketplacePresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.Marketplace -> inject<MarketplacePresenter> { parametersOf(navigator) }.value
 
-                is Screen.EditProfile -> inject<ProfileEditPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.EditProfile -> inject<ProfileEditPresenter> { parametersOf(navigator) }.value
 
-                is Screen.ForceAppUpdate -> inject<ForceAppUpdatePresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.ForceAppUpdate ->
+                    inject<ForceAppUpdatePresenter> { parametersOf(navigator) }.value
 
-                is Screen.InvestmentPortfolio -> inject<InvestmentPortfolioPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.InvestmentPortfolio ->
+                    inject<InvestmentPortfolioPresenter> { parametersOf(navigator) }.value
 
-                is Screen.Wallets -> inject<WalletsPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.Wallets -> inject<WalletsPresenter> { parametersOf(navigator) }.value
 
-                is Screen.WalletDetail -> inject<WalletDetailPresenter> {
-                    parametersOf(
-                        navigator,
-                        screen.walletId,
-                        screen.walletName
-                    )
-                }.value
+                is Screen.WalletDetail ->
+                    inject<WalletDetailPresenter> {
+                        parametersOf(navigator, screen.walletId, screen.walletName)
+                    }.value
 
-                is Screen.Studio -> inject<StudioPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is Screen.Studio -> inject<StudioPresenter> { parametersOf(navigator) }.value
 
                 is DevMenuMainScreen -> inject<DevMenuPresenter> { parametersOf(navigator) }.value
-                is FeatureFlagsListScreen -> inject<FeatureFlagsListPresenter> {
-                    parametersOf(
-                        navigator
-                    )
-                }.value
+                is FeatureFlagsListScreen ->
+                    inject<FeatureFlagsListPresenter> { parametersOf(navigator) }.value
 
                 else -> null
             }
         }
-    }
 
     @Composable
-    fun CircuitDependencies(
-        content: @Composable () -> Unit
-    ) {
+    fun CircuitDependencies(content: @Composable () -> Unit) {
         CircuitCompositionLocals(circuit) {
             CompositionLocalProvider(
                 LocalRetainedStateRegistry provides continuityRetainedStateRegistry(),
-                LocalIsBottomBarVisible provides isBottomBarVisible()
+                LocalIsBottomBarVisible provides isBottomBarVisible(),
             ) {
                 content()
             }

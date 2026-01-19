@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 fun WalletsUi(
     state: WalletsUiState,
     modifier: Modifier = Modifier,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     var selectedWalletConnection by remember { mutableStateOf<WalletConnection?>(null) }
     var bottomSheetType by remember { mutableStateOf(BottomSheetType.DISCONNECT) }
@@ -62,7 +62,7 @@ fun WalletsUi(
         walletState = state,
         type = bottomSheetType,
         selectedWalletConnection = selectedWalletConnection,
-        eventLogger = eventLogger
+        eventLogger = eventLogger,
     ) {
         Scaffold(
             modifier = modifier.fillMaxSize(),
@@ -71,25 +71,22 @@ fun WalletsUi(
                     windowInsets = WindowInsets.statusBars,
                     backgroundColor = Color.Transparent,
                     title = { WalletsTopBarTitle() },
-                    navigationIcon = { WalletsBackNav { state.eventSink(WalletsEvent.OnBack) } }
+                    navigationIcon = { WalletsBackNav { state.eventSink(WalletsEvent.OnBack) } },
                 )
             },
             snackbarHost = {
                 // TODO add snackbars for renaming success and disconnecting success
-            }
+            },
         ) { padding ->
-
-            val pullRefreshState = rememberPullRefreshState(
-                refreshing = state.isRefreshing,
-                onRefresh = { state.eventSink(WalletsEvent.OnRefresh) }
-            )
+            val pullRefreshState =
+                rememberPullRefreshState(
+                    refreshing = state.isRefreshing,
+                    onRefresh = { state.eventSink(WalletsEvent.OnRefresh) },
+                )
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .pullRefresh(pullRefreshState),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize().padding(padding).pullRefresh(pullRefreshState),
+                contentAlignment = Alignment.Center,
             ) {
                 when (state) {
                     is WalletsUiState.Loading -> CircularProgressIndicator()
@@ -112,14 +109,14 @@ fun WalletsUi(
                                     bottomSheetType = BottomSheetType.RENAME
                                     bottomSheetState.show()
                                 }
-                            }
+                            },
                         )
                     }
                 }
                 PullRefreshIndicator(
                     state = pullRefreshState,
                     refreshing = state.isRefreshing,
-                    modifier = Modifier.align(Alignment.TopCenter)
+                    modifier = Modifier.align(Alignment.TopCenter),
                 )
             }
         }
@@ -132,7 +129,7 @@ private fun WalletsBackNav(onClick: () -> Unit) {
         IconButton(onClick = onClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                contentDescription = stringResource(id = R.string.back_description)
+                contentDescription = stringResource(id = R.string.back_description),
             )
         }
     }
@@ -142,11 +139,12 @@ private fun WalletsBackNav(onClick: () -> Unit) {
 private fun WalletsTopBarTitle() {
     Text(
         text = stringResource(id = R.string.wallets_screen_topbar_title),
-        style = TextStyle(
-            fontFamily = inter,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            brush = textGradient(SteelPink, CerisePink)
-        )
+        style =
+            TextStyle(
+                fontFamily = inter,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                brush = textGradient(SteelPink, CerisePink),
+            ),
     )
 }

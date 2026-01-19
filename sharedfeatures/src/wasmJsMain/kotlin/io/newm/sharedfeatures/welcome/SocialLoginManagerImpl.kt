@@ -6,7 +6,5 @@ import me.tatarka.inject.annotations.Inject
 @Inject
 actual class SocialLoginManagerImpl : SocialLoginManager {
     @Composable
-    override fun rememberGoogleSignInLauncher(onResult: (GoogleSignInResult) -> Unit): () -> Unit {
-        return {}
-    }
+    override fun rememberGoogleSignInLauncher(onResult: (GoogleSignInResult) -> Unit): () -> Unit = {}
 }

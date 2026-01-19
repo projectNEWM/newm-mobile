@@ -42,64 +42,49 @@ import io.newm.core.theme.Gray100
 import io.newm.core.theme.Gray500
 import io.newm.core.theme.inter
 
-val formTitleStyle @Composable get() = TextStyle(
-    fontSize = 12.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Bold,
-    color = White
-)
+val formTitleStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 12.sp, fontFamily = inter, fontWeight = FontWeight.Bold, color = White)
 
-val formLabelStyle @Composable get() = TextStyle(
-    fontSize = 12.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Bold,
-    color = Gray100
-)
+val formLabelStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 12.sp, fontFamily = inter, fontWeight = FontWeight.Bold, color = Gray100)
 
-val formTextFieldStyle @Composable get() = TextStyle(
-    fontSize = 16.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Normal,
-)
+val formTextFieldStyle
+    @Composable
+    get() = TextStyle(fontSize = 16.sp, fontFamily = inter, fontWeight = FontWeight.Normal)
 
-val formNameStyle @Composable get() = TextStyle(
-    fontSize = 24.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Bold,
-    color = White
-)
+val formNameStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 24.sp, fontFamily = inter, fontWeight = FontWeight.Bold, color = White)
 
-val formEmailStyle @Composable get() = TextStyle(
-    fontSize = 14.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Normal,
-    color = Gray100
-)
+val formEmailStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 14.sp, fontFamily = inter, fontWeight = FontWeight.Normal, color = Gray100)
 
-val versionTextStyle @Composable get() = TextStyle(
-    fontSize = 12.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Light,
-    color = Gray100
-)
+val versionTextStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 12.sp, fontFamily = inter, fontWeight = FontWeight.Light, color = Gray100)
 
 object TextFieldWithLabelDefaults {
     object KeyboardOptions {
         @Stable
-        val PASSWORD = KeyboardOptions(
-            capitalization = KeyboardCapitalization.None,
-            autoCorrectEnabled = false,
-            keyboardType = KeyboardType.Password
-        )
+        val PASSWORD =
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.None,
+                autoCorrectEnabled = false,
+                keyboardType = KeyboardType.Password,
+            )
 
         @Stable
-        val EMAIL = KeyboardOptions(
-            autoCorrectEnabled = false,
-            keyboardType = KeyboardType.Email
-        )
+        val EMAIL = KeyboardOptions(autoCorrectEnabled = false, keyboardType = KeyboardType.Email)
 
-        @Stable
-        val NON_UNDERLINED = KeyboardOptions(keyboardType = KeyboardType.Password)
+        @Stable val NON_UNDERLINED = KeyboardOptions(keyboardType = KeyboardType.Password)
 
         @Stable
         val Digits =
@@ -119,28 +104,28 @@ fun TextFieldWithLabel(
     placeholderResId: Int? = null,
     placeholderStyle: TextStyle = LocalTextStyle.current,
     isError: Boolean = false,
-    keyboardOptions: KeyboardOptions = if (isPassword) TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD else TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED,
+    keyboardOptions: KeyboardOptions =
+        if (isPassword) {
+            TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD
+        } else {
+            TextFieldWithLabelDefaults.KeyboardOptions.NON_UNDERLINED
+        },
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     helperText: String? = null,
     textfieldBackgroundColor: Color = MaterialTheme.colors.surface,
     singleLine: Boolean = false,
 ) {
     val isInputMasked = remember { mutableStateOf(isPassword) }
-    Column(
-        modifier
-    ) {
+    Column(modifier) {
         var updatedValue by remember { mutableStateOf(value.orEmpty()) }
-        labelResId?.let {
-            Text(
-                text = stringResource(id = labelResId),
-                style = labelStyle
-            )
-        }
+        labelResId?.let { Text(text = stringResource(id = labelResId), style = labelStyle) }
         Spacer(modifier = Modifier.height(4.dp))
         val textColor =
-            if (enabled) MaterialTheme.colors.onSurface else MaterialTheme.colors.onSurface.copy(
-                alpha = 0.5f
-            )
+            if (enabled) {
+                MaterialTheme.colors.onSurface
+            } else {
+                MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+            }
 
         val backgroundColor =
             if (enabled) textfieldBackgroundColor else textfieldBackgroundColor.copy(alpha = 0.5f)
@@ -151,39 +136,38 @@ fun TextFieldWithLabel(
                 updatedValue = it
                 onValueChange(it)
             },
-            visualTransformation = if (isInputMasked.value) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation =
+                if (isInputMasked.value) PasswordVisualTransformation() else VisualTransformation.None,
             textStyle = formTextFieldStyle,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Gray500,
-                unfocusedBorderColor = Gray500,
-                backgroundColor = backgroundColor,
-                textColor = textColor,
-            ),
+            colors =
+                TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Gray500,
+                    unfocusedBorderColor = Gray500,
+                    backgroundColor = backgroundColor,
+                    textColor = textColor,
+                ),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
             enabled = enabled,
-            placeholder = placeholderResId?.let {
-                {
-                    Text(
-                        text = stringResource(id = it),
-                        style = placeholderStyle
-                    )
-                }
-            },
+            placeholder =
+                placeholderResId?.let {
+                    { Text(text = stringResource(id = it), style = placeholderStyle) }
+                },
             isError = isError,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            trailingIcon = if (isPassword) {
-                { PasswordTrailingIcon(isInputMasked) }
-            } else {
-                null
-            },
+            trailingIcon =
+                if (isPassword) {
+                    { PasswordTrailingIcon(isInputMasked) }
+                } else {
+                    null
+                },
             singleLine = singleLine,
         )
         Text(
             text = helperText.orEmpty(),
             style = formLabelStyle,
-            color = if (isError) MaterialTheme.colors.error else Color.Unspecified
+            color = if (isError) MaterialTheme.colors.error else Color.Unspecified,
         )
     }
 }
@@ -195,17 +179,16 @@ fun PasswordTrailingIcon(isInputMasked: MutableState<Boolean>) {
             IconButton(onClick = { isInputMasked.value = false }) {
                 Icon(
                     imageVector = Icons.Filled.VisibilityOff,
-                    contentDescription = stringResource(R.string.show_password_description)
+                    contentDescription = stringResource(R.string.show_password_description),
                 )
             }
         } else {
             IconButton(onClick = { isInputMasked.value = true }) {
                 Icon(
                     imageVector = Icons.Filled.Visibility,
-                    contentDescription = stringResource(R.string.hide_password_description)
+                    contentDescription = stringResource(R.string.hide_password_description),
                 )
             }
         }
     }
 }
-

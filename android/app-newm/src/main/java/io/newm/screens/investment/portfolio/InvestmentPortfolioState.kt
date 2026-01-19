@@ -7,7 +7,7 @@ sealed class InvestmentPortfolioState : CircuitUiState {
     data class Content(
         val claimableTokenAmount: Long,
         val streamTokens: List<NFTTrack>,
-        val eventSink: (InvestmentPortfolioEvent) -> Unit
+        val eventSink: (InvestmentPortfolioEvent) -> Unit,
     ) : InvestmentPortfolioState()
 
     data object Loading : InvestmentPortfolioState()

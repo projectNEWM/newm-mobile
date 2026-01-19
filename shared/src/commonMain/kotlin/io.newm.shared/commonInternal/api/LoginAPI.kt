@@ -13,7 +13,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.di.NetworkClientFactory
 import io.newm.shared.commonInternal.api.models.AppleSignInRequest
 import io.newm.shared.commonInternal.api.models.FacebookSignInRequest
 import io.newm.shared.commonInternal.api.models.GoogleSignInRequest
@@ -28,28 +27,26 @@ import io.newm.shared.commonInternal.api.utils.addHumanVerificationCodeToHeader
 import io.newm.shared.commonPublic.models.error.KMMException
 import shared.getPlatformName
 
-
 class LoginAPI(
     private val httpClient: HttpClient,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
 ) {
-
     suspend fun requestEmailConfirmationCode(
         email: String,
         humanVerificationCode: String,
-        mustExists: Boolean
+        mustExists: Boolean,
     ) {
-        val response = httpClient.get("/v1/auth/code") {
-            contentType(ContentType.Application.Json)
-            parameter("email", email)
-            parameter("mustExists", mustExists)
-            parameter("mobile", true)
-            addHumanVerificationCodeToHeader(humanVerificationCode)
-        }
+        val response =
+            httpClient.get("/v1/auth/code") {
+                contentType(ContentType.Application.Json)
+                parameter("email", email)
+                parameter("mustExists", mustExists)
+                parameter("mobile", true)
+                addHumanVerificationCodeToHeader(humanVerificationCode)
+            }
 
         return when (response.status) {
-            HttpStatusCode.NoContent -> {
-            }
+            HttpStatusCode.NoContent -> {}
 
             else -> {
                 throw KMMException("Unknown Error")
@@ -57,13 +54,17 @@ class LoginAPI(
         }
     }
 
-    suspend fun register(user: NewUser, humanVerificationCode: String) {
-        val response = httpClient.post("/v1/users") {
-            contentType(ContentType.Application.Json)
-            setBody(user)
-            addHumanVerificationCodeToHeader(humanVerificationCode)
-            parameter("clientPlatform", getPlatformName())
-        }
+    suspend fun register(
+        user: NewUser,
+        humanVerificationCode: String,
+    ) {
+        val response =
+            httpClient.post("/v1/users") {
+                contentType(ContentType.Application.Json)
+                setBody(user)
+                addHumanVerificationCodeToHeader(humanVerificationCode)
+                parameter("clientPlatform", getPlatformName())
+            }
         when (response.status) {
             HttpStatusCode.OK -> {}
             HttpStatusCode.Conflict -> {
@@ -80,8 +81,11 @@ class LoginAPI(
         }
     }
 
-    suspend fun logIn(user: LogInUser, humanVerificationCode: String) =
-        httpClient.post("/v1/auth/login") {
+    suspend fun logIn(
+        user: LogInUser,
+        humanVerificationCode: String,
+    ) = httpClient
+        .post("/v1/auth/login") {
             contentType(ContentType.Application.Json)
             setBody(user)
             addHumanVerificationCodeToHeader(humanVerificationCode)
@@ -90,14 +94,15 @@ class LoginAPI(
 
     suspend fun loginWithGoogle(
         request: GoogleSignInRequest,
-        humanVerificationCode: String
+        humanVerificationCode: String,
     ): LoginResponse {
-        val response = httpClient.post("/v1/auth/login/google") {
-            contentType(ContentType.Application.Json)
-            setBody(request)
-            addHumanVerificationCodeToHeader(humanVerificationCode)
-            parameter("clientPlatform", getPlatformName())
-        }
+        val response =
+            httpClient.post("/v1/auth/login/google") {
+                contentType(ContentType.Application.Json)
+                setBody(request)
+                addHumanVerificationCodeToHeader(humanVerificationCode)
+                parameter("clientPlatform", getPlatformName())
+            }
 
         return when (response.status) {
             HttpStatusCode.OK -> response.body<LoginResponse>()
@@ -109,14 +114,15 @@ class LoginAPI(
 
     suspend fun loginWithApple(
         request: AppleSignInRequest,
-        humanVerificationCode: String
+        humanVerificationCode: String,
     ): LoginResponse {
-        val response = httpClient.post("/v1/auth/login/apple") {
-            contentType(ContentType.Application.Json)
-            setBody(request)
-            addHumanVerificationCodeToHeader(humanVerificationCode)
-            parameter("clientPlatform", getPlatformName())
-        }
+        val response =
+            httpClient.post("/v1/auth/login/apple") {
+                contentType(ContentType.Application.Json)
+                setBody(request)
+                addHumanVerificationCodeToHeader(humanVerificationCode)
+                parameter("clientPlatform", getPlatformName())
+            }
 
         return when (response.status) {
             HttpStatusCode.OK -> response.body<LoginResponse>()
@@ -127,11 +133,12 @@ class LoginAPI(
     }
 
     suspend fun loginWithFacebook(request: FacebookSignInRequest): LoginResponse {
-        val response = httpClient.post("/v1/auth/login/facebook") {
-            contentType(ContentType.Application.Json)
-            setBody(request)
-            parameter("clientPlatform", getPlatformName())
-        }
+        val response =
+            httpClient.post("/v1/auth/login/facebook") {
+                contentType(ContentType.Application.Json)
+                setBody(request)
+                parameter("clientPlatform", getPlatformName())
+            }
 
         return when (response.status) {
             HttpStatusCode.OK -> response.body<LoginResponse>()
@@ -142,11 +149,12 @@ class LoginAPI(
     }
 
     suspend fun loginWithLinkedIn(request: LinkedInSignInRequest): LoginResponse {
-        val response = httpClient.post("/v1/auth/login/linkedin") {
-            contentType(ContentType.Application.Json)
-            setBody(request)
-            parameter("clientPlatform", getPlatformName())
-        }
+        val response =
+            httpClient.post("/v1/auth/login/linkedin") {
+                contentType(ContentType.Application.Json)
+                setBody(request)
+                parameter("clientPlatform", getPlatformName())
+            }
 
         return when (response.status) {
             HttpStatusCode.OK -> response.body<LoginResponse>()
@@ -156,7 +164,10 @@ class LoginAPI(
         }
     }
 
-    suspend fun resetPassword(request: ResetPasswordRequest, humanVerificationCode: String) {
+    suspend fun resetPassword(
+        request: ResetPasswordRequest,
+        humanVerificationCode: String,
+    ) {
         try {
             httpClient.put("/v1/users/password") {
                 contentType(ContentType.Application.Json)

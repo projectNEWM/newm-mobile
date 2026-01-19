@@ -5,10 +5,7 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import me.tatarka.inject.annotations.Provides
 
 interface LoggingComponent {
+    @Provides fun provideNewmAppLogger(): NewmAppLogger = NewmAppLogger()
 
-    @Provides
-    fun provideNewmAppLogger(): NewmAppLogger = NewmAppLogger()
-
-    @Provides
-    fun provideNewmAppEventLogger(): NewmAppEventLogger = NewmAppEventLogger()
+    @Provides fun provideNewmAppEventLogger(): NewmAppEventLogger = NewmAppEventLogger()
 }

@@ -18,19 +18,16 @@ import io.newm.screens.library.TAG_NFT_LIBRARY_SCREEN
 @Composable
 fun ZeroSearchResults() {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .testTag(TAG_NFT_LIBRARY_SCREEN),
-        contentAlignment = Alignment.Center // This centers the content both horizontally and vertically
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).testTag(TAG_NFT_LIBRARY_SCREEN),
+        contentAlignment = Alignment.Center, // This centers the content both horizontally and vertically
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 modifier = Modifier.padding(all = 16.dp),
-                text = stringResource(id = R.string.search_zero_results)
+                text = stringResource(id = R.string.search_zero_results),
             )
         }
     }

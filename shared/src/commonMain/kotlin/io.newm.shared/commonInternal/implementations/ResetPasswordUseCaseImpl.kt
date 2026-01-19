@@ -6,9 +6,17 @@ import io.newm.shared.commonPublic.models.error.KMMException
 import io.newm.shared.commonPublic.usecases.ResetPasswordUseCase
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class ResetPasswordUseCaseImpl(private var repository: LogInRepository): ResetPasswordUseCase {
+internal class ResetPasswordUseCaseImpl(
+    private var repository: LogInRepository,
+) : ResetPasswordUseCase {
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun resetPassword(email: String, code: String, newPassword: String, confirmPassword: String, humanVerificationCode: String) {
+    override suspend fun resetPassword(
+        email: String,
+        code: String,
+        newPassword: String,
+        confirmPassword: String,
+        humanVerificationCode: String,
+    ) {
         mapErrorsSuspend {
             repository.resetPassword(email, newPassword, confirmPassword, code, humanVerificationCode)
         }

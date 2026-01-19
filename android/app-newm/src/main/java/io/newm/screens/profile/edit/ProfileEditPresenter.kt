@@ -47,64 +47,49 @@ class ProfileEditPresenter(
     private val updateProfilePictureUseCase: UpdateProfilePictureUseCase,
     private val logout: Logout,
     private val logger: NewmAppLogger,
-    private val eventLogger: NewmAppEventLogger
+    private val eventLogger: NewmAppEventLogger,
 ) : Presenter<ProfileEditUiState> {
     @Composable
     override fun present(): ProfileEditUiState {
-        val storedUser by remember {
-            userDetailsUseCase.fetchLoggedInUserDetailsFlow()
-        }.collectAsState(initial = null)
+        val storedUser by
+            remember { userDetailsUseCase.fetchLoggedInUserDetailsFlow() }.collectAsState(initial = null)
 
-        val isWalletConnected by remember {
-            hasWalletConnectionsUseCase.hasWalletConnectionsFlow()
-        }.collectAsState(initial = false)
+        val isWalletConnected by
+            remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }
+                .collectAsState(initial = false)
 
         val context = LocalContext.current
 
-        val profile = remember(storedUser) {
-            storedUser?.let { user ->
-                ProfileEditUiState.Content.Profile(
-                    pictureUrl = user.pictureUrl.orEmpty(),
-                    bannerUrl = user.bannerUrl.orEmpty(),
-                    firstName = user.firstName.orEmpty(),
-                    lastName = user.lastName.orEmpty(),
-                    canUserEditName = user.canEditName(),
-                    email = user.email.orEmpty(),
-                )
+        val profile =
+            remember(storedUser) {
+                storedUser?.let { user ->
+                    ProfileEditUiState.Content.Profile(
+                        pictureUrl = user.pictureUrl.orEmpty(),
+                        bannerUrl = user.bannerUrl.orEmpty(),
+                        firstName = user.firstName.orEmpty(),
+                        lastName = user.lastName.orEmpty(),
+                        canUserEditName = user.canEditName(),
+                        email = user.email.orEmpty(),
+                    )
+                }
             }
-        }
 
-        val firstNameState = remember(profile?.firstName) {
-            TextFieldState(profile?.firstName.orEmpty())
-        }
+        val firstNameState =
+            remember(profile?.firstName) { TextFieldState(profile?.firstName.orEmpty()) }
 
-        val lastNameState = remember(profile?.lastName) {
-            TextFieldState(profile?.lastName.orEmpty())
-        }
+        val lastNameState = remember(profile?.lastName) { TextFieldState(profile?.lastName.orEmpty()) }
 
-        val currentPasswordState = remember {
-            TextFieldState()
-        }
+        val currentPasswordState = remember { TextFieldState() }
 
-        val newPasswordState = remember {
-            TextFieldState()
-        }
+        val newPasswordState = remember { TextFieldState() }
 
-        val confirmPasswordState = remember {
-            TextFieldState()
-        }
+        val confirmPasswordState = remember { TextFieldState() }
 
-        var errorMessage by remember {
-            mutableStateOf<String?>(null)
-        }
+        var errorMessage by remember { mutableStateOf<String?>(null) }
 
-        var avatarFilePath by remember {
-            mutableStateOf("")
-        }
+        var avatarFilePath by remember { mutableStateOf("") }
 
-        var avatarUrl by remember(profile?.pictureUrl) {
-            mutableStateOf(profile?.pictureUrl.orEmpty())
-        }
+        var avatarUrl by remember(profile?.pictureUrl) { mutableStateOf(profile?.pictureUrl.orEmpty()) }
 
         val isAvatarDirty = avatarUrl != profile?.pictureUrl.orEmpty()
 
@@ -114,14 +99,14 @@ class ProfileEditPresenter(
                 lastNameState.isFocusedDirty,
                 currentPasswordState.isFocusedDirty,
                 newPasswordState.isFocusedDirty,
-                confirmPasswordState.isFocusedDirty
+                confirmPasswordState.isFocusedDirty,
             ) {
                 listOf(
                     firstNameState,
                     lastNameState,
                     currentPasswordState,
                     newPasswordState,
-                    confirmPasswordState
+                    confirmPasswordState,
                 ).any { it.isFocusedDirty }
             }
 
@@ -149,14 +134,15 @@ class ProfileEditPresenter(
                         coroutineScope.launch {
                             try {
                                 if (isFormDirty) {
-                                    val error = getFormErrorOrNull(
-                                        context,
-                                        currentPasswordState,
-                                        newPasswordState,
-                                        confirmPasswordState,
-                                        firstNameState,
-                                        lastNameState
-                                    )
+                                    val error =
+                                        getFormErrorOrNull(
+                                            context,
+                                            currentPasswordState,
+                                            newPasswordState,
+                                            confirmPasswordState,
+                                            firstNameState,
+                                            lastNameState,
+                                        )
 
                                     errorMessage = error
 
@@ -164,24 +150,23 @@ class ProfileEditPresenter(
                                         return@launch
                                     }
 
-                                    val updatedProfile = User(
-                                        newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
-                                        currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
-                                        confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
-                                        firstName = firstNameState.text,
-                                        lastName = lastNameState.text,
-                                        createdAt = "",
-                                        id = ""
-                                    )
+                                    val updatedProfile =
+                                        User(
+                                            newPassword = newPasswordState.text.takeIf { it.isNotEmpty() },
+                                            currentPassword = currentPasswordState.text.takeIf { it.isNotEmpty() },
+                                            confirmPassword = confirmPasswordState.text.takeIf { it.isNotEmpty() },
+                                            firstName = firstNameState.text,
+                                            lastName = lastNameState.text,
+                                            createdAt = "",
+                                            id = "",
+                                        )
                                     userDetailsUseCase.updateUserDetails(updatedProfile)
                                 }
                                 if (isAvatarDirty) {
                                     if (avatarUrl.isEmpty()) {
                                         updateProfilePictureUseCase.removeProfilePicture()
                                     } else {
-                                        updateProfilePictureUseCase.updateProfilePicture(
-                                            avatarFilePath
-                                        )
+                                        updateProfilePictureUseCase.updateProfilePicture(avatarFilePath)
                                     }
                                 }
                                 navigator.pop()
@@ -192,10 +177,11 @@ class ProfileEditPresenter(
                         }
                     }
 
-                    is OnConnectWallet -> coroutineScope.launch {
-                        eventLogger.logClickEvent(AppScreens.AccountScreen.CONNECT_WALLET_BUTTON)
-                        connectWalletUseCase.connect(event.newmCode)
-                    }
+                    is OnConnectWallet ->
+                        coroutineScope.launch {
+                            eventLogger.logClickEvent(AppScreens.AccountScreen.CONNECT_WALLET_BUTTON)
+                            connectWalletUseCase.connect(event.newmCode)
+                        }
 
                     OnLogout -> {
                         eventLogger.logClickEvent(AppScreens.AccountScreen.LOGOUT_BUTTON)
@@ -217,7 +203,7 @@ class ProfileEditPresenter(
                         navigator.pop()
                     }
 
-                    OnBottomSheetVisible ->  {
+                    OnBottomSheetVisible -> {
                         eventLogger.logClickEvent(AppScreens.AccountOptionsScreen.name)
                     }
 
@@ -230,8 +216,7 @@ class ProfileEditPresenter(
                             try {
                                 val file = event.image.toTempFile(context)
                                 if (file.length() > 10 * 1024 * 1024) {
-                                    errorMessage =
-                                        context.getString(R.string.profile_error_image_size_message)
+                                    errorMessage = context.getString(R.string.profile_error_image_size_message)
                                 } else {
                                     avatarFilePath = file.path
                                     avatarUrl = file.toURI().toString()
@@ -251,20 +236,18 @@ class ProfileEditPresenter(
      * Returns an error message if the form is invalid, or null if the form is valid.
      *
      * The form is invalid if any of the following conditions are met:
-     *
      * - The new password is not empty and does not match the correct format.
      * - The confirm password does not match the new password.
      * - The new password is not empty, but the confirm password is empty.
      * - The new password is not empty, but the current password is empty.
      */
-
     private fun getFormErrorOrNull(
         context: Context,
         currentPasswordState: TextFieldState,
         newPasswordState: TextFieldState,
         confirmPasswordState: TextFieldState,
         firstNameState: TextFieldState,
-        lastNameState: TextFieldState
+        lastNameState: TextFieldState,
     ): String? {
         if (newPasswordState.text.isNotEmpty() && isPasswordValid(newPasswordState.text).not()) {
             return passwordValidationError(context)

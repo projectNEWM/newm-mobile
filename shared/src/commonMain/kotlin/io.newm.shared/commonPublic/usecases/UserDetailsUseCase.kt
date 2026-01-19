@@ -10,19 +10,20 @@ import kotlin.coroutines.cancellation.CancellationException
 /**
  * `UserDetailsUseCase` defines the contract for retrieving details of the currently logged-in user.
  *
- * This interface is designed to encapsulate the functionality for fetching user-specific information,
- * ensuring that the implementation details are abstracted away from the usage context.
+ * This interface is designed to encapsulate the functionality for fetching user-specific
+ * information, ensuring that the implementation details are abstracted away from the usage context.
  */
 interface UserDetailsUseCase {
-
     /**
      * Fetches the details of the currently logged-in user.
      *
-     * This method is responsible for retrieving comprehensive information about the user who is currently
-     * authenticated in the application. It returns a [User] object containing the user details.
+     * This method is responsible for retrieving comprehensive information about the user who is
+     * currently authenticated in the application. It returns a [User] object containing the user
+     * details.
      *
      * @return User - An object containing details of the currently authenticated user.
-     * @throws KMMException if there is an issue in the process of fetching user details, such as network errors.
+     * @throws KMMException if there is an issue in the process of fetching user details, such as
+     *   network errors.
      * @throws CancellationException if the operation is cancelled during execution.
      */
     @Throws(KMMException::class, CancellationException::class)
@@ -31,11 +32,13 @@ interface UserDetailsUseCase {
     /**
      * Fetches the details of the currently logged-in user.
      *
-     * This method is responsible for retrieving comprehensive information about the user who is currently
-     * authenticated in the application. It returns a [User] object containing the user details.
+     * This method is responsible for retrieving comprehensive information about the user who is
+     * currently authenticated in the application. It returns a [User] object containing the user
+     * details.
      *
      * @return User - An object containing details of the currently authenticated user.
-     * @throws KMMException if there is an issue in the process of fetching user details, such as network errors.
+     * @throws KMMException if there is an issue in the process of fetching user details, such as
+     *   network errors.
      * @throws CancellationException if the operation is cancelled during execution.
      */
     fun fetchLoggedInUserDetailsFlow(): Flow<User?>
@@ -49,7 +52,8 @@ interface UserDetailsUseCase {
      *
      * @param user The updated user details to be saved.
      * @return User - An object containing the updated details of the currently authenticated user.
-     * @throws KMMException if there is an issue in the process of updating user details, such as network errors.
+     * @throws KMMException if there is an issue in the process of updating user details, such as
+     *   network errors.
      * @throws CancellationException if the operation is cancelled during execution.
      */
     @Throws(KMMException::class, CancellationException::class)
@@ -59,7 +63,5 @@ interface UserDetailsUseCase {
 class UserDetailsUseCaseProvider : KoinComponent {
     private val userDetailsUseCase: UserDetailsUseCase by inject()
 
-    fun get(): UserDetailsUseCase {
-        return this.userDetailsUseCase
-    }
+    fun get(): UserDetailsUseCase = this.userDetailsUseCase
 }

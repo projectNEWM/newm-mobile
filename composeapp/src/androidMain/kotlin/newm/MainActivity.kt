@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
             App(
                 circuit = activityComponent.circuit,
                 config = activityComponent.config,
-                onRootPop = { onBackPressedDispatcher.onBackPressed() }
+                onRootPop = { onBackPressedDispatcher.onBackPressed() },
             )
         }
     }

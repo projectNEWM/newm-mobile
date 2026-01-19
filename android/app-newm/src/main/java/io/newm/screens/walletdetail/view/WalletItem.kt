@@ -27,19 +27,19 @@ fun WalletItem(track: NFTTrack) {
         modifier = Modifier.fillMaxWidth(),
         icon = {
             AsyncImage(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(4.dp)),
-                model = ImageRequest.Builder(context)
-                    .data(track.imageUrl)
-                    .error(R.drawable.ic_default_track_cover_art)
-                    .placeholder(R.drawable.ic_default_track_cover_art)
-                    .build(),
+                modifier = Modifier.size(40.dp).clip(RoundedCornerShape(4.dp)),
+                model =
+                    ImageRequest
+                        .Builder(context)
+                        .data(track.imageUrl)
+                        .error(R.drawable.ic_default_track_cover_art)
+                        .placeholder(R.drawable.ic_default_track_cover_art)
+                        .build(),
                 contentScale = ContentScale.Crop,
-                contentDescription = track.title
+                contentDescription = track.title,
             )
         },
         text = { Text(text = track.title) },
-        secondaryText = { Text(text = track.artists.joinToString()) }
+        secondaryText = { Text(text = track.artists.joinToString()) },
     )
 }

@@ -6,9 +6,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -18,9 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
 import io.newm.core.theme.Gray23
-import io.newm.core.theme.Gray300
-import io.newm.core.theme.Gray500
-import io.newm.core.theme.Gray600
 import io.newm.core.theme.GraySuit
 import io.newm.core.theme.inter
 
@@ -40,26 +38,21 @@ fun SearchBar(
             onQueryChange(query)
         },
         modifier = modifier,
-        textStyle = TextStyle(
-            fontSize = 16.sp,
-            fontFamily = inter,
-            fontWeight = FontWeight.Normal,
-        ),
+        textStyle = TextStyle(fontSize = 16.sp, fontFamily = inter, fontWeight = FontWeight.Normal),
         placeholder = { Text(text = stringResource(placeholderResId)) },
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = iconResId),
-                contentDescription = null
-            )
-        },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), //This is to remove the underline when typing
+        leadingIcon = { Icon(painter = painterResource(id = iconResId), contentDescription = null) },
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+            ), // This is to remove the underline when typing
         shape = RoundedCornerShape(8.dp),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Gray23,
-            unfocusedBorderColor = Gray23,
-            backgroundColor = Gray23,
-            placeholderColor = GraySuit,
-            textColor = GraySuit
-        )
+        colors =
+            TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Gray23,
+                unfocusedBorderColor = Gray23,
+                backgroundColor = Gray23,
+                placeholderColor = GraySuit,
+                textColor = GraySuit,
+            ),
     )
 }

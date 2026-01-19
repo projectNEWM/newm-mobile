@@ -1,25 +1,33 @@
 package io.newm.shared.internal.implementations
 
-import io.newm.shared.commonInternal.db.PreferencesDataStore
 import android.content.Context
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import io.newm.shared.commonInternal.db.PreferencesDataStore
 import kotlinx.coroutines.flow.first
 import me.tatarka.inject.annotations.Inject
 
 private val Context.dataStore by preferencesDataStore(name = "settings")
 
 /**
- * Android implementation of PreferencesDataStore using Jetpack DataStore.
- * All operations are non-blocking suspend functions.
+ * Android implementation of PreferencesDataStore using Jetpack DataStore. All operations are
+ * non-blocking suspend functions.
  */
 @Inject
-class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataStore {
-
-    override suspend fun saveString(key: String, value: String) {
-        context.dataStore.edit { preferences ->
-            preferences[stringPreferencesKey(key)] = value
-        }
+class PreferencesDataStoreImpl(
+    private val context: Context,
+) : PreferencesDataStore {
+    override suspend fun saveString(
+        key: String,
+        value: String,
+    ) {
+        context.dataStore.edit { preferences -> preferences[stringPreferencesKey(key)] = value }
     }
 
     override suspend fun getString(key: String): String? {
@@ -27,10 +35,11 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataSt
         return preferences[stringPreferencesKey(key)]
     }
 
-    override suspend fun saveInt(key: String, value: Int) {
-        context.dataStore.edit { preferences ->
-            preferences[intPreferencesKey(key)] = value
-        }
+    override suspend fun saveInt(
+        key: String,
+        value: Int,
+    ) {
+        context.dataStore.edit { preferences -> preferences[intPreferencesKey(key)] = value }
     }
 
     override suspend fun getInt(key: String): Int? {
@@ -38,10 +47,11 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataSt
         return preferences[intPreferencesKey(key)]
     }
 
-    override suspend fun saveLong(key: String, value: Long) {
-        context.dataStore.edit { preferences ->
-            preferences[longPreferencesKey(key)] = value
-        }
+    override suspend fun saveLong(
+        key: String,
+        value: Long,
+    ) {
+        context.dataStore.edit { preferences -> preferences[longPreferencesKey(key)] = value }
     }
 
     override suspend fun getLong(key: String): Long? {
@@ -49,10 +59,11 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataSt
         return preferences[longPreferencesKey(key)]
     }
 
-    override suspend fun saveBoolean(key: String, value: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[booleanPreferencesKey(key)] = value
-        }
+    override suspend fun saveBoolean(
+        key: String,
+        value: Boolean,
+    ) {
+        context.dataStore.edit { preferences -> preferences[booleanPreferencesKey(key)] = value }
     }
 
     override suspend fun getBoolean(key: String): Boolean? {
@@ -73,8 +84,6 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesDataSt
     }
 
     override suspend fun clearAll() {
-        context.dataStore.edit { preferences ->
-            preferences.clear()
-        }
+        context.dataStore.edit { preferences -> preferences.clear() }
     }
 }

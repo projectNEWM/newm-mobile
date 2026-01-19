@@ -7,17 +7,12 @@ import me.tatarka.inject.annotations.IntoSet
 import me.tatarka.inject.annotations.Provides
 
 interface LoginComponent {
-    @Provides
-    @IntoSet
-    @ActivityScope
+    @Provides @IntoSet @ActivityScope
     fun LoginPresenterFactory.bind(): Presenter.Factory = this
 
-    @Provides
-    @IntoSet
-    @ActivityScope
+    @Provides @IntoSet @ActivityScope
     fun LoginUiFactory.bind(): Ui.Factory = this
 
-    @Provides
-    @ActivityScope
+    @Provides @ActivityScope
     fun RecaptchaManagerImpl.bind(): RecaptchaManager = this
 }

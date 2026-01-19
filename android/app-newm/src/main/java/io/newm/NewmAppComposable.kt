@@ -85,8 +85,7 @@ private val MarketIconGradient = iconGradient(BrightOrange, YellowJacket)
 
 val LocalIsBottomBarVisible = compositionLocalOf { mutableStateOf(true) }
 
-@Composable
-internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
+@Composable internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
 
 private val initialScreen = Screen.NFTLibrary
 
@@ -101,37 +100,35 @@ internal fun NewmApp(
     val context = LocalContext.current
     val backstack = rememberSaveableBackStack(initialScreen)
 
-    val circuitNavigator = rememberCircuitNavigator(
-        backstack,
-        enableBackHandler = false
-    )
+    val circuitNavigator = rememberCircuitNavigator(backstack, enableBackHandler = false)
 
-    val newmNavigator = rememberNewmNavigator(
-        circuitNavigator = circuitNavigator,
-        logger = logger,
-        launchBrowser = { url ->
-            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-        },
-        eventLogger = eventLogger
-    )
+    val newmNavigator =
+        rememberNewmNavigator(
+            circuitNavigator = circuitNavigator,
+            logger = logger,
+            launchBrowser = { url -> context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri())) },
+            eventLogger = eventLogger,
+        )
 
     val currentRootScreen = backstack.topRecord?.screen
     val currentNewmScreen = currentRootScreen as? Screen
 
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
+    val sheetState =
+        rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true,
+        )
 
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler(
-        enabled = backstack.size > 1 || currentNewmScreen != initialScreen || sheetState.isVisible
+        enabled = backstack.size > 1 || currentNewmScreen != initialScreen || sheetState.isVisible,
     ) {
         when {
             sheetState.isVisible -> coroutineScope.launch { sheetState.hide() }
             backstack.size > 1 -> newmNavigator.pop()
-            currentNewmScreen != initialScreen && currentNewmScreen != null -> newmNavigator.resetRoot(initialScreen)
+            currentNewmScreen != initialScreen && currentNewmScreen != null ->
+                newmNavigator.resetRoot(initialScreen)
         }
     }
 
@@ -139,19 +136,13 @@ internal fun NewmApp(
 
     DebugOverlay(
         buildConfig = config,
-        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) }
+        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) },
     ) {
         ModalBottomSheetLayout(
             modifier = Modifier,
             sheetState = sheetState,
             sheetContent = {
-                MusicPlayerScreen(
-                    onNavigateUp = {
-                        coroutineScope.launch {
-                            sheetState.hide()
-                        }
-                    }
-                )
+                MusicPlayerScreen(onNavigateUp = { coroutineScope.launch { sheetState.hide() } })
             },
         ) {
             Scaffold(
@@ -159,25 +150,22 @@ internal fun NewmApp(
                     AnimatedVisibility(
                         visible = LocalIsBottomBarVisible.current.value,
                         enter = slideInVertically(initialOffsetY = { it }),
-                        exit = ExitTransition.None
+                        exit = ExitTransition.None,
                     ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
                             if (currentNewmScreen?.showMiniPlayer == true) {
                                 MiniPlayer(
-                                    modifier = Modifier.clickable {
-                                        coroutineScope.launch {
-                                            eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
-                                            sheetState.show()
-                                        }
-                                    }
+                                    modifier =
+                                        Modifier.clickable {
+                                            coroutineScope.launch {
+                                                eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
+                                                sheetState.show()
+                                            }
+                                        },
                                 )
                                 Spacer(
-                                    modifier = Modifier
-                                        .height(2.dp)
-                                        .fillMaxWidth()
-                                        .background(MaterialTheme.colors.surface)
+                                    modifier =
+                                        Modifier.height(2.dp).fillMaxWidth().background(MaterialTheme.colors.surface),
                                 )
                             }
 
@@ -187,21 +175,19 @@ internal fun NewmApp(
                                     eventLogger = eventLogger,
                                     showRecordStore = showRecordStore,
                                     showInvestmentPortfolio = showInvestmentPortfolio,
-                                    onNavigationSelected = {
-                                        circuitNavigator.resetRoot(it)
-                                    }
+                                    onNavigationSelected = { circuitNavigator.resetRoot(it) },
                                 )
                             }
                         }
                     }
                 },
-                scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
+                scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
             ) { padding ->
                 CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
                     NavigableCircuitContent(
                         modifier = Modifier.padding(padding),
                         navigator = newmNavigator,
-                        backStack = backstack
+                        backStack = backstack,
                     )
                 }
             }
@@ -215,15 +201,13 @@ internal fun NewmBottomNavigation(
     eventLogger: NewmAppEventLogger,
     showRecordStore: Boolean,
     showInvestmentPortfolio: Boolean,
-    onNavigationSelected: (Screen) -> Unit
+    onNavigationSelected: (Screen) -> Unit,
 ) {
     Column(Modifier.height(76.dp)) {
         BottomNavigation(
-            modifier = Modifier
-                .fillMaxHeight()
-                .testTag(TAG_BOTTOM_NAVIGATION),
+            modifier = Modifier.fillMaxHeight().testTag(TAG_BOTTOM_NAVIGATION),
             backgroundColor = Black,
-            contentColor = Gray100
+            contentColor = Gray100,
         ) {
             HomeBottomNavigationItem(
                 selected = currentRootScreen == Screen.NFTLibrary,
@@ -297,12 +281,15 @@ internal fun NewmBottomNavigation(
 @Composable
 fun BottomNavigationBarPreview() {
     NewmBottomNavigation(
-        Screen.NFTLibrary, NewmAppEventLogger(),
-        showRecordStore = false, showInvestmentPortfolio = false
+        Screen.NFTLibrary,
+        NewmAppEventLogger(),
+        showRecordStore = false,
+        showInvestmentPortfolio = false,
     ) {}
 }
 
-// Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
+// Based on content from:
+// https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
 @Composable
 private fun RowScope.HomeBottomNavigationItem(
     selected: Boolean,
@@ -316,13 +303,12 @@ private fun RowScope.HomeBottomNavigationItem(
     BottomNavigationItem(
         icon = {
             Icon(
-                modifier = if (selected) {
-                    Modifier
-                        .align(Alignment.CenterVertically)
-                        .drawWithBrush(selectedIconBrush)
-                } else {
-                    Modifier.align(Alignment.CenterVertically)
-                },
+                modifier =
+                    if (selected) {
+                        Modifier.align(Alignment.CenterVertically).drawWithBrush(selectedIconBrush)
+                    } else {
+                        Modifier.align(Alignment.CenterVertically)
+                    },
                 painter = painterResource(id = iconResId),
                 contentDescription = label,
             )
@@ -334,10 +320,10 @@ private fun RowScope.HomeBottomNavigationItem(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 9.sp,
                 maxLines = 1,
-                color = if (selected) selectedLabelColor else Color.Unspecified
+                color = if (selected) selectedLabelColor else Color.Unspecified,
             )
         },
         selected = selected,
-        onClick = onClick
+        onClick = onClick,
     )
 }

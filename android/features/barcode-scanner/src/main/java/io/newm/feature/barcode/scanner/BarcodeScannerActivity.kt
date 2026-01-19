@@ -83,22 +83,17 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.concurrent.Executors
 
-val qrLabelStyle @Composable get() = TextStyle(
-    fontSize = 12.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Bold,
-    color = Gray6F
-)
+val qrLabelStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 12.sp, fontFamily = inter, fontWeight = FontWeight.Bold, color = Gray6F)
 
-val placeholderStyle @Composable get() = TextStyle(
-    fontSize = 16.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Normal,
-    color = Gray6F
-)
+val placeholderStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 16.sp, fontFamily = inter, fontWeight = FontWeight.Normal, color = Gray6F)
 
 class BarcodeScannerActivity : ComponentActivity() {
-
     private val logger: NewmAppLogger by inject()
     private val eventLogger: NewmAppEventLogger by inject()
 
@@ -113,9 +108,7 @@ class BarcodeScannerActivity : ComponentActivity() {
     }
 
     private fun onValidCodeConnection(newmCode: String) {
-        val resultIntent = Intent().apply {
-            putExtra(NEWM_WALLET_CONNECTION_ID, newmCode)
-        }
+        val resultIntent = Intent().apply { putExtra(NEWM_WALLET_CONNECTION_ID, newmCode) }
         this.apply {
             setResult(RESULT_OK, resultIntent)
             finish()
@@ -125,22 +118,21 @@ class BarcodeScannerActivity : ComponentActivity() {
     @Composable
     private fun HelpButton(onClick: () -> Unit) {
         Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .height(40.dp)
-                .fillMaxWidth()
-                .background(Black)
-                .clickable { onClick() },
+            modifier =
+                Modifier.padding(16.dp).height(40.dp).fillMaxWidth().background(Black).clickable {
+                    onClick()
+                },
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = stringResource(id = R.string.barcode_help_text),
-                style = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    brush = textGradient(SteelPink, CerisePink)
-                )
+                style =
+                    TextStyle(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        brush = textGradient(SteelPink, CerisePink),
+                    ),
             )
         }
     }
@@ -151,22 +143,17 @@ class BarcodeScannerActivity : ComponentActivity() {
         val bottomSheetState =
             rememberModalBottomSheetState(
                 initialValue = ModalBottomSheetValue.Hidden,
-                skipHalfExpanded = false
+                skipHalfExpanded = false,
             )
         val coroutineScope = rememberCoroutineScope()
 
         ModalBottomSheetLayout(
             sheetState = bottomSheetState,
-            sheetContent = {
-                InstructionList(bottomSheetState, coroutineScope)
-            },
+            sheetContent = { InstructionList(bottomSheetState, coroutineScope) },
             content = {
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp)
-                        .background(Black),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).background(Black),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     TopPanel()
                     Spacer(modifier = Modifier.height(40.dp))
@@ -174,42 +161,32 @@ class BarcodeScannerActivity : ComponentActivity() {
                     EnterQRCodePanel()
                     Spacer(modifier = Modifier.weight(1f))
                     CopyToClipboardButton()
-                    HelpButton {
-                        coroutineScope.launch {
-
-                            bottomSheetState.show()
-                        }
-                    }
+                    HelpButton { coroutineScope.launch { bottomSheetState.show() } }
                 }
-            }
+            },
         )
     }
 
     @Composable
     fun TopPanel() {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            IconButton(
-                onClick = { finish() },
-                modifier = Modifier.padding(vertical = 16.dp)
-            ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            IconButton(onClick = { finish() }, modifier = Modifier.padding(vertical = 16.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back_description),
-                    tint = White
+                    tint = White,
                 )
             }
             Text(
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp),
                 text = stringResource(id = R.string.title_connect_wallet),
-                style = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                    brush = textGradient(OceanGreen, LightSkyBlue)
-                )
+                style =
+                    TextStyle(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        brush = textGradient(OceanGreen, LightSkyBlue),
+                    ),
             )
         }
     }
@@ -221,27 +198,27 @@ class BarcodeScannerActivity : ComponentActivity() {
         Button(
             onClick = {
                 eventLogger.logClickEvent(AppScreens.ConnectWalletScannerScreen.COPY_URL_BUTTON)
-                clipboardManager.setText(androidx.compose.ui.text.AnnotatedString(connectWalletUrl))
+                clipboardManager.setText(
+                    androidx.compose.ui.text
+                        .AnnotatedString(connectWalletUrl),
+                )
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .background(buttonGradient),
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).background(buttonGradient),
             elevation = null,
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
         ) {
             Text(
                 text = getString(R.string.newm_tools_url),
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
-                color = GlassSmith
+                color = GlassSmith,
             )
             Icon(
                 modifier = Modifier.padding(start = 8.dp),
                 painter = painterResource(id = R.drawable.icon_copy_text),
                 contentDescription = stringResource(R.string.copy_description),
-                tint = GlassSmith
+                tint = GlassSmith,
             )
         }
     }
@@ -255,42 +232,38 @@ class BarcodeScannerActivity : ComponentActivity() {
             placeholderResId = R.string.barcode_placeholder_text,
             placeholderStyle = placeholderStyle,
             textfieldBackgroundColor = Gray23,
-            onValueChange = { newmWalletConnectionId ->
-                onValidCodeConnection(newmWalletConnectionId)
-            },
+            onValueChange = { newmWalletConnectionId -> onValidCodeConnection(newmWalletConnectionId) },
         )
     }
 
     @Composable
     fun InstructionList(
         bottomSheetState: ModalBottomSheetState,
-        coroutineScope: CoroutineScope
+        coroutineScope: CoroutineScope,
     ) {
-        if(bottomSheetState.isVisible) {
-            LaunchedEffect(Unit) {
-                eventLogger.logPageLoad(AppScreens.WalletInstructionsScreen.name)
-            }
+        if (bottomSheetState.isVisible) {
+            LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.WalletInstructionsScreen.name) }
         }
 
-        val instructions = listOf(
-            R.string.newm_connect_wallet_instruction_1,
-            R.string.newm_connect_wallet_instruction_2
-        )
+        val instructions =
+            listOf(R.string.newm_connect_wallet_instruction_1, R.string.newm_connect_wallet_instruction_2)
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colors.surface, shape = MaterialTheme.shapes.large)
-                .padding(vertical = 32.dp, horizontal = 16.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.surface, shape = MaterialTheme.shapes.large)
+                    .padding(vertical = 32.dp, horizontal = 16.dp),
         ) {
             Text(
                 text = stringResource(id = R.string.newm_connect_wallet_instruction_title).uppercase(),
-                style  = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
-                    color = Gray6F
-                ),
+                style =
+                    TextStyle(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp,
+                        color = Gray6F,
+                    ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -298,12 +271,13 @@ class BarcodeScannerActivity : ComponentActivity() {
             instructions.forEach { instructionResId ->
                 Text(
                     text = stringResource(id = instructionResId),
-                    style = TextStyle(
-                        fontFamily = inter,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        color = White
-                    )
+                    style =
+                        TextStyle(
+                            fontFamily = inter,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp,
+                            color = White,
+                        ),
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -311,21 +285,21 @@ class BarcodeScannerActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = getString(R.string.wallet_desktop_option),
-                style  = TextStyle(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
-                    color = GraySuit
-                ),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                style =
+                    TextStyle(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = GraySuit,
+                    ),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
             )
             Spacer(modifier = Modifier.height(32.dp))
 
-            SecondaryButton(labelResId = R.string.got_it, onClick = {
-                coroutineScope.launch {
-                    bottomSheetState.hide()
-                }
-            })
+            SecondaryButton(
+                labelResId = R.string.got_it,
+                onClick = { coroutineScope.launch { bottomSheetState.hide() } },
+            )
         }
     }
 
@@ -334,55 +308,57 @@ class BarcodeScannerActivity : ComponentActivity() {
         AndroidView(
             { context ->
                 val cameraExecutor = Executors.newSingleThreadExecutor()
-                val previewView = PreviewView(context).also {
-                    it.scaleType = PreviewView.ScaleType.FILL_CENTER
-                }
+                val previewView =
+                    PreviewView(context).also { it.scaleType = PreviewView.ScaleType.FILL_CENTER }
                 val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-                cameraProviderFuture.addListener({
-                    val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+                cameraProviderFuture.addListener(
+                    {
+                        val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-                    val preview = Preview.Builder().build().also {
-                        it.surfaceProvider = previewView.surfaceProvider
-                    }
+                        val preview =
+                            Preview.Builder().build().also { it.surfaceProvider = previewView.surfaceProvider }
 
-                    val imageCapture = ImageCapture.Builder().build()
+                        val imageCapture = ImageCapture.Builder().build()
 
-                    val imageAnalyzer = ImageAnalysis.Builder().build().also {
-                        it.setAnalyzer(cameraExecutor, BarcodeAnalyser { barcodeResult ->
-                            // Return the result to the calling activity
-                            onValidCodeConnection(barcodeResult)
-                        })
-                    }
+                        val imageAnalyzer =
+                            ImageAnalysis.Builder().build().also {
+                                it.setAnalyzer(
+                                    cameraExecutor,
+                                    BarcodeAnalyser { barcodeResult ->
+                                        // Return the result to the calling activity
+                                        onValidCodeConnection(barcodeResult)
+                                    },
+                                )
+                            }
 
-                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-                    try {
-                        // Unbind use cases before rebinding
-                        cameraProvider.unbindAll()
+                        try {
+                            // Unbind use cases before rebinding
+                            cameraProvider.unbindAll()
 
-                        // Bind use cases to camera
-                        cameraProvider.bindToLifecycle(
-                            context as ComponentActivity,
-                            cameraSelector,
-                            preview,
-                            imageCapture,
-                            imageAnalyzer
-                        )
-
-                    } catch (exc: Exception) {
-                        logger.error("BarcodeScannerActivity", "Use case binding failed", exc)
-                    }
-                }, ContextCompat.getMainExecutor(context))
+                            // Bind use cases to camera
+                            cameraProvider.bindToLifecycle(
+                                context as ComponentActivity,
+                                cameraSelector,
+                                preview,
+                                imageCapture,
+                                imageAnalyzer,
+                            )
+                        } catch (exc: Exception) {
+                            logger.error("BarcodeScannerActivity", "Use case binding failed", exc)
+                        }
+                    },
+                    ContextCompat.getMainExecutor(context),
+                )
                 previewView
             },
-            modifier = Modifier
-                .size(278.dp)
-                .clip(RoundedCornerShape(32.dp)),
+            modifier = Modifier.size(278.dp).clip(RoundedCornerShape(32.dp)),
         )
     }
 
     class BarcodeAnalyser(
-        val onValidScan: (String) -> Unit
+        val onValidScan: (String) -> Unit,
     ) : ImageAnalysis.Analyzer {
         @OptIn(ExperimentalGetImage::class)
         override fun analyze(imageProxy: ImageProxy) {
@@ -392,8 +368,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             val scanner = BarcodeScanning.getClient(options)
             val mediaImage = imageProxy.image
             mediaImage?.let {
-                val image =
-                    InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+                val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
                 scanner.process(image).addOnSuccessListener { barcodes ->
                     if (barcodes.size > 0) {

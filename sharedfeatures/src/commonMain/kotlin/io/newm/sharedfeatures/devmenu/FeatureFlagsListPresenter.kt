@@ -23,222 +23,221 @@ import me.tatarka.inject.annotations.Inject
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-class FeatureFlagsListPresenter @Inject constructor(
-    @Assisted private val navigator: Navigator,
-    private val featureFlagService: FeatureFlagService,
-    private val buildConfig: NewmSharedBuildConfig,
-) : Presenter<FeatureFlagsListScreen.UiState> {
-    @Composable
-    override fun present(): FeatureFlagsListScreen.UiState {
-        var flagItems by remember { mutableStateOf<List<FeatureFlagsListScreen.FeatureFlagListItem>>(emptyList()) }
-        var isLoading by remember { mutableStateOf(true) }
-        var error by remember { mutableStateOf<String?>(null) }
-        var isRefreshing by remember { mutableStateOf(false) }
-        var debugMode by remember { mutableStateOf(false) }
-        var debugInfo by remember { mutableStateOf<FeatureFlagsListScreen.DebugInfo?>(null) }
-        var lastSyncTimestamp by remember { mutableStateOf<String?>(null) }
+class FeatureFlagsListPresenter
+    @Inject
+    constructor(
+        @Assisted private val navigator: Navigator,
+        private val featureFlagService: FeatureFlagService,
+        private val buildConfig: NewmSharedBuildConfig,
+    ) : Presenter<FeatureFlagsListScreen.UiState> {
+        @Composable
+        override fun present(): FeatureFlagsListScreen.UiState {
+            var flagItems by remember {
+                mutableStateOf<List<FeatureFlagsListScreen.FeatureFlagListItem>>(emptyList())
+            }
+            var isLoading by remember { mutableStateOf(true) }
+            var error by remember { mutableStateOf<String?>(null) }
+            var isRefreshing by remember { mutableStateOf(false) }
+            var debugMode by remember { mutableStateOf(false) }
+            var debugInfo by remember { mutableStateOf<FeatureFlagsListScreen.DebugInfo?>(null) }
+            var lastSyncTimestamp by remember { mutableStateOf<String?>(null) }
 
-        val scope = rememberCoroutineScope()
+            val scope = rememberCoroutineScope()
 
-        // Observe all flags reactively
-        val allFlagsState by featureFlagService.observeAllFlags().collectAsState(initial = emptyMap())
+            // Observe all flags reactively
+            val allFlagsState by featureFlagService.observeAllFlags().collectAsState(initial = emptyMap())
 
-        // Fetch the global last sync timestamp
-        LaunchedEffect(Unit) {
-            val timestamp = featureFlagService.getLastSyncTimestamp()
-            lastSyncTimestamp = timestamp?.toString()
-        }
-
-        // Environment info from build config
-        val environmentInfo = FeatureFlagsListScreen.EnvironmentInfo(
-            environment = if (buildConfig.isStagingMode) "Development" else "Production",
-            clientStatus = "Connected",
-            lastSync = lastSyncTimestamp ?: "Never"
-        )
-
-        // Load and refresh flag data
-        suspend fun loadFlags() {
-            try {
-                val flags = buildEnhancedFlagListItems()
-                flagItems = flags
-
-                // Update the global last sync timestamp
+            // Fetch the global last sync timestamp
+            LaunchedEffect(Unit) {
                 val timestamp = featureFlagService.getLastSyncTimestamp()
                 lastSyncTimestamp = timestamp?.toString()
-
-                if (debugMode) {
-                    debugInfo = buildDebugInfo(flags)
-                }
-
-                error = null
-            } catch (e: Exception) {
-                error = "Failed to load flags: ${e.message}"
             }
-        }
 
-        // Initial load and reactive updates
-        LaunchedEffect(allFlagsState) {
-            if (isLoading) {
-                loadFlags()
-                isLoading = false
-            } else if (!isRefreshing) {
-                loadFlags()
-            }
-        }
+            // Environment info from build config
+            val environmentInfo =
+                FeatureFlagsListScreen.EnvironmentInfo(
+                    environment = if (buildConfig.isStagingMode) "Development" else "Production",
+                    clientStatus = "Connected",
+                    lastSync = lastSyncTimestamp ?: "Never",
+                )
 
-        if (isLoading && flagItems.isEmpty()) {
-            return FeatureFlagsListScreen.UiState.Loading
-        }
+            // Load and refresh flag data
+            suspend fun loadFlags() {
+                try {
+                    val flags = buildEnhancedFlagListItems()
+                    flagItems = flags
 
-        if (error != null && flagItems.isEmpty()) {
-            return FeatureFlagsListScreen.UiState.Error(
-                message = error!!,
-                onRetry = {
-                    scope.launch {
-                        isLoading = true
-                        error = null
-                        loadFlags()
-                        isLoading = false
-                    }
-                }
-            )
-        }
+                    // Update the global last sync timestamp
+                    val timestamp = featureFlagService.getLastSyncTimestamp()
+                    lastSyncTimestamp = timestamp?.toString()
 
-        val groupedFlags = flagItems.groupBy { it.category }
-
-        return FeatureFlagsListScreen.UiState.Content(
-            flags = flagItems,
-            groupedFlags = groupedFlags,
-            isRefreshing = isRefreshing,
-            debugInfo = if (debugMode) debugInfo else null,
-            environmentInfo = environmentInfo
-        ) { event ->
-            when (event) {
-                is FeatureFlagsListScreen.UiEvent.OnFlagToggled -> {
-                    scope.launch {
-                        val result = featureFlagService.setLocalOverride(event.key, event.isEnabled)
-                        result.fold(
-                            onSuccess = { /* State updates automatically */ },
-                            onError = { exception, _ ->
-                                error = "Failed to toggle flag: ${exception.message}"
-                            }
-                        )
-                    }
-                }
-
-                is FeatureFlagsListScreen.UiEvent.OnResetFlag -> {
-                    scope.launch {
-                        val result = featureFlagService.setLocalOverride(event.key, null)
-                        result.fold(
-                            onSuccess = { /* State updates automatically */ },
-                            onError = { exception, _ ->
-                                error = "Failed to reset flag: ${exception.message}"
-                            }
-                        )
-                    }
-                }
-
-                FeatureFlagsListScreen.UiEvent.OnResetAllFlags -> {
-                    scope.launch {
-                        val result = featureFlagService.resetAllOverrides()
-                        result.fold(
-                            onSuccess = { /* State updates automatically */ },
-                            onError = { exception, _ ->
-                                error = "Failed to reset all flags: ${exception.message}"
-                            }
-                        )
-                    }
-                }
-
-                FeatureFlagsListScreen.UiEvent.OnRefresh -> {
-                    scope.launch {
-                        isRefreshing = true
-                        loadFlags()
-                        isRefreshing = false
-                    }
-                }
-
-                FeatureFlagsListScreen.UiEvent.OnToggleDebugMode -> {
-                    debugMode = !debugMode
                     if (debugMode) {
+                        debugInfo = buildDebugInfo(flags)
+                    }
+
+                    error = null
+                } catch (e: Exception) {
+                    error = "Failed to load flags: ${e.message}"
+                }
+            }
+
+            // Initial load and reactive updates
+            LaunchedEffect(allFlagsState) {
+                if (isLoading) {
+                    loadFlags()
+                    isLoading = false
+                } else if (!isRefreshing) {
+                    loadFlags()
+                }
+            }
+
+            if (isLoading && flagItems.isEmpty()) {
+                return FeatureFlagsListScreen.UiState.Loading
+            }
+
+            if (error != null && flagItems.isEmpty()) {
+                return FeatureFlagsListScreen.UiState.Error(
+                    message = error!!,
+                    onRetry = {
                         scope.launch {
-                            debugInfo = buildDebugInfo(flagItems)
+                            isLoading = true
+                            error = null
+                            loadFlags()
+                            isLoading = false
                         }
-                    } else {
-                        debugInfo = null
-                    }
-                }
+                    },
+                )
+            }
 
-                FeatureFlagsListScreen.UiEvent.OnExportDebugState -> {
-                    scope.launch {
-                        try {
-                            val debugState = featureFlagService.exportDebugState()
-                            println("Debug State: $debugState")
-                        } catch (e: Exception) {
-                            error = "Failed to export debug state: ${e.message}"
+            val groupedFlags = flagItems.groupBy { it.category }
+
+            return FeatureFlagsListScreen.UiState.Content(
+                flags = flagItems,
+                groupedFlags = groupedFlags,
+                isRefreshing = isRefreshing,
+                debugInfo = if (debugMode) debugInfo else null,
+                environmentInfo = environmentInfo,
+            ) { event ->
+                when (event) {
+                    is FeatureFlagsListScreen.UiEvent.OnFlagToggled -> {
+                        scope.launch {
+                            val result = featureFlagService.setLocalOverride(event.key, event.isEnabled)
+                            result.fold(
+                                onSuccess = { /* State updates automatically */ },
+                                onError = { exception, _ -> error = "Failed to toggle flag: ${exception.message}" },
+                            )
                         }
                     }
-                }
 
-                FeatureFlagsListScreen.UiEvent.OnBack -> navigator.pop()
+                    is FeatureFlagsListScreen.UiEvent.OnResetFlag -> {
+                        scope.launch {
+                            val result = featureFlagService.setLocalOverride(event.key, null)
+                            result.fold(
+                                onSuccess = { /* State updates automatically */ },
+                                onError = { exception, _ -> error = "Failed to reset flag: ${exception.message}" },
+                            )
+                        }
+                    }
 
-                is FeatureFlagsListScreen.UiEvent.OnCategoryToggled -> {
-                    // Category expansion/collapse if needed
+                    FeatureFlagsListScreen.UiEvent.OnResetAllFlags -> {
+                        scope.launch {
+                            val result = featureFlagService.resetAllOverrides()
+                            result.fold(
+                                onSuccess = { /* State updates automatically */ },
+                                onError = { exception, _ ->
+                                    error = "Failed to reset all flags: ${exception.message}"
+                                },
+                            )
+                        }
+                    }
+
+                    FeatureFlagsListScreen.UiEvent.OnRefresh -> {
+                        scope.launch {
+                            isRefreshing = true
+                            loadFlags()
+                            isRefreshing = false
+                        }
+                    }
+
+                    FeatureFlagsListScreen.UiEvent.OnToggleDebugMode -> {
+                        debugMode = !debugMode
+                        if (debugMode) {
+                            scope.launch { debugInfo = buildDebugInfo(flagItems) }
+                        } else {
+                            debugInfo = null
+                        }
+                    }
+
+                    FeatureFlagsListScreen.UiEvent.OnExportDebugState -> {
+                        scope.launch {
+                            try {
+                                val debugState = featureFlagService.exportDebugState()
+                                println("Debug State: $debugState")
+                            } catch (e: Exception) {
+                                error = "Failed to export debug state: ${e.message}"
+                            }
+                        }
+                    }
+
+                    FeatureFlagsListScreen.UiEvent.OnBack -> navigator.pop()
+
+                    is FeatureFlagsListScreen.UiEvent.OnCategoryToggled -> {
+                        // Category expansion/collapse if needed
+                    }
                 }
             }
         }
-    }
 
-    private suspend fun buildEnhancedFlagListItems(): List<FeatureFlagsListScreen.FeatureFlagListItem> {
-        val evaluationHistory = featureFlagService.getEvaluationHistory()
+        private suspend fun buildEnhancedFlagListItems(): List<FeatureFlagsListScreen.FeatureFlagListItem> {
+            val evaluationHistory = featureFlagService.getEvaluationHistory()
 
-        return featureFlagService.getAllFlags().map { flag ->
-            val effectiveResult = featureFlagService.getEffectiveValue(flag)
-            val localOverride = featureFlagService.getLocalOverride(flag.key)
+            return featureFlagService.getAllFlags().map { flag ->
+                val effectiveResult = featureFlagService.getEffectiveValue(flag)
+                val localOverride = featureFlagService.getLocalOverride(flag.key)
 
-            val effectiveValue = effectiveResult.fold(
+                val effectiveValue =
+                    effectiveResult.fold(
+                        onSuccess = { it },
+                        onError = { _, fallback -> fallback ?: flag.defaultValue },
+                    )
+
+                // Get the actual remote value (what LaunchDarkly returns without local overrides)
+                val remoteValue = calculateTrueRemoteValue(flag)
+
+                val lastEvaluation =
+                    evaluationHistory.filter { it.flagKey == flag.key }.maxByOrNull { it.timestamp }
+
+                FeatureFlagsListScreen.FeatureFlagListItem(
+                    featureFlag = flag,
+                    effectiveValue = effectiveValue,
+                    remoteValue = remoteValue,
+                    localOverrideValue = localOverride,
+                    isOverridden = localOverride != null,
+                    category = flag.category,
+                    description = flag.description,
+                    evaluationSource = lastEvaluation?.source,
+                )
+            }
+        }
+
+        private suspend fun calculateTrueRemoteValue(flag: FeatureFlag): Boolean {
+            // Get the actual raw value from LaunchDarkly without any local overrides
+            val result = featureFlagService.getRemoteValue(flag)
+            return result.fold(
                 onSuccess = { it },
-                onError = { _, fallback -> fallback ?: flag.defaultValue }
+                onError = { _, fallback -> fallback ?: flag.defaultValue },
             )
+        }
 
-            // Get the actual remote value (what LaunchDarkly returns without local overrides)
-            val remoteValue = calculateTrueRemoteValue(flag)
+        private suspend fun buildDebugInfo(flags: List<FeatureFlagsListScreen.FeatureFlagListItem>): FeatureFlagsListScreen.DebugInfo {
+            val evaluationHistory = featureFlagService.getEvaluationHistory()
+            val cacheHits = evaluationHistory.count { it.source == EvaluationSource.CACHE }
 
-            val lastEvaluation = evaluationHistory
-                .filter { it.flagKey == flag.key }
-                .maxByOrNull { it.timestamp }
-
-            FeatureFlagsListScreen.FeatureFlagListItem(
-                featureFlag = flag,
-                effectiveValue = effectiveValue,
-                remoteValue = remoteValue,
-                localOverrideValue = localOverride,
-                isOverridden = localOverride != null,
-                category = flag.category,
-                description = flag.description,
-                evaluationSource = lastEvaluation?.source
+            return FeatureFlagsListScreen.DebugInfo(
+                totalFlags = flags.size,
+                overriddenCount = flags.count { it.isOverridden },
+                cacheHits = cacheHits,
+                lastUpdated = Clock.System.now().toString(),
             )
         }
     }
-
-    private suspend fun calculateTrueRemoteValue(flag: FeatureFlag): Boolean {
-        // Get the actual raw value from LaunchDarkly without any local overrides
-        val result = featureFlagService.getRemoteValue(flag)
-        return result.fold(
-            onSuccess = { it },
-            onError = { _, fallback -> fallback ?: flag.defaultValue }
-        )
-    }
-
-    private suspend fun buildDebugInfo(flags: List<FeatureFlagsListScreen.FeatureFlagListItem>): FeatureFlagsListScreen.DebugInfo {
-        val evaluationHistory = featureFlagService.getEvaluationHistory()
-        val cacheHits = evaluationHistory.count { it.source == EvaluationSource.CACHE }
-
-        return FeatureFlagsListScreen.DebugInfo(
-            totalFlags = flags.size,
-            overriddenCount = flags.count { it.isOverridden },
-            cacheHits = cacheHits,
-            lastUpdated = Clock.System.now().toString()
-        )
-    }
-}

@@ -18,7 +18,7 @@ object FeatureFlagsListScreen : Screen {
         val isOverridden: Boolean,
         val category: FlagCategory,
         val description: String,
-        val evaluationSource: EvaluationSource? = null
+        val evaluationSource: EvaluationSource? = null,
     )
 
     sealed interface UiState : CircuitUiState {
@@ -26,7 +26,7 @@ object FeatureFlagsListScreen : Screen {
 
         data class Error(
             val message: String,
-            val onRetry: () -> Unit
+            val onRetry: () -> Unit,
         ) : UiState
 
         data class Content(
@@ -43,24 +43,37 @@ object FeatureFlagsListScreen : Screen {
         val totalFlags: Int,
         val overriddenCount: Int,
         val cacheHits: Int,
-        val lastUpdated: String
+        val lastUpdated: String,
     )
 
     data class EnvironmentInfo(
         val environment: String, // "Production", "Development", "Staging"
         val clientStatus: String, // "Connected", "Offline", "Error"
-        val lastSync: String? = null
+        val lastSync: String? = null,
     )
 
     sealed interface UiEvent : CircuitUiEvent {
         data object OnBack : UiEvent
+
         data object OnRefresh : UiEvent
+
         data object OnResetAllFlags : UiEvent
+
         data object OnToggleDebugMode : UiEvent
+
         data object OnExportDebugState : UiEvent
 
-        data class OnFlagToggled(val key: String, val isEnabled: Boolean) : UiEvent
-        data class OnResetFlag(val key: String) : UiEvent
-        data class OnCategoryToggled(val category: FlagCategory) : UiEvent
+        data class OnFlagToggled(
+            val key: String,
+            val isEnabled: Boolean,
+        ) : UiEvent
+
+        data class OnResetFlag(
+            val key: String,
+        ) : UiEvent
+
+        data class OnCategoryToggled(
+            val category: FlagCategory,
+        ) : UiEvent
     }
 }

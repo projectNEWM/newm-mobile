@@ -11,20 +11,19 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 
-enum class AppPermission(val manifestName: String) {
-    CAMERA(Manifest.permission.CAMERA)
+enum class AppPermission(
+    val manifestName: String,
+) {
+    CAMERA(Manifest.permission.CAMERA),
 }
 
 fun Context.doWithPermission(
     onGranted: () -> Unit,
     requestPermissionLauncher: RequestPermissionLauncher,
-    appPermission: AppPermission
+    appPermission: AppPermission,
 ) {
     when (PackageManager.PERMISSION_GRANTED) {
-        ContextCompat.checkSelfPermission(
-            this,
-            appPermission.manifestName
-        ) -> {
+        ContextCompat.checkSelfPermission(this, appPermission.manifestName) -> {
             onGranted()
         }
         else -> {
@@ -34,49 +33,49 @@ fun Context.doWithPermission(
 }
 
 @JvmInline
-value class RequestPermissionLauncher(private val launcher: ManagedActivityResultLauncher<String, Boolean>) {
+value class RequestPermissionLauncher(
+    private val launcher: ManagedActivityResultLauncher<String, Boolean>,
+) {
     fun launch(appPermission: AppPermission) {
         launcher.launch(appPermission.manifestName)
     }
 }
 
 @Composable
-fun rememberRequestPermissionIntent(onGranted: () -> Unit, onDismiss: () -> Unit) =
-    RequestPermissionLauncher(
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                onGranted()
-            } else {
-                onDismiss()
-            }
+fun rememberRequestPermissionIntent(
+    onGranted: () -> Unit,
+    onDismiss: () -> Unit,
+) = RequestPermissionLauncher(
+    rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted ->
+        if (isGranted) {
+            onGranted()
+        } else {
+            onDismiss()
         }
-    )
+    },
+)
 
 @Composable
 fun PermissionHandler(
     appPermission: AppPermission,
     onPermissionGranted: () -> Unit,
     onPermissionDenied: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            onPermissionGranted()
-        } else {
-            onPermissionDenied()
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                onPermissionGranted()
+            } else {
+                onPermissionDenied()
+            }
         }
-    }
 
     content()
 
     SideEffect {
-        val permissionStatus = ContextCompat.checkSelfPermission(
-            context,
-            appPermission.manifestName
-        )
+        val permissionStatus = ContextCompat.checkSelfPermission(context, appPermission.manifestName)
         when (permissionStatus) {
             PackageManager.PERMISSION_GRANTED -> onPermissionGranted()
             else -> launcher.launch(appPermission.manifestName)

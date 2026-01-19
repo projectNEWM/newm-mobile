@@ -14,54 +14,55 @@ import newm_mobile.android.core.ui_utils.generated.resources.and
 import newm_mobile.android.core.ui_utils.generated.resources.privacy_continue
 import newm_mobile.android.core.ui_utils.generated.resources.privacy_policy
 import newm_mobile.android.core.ui_utils.generated.resources.terms_of_service
-import newm_mobile.android.core.ui_utils.generated.resources.Res as R
 import org.jetbrains.compose.resources.stringResource
+import newm_mobile.android.core.ui_utils.generated.resources.Res as R
 
 @Composable
 fun PrivacyPolicyAndTermsSection(
     modifier: Modifier = Modifier,
     onPrivacyPolicyClicked: () -> Unit,
-    onTermsOfServiceClicked: () -> Unit
+    onTermsOfServiceClicked: () -> Unit,
 ) {
-    val linkStyles = TextLinkStyles(
-        style = SpanStyle(
-            color = MaterialTheme.colors.primary,
-            textDecoration = TextDecoration.Underline
+    val linkStyles =
+        TextLinkStyles(
+            style =
+                SpanStyle(color = MaterialTheme.colors.primary, textDecoration = TextDecoration.Underline),
         )
-    )
 
-    val annotatedText = buildAnnotatedString {
-        append(stringResource(R.string.privacy_continue))
+    val annotatedText =
+        buildAnnotatedString {
+            append(stringResource(R.string.privacy_continue))
 
-        pushLink(
-            LinkAnnotation.Clickable(
-                tag = "privacy",
-                styles = linkStyles,
-                linkInteractionListener = { onPrivacyPolicyClicked() }
+            pushLink(
+                LinkAnnotation.Clickable(
+                    tag = "privacy",
+                    styles = linkStyles,
+                    linkInteractionListener = { onPrivacyPolicyClicked() },
+                ),
             )
-        )
-        append(stringResource(R.string.privacy_policy))
-        pop()
+            append(stringResource(R.string.privacy_policy))
+            pop()
 
-        append(stringResource(R.string.and))
+            append(stringResource(R.string.and))
 
-        pushLink(
-            LinkAnnotation.Clickable(
-                tag = "terms",
-                styles = linkStyles,
-                linkInteractionListener = { onTermsOfServiceClicked() }
+            pushLink(
+                LinkAnnotation.Clickable(
+                    tag = "terms",
+                    styles = linkStyles,
+                    linkInteractionListener = { onTermsOfServiceClicked() },
+                ),
             )
-        )
-        append(stringResource(R.string.terms_of_service))
-        pop()
-    }
+            append(stringResource(R.string.terms_of_service))
+            pop()
+        }
 
     Text(
         text = annotatedText,
-        style = MaterialTheme.typography.body2.copy(
-            fontSize = 12.sp,
-            color = MaterialTheme.colors.onBackground
-        ),
-        modifier = modifier
+        style =
+            MaterialTheme.typography.body2.copy(
+                fontSize = 12.sp,
+                color = MaterialTheme.colors.onBackground,
+            ),
+        modifier = modifier,
     )
 }

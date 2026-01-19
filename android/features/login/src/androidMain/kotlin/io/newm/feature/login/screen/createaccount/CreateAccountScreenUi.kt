@@ -3,11 +3,14 @@ package io.newm.feature.login.screen.createaccount
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.newm.core.ui.LoadingScreen
-import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVerificationUiState
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailAndPasswordUiState
+import io.newm.feature.login.screen.createaccount.CreateAccountUiState.EmailVerificationUiState
 
 @Composable
-fun CreateAccountUi(state: CreateAccountUiState, modifier: Modifier) {
+fun CreateAccountUi(
+    state: CreateAccountUiState,
+    modifier: Modifier,
+) {
     when (state) {
         is EmailAndPasswordUiState -> {
             EmailAndPasswordUi(modifier, state)
@@ -20,4 +23,3 @@ fun CreateAccountUi(state: CreateAccountUiState, modifier: Modifier) {
         CreateAccountUiState.Loading -> LoadingScreen()
     }
 }
-

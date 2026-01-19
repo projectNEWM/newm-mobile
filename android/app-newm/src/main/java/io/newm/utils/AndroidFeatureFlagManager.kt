@@ -9,13 +9,13 @@ import com.launchdarkly.sdk.android.LDClient
 import com.launchdarkly.sdk.android.LDConfig
 import com.launchdarkly.sdk.android.LDConfig.Builder.AutoEnvAttributes
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.commonInternal.db.PreferencesDataStore
 import io.newm.shared.commonPublic.featureflags.FeatureFlag
 import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.featureflags.FlagResult
 import io.newm.shared.commonPublic.models.User
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.util.asDeferred
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -54,9 +54,8 @@ class AndroidFeatureFlagManager(
     private val sharedBuildConfig: NewmSharedBuildConfig,
     private val preferencesStore: PreferencesDataStore,
     private val coroutineScope: CoroutineScope,
-    private val log: NewmAppLogger
+    private val log: NewmAppLogger,
 ) : FeatureFlagDataSource {
-
     companion object {
         private const val TAG = "AndroidFeatureFlagManager"
         private const val DISK_CACHE_PREFIX = "flag_cache_"
@@ -82,44 +81,50 @@ class AndroidFeatureFlagManager(
     private val _flagChanges = MutableSharedFlow<String>(replay = 0, extraBufferCapacity = 64)
 
     // Circuit breaker state
-    private val circuitBreaker = CircuitBreaker(
-        failureThreshold = CIRCUIT_BREAKER_FAILURE_THRESHOLD,
-        resetTimeout = CIRCUIT_BREAKER_RESET_TIMEOUT,
-        halfOpenTimeout = CIRCUIT_BREAKER_HALF_OPEN_TIMEOUT,
-        log = log
-    )
+    private val circuitBreaker =
+        CircuitBreaker(
+            failureThreshold = CIRCUIT_BREAKER_FAILURE_THRESHOLD,
+            resetTimeout = CIRCUIT_BREAKER_RESET_TIMEOUT,
+            halfOpenTimeout = CIRCUIT_BREAKER_HALF_OPEN_TIMEOUT,
+            log = log,
+        )
 
     // Deferred client initialization - non-blocking
-    private val clientDeferred: Deferred<LDClient> = CompletableDeferred<LDClient>().also { deferred ->
-        coroutineScope.launch {
-            try {
-                val client = initializeClientAsync()
-                (deferred as CompletableDeferred).complete(client)
-                log.breadcrumb(TAG, "LaunchDarkly client initialized successfully")
+    private val clientDeferred: Deferred<LDClient> =
+        CompletableDeferred<LDClient>().also { deferred ->
+            coroutineScope.launch {
+                try {
+                    val client = initializeClientAsync()
+                    (deferred as CompletableDeferred).complete(client)
+                    log.breadcrumb(TAG, "LaunchDarkly client initialized successfully")
 
-                // Prefetch after initialization
-                prefetchAllFlags()
-            } catch (e: Exception) {
-                log.error(TAG, "Failed to initialize LaunchDarkly client", e)
-                (deferred as CompletableDeferred).completeExceptionally(e)
+                    // Prefetch after initialization
+                    prefetchAllFlags()
+                } catch (e: Exception) {
+                    log.error(TAG, "Failed to initialize LaunchDarkly client", e)
+                    (deferred as CompletableDeferred).completeExceptionally(e)
+                }
             }
         }
-    }
 
-    /**
-     * Circuit breaker implementation to prevent hammering LaunchDarkly on repeated failures.
-     */
+    /** Circuit breaker implementation to prevent hammering LaunchDarkly on repeated failures. */
     private class CircuitBreaker(
         private val failureThreshold: Int,
         private val resetTimeout: kotlin.time.Duration,
         private val halfOpenTimeout: kotlin.time.Duration,
-        private val log: NewmAppLogger
+        private val log: NewmAppLogger,
     ) {
         private val failureCount = AtomicInteger(0)
         private val lastFailureTime = AtomicLong(0)
-        private val state = java.util.concurrent.atomic.AtomicReference(State.CLOSED)
+        private val state =
+            java.util.concurrent.atomic
+                .AtomicReference(State.CLOSED)
 
-        enum class State { CLOSED, OPEN, HALF_OPEN }
+        enum class State {
+            CLOSED,
+            OPEN,
+            HALF_OPEN,
+        }
 
         fun recordSuccess() {
             failureCount.set(0)
@@ -136,8 +141,8 @@ class AndroidFeatureFlagManager(
             }
         }
 
-        fun canExecute(): Boolean {
-            return when (state.get()) {
+        fun canExecute(): Boolean =
+            when (state.get()) {
                 State.CLOSED -> true
                 State.OPEN -> {
                     val elapsed = System.currentTimeMillis() - lastFailureTime.get()
@@ -155,59 +160,58 @@ class AndroidFeatureFlagManager(
                     elapsed >= halfOpenTimeout.inWholeMilliseconds
                 }
             }
-        }
 
         fun isOpen(): Boolean = state.get() == State.OPEN
     }
 
     data class CacheEntry(
         val value: Boolean,
-        val timestamp: Long
+        val timestamp: Long,
     ) {
-        fun isExpired(now: Long, timeout: Long): Boolean = (now - timestamp) > timeout
+        fun isExpired(
+            now: Long,
+            timeout: Long,
+        ): Boolean = (now - timestamp) > timeout
     }
 
     /**
-     * Initialize LaunchDarkly client asynchronously.
-     * This runs on a background thread and doesn't block app startup.
+     * Initialize LaunchDarkly client asynchronously. This runs on a background thread and doesn't
+     * block app startup.
      */
-    private suspend fun initializeClientAsync(): LDClient = withContext(Dispatchers.IO) {
-        val context = LDContext.builder(ContextKind.DEFAULT, "anonymous")
-            .anonymous(true)
-            .build()
+    private suspend fun initializeClientAsync(): LDClient =
+        withContext(Dispatchers.IO) {
+            val context = LDContext.builder(ContextKind.DEFAULT, "anonymous").anonymous(true).build()
 
-        val ldConfig: LDConfig = LDConfig.Builder(AutoEnvAttributes.Enabled)
-            .mobileKey(sharedBuildConfig.launchDarklyKey)
-            .build()
+            val ldConfig: LDConfig =
+                LDConfig
+                    .Builder(AutoEnvAttributes.Enabled)
+                    .mobileKey(sharedBuildConfig.launchDarklyKey)
+                    .build()
 
-        // Initialize with a shorter timeout since this is async
-        val initTimeoutSeconds = 3
-        val ldClient = LDClient.init(application, ldConfig, context, initTimeoutSeconds)
+            // Initialize with a shorter timeout since this is async
+            val initTimeoutSeconds = 3
+            val ldClient = LDClient.init(application, ldConfig, context, initTimeoutSeconds)
 
-        log.breadcrumb(TAG, "LaunchDarkly client initialized with $initTimeoutSeconds second timeout")
+            log.breadcrumb(TAG, "LaunchDarkly client initialized with $initTimeoutSeconds second timeout")
 
-        // Register listeners for real-time updates
-        registerFlagListeners(ldClient)
+            // Register listeners for real-time updates
+            registerFlagListeners(ldClient)
 
-        ldClient
-    }
+            ldClient
+        }
 
     /**
-     * Get the client, waiting for initialization if needed.
-     * Returns null if initialization failed.
+     * Get the client, waiting for initialization if needed. Returns null if initialization failed.
      */
-    private suspend fun getClient(): LDClient? {
-        return try {
+    private suspend fun getClient(): LDClient? =
+        try {
             clientDeferred.await()
         } catch (e: Exception) {
             log.error(TAG, "Failed to get LaunchDarkly client", e)
             null
         }
-    }
 
-    /**
-     * Eagerly fetch all flags after initialization to populate caches.
-     */
+    /** Eagerly fetch all flags after initialization to populate caches. */
     private fun prefetchAllFlags() {
         coroutineScope.launch {
             try {
@@ -233,9 +237,7 @@ class AndroidFeatureFlagManager(
         }
     }
 
-    /**
-     * Register listeners for real-time flag updates from LaunchDarkly.
-     */
+    /** Register listeners for real-time flag updates from LaunchDarkly. */
     private fun registerFlagListeners(client: LDClient) {
         FeatureFlags.ALL_FLAGS.forEach { flag ->
             client.registerFeatureFlagListener(flag.key) {
@@ -256,9 +258,7 @@ class AndroidFeatureFlagManager(
         log.breadcrumb(TAG, "Registered listeners for ${FeatureFlags.ALL_FLAGS.size} flags")
     }
 
-    override fun observeFlagChanges(): Flow<String> {
-        return _flagChanges.asSharedFlow()
-    }
+    override fun observeFlagChanges(): Flow<String> = _flagChanges.asSharedFlow()
 
     override suspend fun getBooleanVariation(featureFlag: FeatureFlag): FlagResult<Boolean> {
         return try {
@@ -280,9 +280,7 @@ class AndroidFeatureFlagManager(
                 // 2. Check disk cache (for offline support)
                 val diskCached = getDiskCache(featureFlag.key)
                 if (diskCached != null && !diskCached.isExpired(now, cacheTimeout)) {
-                    mutex.withLock {
-                        flagCache[featureFlag.key] = diskCached
-                    }
+                    mutex.withLock { flagCache[featureFlag.key] = diskCached }
                     log.breadcrumb(TAG, "Disk cache hit for ${featureFlag.key}: ${diskCached.value}")
                     return@withContext FlagResult.Success(diskCached.value)
                 }
@@ -300,7 +298,7 @@ class AndroidFeatureFlagManager(
                     val fallback = diskCached?.value ?: featureFlag.defaultValue
                     return@withContext FlagResult.Error(
                         Exception("LaunchDarkly client not initialized"),
-                        fallback
+                        fallback,
                     )
                 }
 
@@ -317,8 +315,8 @@ class AndroidFeatureFlagManager(
             circuitBreaker.recordFailure()
 
             // Try to return cached value even if expired
-            val lastKnown = mutex.withLock { flagCache[featureFlag.key]?.value }
-                ?: getDiskCache(featureFlag.key)?.value
+            val lastKnown =
+                mutex.withLock { flagCache[featureFlag.key]?.value } ?: getDiskCache(featureFlag.key)?.value
 
             if (lastKnown != null) {
                 log.breadcrumb(TAG, "Using stale cache for ${featureFlag.key}: $lastKnown")
@@ -330,14 +328,14 @@ class AndroidFeatureFlagManager(
     }
 
     /**
-     * Fetch flag value with exponential backoff retry logic.
-     * Attempts up to 3 times with increasing delays: 100ms, 400ms, 1600ms
+     * Fetch flag value with exponential backoff retry logic. Attempts up to 3 times with increasing
+     * delays: 100ms, 400ms, 1600ms
      */
     private suspend fun fetchWithRetry(
         client: LDClient,
         flagKey: String,
         defaultValue: Boolean,
-        maxRetries: Int = 3
+        maxRetries: Int = 3,
     ): Boolean {
         var lastException: Exception? = null
 
@@ -361,10 +359,11 @@ class AndroidFeatureFlagManager(
         throw lastException ?: Exception("Failed to fetch flag $flagKey after $maxRetries attempts")
     }
 
-    /**
-     * Update both memory and disk caches atomically.
-     */
-    private suspend fun updateCaches(flagKey: String, value: Boolean) {
+    /** Update both memory and disk caches atomically. */
+    private suspend fun updateCaches(
+        flagKey: String,
+        value: Boolean,
+    ) {
         val now = System.currentTimeMillis()
         val entry = CacheEntry(value, now)
 
@@ -376,9 +375,7 @@ class AndroidFeatureFlagManager(
         saveDiskCache(flagKey, entry)
     }
 
-    /**
-     * Load flag value from disk cache.
-     */
+    /** Load flag value from disk cache. */
     private suspend fun getDiskCache(flagKey: String): CacheEntry? {
         return try {
             val value = preferencesStore.getBoolean(DISK_CACHE_PREFIX + flagKey) ?: return null
@@ -390,10 +387,11 @@ class AndroidFeatureFlagManager(
         }
     }
 
-    /**
-     * Save flag value to disk cache.
-     */
-    private suspend fun saveDiskCache(flagKey: String, entry: CacheEntry) {
+    /** Save flag value to disk cache. */
+    private suspend fun saveDiskCache(
+        flagKey: String,
+        entry: CacheEntry,
+    ) {
         try {
             preferencesStore.saveBoolean(DISK_CACHE_PREFIX + flagKey, entry.value)
             preferencesStore.saveLong(DISK_CACHE_TIMESTAMP_PREFIX + flagKey, entry.timestamp)
@@ -404,20 +402,16 @@ class AndroidFeatureFlagManager(
 
     override suspend fun identifyUser(user: User): FlagResult<Unit> {
         return try {
-            val client = getClient() ?: return FlagResult.Error(
-                Exception("LaunchDarkly client not initialized")
-            )
+            val client =
+                getClient() ?: return FlagResult.Error(Exception("LaunchDarkly client not initialized"))
 
-            val ldContext = LDContext.builder(ContextKind.DEFAULT, user.id)
-                .set("email", user.email)
-                .build()
+            val ldContext =
+                LDContext.builder(ContextKind.DEFAULT, user.id).set("email", user.email).build()
 
             withContext(Dispatchers.IO) {
                 client.identify(ldContext).asDeferred().await()
 
-                mutex.withLock {
-                    flagCache.clear()
-                }
+                mutex.withLock { flagCache.clear() }
 
                 clearDiskCache()
             }
@@ -430,8 +424,8 @@ class AndroidFeatureFlagManager(
         }
     }
 
-    override suspend fun getAllVariations(): FlagResult<Map<String, Boolean>> {
-        return try {
+    override suspend fun getAllVariations(): FlagResult<Map<String, Boolean>> =
+        try {
             withContext(Dispatchers.IO) {
                 val flagValues = mutableMapOf<String, Boolean>()
 
@@ -439,12 +433,8 @@ class AndroidFeatureFlagManager(
                     try {
                         val result = getBooleanVariation(flag)
                         result.fold(
-                            onSuccess = { value ->
-                                flagValues[flag.key] = value
-                            },
-                            onError = { _, fallback ->
-                                flagValues[flag.key] = fallback ?: flag.defaultValue
-                            }
+                            onSuccess = { value -> flagValues[flag.key] = value },
+                            onError = { _, fallback -> flagValues[flag.key] = fallback ?: flag.defaultValue },
                         )
                     } catch (e: Exception) {
                         log.error(TAG, "Error getting flag ${flag.key}", e)
@@ -459,11 +449,8 @@ class AndroidFeatureFlagManager(
             val defaultValues = FeatureFlags.ALL_FLAGS.associate { it.key to it.defaultValue }
             FlagResult.Error(e, defaultValues)
         }
-    }
 
-    /**
-     * Clear all disk cached flags.
-     */
+    /** Clear all disk cached flags. */
     private suspend fun clearDiskCache() {
         FeatureFlags.ALL_FLAGS.forEach { flag ->
             try {
@@ -476,22 +463,16 @@ class AndroidFeatureFlagManager(
         log.breadcrumb(TAG, "Disk cache cleared for all flags")
     }
 
-    /**
-     * Clear all caches (memory and disk).
-     */
+    /** Clear all caches (memory and disk). */
     suspend fun clearCache() {
-        mutex.withLock {
-            flagCache.clear()
-        }
+        mutex.withLock { flagCache.clear() }
         clearDiskCache()
         log.breadcrumb(TAG, "All caches cleared (memory and disk)")
     }
 
-    /**
-     * Force refresh all flags from LaunchDarkly.
-     */
-    suspend fun refreshAllFlags(): FlagResult<Unit> {
-        return try {
+    /** Force refresh all flags from LaunchDarkly. */
+    suspend fun refreshAllFlags(): FlagResult<Unit> =
+        try {
             clearCache()
             getAllVariations()
             log.breadcrumb(TAG, "All flags refreshed from LaunchDarkly")
@@ -500,21 +481,20 @@ class AndroidFeatureFlagManager(
             log.error(TAG, "Error refreshing all flags", e)
             FlagResult.Error(e)
         }
-    }
 
     override suspend fun getRemoteValueDirect(featureFlag: FeatureFlag): FlagResult<Boolean> {
         return try {
             withContext(Dispatchers.IO) {
-                val client = getClient() ?: return@withContext FlagResult.Error(
-                    Exception("LaunchDarkly client not initialized"),
-                    featureFlag.defaultValue
-                )
+                val client =
+                    getClient()
+                        ?: return@withContext FlagResult.Error(
+                            Exception("LaunchDarkly client not initialized"),
+                            featureFlag.defaultValue,
+                        )
 
                 val value = client.boolVariation(featureFlag.key, featureFlag.defaultValue)
 
-                mutex.withLock {
-                    lastSyncTimestamp = Clock.System.now()
-                }
+                mutex.withLock { lastSyncTimestamp = Clock.System.now() }
 
                 log.breadcrumb(TAG, "Direct remote fetch for ${featureFlag.key}: $value")
                 FlagResult.Success(value)
@@ -525,10 +505,5 @@ class AndroidFeatureFlagManager(
         }
     }
 
-    override suspend fun getLastSyncTimestamp(): Instant? {
-        return mutex.withLock {
-            lastSyncTimestamp
-        }
-    }
+    override suspend fun getLastSyncTimestamp(): Instant? = mutex.withLock { lastSyncTimestamp }
 }
-

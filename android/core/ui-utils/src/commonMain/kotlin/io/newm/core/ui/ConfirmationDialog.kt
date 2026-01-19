@@ -10,8 +10,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import newm_mobile.android.core.ui_utils.generated.resources.dialog_cancel
 import newm_mobile.android.core.ui_utils.generated.resources.dialog_confirm
-import newm_mobile.android.core.ui_utils.generated.resources.Res as R
 import org.jetbrains.compose.resources.stringResource
+import newm_mobile.android.core.ui_utils.generated.resources.Res as R
 
 @Composable
 fun ConfirmationDialog(
@@ -28,7 +28,8 @@ fun ConfirmationDialog(
     if (isOpen.value) {
         AlertDialog(
             onDismissRequest = {
-                // Update the isOpen state to false when the user clicks outside the dialog or presses the back button
+                // Update the isOpen state to false when the user clicks outside the dialog or presses the
+                // back button
                 isOpen.value = false
                 onDismiss() // Call the onDismiss lambda to handle any additional logic
             },
@@ -40,7 +41,7 @@ fun ConfirmationDialog(
                         isOpen.value = false // Close the dialog
                         onConfirm() // Handle the confirm action
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = positiveButtonColor)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = positiveButtonColor),
                 ) {
                     Text(confirmationText)
                 }
@@ -51,11 +52,11 @@ fun ConfirmationDialog(
                         isOpen.value = false // Close the dialog
                         onDismiss() // Handle the dismiss action
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = negativeButtonColor)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = negativeButtonColor),
                 ) {
                     Text(cancelText)
                 }
-            }
+            },
         )
     }
 }

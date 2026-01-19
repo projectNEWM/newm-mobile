@@ -58,7 +58,7 @@ import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
 @Composable
 fun FeatureFlagsListUi(
     state: FeatureFlagsListScreen.UiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     when (state) {
         is FeatureFlagsListScreen.UiState.Loading -> {
@@ -82,26 +82,20 @@ fun FeatureFlagsListUi(
 @Composable
 fun LoadingState(
     modifier: Modifier = Modifier,
-    message: String = "Loading feature flags..."
+    message: String = "Loading feature flags...",
 ) {
-    Box(
-        modifier = modifier.fillMaxSize().statusBarsPadding(),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = modifier.fillMaxSize().statusBarsPadding(), contentAlignment = Alignment.Center) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colors.primary,
-                strokeWidth = 3.dp
-            )
+            CircularProgressIndicator(color = MaterialTheme.colors.primary, strokeWidth = 3.dp)
 
             Text(
                 text = message,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -112,28 +106,17 @@ fun ErrorState(
     message: String,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
-    title: String = "Error Loading Flags"
+    title: String = "Error Loading Flags",
 ) {
-    Box(
-        modifier = modifier.fillMaxSize().statusBarsPadding(),
-        contentAlignment = Alignment.Center
-    ) {
-        Card(
-            modifier = Modifier.padding(16.dp),
-            elevation = 4.dp,
-            shape = RoundedCornerShape(12.dp)
-        ) {
+    Box(modifier = modifier.fillMaxSize().statusBarsPadding(), contentAlignment = Alignment.Center) {
+        Card(modifier = Modifier.padding(16.dp), elevation = 4.dp, shape = RoundedCornerShape(12.dp)) {
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 // Error icon
-                Text(
-                    text = "⚠️",
-                    style = MaterialTheme.typography.h3,
-                    color = MaterialTheme.colors.error
-                )
+                Text(text = "⚠️", style = MaterialTheme.typography.h3, color = MaterialTheme.colors.error)
 
                 // Error title
                 Text(
@@ -141,7 +124,7 @@ fun ErrorState(
                     style = MaterialTheme.typography.h6,
                     color = MaterialTheme.colors.error,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
 
                 // Error message
@@ -149,16 +132,14 @@ fun ErrorState(
                     text = message,
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
 
                 // Retry button
                 Button(
                     onClick = onRetry,
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.primary
-                    ),
-                    shape = RoundedCornerShape(8.dp)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary),
+                    shape = RoundedCornerShape(8.dp),
                 ) {
                     Text("🔄") // Refresh emoji
                     Spacer(Modifier.width(8.dp))
@@ -173,60 +154,39 @@ fun ErrorState(
 @Composable
 private fun ClearContentState(
     state: FeatureFlagsListScreen.UiState.Content,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.isRefreshing,
-        onRefresh = { state.onEvent(FeatureFlagsListScreen.UiEvent.OnRefresh) }
-    )
+    val pullRefreshState =
+        rememberPullRefreshState(
+            refreshing = state.isRefreshing,
+            onRefresh = { state.onEvent(FeatureFlagsListScreen.UiEvent.OnRefresh) },
+        )
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            ClearTopAppBar(state)
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-                .pullRefresh(pullRefreshState)
-        ) {
+    Scaffold(modifier = modifier, topBar = { ClearTopAppBar(state) }) { padding ->
+        Box(modifier = Modifier.padding(padding).pullRefresh(pullRefreshState)) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 // Environment info header
-                item {
-                    EnvironmentInfoCard(state.environmentInfo)
-                }
+                item { EnvironmentInfoCard(state.environmentInfo) }
 
                 // Debug info section
-                state.debugInfo?.let { debugInfo ->
-                    item {
-                        DebugInfoCard(debugInfo, state.onEvent)
-                    }
-                }
+                state.debugInfo?.let { debugInfo -> item { DebugInfoCard(debugInfo, state.onEvent) } }
 
                 // Grouped flags by category
                 state.groupedFlags.forEach { (category, flags) ->
-                    item {
-                        CategoryHeader(category, flags.size)
-                    }
+                    item { CategoryHeader(category, flags.size) }
 
-                    items(flags) { flagItem ->
-                        ClearFeatureFlagRow(
-                            item = flagItem,
-                            onEvent = state.onEvent
-                        )
-                    }
+                    items(flags) { flagItem -> ClearFeatureFlagRow(item = flagItem, onEvent = state.onEvent) }
                 }
             }
 
             PullRefreshIndicator(
                 refreshing = state.isRefreshing,
                 state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter),
             )
         }
     }
@@ -236,51 +196,54 @@ private fun ClearContentState(
 private fun EnvironmentInfoCard(environmentInfo: FeatureFlagsListScreen.EnvironmentInfo) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        backgroundColor = when (environmentInfo.environment) {
-            "Production" -> Color(0xFF4CAF50).copy(alpha = 0.1f)
-            "Development" -> Color(0xFFFF9800).copy(alpha = 0.1f)
-            else -> MaterialTheme.colors.surface
-        },
-        elevation = 2.dp
+        backgroundColor =
+            when (environmentInfo.environment) {
+                "Production" -> Color(0xFF4CAF50).copy(alpha = 0.1f)
+                "Development" -> Color(0xFFFF9800).copy(alpha = 0.1f)
+                else -> MaterialTheme.colors.surface
+            },
+        elevation = 2.dp,
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column {
                 Text(
                     text = "Environment: ${environmentInfo.environment}",
                     style = MaterialTheme.typography.subtitle1,
                     fontWeight = FontWeight.Bold,
-                    color = when (environmentInfo.environment) {
-                        "Production" -> Color(0xFF4CAF50)
-                        "Development" -> Color(0xFFFF9800)
-                        else -> MaterialTheme.colors.onSurface
-                    }
+                    color =
+                        when (environmentInfo.environment) {
+                            "Production" -> Color(0xFF4CAF50)
+                            "Development" -> Color(0xFFFF9800)
+                            else -> MaterialTheme.colors.onSurface
+                        },
                 )
                 Text(
                     text = "LaunchDarkly: ${environmentInfo.clientStatus}",
                     style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
                 )
                 environmentInfo.lastSync?.let { lastSync ->
                     Text(
                         text = "Last synced: ${formatTimestamp(lastSync)}",
                         style = MaterialTheme.typography.caption,
                         color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     )
                 }
             }
 
             Text(
-                text = when (environmentInfo.environment) {
-                    "Production" -> "🚀"
-                    "Development" -> "🔧"
-                    else -> "⚙️"
-                },
-                style = MaterialTheme.typography.h5
+                text =
+                    when (environmentInfo.environment) {
+                        "Production" -> "🚀"
+                        "Development" -> "🔧"
+                        else -> "⚙️"
+                    },
+                style = MaterialTheme.typography.h5,
             )
         }
     }
@@ -296,9 +259,12 @@ private fun ClearTopAppBar(state: FeatureFlagsListScreen.UiState.Content) {
             Column {
                 Text("Feature Flags")
                 Text(
-                    text = "${state.environmentInfo.environment} • ${state.flags.size} flags • ${state.flags.count { it.isOverridden }} overridden",
+                    text =
+                        "${state.environmentInfo.environment} • ${state.flags.size} flags • ${state.flags.count {
+                            it.isOverridden
+                        }} overridden",
                     style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onPrimary.copy(alpha = 0.7f)
+                    color = MaterialTheme.colors.onPrimary.copy(alpha = 0.7f),
                 )
             }
         },
@@ -308,20 +274,14 @@ private fun ClearTopAppBar(state: FeatureFlagsListScreen.UiState.Content) {
             }
         },
         actions = {
+            IconButton(onClick = { showMenu = true }) { Text("⋮", style = MaterialTheme.typography.h5) }
 
-            IconButton(onClick = { showMenu = true }) {
-                Text("⋮", style = MaterialTheme.typography.h5)
-            }
-
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
+            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                 DropdownMenuItem(
                     onClick = {
                         state.onEvent(FeatureFlagsListScreen.UiEvent.OnToggleDebugMode)
                         showMenu = false
-                    }
+                    },
                 ) {
                     Text("🐛")
                     Spacer(Modifier.width(8.dp))
@@ -332,7 +292,7 @@ private fun ClearTopAppBar(state: FeatureFlagsListScreen.UiState.Content) {
                     onClick = {
                         state.onEvent(FeatureFlagsListScreen.UiEvent.OnExportDebugState)
                         showMenu = false
-                    }
+                    },
                 ) {
                     Text("📥")
                     Spacer(Modifier.width(8.dp))
@@ -345,55 +305,51 @@ private fun ClearTopAppBar(state: FeatureFlagsListScreen.UiState.Content) {
                     onClick = {
                         state.onEvent(FeatureFlagsListScreen.UiEvent.OnResetAllFlags)
                         showMenu = false
-                    }
+                    },
                 ) {
                     Text("🔄", color = MaterialTheme.colors.error)
                     Spacer(Modifier.width(8.dp))
                     Text("Reset All Flags", color = MaterialTheme.colors.error)
                 }
             }
-        }
+        },
     )
 }
 
 @Composable
 private fun ClearFeatureFlagRow(
     item: FeatureFlagsListScreen.FeatureFlagListItem,
-    onEvent: (FeatureFlagsListScreen.UiEvent) -> Unit
+    onEvent: (FeatureFlagsListScreen.UiEvent) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = if (item.isOverridden) 4.dp else 2.dp,
         shape = RoundedCornerShape(12.dp),
-        border = if (item.isOverridden) BorderStroke(2.dp, MaterialTheme.colors.secondary) else null
+        border = if (item.isOverridden) BorderStroke(2.dp, MaterialTheme.colors.secondary) else null,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             // Override badge
             if (item.isOverridden) {
                 Row(
-                    modifier = Modifier
-                        .background(
-                            MaterialTheme.colors.secondary.copy(alpha = 0.15f),
-                            RoundedCornerShape(4.dp)
-                        )
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    modifier =
+                        Modifier
+                            .background(
+                                MaterialTheme.colors.secondary.copy(alpha = 0.15f),
+                                RoundedCornerShape(4.dp),
+                            ).padding(horizontal = 8.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     Text(
                         text = "⚠",
                         style = MaterialTheme.typography.caption,
-                        color = MaterialTheme.colors.secondary
+                        color = MaterialTheme.colors.secondary,
                     )
                     Text(
                         text = "LOCALLY OVERRIDDEN",
                         style = MaterialTheme.typography.caption,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.secondary
+                        color = MaterialTheme.colors.secondary,
                     )
                 }
                 Spacer(Modifier.height(8.dp))
@@ -403,20 +359,25 @@ private fun ClearFeatureFlagRow(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = item.featureFlag.displayName,
                         style = MaterialTheme.typography.h6.copy(fontSize = 16.sp),
-                        color = if (item.isOverridden) MaterialTheme.colors.primary else MaterialTheme.colors.onSurface
+                        color =
+                            if (item.isOverridden) {
+                                MaterialTheme.colors.primary
+                            } else {
+                                MaterialTheme.colors.onSurface
+                            },
                     )
 
                     if (item.description.isNotEmpty()) {
                         Text(
                             text = item.description,
                             style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
                         )
                     }
                 }
@@ -427,13 +388,19 @@ private fun ClearFeatureFlagRow(
                         onEvent(
                             FeatureFlagsListScreen.UiEvent.OnFlagToggled(
                                 key = item.featureFlag.key,
-                                isEnabled = isEnabled
-                            )
+                                isEnabled = isEnabled,
+                            ),
                         )
                     },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = if (item.isOverridden) MaterialTheme.colors.secondary else MaterialTheme.colors.primary
-                    )
+                    colors =
+                        SwitchDefaults.colors(
+                            checkedThumbColor =
+                                if (item.isOverridden) {
+                                    MaterialTheme.colors.secondary
+                                } else {
+                                    MaterialTheme.colors.primary
+                                },
+                        ),
                 )
             }
 
@@ -443,14 +410,14 @@ private fun ClearFeatureFlagRow(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 // Remote value chip
                 ValueChip(
                     label = "Remote Flag",
                     value = if (item.remoteValue) "ON" else "OFF",
                     color = if (item.remoteValue) Color(0xFF4CAF50) else Color(0xFF757575),
-                    isHighlighted = !item.isOverridden
+                    isHighlighted = !item.isOverridden,
                 )
 
                 // Current/Effective value chip
@@ -458,7 +425,7 @@ private fun ClearFeatureFlagRow(
                     label = "Current",
                     value = if (item.effectiveValue) "ON" else "OFF",
                     color = if (item.effectiveValue) Color(0xFF2196F3) else Color(0xFF757575),
-                    isHighlighted = true
+                    isHighlighted = true,
                 )
 
                 // Override chip (if applicable)
@@ -467,7 +434,7 @@ private fun ClearFeatureFlagRow(
                         label = "Override",
                         value = if (item.localOverrideValue) "ON" else "OFF",
                         color = MaterialTheme.colors.secondary,
-                        isHighlighted = true
+                        isHighlighted = true,
                     )
                 }
 
@@ -477,16 +444,11 @@ private fun ClearFeatureFlagRow(
                 if (item.isOverridden) {
                     OutlinedButton(
                         onClick = {
-                            onEvent(
-                                FeatureFlagsListScreen.UiEvent.OnResetFlag(
-                                    key = item.featureFlag.key
-                                )
-                            )
+                            onEvent(FeatureFlagsListScreen.UiEvent.OnResetFlag(key = item.featureFlag.key))
                         },
                         modifier = Modifier.height(32.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = MaterialTheme.colors.secondary
-                        )
+                        colors =
+                            ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.secondary),
                     ) {
                         Text("↶", fontSize = 14.sp)
                         Spacer(Modifier.width(4.dp))
@@ -503,7 +465,7 @@ private fun ClearFeatureFlagRow(
                     Text(
                         text = "Source: ${item.evaluationSource.name.lowercase().replace("_", " ")}",
                         style = MaterialTheme.typography.caption,
-                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                     )
                 }
             }
@@ -514,39 +476,29 @@ private fun ClearFeatureFlagRow(
 @Composable
 private fun DebugInfoCard(
     debugInfo: FeatureFlagsListScreen.DebugInfo,
-    onEvent: (FeatureFlagsListScreen.UiEvent) -> Unit
+    onEvent: (FeatureFlagsListScreen.UiEvent) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f),
-        elevation = 2.dp
+        elevation = 2.dp,
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = "Debug Information",
                     style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
 
-                Text(
-                    "🐛",
-                    style = MaterialTheme.typography.h6,
-                    color = MaterialTheme.colors.primary
-                )
+                Text("🐛", style = MaterialTheme.typography.h6, color = MaterialTheme.colors.primary)
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 DebugMetric("Total Flags", debugInfo.totalFlags.toString())
                 DebugMetric("Overridden", debugInfo.overriddenCount.toString())
                 DebugMetric("Cache Hits", debugInfo.cacheHits.toString())
@@ -555,53 +507,57 @@ private fun DebugInfoCard(
             Text(
                 text = "Last Updated: ${debugInfo.lastUpdated}",
                 style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
             )
         }
     }
 }
 
 @Composable
-private fun DebugMetric(label: String, value: String) {
+private fun DebugMetric(
+    label: String,
+    value: String,
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = value,
-            style = MaterialTheme.typography.h6,
-            color = MaterialTheme.colors.primary
-        )
+        Text(text = value, style = MaterialTheme.typography.h6, color = MaterialTheme.colors.primary)
         Text(
             text = label,
             style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
         )
     }
 }
 
 @Composable
-private fun CategoryHeader(category: FlagCategory, count: Int) {
+private fun CategoryHeader(
+    category: FlagCategory,
+    count: Int,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = category.name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() },
+            text =
+                category.name
+                    .replace("_", " ")
+                    .lowercase()
+                    .replaceFirstChar { it.uppercase() },
             style = MaterialTheme.typography.h6,
-            color = MaterialTheme.colors.primary
+            color = MaterialTheme.colors.primary,
         )
 
         Spacer(Modifier.width(8.dp))
 
         Surface(
             shape = RoundedCornerShape(12.dp),
-            color = MaterialTheme.colors.primary.copy(alpha = 0.1f)
+            color = MaterialTheme.colors.primary.copy(alpha = 0.1f),
         ) {
             Text(
                 text = count.toString(),
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.primary,
             )
         }
 
@@ -609,14 +565,14 @@ private fun CategoryHeader(category: FlagCategory, count: Int) {
 
         Divider(
             modifier = Modifier.weight(2f),
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
         )
     }
 }
 
 /**
- * Format timestamp to a more readable format
- * Converts from ISO instant format to relative time (e.g., "2 minutes ago")
+ * Format timestamp to a more readable format Converts from ISO instant format to relative time
+ * (e.g., "2 minutes ago")
  */
 private fun formatTimestamp(timestamp: String): String {
     try {

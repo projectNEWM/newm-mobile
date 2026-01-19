@@ -40,7 +40,6 @@ import io.newm.core.ui.utils.iconGradient
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 
-
 private val buttonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
 
@@ -51,80 +50,79 @@ fun SongFilterBottomSheet(
     sheetState: ModalBottomSheetState,
     filters: NFTLibraryFilters,
     onApplyFilters: (NFTLibraryFilters) -> Unit,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     LocalIsBottomBarVisible.current.value = sheetState.targetValue != ModalBottomSheetValue.Expanded
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = {
             if (sheetState.targetValue == ModalBottomSheetValue.Expanded) {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.NFTLibraryFilterScreen.name)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.NFTLibraryFilterScreen.name) }
             }
             Box(
-                modifier = Modifier
-                    .background(Black90)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                modifier =
+                    Modifier
+                        .background(Black90)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
             ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            MaterialTheme.colors.surface,
-                            shape = MaterialTheme.shapes.medium
-                        )
-                        .padding(16.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colors.surface, shape = MaterialTheme.shapes.medium)
+                            .padding(16.dp),
                 ) {
                     Text(
                         text = stringResource(id = R.string.library_filter_songs),
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            color = White
-                        )
+                        style =
+                            TextStyle(
+                                fontFamily = inter,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                color = White,
+                            ),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SongFilterButton(
                         onClick = { onApplyFilters(filters.copy(showShortTracks = !filters.showShortTracks)) },
                         labelRes = R.string.library_filter_songs_under_30,
-                        isSelected = filters.showShortTracks
+                        isSelected = filters.showShortTracks,
                     )
                     Spacer(modifier = Modifier.height(40.dp))
                     Text(
                         text = stringResource(id = R.string.library_sort_songs),
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            color = White
-                        )
+                        style =
+                            TextStyle(
+                                fontFamily = inter,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                color = White,
+                            ),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SongFilterButton(
                         onClick = { onApplyFilters(filters.selectSortType(NFTLibrarySortType.ByTitle)) },
                         labelRes = R.string.library_sort_by_title,
-                        isSelected = filters.sortType == NFTLibrarySortType.ByTitle
+                        isSelected = filters.sortType == NFTLibrarySortType.ByTitle,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     SongFilterButton(
                         onClick = { onApplyFilters(filters.selectSortType(NFTLibrarySortType.ByArtist)) },
                         labelRes = R.string.library_sort_by_artist,
-                        isSelected = filters.sortType == NFTLibrarySortType.ByArtist
+                        isSelected = filters.sortType == NFTLibrarySortType.ByArtist,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     SongFilterButton(
                         onClick = { onApplyFilters(filters.selectSortType(NFTLibrarySortType.ByLength)) },
                         labelRes = R.string.library_sort_by_length,
-                        isSelected = filters.sortType == NFTLibrarySortType.ByLength
+                        isSelected = filters.sortType == NFTLibrarySortType.ByLength,
                     )
                 }
             }
         },
         scrimColor = Black90,
-        content = { }
+        content = {},
     )
 }
 
@@ -132,7 +130,7 @@ fun SongFilterBottomSheet(
 private fun SongFilterButton(
     onClick: () -> Unit,
     labelRes: Int,
-    isSelected: Boolean
+    isSelected: Boolean,
 ) {
     NewmButton(
         modifier = Modifier.fillMaxWidth(),
@@ -141,10 +139,7 @@ private fun SongFilterButton(
         unselectedBrush = buttonGradient,
         onClick = onClick,
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(id = labelRes),
                 fontFamily = inter,

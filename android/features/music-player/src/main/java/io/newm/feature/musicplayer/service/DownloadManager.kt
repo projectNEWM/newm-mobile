@@ -8,8 +8,13 @@ import androidx.media3.exoplayer.offline.DownloadService
 import kotlinx.coroutines.flow.Flow
 
 interface DownloadManager {
-    fun download(id: String, url: String)
+    fun download(
+        id: String,
+        url: String,
+    )
+
     fun remove(id: String)
+
     fun getDownloadState(id: String): Flow<DownloadState>
 }
 
@@ -18,32 +23,21 @@ class DownloadManagerImpl(
     private val context: Context,
     private val downloadStateManager: DownloadStateManager,
 ) : DownloadManager {
-
     @UnstableApi
-    override fun download(id: String, url: String) {
+    override fun download(
+        id: String,
+        url: String,
+    ) {
         val uri = Uri.parse(url)
         val downloadRequest = DownloadRequest.Builder(id, uri).build()
 
-        DownloadService.sendAddDownload(
-            context,
-            NewmDownloadService::class.java,
-            downloadRequest,
-            true
-        )
+        DownloadService.sendAddDownload(context, NewmDownloadService::class.java, downloadRequest, true)
     }
-
 
     @UnstableApi
     override fun remove(id: String) {
-        DownloadService.sendRemoveDownload(
-            context,
-            NewmDownloadService::class.java,
-            id,
-            true,
-        )
+        DownloadService.sendRemoveDownload(context, NewmDownloadService::class.java, id, true)
     }
 
-    override fun getDownloadState(id: String): Flow<DownloadState> {
-        return downloadStateManager.getDownloadState(id)
-    }
+    override fun getDownloadState(id: String): Flow<DownloadState> = downloadStateManager.getDownloadState(id)
 }

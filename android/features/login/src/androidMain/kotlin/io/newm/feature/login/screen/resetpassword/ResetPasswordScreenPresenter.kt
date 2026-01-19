@@ -12,7 +12,6 @@ import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.core.resources.R
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.feature.login.screen.email.EmailState
 import io.newm.feature.login.screen.password.ConfirmPasswordState
 import io.newm.feature.login.screen.password.PasswordState
@@ -26,6 +25,7 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
 import io.newm.shared.commonPublic.usecases.ResetPasswordUseCase
 import io.newm.shared.commonPublic.usecases.SignupUseCase
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.sharedfeatures.screens.HomeScreen
 import kotlinx.coroutines.launch
 
@@ -42,7 +42,7 @@ class ResetPasswordScreenPresenter(
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val recaptchaClientProvider: RecaptchaClientProvider,
     private val logger: NewmAppLogger,
-    private val analyticsTracker: NewmAppEventLogger
+    private val analyticsTracker: NewmAppEventLogger,
 ) : Presenter<ResetPasswordScreenUiState> {
     @Composable
     override fun present(): ResetPasswordScreenUiState {
@@ -66,32 +66,31 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterEmailUiEvent.OnSubmit -> {
-                                analyticsTracker.logClickEvent(AppScreens.ResetPasswordEnterEmailScreen.CONTINUE_BUTTON)
+                                analyticsTracker.logClickEvent(
+                                    AppScreens.ResetPasswordEnterEmailScreen.CONTINUE_BUTTON,
+                                )
                                 errorMessage = null
                                 isLoading = true
                                 coroutineScope.launch {
                                     try {
-                                        recaptchaClientProvider.get()
+                                        recaptchaClientProvider
+                                            .get()
                                             .execute(RecaptchaAction.custom("auth_code"))
                                             .onSuccess { token ->
                                                 signupUseCase.requestEmailConfirmationCode(
                                                     email.text,
                                                     humanVerificationCode = token,
-                                                    mustExists = true
+                                                    mustExists = true,
                                                 )
                                                 step = ResetPasswordStep.EnterVerificationCode
                                             }.onFailure {
-                                                logger.error(
-                                                    "ResetPasswordScreenPresenter",
-                                                    "Human verification error",
-                                                    it
-                                                )
+                                                logger.error("ResetPasswordScreenPresenter", "Human verification error", it)
                                             }
                                     } catch (e: Throwable) {
                                         logger.error(
                                             "ResetPasswordScreenPresenter",
                                             "Requesting email confirmation code failed",
-                                            e
+                                            e,
                                         )
                                         errorMessage = e.message
                                     }
@@ -113,7 +112,9 @@ class ResetPasswordScreenPresenter(
                     eventSink = { event ->
                         when (event) {
                             EnterVerificationCodeUiEvent.OnSubmit -> {
-                                analyticsTracker.logClickEvent(AppScreens.ResetPasswordEnterCodeScreen.CONTINUE_BUTTON)
+                                analyticsTracker.logClickEvent(
+                                    AppScreens.ResetPasswordEnterCodeScreen.CONTINUE_BUTTON,
+                                )
                                 step = ResetPasswordStep.EnterNewPassword
                             }
                         }
@@ -138,7 +139,8 @@ class ResetPasswordScreenPresenter(
                                 isLoading = true
                                 coroutineScope.launch {
                                     try {
-                                        recaptchaClientProvider.get()
+                                        recaptchaClientProvider
+                                            .get()
                                             .execute(RecaptchaAction.custom("password_reset"))
                                             .onSuccess { token ->
                                                 resetPasswordUseCase.resetPassword(
@@ -146,32 +148,23 @@ class ResetPasswordScreenPresenter(
                                                     code = authCode.text,
                                                     newPassword = password.text,
                                                     confirmPassword = passwordConfirmation.text,
-                                                    humanVerificationCode = token
+                                                    humanVerificationCode = token,
                                                 )
-                                                errorMessage = context.getString(R.string.password_reset_successfully_message)
-                                                recaptchaClientProvider.get()
-                                                    .execute(RecaptchaAction.LOGIN)
-                                                    .onSuccess { newToken ->
-                                                        loginUseCase.logIn(
-                                                            email.text,
-                                                            password.text,
-                                                            humanVerificationCode = newToken
-                                                        )
-                                                        navigator.goTo(HomeScreen)
-                                                    }
+                                                errorMessage =
+                                                    context.getString(R.string.password_reset_successfully_message)
+                                                recaptchaClientProvider.get().execute(RecaptchaAction.LOGIN).onSuccess { newToken ->
+                                                    loginUseCase.logIn(
+                                                        email.text,
+                                                        password.text,
+                                                        humanVerificationCode = newToken,
+                                                    )
+                                                    navigator.goTo(HomeScreen)
+                                                }
                                             }.onFailure {
-                                                logger.error(
-                                                    "ResetPasswordScreenPresenter",
-                                                    "Human verification error",
-                                                    it
-                                                )
+                                                logger.error("ResetPasswordScreenPresenter", "Human verification error", it)
                                             }
                                     } catch (e: Throwable) {
-                                        logger.error(
-                                            "ResetPasswordScreenPresenter",
-                                            "Resetting password failed",
-                                            e
-                                        )
+                                        logger.error("ResetPasswordScreenPresenter", "Resetting password failed", e)
                                         errorMessage = e.message
                                     }
 

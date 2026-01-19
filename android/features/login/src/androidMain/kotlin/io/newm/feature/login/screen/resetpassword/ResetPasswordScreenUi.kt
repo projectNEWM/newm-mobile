@@ -47,9 +47,14 @@ import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVeri
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 
-class ResetPasswordScreenUi(val eventLogger: NewmAppEventLogger) : Ui<ResetPasswordScreenUiState> {
+class ResetPasswordScreenUi(
+    val eventLogger: NewmAppEventLogger,
+) : Ui<ResetPasswordScreenUiState> {
     @Composable
-    override fun Content(state: ResetPasswordScreenUiState, modifier: Modifier) {
+    override fun Content(
+        state: ResetPasswordScreenUiState,
+        modifier: Modifier,
+    ) {
         ResetPasswordScreenContent(modifier = modifier, state = state, eventLogger = eventLogger)
     }
 }
@@ -58,7 +63,7 @@ class ResetPasswordScreenUi(val eventLogger: NewmAppEventLogger) : Ui<ResetPassw
 internal fun ResetPasswordScreenContent(
     state: ResetPasswordScreenUiState,
     modifier: Modifier = Modifier,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     ToastSideEffect(message = state.errorMessage)
 
@@ -86,44 +91,41 @@ internal fun ResetPasswordScreenContent(
 private fun EnterEmailContent(
     state: EnterEmail,
     modifier: Modifier = Modifier,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     val eventSink = state.eventSink
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(Unit) {
-        eventLogger.logPageLoad(AppScreens.ResetPasswordEnterEmailScreen.name)
-    }
-    Column(
-        modifier = modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.ResetPasswordEnterEmailScreen.name) }
+    Column(modifier = modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             stringResource(R.string.reset_password_forgot_your_password),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h1
+            style = MaterialTheme.typography.h1,
         )
         Text(
             stringResource(R.string.reset_password_enter_email),
             style = MaterialTheme.typography.h2,
             color = MaterialTheme.colors.primary,
             textAlign = TextAlign.Center,
-            fontStyle = FontStyle.Italic
+            fontStyle = FontStyle.Italic,
         )
         Spacer(modifier = Modifier.weight(1f))
         Email(
             modifier = Modifier.focusRequester(focusRequester),
             emailState = state.email,
-            keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.EMAIL.copy(imeAction = ImeAction.Go),
-            keyboardActions = KeyboardActions(onGo = {
-                keyboardController?.hide()
-                if (state.submitButtonEnabled) {
-                    eventSink(
-                        EnterEmailUiEvent.OnSubmit
-                    )
-                }
-            }),
+            keyboardOptions =
+                TextFieldWithLabelDefaults.KeyboardOptions.EMAIL.copy(imeAction = ImeAction.Go),
+            keyboardActions =
+                KeyboardActions(
+                    onGo = {
+                        keyboardController?.hide()
+                        if (state.submitButtonEnabled) {
+                            eventSink(EnterEmailUiEvent.OnSubmit)
+                        }
+                    },
+                ),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -142,12 +144,10 @@ private fun EnterEmailContent(
 private fun EnterCodeContent(
     state: EnterVerificationCode,
     modifier: Modifier,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     val eventSink = state.eventSink
-    LaunchedEffect(Unit) {
-        eventLogger.logPageLoad(AppScreens.ResetPasswordEnterCodeScreen.name)
-    }
+    LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.ResetPasswordEnterCodeScreen.name) }
     EmailVerificationContent(
         modifier = modifier,
         verificationCode = state.code,
@@ -161,49 +161,45 @@ private fun EnterCodeContent(
 private fun SetNewPasswordContent(
     state: EnterNewPassword,
     modifier: Modifier = Modifier,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     val onEvent = state.eventSink
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(Unit) {
-        eventLogger.logPageLoad(AppScreens.NewPasswordScreen.name)
-    }
+    LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.NewPasswordScreen.name) }
 
     ToastSideEffect(message = state.errorMessage)
 
-    Column(
-        modifier = modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    Column(modifier = modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = stringResource(R.string.reset_password_enter_new_password),
             style = MaterialTheme.typography.h1,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.weight(1f))
         Password(
             modifier = Modifier.focusRequester(focusRequester),
             label = R.string.reset_password_new_password,
             passwordState = state.password,
-            keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(imeAction = ImeAction.Next),
+            keyboardOptions =
+                TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(imeAction = ImeAction.Next),
         )
 
         Password(
             label = R.string.reset_password_confirm_new_password,
             passwordState = state.confirmPasswordState,
-            keyboardOptions = TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(
-                imeAction = ImeAction.Go,
-            ),
-            keyboardActions = KeyboardActions(
-                onGo = {
-                    keyboardController?.hide()
-                    if (state.submitButtonEnabled) {
-                        onEvent(EnterNewPasswordUiEvent.OnSubmit)
-                    }
-                }
-            ),
+            keyboardOptions =
+                TextFieldWithLabelDefaults.KeyboardOptions.PASSWORD.copy(imeAction = ImeAction.Go),
+            keyboardActions =
+                KeyboardActions(
+                    onGo = {
+                        keyboardController?.hide()
+                        if (state.submitButtonEnabled) {
+                            onEvent(EnterNewPasswordUiEvent.OnSubmit)
+                        }
+                    },
+                ),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -211,9 +207,7 @@ private fun SetNewPasswordContent(
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.confirm),
-            onClick = {
-                onEvent(EnterNewPasswordUiEvent.OnSubmit)
-            },
+            onClick = { onEvent(EnterNewPasswordUiEvent.OnSubmit) },
             enabled = state.submitButtonEnabled,
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -233,7 +227,7 @@ private fun PreviewEnterEmail() {
                 submitButtonEnabled = true,
                 eventSink = {},
             ),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }
@@ -251,7 +245,7 @@ private fun PreviewVerificationCode() {
                 submitButtonEnabled = true,
                 eventSink = {},
             ),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }
@@ -270,7 +264,7 @@ private fun PreviewSetNewPassword() {
                 submitButtonEnabled = true,
                 eventSink = {},
             ),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }
@@ -289,8 +283,7 @@ private fun PreviewLoading() {
                 submitButtonEnabled = true,
                 eventSink = {},
             ),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }
-

@@ -10,7 +10,7 @@ import shared.postNotification
 class SessionManager(
     private val tokenManager: TokenManager,
     private val db: NewmDatabaseWrapper,
-    private val dataStore: PreferencesDataStore
+    private val dataStore: PreferencesDataStore,
 ) {
     suspend fun logout() {
         tokenManager.clearToken()

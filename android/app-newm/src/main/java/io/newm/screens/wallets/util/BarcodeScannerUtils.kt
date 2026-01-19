@@ -16,7 +16,10 @@ import io.newm.core.ui.permissions.rememberRequestPermissionIntent
 import io.newm.core.ui.utils.shortToast
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 
-internal fun ActivityResult.onActivityResultOk(context: Context, onResult: (String) -> Unit) {
+internal fun ActivityResult.onActivityResultOk(
+    context: Context,
+    onResult: (String) -> Unit,
+) {
     // Do something with the data
     val walletId = data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
     // create message
@@ -28,30 +31,29 @@ internal fun ActivityResult.onActivityResultOk(context: Context, onResult: (Stri
 
 @Composable
 fun rememberBarcodeScannerLauncher(
-    onDismiss: () -> Unit = {/*TODO We need a flow for when the user denies permissions*/ },
-    onResult: (String) -> Unit
+    onDismiss: () -> Unit = { /*TODO We need a flow for when the user denies permissions*/ },
+    onResult: (String) -> Unit,
 ): () -> Unit {
     val context = LocalContext.current
     val intent = remember { Intent(context, BarcodeScannerActivity::class.java) }
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.onActivityResultOk(context, onResult)
+    val launcher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.onActivityResultOk(context, onResult)
+            }
         }
-    }
 
-    val requestPermission = rememberRequestPermissionIntent(
-        onGranted = { launcher.launch(intent) },
-        onDismiss = onDismiss
-    )
+    val requestPermission =
+        rememberRequestPermissionIntent(onGranted = { launcher.launch(intent) }, onDismiss = onDismiss)
 
     return remember {
         {
             context.doWithPermission(
                 onGranted = { launcher.launch(intent) },
                 requestPermissionLauncher = requestPermission,
-                appPermission = AppPermission.CAMERA
+                appPermission = AppPermission.CAMERA,
             )
         }
     }

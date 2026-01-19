@@ -39,22 +39,22 @@ private val defaultProfileButtonGradient =
 private val disconnectWalletButtonGradient =
     iconGradient(OceanGreen.copy(alpha = 0.08f), LightSkyBlue.copy(alpha = 0.08f))
 
-private val disconnectWalletButtonTextGradient =
-    iconGradient(OceanGreen, LightSkyBlue)
+private val disconnectWalletButtonTextGradient = iconGradient(OceanGreen, LightSkyBlue)
 
-val defaultButtonLabelStyle @Composable get() = TextStyle(
-    fontSize = 14.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Medium,
-    color = Purple
-)
+val defaultButtonLabelStyle
+    @Composable
+    get() =
+        TextStyle(fontSize = 14.sp, fontFamily = inter, fontWeight = FontWeight.Medium, color = Purple)
 
-val disconnectButtonLabelStyle @Composable get() = TextStyle(
-    fontSize = 14.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Medium,
-    color = LightSkyBlue
-)
+val disconnectButtonLabelStyle
+    @Composable
+    get() =
+        TextStyle(
+            fontSize = 14.sp,
+            fontFamily = inter,
+            fontWeight = FontWeight.Medium,
+            color = LightSkyBlue,
+        )
 
 @Composable
 fun ProfileButton(
@@ -62,58 +62,58 @@ fun ProfileButton(
     label: String,
     backgroundBrush: Brush = defaultProfileButtonGradient,
     textStyle: TextStyle = defaultButtonLabelStyle,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     NewmButton(
         modifier = modifier.fillMaxWidth(),
         unselectedBrush = backgroundBrush,
-        onClick = onClick
+        onClick = onClick,
     ) {
-        Text(
-            text = label,
-            style = textStyle
-        )
+        Text(text = label, style = textStyle)
     }
 }
 
 @Composable
 fun WalletsButton(
     isWalletConnected: Boolean = false,
-    onConnectWalletClick: (String) -> Unit = {}
+    onConnectWalletClick: (String) -> Unit = {},
 ) {
     val context = LocalContext.current
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // Handle the returned result here
-            val data = result.data
-            // Do something with the data
-            val newmWalletConnectionId =
-                data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
-            // create message
-            val message =
-                context.getString(R.string.wallet_link_connected_message, newmWalletConnectionId)
-            // show message
-            context.shortToast(message)
-            onConnectWalletClick(newmWalletConnectionId)
+    val launcher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the returned result here
+                val data = result.data
+                // Do something with the data
+                val newmWalletConnectionId =
+                    data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
+                // create message
+                val message =
+                    context.getString(R.string.wallet_link_connected_message, newmWalletConnectionId)
+                // show message
+                context.shortToast(message)
+                onConnectWalletClick(newmWalletConnectionId)
+            }
         }
-    }
 
-    val requestPermission = rememberRequestPermissionIntent(
-        onGranted = {
-            val intent = Intent(context, BarcodeScannerActivity::class.java)
-            launcher.launch(intent)
-        },
-        onDismiss = { /*TODO*/ }
-    )
+    val requestPermission =
+        rememberRequestPermissionIntent(
+            onGranted = {
+                val intent = Intent(context, BarcodeScannerActivity::class.java)
+                launcher.launch(intent)
+            },
+            onDismiss = { /*TODO*/ },
+        )
 
-    val label = if (isWalletConnected) {
-        R.string.profile_connect_new_wallet_button_label
-    } else {
-        R.string.profile_connect_wallet_button_label
-    }
+    val label =
+        if (isWalletConnected) {
+            R.string.profile_connect_new_wallet_button_label
+        } else {
+            R.string.profile_connect_wallet_button_label
+        }
 
     ProfileButton(
         label = stringResource(id = label),
@@ -124,7 +124,7 @@ fun WalletsButton(
                     launcher.launch(intent)
                 },
                 requestPermissionLauncher = requestPermission,
-                appPermission = AppPermission.CAMERA
+                appPermission = AppPermission.CAMERA,
             )
         },
     )
@@ -135,58 +135,54 @@ fun WalletButton(
     openWalletDialog: MutableState<Boolean>,
     isWalletConnected: Boolean,
     disconnectWallet: () -> Unit,
-    onConnectWalletClick: (String) -> Unit
+    onConnectWalletClick: (String) -> Unit,
 ) {
     val context = LocalContext.current
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // Handle the returned result here
-            val data = result.data
-            // Do something with the data
-            val newmWalletConnectionId =
-                data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
-            // create message
-            val message =
-                context.getString(R.string.wallet_link_connected_message, newmWalletConnectionId)
-            // show message
-            context.shortToast(message)
-            onConnectWalletClick(newmWalletConnectionId)
+    val launcher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the returned result here
+                val data = result.data
+                // Do something with the data
+                val newmWalletConnectionId =
+                    data?.getStringExtra(BarcodeScannerActivity.NEWM_WALLET_CONNECTION_ID).orEmpty()
+                // create message
+                val message =
+                    context.getString(R.string.wallet_link_connected_message, newmWalletConnectionId)
+                // show message
+                context.shortToast(message)
+                onConnectWalletClick(newmWalletConnectionId)
+            }
         }
-    }
 
     val onGranted = {
         val intent = Intent(context, BarcodeScannerActivity::class.java)
         launcher.launch(intent)
     }
 
-    val requestPermission = rememberRequestPermissionIntent(
-        onGranted = onGranted,
-        onDismiss = { /*TODO*/ })
-
+    val requestPermission =
+        rememberRequestPermissionIntent(onGranted = onGranted, onDismiss = { /*TODO*/ })
 
     if (isWalletConnected) {
-
         ProfileButton(
             label = stringResource(id = R.string.profile_disconnect_wallet_button_label),
             modifier = Modifier.drawWithBrush(disconnectWalletButtonTextGradient),
             onClick = { openWalletDialog.value = true },
             backgroundBrush = disconnectWalletButtonGradient,
-            textStyle = disconnectButtonLabelStyle
+            textStyle = disconnectButtonLabelStyle,
         )
         ConfirmationDialog(
             title = stringResource(R.string.profile_unlink_dialog_title),
             message = stringResource(R.string.profile_unlink_dialog_message),
             isOpen = openWalletDialog,
-            onConfirm = {
-                disconnectWallet()
-            },
+            onConfirm = { disconnectWallet() },
             onDismiss = {
                 // Handle the cancellation of logout here
                 openWalletDialog.value = false
-            }
+            },
         )
     } else {
         ProfileButton(
@@ -195,7 +191,7 @@ fun WalletButton(
                 context.doWithPermission(
                     onGranted = onGranted,
                     requestPermissionLauncher = requestPermission,
-                    appPermission = AppPermission.CAMERA
+                    appPermission = AppPermission.CAMERA,
                 )
             },
         )
