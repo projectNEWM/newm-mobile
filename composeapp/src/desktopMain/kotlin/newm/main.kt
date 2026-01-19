@@ -17,6 +17,7 @@ fun main() = application {
 
         App(
             circuit = windowComponent.circuit,
+            config = windowComponent.config,
             onRootPop = { exitApplication() }
         )
     }

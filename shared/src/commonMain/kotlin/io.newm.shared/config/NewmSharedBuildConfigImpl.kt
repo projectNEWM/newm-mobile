@@ -85,6 +85,9 @@ class NewmSharedBuildConfigImpl(private val storage: PreferencesDataStore, priva
 
     override val isStagingMode: Boolean
         get() = mode == Mode.STAGING
+
+    override val isDebug: Boolean
+        get() = BuildConfig.IS_DEBUG
 }
 
 interface NewmSharedBuildConfig {
@@ -95,4 +98,5 @@ interface NewmSharedBuildConfig {
     val googleAuthClientId: String
     val recaptchaSiteKey: String
     val isStagingMode: Boolean
+    val isDebug: Boolean
 }

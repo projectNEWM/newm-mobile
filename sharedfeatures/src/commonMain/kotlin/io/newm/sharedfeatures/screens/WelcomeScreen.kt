@@ -17,7 +17,6 @@ data object WelcomeScreen : Screen {
 
     sealed interface UiEvent : CircuitUiEvent {
         data object OnBack : UiEvent
-        data object OnDevMenu : UiEvent
         data object OnLogin : UiEvent
         data object CreateAccountClicked : UiEvent
         data object OnGoogleSignInClicked : UiEvent

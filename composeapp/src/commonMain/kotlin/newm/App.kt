@@ -13,6 +13,9 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import io.newm.core.theme.NewmTheme
+import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.sharedfeatures.devmenu.DebugOverlay
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -20,6 +23,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App(
     circuit: Circuit,
+    config: NewmSharedBuildConfig,
     onRootPop: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -28,24 +32,29 @@ fun App(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            val backstack = rememberSaveableBackStack(WelcomeScreen)
+
+            val circuitNavigator = rememberCircuitNavigator(
+                backstack,
+                onRootPop = { onRootPop() }
+            )
+
+            DebugOverlay(
+                buildConfig = config,
+                onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) }
             ) {
-                val backstack = rememberSaveableBackStack(WelcomeScreen)
-
-                val circuitNavigator = rememberCircuitNavigator(
-                    backstack,
-                    onRootPop = { onRootPop() }
-                )
-
-                NavigableCircuitContent(
-                    modifier = modifier,
-                    circuit = circuit,
-                    navigator = circuitNavigator,
-                    backStack = backstack
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    NavigableCircuitContent(
+                        modifier = modifier,
+                        circuit = circuit,
+                        navigator = circuitNavigator,
+                        backStack = backstack
+                    )
+                }
             }
         }
     }

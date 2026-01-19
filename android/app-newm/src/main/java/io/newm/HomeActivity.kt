@@ -49,6 +49,7 @@ import io.newm.screens.wallets.WalletsPresenter
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.view.WalletsUi
 import io.newm.shared.NewmAppLogger
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
@@ -68,6 +69,7 @@ import org.koin.core.parameter.parametersOf
 class HomeActivity : ComponentActivity() {
     private val circuit: Circuit = createCircuit()
     private val logger: NewmAppLogger by inject()
+    private val config: NewmSharedBuildConfig by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
     private val eventLogger: NewmAppEventLogger by inject()
     private val featureFlagService: FeatureFlagService by inject()
@@ -97,6 +99,7 @@ class HomeActivity : ComponentActivity() {
                             .collectAsState(initial = FeatureFlags.ShowInvestmentPortfolio.defaultValue)
 
                         NewmApp(
+                            config = config,
                             logger = logger,
                             eventLogger = eventLogger,
                             showRecordStore = showRecordStore,

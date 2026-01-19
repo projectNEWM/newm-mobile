@@ -63,6 +63,7 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : ComponentActivity() {
 
     private val logger: NewmAppLogger by inject()
+    private val config: io.newm.shared.config.NewmSharedBuildConfig by inject()
     private val eventLogger: NewmAppEventLogger by inject()
     private val forceAppUpdateViewModel: ForceAppUpdateViewModel by inject()
 
@@ -144,7 +145,7 @@ class LoginActivity : ComponentActivity() {
                             eventLogger
                         )
                     } else {
-                        WelcomeToNewm(logger, eventLogger, ::launchHomeActivity)
+                        WelcomeToNewm(config, logger, eventLogger, ::launchHomeActivity)
                     }
                 }
             }
@@ -170,6 +171,7 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun WelcomeToNewm(
+    config: io.newm.shared.config.NewmSharedBuildConfig,
     logger: NewmAppLogger,
     eventLogger: NewmAppEventLogger,
     onStartHomeActivity: () -> Unit,
@@ -190,15 +192,20 @@ fun WelcomeToNewm(
         )
 
     val snackbarHostState = remember { SnackbarHostState() }
-    Scaffold(
-        scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
-    ) { contentPadding ->
+    io.newm.sharedfeatures.devmenu.DebugOverlay(
+        buildConfig = config,
+        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) }
+    ) {
+        Scaffold(
+            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
+        ) { contentPadding ->
 
-        CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
-            NavigableCircuitContent(
-                modifier = Modifier.padding(contentPadding),
-                navigator = newmNavigator, backStack = backstack
-            )
+            CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
+                NavigableCircuitContent(
+                    modifier = Modifier.padding(contentPadding),
+                    navigator = newmNavigator, backStack = backstack
+                )
+            }
         }
     }
 }

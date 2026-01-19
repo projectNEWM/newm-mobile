@@ -8,27 +8,23 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
-import io.newm.shared.AppLogger
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
 import io.newm.sharedfeatures.login.RecaptchaManager
 import io.newm.sharedfeatures.screens.CreateAccountScreen
-import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.HomeScreen
 import io.newm.sharedfeatures.screens.LoginScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.CreateAccountClicked
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnBack
-import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnDevMenu
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnGoogleSignInClicked
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnLogin
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnPrivacyPolicyClicked
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnTermsOfServiceClicked
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiState
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiState.Content
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -76,9 +72,6 @@ class WelcomePresenter @Inject constructor(
                     OnPrivacyPolicyClicked -> {
                         analyticsTracker.logClickEvent(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
                         uriHandler.openUri("https://newm.io/app-privacy")
-                    }
-                    OnDevMenu -> {
-                        navigator.goTo(DevMenuMainScreen)
                     }
                     OnBack -> {
                         navigator.pop()

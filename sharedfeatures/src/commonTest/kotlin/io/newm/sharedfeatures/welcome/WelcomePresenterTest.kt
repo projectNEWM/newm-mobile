@@ -15,7 +15,6 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.sharedfeatures.fakes.*
 import io.newm.sharedfeatures.screens.CreateAccountScreen
-import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.HomeScreen
 import io.newm.sharedfeatures.screens.LoginScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
@@ -120,18 +119,6 @@ class WelcomePresenterTest {
 
             assertThat(fakeEventLogger.clickEvents.last().first).isEqualTo(AppScreens.AccountScreen.PRIVACY_POLICY_BUTTON)
             assertThat(uriHandler.openedUris.last()).isEqualTo("https://newm.io/app-privacy")
-        }
-    }
-
-    @Test
-    fun `OnDevMenu navigates to DevMenuMainScreen`() = runTest {
-        val presenter = createPresenter()
-
-        presenter.test {
-            val state = awaitItem() as WelcomeScreen.UiState.Content
-            state.onEvent(UiEvent.OnDevMenu)
-
-            assertThat(navigator.goToHistory.last()).isEqualTo(DevMenuMainScreen)
         }
     }
 

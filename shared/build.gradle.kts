@@ -143,12 +143,15 @@ buildConfig {
     packageName("io.newm.shared.generated")
 
     val props = Properties().apply {
-        load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+        val localPropertiesFile = File(rootProject.rootDir, "local.properties")
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.inputStream().use { load(it) }
+        }
     }
 
-    // Helper: fail fast if a required key is missing
+    // Helper: return empty string if key is missing to avoid build failure
     fun req(name: String): String =
-        props.getProperty(name)?.trim('"') ?: error("Missing '$name' in local.properties")
+        props.getProperty(name)?.trim('"') ?: ""
 
     buildConfigField<String>("STAGING_URL", req("STAGING_URL"))
     buildConfigField<String>("PRODUCTION_URL", req("PRODUCTION_URL"))
@@ -157,6 +160,7 @@ buildConfig {
     buildConfigField<String>("SENTRY_AUTH_TOKEN", req("SENTRY_AUTH_TOKEN"))
     buildConfigField<String>("ANDROID_SENTRY_DSN", req("ANDROID_SENTRY_DSN"))
     buildConfigField<String>("LAUNCHDARKLY_MOBILE_KEY", req("LAUNCHDARKLY_MOBILE_KEY"))
+    buildConfigField<Boolean>("IS_DEBUG", req("IS_DEBUG").toBoolean())
 }
 
 

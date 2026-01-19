@@ -14,6 +14,10 @@ fun main() {
 
     ComposeViewport(document.body!!) {
         val activityComponent = remember { InjectWasmActivityComponent(appComponent) }
-        App(circuit = activityComponent.circuit, onRootPop = { window.close() })
+        App(
+            circuit = activityComponent.circuit,
+            config = activityComponent.config,
+            onRootPop = { window.close() }
+        )
     }
 }

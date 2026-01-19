@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             App(
                 circuit = activityComponent.circuit,
+                config = activityComponent.config,
                 onRootPop = { onBackPressedDispatcher.onBackPressed() }
             )
         }

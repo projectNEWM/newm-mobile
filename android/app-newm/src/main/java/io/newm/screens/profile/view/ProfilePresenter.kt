@@ -15,7 +15,6 @@ import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
-import io.newm.screens.profile.OnDeveloperMenu
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
@@ -144,10 +143,6 @@ class ProfilePresenter(
                         OnVisitStudio -> {
                             navigator.goTo(Screen.Studio)
                             eventLogger.logClickEvent(AppScreens.AccountScreen.VISIT_STUDIO_BUTTON)
-                        }
-
-                        OnDeveloperMenu -> {
-                            navigator.goTo(DevMenuMainScreen)
                         }
                     }
                 }

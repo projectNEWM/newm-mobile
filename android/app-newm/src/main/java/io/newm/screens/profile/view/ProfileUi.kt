@@ -28,7 +28,6 @@ import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
-import io.newm.screens.profile.OnDeveloperMenu
 import io.newm.screens.profile.OnDisconnectWallet
 import io.newm.screens.profile.OnEditProfile
 import io.newm.screens.profile.OnLogout
@@ -84,8 +83,7 @@ private fun ProfileUiContent(
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
-        onBottomSheetVisible = { onEvent(OnBottomSheetVisible) },
-        onDeveloperMenu = { onEvent(OnDeveloperMenu) }
+        onBottomSheetVisible = { onEvent(OnBottomSheetVisible) }
     ) {
         Scaffold(
             modifier = Modifier

@@ -68,6 +68,9 @@ import io.newm.screens.Screen
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.sharedfeatures.devmenu.DebugOverlay
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -89,6 +92,7 @@ private val initialScreen = Screen.NFTLibrary
 
 @Composable
 internal fun NewmApp(
+    config: NewmSharedBuildConfig,
     logger: NewmAppLogger,
     eventLogger: NewmAppEventLogger,
     showRecordStore: Boolean,
@@ -133,68 +137,73 @@ internal fun NewmApp(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    ModalBottomSheetLayout(
-        modifier = Modifier,
-        sheetState = sheetState,
-        sheetContent = {
-            MusicPlayerScreen(
-                onNavigateUp = {
-                    coroutineScope.launch {
-                        sheetState.hide()
-                    }
-                }
-            )
-        },
+    DebugOverlay(
+        buildConfig = config,
+        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) }
     ) {
-        Scaffold(
-            bottomBar = {
-                AnimatedVisibility(
-                    visible = LocalIsBottomBarVisible.current.value,
-                    enter = slideInVertically(initialOffsetY = { it }),
-                    exit = ExitTransition.None
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        if (currentNewmScreen?.showMiniPlayer == true) {
-                            MiniPlayer(
-                                modifier = Modifier.clickable {
-                                    coroutineScope.launch {
-                                        eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
-                                        sheetState.show()
-                                    }
-                                }
-                            )
-                            Spacer(
-                                modifier = Modifier
-                                    .height(2.dp)
-                                    .fillMaxWidth()
-                                    .background(MaterialTheme.colors.surface)
-                            )
-                        }
-
-                        if (currentNewmScreen?.showBottomBar == true) {
-                            NewmBottomNavigation(
-                                currentRootScreen = currentNewmScreen,
-                                eventLogger = eventLogger,
-                                showRecordStore = showRecordStore,
-                                showInvestmentPortfolio = showInvestmentPortfolio,
-                                onNavigationSelected = {
-                                    circuitNavigator.resetRoot(it)
-                                }
-                            )
+        ModalBottomSheetLayout(
+            modifier = Modifier,
+            sheetState = sheetState,
+            sheetContent = {
+                MusicPlayerScreen(
+                    onNavigateUp = {
+                        coroutineScope.launch {
+                            sheetState.hide()
                         }
                     }
-                }
-            },
-            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
-        ) { padding ->
-            CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
-                NavigableCircuitContent(
-                    modifier = Modifier.padding(padding),
-                    navigator = newmNavigator,
-                    backStack = backstack
                 )
+            },
+        ) {
+            Scaffold(
+                bottomBar = {
+                    AnimatedVisibility(
+                        visible = LocalIsBottomBarVisible.current.value,
+                        enter = slideInVertically(initialOffsetY = { it }),
+                        exit = ExitTransition.None
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            if (currentNewmScreen?.showMiniPlayer == true) {
+                                MiniPlayer(
+                                    modifier = Modifier.clickable {
+                                        coroutineScope.launch {
+                                            eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
+                                            sheetState.show()
+                                        }
+                                    }
+                                )
+                                Spacer(
+                                    modifier = Modifier
+                                        .height(2.dp)
+                                        .fillMaxWidth()
+                                        .background(MaterialTheme.colors.surface)
+                                )
+                            }
+
+                            if (currentNewmScreen?.showBottomBar == true) {
+                                NewmBottomNavigation(
+                                    currentRootScreen = currentNewmScreen,
+                                    eventLogger = eventLogger,
+                                    showRecordStore = showRecordStore,
+                                    showInvestmentPortfolio = showInvestmentPortfolio,
+                                    onNavigationSelected = {
+                                        circuitNavigator.resetRoot(it)
+                                    }
+                                )
+                            }
+                        }
+                    }
+                },
+                scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
+            ) { padding ->
+                CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
+                    NavigableCircuitContent(
+                        modifier = Modifier.padding(padding),
+                        navigator = newmNavigator,
+                        backStack = backstack
+                    )
+                }
             }
         }
     }

@@ -42,11 +42,8 @@ fun ProfileBottomSheetLayout(
     onBottomSheetVisible: () -> Unit,
     onShowTermsAndConditions: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
-    onDeveloperMenu: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
-    var showDevMenu by rememberSaveable { mutableStateOf(false) }
-
     ModalBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
@@ -75,11 +72,7 @@ fun ProfileBottomSheetLayout(
                     onClick = onLogout
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                AppVersion(
-                    showDevMenu = showDevMenu,
-                    onUnlockDevMenu = { showDevMenu = true },
-                    onDeveloperMenu = onDeveloperMenu
-                )
+                AppVersion()
             }
 
         },
@@ -90,24 +83,8 @@ fun ProfileBottomSheetLayout(
 }
 
 @Composable
-private fun AppVersion(
-    showDevMenu: Boolean,
-    onUnlockDevMenu: () -> Unit,
-    onDeveloperMenu: () -> Unit
-) {
-    var tapCount by remember { mutableIntStateOf(0) }
-
-    Column(
-        modifier = Modifier
-            .clickable {
-                if (!showDevMenu) {
-                    tapCount++
-                    if (tapCount == 7) {
-                        onUnlockDevMenu()
-                    }
-                }
-            }
-    ) {
+private fun AppVersion() {
+    Column {
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -124,18 +101,5 @@ private fun AppVersion(
             text = "Build: " + BuildConfig.VERSION_CODE,
             style = versionTextStyle
         )
-        if (showDevMenu) {
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = "Developer Menu",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(Alignment.CenterHorizontally)
-                    .clickable(onClick = onDeveloperMenu)
-            )
-        }
     }
 }
