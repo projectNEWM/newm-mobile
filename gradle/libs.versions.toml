@@ -1,8 +1,8 @@
 [versions]
-agp = "8.13.2"
-android-compileSdk = "36"
+agp = "8.1.1"
+android-compileSdk = "34"
 android-minSdk = "28"
-android-targetSdk = "36"
+android-targetSdk = "34"
 androidx-activityCompose = "1.11.0"
 androidx-appcompat = "1.7.1"
 androidx-constraintlayout = "2.2.1"
@@ -26,7 +26,6 @@ firebaseBom = "34.7.0"
 flipper = "0.273.0"
 flipperNoop = "0.273.0"
 googleServices = "4.4.2"
-gradle = "8.13.2"
 gradlePlugin = "1.5.5"
 gradleVersionsPlugin = "0.51.0"
 guava = "33.5.0-jre"
@@ -107,7 +106,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 flipper = { module = "com.facebook.flipper:flipper", version.ref = "flipper" }
 flipper-noop = { module = "com.facebook.flipper:flipper-noop", version.ref = "flipperNoop" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }

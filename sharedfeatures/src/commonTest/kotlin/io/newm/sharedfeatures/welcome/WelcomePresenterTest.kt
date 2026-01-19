@@ -20,7 +20,6 @@ import io.newm.sharedfeatures.fakes.FakeNavigator
 import io.newm.sharedfeatures.fakes.FakeRecaptchaManager
 import io.newm.sharedfeatures.fakes.FakeSocialLoginManager
 import io.newm.sharedfeatures.fakes.FakeUriHandler
-import io.newm.sharedfeatures.fakes.GoogleSignInResult
 import io.newm.sharedfeatures.screens.CreateAccountScreen
 import io.newm.sharedfeatures.screens.HomeScreen
 import io.newm.sharedfeatures.screens.LoginScreen
