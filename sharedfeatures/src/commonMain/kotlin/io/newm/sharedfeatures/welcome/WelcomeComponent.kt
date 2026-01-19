@@ -12,9 +12,12 @@ interface WelcomeComponent {
     @ActivityScope
     fun WelcomePresenterFactory.bind(): Presenter.Factory = this
 
-
     @Provides
     @IntoSet
     @ActivityScope
     fun WelcomeUiFactory.bind(): Ui.Factory = this
+
+    @Provides
+    @ActivityScope
+    fun provideSocialLoginManager(impl: SocialLoginManagerImpl): SocialLoginManager = impl
 }

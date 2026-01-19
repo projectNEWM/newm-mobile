@@ -18,7 +18,6 @@ import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
 import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncherImpl
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
-import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
 import io.newm.feature.musicplayer.service.DownloadManager
 import io.newm.feature.musicplayer.service.DownloadManagerImpl
 import io.newm.feature.musicplayer.service.DownloadStateManager
@@ -42,6 +41,9 @@ import io.newm.sharedfeatures.login.LoginPresenter
 import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.sharedfeatures.login.RecaptchaManager
 import io.newm.sharedfeatures.login.RecaptchaManagerImpl
+import io.newm.sharedfeatures.welcome.SocialLoginManager
+import io.newm.sharedfeatures.welcome.SocialLoginManagerImpl
+import io.newm.sharedfeatures.welcome.WelcomePresenter
 import io.newm.utils.AndroidFeatureFlagManager
 import io.newm.utils.ForceAppUpdateViewModel
 import org.koin.android.ext.koin.androidContext
@@ -91,15 +93,16 @@ val viewModule = module {
         )
     }
     single<GoogleSignInLauncher> { GoogleSignInLauncherImpl(get()) }
+    single<SocialLoginManager> { SocialLoginManagerImpl(get()) }
+
     factory { params ->
-        WelcomeScreenPresenter(
+        WelcomePresenter(
             navigator = params.get(),
-            googleSignInLauncher = get(),
-            recaptchaClientProvider = get(),
             loginUseCase = get(),
-            activityResultContract = ActivityResultContracts.StartActivityForResult(),
+            socialLoginManager = get(),
+            recaptchaManager = get(),
+            analyticsTracker = get(),
             logger = get(),
-            analyticsTracker = get()
         )
     }
     factory { params ->

@@ -71,6 +71,8 @@ kotlin {
         androidMain {
             dependencies {
                 api(libs.recaptcha)
+                implementation(libs.play.services.auth)
+                implementation(libs.androidx.activity.compose)
             }
         }
 

@@ -45,16 +45,12 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
         is UiState.Content -> {
             WelcomeScreenContent(
                 modifier = modifier,
-                onCreateAccount = { },
-                onLoginWithEmail = {
-                   state.onEvent(WelcomeScreen.UiEvent.OnLogin)
-                },
-                onGoogleSignIn = {},
-                onPrivacyPolicyClicked = {},
-                onTermsOfServiceClicked = {},
-                onDebugMenu = {
-                    state.onEvent(WelcomeScreen.UiEvent.OnDevMenu)
-                }
+                onCreateAccount = { state.onEvent(WelcomeScreen.UiEvent.CreateAccountClicked) },
+                onLoginWithEmail = { state.onEvent(WelcomeScreen.UiEvent.OnLogin) },
+                onGoogleSignIn = { state.onEvent(WelcomeScreen.UiEvent.OnGoogleSignInClicked) },
+                onPrivacyPolicyClicked = { state.onEvent(WelcomeScreen.UiEvent.OnPrivacyPolicyClicked) },
+                onTermsOfServiceClicked = { state.onEvent(WelcomeScreen.UiEvent.OnTermsOfServiceClicked) },
+                onDebugMenu = { state.onEvent(WelcomeScreen.UiEvent.OnDevMenu) }
             )
         }
 

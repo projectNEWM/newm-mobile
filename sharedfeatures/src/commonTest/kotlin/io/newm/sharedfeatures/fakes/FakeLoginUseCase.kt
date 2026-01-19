@@ -17,8 +17,15 @@ class FakeLoginUseCase : LoginUseCase {
         logInResult.getOrThrow()
     }
 
+    var logInWithGoogleCalled = false
+    var lastIdToken = ""
+    var logInWithGoogleResult: Result<Unit> = Result.success(Unit)
+
     override suspend fun logInWithGoogle(idToken: String, humanVerificationCode: String) {
-        TODO("Not yet implemented")
+        logInWithGoogleCalled = true
+        lastIdToken = idToken
+        lastHumanVerificationCode = humanVerificationCode
+        logInWithGoogleResult.getOrThrow()
     }
 
     override suspend fun logInWithFacebook(accessToken: String) {
