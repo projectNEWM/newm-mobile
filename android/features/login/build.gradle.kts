@@ -49,7 +49,6 @@ kotlin {
             implementation(libs.androidx.material)
             implementation(libs.androidx.material.icons.extended)
             implementation(libs.koin.android)
-            implementation(libs.play.services.auth)
             implementation(libs.recaptcha)
             implementation(project(Modules.coreResources))
             implementation(project(Modules.coreTheme))

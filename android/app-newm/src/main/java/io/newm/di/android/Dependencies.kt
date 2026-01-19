@@ -14,8 +14,6 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import io.newm.Logout
 import io.newm.RestartApp
-import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncher
-import io.newm.feature.login.screen.authproviders.google.GoogleSignInLauncherImpl
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.musicplayer.service.DownloadManager
@@ -92,7 +90,6 @@ val viewModule = module {
                 .build()
         )
     }
-    single<GoogleSignInLauncher> { GoogleSignInLauncherImpl(get()) }
     single<SocialLoginManager> { SocialLoginManagerImpl(get()) }
 
     factory { params ->
