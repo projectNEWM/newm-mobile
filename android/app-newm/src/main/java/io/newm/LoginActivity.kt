@@ -28,16 +28,12 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LocalSnackBarHostState
-import io.newm.feature.login.screen.createaccount.CreateAccountScreen
 import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
 import io.newm.feature.login.screen.createaccount.CreateAccountUi
 import io.newm.feature.login.screen.createaccount.CreateAccountUiState
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUi
 import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState
-import io.newm.feature.login.screen.welcome.WelcomeScreenPresenter
-import io.newm.feature.login.screen.welcome.WelcomeScreenUi
-import io.newm.feature.login.screen.welcome.WelcomeScreenUiState
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
@@ -50,11 +46,14 @@ import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
 import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
 import io.newm.sharedfeatures.login.LoginPresenter
 import io.newm.sharedfeatures.login.LoginUi
+import io.newm.sharedfeatures.screens.CreateAccountScreen
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
 import io.newm.sharedfeatures.screens.LoginScreen
 import io.newm.sharedfeatures.screens.ResetPasswordScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
+import io.newm.sharedfeatures.welcome.WelcomePresenter
+import io.newm.sharedfeatures.welcome.WelcomeUi
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
@@ -77,7 +76,7 @@ class LoginActivity : ComponentActivity() {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CreateAccountScreen -> inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }.value
-                is WelcomeScreen -> inject<WelcomeScreenPresenter> { parametersOf(navigator) }.value
+                is WelcomeScreen -> inject<WelcomePresenter> { parametersOf(navigator) }.value
                 is LoginScreen -> inject<LoginPresenter> { parametersOf(navigator) }.value
                 is ResetPasswordScreen -> inject<ResetPasswordScreenPresenter> {
                     parametersOf(
@@ -103,8 +102,8 @@ class LoginActivity : ComponentActivity() {
                     CreateAccountUi(state, modifier)
                 }
 
-                is WelcomeScreen -> ui<WelcomeScreenUiState> { state, modifier ->
-                    WelcomeScreenUi(modifier, state)
+                is WelcomeScreen -> ui<WelcomeScreen.UiState> { state, modifier ->
+                    WelcomeUi(state, modifier)
                 }
 
                 is LoginScreen -> ui<LoginScreen.UiState> { state, modifier ->

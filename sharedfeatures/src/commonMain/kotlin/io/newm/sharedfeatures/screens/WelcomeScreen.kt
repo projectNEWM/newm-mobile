@@ -19,5 +19,9 @@ data object WelcomeScreen : Screen {
         data object OnBack : UiEvent
         data object OnDevMenu : UiEvent
         data object OnLogin : UiEvent
+        data object CreateAccountClicked : UiEvent
+        data object OnGoogleSignInClicked : UiEvent
+        data object OnTermsOfServiceClicked : UiEvent
+        data object OnPrivacyPolicyClicked : UiEvent
     }
 }
