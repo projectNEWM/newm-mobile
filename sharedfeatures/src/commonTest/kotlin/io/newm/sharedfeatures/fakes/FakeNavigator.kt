@@ -23,8 +23,7 @@ class FakeNavigator : Navigator {
 
     override fun resetRoot(
         newRoot: Screen,
-        saveState: Boolean,
-        restoreState: Boolean,
+        options: Navigator.StateOptions,
     ): ImmutableList<Screen> {
         resetRootHistory.add(newRoot)
         return persistentListOf()

@@ -10,6 +10,7 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.sharedfeatures.screens.HomeScreen
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun rememberNewmNavigator(
@@ -54,19 +55,18 @@ private class NewmNavigator(
     }
 
     override fun pop(result: PopResult?): Screen? {
-        val screen = circuitNavigator.pop()
+        val screen = circuitNavigator.pop(result)
         logger.debug(tag = "NewmNavigator", message = "Popping screen: $screen")
         return screen
     }
 
     override fun resetRoot(
         newRoot: Screen,
-        saveState: Boolean,
-        restoreState: Boolean,
+        options: Navigator.StateOptions,
     ): ImmutableList<Screen> {
         logger.debug(tag = "NewmNavigator", message = "Resetting root to $newRoot")
         logPageViewEvent(newRoot)
-        return circuitNavigator.resetRoot(newRoot)
+        return circuitNavigator.resetRoot(newRoot, options).toImmutableList()
     }
 
     private fun logPageViewEvent(screen: Screen) {
