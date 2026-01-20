@@ -2,9 +2,8 @@ package io.newm.shared.commonPublic.analytics.events
 
 import io.newm.shared.commonPublic.analytics.ScreenEvents
 
-
 object AppScreens {
-    //General Screens
+    // General Screens
     object LoadingScreen : ScreenEvents {
         override val name = "Loading"
     }
@@ -13,7 +12,7 @@ object AppScreens {
         override val name = "Error"
     }
 
-    //Main Screens
+    // Main Screens
     object AccountOptionsScreen : ScreenEvents {
         override val name = "Account Options"
     }
@@ -50,7 +49,6 @@ object AppScreens {
     object ForceUpdateScreen : ScreenEvents {
         override val name = "Force App Update"
         const val UPDATE_BUTTON: String = "Update Now"
-
     }
 
     object LogoutConfirmationDialogScreen : ScreenEvents {
@@ -96,7 +94,6 @@ object AppScreens {
     object MarketplaceScreen : ScreenEvents {
         override val name = "Marketplace"
         const val MARKETPLACE_BUTTON: String = "Marketplace"
-
     }
 
     object NFTLibraryScreen : ScreenEvents {
@@ -189,5 +186,4 @@ object AppScreens {
         const val NFT_LIBRARY_BUTTON: String = "NFT Library"
         const val ACCOUNT_BUTTON: String = "Account"
     }
-
 }

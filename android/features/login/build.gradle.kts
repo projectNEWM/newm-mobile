@@ -4,14 +4,15 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("com.android.library")
-    id("kotlin-parcelize")
-    id("app.cash.paparazzi")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.plugin.parcelize)
+    alias(libs.plugins.paparazzi)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/compose.gradle")
+
 apply(from = "../../../gradle_include/circuit.gradle")
 
 android {
@@ -24,9 +25,7 @@ android {
         resourcePrefix = "login"
     }
 
-    lint {
-        baseline = file("lint-baseline.xml")
-    }
+    lint { baseline = file("lint-baseline.xml") }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -37,9 +36,7 @@ android {
 kotlin {
     androidTarget()
 
-    wasmJs {
-        browser {}
-    }
+    wasmJs { browser {} }
 
     jvm("desktop")
 
@@ -50,27 +47,25 @@ kotlin {
             implementation(libs.androidx.material.icons.extended)
             implementation(libs.koin.android)
             implementation(libs.recaptcha)
-            implementation(project(Modules.coreResources))
-            implementation(project(Modules.coreTheme))
-            implementation(project(Modules.coreUiUtils))
-            implementation(project(Modules.shared))
-            implementation(project(Modules.sharedComposeFeatures))
+            implementation(project(Modules.CORE_RESOURCES))
+            implementation(project(Modules.CORE_THEME))
+            implementation(project(Modules.CORE_UI_UTILS))
+            implementation(project(Modules.SHARED))
+            implementation(project(Modules.SHARED_COMPOSE_FEATURES))
+
             implementation(compose.material)
         }
-
     }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
-    }
+    compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
 }
 
 dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.test.parameter.injector)
-    testImplementation(project(Modules.testUtils))
+    testImplementation(project(Modules.TEST_UTILS))
     testImplementation(compose.components.resources)
 
     androidTestImplementation(libs.androidx.espresso.core)

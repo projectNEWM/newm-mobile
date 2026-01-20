@@ -6,10 +6,9 @@ import kotlinx.serialization.Serializable
 data class MobileConfig(
     val version: Int,
     val android: MobileClientConfig,
-    val ios: MobileClientConfig
+    val ios: MobileClientConfig,
 )
 
-@Serializable
-data class MobileClientConfig(
-    val minAppVersion: String
+@Serializable data class MobileClientConfig(
+    val minAppVersion: String,
 )

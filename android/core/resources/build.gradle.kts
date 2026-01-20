@@ -1,19 +1,15 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     namespace = "io.newm.core.resources"
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
+    defaultConfig { minSdk = libs.versions.android.minSdk.get().toInt() }
 
-    lint {
-        baseline = file("lint-baseline.xml")
-    }
+    lint { baseline = file("lint-baseline.xml") }
 }
 
 dependencies {

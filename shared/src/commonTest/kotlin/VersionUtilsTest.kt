@@ -4,13 +4,24 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class VersionUtilsTest {
-
     @Test
     fun `test version comparison with pre-release versions`() {
-        assertFalse(VersionUtils.isUpgradeRequired("1.0.0-alpha", "1.0.0-beta"), "1.0.0-alpha should not be greater than 1.0.0-beta")
-        assertTrue(VersionUtils.isUpgradeRequired("1.0.0-beta", "1.0.0-alpha"), "1.0.0-beta should be greater than 1.0.0-alpha")
-        assertTrue(VersionUtils.isUpgradeRequired("1.0.0", "1.0.0-alpha"), "1.0.0 should be greater than 1.0.0-alpha")
-        assertTrue(VersionUtils.isUpgradeRequired("1.0.1", "1.0.0"), "1.0.1 should be greater than 1.0.0")
+        assertFalse(
+            VersionUtils.isUpgradeRequired("1.0.0-alpha", "1.0.0-beta"),
+            "1.0.0-alpha should not be greater than 1.0.0-beta",
+        )
+        assertTrue(
+            VersionUtils.isUpgradeRequired("1.0.0-beta", "1.0.0-alpha"),
+            "1.0.0-beta should be greater than 1.0.0-alpha",
+        )
+        assertTrue(
+            VersionUtils.isUpgradeRequired("1.0.0", "1.0.0-alpha"),
+            "1.0.0 should be greater than 1.0.0-alpha",
+        )
+        assertTrue(
+            VersionUtils.isUpgradeRequired("1.0.1", "1.0.0"),
+            "1.0.1 should be greater than 1.0.0",
+        )
     }
 
     @Test

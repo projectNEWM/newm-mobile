@@ -28,37 +28,35 @@ fun WalletCardHeader(
     title: String,
     headerShape: RoundedCornerShape,
     expanded: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                color = Gray16,
-                shape = headerShape
-            )
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(color = Gray16, shape = headerShape)
+                .clickable(onClick = onClick)
+                .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             modifier = Modifier.weight(1f),
             text = title,
-            style = TextStyle(
-                fontFamily = inter,
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                color = White
-            )
+            style =
+                TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    color = White,
+                ),
         )
-        IconButton(
-            onClick = onClick
-        ) {
-            val arrow = if (expanded) {
-                Icons.Default.ArrowDropUp
-            } else {
-                Icons.Default.ArrowDropDown
-            }
+        IconButton(onClick = onClick) {
+            val arrow =
+                if (expanded) {
+                    Icons.Default.ArrowDropUp
+                } else {
+                    Icons.Default.ArrowDropDown
+                }
             Icon(imageVector = arrow, contentDescription = null)
         }
     }

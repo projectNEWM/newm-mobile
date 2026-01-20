@@ -16,12 +16,10 @@ fun LazyListScope.tracksItem(
     isExpanded: Boolean,
     headerShape: RoundedCornerShape,
     onExitFinished: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     if (tracks.isNotEmpty()) {
-        item {
-            Spacer(modifier = Modifier.height(8.dp))
-        }
+        item { Spacer(modifier = Modifier.height(8.dp)) }
         collapsibleCard(
             items = tracks,
             isExpanded = isExpanded,
@@ -31,10 +29,10 @@ fun LazyListScope.tracksItem(
                     title = stringResource(R.string.wallet_detail_music_header),
                     headerShape = headerShape,
                     expanded = isExpanded,
-                    onClick = onClick
+                    onClick = onClick,
                 )
             },
-            content = { WalletItem(it) }
+            content = { WalletItem(it) },
         )
     }
 }

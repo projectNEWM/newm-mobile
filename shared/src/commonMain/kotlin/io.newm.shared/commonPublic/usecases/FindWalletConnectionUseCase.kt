@@ -5,11 +5,8 @@ import io.newm.shared.commonPublic.models.error.KMMException
 import kotlinx.coroutines.flow.Flow
 import kotlin.coroutines.cancellation.CancellationException
 
-/**
- * Represents a use case for finding a single wallet connection by ID
- */
+/** Represents a use case for finding a single wallet connection by ID */
 interface FindWalletConnectionUseCase {
-
     /**
      * Finds a single wallet connection by ID from the cache
      *

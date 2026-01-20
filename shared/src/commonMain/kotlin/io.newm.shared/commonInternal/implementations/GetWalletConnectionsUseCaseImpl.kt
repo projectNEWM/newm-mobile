@@ -12,20 +12,18 @@ import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class GetWalletConnectionsUseCaseImpl(
-    private val walletRepository: WalletRepository
-) : GetWalletConnectionsUseCase, KoinComponent {
-
+    private val walletRepository: WalletRepository,
+) : GetWalletConnectionsUseCase,
+    KoinComponent {
     @Throws(KMMException::class, CancellationException::class)
-    override fun getWalletConnectionsFromCacheFlow(): Flow<List<WalletConnection>> {
-        return mapErrors {
+    override fun getWalletConnectionsFromCacheFlow(): Flow<List<WalletConnection>> =
+        mapErrors {
             walletRepository.getWalletConnectionsCache()
         }
-    }
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun getWalletConnectionsFromCache(): List<WalletConnection> {
-        return mapErrorsSuspend {
+    override suspend fun getWalletConnectionsFromCache(): List<WalletConnection> =
+        mapErrorsSuspend {
             getWalletConnectionsFromCacheFlow().first()
         }
-    }
 }

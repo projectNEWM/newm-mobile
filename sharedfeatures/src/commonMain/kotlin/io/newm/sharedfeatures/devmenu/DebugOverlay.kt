@@ -28,14 +28,13 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.slack.circuit.foundation.LocalCircuit
 import io.newm.shared.config.NewmSharedBuildConfig
 
 /**
  * A global overlay that provides access to the developer menu via:
  * 1. A floating "DEV" button (bottom-right)
  * 2. A keyboard shortcut (SHIFT + D)
- * 
+ *
  * Only active in debug builds.
  */
 @OptIn(ExperimentalComposeUiApi::class)
@@ -44,7 +43,7 @@ fun DebugOverlay(
     buildConfig: NewmSharedBuildConfig,
     onOpenDebugMenu: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     if (!buildConfig.isDebug) {
         content()
@@ -60,43 +59,38 @@ fun DebugOverlay(
     }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .focusRequester(focusRequester)
-            .onKeyEvent { event ->
+        modifier =
+            modifier.fillMaxSize().focusRequester(focusRequester).onKeyEvent { event ->
                 if (event.isShiftPressed && event.key == Key.D) {
                     triggerDebugMenu()
                     true
                 } else {
                     false
                 }
-            }
+            },
     ) {
         content()
-        
+
         // Floating Debug Button
         Box(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(bottom = 80.dp, end = 16.dp) // Offset to avoid interference with bottom navigation
-                .size(48.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colors.primary.copy(alpha = 0.8f))
-                .clickable { triggerDebugMenu() }
-                .alpha(0.7f),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(
+                        bottom = 80.dp,
+                        end = 16.dp,
+                    ) // Offset to avoid interference with bottom navigation
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colors.primary.copy(alpha = 0.8f))
+                    .clickable { triggerDebugMenu() }
+                    .alpha(0.7f),
+            contentAlignment = Alignment.Center,
         ) {
-            Text(
-                text = "DEV",
-                color = Color.White,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Text(text = "DEV", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         }
 
         // Request focus to capture key events
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
-        }
+        LaunchedEffect(Unit) { focusRequester.requestFocus() }
     }
 }

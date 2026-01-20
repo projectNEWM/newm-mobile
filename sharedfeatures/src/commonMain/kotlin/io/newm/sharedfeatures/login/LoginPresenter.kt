@@ -32,16 +32,17 @@ class LoginPresenter(
     private val loginUseCase: () -> LoginUseCase,
     private val recaptchaManager: RecaptchaManager,
     private val logger: NewmAppLogger,
-    private val analyticsTracker: NewmAppEventLogger
+    private val analyticsTracker: NewmAppEventLogger,
 ) : Presenter<LoginScreen.UiState> {
     @Composable
     override fun present(): LoginScreen.UiState {
         val email = rememberRetained { EmailState() }
         val password = rememberRetained { PasswordState() }
-        val isFormValid = remember(email.isValid, password.isValid) {
-            email.isValid && password.isValid
+        val isFormValid =
+            remember(email.isValid, password.isValid) { email.isValid && password.isValid }
+        var errorMessage by remember {
+            mutableStateOf<org.jetbrains.compose.resources.StringResource?>(null)
         }
-        var errorMessage by remember { mutableStateOf<org.jetbrains.compose.resources.StringResource?>(null) }
         var isLoading by remember { mutableStateOf(false) }
 
         val coroutineScope = rememberCoroutineScope()
@@ -66,19 +67,20 @@ class LoginPresenter(
 
                             isLoading = true
                             try {
-                                recaptchaManager.executeLogin()
+                                recaptchaManager
+                                    .executeLogin()
                                     .onSuccess { token ->
-                                        loginUseCase().logIn(
-                                            email.text,
-                                            password.text,
-                                            humanVerificationCode = token
-                                        )
+                                        loginUseCase()
+                                            .logIn(
+                                                email.text,
+                                                password.text,
+                                                humanVerificationCode = token,
+                                            )
                                         navigator.goTo(HomeScreen)
                                     }.onFailure {
                                         errorMessage = Res.string.invalid_recaptcha_message
                                         isLoading = false
                                     }
-
                             } catch (e: Throwable) {
                                 logger.error("LoginScreenPresenter", "Login failed", e)
                                 isLoading = false
@@ -88,11 +90,13 @@ class LoginPresenter(
                     }
 
                     LoginScreen.UiEvent.ForgotPasswordClick -> {
-                        analyticsTracker.logClickEvent(AppScreens.LogInWithEmailScreen.FORGOT_PASSWORD_BUTTON)
+                        analyticsTracker.logClickEvent(
+                            AppScreens.LogInWithEmailScreen.FORGOT_PASSWORD_BUTTON,
+                        )
                         navigator.goTo(ResetPasswordScreen(email.text))
                     }
                 }
-            }
+            },
         )
     }
 }
@@ -105,10 +109,9 @@ class LoginPresenterFactory(
         screen: Screen,
         navigator: Navigator,
         context: CircuitContext,
-    ): Presenter<*>? {
-        return when (screen) {
+    ): Presenter<*>? =
+        when (screen) {
             is LoginScreen -> presenter(navigator)
             else -> null
         }
-    }
 }

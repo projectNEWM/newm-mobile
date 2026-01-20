@@ -19,8 +19,8 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class DisconnectWalletUseCaseImpl(
     private val walletRepository: WalletRepository,
     private val nftRepository: NFTRepository,
-) : DisconnectWalletUseCase, KoinComponent {
-
+) : DisconnectWalletUseCase,
+    KoinComponent {
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun disconnect(walletConnectionId: String?) {
         mapErrorsSuspend {
@@ -30,24 +30,20 @@ internal class DisconnectWalletUseCaseImpl(
                 val connections = walletRepository.syncWalletConnectionsFromNetworkToDB()
 
                 coroutineScope {
-                    connections.map { connection ->
-                        async {
-                            walletRepository.disconnectWallet(connection.id)
-                        }
-                    }.awaitAll()
+                    connections
+                        .map { connection ->
+                            async { walletRepository.disconnectWallet(connection.id) }
+                        }.awaitAll()
                 }
-
             }
             nftRepository.deleteAllTracksNFTsCache()
-            postNotification(Notification.walletConnectionStateChanged)
+            postNotification(Notification.WALLET_CONNECTION_STATE_CHANGED)
         }
     }
 
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun disconnectSingleWallet(walletConnectionId: String) {
-        mapErrorsSuspend {
-            walletRepository.disconnectWallet(walletConnectionId)
-        }
-        postNotification(Notification.walletConnectionStateChanged)
+        mapErrorsSuspend { walletRepository.disconnectWallet(walletConnectionId) }
+        postNotification(Notification.WALLET_CONNECTION_STATE_CHANGED)
     }
 }

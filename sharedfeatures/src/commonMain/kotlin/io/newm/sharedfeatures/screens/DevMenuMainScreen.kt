@@ -10,6 +10,7 @@ import io.newm.sharedfeatures.parceling.CommonParcelize
 object DevMenuMainScreen : Screen, ScreenEvents {
     sealed interface UiState : CircuitUiState {
         data object Loading : UiState
+
         data class Content(
             val menuItems: List<DevMenuItem>,
             val onEvent: (UiEvent) -> Unit,
@@ -18,7 +19,10 @@ object DevMenuMainScreen : Screen, ScreenEvents {
 
     sealed interface UiEvent : CircuitUiEvent {
         data object OnBack : UiEvent
-        data class OnItemClick(val screen: Screen) : UiEvent
+
+        data class OnItemClick(
+            val screen: Screen,
+        ) : UiEvent
     }
 
     override val name: String
@@ -28,5 +32,5 @@ object DevMenuMainScreen : Screen, ScreenEvents {
 data class DevMenuItem(
     val title: String,
     val screen: Screen,
-    val description: String = ""
+    val description: String = "",
 )

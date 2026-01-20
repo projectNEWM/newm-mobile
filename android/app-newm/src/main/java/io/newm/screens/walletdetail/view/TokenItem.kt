@@ -26,36 +26,34 @@ import io.newm.core.theme.White
 import io.newm.core.theme.inter
 
 fun LazyListScope.tokenItem(claimable: Long) {
-    item {
-        Spacer(modifier = Modifier.height(8.dp))
-    }
+    item { Spacer(modifier = Modifier.height(8.dp)) }
     item {
         WalletDetailCard {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Start,
             ) {
                 Column {
                     Text(
                         text = stringResource(R.string.tokens),
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = White
-                        )
+                        style =
+                            TextStyle(
+                                fontFamily = inter,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = White,
+                            ),
                     )
                     Text(
                         text = "$$claimable",
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = GraySuit
-                        )
+                        style =
+                            TextStyle(
+                                fontFamily = inter,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = GraySuit,
+                            ),
                     )
                 }
             }
@@ -66,9 +64,5 @@ fun LazyListScope.tokenItem(claimable: Long) {
 @Preview(device = "id:pixel_9_pro_xl", showSystemUi = true)
 @Composable
 private fun Preview() {
-    NewmTheme {
-        LazyColumn {
-            tokenItem(123)
-        }
-    }
+    NewmTheme { LazyColumn { tokenItem(123) } }
 }

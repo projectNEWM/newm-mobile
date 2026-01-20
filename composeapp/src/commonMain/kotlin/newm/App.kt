@@ -25,34 +25,28 @@ fun App(
     circuit: Circuit,
     config: NewmSharedBuildConfig,
     onRootPop: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NewmTheme(darkTheme = true) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             val backstack = rememberSaveableBackStack(WelcomeScreen)
 
-            val circuitNavigator = rememberCircuitNavigator(
-                backstack,
-                onRootPop = { onRootPop() }
-            )
+            val circuitNavigator = rememberCircuitNavigator(backstack, onRootPop = { onRootPop() })
 
             DebugOverlay(
                 buildConfig = config,
-                onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) }
+                onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) },
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     NavigableCircuitContent(
                         modifier = modifier,
                         circuit = circuit,
                         navigator = circuitNavigator,
-                        backStack = backstack
+                        backStack = backstack,
                     )
                 }
             }

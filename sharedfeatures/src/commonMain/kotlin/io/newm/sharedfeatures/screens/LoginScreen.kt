@@ -16,11 +16,12 @@ object LoginScreen : Screen {
         val submitButtonEnabled: Boolean,
         val errorMessage: StringResource?,
         val isLoading: Boolean,
-        val eventSink: (UiEvent) -> Unit
+        val eventSink: (UiEvent) -> Unit,
     ) : CircuitUiState
 
     sealed interface UiEvent : CircuitUiEvent {
         data object OnLoginClick : UiEvent
+
         data object ForgotPasswordClick : UiEvent
     }
 }

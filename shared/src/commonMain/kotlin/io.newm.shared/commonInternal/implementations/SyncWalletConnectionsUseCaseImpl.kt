@@ -9,13 +9,12 @@ import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class SyncWalletConnectionsUseCaseImpl(
-    private val walletRepository: WalletRepository
-) : SyncWalletConnectionsUseCase, KoinComponent {
-
+    private val walletRepository: WalletRepository,
+) : SyncWalletConnectionsUseCase,
+    KoinComponent {
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun syncWalletConnectionsFromNetworkToDevice(): List<WalletConnection> {
-        return mapErrorsSuspend {
+    override suspend fun syncWalletConnectionsFromNetworkToDevice(): List<WalletConnection> =
+        mapErrorsSuspend {
             walletRepository.syncWalletConnectionsFromNetworkToDB()
         }
-    }
 }

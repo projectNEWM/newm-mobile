@@ -13,27 +13,21 @@ import me.tatarka.inject.annotations.Provides
 import kotlin.time.Instant
 
 /**
- * WebAssembly-specific dependency injection component.
- * Provides platform-specific implementations for the wasmJs (web) target.
+ * WebAssembly-specific dependency injection component. Provides platform-specific implementations
+ * for the wasmJs (web) target.
  */
 interface WasmComponent {
-
-    @Provides
-    fun providesFeatureFlagDataSource(): FeatureFlagDataSource {
-        return WasmFeatureFlagManager()
-    }
+    @Provides fun providesFeatureFlagDataSource(): FeatureFlagDataSource = WasmFeatureFlagManager()
 }
 
 /**
- * WebAssembly implementation of FeatureFlagDataSource.
- * Returns default feature flag values for the web platform.
+ * WebAssembly implementation of FeatureFlagDataSource. Returns default feature flag values for the
+ * web platform.
  *
- * Note: WebAssembly doesn't have LaunchDarkly integration yet.
- * All flags return their default values.
- * Consider using LaunchDarkly's JavaScript SDK via interop in the future.
+ * Note: WebAssembly doesn't have LaunchDarkly integration yet. All flags return their default
+ * values. Consider using LaunchDarkly's JavaScript SDK via interop in the future.
  */
 class WasmFeatureFlagManager : FeatureFlagDataSource {
-
     override suspend fun getBooleanVariation(featureFlag: FeatureFlag): FlagResult<Boolean> {
         // For wasmJs/web, return default values
         return FlagResult.Success(featureFlag.defaultValue)

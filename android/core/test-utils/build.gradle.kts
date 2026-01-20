@@ -1,9 +1,10 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 apply(from = "../../../gradle_include/circuit.gradle")
+
 apply(from = "../../../gradle_include/compose.gradle")
 
 android {
@@ -20,15 +21,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
+
+kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) } }
 
 dependencies {
     implementation(libs.paparazzi)
-    implementation(project(Modules.coreTheme))
+    implementation(project(Modules.CORE_THEME))
 
     testImplementation(libs.test.parameter.injector)
     testImplementation(libs.junit)

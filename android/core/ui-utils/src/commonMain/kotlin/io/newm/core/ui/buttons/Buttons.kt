@@ -38,8 +38,7 @@ import newm_mobile.android.core.ui_utils.generated.resources.check_icon_descript
 import org.jetbrains.compose.resources.stringResource
 import newm_mobile.android.core.ui_utils.generated.resources.Res as R
 
-private val enabledButtonGradient =
-    iconGradient(DarkViolet, Pinkish)
+private val enabledButtonGradient = iconGradient(DarkViolet, Pinkish)
 
 private val disabledButtonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.4f), Pinkish.copy(alpha = 0.4f))
@@ -51,27 +50,28 @@ fun NewmButton(
     selectedBrush: Brush = enabledButtonGradient,
     unselectedBrush: Brush = disabledButtonGradient,
     onClick: () -> Unit = {},
-    content: @Composable (RowScope.() -> Unit)
+    content: @Composable (RowScope.() -> Unit),
 ) {
-    val newmModifier = modifier.then(
-        Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .height(40.dp)
-            .then(
-                if (isSelected) {
-                    Modifier.background(selectedBrush)
-                } else {
-                    Modifier.background(unselectedBrush)
-                }
-            )
-    )
+    val newmModifier =
+        modifier.then(
+            Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .height(40.dp)
+                .then(
+                    if (isSelected) {
+                        Modifier.background(selectedBrush)
+                    } else {
+                        Modifier.background(unselectedBrush)
+                    },
+                ),
+        )
 
     Button(
         onClick = onClick,
         modifier = newmModifier,
         elevation = null,
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-        content = content
+        content = content,
     )
 }
 
@@ -81,29 +81,29 @@ fun PrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    iconPainter: Painter? = null
+    iconPainter: Painter? = null,
 ) {
     Row(
-        modifier = modifier
-            .height(40.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(brush = if (enabled) enabledButtonGradient else disabledButtonGradient)
-            .then(
-                if (enabled) Modifier.clickable { onClick.invoke() }
-                else Modifier
-            ),
+        modifier =
+            modifier
+                .height(40.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(brush = if (enabled) enabledButtonGradient else disabledButtonGradient)
+                .then(if (enabled) Modifier.clickable { onClick.invoke() } else Modifier),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        iconPainter?.takeIf { enabled }?.let {
-            Icon(
-                painter = it,
-                contentDescription = stringResource(R.string.check_icon_description),
-                tint = White,
-            )
-            Spacer(modifier = Modifier.size(8.dp))
-        }
+        iconPainter
+            ?.takeIf { enabled }
+            ?.let {
+                Icon(
+                    painter = it,
+                    contentDescription = stringResource(R.string.check_icon_description),
+                    tint = White,
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+            }
         Text(
             text = text,
             color = if (enabled) MaterialTheme.colors.onPrimary else Gray,
@@ -122,35 +122,29 @@ fun SecondaryButton(
     backgroundBrush: Brush = defaultButtonGradient,
     textStyle: TextStyle = defaultButtonLabelStyle,
     enabled: Boolean = true,
-    iconPainter: Painter? = null
+    iconPainter: Painter? = null,
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(backgroundBrush)
-            .fillMaxWidth()
-            .height(40.dp),
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(backgroundBrush)
+                .fillMaxWidth()
+                .height(40.dp),
         elevation = null,
         enabled = enabled,
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
             iconPainter?.let {
-                Icon(
-                    painter = it,
-                    contentDescription = null,
-                    tint = Purple
-                )
+                Icon(painter = it, contentDescription = null, tint = Purple)
                 Spacer(modifier = Modifier.size(8.dp))
             }
-            Text(
-                text = label,
-                style = textStyle
-            )
+            Text(text = label, style = textStyle)
         }
     }
 }
@@ -158,9 +152,12 @@ fun SecondaryButton(
 private val defaultButtonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
 
-private val defaultButtonLabelStyle @Composable get() = TextStyle(
-    fontSize = 16.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Medium,
-    color = Purple
-)
+private val defaultButtonLabelStyle
+    @Composable
+    get() =
+        TextStyle(
+            fontSize = 16.sp,
+            fontFamily = inter,
+            fontWeight = FontWeight.Medium,
+            color = Purple,
+        )

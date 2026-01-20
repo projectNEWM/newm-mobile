@@ -30,14 +30,11 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 fun ForceAppUpdateUi(
     state: ForceAppUpdateState,
     eventLogger: NewmAppEventLogger,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     when (state) {
         is ForceAppUpdateState.Content -> {
-            ForceAppUpdateContent(
-                state = state,
-                modifier = modifier
-            )
+            ForceAppUpdateContent(state = state, modifier = modifier)
         }
     }
 }
@@ -45,18 +42,15 @@ fun ForceAppUpdateUi(
 @Composable
 fun ForceAppUpdateContent(
     state: ForceAppUpdateState.Content,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .padding(16.dp)
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colors.background).padding(16.dp),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             Spacer(modifier = Modifier.weight(.25f))
 
@@ -66,7 +60,7 @@ fun ForceAppUpdateContent(
                 text = stringResource(id = R.string.force_app_update_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colors.onBackground,
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -75,11 +69,10 @@ fun ForceAppUpdateContent(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colors.onBackground,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
 
             Spacer(modifier = Modifier.weight(1f))
-
 
             PrimaryButton(
                 modifier = Modifier.padding(vertical = 32.dp),
@@ -96,7 +89,7 @@ fun ForceAppUpdateUiDarkModePreview() {
     NewmTheme(darkTheme = true) {
         ForceAppUpdateUi(
             state = ForceAppUpdateState.Content(eventSink = {}),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }
@@ -107,7 +100,7 @@ fun ForceAppUpdateUiPreview() {
     NewmTheme(darkTheme = false) {
         ForceAppUpdateUi(
             state = ForceAppUpdateState.Content(eventSink = {}),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }

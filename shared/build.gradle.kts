@@ -2,16 +2,14 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.Properties
-import java.io.FileInputStream
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization")
-    id("kotlinx-serialization")
-    id("com.android.library")
-    id("app.cash.sqldelight") version "2.1.0"
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
-    id("com.github.gmazzo.buildconfig") version "5.6.8"
+    alias(libs.plugins.buildconfig)
 }
 
 android {
@@ -31,22 +29,11 @@ android {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-    jvm {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    androidTarget { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
+    jvm { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
 
     val xcf = XCFramework()
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
+    listOf(iosArm64(), iosSimulatorArm64()).forEach {
         it.binaries.framework {
             baseName = "shared"
             xcf.add(this)
@@ -67,8 +54,8 @@ kotlin {
                 api(libs.ktor.client.auth)
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.store5)
-                implementation("app.cash.sqldelight:runtime:${libs.versions.runtime.get()}")
-                implementation("app.cash.sqldelight:coroutines-extensions:${libs.versions.runtime.get()}")
+                implementation(libs.sqldelight.runtime)
+                implementation(libs.sqldelight.coroutines.extensions)
             }
         }
         val commonTest by getting {
@@ -80,7 +67,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("app.cash.sqldelight:android-driver:${libs.versions.runtime.get()}")
+                implementation(libs.sqldelight.android.driver)
                 implementation(libs.ktor.client.android)
                 implementation(libs.cloudinary.android)
                 implementation(libs.androidx.datastore.preferences)
@@ -102,7 +89,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation(libs.ktor.client.darwin)
-                implementation("app.cash.sqldelight:native-driver:${libs.versions.runtime.get()}")
+                implementation(libs.sqldelight.native.driver)
                 implementation(libs.kvault)
             }
         }
@@ -114,24 +101,19 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation("app.cash.sqldelight:sqlite-driver:${libs.versions.runtime.get()}")
+                implementation(libs.sqldelight.sqlite.driver)
                 implementation(libs.ktor.client.cio)
             }
         }
 
-        all {
-            languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-        }
+        all { languageSettings.optIn("kotlin.experimental.ExperimentalObjCName") }
 
-        @OptIn(ExperimentalWasmDsl::class)
-        wasmJs {
-            browser {}
-        }
+        @OptIn(ExperimentalWasmDsl::class) wasmJs { browser {} }
 
         val wasmJsMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-js:${libs.versions.ktor.get()}")
-                implementation("org.jetbrains.kotlinx:kotlinx-browser:0.2")
+                implementation(libs.ktor.client.js)
+                implementation(libs.kotlin.browser)
                 // Note: SQLDelight and DataStore don't have wasmJs support yet
                 // Database and preferences are handled via browser localStorage
             }
@@ -142,16 +124,16 @@ kotlin {
 buildConfig {
     packageName("io.newm.shared.generated")
 
-    val props = Properties().apply {
-        val localPropertiesFile = File(rootProject.rootDir, "local.properties")
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.inputStream().use { load(it) }
+    val props =
+        Properties().apply {
+            val localPropertiesFile = File(rootProject.rootDir, "local.properties")
+            if (localPropertiesFile.exists()) {
+                localPropertiesFile.inputStream().use { load(it) }
+            }
         }
-    }
 
     // Helper: return empty string if key is missing to avoid build failure
-    fun req(name: String): String =
-        props.getProperty(name)?.trim('"') ?: ""
+    fun req(name: String): String = props.getProperty(name)?.trim('"') ?: ""
 
     buildConfigField<String>("STAGING_URL", req("STAGING_URL"))
     buildConfigField<String>("PRODUCTION_URL", req("PRODUCTION_URL"))
@@ -162,7 +144,6 @@ buildConfig {
     buildConfigField<String>("LAUNCHDARKLY_MOBILE_KEY", req("LAUNCHDARKLY_MOBILE_KEY"))
     buildConfigField<Boolean>("IS_DEBUG", req("IS_DEBUG").toBoolean())
 }
-
 
 sqldelight {
     databases {
@@ -175,9 +156,7 @@ sqldelight {
     }
 }
 
-kotlin.sourceSets.all {
-    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-}
+kotlin.sourceSets.all { languageSettings.optIn("kotlin.experimental.ExperimentalObjCName") }
 
 dependencies {
     add("kspAndroid", libs.kotlinInject.compiler)

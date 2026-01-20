@@ -1,0 +1,9 @@
+[*.{kt,kts}]
+# Compose allows PascalCase for @Composable functions
+ktlint_standard_function-naming = disabled
+# Enforce no wildcard imports
+ktlint_standard_no-wildcard-imports = enabled
+# Filename should match class name is not always desired
+ktlint_standard_filename = disabled
+# Backing properties naming can be different
+ktlint_standard_backing-property-naming = disabled

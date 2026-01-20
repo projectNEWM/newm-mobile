@@ -6,13 +6,14 @@ import io.newm.shared.commonPublic.usecases.UpdateProfilePictureUseCase
 
 internal class UpdateProfilePictureUseCaseImpl(
     private val cloudinaryManager: CloudinaryManager,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : UpdateProfilePictureUseCase {
     override suspend fun updateProfilePicture(filePath: String) {
-        val url = cloudinaryManager.uploadImage(
-            filePath = filePath,
-            options = mapOf("eager" to "c_lfill,w_400,h_400")
-        )
+        val url =
+            cloudinaryManager.uploadImage(
+                filePath = filePath,
+                options = mapOf("eager" to "c_lfill,w_400,h_400"),
+            )
         userRepository.updateUserPicture(url)
     }
 

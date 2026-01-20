@@ -31,66 +31,65 @@ internal fun WalletDropDownMenu(
     onViewDetailsClick: () -> Unit,
     onRenameClick: () -> Unit,
     onCopyAddressClick: () -> Unit,
-    onDisconnectClick: () -> Unit
+    onDisconnectClick: () -> Unit,
 ) {
-    val menuItems = listOf(
-        MenuItemData(
-            icon = Icons.Rounded.RemoveRedEye,
-            labelResId = R.string.wallet_menu_details,
-            onClick = {
-                onDismissRequest()
-                onViewDetailsClick()
-            }
-        ),
-        MenuItemData(
-            icon = Icons.Rounded.Edit,
-            labelResId = R.string.wallet_menu_rename,
-            onClick = {
-                onDismissRequest()
-                onRenameClick()
-            }
-        ),
-        MenuItemData(
-            icon = Icons.Filled.ContentCopy,
-            labelResId = R.string.wallet_menu_copy,
-            onClick = {
-                onDismissRequest()
-                onCopyAddressClick()
-            }
-        ),
-        MenuItemData(
-            icon = Icons.Rounded.Close,
-            labelResId = R.string.wallet_menu_disconnect,
-            onClick = {
-                onDismissRequest()
-                onDisconnectClick()
-            }
+    val menuItems =
+        listOf(
+            MenuItemData(
+                icon = Icons.Rounded.RemoveRedEye,
+                labelResId = R.string.wallet_menu_details,
+                onClick = {
+                    onDismissRequest()
+                    onViewDetailsClick()
+                },
+            ),
+            MenuItemData(
+                icon = Icons.Rounded.Edit,
+                labelResId = R.string.wallet_menu_rename,
+                onClick = {
+                    onDismissRequest()
+                    onRenameClick()
+                },
+            ),
+            MenuItemData(
+                icon = Icons.Filled.ContentCopy,
+                labelResId = R.string.wallet_menu_copy,
+                onClick = {
+                    onDismissRequest()
+                    onCopyAddressClick()
+                },
+            ),
+            MenuItemData(
+                icon = Icons.Rounded.Close,
+                labelResId = R.string.wallet_menu_disconnect,
+                onClick = {
+                    onDismissRequest()
+                    onDisconnectClick()
+                },
+            ),
         )
-    )
     DropdownMenu(
-        modifier = Modifier
-            .background(color = Gray500)
-            .width(IntrinsicSize.Min),
+        modifier = Modifier.background(color = Gray500).width(IntrinsicSize.Min),
         expanded = expanded,
         onDismissRequest = onDismissRequest,
-        offset = DpOffset(x = (-4).dp, y = (-2).dp)
+        offset = DpOffset(x = (-4).dp, y = (-2).dp),
     ) {
         menuItems.forEach {
             DropdownMenuItem(onClick = it.onClick) {
-                WalletDropDownItem(
-                    image = it.icon,
-                    text = stringResource(id = it.labelResId)
-                )
+                WalletDropDownItem(image = it.icon, text = stringResource(id = it.labelResId))
             }
         }
     }
 }
 
 @Composable
-private fun WalletDropDownItem(image: ImageVector, text: String) {
+private fun WalletDropDownItem(
+    image: ImageVector,
+    text: String,
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(image, null)
         Text(text = text)
@@ -100,5 +99,5 @@ private fun WalletDropDownItem(image: ImageVector, text: String) {
 private data class MenuItemData(
     val icon: ImageVector,
     val labelResId: Int,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
 )

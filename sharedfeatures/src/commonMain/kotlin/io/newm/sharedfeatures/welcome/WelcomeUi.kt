@@ -34,9 +34,11 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import newm_mobile.sharedfeatures.generated.resources.Res as R
 
-
 @Composable
-fun WelcomeUi(state: UiState, modifier: Modifier) {
+fun WelcomeUi(
+    state: UiState,
+    modifier: Modifier,
+) {
     when (state) {
         is UiState.Content -> {
             WelcomeScreenContent(
@@ -44,8 +46,12 @@ fun WelcomeUi(state: UiState, modifier: Modifier) {
                 onCreateAccount = { state.onEvent(WelcomeScreen.UiEvent.CreateAccountClicked) },
                 onLoginWithEmail = { state.onEvent(WelcomeScreen.UiEvent.OnLogin) },
                 onGoogleSignIn = { state.onEvent(WelcomeScreen.UiEvent.OnGoogleSignInClicked) },
-                onPrivacyPolicyClicked = { state.onEvent(WelcomeScreen.UiEvent.OnPrivacyPolicyClicked) },
-                onTermsOfServiceClicked = { state.onEvent(WelcomeScreen.UiEvent.OnTermsOfServiceClicked) }
+                onPrivacyPolicyClicked = {
+                    state.onEvent(WelcomeScreen.UiEvent.OnPrivacyPolicyClicked)
+                },
+                onTermsOfServiceClicked = {
+                    state.onEvent(WelcomeScreen.UiEvent.OnTermsOfServiceClicked)
+                },
             )
         }
 
@@ -62,7 +68,7 @@ fun WelcomeScreenContent(
     onLoginWithEmail: () -> Unit,
     onGoogleSignIn: () -> Unit,
     onPrivacyPolicyClicked: () -> Unit,
-    onTermsOfServiceClicked: () -> Unit
+    onTermsOfServiceClicked: () -> Unit,
 ) {
     PreLoginArtistBackgroundContentTemplate(
         modifier = modifier,
@@ -72,24 +78,25 @@ fun WelcomeScreenContent(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(16.dp)
-                    .clickable(onClick = onCreateAccount)
+                modifier =
+                    Modifier
+                        .align(Alignment.End)
+                        .padding(16.dp)
+                        .clickable(onClick = onCreateAccount),
             )
-        }
+        },
     ) {
         Text(
             text = stringResource(R.string.welcome_to_newm),
             fontSize = 30.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colors.onBackground,
         )
         Spacer(modifier = Modifier.weight(1f))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(all = 16.dp)
+            modifier = Modifier.padding(all = 16.dp),
         ) {
             PrimaryButton(
                 text = stringResource(R.string.login_with_email),
@@ -98,28 +105,27 @@ fun WelcomeScreenContent(
             SecondaryButton(
                 label = stringResource(Res.string.login_with_google),
                 onClick = onGoogleSignIn,
-                iconPainter = painterResource(Res.drawable.ic_google_g)
+                iconPainter = painterResource(Res.drawable.ic_google_g),
             )
         }
 
         PrivacyPolicyAndTermsSection(
-            modifier = Modifier
-                .padding(vertical = 32.dp, horizontal = 16.dp),
+            modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp),
             onPrivacyPolicyClicked = onPrivacyPolicyClicked,
             onTermsOfServiceClicked = onTermsOfServiceClicked,
         )
     }
 }
 
-
-class WelcomeUiFactory @Inject constructor() : Ui.Factory {
-    override fun create(screen: Screen, context: CircuitContext): Ui<*>? {
-        return when (screen) {
-            WelcomeScreen -> ui<UiState> { state, modifier ->
-                WelcomeUi(state, modifier)
+class WelcomeUiFactory
+    @Inject
+    constructor() : Ui.Factory {
+        override fun create(
+            screen: Screen,
+            context: CircuitContext,
+        ): Ui<*>? =
+            when (screen) {
+                WelcomeScreen -> ui<UiState> { state, modifier -> WelcomeUi(state, modifier) }
+                else -> null
             }
-
-            else -> null
-        }
     }
-}

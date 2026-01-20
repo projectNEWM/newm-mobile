@@ -99,19 +99,12 @@ internal val LibraryBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink
 fun NFTLibraryScreenUi(
     modifier: Modifier = Modifier,
     state: NFTLibraryState,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .testTag(TAG_NFT_LIBRARY_SCREEN),
-    ) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding().testTag(TAG_NFT_LIBRARY_SCREEN)) {
         when (state) {
             NFTLibraryState.Loading -> {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.LoadingScreen.name) }
                 LoadingScreen()
             }
 
@@ -119,11 +112,7 @@ fun NFTLibraryScreenUi(
                 LaunchedEffect(Unit) {
                     eventLogger.logPageLoad(AppScreens.NFTLibraryLinkWalletScreen.name)
                 }
-                LinkWalletScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
-                ) { newmWalletConnectionId ->
+                LinkWalletScreen(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) { newmWalletConnectionId ->
                     val eventSink = state.onConnectWallet
                     eventSink(newmWalletConnectionId)
                 }
@@ -137,30 +126,27 @@ fun NFTLibraryScreenUi(
             }
 
             is NFTLibraryState.Error -> {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.ErrorScreen.name)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.ErrorScreen.name) }
                 ErrorScreen(
                     title = stringResource(R.string.nft_library_error_message),
-                    message = state.message
+                    message = state.message,
                 )
             }
 
             is NFTLibraryState.Content -> {
                 val eventSink = state.eventSink
 
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.NFTLibraryScreen.name)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.NFTLibraryScreen.name) }
                 Text(
                     text = stringResource(id = R.string.title_nft_library),
                     modifier = Modifier.padding(16.dp),
-                    style = TextStyle(
-                        fontFamily = raleway,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
-                        brush = textGradient(SteelPink, CerisePink)
-                    )
+                    style =
+                        TextStyle(
+                            fontFamily = raleway,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 32.sp,
+                            brush = textGradient(SteelPink, CerisePink),
+                        ),
                 )
 
                 NFTTracks(
@@ -179,12 +165,12 @@ fun NFTLibraryScreenUi(
                     currentTrackId = state.currentTrackId,
                     downloadsEnabled = state.downloadsEnabled,
                     downloadStates = state.downloadStates,
-                    onRemoveSong = { track -> eventSink(NFTLibraryEvent.OnRemoveDownload(track)) })
+                    onRemoveSong = { track -> eventSink(NFTLibraryEvent.OnRemoveDownload(track)) },
+                )
             }
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -213,45 +199,39 @@ private fun NFTTracks(
 
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxSize()
-                .testTag(TAG_NFT_LIBRARY_SCREEN)
+            modifier =
+                Modifier.padding(horizontal = 16.dp).fillMaxSize().testTag(TAG_NFT_LIBRARY_SCREEN),
         ) {
             item {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     SearchBar(
                         placeholderResId = R.string.library_search,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        onQueryChange = onQueryChange
+                        modifier = Modifier.fillMaxWidth().weight(1f),
+                        onQueryChange = onQueryChange,
                     )
                     IconButton(
                         modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 16.dp),
-                        onClick = { scope.launch { filterSheetState.show() } }
+                        onClick = { scope.launch { filterSheetState.show() } },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_library_filter),
                             contentDescription = stringResource(R.string.filter_description),
-                            modifier = Modifier.drawWithBrush(LibraryBrush)
+                            modifier = Modifier.drawWithBrush(LibraryBrush),
                         )
                     }
                 }
             }
             when {
-                showZeroResultsFound -> item { ZeroSearchResults() }
+                showZeroResultsFound -> {
+                    item { ZeroSearchResults() }
+                }
 
                 nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
                     items(nftTracks + streamTokenTracks, key = { track -> track.id }) { track ->
-                        Box(
-                            modifier = Modifier.background(Gray16)
-                        ) {
+                        Box(modifier = Modifier.background(Gray16)) {
                             TrackRowItemWrapper(
                                 track = track,
                                 onPlaySong = onPlaySong,
@@ -270,7 +250,7 @@ private fun NFTTracks(
             refreshing = refreshing,
             state = pullRefreshState,
             contentColor = MaterialTheme.colors.primary,
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter),
         )
 
         SongFilterBottomSheet(filterSheetState, filters, onApplyFilters, eventLogger)
@@ -300,29 +280,28 @@ private fun TrackRowItemWrapper(
                 orientation = Orientation.Horizontal,
                 enabled = !track.isDownloaded,
                 reverseDirection = true,
-                anchors = mapOf(
-                    0f to false,
-                    deltaX to true,
-                ),
-            )
+                anchors = mapOf(0f to false, deltaX to true),
+            ),
     ) {
         if (downloadsEnabled) {
             DownloadPanel(
                 swipeableState = swipeableState,
                 downloadState = downloadState,
                 onRemoveSong = onRemoveSong,
-                onDownloadSong = onDownloadSong
+                onDownloadSong = onDownloadSong,
             )
         }
         TrackRowItem(
             track = track,
             onClick = onPlaySong,
-            modifier = if (downloadsEnabled) Modifier.offset {
-                IntOffset(
-                    x = -swipeableState.offset.value.roundToInt(),
-                    y = 0
-                )
-            } else Modifier,
+            modifier =
+                if (downloadsEnabled) {
+                    Modifier.offset {
+                        IntOffset(x = -swipeableState.offset.value.roundToInt(), y = 0)
+                    }
+                } else {
+                    Modifier
+                },
             isSelected = isSelected,
             downloadState = downloadState,
         )
@@ -335,30 +314,30 @@ private fun DownloadPanel(
     swipeableState: SwipeableState<Boolean>,
     downloadState: DownloadState,
     onRemoveSong: () -> Unit,
-    onDownloadSong: () -> Unit
+    onDownloadSong: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
     fun closeSwipeView() {
-        coroutineScope.launch {
-            swipeableState.animateTo(false)
-        }
+        coroutineScope.launch { swipeableState.animateTo(false) }
     }
 
     RevealedPanel {
-        if (downloadState is DownloadState.Completed || downloadState is DownloadState.Downloading) {
+        if (
+            downloadState is DownloadState.Completed || downloadState is DownloadState.Downloading
+        ) {
             RemoveButton(
                 onClick = {
                     closeSwipeView()
                     onRemoveSong()
-                }
+                },
             )
         } else {
             DownloadButton(
                 onClick = {
                     closeSwipeView()
                     onDownloadSong()
-                }
+                },
             )
         }
     }
@@ -373,34 +352,32 @@ private fun TrackRowItem(
     downloadState: DownloadState,
 ) {
     Row(
-        modifier = modifier
-            .background(color = Gray16)
-            .clickable(onClick = { onClick(track) })
-            .fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .background(color = Gray16)
+                .clickable(onClick = { onClick(track) })
+                .fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(track.imageUrl)
-                .error(R.drawable.ic_default_track_cover_art)
-                .placeholder(R.drawable.ic_default_track_cover_art)
-                .build(),
-            modifier = Modifier
-                .size(48.dp)
-                .clip(RoundedCornerShape(4.dp)),
+            model =
+                ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(track.imageUrl)
+                    .error(R.drawable.ic_default_track_cover_art)
+                    .placeholder(R.drawable.ic_default_track_cover_art)
+                    .build(),
+            modifier = Modifier.size(48.dp).clip(RoundedCornerShape(4.dp)),
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
-        Column(
-            modifier = Modifier
-                .padding(start = 12.dp)
-        ) {
+        Column(modifier = Modifier.padding(start = 12.dp)) {
             Text(
                 text = track.title,
                 fontFamily = inter,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
-                color = if (isSelected) StatusGreen else White
+                color = if (isSelected) StatusGreen else White,
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 when (downloadState) {
@@ -408,7 +385,7 @@ private fun TrackRowItem(
                         CircularProgressIndicator(
                             modifier = Modifier.size(16.dp),
                             strokeWidth = 2.dp,
-                            color = StatusGreen
+                            color = StatusGreen,
                         )
                         Spacer(modifier = Modifier.size(4.dp))
                     }
@@ -418,7 +395,7 @@ private fun TrackRowItem(
                             imageVector = Icons.Default.Warning,
                             contentDescription = "Failed",
                             tint = MaterialTheme.colors.error,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(16.dp),
                         )
                         Spacer(modifier = Modifier.size(4.dp))
                     }
@@ -428,7 +405,7 @@ private fun TrackRowItem(
                             painter = painterResource(id = R.drawable.ic_downloaded),
                             contentDescription = stringResource(R.string.downloaded_description),
                             tint = StatusGreen,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(16.dp),
                         )
                         Spacer(modifier = Modifier.size(4.dp))
                     }
@@ -443,7 +420,7 @@ private fun TrackRowItem(
                     fontFamily = inter,
                     fontWeight = FontWeight.Normal,
                     fontSize = 12.sp,
-                    color = GraySuit
+                    color = GraySuit,
                 )
             }
         }
@@ -451,14 +428,10 @@ private fun TrackRowItem(
 }
 
 @Composable
-fun RevealedPanel(
-    content: @Composable RowScope.() -> Unit
-) {
+fun RevealedPanel(content: @Composable RowScope.() -> Unit) {
     Row(
-        modifier = Modifier
-            .background(Purple)
-            .fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier.background(Purple).fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
         content()
@@ -466,49 +439,57 @@ fun RevealedPanel(
 }
 
 @Composable
-fun DownloadButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun DownloadButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier.padding(horizontal = 12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_download),
-                contentDescription = stringResource(R.string.library_download_description)
+                contentDescription = stringResource(R.string.library_download_description),
             )
         }
         Text(
             text = stringResource(id = R.string.library_download),
-            style = TextStyle(
-                fontFamily = inter,
-                fontWeight = FontWeight.Medium,
-                fontSize = 12.sp,
-                color = White
-            )
+            style =
+                TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 12.sp,
+                    color = White,
+                ),
         )
     }
 }
 
 @Composable
-fun RemoveButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun RemoveButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier.padding(horizontal = 12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = stringResource(R.string.library_remove_description)
+                contentDescription = stringResource(R.string.library_remove_description),
             )
         }
         Text(
             text = stringResource(id = R.string.library_remove_description),
-            style = TextStyle(
-                fontFamily = inter,
-                fontWeight = FontWeight.Medium,
-                fontSize = 12.sp,
-                color = White
-            )
+            style =
+                TextStyle(
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 12.sp,
+                    color = White,
+                ),
         )
     }
 }
@@ -518,25 +499,28 @@ fun RemoveButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 fun PreviewNftLibrary() {
     NewmTheme(darkTheme = true) {
         NFTLibraryScreenUi(
-            state = NFTLibraryState.Content(
-                nftTracks = emptyList(),
-                streamTokenTracks = emptyList(),
-                showZeroResultFound = false,
-                filters = NFTLibraryFilters(
-                    sortType = NFTLibrarySortType.None,
-                    showShortTracks = false
+            state =
+                NFTLibraryState.Content(
+                    nftTracks = emptyList(),
+                    streamTokenTracks = emptyList(),
+                    showZeroResultFound = false,
+                    filters =
+                        NFTLibraryFilters(
+                            sortType = NFTLibrarySortType.None,
+                            showShortTracks = false,
+                        ),
+                    refreshing = false,
+                    downloadStates =
+                        mapOf(
+                            "track1" to DownloadState.Downloading(0.5f),
+                            "track2" to DownloadState.Completed,
+                            "track3" to DownloadState.Failed("Error message"),
+                        ),
+                    eventSink = {},
+                    currentTrackId = null,
+                    downloadsEnabled = true,
                 ),
-                refreshing = false,
-                downloadStates = mapOf(
-                    "track1" to DownloadState.Downloading(0.5f),
-                    "track2" to DownloadState.Completed,
-                    "track3" to DownloadState.Failed("Error message")
-                ),
-                eventSink = {},
-                currentTrackId = null,
-                downloadsEnabled = true,
-            ),
-            eventLogger = NewmAppEventLogger()
+            eventLogger = NewmAppEventLogger(),
         )
     }
 }
@@ -545,10 +529,7 @@ fun PreviewNftLibrary() {
 @Composable
 fun PreviewNftLibraryLoading() {
     NewmTheme(darkTheme = true) {
-        NFTLibraryScreenUi(
-            state = NFTLibraryState.Loading,
-            eventLogger = NewmAppEventLogger()
-        )
+        NFTLibraryScreenUi(state = NFTLibraryState.Loading, eventLogger = NewmAppEventLogger())
     }
 }
 
@@ -556,9 +537,6 @@ fun PreviewNftLibraryLoading() {
 @Composable
 fun PreviewNftLibraryEmptyWallet() {
     NewmTheme(darkTheme = true) {
-        NFTLibraryScreenUi(
-            state = NFTLibraryState.EmptyWallet,
-            eventLogger = NewmAppEventLogger()
-        )
+        NFTLibraryScreenUi(state = NFTLibraryState.EmptyWallet, eventLogger = NewmAppEventLogger())
     }
 }

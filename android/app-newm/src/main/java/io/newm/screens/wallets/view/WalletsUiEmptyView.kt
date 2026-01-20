@@ -28,51 +28,38 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 @Composable
 internal fun BoxScope.Empty(
     state: WalletsUiState.Empty,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
-    val launchBarcodeScanner = rememberBarcodeScannerLauncher {
-        state.eventSink(WalletsEvent.OnConnectWallet(it))
-    }
+    val launchBarcodeScanner =
+        rememberBarcodeScannerLauncher {
+            state.eventSink(WalletsEvent.OnConnectWallet(it))
+        }
 
-    /**
-     * TODO: Get actual designs and copy for this view
-     */
+    // TODO: Get actual designs and copy for this view
     Card(
-        modifier = Modifier
-            .align(Alignment.Center)
-            .padding(vertical = 24.dp, horizontal = 24.dp)
+        modifier = Modifier.align(Alignment.Center).padding(vertical = 24.dp, horizontal = 24.dp),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
         ) {
             Icon(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .size(48.dp),
+                modifier = Modifier.align(Alignment.CenterHorizontally).size(48.dp),
                 imageVector = Icons.Default.Warning,
-                contentDescription = null
+                contentDescription = null,
             )
-            Text(
-                text = "You don't have a wallet connected",
-                style = MaterialTheme.typography.h4
-            )
-            Text(
-                text = "Connect to access all your songs",
-                style = MaterialTheme.typography.body2
-            )
+            Text(text = "You don't have a wallet connected", style = MaterialTheme.typography.h4)
+            Text(text = "Connect to access all your songs", style = MaterialTheme.typography.body2)
         }
     }
 
     ConnectNewWalletButton(
-        modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .padding(16.dp),
+        modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp),
         onClick = {
             eventLogger.logClickEvent(AppScreens.WalletsScreen.EMPTY_ADD_WALLET_BUTTON)
             launchBarcodeScanner()
-        }
+        },
     )
 }
 
@@ -80,14 +67,8 @@ internal fun BoxScope.Empty(
 @Composable
 private fun Preview() {
     NewmTheme(darkTheme = true) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Empty(
-                state = WalletsUiState.Empty({}, false),
-                eventLogger = NewmAppEventLogger()
-            )
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Empty(state = WalletsUiState.Empty({}, false), eventLogger = NewmAppEventLogger())
         }
     }
 }

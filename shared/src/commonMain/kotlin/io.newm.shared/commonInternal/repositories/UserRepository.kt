@@ -3,9 +3,9 @@ package io.newm.shared.commonInternal.repositories
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
 import io.newm.shared.commonInternal.api.UserAPI
 import io.newm.shared.commonInternal.api.models.UserProfileUpdateRequest
+import io.newm.shared.commonInternal.services.db.NewmDatabaseWrapper
 import io.newm.shared.commonPublic.models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
@@ -19,7 +19,6 @@ internal class UserRepository(
     private val logger: NewmAppLogger,
     private val scope: CoroutineScope,
 ) : KoinComponent {
-
     private val service: UserAPI by inject()
 
     suspend fun fetchLoggedInUserDetails(): User {
@@ -28,76 +27,80 @@ internal class UserRepository(
         return user
     }
 
-
-    fun fetchUserDetailsFlow() = dbWrapper().userQueries.getAnyUser()
-        .asFlow()
-        .mapToOneOrNull(kotlinx.coroutines.Dispatchers.Default) // This will emit either one user or null
-        .onStart {
-            if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null) {
-                logger.debug("UserRepository","No Users found in DB, fetching from network" )
-                scope.launch {
-                    val user = fetchLoggedInUserDetails()
-                    dbWrapper().transaction {
-                        dbWrapper().userQueries.deleteAll() // just in case...
-                        dbWrapper().userQueries.insertUser(
-                            id = user.id,
-                            createdAt = user.createdAt,
-                            oauthType = user.oauthType,
-                            oauthId = user.oauthId,
-                            firstName = user.firstName,
-                            lastName = user.lastName,
-                            nickname = user.nickname,
-                            pictureUrl = user.pictureUrl,
-                            bannerUrl = user.bannerUrl,
-                            websiteUrl = user.websiteUrl,
-                            twitterUrl = user.twitterUrl,
-                            instagramUrl = user.instagramUrl,
-                            location = user.location,
-                            role = user.role,
-                            genre = user.genre,
-                            biography = user.biography,
-                            walletAddress = user.walletAddress,
-                            email = user.email,
-                            companyName = user.companyName,
-                            companyLogoUrl = user.companyLogoUrl,
-                            companyIpRights = user.companyIpRights,
-                            verificationStatus = user.verificationStatus,
-                        )
+    fun fetchUserDetailsFlow() =
+        dbWrapper()
+            .userQueries
+            .getAnyUser()
+            .asFlow()
+            .mapToOneOrNull(
+                kotlinx.coroutines.Dispatchers.Default,
+            ) // This will emit either one user or null
+            .onStart {
+                if (dbWrapper().userQueries.getAnyUser().executeAsOneOrNull() == null) {
+                    logger.debug("UserRepository", "No Users found in DB, fetching from network")
+                    scope.launch {
+                        val user = fetchLoggedInUserDetails()
+                        dbWrapper().transaction {
+                            dbWrapper().userQueries.deleteAll() // just in case...
+                            dbWrapper()
+                                .userQueries
+                                .insertUser(
+                                    id = user.id,
+                                    createdAt = user.createdAt,
+                                    oauthType = user.oauthType,
+                                    oauthId = user.oauthId,
+                                    firstName = user.firstName,
+                                    lastName = user.lastName,
+                                    nickname = user.nickname,
+                                    pictureUrl = user.pictureUrl,
+                                    bannerUrl = user.bannerUrl,
+                                    websiteUrl = user.websiteUrl,
+                                    twitterUrl = user.twitterUrl,
+                                    instagramUrl = user.instagramUrl,
+                                    location = user.location,
+                                    role = user.role,
+                                    genre = user.genre,
+                                    biography = user.biography,
+                                    walletAddress = user.walletAddress,
+                                    email = user.email,
+                                    companyName = user.companyName,
+                                    companyLogoUrl = user.companyLogoUrl,
+                                    companyIpRights = user.companyIpRights,
+                                    verificationStatus = user.verificationStatus,
+                                )
+                        }
                     }
                 }
+            }.map { dbUser ->
+                dbUser?.let {
+                    User(
+                        id = dbUser.id,
+                        createdAt = dbUser.createdAt,
+                        oauthType = dbUser.oauthType,
+                        oauthId = dbUser.oauthId,
+                        firstName = dbUser.firstName,
+                        lastName = dbUser.lastName,
+                        nickname = dbUser.nickname,
+                        pictureUrl = dbUser.pictureUrl,
+                        bannerUrl = dbUser.bannerUrl,
+                        websiteUrl = dbUser.websiteUrl,
+                        twitterUrl = dbUser.twitterUrl,
+                        instagramUrl = dbUser.instagramUrl,
+                        location = dbUser.location,
+                        role = dbUser.role,
+                        genre = dbUser.genre,
+                        biography = dbUser.biography,
+                        walletAddress = dbUser.walletAddress,
+                        email = dbUser.email,
+                        companyName = dbUser.companyName,
+                        companyLogoUrl = dbUser.companyLogoUrl,
+                        companyIpRights = dbUser.companyIpRights,
+                        verificationStatus = dbUser.verificationStatus,
+                    )
+                }
             }
-        }.map { dbUser ->
-            dbUser?.let {
-                User(
-                    id = dbUser.id,
-                    createdAt = dbUser.createdAt,
-                    oauthType = dbUser.oauthType,
-                    oauthId = dbUser.oauthId,
-                    firstName = dbUser.firstName,
-                    lastName = dbUser.lastName,
-                    nickname = dbUser.nickname,
-                    pictureUrl = dbUser.pictureUrl,
-                    bannerUrl = dbUser.bannerUrl,
-                    websiteUrl = dbUser.websiteUrl,
-                    twitterUrl = dbUser.twitterUrl,
-                    instagramUrl = dbUser.instagramUrl,
-                    location = dbUser.location,
-                    role = dbUser.role,
-                    genre = dbUser.genre,
-                    biography = dbUser.biography,
-                    walletAddress = dbUser.walletAddress,
-                    email = dbUser.email,
-                    companyName = dbUser.companyName,
-                    companyLogoUrl = dbUser.companyLogoUrl,
-                    companyIpRights = dbUser.companyIpRights,
-                    verificationStatus = dbUser.verificationStatus,
-                )
-            }
-        }
 
-    suspend fun getUserById(userId: String): User {
-        return service.getUserById(userId)
-    }
+    suspend fun getUserById(userId: String): User = service.getUserById(userId)
 
     suspend fun getUsers(
         offset: Int?,
@@ -106,30 +109,24 @@ internal class UserRepository(
         roles: String?,
         genres: String?,
         olderThan: String?,
-        newerThan: String?
-    ): List<User> {
-        return service.getUsers(offset, limit, ids, roles, genres, olderThan, newerThan)
-    }
+        newerThan: String?,
+    ): List<User> = service.getUsers(offset, limit, ids, roles, genres, olderThan, newerThan)
 
-    suspend fun getUserCount(): Int {
-        return service.getUserCount().count
-    }
+    suspend fun getUserCount(): Int = service.getUserCount().count
 
-    suspend fun deleteCurrentUser(): Boolean {
-        return service.deleteCurrentUser().status.value == 204
-    }
+    suspend fun deleteCurrentUser(): Boolean = service.deleteCurrentUser().status.value == 204
 
     suspend fun changePassword(
         currentPassword: String,
         newPassword: String,
-        confirmNewPassword: String
+        confirmNewPassword: String,
     ) {
         service.updateUserProfile(
             UserProfileUpdateRequest(
                 currentPassword = currentPassword,
                 newPassword = newPassword,
-                confirmPassword = confirmNewPassword
-            )
+                confirmPassword = confirmNewPassword,
+            ),
         )
     }
 
@@ -154,7 +151,7 @@ internal class UserRepository(
                 newPassword = user.newPassword?.takeIf { it.isNotBlank() },
                 confirmPassword = user.confirmPassword?.takeIf { it.isNotBlank() },
                 currentPassword = user.currentPassword?.takeIf { it.isNotBlank() },
-            )
+            ),
         )
         dbWrapper().transaction {
             dbWrapper().userQueries.deleteAll() // invalidate cache
@@ -165,7 +162,7 @@ internal class UserRepository(
         service.updateUserProfile(
             UserProfileUpdateRequest(
                 pictureUrl = url.orEmpty(), // Sending empty string to the server, remove the picture
-            )
+            ),
         )
         dbWrapper().transaction {
             dbWrapper().userQueries.deleteAll() // invalidate cache

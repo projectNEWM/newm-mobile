@@ -6,17 +6,21 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
- * `LoginUseCase` defines the contract for handling user authentication in the Newm mobile application.
+ * `LoginUseCase` defines the contract for handling user authentication in the Newm mobile
+ * application.
  *
- * This interface provides methods for logging in using various authentication methods,
- * including email/password and third-party providers such as Google, Facebook, LinkedIn, and Apple.
- * It also offers functionality to log out.
+ * This interface provides methods for logging in using various authentication methods, including
+ * email/password and third-party providers such as Google, Facebook, LinkedIn, and Apple. It also
+ * offers functionality to log out.
  */
 interface LoginUseCase {
     sealed class LoginException {
-        //TODO: This is never used.  We should be mapping the errors to this in the implementation
-        data class invalidLogin(override val message: String) : KMMException(message)
+        // TODO: This is never used.  We should be mapping the errors to this in the implementation
+        data class InvalidLogin(
+            override val message: String,
+        ) : KMMException(message)
     }
+
     /**
      * Authenticates a user using their email and password.
      *
@@ -26,7 +30,11 @@ interface LoginUseCase {
      * @throws CancellationException if the login process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logIn(email: String, password: String, humanVerificationCode: String)
+    suspend fun logIn(
+        email: String,
+        password: String,
+        humanVerificationCode: String,
+    )
 
     /**
      * Authenticates a user using their Google account.
@@ -36,7 +44,10 @@ interface LoginUseCase {
      * @throws CancellationException if the login process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logInWithGoogle(idToken: String, humanVerificationCode: String)
+    suspend fun logInWithGoogle(
+        idToken: String,
+        humanVerificationCode: String,
+    )
 
     /**
      * Authenticates a user using their Facebook account with the given access token.
@@ -45,7 +56,6 @@ interface LoginUseCase {
      * @throws KMMException if there is an issue during the login process.
      * @throws CancellationException if the login process is cancelled.
      */
-
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logInWithFacebook(accessToken: String)
 
@@ -67,25 +77,24 @@ interface LoginUseCase {
      * @throws CancellationException if the login process is cancelled.
      */
     @Throws(KMMException::class, CancellationException::class)
-    suspend fun logInWithApple(idToken: String, humanVerificationCode: String)
-
+    suspend fun logInWithApple(
+        idToken: String,
+        humanVerificationCode: String,
+    )
 
     /**
      * Logs out the user.
      *
      * This method should handle all necessary steps to effectively terminate the user's session,
-     * such as clearing session tokens, disconnecting from external services, or restoring app state.
+     * such as clearing session tokens, disconnecting from external services, or restoring app
+     * state.
      */
     @Throws(KMMException::class, CancellationException::class)
     suspend fun logout()
 }
 
-
-
 class LoginUseCaseProvider : KoinComponent {
     private val loginUseCase: LoginUseCase by inject()
 
-    fun get(): LoginUseCase {
-        return this.loginUseCase
-    }
+    fun get(): LoginUseCase = this.loginUseCase
 }

@@ -28,16 +28,15 @@ class AppLaunchGhostActivity : ComponentActivity() {
     @OptIn(FlowPreview::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition { true }
-        }
+        installSplashScreen().apply { setKeepOnScreenCondition { true } }
 
         lifecycleScope.launch {
             val isLoggedIn = userSession.isLoggedIn()
 
             if (isLoggedIn) {
                 try {
-                    userDetailsUseCase.fetchLoggedInUserDetailsFlow()
+                    userDetailsUseCase
+                        .fetchLoggedInUserDetailsFlow()
                         .filterNotNull()
                         .onEach(featureFlagMager::identifyUser)
                         .timeout(3.seconds)
@@ -46,7 +45,7 @@ class AppLaunchGhostActivity : ComponentActivity() {
                     logger.error(
                         tag,
                         "Failed to identify feature flag because fetching user details failed.",
-                        e
+                        e,
                     )
                 } finally {
                     launchHomeActivity()

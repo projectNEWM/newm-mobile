@@ -1,6 +1,5 @@
 package io.newm.shared.commonPublic.featureflags
 
-
 interface FeatureFlag {
     val key: String
     val displayName: String
@@ -12,12 +11,11 @@ interface FeatureFlag {
 enum class FlagCategory {
     UI_FEATURE,
     BUSINESS_LOGIC,
-    DEVELOPER_TOOLS
+    DEVELOPER_TOOLS,
 }
 
 // Type-safe flag definitions with rich metadata
 object FeatureFlags {
-
     object ShowRecordStore : FeatureFlag {
         override val key = "mobile-app-show-recordstore"
         override val displayName = "Record Store"
@@ -58,13 +56,12 @@ object FeatureFlags {
         override val defaultValue = false
     }
 
-    val ALL_FLAGS: List<FeatureFlag> = listOf(
-        ShowRecordStore,
-        DownloadTracks,
-        ShowInvestmentPortfolio,
-        ShowMultiWallets,
-        ShowNEWMStudio
-    )
+    val ALL_FLAGS: List<FeatureFlag> =
+        listOf(
+            ShowRecordStore,
+            DownloadTracks,
+            ShowInvestmentPortfolio,
+            ShowMultiWallets,
+            ShowNEWMStudio,
+        )
 }
-
-
