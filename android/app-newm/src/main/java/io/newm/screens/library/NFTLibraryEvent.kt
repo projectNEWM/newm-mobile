@@ -6,13 +6,23 @@ import io.newm.shared.commonPublic.models.NFTTrack
 sealed interface NFTLibraryEvent : CircuitUiEvent {
     data object OnRefresh : NFTLibraryEvent
 
-    data class PlaySong(val track: NFTTrack) : NFTLibraryEvent
+    data class PlaySong(
+        val track: NFTTrack,
+    ) : NFTLibraryEvent
 
-    data class OnQueryChange(val newQuery: String) : NFTLibraryEvent
+    data class OnQueryChange(
+        val newQuery: String,
+    ) : NFTLibraryEvent
 
-    data class OnDownloadTrack(val track: NFTTrack) : NFTLibraryEvent
+    data class OnDownloadTrack(
+        val track: NFTTrack,
+    ) : NFTLibraryEvent
 
-    data class OnRemoveDownload(val track: NFTTrack) : NFTLibraryEvent
+    data class OnRemoveDownload(
+        val track: NFTTrack,
+    ) : NFTLibraryEvent
 
-    data class OnApplyFilters(val filters: NFTLibraryFilters) : NFTLibraryEvent
+    data class OnApplyFilters(
+        val filters: NFTLibraryFilters,
+    ) : NFTLibraryEvent
 }

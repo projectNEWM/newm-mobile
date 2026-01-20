@@ -10,7 +10,7 @@ import kotlin.time.Instant
 data class CacheEntry constructor(
     val value: Boolean,
     val timestamp: Instant,
-    val ttl: Duration
+    val ttl: Duration,
 ) {
     fun isExpired(now: Instant): Boolean = (now - timestamp) > ttl
 }

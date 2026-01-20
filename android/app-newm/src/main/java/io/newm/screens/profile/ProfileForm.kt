@@ -34,46 +34,33 @@ fun ProfileForm(
     newPasswordState: TextFieldState,
     confirmNewPasswordState: TextFieldState,
 ) {
-    Column(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Spacer(modifier = Modifier.height(16.dp))
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(Gray16)
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(top = 12.dp, start = 12.dp, end = 12.dp)
-            ) {
+        Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(Gray16)) {
+            Column(modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
                 if (canUserEditName) {
                     Email(
                         label = R.string.profile_form_first_name,
                         emailState = firstName,
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Next,
-                        )
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     )
                     Email(
                         label = R.string.profile_form_last_name,
                         emailState = lastName,
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Next,
-                        )
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     )
                 } else {
                     TextFieldWithLabel(
                         labelResId = R.string.profile_form_first_name,
                         value = firstName.text,
-                        onValueChange = { },
+                        onValueChange = {},
                         enabled = false,
                         textfieldBackgroundColor = Gray23,
                     )
                     TextFieldWithLabel(
                         labelResId = R.string.profile_form_last_name,
                         value = lastName.text,
-                        onValueChange = { },
+                        onValueChange = {},
                         enabled = false,
                         textfieldBackgroundColor = Gray23,
                     )
@@ -81,50 +68,36 @@ fun ProfileForm(
                 TextFieldWithLabel(
                     labelResId = R.string.profile_form_email,
                     value = email,
-                    onValueChange = { },
+                    onValueChange = {},
                     enabled = false,
                     textfieldBackgroundColor = Gray23,
                 )
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(Gray16)
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(top = 12.dp, start = 12.dp, end = 12.dp)
-            ) {
+        Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(Gray16)) {
+            Column(modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
                 Text(
                     text = stringResource(id = R.string.profile_form_password_title),
-                    style = formTitleStyle
+                    style = formTitleStyle,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Password(
                     label = R.string.profile_form_password_current_password,
                     passwordState = currentPasswordState,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                    )
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 )
                 Password(
                     label = R.string.profile_form_password_new_password,
                     passwordState = newPasswordState,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                    )
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 )
                 Password(
                     label = R.string.profile_form_password_confirm_password,
                     passwordState = confirmNewPasswordState,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done,
-                    )
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 )
             }
         }
     }
 }
-

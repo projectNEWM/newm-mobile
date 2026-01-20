@@ -16,9 +16,8 @@ class Logout(
     private val restartApp: RestartApp,
     private val scope: CoroutineScope,
     private val logger: NewmAppLogger,
-    private val googleSignInClient: GoogleSignInClient
+    private val googleSignInClient: GoogleSignInClient,
 ) {
-
     fun signOutUser() {
         scope.launch {
             try {
@@ -44,8 +43,9 @@ class Logout(
 }
 
 class RestartApp(
-    private val context: Context
-) : KoinComponent, Runnable {
+    private val context: Context,
+) : KoinComponent,
+    Runnable {
     override fun run() {
         ProcessPhoenix.triggerRebirth(context)
     }

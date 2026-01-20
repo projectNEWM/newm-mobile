@@ -28,30 +28,29 @@ private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 fun EmptyWalletScreen(eventLogger: NewmAppEventLogger) {
     val context = LocalContext.current
 
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = stringResource(id = R.string.wallet_empty_title),
                 style = MaterialTheme.typography.h6,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.wallet_empty_subtitle),
                 style = MaterialTheme.typography.body1,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
 
             PrimaryButton(
                 modifier = Modifier.padding(all = 16.dp),
                 text = stringResource(id = R.string.wallet_empty_button),
                 onClick = {
-                    eventLogger.logClickEvent(AppScreens.NFTLibraryEmptyWalletScreen.VISIT_RECORDS_BUTTON)
+                    eventLogger.logClickEvent(
+                        AppScreens.NFTLibraryEmptyWalletScreen.VISIT_RECORDS_BUTTON,
+                    )
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(RECORD_STORE_URL)))
                 },
             )

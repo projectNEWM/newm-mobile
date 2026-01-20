@@ -21,33 +21,26 @@ private const val MARKETPLACE_URL = "https://marketplace.newm.io/"
 fun MarketplaceScreenUi(
     modifier: Modifier = Modifier,
     state: MarketplaceState,
-    eventLogger: NewmAppEventLogger
+    eventLogger: NewmAppEventLogger,
 ) {
     val context = LocalContext.current
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding(),
-    ) {
+    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         when (state) {
             is MarketplaceState.Content -> {
                 FullScreenWebView(context, MARKETPLACE_URL)
             }
 
             MarketplaceState.Loading -> {
-                LaunchedEffect(Unit) {
-                    eventLogger.logPageLoad(AppScreens.LoadingScreen.name)
-                }
+                LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.LoadingScreen.name) }
                 LoadingScreen()
             }
 
             MarketplaceState.Error -> {
                 ErrorScreen(
                     title = stringResource(R.string.record_store_error_title),
-                    message = stringResource(R.string.record_store_error_message)
+                    message = stringResource(R.string.record_store_error_message),
                 )
             }
         }
     }
 }
-

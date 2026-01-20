@@ -17,32 +17,26 @@ private const val NOTIFICATION_UPDATE_INTERVAL: Long = 1_000
 const val DOWNLOAD_NOTIFICATION_CHANNEL_ID = "download_channel"
 
 @UnstableApi
-internal class NewmDownloadService : DownloadService(
-    FOREGROUND_NOTIFICATION_ID,
-    NOTIFICATION_UPDATE_INTERVAL,
-    DOWNLOAD_NOTIFICATION_CHANNEL_ID,
-    R.string.musicplayer_exo_download_notification_channel_name,
-    0
-) {
+internal class NewmDownloadService :
+    DownloadService(
+        FOREGROUND_NOTIFICATION_ID,
+        NOTIFICATION_UPDATE_INTERVAL,
+        DOWNLOAD_NOTIFICATION_CHANNEL_ID,
+        R.string.musicplayer_exo_download_notification_channel_name,
+        0,
+    ) {
+    private val exoDownloadManager: DownloadManager by inject()
 
-    private val exoDownloadManager : DownloadManager by inject()
+    override fun getDownloadManager(): DownloadManager = exoDownloadManager
 
-    override fun getDownloadManager(): DownloadManager {
-        return exoDownloadManager
-    }
-
-    override fun getScheduler(): Scheduler {
-        return WorkManagerScheduler(this, WORK_NAME)
-    }
+    override fun getScheduler(): Scheduler = WorkManagerScheduler(this, WORK_NAME)
 
     override fun getForegroundNotification(
         downloads: MutableList<Download>,
-        notMetRequirements: Int
+        notMetRequirements: Int,
     ): Notification {
-        val downloadNotificationHelper = DownloadNotificationHelper(
-            this,
-            DOWNLOAD_NOTIFICATION_CHANNEL_ID
-        )
+        val downloadNotificationHelper =
+            DownloadNotificationHelper(this, DOWNLOAD_NOTIFICATION_CHANNEL_ID)
 
         return downloadNotificationHelper.buildProgressNotification(
             this,
@@ -50,7 +44,7 @@ internal class NewmDownloadService : DownloadService(
             null,
             null,
             downloads,
-            notMetRequirements
+            notMetRequirements,
         )
     }
 }

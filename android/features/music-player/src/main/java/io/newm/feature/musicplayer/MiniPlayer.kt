@@ -54,7 +54,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import io.newm.core.resources.R as CoreR
 
-
 @Composable
 fun MiniPlayer(
     modifier: Modifier = Modifier,
@@ -68,30 +67,32 @@ fun MiniPlayer(
         onPlayPauseClicked = {
             when (playbackStatus.state) {
                 PlaybackState.PLAYING,
-                PlaybackState.BUFFERING -> mediaPlayer.pause()
+                PlaybackState.BUFFERING,
+                -> mediaPlayer.pause()
 
                 PlaybackState.PAUSED,
-                PlaybackState.STOPPED -> mediaPlayer.play()
+                PlaybackState.STOPPED,
+                -> mediaPlayer.play()
             }
         },
         playStatus = playbackStatus,
         onSwipe = { direction ->
             when (direction) {
-                SwipeDirection.LEFT -> mediaPlayer.next()  // Swipe right to next song
-                SwipeDirection.RIGHT -> mediaPlayer.previous()  // Swipe left to previous song
+                SwipeDirection.LEFT -> mediaPlayer.next()
+
+                // Swipe right to next song
+                SwipeDirection.RIGHT -> mediaPlayer.previous() // Swipe left to previous song
             }
         },
     )
-
 }
-
 
 @Composable
 fun MiniPlayer(
     onPlayPauseClicked: () -> Unit,
     playStatus: PlaybackStatus,
     onSwipe: (SwipeDirection) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (playStatus.track == null) return
 
@@ -101,94 +102,88 @@ fun MiniPlayer(
 
     val palette = remember { mutableStateOf<Palette?>(null) }
 
-    val dominantSwatch = remember(palette.value) {
-        palette.value?.dominantSwatch
-    }
+    val dominantSwatch = remember(palette.value) { palette.value?.dominantSwatch }
 
-    val dominantColor = remember(dominantSwatch) {
-        dominantSwatch?.rgb?.let { Color(it) }
-    }
+    val dominantColor = remember(dominantSwatch) { dominantSwatch?.rgb?.let { Color(it) } }
 
-    val titleTextColor = remember(dominantSwatch) {
-        dominantSwatch?.titleTextColor?.let { Color(it) }
-    }
+    val titleTextColor =
+        remember(dominantSwatch) { dominantSwatch?.titleTextColor?.let { Color(it) } }
 
-    val bodyTextColor = remember(dominantSwatch) {
-        dominantSwatch?.bodyTextColor?.let { Color(it) }
-    }
+    val bodyTextColor =
+        remember(dominantSwatch) { dominantSwatch?.bodyTextColor?.let { Color(it) } }
 
-    val animatedDominantColor by animateColorAsState(
-        targetValue = dominantColor ?: MaterialTheme.colors.background,
-        label = "animatedDominantColor",
-        animationSpec = spring(
-            stiffness = StiffnessLow,
+    val animatedDominantColor by
+        animateColorAsState(
+            targetValue = dominantColor ?: MaterialTheme.colors.background,
+            label = "animatedDominantColor",
+            animationSpec = spring(stiffness = StiffnessLow),
         )
-    )
 
-    val animatedTitleTextColor by animateColorAsState(
-        targetValue = titleTextColor ?: Color.Unspecified,
-        label = "animatedTitleTextColor"
-    )
+    val animatedTitleTextColor by
+        animateColorAsState(
+            targetValue = titleTextColor ?: Color.Unspecified,
+            label = "animatedTitleTextColor",
+        )
 
-    val animatedBodyTextColor by animateColorAsState(
-        targetValue = bodyTextColor ?: Color.Unspecified,
-        label = "animatedBodyTextColor"
-    )
+    val animatedBodyTextColor by
+        animateColorAsState(
+            targetValue = bodyTextColor ?: Color.Unspecified,
+            label = "animatedBodyTextColor",
+        )
 
     val coroutineScope = rememberCoroutineScope()
 
-
-    Card(
-        modifier = modifier,
-        elevation = 4.dp,
-        backgroundColor = animatedDominantColor,
-    ) {
-        SwipeableWrapper(
-            onSwipe = onSwipe
-        ) {
+    Card(modifier = modifier, elevation = 4.dp, backgroundColor = animatedDominantColor) {
+        SwipeableWrapper(onSwipe = onSwipe) {
             Column {
                 MusicPlayerSlider(
                     value = playStatus.elapsedFraction,
                     onValueChange = {},
-                    colors = SliderDefaults.colors(
-                        thumbColor = White,
-                        inactiveTrackColor = Color.DarkGray.copy(alpha = 0.7f)
-                    ),
+                    colors =
+                        SliderDefaults.colors(
+                            thumbColor = White,
+                            inactiveTrackColor = Color.DarkGray.copy(alpha = 0.7f),
+                        ),
                     allowScrub = false,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(4.dp)
+                    modifier = Modifier.fillMaxWidth().height(4.dp),
                 )
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 6.dp, horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp, horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     val context = LocalContext.current
                     artworkUrl?.let { url ->
-                        val model = remember(url) {
-                            ImageRequest.Builder(context)
-                                .allowHardware(false)
-                                .data(url)
-                                .build()
-                        }
+                        val model =
+                            remember(url) {
+                                ImageRequest
+                                    .Builder(context)
+                                    .allowHardware(false)
+                                    .data(url)
+                                    .build()
+                            }
 
                         Image(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                                .size(40.dp)
-                                .clip(shape = RoundedCornerShape(size = 4.dp)),
-                            painter = rememberAsyncImagePainter(model = model, onState = {
-                                if (it is AsyncImagePainter.State.Success) {
-                                    coroutineScope.launch(Dispatchers.Default) {
-                                        val image = it.result.image
-                                        val bitmap = image.toBitmap(image.width, image.height)
-                                        palette.value = bitmap.getPalletColors()
-                                    }
-                                }
-                            }),
-                            contentDescription = stringResource(id = CoreR.string.mini_player_artwork_description),
+                            modifier =
+                                Modifier
+                                    .padding(start = 8.dp)
+                                    .size(40.dp)
+                                    .clip(shape = RoundedCornerShape(size = 4.dp)),
+                            painter =
+                                rememberAsyncImagePainter(
+                                    model = model,
+                                    onState = {
+                                        if (it is AsyncImagePainter.State.Success) {
+                                            coroutineScope.launch(Dispatchers.Default) {
+                                                val image = it.result.image
+                                                val bitmap =
+                                                    image.toBitmap(image.width, image.height)
+                                                palette.value = bitmap.getPalletColors()
+                                            }
+                                        }
+                                    },
+                                ),
+                            contentDescription =
+                                stringResource(id = CoreR.string.mini_player_artwork_description),
                             contentScale = ContentScale.FillBounds,
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -198,14 +193,12 @@ fun MiniPlayer(
                         Text(
                             text = songTitle,
                             style = MaterialTheme.typography.body2,
-                            color = animatedTitleTextColor
+                            color = animatedTitleTextColor,
                         )
                         Text(
                             text = artistName,
-                            style = MaterialTheme.typography.body2.copy(
-                                fontSize = 10.sp,
-                            ),
-                            color = animatedBodyTextColor
+                            style = MaterialTheme.typography.body2.copy(fontSize = 10.sp),
+                            color = animatedBodyTextColor,
                         )
                     }
                     Spacer(modifier = Modifier.weight(1f))
@@ -213,18 +206,24 @@ fun MiniPlayer(
                     IconButton(onClick = { onPlayPauseClicked() }) {
                         when (playStatus.state) {
                             PlaybackState.PAUSED,
-                            PlaybackState.STOPPED -> {
+                            PlaybackState.STOPPED,
+                            -> {
                                 Icon(
                                     Icons.Default.PlayArrow,
-                                    contentDescription = stringResource(CoreR.string.mini_player_play_arrow_description),
+                                    contentDescription =
+                                        stringResource(
+                                            CoreR.string.mini_player_play_arrow_description,
+                                        ),
                                 )
                             }
 
                             PlaybackState.PLAYING,
-                            PlaybackState.BUFFERING -> {
+                            PlaybackState.BUFFERING,
+                            -> {
                                 Icon(
                                     Icons.Default.Pause,
-                                    contentDescription = stringResource(CoreR.string.mini_player_pause_description),
+                                    contentDescription =
+                                        stringResource(CoreR.string.mini_player_pause_description),
                                 )
                             }
                         }
@@ -235,21 +234,16 @@ fun MiniPlayer(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewMiniPlayer() {
     MiniPlayer(
-        playStatus = PlaybackStatus.EMPTY.copy(
-            track = Track(
-                id = "1",
-                title = "Song Title",
-                artist = "Artist Name",
-                url = ""
+        playStatus =
+            PlaybackStatus.EMPTY.copy(
+                track = Track(id = "1", title = "Song Title", artist = "Artist Name", url = ""),
+                state = PlaybackState.PLAYING,
             ),
-            state = PlaybackState.PLAYING
-        ),
         onSwipe = {},
-        onPlayPauseClicked = {}
+        onPlayPauseClicked = {},
     )
 }

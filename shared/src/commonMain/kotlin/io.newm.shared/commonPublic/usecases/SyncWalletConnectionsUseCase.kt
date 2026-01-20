@@ -7,14 +7,14 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
- * `SyncWalletConnectionsUseCase` defines the contract for synchronizing wallet connections from the network to the device.
+ * `SyncWalletConnectionsUseCase` defines the contract for synchronizing wallet connections from the
+ * network to the device.
  */
 interface SyncWalletConnectionsUseCase {
-
     /**
-     * Synchronizes wallet connections from the network to the device's database.
-     * This method should be called at least once per app launch or after connecting a wallet
-     * to ensure the database is seeded from the network.
+     * Synchronizes wallet connections from the network to the device's database. This method should
+     * be called at least once per app launch or after connecting a wallet to ensure the database is
+     * seeded from the network.
      *
      * @return A list of [WalletConnection] fetched from the network.
      * @throws KMMException If an application-specific error occurs.
@@ -27,7 +27,5 @@ interface SyncWalletConnectionsUseCase {
 class SyncWalletConnectionsUseCaseProvider : KoinComponent {
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase by inject()
 
-    fun get(): SyncWalletConnectionsUseCase {
-        return this.syncWalletConnectionsUseCase
-    }
+    fun get(): SyncWalletConnectionsUseCase = this.syncWalletConnectionsUseCase
 }

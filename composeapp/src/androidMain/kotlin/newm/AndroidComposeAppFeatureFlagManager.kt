@@ -9,12 +9,12 @@ import com.launchdarkly.sdk.android.LDClient
 import com.launchdarkly.sdk.android.LDConfig
 import com.launchdarkly.sdk.android.LDConfig.Builder.AutoEnvAttributes
 import io.newm.shared.NewmAppLogger
-import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.commonPublic.featureflags.FeatureFlag
 import io.newm.shared.commonPublic.featureflags.FeatureFlagDataSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.commonPublic.featureflags.FlagResult
 import io.newm.shared.commonPublic.models.User
+import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.util.asDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,26 +29,25 @@ class AndroidComposeAppFeatureFlagManager(
     private val application: Application,
     private val sharedBuildConfig: NewmSharedBuildConfig,
     private val log: NewmAppLogger,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
 ) : FeatureFlagDataSource {
-
     private val client: LDClient = buildClient()
 
     // Simple in-memory cache for flag values
     private val flagCache = mutableMapOf<String, Pair<Boolean, Long>>()
     private val cacheTimeout = 30_000L // 30 seconds
-    private val TAG = "AndroidFeatureFlagManager"
+    private val tag = "AndroidFeatureFlagManager"
 
-    private val _flagChanges = MutableSharedFlow<String>(replay = 0, extraBufferCapacity = 64)
+    private val flagChanges = MutableSharedFlow<String>(replay = 0, extraBufferCapacity = 64)
 
     private fun buildClient(): LDClient {
-        val context = LDContext.builder(ContextKind.DEFAULT, "anonymous")
-            .anonymous(true)
-            .build()
+        val context = LDContext.builder(ContextKind.DEFAULT, "anonymous").anonymous(true).build()
 
-        val ldConfig: LDConfig = LDConfig.Builder(AutoEnvAttributes.Enabled)
-            .mobileKey(sharedBuildConfig.launchDarklyKey)
-            .build()
+        val ldConfig: LDConfig =
+            LDConfig
+                .Builder(AutoEnvAttributes.Enabled)
+                .mobileKey(sharedBuildConfig.launchDarklyKey)
+                .build()
 
         val ldClient = LDClient.init(application, ldConfig, context, 0)
         registerFlagListeners(ldClient)
@@ -58,14 +57,12 @@ class AndroidComposeAppFeatureFlagManager(
     private fun registerFlagListeners(client: LDClient) {
         FeatureFlags.ALL_FLAGS.forEach { flag ->
             client.registerFeatureFlagListener(flag.key) {
-                scope.launch {
-                    _flagChanges.emit(flag.key)
-                }
+                scope.launch { flagChanges.emit(flag.key) }
             }
         }
     }
 
-    override fun observeFlagChanges(): Flow<String> = _flagChanges.asSharedFlow()
+    override fun observeFlagChanges(): Flow<String> = flagChanges.asSharedFlow()
 
     override suspend fun getBooleanVariation(featureFlag: FeatureFlag): FlagResult<Boolean> {
         return try {
@@ -77,7 +74,7 @@ class AndroidComposeAppFeatureFlagManager(
                 if (cached != null && (now - cached.second) < cacheTimeout) {
                     log.breadcrumb(
                         "FeatureFlag",
-                        "Cache hit for ${featureFlag.key}: ${cached.first}"
+                        "Cache hit for ${featureFlag.key}: ${cached.first}",
                     )
                     return@withContext FlagResult.Success(cached.first)
                 }
@@ -90,12 +87,15 @@ class AndroidComposeAppFeatureFlagManager(
                 FlagResult.Success(value)
             }
         } catch (e: Exception) {
-            log.error(TAG, "Error getting feature flag ${featureFlag.key}", e)
+            log.error(tag, "Error getting feature flag ${featureFlag.key}", e)
             FlagResult.Error(e, featureFlag.defaultValue)
         }
     }
 
-    private fun getCachedOrFetch(flagKey: String, defaultValue: Boolean): Boolean {
+    private fun getCachedOrFetch(
+        flagKey: String,
+        defaultValue: Boolean,
+    ): Boolean {
         val cached = flagCache[flagKey]
         val now = System.currentTimeMillis()
 
@@ -108,11 +108,10 @@ class AndroidComposeAppFeatureFlagManager(
         }
     }
 
-    override suspend fun identifyUser(user: User): FlagResult<Unit> {
-        return try {
-            val ldContext = LDContext.builder(ContextKind.DEFAULT, user.id)
-                .set("email", user.email)
-                .build()
+    override suspend fun identifyUser(user: User): FlagResult<Unit> =
+        try {
+            val ldContext =
+                LDContext.builder(ContextKind.DEFAULT, user.id).set("email", user.email).build()
 
             withContext(Dispatchers.IO) {
                 client.identify(ldContext).asDeferred().await()
@@ -123,13 +122,12 @@ class AndroidComposeAppFeatureFlagManager(
             log.breadcrumb("FeatureFlag", "User identified and cache cleared: ${user.id}")
             FlagResult.Success(Unit)
         } catch (e: Exception) {
-            log.error(TAG, "Error identifying user ${user.id}", e)
+            log.error(tag, "Error identifying user ${user.id}", e)
             FlagResult.Error(e)
         }
-    }
 
-    override suspend fun getAllVariations(): FlagResult<Map<String, Boolean>> {
-        return try {
+    override suspend fun getAllVariations(): FlagResult<Map<String, Boolean>> =
+        try {
             withContext(Dispatchers.IO) {
                 val flagValues = mutableMapOf<String, Boolean>()
                 val now = System.currentTimeMillis()
@@ -140,7 +138,7 @@ class AndroidComposeAppFeatureFlagManager(
                         flagValues[flag.key] = value
                         flagCache[flag.key] = value to now
                     } catch (e: Exception) {
-                        log.error(TAG, "Error getting flag ${flag.key}", e)
+                        log.error(tag, "Error getting flag ${flag.key}", e)
                         flagValues[flag.key] = flag.defaultValue
                     }
                 }
@@ -148,23 +146,21 @@ class AndroidComposeAppFeatureFlagManager(
                 FlagResult.Success(flagValues)
             }
         } catch (e: Exception) {
-            log.error(TAG, "Error getting all flag variations", e)
+            log.error(tag, "Error getting all flag variations", e)
             val defaultValues = FeatureFlags.ALL_FLAGS.associate { it.key to it.defaultValue }
             FlagResult.Error(e, defaultValues)
         }
-    }
 
-    override suspend fun getRemoteValueDirect(featureFlag: FeatureFlag): FlagResult<Boolean> {
-        return try {
+    override suspend fun getRemoteValueDirect(featureFlag: FeatureFlag): FlagResult<Boolean> =
+        try {
             withContext(Dispatchers.IO) {
                 val value = client.boolVariation(featureFlag.key, featureFlag.defaultValue)
                 FlagResult.Success(value)
             }
         } catch (e: Exception) {
-            log.error(TAG, "Error getting feature flag direct ${featureFlag.key}", e)
+            log.error(tag, "Error getting feature flag direct ${featureFlag.key}", e)
             FlagResult.Error(e, featureFlag.defaultValue)
         }
-    }
 
     override suspend fun getLastSyncTimestamp(): Instant? = null
 

@@ -7,10 +7,10 @@ import org.koin.core.component.inject
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
- * `HasWalletConnectionsUseCase` defines the contract for checking if there are any wallet connections available in the cache.
+ * `HasWalletConnectionsUseCase` defines the contract for checking if there are any wallet
+ * connections available in the cache.
  */
 interface HasWalletConnectionsUseCase {
-
     /**
      * Checks if there are any wallet connections available in the cache.
      *
@@ -35,7 +35,5 @@ interface HasWalletConnectionsUseCase {
 class HasWalletConnectionsUseCaseProvider : KoinComponent {
     private val hasWalletConnectionsUseCase: HasWalletConnectionsUseCase by inject()
 
-    fun get(): HasWalletConnectionsUseCase {
-        return this.hasWalletConnectionsUseCase
-    }
+    fun get(): HasWalletConnectionsUseCase = this.hasWalletConnectionsUseCase
 }

@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class UserDetailsUseCaseImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : UserDetailsUseCase {
-
     @Throws(KMMException::class, CancellationException::class)
     override suspend fun fetchLoggedInUserDetails(): User {
         return mapErrorsSuspend {
@@ -19,13 +18,10 @@ internal class UserDetailsUseCaseImpl(
         }
     }
 
-    override fun fetchLoggedInUserDetailsFlow(): Flow<User?> {
-        return userRepository.fetchUserDetailsFlow()
-    }
+    override fun fetchLoggedInUserDetailsFlow(): Flow<User?> = userRepository.fetchUserDetailsFlow()
 
-    override suspend fun updateUserDetails(user: User) {
-        return mapErrorsSuspend {
+    override suspend fun updateUserDetails(user: User) =
+        mapErrorsSuspend {
             userRepository.updateUserDetails(user)
         }
-    }
 }

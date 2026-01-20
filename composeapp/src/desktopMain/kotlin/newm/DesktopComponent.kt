@@ -13,26 +13,21 @@ import me.tatarka.inject.annotations.Provides
 import kotlin.time.Instant
 
 /**
- * Desktop-specific dependency injection component.
- * Provides platform-specific implementations for the desktop (JVM) target.
+ * Desktop-specific dependency injection component. Provides platform-specific implementations for
+ * the desktop (JVM) target.
  */
 interface DesktopComponent {
-
     @Provides
-    fun providesFeatureFlagDataSource(): FeatureFlagDataSource {
-        return DesktopFeatureFlagManager()
-    }
+    fun providesFeatureFlagDataSource(): FeatureFlagDataSource = DesktopFeatureFlagManager()
 }
 
 /**
- * Desktop implementation of FeatureFlagDataSource.
- * Returns default feature flag values for the desktop platform.
+ * Desktop implementation of FeatureFlagDataSource. Returns default feature flag values for the
+ * desktop platform.
  *
- * Note: Desktop doesn't have LaunchDarkly integration yet.
- * All flags return their default values.
+ * Note: Desktop doesn't have LaunchDarkly integration yet. All flags return their default values.
  */
 class DesktopFeatureFlagManager : FeatureFlagDataSource {
-
     override suspend fun getBooleanVariation(featureFlag: FeatureFlag): FlagResult<Boolean> {
         // For desktop, return default values
         return FlagResult.Success(featureFlag.defaultValue)

@@ -7,16 +7,13 @@ import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 
 internal class UserSessionUseCaseImpl(
-    private val tokenManager: TokenManager
-    ) : KoinComponent, UserSessionUseCase {
+    private val tokenManager: TokenManager,
+) : KoinComponent,
+    UserSessionUseCase {
+    override suspend fun isLoggedIn(): Boolean = tokenManager.getAccessToken()?.isEmpty()?.not() == true
 
-    override suspend fun isLoggedIn(): Boolean {
-        return tokenManager.getAccessToken()?.isEmpty()?.not() == true
-    }
-
-    override fun isLoggedInFlow(): Flow<Boolean> {
-        return flow {
+    override fun isLoggedInFlow(): Flow<Boolean> =
+        flow {
             emit(tokenManager.getAccessToken()?.isNotEmpty() == true)
         }
-    }
 }

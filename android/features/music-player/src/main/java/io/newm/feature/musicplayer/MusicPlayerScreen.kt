@@ -41,6 +41,6 @@ fun MusicPlayerScreen(
                     SwipeDirection.RIGHT -> previous()
                 }
             }
-        }
+        },
     )
 }

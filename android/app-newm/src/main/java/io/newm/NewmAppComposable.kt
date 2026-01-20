@@ -68,6 +68,9 @@ import io.newm.screens.Screen
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.sharedfeatures.devmenu.DebugOverlay
+import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -82,13 +85,13 @@ private val MarketIconGradient = iconGradient(BrightOrange, YellowJacket)
 
 val LocalIsBottomBarVisible = compositionLocalOf { mutableStateOf(true) }
 
-@Composable
-internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
+@Composable internal fun isBottomBarVisible() = remember { mutableStateOf(true) }
 
 private val initialScreen = Screen.NFTLibrary
 
 @Composable
 internal fun NewmApp(
+    config: NewmSharedBuildConfig,
     logger: NewmAppLogger,
     eventLogger: NewmAppEventLogger,
     showRecordStore: Boolean,
@@ -97,104 +100,110 @@ internal fun NewmApp(
     val context = LocalContext.current
     val backstack = rememberSaveableBackStack(initialScreen)
 
-    val circuitNavigator = rememberCircuitNavigator(
-        backstack,
-        enableBackHandler = false
-    )
+    val circuitNavigator = rememberCircuitNavigator(backstack, enableBackHandler = false)
 
-    val newmNavigator = rememberNewmNavigator(
-        circuitNavigator = circuitNavigator,
-        logger = logger,
-        launchBrowser = { url ->
-            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-        },
-        eventLogger = eventLogger
-    )
+    val newmNavigator =
+        rememberNewmNavigator(
+            circuitNavigator = circuitNavigator,
+            logger = logger,
+            launchBrowser = { url ->
+                context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+            },
+            eventLogger = eventLogger,
+        )
 
     val currentRootScreen = backstack.topRecord?.screen
     val currentNewmScreen = currentRootScreen as? Screen
 
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
+    val sheetState =
+        rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true,
+        )
 
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler(
-        enabled = backstack.size > 1 || currentNewmScreen != initialScreen || sheetState.isVisible
+        enabled = backstack.size > 1 || currentNewmScreen != initialScreen || sheetState.isVisible,
     ) {
         when {
-            sheetState.isVisible -> coroutineScope.launch { sheetState.hide() }
-            backstack.size > 1 -> newmNavigator.pop()
-            currentNewmScreen != initialScreen && currentNewmScreen != null -> newmNavigator.resetRoot(initialScreen)
+            sheetState.isVisible -> {
+                coroutineScope.launch { sheetState.hide() }
+            }
+
+            backstack.size > 1 -> {
+                newmNavigator.pop()
+            }
+
+            currentNewmScreen != initialScreen && currentNewmScreen != null -> {
+                newmNavigator.resetRoot(initialScreen)
+            }
         }
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    ModalBottomSheetLayout(
-        modifier = Modifier,
-        sheetState = sheetState,
-        sheetContent = {
-            MusicPlayerScreen(
-                onNavigateUp = {
-                    coroutineScope.launch {
-                        sheetState.hide()
-                    }
-                }
-            )
-        },
+    DebugOverlay(
+        buildConfig = config,
+        onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) },
     ) {
-        Scaffold(
-            bottomBar = {
-                AnimatedVisibility(
-                    visible = LocalIsBottomBarVisible.current.value,
-                    enter = slideInVertically(initialOffsetY = { it }),
-                    exit = ExitTransition.None
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
+        ModalBottomSheetLayout(
+            modifier = Modifier,
+            sheetState = sheetState,
+            sheetContent = {
+                MusicPlayerScreen(onNavigateUp = { coroutineScope.launch { sheetState.hide() } })
+            },
+        ) {
+            Scaffold(
+                bottomBar = {
+                    AnimatedVisibility(
+                        visible = LocalIsBottomBarVisible.current.value,
+                        enter = slideInVertically(initialOffsetY = { it }),
+                        exit = ExitTransition.None,
                     ) {
-                        if (currentNewmScreen?.showMiniPlayer == true) {
-                            MiniPlayer(
-                                modifier = Modifier.clickable {
-                                    coroutineScope.launch {
-                                        eventLogger.logPageLoad(AppScreens.MusicPlayerScreen.name)
-                                        sheetState.show()
-                                    }
-                                }
-                            )
-                            Spacer(
-                                modifier = Modifier
-                                    .height(2.dp)
-                                    .fillMaxWidth()
-                                    .background(MaterialTheme.colors.surface)
-                            )
-                        }
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            if (currentNewmScreen?.showMiniPlayer == true) {
+                                MiniPlayer(
+                                    modifier =
+                                        Modifier.clickable {
+                                            coroutineScope.launch {
+                                                eventLogger.logPageLoad(
+                                                    AppScreens.MusicPlayerScreen.name,
+                                                )
+                                                sheetState.show()
+                                            }
+                                        },
+                                )
+                                Spacer(
+                                    modifier =
+                                        Modifier
+                                            .height(2.dp)
+                                            .fillMaxWidth()
+                                            .background(MaterialTheme.colors.surface),
+                                )
+                            }
 
-                        if (currentNewmScreen?.showBottomBar == true) {
-                            NewmBottomNavigation(
-                                currentRootScreen = currentNewmScreen,
-                                eventLogger = eventLogger,
-                                showRecordStore = showRecordStore,
-                                showInvestmentPortfolio = showInvestmentPortfolio,
-                                onNavigationSelected = {
-                                    circuitNavigator.resetRoot(it)
-                                }
-                            )
+                            if (currentNewmScreen?.showBottomBar == true) {
+                                NewmBottomNavigation(
+                                    currentRootScreen = currentNewmScreen,
+                                    eventLogger = eventLogger,
+                                    showRecordStore = showRecordStore,
+                                    showInvestmentPortfolio = showInvestmentPortfolio,
+                                    onNavigationSelected = { circuitNavigator.resetRoot(it) },
+                                )
+                            }
                         }
                     }
+                },
+                scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState),
+            ) { padding ->
+                CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
+                    NavigableCircuitContent(
+                        modifier = Modifier.padding(padding),
+                        navigator = newmNavigator,
+                        backStack = backstack,
+                    )
                 }
-            },
-            scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
-        ) { padding ->
-            CompositionLocalProvider(LocalSnackBarHostState provides snackbarHostState) {
-                NavigableCircuitContent(
-                    modifier = Modifier.padding(padding),
-                    navigator = newmNavigator,
-                    backStack = backstack
-                )
             }
         }
     }
@@ -206,15 +215,13 @@ internal fun NewmBottomNavigation(
     eventLogger: NewmAppEventLogger,
     showRecordStore: Boolean,
     showInvestmentPortfolio: Boolean,
-    onNavigationSelected: (Screen) -> Unit
+    onNavigationSelected: (Screen) -> Unit,
 ) {
     Column(Modifier.height(76.dp)) {
         BottomNavigation(
-            modifier = Modifier
-                .fillMaxHeight()
-                .testTag(TAG_BOTTOM_NAVIGATION),
+            modifier = Modifier.fillMaxHeight().testTag(TAG_BOTTOM_NAVIGATION),
             backgroundColor = Black,
-            contentColor = Gray100
+            contentColor = Gray100,
         ) {
             HomeBottomNavigationItem(
                 selected = currentRootScreen == Screen.NFTLibrary,
@@ -235,7 +242,9 @@ internal fun NewmBottomNavigation(
                     selectedIconBrush = AccountIconGradient,
                     selectedLabelColor = DarkPink,
                     onClick = {
-                        eventLogger.logClickEvent(AppScreens.InvestmentPortfolioScreen.RECORD_STORE_BUTTON)
+                        eventLogger.logClickEvent(
+                            AppScreens.InvestmentPortfolioScreen.RECORD_STORE_BUTTON,
+                        )
                         eventLogger.logPageLoad(AppScreens.InvestmentPortfolioScreen.name)
                         onNavigationSelected(Screen.InvestmentPortfolio)
                     },
@@ -288,12 +297,15 @@ internal fun NewmBottomNavigation(
 @Composable
 fun BottomNavigationBarPreview() {
     NewmBottomNavigation(
-        Screen.NFTLibrary, NewmAppEventLogger(),
-        showRecordStore = false, showInvestmentPortfolio = false
+        Screen.NFTLibrary,
+        NewmAppEventLogger(),
+        showRecordStore = false,
+        showInvestmentPortfolio = false,
     ) {}
 }
 
-// Based on content from: https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
+// Based on content from:
+// https://github.com/wlara/android-next-gen/blob/main/app/src/main/java/com/github/wlara/nextgen/ui/home/HomeScreen.kt
 @Composable
 private fun RowScope.HomeBottomNavigationItem(
     selected: Boolean,
@@ -307,13 +319,12 @@ private fun RowScope.HomeBottomNavigationItem(
     BottomNavigationItem(
         icon = {
             Icon(
-                modifier = if (selected) {
-                    Modifier
-                        .align(Alignment.CenterVertically)
-                        .drawWithBrush(selectedIconBrush)
-                } else {
-                    Modifier.align(Alignment.CenterVertically)
-                },
+                modifier =
+                    if (selected) {
+                        Modifier.align(Alignment.CenterVertically).drawWithBrush(selectedIconBrush)
+                    } else {
+                        Modifier.align(Alignment.CenterVertically)
+                    },
                 painter = painterResource(id = iconResId),
                 contentDescription = label,
             )
@@ -325,10 +336,10 @@ private fun RowScope.HomeBottomNavigationItem(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 9.sp,
                 maxLines = 1,
-                color = if (selected) selectedLabelColor else Color.Unspecified
+                color = if (selected) selectedLabelColor else Color.Unspecified,
             )
         },
         selected = selected,
-        onClick = onClick
+        onClick = onClick,
     )
 }

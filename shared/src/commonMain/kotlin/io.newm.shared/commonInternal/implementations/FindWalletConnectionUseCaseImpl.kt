@@ -10,12 +10,12 @@ import org.koin.core.component.KoinComponent
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class FindWalletConnectionUseCaseImpl(
-    private val walletRepository: WalletRepository
-) : FindWalletConnectionUseCase, KoinComponent {
+    private val walletRepository: WalletRepository,
+) : FindWalletConnectionUseCase,
+    KoinComponent {
     @Throws(KMMException::class, CancellationException::class)
-    override fun findWalletConnectionByIDFromCacheFlow(id: String): Flow<WalletConnection?> {
-        return mapErrors {
+    override fun findWalletConnectionByIDFromCacheFlow(id: String): Flow<WalletConnection?> =
+        mapErrors {
             walletRepository.findWalletConnectionByID(id)
         }
-    }
 }

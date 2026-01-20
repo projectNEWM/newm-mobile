@@ -8,8 +8,8 @@ import io.newm.shared.commonPublic.models.NFTTrack
 import kotlinx.coroutines.flow.Flow
 
 class NFTCacheService(
-    private val db: NewmDatabaseWrapper
-)  {
+    private val db: NewmDatabaseWrapper,
+) {
     fun getAllTracks(): Flow<List<NFTTrack>> = db.getAllTracks()
 
     fun cacheNFTTracks(nfts: List<NFTTrack>) = db.cacheNFTTracks(nfts)

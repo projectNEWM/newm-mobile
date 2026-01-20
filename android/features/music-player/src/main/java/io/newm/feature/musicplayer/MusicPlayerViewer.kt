@@ -73,13 +73,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val playbackTimeStyle @Composable get() = TextStyle(
-    fontSize = 12.sp,
-    fontFamily = inter,
-    fontWeight = FontWeight.Normal,
-    color = GraySuit
-)
-
+private val playbackTimeStyle
+    @Composable
+    get() =
+        TextStyle(
+            fontSize = 12.sp,
+            fontFamily = inter,
+            fontWeight = FontWeight.Normal,
+            color = GraySuit,
+        )
 
 internal val MusicPlayerBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink))
 
@@ -94,28 +96,26 @@ internal fun MusicPlayerViewer(
     val song: Track = remember(playbackStatus) { playbackStatus.track } ?: return
     var palette by remember { mutableStateOf<Palette?>(null) }
     val dominantColor = remember(palette) { palette?.dominantColor ?: Black }
-    val animatedColor by animateColorAsState(
-        dominantColor,
-        label = "",
-        animationSpec = spring(stiffness = StiffnessLow)
-    )
+    val animatedColor by
+        animateColorAsState(
+            dominantColor,
+            label = "",
+            animationSpec = spring(stiffness = StiffnessLow),
+        )
 
     val context = LocalContext.current
-    Box(
-        modifier = modifier.background(animatedColor),
-    ) {
+    Box(modifier = modifier.background(animatedColor)) {
         val coroutineScope = rememberCoroutineScope()
-        SwipeableWrapper(
-            modifier = Modifier.align(Alignment.Center),
-            onSwipe = onSwipe
-        ) {
-            val imageModel = remember(song.artworkUri) {
-                ImageRequest.Builder(context)
-                    .data(song.artworkUri)
-                    .error(R.drawable.ic_default_track_cover_art)
-                    .allowHardware(false) // Disable hardware bitmaps.
-                    .build()
-            }
+        SwipeableWrapper(modifier = Modifier.align(Alignment.Center), onSwipe = onSwipe) {
+            val imageModel =
+                remember(song.artworkUri) {
+                    ImageRequest
+                        .Builder(context)
+                        .data(song.artworkUri)
+                        .error(R.drawable.ic_default_track_cover_art)
+                        .allowHardware(false) // Disable hardware bitmaps.
+                        .build()
+                }
 
             ZoomableImage(
                 modifier = Modifier.align(Alignment.Center),
@@ -134,69 +134,61 @@ internal fun MusicPlayerViewer(
 
                         else -> {}
                     }
-                }
+                },
             )
         }
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding()
-                .padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize().safeDrawingPadding().padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 val buttonModifier =
-                    Modifier
-                        .clip(CircleShape)
-                        .background(Color.Black.copy(alpha = 0.4f))
+                    Modifier.clip(CircleShape).background(Color.Black.copy(alpha = 0.4f))
 
-                IconButton(
-                    modifier = buttonModifier,
-                    onClick = onNavigateUp
-                ) {
+                IconButton(modifier = buttonModifier, onClick = onNavigateUp) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_down),
                         contentDescription = stringResource(R.string.back_description),
-                        tint = White
+                        tint = White,
                     )
                 }
 
                 ShareButton(
                     modifier = buttonModifier,
                     songTitle = playbackStatus.track?.title,
-                    songArtist = playbackStatus.track?.artist
+                    songArtist = playbackStatus.track?.artist,
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = song.title,
                 color = White,
-                style = LocalTextStyle.current.copy(
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 32.sp,
-                    lineBreak = LineBreak.Heading,
-                    shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 3f)),
-                )
+                style =
+                    LocalTextStyle.current.copy(
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
+                        lineHeight = 32.sp,
+                        lineBreak = LineBreak.Heading,
+                        shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 3f)),
+                    ),
             )
             Text(
                 text = song.artist,
                 modifier = Modifier.padding(top = 4.dp, bottom = 28.dp),
-                style = LocalTextStyle.current.copy(
-                    color = White,
-                    fontFamily = inter,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 0f)),
-                )
+                style =
+                    LocalTextStyle.current.copy(
+                        color = White,
+                        fontFamily = inter,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 0f)),
+                    ),
             )
             MusicPlayerControls(playbackStatus, onEvent)
             Spacer(modifier = Modifier.height(16.dp))
@@ -207,31 +199,26 @@ internal fun MusicPlayerViewer(
 @Composable
 private fun MusicPlayerControls(
     playbackStatus: PlaybackStatus,
-    onEvent: (PlaybackUiEvent) -> Unit
+    onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     Box {
-        PlaybackControlPanel(
-            playbackStatus = playbackStatus,
-            onEvent = onEvent
-        )
+        PlaybackControlPanel(playbackStatus = playbackStatus, onEvent = onEvent)
         if (playbackStatus.duration != null) {
             MusicPlayerSlider(
                 value = playbackStatus.elapsedFraction,
-                onValueChange = { onEvent(PlaybackUiEvent.Seek((it * playbackStatus.duration.inWholeMilliseconds).toLong())) },
-                colors = SliderDefaults.colors(
-                    thumbColor = White,
-                    inactiveTrackColor = Gray500
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp)
-                    .height(4.dp)
-
+                onValueChange = {
+                    onEvent(
+                        PlaybackUiEvent.Seek(
+                            (it * playbackStatus.duration.inWholeMilliseconds).toLong(),
+                        ),
+                    )
+                },
+                colors = SliderDefaults.colors(thumbColor = White, inactiveTrackColor = Gray500),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp).height(4.dp),
             )
         }
     }
 }
-
 
 @Composable
 fun PlaybackControlPanel(
@@ -239,60 +226,53 @@ fun PlaybackControlPanel(
     onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .height(102.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding()
-            .clip(
-                shape = RoundedCornerShape(
-                    bottomEnd = 8.dp,
-                    bottomStart = 8.dp
-                )
-            )
+        modifier =
+            Modifier
+                .height(102.dp)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding()
+                .clip(shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)),
     ) {
-        Column(
-            modifier = Modifier
-                .background(Black)
-                .fillMaxSize()
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .padding(top = 8.dp)
-            ) {
+        Column(modifier = Modifier.background(Black).fillMaxSize()) {
+            Row(modifier = Modifier.padding(horizontal = 12.dp).padding(top = 8.dp)) {
                 Text(
                     text = playbackStatus.position.millisToMinutesSecondsString(),
-                    style = playbackTimeStyle
+                    style = playbackTimeStyle,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = if (playbackStatus.duration == null) {
-                        "-:--"
-                    } else {
-                        playbackStatus.duration.inWholeMilliseconds.millisToMinutesSecondsString()
-                    },
-                    style = playbackTimeStyle
+                    text =
+                        if (playbackStatus.duration == null) {
+                            "-:--"
+                        } else {
+                            playbackStatus.duration.inWholeMilliseconds
+                                .millisToMinutesSecondsString()
+                        },
+                    style = playbackTimeStyle,
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.padding(12.dp)) {
                 RepeatButton(
                     playbackStatus.repeatMode,
-                    onClick = { onEvent(PlaybackUiEvent.Repeat) })
+                    onClick = { onEvent(PlaybackUiEvent.Repeat) },
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 PreviousTrackButton(
                     modifier = Modifier.padding(horizontal = 12.dp),
-                    onClick = { onEvent(PlaybackUiEvent.Previous) })
+                    onClick = { onEvent(PlaybackUiEvent.Previous) },
+                )
                 PlayOrPauseButton(playbackStatus = playbackStatus, onEvent = onEvent)
                 NextTrackButton(
                     modifier = Modifier.padding(horizontal = 12.dp),
-                    onClick = { onEvent(PlaybackUiEvent.Next) })
+                    onClick = { onEvent(PlaybackUiEvent.Next) },
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 ShuffleButton(
                     enabled = playbackStatus.state == PlaybackState.PLAYING,
                     shuffleMode = playbackStatus.shuffleMode,
-                    onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) }
+                    onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) },
                 )
             }
         }
@@ -303,20 +283,18 @@ fun PlaybackControlPanel(
 fun ShuffleButton(
     onClick: () -> Unit,
     shuffleMode: Boolean,
-    enabled: Boolean
+    enabled: Boolean,
 ) {
-    IconButton(
-        onClick = onClick,
-        enabled = enabled
-    ) {
+    IconButton(onClick = onClick, enabled = enabled) {
         Icon(
             painter = painterResource(R.drawable.ic_music_player_shuffle),
             contentDescription = stringResource(R.string.music_player_shuffle_description),
-            tint = when {
-                enabled.not() -> Gray500
-                shuffleMode -> DarkViolet
-                else -> White
-            }
+            tint =
+                when {
+                    enabled.not() -> Gray500
+                    shuffleMode -> DarkViolet
+                    else -> White
+                },
         )
     }
 }
@@ -324,23 +302,19 @@ fun ShuffleButton(
 @Composable
 private fun PlayOrPauseButton(
     playbackStatus: PlaybackStatus,
-    onEvent: (PlaybackUiEvent) -> Unit
+    onEvent: (PlaybackUiEvent) -> Unit,
 ) {
     when (playbackStatus.state) {
-        PlaybackState.PLAYING, PlaybackState.BUFFERING -> {
-            PauseButton(onClick = {
-                onEvent(
-                    PlaybackUiEvent.Pause
-                )
-            })
+        PlaybackState.PLAYING,
+        PlaybackState.BUFFERING,
+        -> {
+            PauseButton(onClick = { onEvent(PlaybackUiEvent.Pause) })
         }
 
-        PlaybackState.PAUSED, PlaybackState.STOPPED -> {
-            PlayButton(onClick = {
-                onEvent(
-                    PlaybackUiEvent.Play
-                )
-            })
+        PlaybackState.PAUSED,
+        PlaybackState.STOPPED,
+        -> {
+            PlayButton(onClick = { onEvent(PlaybackUiEvent.Play) })
         }
     }
 }
@@ -348,56 +322,58 @@ private fun PlayOrPauseButton(
 @Composable
 private fun PreviousTrackButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    IconButton(
-        modifier = modifier,
-        onClick = onClick
-    ) {
+    IconButton(modifier = modifier, onClick = onClick) {
         Icon(
             painter = painterResource(id = R.drawable.ic_prev_track_default),
             contentDescription = stringResource(R.string.music_player_prev_track_description),
-            tint = Color.White
+            tint = Color.White,
         )
     }
 }
 
 @Composable
-private fun PlayButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    IconButton(
-        modifier = modifier,
-        onClick = onClick
-    ) {
+private fun PlayButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(modifier = modifier, onClick = onClick) {
         Icon(
             painter = painterResource(id = R.drawable.ic_play),
             contentDescription = stringResource(R.string.music_player_play_description),
-            modifier = Modifier.drawWithBrush(MusicPlayerBrush)
+            modifier = Modifier.drawWithBrush(MusicPlayerBrush),
         )
     }
 }
 
 @Composable
-fun PauseButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun PauseButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     IconButton(modifier = modifier, onClick = onClick) {
         Icon(
             painter = painterResource(id = R.drawable.ic_pause),
             contentDescription = stringResource(R.string.music_player_pause_description),
-            modifier = Modifier.drawWithBrush(MusicPlayerBrush)
+            modifier = Modifier.drawWithBrush(MusicPlayerBrush),
         )
     }
 }
 
 @Composable
-fun NextTrackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun NextTrackButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     IconButton(modifier = modifier, onClick = onClick) {
         Icon(
             painter = painterResource(id = R.drawable.ic_next_track_default),
             contentDescription = stringResource(R.string.music_player_next_track_description),
-            tint = Color.White
+            tint = Color.White,
         )
     }
 }
-
 
 @Composable
 fun RepeatButton(
@@ -405,16 +381,17 @@ fun RepeatButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val imageRes = when (repeatMode) {
-        PlaybackRepeatMode.REPEAT_OFF -> R.drawable.ic_repeat_off
-        PlaybackRepeatMode.REPEAT_ONE -> R.drawable.ic_music_player_repeat_one
-        PlaybackRepeatMode.REPEAT_ALL -> R.drawable.ic_music_player_repeat_all
-    }
+    val imageRes =
+        when (repeatMode) {
+            PlaybackRepeatMode.REPEAT_OFF -> R.drawable.ic_repeat_off
+            PlaybackRepeatMode.REPEAT_ONE -> R.drawable.ic_music_player_repeat_one
+            PlaybackRepeatMode.REPEAT_ALL -> R.drawable.ic_music_player_repeat_all
+        }
     IconButton(modifier = modifier, onClick = onClick) {
         Icon(
             painter = painterResource(id = imageRes),
             contentDescription = stringResource(R.string.music_player_repeat_description),
-            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) White else DarkViolet
+            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) White else DarkViolet,
         )
     }
 }
@@ -430,4 +407,3 @@ suspend fun Bitmap.getPalletColors(): Palette =
         val palette = Palette.from(this@getPalletColors).generate()
         palette
     }
-

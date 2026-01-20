@@ -1,3 +1,8 @@
 package io.newm.sharedfeatures.welcome
 
-expect class SocialLoginManagerImpl : SocialLoginManager
+import androidx.compose.runtime.Composable
+
+expect class SocialLoginManagerImpl : SocialLoginManager {
+    @Composable
+    override fun rememberGoogleSignInLauncher(onResult: (GoogleSignInResult) -> Unit): () -> Unit
+}

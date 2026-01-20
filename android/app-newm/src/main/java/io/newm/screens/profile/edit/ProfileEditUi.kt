@@ -61,15 +61,15 @@ internal const val TAG_PROFILE_SCREEN = "TAG_PROFILE_SCREEN"
 @Composable
 fun ProfileEditUi(
     modifier: Modifier,
-    state: ProfileEditUiState
+    state: ProfileEditUiState,
 ) {
     when (state) {
-        Loading -> LoadingScreen()
+        Loading -> {
+            LoadingScreen()
+        }
+
         is Content -> {
-            ProfileEditUiContent(
-                modifier = modifier,
-                state = state,
-            )
+            ProfileEditUiContent(modifier = modifier, state = state)
         }
     }
 }
@@ -93,22 +93,23 @@ private fun ProfileEditUiContent(
         onLogout = { onEvent(OnLogout) },
         onShowTermsAndConditions = { onEvent(OnShowTermsAndConditions) },
         onShowPrivacyPolicy = { onEvent(OnShowPrivacyPolicy) },
-        onBottomSheetVisible = { onEvent(OnBottomSheetVisible)}
+        onBottomSheetVisible = { onEvent(OnBottomSheetVisible) },
     ) {
         Column(
-            modifier = Modifier
-                .imePadding()
-                .fillMaxSize()
-                .verticalScroll(state = rememberScrollState())
-                .testTag(TAG_PROFILE_SCREEN),
-            verticalArrangement = Arrangement.Top
+            modifier =
+                Modifier
+                    .imePadding()
+                    .fillMaxSize()
+                    .verticalScroll(state = rememberScrollState())
+                    .testTag(TAG_PROFILE_SCREEN),
+            verticalArrangement = Arrangement.Top,
         ) {
             ProfileAppBar(
                 bannerUrl = profile.bannerUrl,
                 avatarUrl = state.avatarUrl,
                 onOverflowTapped = { scope.launch { bottomSheetState.show() } },
                 onNavigationClick = { onEvent(OnBack) },
-                onAvatarClick = { scope.launch { profilePictureSheetState.show() } }
+                onAvatarClick = { scope.launch { profilePictureSheetState.show() } },
             )
             ProfileHeader(
                 firstName = profile.firstName,
@@ -130,12 +131,12 @@ private fun ProfileEditUiContent(
                 Text(
                     text = state.errorMessage.orEmpty(),
                     color = Color.Red,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp),
                 )
             }
             PrimaryButton(
                 enabled = state.submitButtonEnabled,
-                labelResId =  R.string.profile_save_button_label,
+                labelResId = R.string.profile_save_button_label,
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onClick = { onEvent(OnSaveProfile) },
                 iconResId = R.drawable.ic_library_filter_check,
@@ -156,20 +157,14 @@ private fun ProfileEditUiContent(
                 profilePictureSheetState.hide()
                 onEvent(OnRemoveProfilePicture)
             }
-        }
+        },
     )
     CMPImagePickNCropDialog(
         openImagePicker = openImagePicker,
         autoZoom = true,
-        imagePickerDialogHandler = {
-            openImagePicker = it
-        },
-        selectedImageCallback = {
-            onEvent(OnReplaceProfilePicture(it))
-        },
-        selectedImageFileCallback = {
-            onEvent(OnRemoveProfilePicture)
-        },
+        imagePickerDialogHandler = { openImagePicker = it },
+        selectedImageCallback = { onEvent(OnReplaceProfilePicture(it)) },
+        selectedImageFileCallback = { onEvent(OnRemoveProfilePicture) },
     )
 }
 
@@ -178,45 +173,37 @@ fun ScrimCircle(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Box(
-        modifier = modifier
-            .background(
-                Color.Black.copy(alpha = 0.25f),
-                shape = CircleShape
-            )
-    ) {
+    Box(modifier = modifier.background(Color.Black.copy(alpha = 0.25f), shape = CircleShape)) {
         content()
     }
 }
 
-
 @Preview
 @Composable
 private fun ProfileScreenPreview() {
-    NewmTheme(
-        darkTheme = true
-    ) {
+    NewmTheme(darkTheme = true) {
         ProfileEditUiContent(
-            state = Content(
-                profile = mockUsers.first().toProfile(),
-                avatarUrl = "",
-                submitButtonEnabled = true,
-                showConnectWallet = true,
-                canUserEditName = true,
-                firstName = TextFieldState(),
-                lastName = TextFieldState(),
-                currentPasswordState = TextFieldState(),
-                newPasswordState = TextFieldState(),
-                confirmPasswordState = TextFieldState(),
-                errorMessage = null,
-                eventSink = {},
-            ),
+            state =
+                Content(
+                    profile = mockUsers.first().toProfile(),
+                    avatarUrl = "",
+                    submitButtonEnabled = true,
+                    showConnectWallet = true,
+                    canUserEditName = true,
+                    firstName = TextFieldState(),
+                    lastName = TextFieldState(),
+                    currentPasswordState = TextFieldState(),
+                    newPasswordState = TextFieldState(),
+                    confirmPasswordState = TextFieldState(),
+                    errorMessage = null,
+                    eventSink = {},
+                ),
         )
     }
 }
 
-private fun User.toProfile(): Content.Profile {
-    return Content.Profile(
+private fun User.toProfile(): Content.Profile =
+    Content.Profile(
         email = email.orEmpty(),
         firstName = firstName.orEmpty(),
         lastName = lastName.orEmpty(),
@@ -224,4 +211,3 @@ private fun User.toProfile(): Content.Profile {
         pictureUrl = pictureUrl.orEmpty(),
         bannerUrl = bannerUrl.orEmpty(),
     )
-}

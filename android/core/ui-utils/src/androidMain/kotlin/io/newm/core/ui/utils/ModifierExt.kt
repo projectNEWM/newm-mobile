@@ -7,17 +7,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 
-fun Modifier.drawWithBrush(brush: Brush, blendMode: BlendMode = BlendMode.SrcAtop): Modifier {
-    return graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-        .drawWithCache {
-            onDrawWithContent {
-                drawContent()
-                drawRect(brush = brush, blendMode = blendMode)
-            }
+fun Modifier.drawWithBrush(
+    brush: Brush,
+    blendMode: BlendMode = BlendMode.SrcAtop,
+): Modifier =
+    graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen).drawWithCache {
+        onDrawWithContent {
+            drawContent()
+            drawRect(brush = brush, blendMode = blendMode)
         }
-}
-
-
-
-
-
+    }

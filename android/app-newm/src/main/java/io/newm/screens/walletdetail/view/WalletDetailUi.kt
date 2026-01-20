@@ -44,7 +44,10 @@ import io.newm.screens.walletdetail.WalletDetailUiState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun WalletDetailUi(modifier: Modifier = Modifier, state: WalletDetailUiState) {
+fun WalletDetailUi(
+    modifier: Modifier = Modifier,
+    state: WalletDetailUiState,
+) {
     Scaffold(
         modifier = modifier.then(Modifier.fillMaxSize()),
         topBar = {
@@ -52,33 +55,35 @@ fun WalletDetailUi(modifier: Modifier = Modifier, state: WalletDetailUiState) {
                 windowInsets = WindowInsets.statusBars,
                 backgroundColor = Color.Transparent,
                 title = { WalletDetailTitle(state.walletName) },
-                navigationIcon = { WalletDetailBackNav { state.eventSink(WalletDetailEvent.OnBack) } }
+                navigationIcon = {
+                    WalletDetailBackNav { state.eventSink(WalletDetailEvent.OnBack) }
+                },
             )
-        }
+        },
     ) { padding ->
-        val pullRefreshState = rememberPullRefreshState(
-            refreshing = state.isSyncing,
-            onRefresh = { state.eventSink(WalletDetailEvent.OnRefresh) }
-        )
+        val pullRefreshState =
+            rememberPullRefreshState(
+                refreshing = state.isSyncing,
+                onRefresh = { state.eventSink(WalletDetailEvent.OnRefresh) },
+            )
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .pullRefresh(pullRefreshState),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxSize().padding(padding).pullRefresh(pullRefreshState),
+            contentAlignment = Alignment.Center,
         ) {
-
             when (state) {
-                is WalletDetailUiState.Error -> Text(text = "ERROR") // todo need real error screen
+                is WalletDetailUiState.Error -> Text(text = "ERROR")
+
+                // todo need real error screen
                 is WalletDetailUiState.Loading -> CircularProgressIndicator()
+
                 is WalletDetailUiState.Content -> ContentWrapper(state)
             }
 
             PullRefreshIndicator(
                 state = pullRefreshState,
                 refreshing = state.isSyncing,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter),
             )
         }
     }
@@ -91,11 +96,9 @@ private fun ContentWrapper(state: WalletDetailUiState.Content) {
     var streamExpanded by remember { mutableStateOf(true) }
     var streamHeaderShape by remember { mutableStateOf(HeaderExpandedShape) }
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
     ) {
         addressItem(state.walletConnection.stakeAddress)
         tokenItem(state.claimableTokenAmount)
@@ -109,7 +112,7 @@ private fun ContentWrapper(state: WalletDetailUiState.Content) {
                 if (trackExpanded) {
                     trackHeaderShape = HeaderExpandedShape
                 }
-            }
+            },
         )
         streamTokensItem(
             tokens = state.streamTokens,
@@ -121,11 +124,9 @@ private fun ContentWrapper(state: WalletDetailUiState.Content) {
                 if (streamExpanded) {
                     streamHeaderShape = HeaderExpandedShape
                 }
-            }
+            },
         )
-        item {
-            Spacer(modifier = Modifier.height(32.dp))
-        }
+        item { Spacer(modifier = Modifier.height(32.dp)) }
     }
 }
 
@@ -134,11 +135,7 @@ private fun WalletDetailTitle(walletName: String) {
     Text(
         text = walletName,
         color = White,
-        style = TextStyle(
-            fontFamily = inter,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
-        )
+        style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Bold, fontSize = 24.sp),
     )
 }
 
@@ -148,7 +145,7 @@ private fun WalletDetailBackNav(onClick: () -> Unit) {
         IconButton(onClick = onClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                contentDescription = stringResource(id = R.string.back_description)
+                contentDescription = stringResource(id = R.string.back_description),
             )
         }
     }

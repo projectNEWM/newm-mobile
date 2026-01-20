@@ -26,4 +26,3 @@ fun <T> mapErrors(block: () -> T): T {
         throw KMMException("We encountered a problem", e)
     }
 }
-

@@ -23,9 +23,8 @@ fun Password(
     val context = LocalContext.current
 
     TextFieldWithLabel(
-        modifier = modifier
-            .fillMaxWidth()
-            .onFocusChanged { focusState ->
+        modifier =
+            modifier.fillMaxWidth().onFocusChanged { focusState ->
                 passwordState.onFocusChange(focusState.isFocused)
                 if (!focusState.isFocused) {
                     passwordState.enableShowErrors()

@@ -9,17 +9,13 @@ import kotlinx.coroutines.CoroutineScope
 import me.tatarka.inject.annotations.Provides
 
 interface AndroidComponent {
-
     @Provides
     fun providesFeatureFlagDataSource(
         application: Application,
         sharedBuildConfig: NewmSharedBuildConfig,
         log: NewmAppLogger,
-        scope: CoroutineScope
-    ): FeatureFlagDataSource {
-        return AndroidComposeAppFeatureFlagManager(application, sharedBuildConfig, log, scope)
-    }
+        scope: CoroutineScope,
+    ): FeatureFlagDataSource = AndroidComposeAppFeatureFlagManager(application, sharedBuildConfig, log, scope)
 
-    @Provides
-    fun provideContext(application: Application): Context = application
+    @Provides fun provideContext(application: Application): Context = application
 }

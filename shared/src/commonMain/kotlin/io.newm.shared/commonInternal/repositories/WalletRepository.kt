@@ -10,13 +10,11 @@ import kotlinx.coroutines.flow.Flow
 internal class WalletRepository(
     private val networkService: WalletConnectionNetworkService,
     private val cacheService: WalletConnectionCacheService,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
 ) {
-    fun getWalletConnectionsCache(): Flow<List<WalletConnection>> =
-        cacheService.getWalletConnections()
+    fun getWalletConnectionsCache(): Flow<List<WalletConnection>> = cacheService.getWalletConnections()
 
-    fun findWalletConnectionByID(walletID: String): Flow<WalletConnection?> =
-        cacheService.findWalletConnectionByID(walletID)
+    fun findWalletConnectionByID(walletID: String): Flow<WalletConnection?> = cacheService.findWalletConnectionByID(walletID)
 
     suspend fun syncWalletConnectionsFromNetworkToDB(): List<WalletConnection> {
         return try {
@@ -25,13 +23,17 @@ internal class WalletRepository(
             cacheService.cacheWalletConnections(connections)
             connections
         } catch (e: Exception) {
-            logger.error("WalletRepository", "Error fetching wallet connections from network ${e.cause}", e)
+            logger.error(
+                "WalletRepository",
+                "Error fetching wallet connections from network ${e.cause}",
+                e,
+            )
             return emptyList()
         }
     }
 
-    suspend fun connectWallet(newmCode: String): WalletConnection? {
-        return try {
+    suspend fun connectWallet(newmCode: String): WalletConnection? =
+        try {
             val newConnection = networkService.connectWallet(newmCode.removePrefix("newm-"))
             cacheService.cacheWalletConnections(listOf(newConnection))
             newConnection
@@ -39,10 +41,9 @@ internal class WalletRepository(
             logger.error("WalletRepository", "Error connecting wallet ${e.cause}", e)
             null
         }
-    }
 
-    suspend fun disconnectWallet(walletConnectionId: String): Boolean {
-        return try {
+    suspend fun disconnectWallet(walletConnectionId: String): Boolean =
+        try {
             val success = networkService.disconnectWallet(walletConnectionId)
             if (success) {
                 cacheService.deleteWalletConnectionsById(walletConnectionId)
@@ -54,5 +55,4 @@ internal class WalletRepository(
             logger.error("WalletRepository", "Error disconnecting wallet ${e.cause}", e)
             false
         }
-    }
 }

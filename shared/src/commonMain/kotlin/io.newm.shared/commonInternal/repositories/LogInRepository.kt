@@ -27,82 +27,102 @@ class LogInRepository(
     private val service: LoginAPI,
     private val tokenManager: TokenManager,
     private val sessionManager: SessionManager,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
 ) {
-
     suspend fun requestEmailConfirmationCode(
         email: String,
         humanVerificationCode: String,
-        mustExists: Boolean = false
+        mustExists: Boolean = false,
     ) {
         logger.debug("LogInRepository", "requestEmailConfirmationCode: email $email")
         return service.requestEmailConfirmationCode(email, humanVerificationCode, mustExists)
     }
 
-    suspend fun registerUser(user: NewUser, humanVerificationCode: String) {
+    suspend fun registerUser(
+        user: NewUser,
+        humanVerificationCode: String,
+    ) {
         logger.debug("LogInRepository", "registerUser: email $user")
         return service.register(user, humanVerificationCode)
     }
 
-    suspend fun logIn(email: String, password: String, humanVerificationCode: String) {
+    suspend fun logIn(
+        email: String,
+        password: String,
+        humanVerificationCode: String,
+    ) {
         logger.debug("LogInRepository", "logIn: email $email")
         return handleLoginResponse {
-            service.logIn(
-                LogInUser(email = email, password = password),
-                humanVerificationCode
-            )
+            service.logIn(LogInUser(email = email, password = password), humanVerificationCode)
         }
     }
 
-    suspend fun oAuthLogin(oAuthData: OAuthData, humanVerificationCode: String) =
-        handleLoginResponse {
-            logger.debug("LogInRepository", "logIn: oAuth")
-            when (oAuthData) {
-                is OAuthData.Facebook -> service.loginWithFacebook(FacebookSignInRequest(accessToken = oAuthData.accessToken))
-                is OAuthData.Google -> service.loginWithGoogle(
+    suspend fun oAuthLogin(
+        oAuthData: OAuthData,
+        humanVerificationCode: String,
+    ) = handleLoginResponse {
+        logger.debug("LogInRepository", "logIn: oAuth")
+        when (oAuthData) {
+            is OAuthData.Facebook -> {
+                service.loginWithFacebook(
+                    FacebookSignInRequest(accessToken = oAuthData.accessToken),
+                )
+            }
+
+            is OAuthData.Google -> {
+                service.loginWithGoogle(
                     GoogleSignInRequest(idToken = oAuthData.idToken),
-                    humanVerificationCode
+                    humanVerificationCode,
                 )
+            }
 
-                is OAuthData.Apple -> service.loginWithApple(
+            is OAuthData.Apple -> {
+                service.loginWithApple(
                     AppleSignInRequest(idToken = oAuthData.idToken),
-                    humanVerificationCode
+                    humanVerificationCode,
                 )
+            }
 
-                is OAuthData.LinkedIn -> service.loginWithLinkedIn(LinkedInSignInRequest(accessToken = oAuthData.accessToken))
+            is OAuthData.LinkedIn -> {
+                service.loginWithLinkedIn(
+                    LinkedInSignInRequest(accessToken = oAuthData.accessToken),
+                )
             }
         }
+    }
 
     private suspend fun handleLoginResponse(request: suspend () -> LoginResponse) {
         try {
             storeAccessToken(request())
-            postNotification(Notification.loginStateChanged)
+            postNotification(Notification.LOGIN_STATE_CHANGED)
         } catch (e: ClientRequestException) {
             logger.error(
                 "LogInRepository",
                 "LoginStatus 1- ClientRequestException: ${e.response.status}",
-                e
+                e,
             )
             when (e.response.status.value) {
                 404 -> {
                     logger.debug("LogInRepository", "logIn: LoginStatus UserNotFound (404)")
-                    //404 NOT FOUND If no registered user with 'email' is found
+                    // 404 NOT FOUND If no registered user with 'email' is found
                     throw UserNotFound("Invalid login.  Please try again.")
                 }
 
                 401 -> {
                     logger.debug("LogInRepository", "logIn: LoginStatus WrongPassword (401): $e")
-                    //401 UNAUTHORIZED if 'password' is invalid.
+                    // 401 UNAUTHORIZED if 'password' is invalid.
                     throw WrongPassword("Invalid login.  Please try again.")
                 }
 
                 403 -> {
                     logger.debug(
                         "LogInRepository",
-                        "logIn: LoginStatus TwoFactorAuthenticationFailed (403): $e"
+                        "logIn: LoginStatus TwoFactorAuthenticationFailed (403): $e",
                     )
-                    //403 FORBIDDEN if recaptcha fails.
-                    throw HumanVerificationFailed("Humanity could not be verified. Please try again.")
+                    // 403 FORBIDDEN if recaptcha fails.
+                    throw HumanVerificationFailed(
+                        "Humanity could not be verified. Please try again.",
+                    )
                 }
 
                 else -> {
@@ -123,7 +143,7 @@ class LogInRepository(
         newPassword: String,
         confirmPassword: String,
         authCode: String,
-        humanVerificationCode: String
+        humanVerificationCode: String,
     ) {
         service.register(
             NewUser(
@@ -133,8 +153,9 @@ class LogInRepository(
                 email = email,
                 newPassword = newPassword,
                 confirmPassword = confirmPassword,
-                authCode = authCode
-            ), humanVerificationCode
+                authCode = authCode,
+            ),
+            humanVerificationCode,
         )
     }
 
@@ -143,7 +164,7 @@ class LogInRepository(
             logger.debug("LogInRepository", "logIn: LoginStatus Valid Response")
             tokenManager.setAuthTokens(
                 response.accessToken.orEmpty(),
-                response.refreshToken.orEmpty()
+                response.refreshToken.orEmpty(),
             )
         } else {
             logger.debug("LogInRepository", "logIn: Fail to login: $response")
@@ -160,19 +181,12 @@ class LogInRepository(
         newPassword: String,
         confirmPassword: String,
         authCode: String,
-        humanVerificationCode: String
+        humanVerificationCode: String,
     ) {
-        logger.debug(
-            "LogInRepository",
-            "resetPassword"
-        )
+        logger.debug("LogInRepository", "resetPassword")
         service.resetPassword(
-            ResetPasswordRequest(
-                email,
-                newPassword,
-                confirmPassword,
-                authCode,
-            ), humanVerificationCode
+            ResetPasswordRequest(email, newPassword, confirmPassword, authCode),
+            humanVerificationCode,
         )
     }
 }

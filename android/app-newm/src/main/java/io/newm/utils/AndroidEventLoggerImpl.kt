@@ -7,17 +7,15 @@ import io.newm.BuildConfig
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.IEventLogger
 
-/**
- * Implementation of [IEventLogger] for Android using Firebase Analytics.
- */
-internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger {
+/** Implementation of [IEventLogger] for Android using Firebase Analytics. */
+internal class AndroidEventLoggerImpl(
+    val logger: NewmAppLogger,
+) : IEventLogger {
+    private val firebaseAnalytics =
+        FirebaseAnalytics.getInstance(FirebaseApp.getInstance().applicationContext)
 
-    private val firebaseAnalytics = FirebaseAnalytics.getInstance(FirebaseApp.getInstance().applicationContext)
-
-    private val defaultProperties = mapOf(
-        "app_version" to BuildConfig.VERSION_NAME,
-        "platform" to "Android"
-    )
+    private val defaultProperties =
+        mapOf("app_version" to BuildConfig.VERSION_NAME, "platform" to "Android")
 
     companion object {
         private const val MAX_EVENT_NAME_LENGTH =
@@ -30,61 +28,62 @@ internal class AndroidEventLoggerImpl(val logger: NewmAppLogger) : IEventLogger 
         firebaseAnalytics.setUserId(userId)
     }
 
-    override fun setUserProperty(propertyName: String, value: String) {
+    override fun setUserProperty(
+        propertyName: String,
+        value: String,
+    ) {
         logger.debug(
             tag = "analytics - user",
-            message = "propertyName: $propertyName, value:$value"
+            message = "propertyName: $propertyName, value:$value",
         )
         firebaseAnalytics.setUserProperty(propertyName, value)
     }
 
-    override fun logEvent(eventName: String, properties: Map<String, Any?>?) {
+    override fun logEvent(
+        eventName: String,
+        properties: Map<String, Any?>?,
+    ) {
         logger.debug(
             tag = "analytics - event",
-            message = "eventName: $eventName, properties:$properties"
+            message = "eventName: $eventName, properties:$properties",
         )
         actualLogEvent(eventName, properties)
     }
 
-    override fun logPageLoad(screenName: String, properties: Map<String, Any?>?) {
-        logger.debug(
-            tag = "analytics - screen",
-            message = "screen: $screenName"
-        )
+    override fun logPageLoad(
+        screenName: String,
+        properties: Map<String, Any?>?,
+    ) {
+        logger.debug(tag = "analytics - screen", message = "screen: $screenName")
 
-        val params = mutableListOf<Pair<String, Any?>>(
-            FirebaseAnalytics.Param.SCREEN_NAME to screenName
-        )
-        properties?.forEach { (key, value) ->
-            params.add(key to value.toString())
-        }
+        val params =
+            mutableListOf<Pair<String, Any?>>(FirebaseAnalytics.Param.SCREEN_NAME to screenName)
+        properties?.forEach { (key, value) -> params.add(key to value.toString()) }
         val bundle = bundleOf(*params.toTypedArray())
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     override fun logClickEvent(
         buttonName: String,
-        properties: Map<String, Any?>?
+        properties: Map<String, Any?>?,
     ) {
-        logger.debug(
-            tag = "analytics - click",
-            message = "buttonName: $buttonName"
-        )
+        logger.debug(tag = "analytics - click", message = "buttonName: $buttonName")
         actualLogEvent(
             eventName = "button_click",
-            properties = mapOf("button_name" to buttonName,) + (properties ?: emptyMap())
+            properties = mapOf("button_name" to buttonName) + (properties ?: emptyMap()),
         )
     }
 
-    private fun actualLogEvent(eventName: String, properties: Map<String, Any?>?) {
+    private fun actualLogEvent(
+        eventName: String,
+        properties: Map<String, Any?>?,
+    ) {
         val safeEventName = validateEventName(eventName)
         if (safeEventName == null) {
             logger.info(TAG, "Invalid event name: $eventName. Event not tracked.")
             return
         }
-        val metadata = mapOf(
-            "timestamp" to System.currentTimeMillis()
-        )
+        val metadata = mapOf("timestamp" to System.currentTimeMillis())
         val combinedProperties = defaultProperties + (properties ?: emptyMap()) + metadata
         val bundle = bundleOf(*combinedProperties.toList().toTypedArray())
         firebaseAnalytics.logEvent(safeEventName, bundle)

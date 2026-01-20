@@ -37,35 +37,33 @@ fun ProfilePictureUpdateSheet(
         sheetState = sheetState,
         sheetContent = {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.surface)
-                    .padding(16.dp)
+                modifier =
+                    Modifier.fillMaxWidth().background(MaterialTheme.colors.surface).padding(16.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.title_profile_picture),
-                    style = TextStyle(
-                        fontFamily = inter,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp,
-                        color = White
-                    )
+                    style =
+                        TextStyle(
+                            fontFamily = inter,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            color = White,
+                        ),
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 PrimaryButton(
                     text = stringResource(id = R.string.profile_replace_picture),
-                    onClick = onReplacePicture
+                    onClick = onReplacePicture,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 SecondaryButton(
                     labelResId = R.string.profile_remove_picture,
-                    onClick = onRemovePicture
+                    onClick = onRemovePicture,
                 )
             }
-
         },
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
         scrimColor = Black90,
-        content = { }
+        content = {},
     )
 }

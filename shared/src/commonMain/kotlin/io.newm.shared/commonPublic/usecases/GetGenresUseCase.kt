@@ -2,9 +2,9 @@ package io.newm.shared.commonPublic.usecases
 
 import io.newm.shared.commonPublic.models.Genre
 import io.newm.shared.commonPublic.models.error.KMMException
-import kotlin.coroutines.cancellation.CancellationException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.coroutines.cancellation.CancellationException
 
 interface GetGenresUseCase {
     @Throws(KMMException::class, CancellationException::class)
@@ -14,8 +14,5 @@ interface GetGenresUseCase {
 class GetGenresUseCaseProvider : KoinComponent {
     private val getGenresUseCase: GetGenresUseCase by inject()
 
-    fun get(): GetGenresUseCase {
-        return this.getGenresUseCase
-    }
+    fun get(): GetGenresUseCase = this.getGenresUseCase
 }
-

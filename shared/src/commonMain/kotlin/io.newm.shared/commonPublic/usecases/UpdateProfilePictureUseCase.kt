@@ -10,4 +10,3 @@ interface UpdateProfilePictureUseCase {
     @Throws(KMMException::class, CancellationException::class)
     suspend fun removeProfilePicture()
 }
-

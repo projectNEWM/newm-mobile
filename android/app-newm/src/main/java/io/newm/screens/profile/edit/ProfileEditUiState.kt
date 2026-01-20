@@ -6,6 +6,7 @@ import io.newm.screens.profile.ProfileEditUiEvent
 
 sealed class ProfileEditUiState : CircuitUiState {
     data object Loading : ProfileEditUiState()
+
     data class Content(
         val profile: Profile,
         val avatarUrl: String,
@@ -18,7 +19,7 @@ sealed class ProfileEditUiState : CircuitUiState {
         val submitButtonEnabled: Boolean,
         val showConnectWallet: Boolean,
         val errorMessage: String?,
-        val eventSink: (ProfileEditUiEvent) -> Unit
+        val eventSink: (ProfileEditUiEvent) -> Unit,
     ) : ProfileEditUiState() {
         data class Profile(
             val firstName: String,

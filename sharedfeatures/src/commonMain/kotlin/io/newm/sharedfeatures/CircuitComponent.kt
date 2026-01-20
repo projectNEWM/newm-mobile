@@ -9,7 +9,10 @@ import io.newm.sharedfeatures.login.LoginComponent
 import io.newm.sharedfeatures.welcome.WelcomeComponent
 import me.tatarka.inject.annotations.Provides
 
-interface CircuitComponent : WelcomeComponent, DevMenuComponent, LoginComponent {
+interface CircuitComponent :
+    WelcomeComponent,
+    DevMenuComponent,
+    LoginComponent {
     val circuit: Circuit
 
     @Provides
@@ -17,8 +20,10 @@ interface CircuitComponent : WelcomeComponent, DevMenuComponent, LoginComponent 
     fun provideCircuit(
         uiFactories: Set<Ui.Factory>,
         presenterFactories: Set<Presenter.Factory>,
-    ): Circuit = Circuit.Builder()
-        .addUiFactories(uiFactories)
-        .addPresenterFactories(presenterFactories)
-        .build()
+    ): Circuit =
+        Circuit
+            .Builder()
+            .addUiFactories(uiFactories)
+            .addPresenterFactories(presenterFactories)
+            .build()
 }

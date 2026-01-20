@@ -15,9 +15,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun OnboardingMainImage(painter: Painter) {
     Image(
-        modifier = Modifier
-            .width(250.dp)
-            .height(250.dp),
+        modifier = Modifier.width(250.dp).height(250.dp),
         painter = painter,
         contentDescription = stringResource(Res.string.newm_login_logo_description),
         contentScale = ContentScale.Crop,

@@ -9,8 +9,8 @@ import io.newm.feature.musicplayer.service.MusicPlayer
 import org.koin.compose.koinInject
 
 /**
- * Observes the singleton [MusicPlayer] instance managed by [MediaSessionConnection].
- * This maintains the connection across navigation.
+ * Observes the singleton [MusicPlayer] instance managed by [MediaSessionConnection]. This maintains
+ * the connection across navigation.
  */
 @Composable
 fun observeMusicPlayer(): MusicPlayer? {

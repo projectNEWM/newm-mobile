@@ -22,7 +22,7 @@ class DownloadStateManagerImpl(
     private val exoDownloadManager: DownloadManager,
     private val scope: CoroutineScope,
     private val logger: NewmAppLogger,
-): DownloadStateManager {
+) : DownloadStateManager {
     private val downloadStates = ConcurrentHashMap<String, MutableStateFlow<DownloadState>>()
 
     init {
@@ -32,7 +32,7 @@ class DownloadStateManagerImpl(
             object : DownloadManager.Listener {
                 override fun onDownloadsPausedChanged(
                     downloadManager: DownloadManager,
-                    downloadsPaused: Boolean
+                    downloadsPaused: Boolean,
                 ) {
                     super.onDownloadsPausedChanged(downloadManager, downloadsPaused)
                     println("Downloads paused: $downloadsPaused")
@@ -41,7 +41,7 @@ class DownloadStateManagerImpl(
                 override fun onDownloadChanged(
                     downloadManager: DownloadManager,
                     download: Download,
-                    finalException: Exception?
+                    finalException: Exception?,
                 ) {
                     super.onDownloadChanged(downloadManager, download, finalException)
 
@@ -49,19 +49,18 @@ class DownloadStateManagerImpl(
                         finalException != null -> {
                             updateDownloadState(
                                 download.request.id,
-                                DownloadState.Failed(finalException.message ?: "Download failed")
+                                DownloadState.Failed(finalException.message ?: "Download failed"),
                             )
                         }
+
                         download.state == Download.STATE_COMPLETED -> {
-                            updateDownloadState(
-                                download.request.id,
-                                DownloadState.Completed
-                            )
+                            updateDownloadState(download.request.id, DownloadState.Completed)
                         }
+
                         download.state == Download.STATE_DOWNLOADING -> {
                             updateDownloadState(
                                 download.request.id,
-                                DownloadState.Downloading(download.percentDownloaded / 100f)
+                                DownloadState.Downloading(download.percentDownloaded / 100f),
                             )
                         }
                     }
@@ -69,13 +68,10 @@ class DownloadStateManagerImpl(
 
                 override fun onDownloadRemoved(
                     downloadManager: DownloadManager,
-                    download: Download
+                    download: Download,
                 ) {
                     super.onDownloadRemoved(downloadManager, download)
-                    updateDownloadState(
-                        download.request.id,
-                        DownloadState.None
-                    )
+                    updateDownloadState(download.request.id, DownloadState.None)
                     println("Download removed: $download")
                 }
 
@@ -87,24 +83,24 @@ class DownloadStateManagerImpl(
                 override fun onRequirementsStateChanged(
                     downloadManager: DownloadManager,
                     requirements: Requirements,
-                    notMetRequirements: Int
+                    notMetRequirements: Int,
                 ) {
                     super.onRequirementsStateChanged(
                         downloadManager,
                         requirements,
-                        notMetRequirements
+                        notMetRequirements,
                     )
                     println("Requirements state changed: $requirements")
                 }
 
                 override fun onWaitingForRequirementsChanged(
                     downloadManager: DownloadManager,
-                    waitingForRequirements: Boolean
+                    waitingForRequirements: Boolean,
                 ) {
                     super.onWaitingForRequirementsChanged(downloadManager, waitingForRequirements)
                     println("Waiting for requirements: $waitingForRequirements")
                 }
-            }
+            },
         )
     }
 
@@ -116,41 +112,37 @@ class DownloadStateManagerImpl(
                         val download = cursor.download
                         when (download.state) {
                             Download.STATE_COMPLETED -> {
-                                updateDownloadState(
-                                    download.request.id,
-                                    DownloadState.Completed
-                                )
+                                updateDownloadState(download.request.id, DownloadState.Completed)
                             }
 
                             Download.STATE_DOWNLOADING -> {
                                 updateDownloadState(
                                     download.request.id,
-                                    DownloadState.Downloading(download.percentDownloaded / 100f)
+                                    DownloadState.Downloading(download.percentDownloaded / 100f),
                                 )
                             }
 
                             Download.STATE_FAILED -> {
                                 updateDownloadState(
                                     download.request.id,
-                                    DownloadState.Failed("Download failed")
+                                    DownloadState.Failed("Download failed"),
                                 )
                             }
                         }
                     }
                 }
             } catch (e: IOException) {
-                logger.error("DownloadManager","Failed to initialize download states", e)
+                logger.error("DownloadManager", "Failed to initialize download states", e)
             }
         }
-
     }
 
-    override fun getDownloadState(id: String): Flow<DownloadState> {
-        return downloadStates.getOrPut(id) { MutableStateFlow(DownloadState.None) }
-    }
+    override fun getDownloadState(id: String): Flow<DownloadState> = downloadStates.getOrPut(id) { MutableStateFlow(DownloadState.None) }
 
-    fun updateDownloadState(id: String, state: DownloadState) {
-        downloadStates.getOrPut(id) { MutableStateFlow(DownloadState.None) }
-            .value = state
+    fun updateDownloadState(
+        id: String,
+        state: DownloadState,
+    ) {
+        downloadStates.getOrPut(id) { MutableStateFlow(DownloadState.None) }.value = state
     }
 }

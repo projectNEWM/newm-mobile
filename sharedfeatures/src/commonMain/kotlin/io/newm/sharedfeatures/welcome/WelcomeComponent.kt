@@ -7,14 +7,10 @@ import me.tatarka.inject.annotations.IntoSet
 import me.tatarka.inject.annotations.Provides
 
 interface WelcomeComponent {
-    @Provides
-    @IntoSet
-    @ActivityScope
+    @Provides @IntoSet @ActivityScope
     fun WelcomePresenterFactory.bind(): Presenter.Factory = this
 
-    @Provides
-    @IntoSet
-    @ActivityScope
+    @Provides @IntoSet @ActivityScope
     fun WelcomeUiFactory.bind(): Ui.Factory = this
 
     @Provides

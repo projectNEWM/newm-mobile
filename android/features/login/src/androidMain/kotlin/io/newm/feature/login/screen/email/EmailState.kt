@@ -10,13 +10,12 @@ class EmailState : TextFieldState(validator = ::isEmailValid, errorFor = ::email
 /**
  * Returns an error to be displayed or null if no error was found
  *
- * @param context   needed to get string resource
- * @param email     invalid email we show the user
+ * @param context needed to get string resource
+ * @param email invalid email we show the user
  */
-private fun emailValidationError(context: Context, email: String): String {
-    return context.getString(R.string.email_validation_error_message, email)
-}
+private fun emailValidationError(
+    context: Context,
+    email: String,
+): String = context.getString(R.string.email_validation_error_message, email)
 
-private fun isEmailValid(email: String): Boolean {
-    return EMAIL_ADDRESS.matcher(email).matches()
-}
+private fun isEmailValid(email: String): Boolean = EMAIL_ADDRESS.matcher(email).matches()

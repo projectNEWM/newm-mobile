@@ -47,13 +47,13 @@ fun WalletRowItem(
     onViewDetailsClick: () -> Unit,
     onRenameClick: () -> Unit,
     onCopyAddressClick: () -> Unit,
-    onDisconnectClick: () -> Unit
+    onDisconnectClick: () -> Unit,
 ) {
     var isDropdownExpanded by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         WalletRowItemDetails(connection)
         Spacer(modifier = Modifier.weight(1f))
@@ -65,15 +65,14 @@ fun WalletRowItem(
                 },
             ) {
                 Icon(
-                    modifier = Modifier
-                        .background(
-                            color = Gray16,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .padding(8.dp),
+                    modifier =
+                        Modifier
+                            .background(color = Gray16, shape = RoundedCornerShape(8.dp))
+                            .padding(8.dp),
                     imageVector = Icons.Rounded.MoreVert,
                     tint = Color.White,
-                    contentDescription = stringResource(id = R.string.wallets_screen_wallet_options_desc)
+                    contentDescription =
+                        stringResource(id = R.string.wallets_screen_wallet_options_desc),
                 )
             }
             WalletDropDownMenu(
@@ -82,7 +81,7 @@ fun WalletRowItem(
                 onViewDetailsClick = onViewDetailsClick,
                 onRenameClick = onRenameClick,
                 onCopyAddressClick = onCopyAddressClick,
-                onDisconnectClick = onDisconnectClick
+                onDisconnectClick = onDisconnectClick,
             )
         }
     }
@@ -90,32 +89,31 @@ fun WalletRowItem(
 
 @Composable
 fun WalletRowItemDetails(connection: WalletConnection) {
-    Icon(
-        imageVector = Icons.Rounded.Info,
-        contentDescription = "Wallet image placeholder"
-    )
+    Icon(imageVector = Icons.Rounded.Info, contentDescription = "Wallet image placeholder")
     Column(modifier = Modifier.width(150.dp)) {
         Text(
             text = connection.id,
             maxLines = 1,
             overflow = TextOverflow.MiddleEllipsis,
-            style = TextStyle(
-                color = MaterialTheme.colors.onBackground,
-                fontSize = 14.sp,
-                fontFamily = inter,
-                fontWeight = FontWeight.Medium
-            )
+            style =
+                TextStyle(
+                    color = MaterialTheme.colors.onBackground,
+                    fontSize = 14.sp,
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Medium,
+                ),
         )
         Text(
             text = connection.stakeAddress,
             maxLines = 1,
             overflow = TextOverflow.MiddleEllipsis,
-            style = TextStyle(
-                color = GraySuit,
-                fontSize = 12.sp,
-                fontFamily = inter,
-                fontWeight = FontWeight.Normal
-            )
+            style =
+                TextStyle(
+                    color = GraySuit,
+                    fontSize = 12.sp,
+                    fontFamily = inter,
+                    fontWeight = FontWeight.Normal,
+                ),
         )
     }
 }

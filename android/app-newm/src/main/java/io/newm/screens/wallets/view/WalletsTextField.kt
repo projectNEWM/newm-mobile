@@ -20,7 +20,7 @@ fun WalletsTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    onDone: () -> Unit
+    onDone: () -> Unit,
 ) {
     OutlinedTextField(
         modifier = modifier.then(Modifier.height(IntrinsicSize.Min)),
@@ -28,19 +28,21 @@ fun WalletsTextField(
         onValueChange = onValueChange,
         shape = RoundedCornerShape(8.dp),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(
-            autoCorrectEnabled = false,
-            imeAction = ImeAction.Done,
-            showKeyboardOnFocus = true,
-            keyboardType = KeyboardType.Text
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                autoCorrectEnabled = false,
+                imeAction = ImeAction.Done,
+                showKeyboardOnFocus = true,
+                keyboardType = KeyboardType.Text,
+            ),
         keyboardActions = KeyboardActions(onDone = { onDone() }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = White,
-            unfocusedBorderColor = White,
-            cursorColor = White,
-            textColor = White,
-            backgroundColor = MaterialTheme.colors.surface
-        )
+        colors =
+            TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = White,
+                unfocusedBorderColor = White,
+                cursorColor = White,
+                textColor = White,
+                backgroundColor = MaterialTheme.colors.surface,
+            ),
     )
 }
