@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.plugin.parcelize)
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -35,15 +35,14 @@ android {
 
 kotlin {
     androidTarget {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-        }
+        compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) }
     }
 
     sourceSets {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.collections.immutable)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
@@ -53,9 +52,9 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.circuit.foundation)
-                implementation(project(Modules.coreTheme))
-                implementation(project(Modules.coreUiUtils))
-                implementation(project(Modules.shared))
+                implementation(project(Modules.CORE_THEME))
+                implementation(project(Modules.CORE_UI_UTILS))
+                implementation(project(Modules.SHARED))
             }
         }
 
@@ -98,6 +97,5 @@ kotlin {
             outputModuleName = "sharedfeatures"
             browser {}
         }
-
     }
 }

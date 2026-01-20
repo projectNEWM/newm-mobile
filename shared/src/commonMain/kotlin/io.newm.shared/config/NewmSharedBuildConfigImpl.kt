@@ -1,28 +1,28 @@
 package io.newm.shared.config
 
-import io.newm.shared.generated.BuildConfig
 import io.newm.shared.commonInternal.db.PreferencesDataStore
+import io.newm.shared.generated.BuildConfig
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 // Enum to represent the mode in which the app is running
 enum class Mode {
     PRODUCTION,
-    STAGING
+    STAGING,
 }
 
 /**
  * BuildConfiguration class to manage app configurations based on the mode.
  *
- * Note: Mode is cached in memory for synchronous access. Changes are persisted
- * asynchronously to storage. The initial value defaults to PRODUCTION and is
- * loaded from storage asynchronously during initialization.
+ * Note: Mode is cached in memory for synchronous access. Changes are persisted asynchronously to
+ * storage. The initial value defaults to PRODUCTION and is loaded from storage asynchronously
+ * during initialization.
  */
-class NewmSharedBuildConfigImpl(private val storage: PreferencesDataStore, private val scope: CoroutineScope): NewmSharedBuildConfig {
-
+class NewmSharedBuildConfigImpl(
+    private val storage: PreferencesDataStore,
+    private val scope: CoroutineScope,
+) : NewmSharedBuildConfig {
     companion object {
         private const val APP_MODE = "app_mode"
     }
@@ -58,22 +58,22 @@ class NewmSharedBuildConfigImpl(private val storage: PreferencesDataStore, priva
         set(value) {
             cachedMode.value = value
             // Persist asynchronously - fire and forget
-            scope.launch {
-                storage.saveString(APP_MODE, value.name)
-            }
+            scope.launch { storage.saveString(APP_MODE, value.name) }
         }
 
     override val launchDarklyKey: String
         get() = BuildConfig.LAUNCHDARKLY_MOBILE_KEY
 
     override val baseUrl: String
-        get() = when (mode) {
-            Mode.STAGING -> BuildConfig.STAGING_URL
-            Mode.PRODUCTION -> BuildConfig.PRODUCTION_URL
-        }
+        get() =
+            when (mode) {
+                Mode.STAGING -> BuildConfig.STAGING_URL
+                Mode.PRODUCTION -> BuildConfig.PRODUCTION_URL
+            }
 
     override val sentryAuthToken: String
         get() = BuildConfig.SENTRY_AUTH_TOKEN
+
     override val androidSentryDSN: String
         get() = BuildConfig.ANDROID_SENTRY_DSN
 
@@ -85,6 +85,9 @@ class NewmSharedBuildConfigImpl(private val storage: PreferencesDataStore, priva
 
     override val isStagingMode: Boolean
         get() = mode == Mode.STAGING
+
+    override val isDebug: Boolean
+        get() = BuildConfig.IS_DEBUG
 }
 
 interface NewmSharedBuildConfig {
@@ -95,4 +98,5 @@ interface NewmSharedBuildConfig {
     val googleAuthClientId: String
     val recaptchaSiteKey: String
     val isStagingMode: Boolean
+    val isDebug: Boolean
 }

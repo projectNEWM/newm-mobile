@@ -17,24 +17,26 @@ import io.newm.core.ui.text.formNameStyle
 fun ProfileHeader(
     firstName: String,
     lastName: String,
-    email: String
+    email: String,
 ) {
     val fullName = "${firstName.trim()} ${lastName.trim()}".trim()
 
     Text(
-        modifier = Modifier
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.CenterHorizontally),
+        modifier =
+            Modifier
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
         text = fullName.ifEmpty { stringResource(R.string.profile_header_welcome) },
-        style = formNameStyle
+        style = formNameStyle,
     )
     Text(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .wrapContentWidth(Alignment.CenterHorizontally),
+        modifier =
+            Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
         text = email,
-        style = formEmailStyle
+        style = formEmailStyle,
     )
 }

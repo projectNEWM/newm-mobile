@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.multiplatform)
 }
 
@@ -15,9 +15,7 @@ android {
         resourcePrefix = "musicplayer"
     }
 
-    lint {
-        baseline = file("lint-baseline.xml")
-    }
+    lint { baseline = file("lint-baseline.xml") }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -38,16 +36,12 @@ dependencies {
     implementation(libs.androidx.palette.ktx)
     implementation(libs.koin.android)
     implementation(libs.play.services.auth)
-    implementation(project(Modules.coreResources))
-    implementation(project(Modules.coreTheme))
-    implementation(project(Modules.coreUiUtils))
-    implementation(project(Modules.shared))
+    implementation(project(Modules.CORE_RESOURCES))
+    implementation(project(Modules.CORE_THEME))
+    implementation(project(Modules.CORE_UI_UTILS))
+    implementation(project(Modules.SHARED))
 
-    testImplementation(project(Modules.testUtils))
+    testImplementation(project(Modules.TEST_UTILS))
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-    }
-}
+kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) } }

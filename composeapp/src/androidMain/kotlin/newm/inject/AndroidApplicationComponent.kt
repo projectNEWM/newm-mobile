@@ -14,7 +14,8 @@ import newm.AndroidComponent
 @ApplicationScope
 abstract class AndroidApplicationComponent(
     @get:Provides val application: Application,
-) : CommonApplicationComponent, AndroidComponent {
+) : CommonApplicationComponent,
+    AndroidComponent {
     abstract val recaptchaClientProvider: RecaptchaClientProvider
     abstract val config: NewmSharedBuildConfig
 

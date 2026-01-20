@@ -23,9 +23,8 @@ fun Email(
     val context = LocalContext.current
 
     TextFieldWithLabel(
-        modifier = modifier
-            .fillMaxWidth()
-            .onFocusChanged { focusState ->
+        modifier =
+            modifier.fillMaxWidth().onFocusChanged { focusState ->
                 emailState.onFocusChange(focusState.isFocused)
                 if (!focusState.isFocused) {
                     emailState.enableShowErrors()

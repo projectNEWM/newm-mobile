@@ -10,20 +10,17 @@ import kotlinx.coroutines.flow.map
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class HasWalletConnectionsUseCaseImpl(
-    private val getWalletConnectionsUseCase: GetWalletConnectionsUseCase
+    private val getWalletConnectionsUseCase: GetWalletConnectionsUseCase,
 ) : HasWalletConnectionsUseCase {
-
     @Throws(KMMException::class, CancellationException::class)
-    override fun hasWalletConnectionsFlow(): Flow<Boolean> {
-        return getWalletConnectionsUseCase.getWalletConnectionsFromCacheFlow().map { connections ->
+    override fun hasWalletConnectionsFlow(): Flow<Boolean> =
+        getWalletConnectionsUseCase.getWalletConnectionsFromCacheFlow().map { connections ->
             connections.isNotEmpty()
         }
-    }
 
     @Throws(KMMException::class, CancellationException::class)
-    override suspend fun hasWalletConnections(): Boolean {
-        return mapErrorsSuspend {
+    override suspend fun hasWalletConnections(): Boolean =
+        mapErrorsSuspend {
             hasWalletConnectionsFlow().first()
         }
-    }
 }

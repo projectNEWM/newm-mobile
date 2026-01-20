@@ -9,12 +9,12 @@ import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.usecases.GetInvestmentPortfolioDataUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
+import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import kotlinx.coroutines.flow.flowOf
 
 class InvestmentPortfolioPresenter(
@@ -29,40 +29,50 @@ class InvestmentPortfolioPresenter(
     @Composable
     override fun present(): InvestmentPortfolioState {
         // State to hold claimable token amount using produceState
-        val claimableTokenAmount by produceState(initialValue = 0L) {
-            val wallets = syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
-            if (wallets.isNotEmpty()) {
-                recaptchaClientProvider.get()
-                    .execute(RecaptchaAction.custom("get_earnings"))
-                    .onSuccess { token ->
-                        value = getPortfolioDataUseCase.getInvestmentPortfolio(
-                            walletAddress = wallets.first().stakeAddress,
-                            humanVerificationCode = token
-                        )
-                    }.onFailure {
-                        logger.error("InvestmentPortfolioPresenter", "Error getting recaptcha token", it)
-                    }
+        val claimableTokenAmount by
+            produceState(initialValue = 0L) {
+                val wallets =
+                    syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+                if (wallets.isNotEmpty()) {
+                    recaptchaClientProvider
+                        .get()
+                        .execute(RecaptchaAction.custom("get_earnings"))
+                        .onSuccess { token ->
+                            value =
+                                getPortfolioDataUseCase.getInvestmentPortfolio(
+                                    walletAddress = wallets.first().stakeAddress,
+                                    humanVerificationCode = token,
+                                )
+                        }.onFailure {
+                            logger.error(
+                                "InvestmentPortfolioPresenter",
+                                "Error getting recaptcha token",
+                                it,
+                            )
+                        }
+                }
             }
-        }
 
-        val isWalletConnected: Boolean? by remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }
-            .collectAsRetainedState(null)
+        val isWalletConnected: Boolean? by
+            remember { hasWalletConnectionsUseCase.hasWalletConnectionsFlow() }
+                .collectAsRetainedState(null)
 
-        val isWalletSynced by remember { walletNFTTracksUseCase.walletSynced }
-            .collectAsState(false)
+        val isWalletSynced by remember { walletNFTTracksUseCase.walletSynced }.collectAsState(false)
 
-        val streamTokens by remember(isWalletConnected) {
-            if (isWalletConnected == true) {
-                walletNFTTracksUseCase.getAllStreamTokensFlow()
-            } else {
-                flowOf(emptyList())
-            }
-        }.collectAsRetainedState(initial = emptyList())
+        val streamTokens by
+            remember(isWalletConnected) {
+                if (isWalletConnected == true) {
+                    walletNFTTracksUseCase.getAllStreamTokensFlow()
+                } else {
+                    flowOf(emptyList())
+                }
+            }.collectAsRetainedState(initial = emptyList())
 
         return when {
             streamTokens.isNotEmpty() -> {
                 InvestmentPortfolioState.Content(
-                    claimableTokenAmount = claimableTokenAmount, // Use stored claimable token amount
+                    claimableTokenAmount =
+                    claimableTokenAmount, // Use stored claimable token amount
                     streamTokens = streamTokens,
                     eventSink = { event ->
                         when (event) {
@@ -70,7 +80,7 @@ class InvestmentPortfolioPresenter(
                                 navigator.pop()
                             }
                         }
-                    }
+                    },
                 )
             }
 

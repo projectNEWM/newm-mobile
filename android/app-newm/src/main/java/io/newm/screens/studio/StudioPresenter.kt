@@ -18,14 +18,15 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 class StudioPresenter(
     private val navigator: Navigator,
     private val eventLogger: NewmAppEventLogger,
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
 ) : Presenter<StudioState> {
     @Composable
     override fun present(): StudioState {
         val context = LocalContext.current
-        val connectivityManager = remember {
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        }
+        val connectivityManager =
+            remember {
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            }
         val isNetworkAvailable by remember {
             mutableStateOf(connectivityManager.activeNetwork != null)
         }
@@ -42,14 +43,20 @@ class StudioPresenter(
         }
 
         return when {
-            isLoading -> StudioState.Loading
-            !isNetworkAvailable -> StudioState.Error
+            isLoading -> {
+                StudioState.Loading
+            }
+
+            !isNetworkAvailable -> {
+                StudioState.Error
+            }
+
             else -> {
                 eventLogger.logPageLoad(AppScreens.MarketplaceScreen.name)
                 StudioState.Content(
                     eventSink = {},
                     accessToken = accessToken,
-                    refreshToken = refreshToken
+                    refreshToken = refreshToken,
                 )
             }
         }

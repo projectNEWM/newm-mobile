@@ -36,35 +36,30 @@ class NetworkClientFactory(
     private val sessionManager: SessionManager,
     private val enableNetworkLogs: Boolean,
     private val buildConfig: NewmSharedBuildConfig,
-    private val appLogger: NewmAppLogger
+    private val appLogger: NewmAppLogger,
 ) {
-
-    private lateinit var _authHttpClient: HttpClient
-    private lateinit var _httpClient: HttpClient
+    private lateinit var authHttpClientInternal: HttpClient
+    private lateinit var httpClientInternal: HttpClient
 
     fun authHttpClient(): HttpClient {
-        if (!::_authHttpClient.isInitialized) {
-            _authHttpClient = createAuthHttpClient()
+        if (!::authHttpClientInternal.isInitialized) {
+            authHttpClientInternal = createAuthHttpClient()
         }
-        return _authHttpClient
+        return authHttpClientInternal
     }
 
     fun httpClient(): HttpClient {
-        if (!::_httpClient.isInitialized) {
-            _httpClient = createHttpClient()
+        if (!::httpClientInternal.isInitialized) {
+            httpClientInternal = createHttpClient()
         }
-        return _httpClient
+        return httpClientInternal
     }
 
-    private fun createHttpClient(): HttpClient {
-        return HttpClient(httpClientEngine) {
+    private fun createHttpClient(): HttpClient =
+        HttpClient(httpClientEngine) {
             this.expectSuccess = true
-            defaultRequest {
-                url(buildConfig.baseUrl)
-            }
-            install(ContentNegotiation) {
-                json(json)
-            }
+            defaultRequest { url(buildConfig.baseUrl) }
+            install(ContentNegotiation) { json(json) }
             if (enableNetworkLogs) {
                 install(Logging) {
                     logger = Logger.SIMPLE
@@ -72,27 +67,23 @@ class NetworkClientFactory(
                 }
             }
         }
-    }
 
-    private val refreshTokenPlugin = createClientPlugin("RefreshTokenPlugin") {
-        onRequest { request, _ ->
-            if (request.url.encodedPath == "/v1/auth/refresh") {
-                request.headers.remove(HttpHeaders.Authorization)
-                request.bearerAuth(tokenManager.getRefreshToken().toString())
+    private val refreshTokenPlugin =
+        createClientPlugin("RefreshTokenPlugin") {
+            onRequest { request, _ ->
+                if (request.url.encodedPath == "/v1/auth/refresh") {
+                    request.headers.remove(HttpHeaders.Authorization)
+                    request.bearerAuth(tokenManager.getRefreshToken().toString())
+                }
             }
         }
-    }
 
     private fun createAuthHttpClient(): HttpClient {
         return HttpClient(httpClientEngine) {
             this.expectSuccess = true
-            defaultRequest {
-                url(buildConfig.baseUrl)
-            }
+            defaultRequest { url(buildConfig.baseUrl) }
 
-            install(ContentNegotiation) {
-                json(json)
-            }
+            install(ContentNegotiation) { json(json) }
             if (enableNetworkLogs) {
                 install(Logging) {
                     logger = Logger.SIMPLE
@@ -108,7 +99,7 @@ class NetworkClientFactory(
                         appLogger.breadcrumb("Auth", "Loading user tokens")
                         BearerTokens(
                             accessToken = tokenManager.getAccessToken().orEmpty(),
-                            refreshToken = tokenManager.getRefreshToken().orEmpty()
+                            refreshToken = tokenManager.getRefreshToken().orEmpty(),
                         )
                     }
 
@@ -119,23 +110,26 @@ class NetworkClientFactory(
                                 return@refreshTokens null
                             }
 
-                            val renewTokens = client.get("/v1/auth/refresh") {
-                                markAsRefreshTokenRequest()
-                            }.body<LoginResponse>()
-                            if (renewTokens.accessToken != null && renewTokens.refreshToken != null) {
+                            val renewTokens =
+                                client
+                                    .get("/v1/auth/refresh") { markAsRefreshTokenRequest() }
+                                    .body<LoginResponse>()
+                            if (
+                                renewTokens.accessToken != null && renewTokens.refreshToken != null
+                            ) {
                                 tokenManager.setAuthTokens(
                                     renewTokens.accessToken,
-                                    renewTokens.refreshToken
+                                    renewTokens.refreshToken,
                                 )
                                 appLogger.info("Auth", "Refreshed tokens successfully.")
                                 BearerTokens(
                                     accessToken = tokenManager.getAccessToken()!!,
-                                    refreshToken = tokenManager.getRefreshToken()!!
+                                    refreshToken = tokenManager.getRefreshToken()!!,
                                 )
                             } else {
                                 appLogger.debug(
                                     "Auth",
-                                    "Refresh tokens invalid response: $renewTokens"
+                                    "Refresh tokens invalid response: $renewTokens",
                                 )
                                 sessionManager.logout()
                                 null

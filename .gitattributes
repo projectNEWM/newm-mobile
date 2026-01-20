@@ -1,1 +1,2 @@
+* text=auto eol=lf
 **/snapshots/**/*.png filter=lfs diff=lfs merge=lfs -text

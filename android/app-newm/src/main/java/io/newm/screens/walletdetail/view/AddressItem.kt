@@ -38,73 +38,69 @@ import io.newm.core.theme.inter
 import kotlinx.coroutines.launch
 
 fun LazyListScope.addressItem(address: String) {
-    item {
-        Spacer(modifier = Modifier.height(8.dp))
-    }
+    item { Spacer(modifier = Modifier.height(8.dp)) }
     item {
         val clipboard = LocalClipboard.current
         val scope = rememberCoroutineScope()
         val context = LocalContext.current
         WalletDetailCard {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(modifier = Modifier.width(150.dp)) {
                     Text(
                         text = stringResource(R.string.address),
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            color = White
-                        )
+                        style =
+                            TextStyle(
+                                fontFamily = inter,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                color = White,
+                            ),
                     )
                     Text(
                         text = address,
                         maxLines = 1,
                         overflow = TextOverflow.MiddleEllipsis,
-                        style = TextStyle(
-                            fontFamily = inter,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 12.sp,
-                            color = GraySuit
-                        )
+                        style =
+                            TextStyle(
+                                fontFamily = inter,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 12.sp,
+                                color = GraySuit,
+                            ),
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(
-                            color = GraySuit,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .clickable(onClick = {
-                            scope.launch {
-                                clipboard.setClipEntry(
-                                    ClipEntry(
-                                        ClipData.newPlainText(
-                                            context.getString(
-                                                R.string.wallets_copy_address_label,
-                                                address
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(color = GraySuit, shape = RoundedCornerShape(8.dp))
+                            .clickable(
+                                onClick = {
+                                    scope.launch {
+                                        clipboard.setClipEntry(
+                                            ClipEntry(
+                                                ClipData.newPlainText(
+                                                    context.getString(
+                                                        R.string.wallets_copy_address_label,
+                                                        address,
+                                                    ),
+                                                    address,
+                                                ),
                                             ),
-                                            address
                                         )
-                                    )
-                                )
-                            }
-                        }),
-                    contentAlignment = Alignment.Center
+                                    }
+                                },
+                            ),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .scale(scaleX = -1f, scaleY = 1f),
+                        modifier = Modifier.size(20.dp).scale(scaleX = -1f, scaleY = 1f),
                         imageVector = Icons.TwoTone.ContentCopy,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }

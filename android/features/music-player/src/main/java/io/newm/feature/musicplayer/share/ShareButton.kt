@@ -20,28 +20,32 @@ fun ShareButton(
 ) {
     if (songTitle.isNullOrBlank() || songArtist.isNullOrBlank()) return
     val context = LocalContext.current
-    IconButton(modifier = modifier, onClick = {
-        shareSong(context, songTitle, songArtist)
-    }) {
+    IconButton(modifier = modifier, onClick = { shareSong(context, songTitle, songArtist) }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_share),
             contentDescription = stringResource(id = R.string.share_button_icon_description),
-            tint = Color.White
+            tint = Color.White,
         )
     }
 }
 
-fun shareSong(context: Context, songTitle: String, songArtist: String) {
-    val randomPhrase = context.getRandomSharePhrase(
-        songTitle,
-        songArtist,
-        context.getString(R.string.newm_download_app_landing_page)
-    )
-    val shareIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, randomPhrase)
-        type = "text/plain"
-    }
+fun shareSong(
+    context: Context,
+    songTitle: String,
+    songArtist: String,
+) {
+    val randomPhrase =
+        context.getRandomSharePhrase(
+            songTitle,
+            songArtist,
+            context.getString(R.string.newm_download_app_landing_page),
+        )
+    val shareIntent =
+        Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, randomPhrase)
+            type = "text/plain"
+        }
     val chooser = Intent.createChooser(shareIntent, context.getString(R.string.share_chooser_title))
     context.startActivity(chooser)
 }

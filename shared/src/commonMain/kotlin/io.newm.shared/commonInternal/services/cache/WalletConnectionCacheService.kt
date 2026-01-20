@@ -10,20 +10,15 @@ import io.newm.shared.commonPublic.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
 
 class WalletConnectionCacheService(
-    private val db: NewmDatabaseWrapper
+    private val db: NewmDatabaseWrapper,
 ) {
-    fun getWalletConnections(): Flow<List<WalletConnection>> =
-        db.getWalletConnections()
+    fun getWalletConnections(): Flow<List<WalletConnection>> = db.getWalletConnections()
 
-    fun findWalletConnectionByID(id: String): Flow<WalletConnection?> =
-        db.findWalletConnectionByID(id)
+    fun findWalletConnectionByID(id: String): Flow<WalletConnection?> = db.findWalletConnectionByID(id)
 
-    suspend fun cacheWalletConnections(connections: List<WalletConnection>) =
-        db.cacheWalletConnections(connections)
+    suspend fun cacheWalletConnections(connections: List<WalletConnection>) = db.cacheWalletConnections(connections)
 
-    suspend fun deleteAllWalletConnections() =
-        db.deleteAllWalletConnections()
+    suspend fun deleteAllWalletConnections() = db.deleteAllWalletConnections()
 
-    suspend fun deleteWalletConnectionsById(id: String) =
-        db.deleteWalletConnectionById(id)
+    suspend fun deleteWalletConnectionsById(id: String) = db.deleteWalletConnectionById(id)
 }

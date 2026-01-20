@@ -7,5 +7,5 @@ data class CloudinarySignResponse(
     val signature: String,
     val timestamp: Long,
     val apiKey: String,
-    val cloudName: String
+    val cloudName: String,
 )

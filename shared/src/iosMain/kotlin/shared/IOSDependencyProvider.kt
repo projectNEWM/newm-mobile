@@ -15,9 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import me.tatarka.inject.annotations.Provides
 
-
 actual interface OSDependencyProvider {
-
     actual val preferencesDataStore: PreferencesDataStore
     actual val tokenManager: TokenManager
     actual val db: NewmDatabaseWrapper
@@ -26,8 +24,7 @@ actual interface OSDependencyProvider {
     @Provides
     fun provideCoroutineScope(): CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    @Provides
-    fun providePreferencesDataStore(): PreferencesDataStore = PreferencesDataStoreImpl()
+    @Provides fun providePreferencesDataStore(): PreferencesDataStore = PreferencesDataStoreImpl()
 
     @Provides
     fun providesNewmDatabaseWrapper(): NewmDatabaseWrapper {
@@ -35,16 +32,13 @@ actual interface OSDependencyProvider {
         return NewmDatabaseWrapper(NewmDatabase(driver))
     }
 
-    @Provides
-    fun providesHttpClientEngine(): HttpClientEngine {
-        return Darwin.create()
-    }
+    @Provides fun providesHttpClientEngine(): HttpClientEngine = Darwin.create()
 
     @Provides
-    fun providesTokenManager(storage: PreferencesDataStore, logger: NewmAppLogger): TokenManager {
-        return TokenManagerImpl(storage, logger)
-    }
+    fun providesTokenManager(
+        storage: PreferencesDataStore,
+        logger: NewmAppLogger,
+    ): TokenManager = TokenManagerImpl(storage, logger)
 
-    @Provides
-    fun providePlatformName(): String = "IOS"
+    @Provides fun providePlatformName(): String = "IOS"
 }

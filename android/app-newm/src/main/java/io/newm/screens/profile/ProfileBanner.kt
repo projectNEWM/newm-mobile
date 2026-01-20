@@ -34,35 +34,40 @@ fun ProfileBanner(
     avatarUrl: String,
     onAvatarClick: (() -> Unit)?,
 ) {
-    Box(
-        modifier = modifier
-            .height(230.dp)
-            .fillMaxWidth(),
-    ) {
+    Box(modifier = modifier.height(230.dp).fillMaxWidth()) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(bannerUrl)
-                .error(R.drawable.ic_banner_placeholder)
-                .placeholder(R.drawable.ic_banner_placeholder)
-                .build(),
-            modifier = Modifier
-                .height(160.dp)
-                .fillMaxWidth(),
+            model =
+                ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(bannerUrl)
+                    .error(R.drawable.ic_banner_placeholder)
+                    .placeholder(R.drawable.ic_banner_placeholder)
+                    .build(),
+            modifier = Modifier.height(160.dp).fillMaxWidth(),
             contentScale = ContentScale.Crop,
             placeholder = gradient(),
             contentDescription = null,
         )
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(avatarUrl)
-                .error(R.drawable.ic_avatar_placeholder)
-                .placeholder(R.drawable.ic_avatar_placeholder)
-                .build(),
-            modifier = Modifier
-                .size(140.dp)
-                .align(Alignment.BottomCenter)
-                .clip(CircleShape)
-                .then(if (onAvatarClick != null) Modifier.clickable(onClick = onAvatarClick) else Modifier),
+            model =
+                ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(avatarUrl)
+                    .error(R.drawable.ic_avatar_placeholder)
+                    .placeholder(R.drawable.ic_avatar_placeholder)
+                    .build(),
+            modifier =
+                Modifier
+                    .size(140.dp)
+                    .align(Alignment.BottomCenter)
+                    .clip(CircleShape)
+                    .then(
+                        if (onAvatarClick != null) {
+                            Modifier.clickable(onClick = onAvatarClick)
+                        } else {
+                            Modifier
+                        },
+                    ),
             placeholder = painterResource(R.drawable.ic_default_moster),
             error = painterResource(R.drawable.ic_default_moster),
             contentScale = ContentScale.Crop,
@@ -73,22 +78,16 @@ fun ProfileBanner(
                 painter = painterResource(R.drawable.ic_add_circle),
                 contentDescription = null,
                 tint = White50,
-                modifier = Modifier
-                    .size(40.dp)
-                    .align(Alignment.Center)
-                    .offset(x = 54.dp, y = 90.dp)
-                    .background(Color.Transparent)
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .align(Alignment.Center)
+                        .offset(x = 54.dp, y = 90.dp)
+                        .background(Color.Transparent),
             )
         }
     }
 }
 
 @Composable
-private fun gradient() = BrushPainter(
-    Brush.linearGradient(
-        listOf(
-            Color.White,
-            Color.LightGray,
-        )
-    )
-)
+private fun gradient() = BrushPainter(Brush.linearGradient(listOf(Color.White, Color.LightGray)))

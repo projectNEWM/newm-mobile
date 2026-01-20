@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 /**
  * A data class representing a NEWM minted song.
  *
- * This class encapsulates the properties of a song, including its metadata, status in minting and marketplace,
- * and optional fields related to its digital and commercial attributes.
+ * This class encapsulates the properties of a song, including its metadata, status in minting and
+ * marketplace, and optional fields related to its digital and commercial attributes.
  *
  * @property id Unique identifier of the song.
  * @property ownerId Identifier of the owner of the song.
@@ -64,5 +64,5 @@ data class Song(
     val streamUrl: String? = null,
     val nftPolicyId: String? = null,
     val nftName: String? = null,
-    val tempSourceId: Int = 0
+    val tempSourceId: Int = 0,
 )

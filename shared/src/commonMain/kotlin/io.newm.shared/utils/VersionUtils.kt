@@ -1,16 +1,17 @@
 package io.newm.shared.utils
 
 object VersionUtils {
-
     /**
-     * Compares two semantic version strings to determine if the first version is greater than the second.
+     * Compares two semantic version strings to determine if the first version is greater than the
+     * second.
      *
-     * This function parses and compares semantic versions, considering major, minor, patch, and pre-release components.
-     * The comparison follows the Semantic Versioning 2.0.0 specification where:
+     * This function parses and compares semantic versions, considering major, minor, patch, and
+     * pre-release components. The comparison follows the Semantic Versioning 2.0.0 specification
+     * where:
      * - Major, minor, and patch versions are compared numerically.
      * - Pre-release versions have a lower precedence than the associated normal version.
-     * - A version with a pre-release is always less than a version without a pre-release when the major, minor,
-     *   and patch versions are equal.
+     * - A version with a pre-release is always less than a version without a pre-release when the
+     *   major, minor, and patch versions are equal.
      *
      * Example comparisons:
      * - "1.0.0" > "0.9.9"
@@ -21,7 +22,10 @@ object VersionUtils {
      * @param currentAppVersion The second semantic version string.
      * @return True if version1 is greater than version2, otherwise false.
      */
-    fun isUpgradeRequired(minSupportedAppVersion: String, currentAppVersion: String): Boolean {
+    fun isUpgradeRequired(
+        minSupportedAppVersion: String,
+        currentAppVersion: String,
+    ): Boolean {
         // Parse versions into main and pre-release parts
         val mainAndPre1 = minSupportedAppVersion.split("-", limit = 2)
         val mainAndPre2 = currentAppVersion.split("-", limit = 2)

@@ -6,15 +6,14 @@ import io.newm.shared.commonInternal.db.PreferencesDataStore
 
 internal class TokenManagerImpl(
     private val storage: PreferencesDataStore,
-    private val logger: NewmAppLogger
+    private val logger: NewmAppLogger,
 ) : TokenManager {
-
-    override suspend fun getAccessToken(): String? {
-        return storage.getString(ACCESS_TOKEN_KEY) ?: run {
-            logger.debug("TokenManagerImpl", "No Access Token found - Time to Login")
-            null
-        }
-    }
+    override suspend fun getAccessToken(): String? =
+        storage.getString(ACCESS_TOKEN_KEY)
+            ?: run {
+                logger.debug("TokenManagerImpl", "No Access Token found - Time to Login")
+                null
+            }
 
     override suspend fun getRefreshToken(): String? {
         val refreshToken = storage.getString(REFRESH_TOKEN_KEY)
@@ -31,7 +30,10 @@ internal class TokenManagerImpl(
         storage.deleteValue(REFRESH_TOKEN_KEY)
     }
 
-    override suspend fun setAuthTokens(accessToken: String, refreshToken: String) {
+    override suspend fun setAuthTokens(
+        accessToken: String,
+        refreshToken: String,
+    ) {
         storage.saveString(ACCESS_TOKEN_KEY, accessToken)
         storage.saveString(REFRESH_TOKEN_KEY, refreshToken)
     }

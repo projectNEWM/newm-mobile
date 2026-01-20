@@ -7,7 +7,6 @@ import me.tatarka.inject.annotations.Inject
 @ApplicationScope
 @Inject
 class RecaptchaClientProvider {
-
     private var recaptchaClient: RecaptchaClient? = null
 
     fun setRecaptchaClient(recaptchaClient: RecaptchaClient) {

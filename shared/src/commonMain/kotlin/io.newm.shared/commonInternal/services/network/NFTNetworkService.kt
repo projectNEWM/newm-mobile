@@ -4,8 +4,7 @@ import io.newm.shared.commonInternal.api.CardanoWalletAPI
 import io.newm.shared.commonPublic.models.NFTTrack
 
 class NFTNetworkService(
-    private val cardanoWalletAPI: CardanoWalletAPI
-)  {
-    suspend fun getWalletNFTs(): List<NFTTrack> =
-        cardanoWalletAPI.getWalletNFTs()
+    private val cardanoWalletAPI: CardanoWalletAPI,
+) {
+    suspend fun getWalletNFTs(): List<NFTTrack> = cardanoWalletAPI.getWalletNFTs()
 }

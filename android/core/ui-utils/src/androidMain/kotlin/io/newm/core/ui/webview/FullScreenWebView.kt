@@ -20,7 +20,7 @@ fun FullScreenWebView(
     context: Context,
     url: String,
     accessToken: String? = null,
-    refreshToken: String? = null
+    refreshToken: String? = null,
 ) {
     AndroidView(
         factory = { ctx ->
@@ -34,34 +34,33 @@ fun FullScreenWebView(
 
                 // Set cookies only if they exist
                 accessToken?.let {
-                    val accessCookie =
-                        "accessToken=$it; path=/; domain=$domain"
+                    val accessCookie = "accessToken=$it; path=/; domain=$domain"
                     cookieManager.setCookie("https://$domain", accessCookie)
                 }
                 refreshToken?.let {
-                    val refreshCookie =
-                        "refreshToken=$it; path=/; domain=$domain"
+                    val refreshCookie = "refreshToken=$it; path=/; domain=$domain"
                     cookieManager.setCookie("https://$domain", refreshCookie)
                 }
 
                 cookieManager.flush() // Ensure cookies are written immediately
 
-                webViewClient = object : WebViewClient() {
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        request: WebResourceRequest?
-                    ): Boolean {
-                        val currentUrl = request?.url.toString()
-                        return if (isInternalUrl(currentUrl)) {
-                            // Load the URL in the current WebView
-                            false
-                        } else {
-                            // Open external links
-                            launchExternalUrl(context, currentUrl)
-                            true
+                webViewClient =
+                    object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?,
+                        ): Boolean {
+                            val currentUrl = request?.url.toString()
+                            return if (isInternalUrl(currentUrl)) {
+                                // Load the URL in the current WebView
+                                false
+                            } else {
+                                // Open external links
+                                launchExternalUrl(context, currentUrl)
+                                true
+                            }
                         }
                     }
-                }
 
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
@@ -70,16 +69,19 @@ fun FullScreenWebView(
                 loadUrl(url)
             }
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     )
 }
 
-private fun isInternalUrl(url: String): Boolean {
-    return listOf("newm.studio", "newm.io", "recordstore.newm.io")
-        .any { domain -> url.contains(domain, ignoreCase = true) }
-}
+private fun isInternalUrl(url: String): Boolean =
+    listOf("newm.studio", "newm.io", "recordstore.newm.io").any { domain ->
+        url.contains(domain, ignoreCase = true)
+    }
 
-fun launchExternalUrl(context: Context, url: String) {
+fun launchExternalUrl(
+    context: Context,
+    url: String,
+) {
     val intent = Intent(Intent.ACTION_VIEW, url.toUri())
     context.startActivity(intent)
 }

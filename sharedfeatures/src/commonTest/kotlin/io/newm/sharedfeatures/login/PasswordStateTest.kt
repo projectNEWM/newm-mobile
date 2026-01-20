@@ -4,19 +4,19 @@ import com.varabyte.truthish.assertThat
 import kotlin.test.Test
 
 class PasswordStateTest {
-
     @Test
     fun `validate passwords correctly`() {
         val state = PasswordState()
-        
+
         val validPasswords = listOf("Password123!", "Abcdefg1", "1234567aA")
-        val invalidPasswords = listOf(
-            "short1A", // too short
-            "alllowercase1", // no uppercase
-            "ALLUPPERCASE1", // no lowercase
-            "NoNumbers", // no numbers
-            "12345678" // no letters
-        )
+        val invalidPasswords =
+            listOf(
+                "short1A", // too short
+                "alllowercase1", // no uppercase
+                "ALLUPPERCASE1", // no lowercase
+                "NoNumbers", // no numbers
+                "12345678", // no letters
+            )
 
         validPasswords.forEach { password ->
             state.text = password

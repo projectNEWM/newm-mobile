@@ -3,8 +3,8 @@ package io.newm.feature.login.screen.resetpassword
 import com.slack.circuit.runtime.CircuitUiState
 import io.newm.feature.login.screen.TextFieldState
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterEmailUiEvent
-import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterNewPasswordUiEvent
+import io.newm.feature.login.screen.resetpassword.ResetPasswordUiEvent.EnterVerificationCodeUiEvent
 
 sealed interface ResetPasswordScreenUiState : CircuitUiState {
     val isLoading: Boolean
@@ -15,7 +15,7 @@ sealed interface ResetPasswordScreenUiState : CircuitUiState {
         override val isLoading: Boolean,
         override val errorMessage: String?,
         val submitButtonEnabled: Boolean,
-        val eventSink: (EnterEmailUiEvent) -> Unit
+        val eventSink: (EnterEmailUiEvent) -> Unit,
     ) : ResetPasswordScreenUiState
 
     data class EnterVerificationCode(
@@ -23,7 +23,7 @@ sealed interface ResetPasswordScreenUiState : CircuitUiState {
         val submitButtonEnabled: Boolean,
         override val isLoading: Boolean,
         override val errorMessage: String?,
-        val eventSink: (EnterVerificationCodeUiEvent) -> Unit
+        val eventSink: (EnterVerificationCodeUiEvent) -> Unit,
     ) : ResetPasswordScreenUiState
 
     data class EnterNewPassword(
@@ -32,6 +32,6 @@ sealed interface ResetPasswordScreenUiState : CircuitUiState {
         val submitButtonEnabled: Boolean,
         override val isLoading: Boolean,
         override val errorMessage: String?,
-        val eventSink: (EnterNewPasswordUiEvent) -> Unit
+        val eventSink: (EnterNewPasswordUiEvent) -> Unit,
     ) : ResetPasswordScreenUiState
 }

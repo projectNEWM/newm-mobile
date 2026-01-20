@@ -41,9 +41,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 
-
 @Composable
-fun DevMenuUi(state: DevMenuMainScreen.UiState, modifier: Modifier = Modifier) {
+fun DevMenuUi(
+    state: DevMenuMainScreen.UiState,
+    modifier: Modifier = Modifier,
+) {
     val onEvent = (state as? DevMenuMainScreen.UiState.Content)?.onEvent ?: {}
 
     Scaffold(
@@ -56,7 +58,7 @@ fun DevMenuUi(state: DevMenuMainScreen.UiState, modifier: Modifier = Modifier) {
                         Text(
                             text = "Debug tools and utilities",
                             style = MaterialTheme.typography.caption,
-                            color = MaterialTheme.colors.onPrimary.copy(alpha = 0.7f)
+                            color = MaterialTheme.colors.onPrimary.copy(alpha = 0.7f),
                         )
                     }
                 },
@@ -67,33 +69,33 @@ fun DevMenuUi(state: DevMenuMainScreen.UiState, modifier: Modifier = Modifier) {
                     }
                 },
                 backgroundColor = MaterialTheme.colors.primary,
-                elevation = 4.dp
+                elevation = 4.dp,
             )
-        }
+        },
     ) { padding ->
         when (state) {
-            is DevMenuMainScreen.UiState.Content -> DevMenuScreenContent(
-                modifier = Modifier.padding(padding),
-                menuItems = state.menuItems,
-                onEvent = onEvent
-            )
+            is DevMenuMainScreen.UiState.Content -> {
+                DevMenuScreenContent(
+                    modifier = Modifier.padding(padding),
+                    menuItems = state.menuItems,
+                    onEvent = onEvent,
+                )
+            }
 
             DevMenuMainScreen.UiState.Loading -> {
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxSize().padding(padding),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         CircularProgressIndicator(color = MaterialTheme.colors.primary)
                         Text(
                             text = "Loading developer tools...",
                             style = MaterialTheme.typography.body1,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
                         )
                     }
                 }
@@ -106,14 +108,12 @@ fun DevMenuUi(state: DevMenuMainScreen.UiState, modifier: Modifier = Modifier) {
 fun DevMenuScreenContent(
     modifier: Modifier,
     menuItems: List<DevMenuItem>,
-    onEvent: (DevMenuMainScreen.UiEvent) -> Unit
+    onEvent: (DevMenuMainScreen.UiEvent) -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        modifier =
+            modifier.fillMaxSize().background(MaterialTheme.colors.background).padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
             // Welcome header card
@@ -121,28 +121,28 @@ fun DevMenuScreenContent(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = 2.dp,
                 shape = RoundedCornerShape(12.dp),
-                backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f)
+                backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f),
             ) {
                 Row(
                     modifier = Modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         text = "🛠️",
                         style = MaterialTheme.typography.h4,
-                        modifier = Modifier.padding(end = 12.dp)
+                        modifier = Modifier.padding(end = 12.dp),
                     )
                     Column {
                         Text(
                             text = "Development Tools",
                             style = MaterialTheme.typography.h6,
                             color = MaterialTheme.colors.primary,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                         Text(
                             text = "Access debugging and testing utilities",
                             style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
                         )
                     }
                 }
@@ -152,9 +152,7 @@ fun DevMenuScreenContent(
         items(menuItems) { item ->
             DevMenuListItem(
                 item = item,
-                onClick = {
-                    onEvent(DevMenuMainScreen.UiEvent.OnItemClick(item.screen))
-                }
+                onClick = { onEvent(DevMenuMainScreen.UiEvent.OnItemClick(item.screen)) },
             )
         }
 
@@ -164,16 +162,16 @@ fun DevMenuScreenContent(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = 1.dp,
                 shape = RoundedCornerShape(8.dp),
-                backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
+                backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f),
             ) {
                 Column(
                     modifier = Modifier.padding(12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
                         text = "⚠️ These tools are for development only",
                         style = MaterialTheme.typography.caption,
-                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                     )
                 }
             }
@@ -190,9 +188,8 @@ fun DevMenuListItem(
     var isPressed by remember { mutableStateOf(false) }
 
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable {
+        modifier =
+            modifier.fillMaxWidth().clickable {
                 isPressed = true
                 onClick()
                 // Reset pressed state
@@ -203,36 +200,36 @@ fun DevMenuListItem(
             },
         elevation = if (isPressed) 8.dp else 4.dp,
         shape = RoundedCornerShape(12.dp),
-        backgroundColor = if (isPressed) {
-            MaterialTheme.colors.primary.copy(alpha = 0.1f)
-        } else {
-            MaterialTheme.colors.surface
-        }
+        backgroundColor =
+            if (isPressed) {
+                MaterialTheme.colors.primary.copy(alpha = 0.1f)
+            } else {
+                MaterialTheme.colors.surface
+            },
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 // Smart icon based on title
                 Text(
-                    text = when (item.title) {
-                        "Feature Flags" -> "🚩"
-                        "Debug Info" -> "🐛"
-                        "Network Logs" -> "🌐"
-                        "Cache Manager" -> "🗂️"
-                        "Performance" -> "⚡"
-                        else -> "🔧"
-                    },
+                    text =
+                        when (item.title) {
+                            "Feature Flags" -> "🚩"
+                            "Debug Info" -> "🐛"
+                            "Network Logs" -> "🌐"
+                            "Cache Manager" -> "🗂️"
+                            "Performance" -> "⚡"
+                            else -> "🔧"
+                        },
                     style = MaterialTheme.typography.h5,
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
                 )
 
                 // Title and description
@@ -241,7 +238,7 @@ fun DevMenuListItem(
                         text = item.title,
                         style = MaterialTheme.typography.h6.copy(fontSize = 16.sp),
                         color = MaterialTheme.colors.onSurface,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     )
 
                     // Show description if it exists
@@ -249,7 +246,7 @@ fun DevMenuListItem(
                         Text(
                             text = item.description,
                             style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f)
+                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.7f),
                         )
                     }
                 }
@@ -259,25 +256,32 @@ fun DevMenuListItem(
             Text(
                 text = "→",
                 style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.primary,
             )
         }
     }
 }
 
+class DevMenuUiFactory
+    @Inject
+    constructor() : Ui.Factory {
+        override fun create(
+            screen: Screen,
+            context: CircuitContext,
+        ): Ui<*>? =
+            when (screen) {
+                DevMenuMainScreen -> {
+                    ui<DevMenuMainScreen.UiState> { state, modifier -> DevMenuUi(state, modifier) }
+                }
 
-class DevMenuUiFactory @Inject constructor() : Ui.Factory {
-    override fun create(screen: Screen, context: CircuitContext): Ui<*>? {
-        return when (screen) {
-            DevMenuMainScreen -> ui<DevMenuMainScreen.UiState> { state, modifier ->
-                DevMenuUi(state, modifier)
+                is FeatureFlagsListScreen -> {
+                    ui<FeatureFlagsListScreen.UiState> { state, modifier ->
+                        FeatureFlagsListUi(state, modifier)
+                    }
+                }
+
+                else -> {
+                    null
+                }
             }
-
-            is FeatureFlagsListScreen -> ui<FeatureFlagsListScreen.UiState> { state, modifier ->
-                FeatureFlagsListUi(state, modifier)
-            }
-
-            else -> null
-        }
     }
-}
