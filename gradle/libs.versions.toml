@@ -3,68 +3,64 @@ agp = "8.13.2"
 android-compileSdk = "36"
 android-minSdk = "28"
 android-targetSdk = "36"
-androidx-activityCompose = "1.11.0"
+androidx-activityCompose = "1.12.2"
 androidx-appcompat = "1.7.1"
 androidx-constraintlayout = "2.2.1"
 androidx-core-ktx = "1.17.0"
 androidx-espresso-core = "3.5.0"
-androidx-material = "1.12.0"
+androidx-material = "1.13.0"
 androidx-test-junit = "1.1.5"
 barcodeScanning = "17.3.0"
 browser = "1.9.0"
-cameraView = "1.5.1"
-circuitFoundation = "0.28.0"
+buildConfig = "6.0.7"
+cameraView = "1.5.2"
+circuitFoundation = "0.32.0"
 cloudinaryAndroid = "3.1.2"
 cmpImagePickNCrop = "1.1.2"
 coil = "3.3.0"
 compose-multiplatform = "1.10.0"
 coreSplashscreen = "1.2.0"
-coroutinesExtensions = "1.5.5"
 datastorePreferences = "1.2.0"
-desugar_jdk_libs = "2.1.4"
-firebaseBom = "34.7.0"
+desugar_jdk_libs = "2.1.5"
+firebaseBom = "34.8.0"
 flipper = "0.273.0"
 flipperNoop = "0.273.0"
-googleServices = "4.4.2"
+googleServices = "4.4.4"
 gradle = "8.13.2"
-gradlePlugin = "1.5.5"
-gradleVersionsPlugin = "0.51.0"
+gradleVersionsPlugin = "0.53.0"
 guava = "33.5.0-jre"
 junit = "4.13.2"
-koin = "4.0.4"
-kotlin = "2.2.21"
-kotlin-inject = "0.8.0"
+koin = "4.1.1"
+kotlin = "2.3.0"
+kotlin-inject = "0.9.0"
+kotlinBrowser = "0.5.0"
 kotlinxCoroutines = "1.10.2"
 ksp = "2.2.21-2.0.4"
+ktfmt = "0.61"
+ktlint = "1.8.0"
 ktor = "3.3.3"
 kvault = "1.12.0"
 launchdarklyAndroidClientSdk = "5.10.0"
-lifecycleRuntimeKtx = "2.9.4"
-material = "1.8.0"
+lifecycleRuntimeKtx = "2.10.0"
 materialIconsExtended = "1.7.8"
-media3 = "1.7.1"
-mockk = "1.14.2"
-navigationCompose = "2.9.5"
+media3 = "1.9.0"
+mockk = "1.14.7"
+navigationCompose = "2.9.6"
 paletteKtx = "1.0.0"
 paparazzi = "1.3.5"
 playServicesAuth = "21.5.0"
 processPhoenix = "3.0.0"
 recaptcha = "18.8.0"
-runtime = "2.1.0"
+sentryPlugin = "5.12.2"
 soloader = "0.12.1"
-store5 = "5.1.0-alpha07"
-testParameterInjector = "1.18"
-truthish = "1.0.4"
-uiUtil = "1.9.4"
-jetbrainsKotlinJvm = "1.9.24"
-runner = "1.5.2"
-core = "1.5.0"
 spotless = "8.1.0"
-ktfmt = "0.61"
-ktlint = "1.8.0"
+sqldelight = "2.2.1"
+store5 = "5.1.0-alpha08"
+testParameterInjector = "1.20"
+truthish = "1.0.4"
+uiUtil = "1.10.1"
 
 [libraries]
-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "coroutinesExtensions" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraView" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraView" }
@@ -73,7 +69,6 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-androidx-material-icons-extended-android = { module = "androidx.compose.material:material-icons-extended-android", version.ref = "materialIconsExtended" }
 androidx-media3-common = { module = "androidx.media3:media3-common", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
 androidx-media3-datasource = { module = "androidx.media3:media3-datasource", version.ref = "media3" }
@@ -100,7 +95,6 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" 
 coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
 coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -114,12 +108,13 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+kotlin-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinBrowser" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.8" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
@@ -138,22 +133,25 @@ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kvault = { module = "com.liftric:kvault", version.ref = "kvault" }
 launchdarkly-client = { module = "com.launchdarkly:launchdarkly-android-client-sdk", version.ref = "launchdarklyAndroidClientSdk" }
-material = { module = "androidx.compose.material:material", version.ref = "material" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "coroutinesExtensions" }
 paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
 paparazzi-gradle-plugin = { module = "app.cash.paparazzi:paparazzi-gradle-plugin", version.ref = "paparazzi" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 process-phoenix = { module = "com.jakewharton:process-phoenix", version.ref = "processPhoenix" }
 recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "recaptcha" }
-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "runtime" }
 soloader = { module = "com.facebook.soloader:soloader", version.ref = "soloader" }
-sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "gradlePlugin" }
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 store5 = { module = "org.mobilenativefoundation.store:store5", version.ref = "store5" }
 test-parameter-injector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 truthish = { module = "com.varabyte.truthish:truthish", version.ref = "truthish" }
@@ -161,10 +159,18 @@ truthish = { module = "com.varabyte.truthish:truthish", version.ref = "truthish"
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+gradleVersions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-plugin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentryPlugin" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

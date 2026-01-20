@@ -8,12 +8,12 @@ apply(from = "../../gradle_include/circuit.gradle")
 apply(from = "../../gradle_include/flipper.gradle")
 
 plugins {
-    id("com.android.application")
-    id("com.google.gms.google-services")
-    id("kotlin-parcelize")
-    kotlin("android")
-    kotlin("kapt")
-    id("io.sentry.android.gradle") version "5.12.1"
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.kotlin.plugin.parcelize)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlinKapt)
+    alias(libs.plugins.sentry)
     alias(libs.plugins.compose.multiplatform)
 }
 
@@ -101,6 +101,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.analytics)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.circuit.retained)
     implementation(compose.material)
     implementation(libs.androidx.media3.datasource)
     implementation(libs.androidx.media3.exoplayer)

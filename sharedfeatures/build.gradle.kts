@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.plugin.parcelize)
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -42,6 +42,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.collections.immutable)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)

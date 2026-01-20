@@ -1,19 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import java.util.Locale
 
-buildscript {
-    Repo.addRepos(repositories)
-
-    dependencies {
-        classpath(libs.gradle)
-        classpath(libs.google.services)
-        classpath(libs.kotlin.gradle.plugin)
-        classpath(libs.kotlin.serialization)
-        classpath(libs.gradle.versions.plugin)
-        classpath(libs.sqldelight.gradle.plugin)
-        classpath(libs.paparazzi.gradle.plugin)
-    }
-}
+buildscript { Repo.addRepos(repositories) }
 
 plugins {
     alias(libs.plugins.androidApplication) apply false
@@ -23,7 +11,14 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlin.plugin.parcelize) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.kotlinKapt) apply false
+    alias(libs.plugins.sqldelight) apply false
+    alias(libs.plugins.paparazzi) apply false
+    alias(libs.plugins.googleServices) apply false
     alias(libs.plugins.spotless)
+    alias(libs.plugins.gradleVersions)
 }
 
 allprojects {
@@ -54,8 +49,6 @@ allprojects {
  * Run with `./gradlew dependencyUpdates` and the report will be in:
  * /build/dependencyUpdates/versionsReport.html
  */
-apply(plugin = "com.github.ben-manes.versions")
-
 fun isNonStable(version: String): Boolean {
     val stableKeyword =
         listOf("RELEASE", "FINAL", "GA").any { version.uppercase(Locale.getDefault()).contains(it) }

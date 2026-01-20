@@ -4,9 +4,9 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("com.android.library")
-    id("kotlin-parcelize")
-    id("app.cash.paparazzi")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.plugin.parcelize)
+    alias(libs.plugins.paparazzi)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.compose.multiplatform)
 }
