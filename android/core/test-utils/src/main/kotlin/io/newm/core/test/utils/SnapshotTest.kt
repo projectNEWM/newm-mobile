@@ -1,8 +1,11 @@
 package io.newm.core.test.utils
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalInspectionMode
 import app.cash.paparazzi.Paparazzi
 import io.newm.core.theme.NewmTheme
+import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.junit.Rule
 
 abstract class SnapshotTest(
@@ -19,6 +22,9 @@ abstract class SnapshotTest(
 
     fun snapshot(content: @Composable () -> Unit) {
         paparazzi.snapshot {
+            CompositionLocalProvider(LocalInspectionMode provides true) {
+                PreviewContextConfigurationEffect()
+            }
             NewmTheme(darkTheme = snapshotTestConfiguration.isDarkMode, content = content)
         }
     }

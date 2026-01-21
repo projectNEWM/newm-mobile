@@ -22,6 +22,7 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import io.newm.core.theme.NewmTheme
 import io.newm.core.theme.inter
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
@@ -32,6 +33,7 @@ import newm_mobile.sharedfeatures.generated.resources.login
 import newm_mobile.sharedfeatures.generated.resources.password
 import newm_mobile.sharedfeatures.generated.resources.reset_password_forgot_your_password
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LoginUi(
@@ -102,6 +104,25 @@ internal fun LoginScreenContent(
             enabled = state.submitButtonEnabled,
         )
         Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+@Preview
+@Composable
+fun PreviewLoginUi() {
+    NewmTheme {
+        LoginUi(
+            state =
+                LoginScreen.UiState(
+                    emailState = EmailState(),
+                    passwordState = PasswordState(),
+                    submitButtonEnabled = true,
+                    errorMessage = null,
+                    isLoading = false,
+                    eventSink = {},
+                ),
+            modifier = Modifier,
+        )
     }
 }
 
