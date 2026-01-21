@@ -78,8 +78,27 @@ To set up Git LFS:
 2. Initialize Git LFS in the repository: `git lfs install`
 3. Pull the LFS assets: `git lfs pull`
 
+#### UI Snapshot Testing
+We use **Paparazzi** for UI snapshot testing to catch unintended visual changes in our Compose UI components. Snapshot tests render UI components and compare them against baseline images.
+
+**Recording Snapshots (Creating Baselines):**
+```bash
+./gradlew recordPaparazziDebug
+```
+This command generates baseline snapshot images for all your snapshot tests. Run this when:
+- Adding new snapshot tests
+- Intentionally updating UI components (after verifying the changes are correct)
+
+**Verifying Snapshots (Running Tests):**
+```bash
+./gradlew verifyPaparazziDebug
+```
+This command runs all snapshot tests and compares the rendered output against the baseline images. If differences are detected, the test will fail and show you the differences.
+
+**Note:** Snapshot images are stored in Git LFS, so make sure you have Git LFS set up before working with snapshots.
+
 #### CI Integration
-Formatting is automatically verified on every Pull Request via GitHub Actions.
+Formatting and snapshot tests are automatically verified on every Pull Request via GitHub Actions.
 
 <!-- GETTING STARTED -->
 
