@@ -54,10 +54,6 @@ fun WelcomeUi(
                 },
             )
         }
-
-        UiState.Loading -> {
-            Text("Welcome to Newm!")
-        }
     }
 }
 

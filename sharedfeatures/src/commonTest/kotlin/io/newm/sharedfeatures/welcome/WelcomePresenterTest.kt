@@ -55,7 +55,7 @@ class WelcomePresenterTest {
             @Composable
             override fun present(): WelcomeScreen.UiState {
                 var state: WelcomeScreen.UiState by remember {
-                    mutableStateOf(WelcomeScreen.UiState.Loading)
+                    mutableStateOf(WelcomeScreen.UiState.Content {})
                 }
                 CompositionLocalProvider(LocalUriHandler provides uriHandler) {
                     state = realPresenter.present()
