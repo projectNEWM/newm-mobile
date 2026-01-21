@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.compose.multiplatform)
 }
 
 apply(from = "../../../gradle_include/circuit.gradle")
@@ -27,6 +28,7 @@ kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarg
 
 dependencies {
     implementation(libs.paparazzi)
+    implementation(compose.components.resources)
     implementation(project(Modules.CORE_THEME))
 
     testImplementation(libs.test.parameter.injector)

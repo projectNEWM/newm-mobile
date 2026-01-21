@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.plugin.parcelize)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -72,6 +73,13 @@ kotlin {
                 api(libs.recaptcha)
                 implementation(libs.play.services.auth)
                 implementation(libs.androidx.activity.compose)
+            }
+        }
+
+        androidUnitTest {
+            dependencies {
+                implementation(project(Modules.TEST_UTILS))
+                implementation(libs.test.parameter.injector)
             }
         }
 
