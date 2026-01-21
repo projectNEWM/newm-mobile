@@ -70,6 +70,14 @@ To ensure code is formatted before every commit, we use a pre-commit hook. You c
 ```
 This hook will automatically run `spotlessApply` and stage any formatting changes whenever you commit.
 
+#### Git LFS
+We use **Git LFS** to manage snapshot images for Paparazzi testing. This ensures that the repository size remains small and binary files are handled efficiently.
+
+To set up Git LFS:
+1. Install Git LFS: `brew install git-lfs` (on macOS) or follow [installation instructions](https://git-lfs.github.com/).
+2. Initialize Git LFS in the repository: `git lfs install`
+3. Pull the LFS assets: `git lfs pull`
+
 #### CI Integration
 Formatting is automatically verified on every Pull Request via GitHub Actions.
 

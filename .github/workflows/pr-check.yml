@@ -68,6 +68,30 @@ jobs:
       - name: Run Lint
         run: ./gradlew lintDebug
 
+  paparazzi-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Grant execute permission for lfs_check.sh
+        run: chmod +x .github/scripts/lfs_check.sh
+      - name: Run LFS Check
+        run: ./.github/scripts/lfs_check.sh
+      - name: Verify Paparazzi Snapshots
+        run: ./gradlew verifyPaparazziDebug
+
   unit-tests:
     runs-on: ubuntu-latest
     environment: staging
