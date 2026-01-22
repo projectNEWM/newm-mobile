@@ -5,10 +5,10 @@ import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.newm.core.test.utils.SnapshotTest
 import io.newm.core.test.utils.SnapshotTestConfiguration
-import io.newm.sharedfeatures.devmenu.DevMenuUi
 import io.newm.sharedfeatures.screens.DevMenuItem
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
+import io.newm.sharedfeatures.screens.devmenu.DevMenuUi
 import org.junit.Test
 import org.junit.runner.RunWith
 

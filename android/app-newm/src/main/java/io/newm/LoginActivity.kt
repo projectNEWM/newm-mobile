@@ -40,20 +40,20 @@ import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
-import io.newm.sharedfeatures.devmenu.DevMenuPresenter
-import io.newm.sharedfeatures.devmenu.DevMenuUi
-import io.newm.sharedfeatures.devmenu.FeatureFlagsListPresenter
-import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
-import io.newm.sharedfeatures.login.LoginPresenter
-import io.newm.sharedfeatures.login.LoginUi
 import io.newm.sharedfeatures.screens.CreateAccountScreen
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
 import io.newm.sharedfeatures.screens.LoginScreen
 import io.newm.sharedfeatures.screens.ResetPasswordScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
-import io.newm.sharedfeatures.welcome.WelcomePresenter
-import io.newm.sharedfeatures.welcome.WelcomeUi
+import io.newm.sharedfeatures.screens.auth.login.LoginPresenter
+import io.newm.sharedfeatures.screens.auth.login.LoginUi
+import io.newm.sharedfeatures.screens.auth.welcome.WelcomePresenter
+import io.newm.sharedfeatures.screens.auth.welcome.WelcomeUi
+import io.newm.sharedfeatures.screens.devmenu.DevMenuPresenter
+import io.newm.sharedfeatures.screens.devmenu.DevMenuUi
+import io.newm.sharedfeatures.screens.devmenu.featureflaglist.FeatureFlagsListPresenter
+import io.newm.sharedfeatures.screens.devmenu.featureflaglist.FeatureFlagsListUi
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui
@@ -216,7 +216,7 @@ fun WelcomeToNewm(
         )
 
     val snackbarHostState = remember { SnackbarHostState() }
-    io.newm.sharedfeatures.devmenu.DebugOverlay(
+    io.newm.sharedfeatures.screens.devmenu.DebugOverlay(
         buildConfig = config,
         onOpenDebugMenu = { circuitNavigator.goTo(DevMenuMainScreen) },
     ) {

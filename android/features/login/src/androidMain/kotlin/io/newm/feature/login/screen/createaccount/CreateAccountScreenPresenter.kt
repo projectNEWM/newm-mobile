@@ -22,7 +22,7 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
 import io.newm.shared.commonPublic.usecases.SignupUseCase
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
+import io.newm.sharedfeatures.screens.auth.login.RecaptchaClientProvider
 import kotlinx.coroutines.launch
 
 class CreateAccountScreenPresenter(
