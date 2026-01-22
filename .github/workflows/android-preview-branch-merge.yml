@@ -1,13 +1,7 @@
 name: Distribute Android App
 on:
-  push:
-    branches:
-      - development
-    paths:
-      - "android/**"
-      - "shared/**"
-      - "buildSrc/**"
-      - ".github/workflows/android-preview-branch-merge.yml"
+  schedule:
+    - cron: '30 4 * * *' #runs every morning at 4:30 AM UTC
 jobs:
   build_android_debug:
     runs-on: ubuntu-latest
