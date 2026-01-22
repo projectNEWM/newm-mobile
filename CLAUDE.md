@@ -18,12 +18,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Code Style Guidelines
 - Kotlin style: Follow standard Kotlin conventions (camelCase, PascalCase)
 - Architecture: KMP (Kotlin Multiplatform) supporting Android, iOS, Desktop (JVM), and Web (WebAssembly)
-- Android UI: Uses Circuit library for UI navigation and state management
+- UI Architecture: Uses **Circuit** library for UI navigation and state management (Presenter/Ui pattern)
 - Desktop: JVM-based Compose Multiplatform application
 - Web: WebAssembly-based Compose Multiplatform application using browser APIs
 - Imports: Group by package, alphabetize within groups
 - Types: Prefer non-nullable types when possible
 - Naming: Descriptive, explicit naming (e.g., `UserRepository` not `Repository`)
 - Error handling: Use Result pattern with sealed classes for domain errors
-- Dependency injection: Uses Koin for KMP code
+- Dependency injection: Uses **kotlin-inject** for KMP code (migrating away from Koin)
+- Testing: circuit-test for presenters, Paparazzi for snapshots, truthish for assertions
 - JVM target: 11

@@ -25,8 +25,8 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
 import io.newm.shared.commonPublic.usecases.ResetPasswordUseCase
 import io.newm.shared.commonPublic.usecases.SignupUseCase
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
 import io.newm.sharedfeatures.screens.HomeScreen
+import io.newm.sharedfeatures.screens.auth.login.RecaptchaClientProvider
 import kotlinx.coroutines.launch
 
 private enum class ResetPasswordStep {

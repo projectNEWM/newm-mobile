@@ -1,0 +1,52 @@
+package io.newm.sharedfeatures.screens.auth.login
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import io.newm.core.ui.OnboardingMainImage
+import newm_mobile.sharedfeatures.generated.resources.Res
+import newm_mobile.sharedfeatures.generated.resources.ic_newm_logo
+import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun PreLoginArtistBackgroundContentTemplate(
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+    header: @Composable ColumnScope.() -> Unit = {},
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+                .systemBarsPadding()
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState()),
+    ) {
+        header()
+        Spacer(modifier = Modifier.height(70.dp))
+        OnboardingMainImage(painterResource(Res.drawable.ic_newm_logo))
+        Spacer(modifier = Modifier.height(16.dp))
+        content()
+    }
+
+    if (isLoading) {
+        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+    }
+}

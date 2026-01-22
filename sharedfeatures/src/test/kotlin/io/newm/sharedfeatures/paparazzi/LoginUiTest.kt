@@ -5,10 +5,10 @@ import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.newm.core.test.utils.SnapshotTest
 import io.newm.core.test.utils.SnapshotTestConfiguration
-import io.newm.sharedfeatures.login.EmailState
-import io.newm.sharedfeatures.login.LoginUi
-import io.newm.sharedfeatures.login.PasswordState
 import io.newm.sharedfeatures.screens.LoginScreen
+import io.newm.sharedfeatures.screens.auth.login.EmailState
+import io.newm.sharedfeatures.screens.auth.login.LoginUi
+import io.newm.sharedfeatures.screens.auth.login.PasswordState
 import org.junit.Test
 import org.junit.runner.RunWith
 

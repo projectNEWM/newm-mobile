@@ -69,8 +69,8 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.config.NewmSharedBuildConfig
-import io.newm.sharedfeatures.devmenu.DebugOverlay
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
+import io.newm.sharedfeatures.screens.devmenu.DebugOverlay
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 

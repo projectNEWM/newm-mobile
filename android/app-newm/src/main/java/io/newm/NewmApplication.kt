@@ -16,7 +16,7 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.shared.di.initKoin
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
+import io.newm.sharedfeatures.screens.auth.login.RecaptchaClientProvider
 import io.newm.utils.AndroidEventLoggerImpl
 import io.newm.utils.AndroidNewmAppLogger
 import io.newm.utils.AppForegroundBackgroundTracker

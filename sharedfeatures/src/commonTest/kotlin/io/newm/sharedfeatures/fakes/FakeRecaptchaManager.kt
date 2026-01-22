@@ -1,6 +1,6 @@
 package io.newm.sharedfeatures.fakes
 
-import io.newm.sharedfeatures.login.RecaptchaManager
+import io.newm.sharedfeatures.screens.auth.login.RecaptchaManager
 import kotlinx.coroutines.yield
 
 class FakeRecaptchaManager : RecaptchaManager {

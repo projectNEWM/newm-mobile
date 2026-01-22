@@ -1,8 +1,8 @@
 package io.newm.sharedfeatures.fakes
 
 import androidx.compose.runtime.Composable
-import io.newm.sharedfeatures.welcome.GoogleSignInResult
-import io.newm.sharedfeatures.welcome.SocialLoginManager
+import io.newm.sharedfeatures.screens.auth.welcome.GoogleSignInResult
+import io.newm.sharedfeatures.screens.auth.welcome.SocialLoginManager
 
 class FakeSocialLoginManager : SocialLoginManager {
     var capturedOnResult: ((GoogleSignInResult) -> Unit)? = null

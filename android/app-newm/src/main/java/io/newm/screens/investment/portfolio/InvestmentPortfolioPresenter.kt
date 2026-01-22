@@ -14,7 +14,7 @@ import io.newm.shared.commonPublic.usecases.GetInvestmentPortfolioDataUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
-import io.newm.sharedfeatures.login.RecaptchaClientProvider
+import io.newm.sharedfeatures.screens.auth.login.RecaptchaClientProvider
 import kotlinx.coroutines.flow.flowOf
 
 class InvestmentPortfolioPresenter(

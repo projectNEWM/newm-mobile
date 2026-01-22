@@ -8,8 +8,8 @@ import io.newm.core.test.utils.SnapshotTestConfiguration
 import io.newm.shared.commonPublic.featureflags.EvaluationSource
 import io.newm.shared.commonPublic.featureflags.FeatureFlag
 import io.newm.shared.commonPublic.featureflags.FlagCategory
-import io.newm.sharedfeatures.devmenu.FeatureFlagsListUi
 import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
+import io.newm.sharedfeatures.screens.devmenu.featureflaglist.FeatureFlagsListUi
 import org.junit.Test
 import org.junit.runner.RunWith
 
