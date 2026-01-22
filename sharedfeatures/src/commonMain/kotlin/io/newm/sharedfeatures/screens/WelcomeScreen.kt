@@ -8,8 +8,6 @@ import io.newm.sharedfeatures.parceling.CommonParcelize
 @CommonParcelize
 data object WelcomeScreen : Screen {
     sealed interface UiState : CircuitUiState {
-        data object Loading : UiState
-
         data class Content(
             val onEvent: (UiEvent) -> Unit,
         ) : UiState
