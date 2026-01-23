@@ -23,22 +23,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.LocalIsBottomBarVisible
-import io.newm.core.resources.R
-import io.newm.core.theme.Black
-import io.newm.core.theme.Black90
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Pinkish
-import io.newm.core.theme.Purple
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
-import io.newm.core.ui.buttons.NewmButton
-import io.newm.core.ui.utils.iconGradient
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.sharedfeatures.core.resources.R
+import io.newm.sharedfeatures.theme.Black
+import io.newm.sharedfeatures.theme.Black90
+import io.newm.sharedfeatures.theme.DarkViolet
+import io.newm.sharedfeatures.theme.Pinkish
+import io.newm.sharedfeatures.theme.Purple
+import io.newm.sharedfeatures.theme.White
+import io.newm.sharedfeatures.ui.buttons.NewmButton
+import io.newm.sharedfeatures.ui.utils.iconGradient
 
 private val buttonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
@@ -81,7 +81,7 @@ fun SongFilterBottomSheet(
                         text = stringResource(id = R.string.library_filter_songs),
                         style =
                             TextStyle(
-                                fontFamily = inter,
+                                fontFamily = FontFamily.Default,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp,
                                 color = White,
@@ -100,7 +100,7 @@ fun SongFilterBottomSheet(
                         text = stringResource(id = R.string.library_sort_songs),
                         style =
                             TextStyle(
-                                fontFamily = inter,
+                                fontFamily = FontFamily.Default,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp,
                                 color = White,
@@ -154,7 +154,7 @@ private fun SongFilterButton(
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(id = labelRes),
-                fontFamily = inter,
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
                 color = if (isSelected) Black else Purple,

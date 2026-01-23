@@ -104,9 +104,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import io.newm.core.theme.DarkPink
-import io.newm.core.theme.DarkViolet
-import io.newm.feature.musicplayer.components.MusicPlayerBrush
+import io.newm.sharedfeatures.theme.DarkPink
+import io.newm.sharedfeatures.theme.DarkViolet
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope

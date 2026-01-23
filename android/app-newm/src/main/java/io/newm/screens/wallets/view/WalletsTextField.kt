@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import io.newm.core.theme.White
+import io.newm.sharedfeatures.theme.White
 
 @Composable
 fun WalletsTextField(

@@ -48,9 +48,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
@@ -60,24 +59,9 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
-import io.newm.core.resources.R
-import io.newm.core.theme.CerisePink
-import io.newm.core.theme.DarkPink
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Gray16
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.NewmTheme
-import io.newm.core.theme.Purple
-import io.newm.core.theme.StatusGreen
-import io.newm.core.theme.SteelPink
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
-import io.newm.core.theme.raleway
 import io.newm.core.ui.LoadingScreen
-import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
-import io.newm.core.ui.utils.textGradient
 import io.newm.feature.musicplayer.service.DownloadState
 import io.newm.screens.library.NFTLibraryEvent.OnApplyFilters
 import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
@@ -89,7 +73,33 @@ import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.NFTTrack
+import io.newm.sharedfeatures.core.resources.Res
+import io.newm.sharedfeatures.core.resources.downloaded_description
+import io.newm.sharedfeatures.core.resources.filter_description
+import io.newm.sharedfeatures.core.resources.ic_download
+import io.newm.sharedfeatures.core.resources.ic_downloaded
+import io.newm.sharedfeatures.core.resources.ic_library_filter
+import io.newm.sharedfeatures.core.resources.library_download
+import io.newm.sharedfeatures.core.resources.library_download_description
+import io.newm.sharedfeatures.core.resources.library_remove_description
+import io.newm.sharedfeatures.core.resources.library_search
+import io.newm.sharedfeatures.core.resources.nft_library_error_message
+import io.newm.sharedfeatures.core.resources.title_nft_library
+import io.newm.sharedfeatures.theme.CerisePink
+import io.newm.sharedfeatures.theme.DarkPink
+import io.newm.sharedfeatures.theme.DarkViolet
+import io.newm.sharedfeatures.theme.Gray16
+import io.newm.sharedfeatures.theme.GraySuit
+import io.newm.sharedfeatures.theme.NewmTheme
+import io.newm.sharedfeatures.theme.Purple
+import io.newm.sharedfeatures.theme.StatusGreen
+import io.newm.sharedfeatures.theme.SteelPink
+import io.newm.sharedfeatures.theme.White
+import io.newm.sharedfeatures.ui.text.SearchBar
+import io.newm.sharedfeatures.ui.utils.textGradient
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
 
 internal const val TAG_NFT_LIBRARY_SCREEN = "TAG_NFT_LIBRARY_SCREEN"
@@ -128,7 +138,7 @@ fun NFTLibraryScreenUi(
             is NFTLibraryState.Error -> {
                 LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.ErrorScreen.name) }
                 ErrorScreen(
-                    title = stringResource(R.string.nft_library_error_message),
+                    title = stringResource(Res.string.nft_library_error_message),
                     message = state.message,
                 )
             }
@@ -138,11 +148,11 @@ fun NFTLibraryScreenUi(
 
                 LaunchedEffect(Unit) { eventLogger.logPageLoad(AppScreens.NFTLibraryScreen.name) }
                 Text(
-                    text = stringResource(id = R.string.title_nft_library),
+                    text = stringResource(Res.string.title_nft_library),
                     modifier = Modifier.padding(16.dp),
                     style =
                         TextStyle(
-                            fontFamily = raleway,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight.Bold,
                             fontSize = 32.sp,
                             brush = textGradient(SteelPink, CerisePink),
@@ -208,7 +218,7 @@ private fun NFTTracks(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     SearchBar(
-                        placeholderResId = R.string.library_search,
+                        placeholderResId = Res.string.library_search,
                         modifier = Modifier.fillMaxWidth().weight(1f),
                         onQueryChange = onQueryChange,
                     )
@@ -217,8 +227,8 @@ private fun NFTTracks(
                         onClick = { scope.launch { filterSheetState.show() } },
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_library_filter),
-                            contentDescription = stringResource(R.string.filter_description),
+                            painter = painterResource(Res.drawable.ic_library_filter),
+                            contentDescription = stringResource(Res.string.filter_description),
                             modifier = Modifier.drawWithBrush(LibraryBrush),
                         )
                     }
@@ -364,9 +374,11 @@ private fun TrackRowItem(
                 ImageRequest
                     .Builder(LocalContext.current)
                     .data(track.imageUrl)
-                    .error(R.drawable.ic_default_track_cover_art)
-                    .placeholder(R.drawable.ic_default_track_cover_art)
-                    .build(),
+                    .error(
+                        io.newm.sharedfeatures.core.resources.R.drawable.ic_default_track_cover_art,
+                    ).placeholder(
+                        io.newm.sharedfeatures.core.resources.R.drawable.ic_default_track_cover_art,
+                    ).build(),
             modifier = Modifier.size(48.dp).clip(RoundedCornerShape(4.dp)),
             contentScale = ContentScale.Crop,
             contentDescription = null,
@@ -374,7 +386,7 @@ private fun TrackRowItem(
         Column(modifier = Modifier.padding(start = 12.dp)) {
             Text(
                 text = track.title,
-                fontFamily = inter,
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
                 color = if (isSelected) StatusGreen else White,
@@ -402,8 +414,8 @@ private fun TrackRowItem(
 
                     is DownloadState.Completed -> {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_downloaded),
-                            contentDescription = stringResource(R.string.downloaded_description),
+                            painter = painterResource(Res.drawable.ic_downloaded),
+                            contentDescription = stringResource(Res.string.downloaded_description),
                             tint = StatusGreen,
                             modifier = Modifier.size(16.dp),
                         )
@@ -417,7 +429,7 @@ private fun TrackRowItem(
 
                 Text(
                     text = track.artists.joinToString(","),
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal,
                     fontSize = 12.sp,
                     color = GraySuit,
@@ -449,15 +461,15 @@ fun DownloadButton(
     ) {
         IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_download),
-                contentDescription = stringResource(R.string.library_download_description),
+                painter = painterResource(Res.drawable.ic_download),
+                contentDescription = stringResource(Res.string.library_download_description),
             )
         }
         Text(
-            text = stringResource(id = R.string.library_download),
+            text = stringResource(Res.string.library_download),
             style =
                 TextStyle(
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Medium,
                     fontSize = 12.sp,
                     color = White,
@@ -478,14 +490,14 @@ fun RemoveButton(
         IconButton(onClick = onClick, modifier = Modifier.size(16.dp)) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = stringResource(R.string.library_remove_description),
+                contentDescription = stringResource(Res.string.library_remove_description),
             )
         }
         Text(
-            text = stringResource(id = R.string.library_remove_description),
+            text = stringResource(Res.string.library_remove_description),
             style =
                 TextStyle(
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Medium,
                     fontSize = 12.sp,
                     color = White,

@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.newm.core.resources.R
 import io.newm.screens.profile.edit.ScrimCircle
+import io.newm.sharedfeatures.core.resources.R
 
 @Composable
 fun ProfileAppBar(

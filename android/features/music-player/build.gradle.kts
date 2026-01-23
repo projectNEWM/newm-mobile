@@ -36,8 +36,7 @@ dependencies {
     implementation(libs.androidx.palette.ktx)
     implementation(libs.koin.android)
     implementation(libs.play.services.auth)
-    implementation(project(Modules.CORE_RESOURCES))
-    implementation(project(Modules.CORE_THEME))
+
     implementation(project(Modules.CORE_UI_UTILS))
     implementation(project(Modules.SHARED))
 

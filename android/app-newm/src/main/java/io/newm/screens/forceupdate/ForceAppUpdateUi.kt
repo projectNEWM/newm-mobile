@@ -20,11 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.core.resources.R
-import io.newm.core.theme.NewmTheme
-import io.newm.core.ui.OnboardingMainImage
-import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
+import io.newm.sharedfeatures.core.resources.R
+import io.newm.sharedfeatures.theme.NewmTheme
+import io.newm.sharedfeatures.ui.OnboardingMainImage
+import io.newm.sharedfeatures.ui.buttons.PrimaryButton
 
 @Composable
 fun ForceAppUpdateUi(

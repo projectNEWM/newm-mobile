@@ -7,7 +7,7 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.newm.core.theme.Gray16
+import io.newm.sharedfeatures.theme.Gray16
 
 @Composable
 fun WalletDetailCard(content: @Composable () -> Unit) {

@@ -12,20 +12,24 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import io.newm.core.resources.R
-import io.newm.core.theme.Gray16
-import io.newm.core.theme.Gray23
-import io.newm.core.ui.text.TextFieldWithLabel
-import io.newm.core.ui.text.formTitleStyle
+import io.newm.sharedfeatures.core.resources.Res
+import io.newm.sharedfeatures.core.resources.profile_form_email
+import io.newm.sharedfeatures.core.resources.profile_form_first_name
+import io.newm.sharedfeatures.core.resources.profile_form_last_name
+import io.newm.sharedfeatures.core.resources.profile_form_password_confirm_password
+import io.newm.sharedfeatures.core.resources.profile_form_password_current_password
+import io.newm.sharedfeatures.core.resources.profile_form_password_new_password
+import io.newm.sharedfeatures.core.resources.profile_form_password_title
 import io.newm.sharedfeatures.screens.auth.login.Password
+import io.newm.sharedfeatures.screens.auth.login.PasswordState
 import io.newm.sharedfeatures.screens.auth.login.TextFieldState
-import newm_mobile.sharedfeatures.generated.resources.Res
-import newm_mobile.sharedfeatures.generated.resources.profile_form_password_confirm_password
-import newm_mobile.sharedfeatures.generated.resources.profile_form_password_current_password
-import newm_mobile.sharedfeatures.generated.resources.profile_form_password_new_password
+import io.newm.sharedfeatures.theme.Gray16
+import io.newm.sharedfeatures.theme.Gray23
+import io.newm.sharedfeatures.ui.text.TextFieldWithLabel
+import io.newm.sharedfeatures.ui.text.formTitleStyle
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ProfileForm(
@@ -43,27 +47,27 @@ fun ProfileForm(
             Column(modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
                 if (canUserEditName) {
                     TextFieldWithLabel(
-                        labelResId = R.string.profile_form_first_name,
+                        labelResId = Res.string.profile_form_first_name,
                         value = firstName.text,
                         onValueChange = { firstName.text = it },
                         textfieldBackgroundColor = Gray16,
                     )
                     TextFieldWithLabel(
-                        labelResId = R.string.profile_form_last_name,
+                        labelResId = Res.string.profile_form_last_name,
                         value = lastName.text,
                         onValueChange = { lastName.text = it },
                         textfieldBackgroundColor = Gray16,
                     )
                 } else {
                     TextFieldWithLabel(
-                        labelResId = R.string.profile_form_first_name,
+                        labelResId = Res.string.profile_form_first_name,
                         value = firstName.text,
                         onValueChange = {},
                         enabled = false,
                         textfieldBackgroundColor = Gray23,
                     )
                     TextFieldWithLabel(
-                        labelResId = R.string.profile_form_last_name,
+                        labelResId = Res.string.profile_form_last_name,
                         value = lastName.text,
                         onValueChange = {},
                         enabled = false,
@@ -71,7 +75,7 @@ fun ProfileForm(
                     )
                 }
                 TextFieldWithLabel(
-                    labelResId = R.string.profile_form_email,
+                    labelResId = Res.string.profile_form_email,
                     value = email,
                     onValueChange = {},
                     enabled = false,
@@ -83,28 +87,23 @@ fun ProfileForm(
         Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(Gray16)) {
             Column(modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
                 Text(
-                    text = stringResource(id = R.string.profile_form_password_title),
+                    text = stringResource(Res.string.profile_form_password_title),
                     style = formTitleStyle,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Password(
                     label = Res.string.profile_form_password_current_password,
-                    passwordState =
-                        currentPasswordState
-                            as io.newm.sharedfeatures.screens.auth.login.PasswordState,
+                    passwordState = currentPasswordState as PasswordState,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 )
                 Password(
                     label = Res.string.profile_form_password_new_password,
-                    passwordState =
-                        newPasswordState as io.newm.sharedfeatures.screens.auth.login.PasswordState,
+                    passwordState = newPasswordState as PasswordState,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 )
                 Password(
                     label = Res.string.profile_form_password_confirm_password,
-                    passwordState =
-                        confirmNewPasswordState
-                            as io.newm.sharedfeatures.screens.auth.login.PasswordState,
+                    passwordState = confirmNewPasswordState as PasswordState,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 )
             }

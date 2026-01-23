@@ -29,7 +29,7 @@ kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarg
 dependencies {
     implementation(libs.paparazzi)
     implementation(compose.components.resources)
-    implementation(project(Modules.CORE_THEME))
+    implementation(project(Modules.CORE_UI_UTILS))
 
     testImplementation(libs.test.parameter.injector)
     testImplementation(libs.junit)

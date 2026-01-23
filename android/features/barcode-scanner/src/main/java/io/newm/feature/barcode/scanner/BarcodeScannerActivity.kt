@@ -49,6 +49,7 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,26 +59,28 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import io.newm.core.resources.R
-import io.newm.core.theme.Black
-import io.newm.core.theme.CerisePink
-import io.newm.core.theme.GlassSmith
-import io.newm.core.theme.Gray23
-import io.newm.core.theme.Gray6F
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.LightSkyBlue
-import io.newm.core.theme.NewmTheme
-import io.newm.core.theme.OceanGreen
-import io.newm.core.theme.SteelPink
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
-import io.newm.core.ui.buttons.SecondaryButton
-import io.newm.core.ui.text.TextFieldWithLabel
-import io.newm.core.ui.utils.textGradient
-import io.newm.core.ui.wallet.buttonGradient
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.sharedfeatures.core.resources.R
+import io.newm.sharedfeatures.core.resources.Res
+import io.newm.sharedfeatures.core.resources.barcode_placeholder_text
+import io.newm.sharedfeatures.core.resources.barcode_scanner_paste_qr_code
+import io.newm.sharedfeatures.theme.Black
+import io.newm.sharedfeatures.theme.CerisePink
+import io.newm.sharedfeatures.theme.GlassSmith
+import io.newm.sharedfeatures.theme.Gray23
+import io.newm.sharedfeatures.theme.Gray6F
+import io.newm.sharedfeatures.theme.GraySuit
+import io.newm.sharedfeatures.theme.LightSkyBlue
+import io.newm.sharedfeatures.theme.NewmTheme
+import io.newm.sharedfeatures.theme.OceanGreen
+import io.newm.sharedfeatures.theme.SteelPink
+import io.newm.sharedfeatures.theme.White
+import io.newm.sharedfeatures.ui.buttons.SecondaryButton
+import io.newm.sharedfeatures.ui.text.TextFieldWithLabel
+import io.newm.sharedfeatures.ui.utils.textGradient
+import io.newm.sharedfeatures.ui.wallet.buttonGradient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -88,7 +91,7 @@ val qrLabelStyle
     get() =
         TextStyle(
             fontSize = 12.sp,
-            fontFamily = inter,
+            fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Bold,
             color = Gray6F,
         )
@@ -98,7 +101,7 @@ val placeholderStyle
     get() =
         TextStyle(
             fontSize = 16.sp,
-            fontFamily = inter,
+            fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Normal,
             color = Gray6F,
         )
@@ -138,7 +141,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                 text = stringResource(id = R.string.barcode_help_text),
                 style =
                     TextStyle(
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         brush = textGradient(SteelPink, CerisePink),
@@ -183,7 +186,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             IconButton(onClick = { finish() }, modifier = Modifier.padding(vertical = 16.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back_description),
+                    contentDescription = stringResource(id = R.string.back_description),
                     tint = White,
                 )
             }
@@ -192,7 +195,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                 text = stringResource(id = R.string.title_connect_wallet),
                 style =
                     TextStyle(
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         brush = textGradient(OceanGreen, LightSkyBlue),
@@ -219,8 +222,8 @@ class BarcodeScannerActivity : ComponentActivity() {
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
         ) {
             Text(
-                text = getString(R.string.newm_tools_url),
-                fontFamily = inter,
+                text = stringResource(id = R.string.newm_tools_url),
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
                 color = GlassSmith,
@@ -228,7 +231,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             Icon(
                 modifier = Modifier.padding(start = 8.dp),
                 painter = painterResource(id = R.drawable.icon_copy_text),
-                contentDescription = stringResource(R.string.copy_description),
+                contentDescription = stringResource(id = R.string.copy_description),
                 tint = GlassSmith,
             )
         }
@@ -238,9 +241,9 @@ class BarcodeScannerActivity : ComponentActivity() {
     fun EnterQRCodePanel() {
         TextFieldWithLabel(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 38.5.dp),
-            labelResId = R.string.barcode_scanner_paste_qr_code,
+            labelResId = Res.string.barcode_scanner_paste_qr_code,
             labelStyle = qrLabelStyle,
-            placeholderResId = R.string.barcode_placeholder_text,
+            placeholderResId = Res.string.barcode_placeholder_text,
             placeholderStyle = placeholderStyle,
             textfieldBackgroundColor = Gray23,
             onValueChange = { newmWalletConnectionId ->
@@ -278,7 +281,7 @@ class BarcodeScannerActivity : ComponentActivity() {
                     stringResource(id = R.string.newm_connect_wallet_instruction_title).uppercase(),
                 style =
                     TextStyle(
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp,
                         color = Gray6F,
@@ -289,10 +292,10 @@ class BarcodeScannerActivity : ComponentActivity() {
 
             instructions.forEach { instructionResId ->
                 Text(
-                    text = stringResource(id = instructionResId),
+                    text = stringResource(instructionResId),
                     style =
                         TextStyle(
-                            fontFamily = inter,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight.Normal,
                             fontSize = 14.sp,
                             color = White,
@@ -303,10 +306,10 @@ class BarcodeScannerActivity : ComponentActivity() {
             CopyToClipboardButton()
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = getString(R.string.wallet_desktop_option),
+                text = stringResource(id = R.string.wallet_desktop_option),
                 style =
                     TextStyle(
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
                         color = GraySuit,
@@ -316,7 +319,7 @@ class BarcodeScannerActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(32.dp))
 
             SecondaryButton(
-                labelResId = R.string.got_it,
+                label = stringResource(id = R.string.got_it),
                 onClick = { coroutineScope.launch { bottomSheetState.hide() } },
             )
         }

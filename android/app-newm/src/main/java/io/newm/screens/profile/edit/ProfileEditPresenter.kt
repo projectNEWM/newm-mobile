@@ -12,7 +12,6 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
-import io.newm.core.resources.R
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBack
@@ -33,6 +32,7 @@ import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.UpdateProfilePictureUseCase
 import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
+import io.newm.sharedfeatures.core.resources.R
 import io.newm.sharedfeatures.screens.auth.login.PasswordState
 import io.newm.sharedfeatures.screens.auth.login.TextFieldState
 import io.newm.sharedfeatures.screens.auth.login.isPasswordValid

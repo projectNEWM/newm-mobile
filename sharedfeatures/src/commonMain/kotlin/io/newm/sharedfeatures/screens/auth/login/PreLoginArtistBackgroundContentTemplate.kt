@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.newm.core.ui.OnboardingMainImage
+import io.newm.sharedfeatures.ui.OnboardingMainImage
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.ic_newm_logo
 import org.jetbrains.compose.resources.painterResource

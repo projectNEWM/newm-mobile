@@ -1,7 +1,7 @@
 object Modules {
-    const val CORE_THEME = ":android:core:theme"
-    const val CORE_UI_UTILS = ":android:core:ui-utils"
-    const val CORE_RESOURCES = ":android:core:resources"
+    const val CORE_RESOURCES = ":sharedfeatures:core-resources"
+    const val CORE_UI_UTILS = ":sharedfeatures:ui-utils"
+
     const val CORE_ANDROID_IMPLEMENTATIONS = ":android:core:android:implementations"
 
     const val MUSIC_PLAYER = ":android:features:music-player"

@@ -3,8 +3,7 @@
 /local.properties
 .idea
 .DS_Store
-/build
-*/build
+**/build
 # Paparazzi failure output folder
 **/out
 /captures

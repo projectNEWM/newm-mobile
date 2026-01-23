@@ -23,8 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import io.newm.core.resources.R
-import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnConnectWallet
@@ -41,6 +39,8 @@ import io.newm.screens.profile.ProfileAppBar
 import io.newm.screens.profile.ProfileBottomSheetLayout
 import io.newm.screens.profile.ProfileHeader
 import io.newm.shared.commonPublic.models.User
+import io.newm.sharedfeatures.core.resources.R
+import io.newm.sharedfeatures.theme.NewmTheme
 import kotlinx.coroutines.launch
 
 internal const val TAG_USER_ACCOUNT_VIEW_SCREEN = "TAG_USER_ACCOUNT_VIEW_SCREEN"

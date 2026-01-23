@@ -28,17 +28,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.core.resources.R
-import io.newm.core.theme.Gray16
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.inter
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.WalletConnection
+import io.newm.sharedfeatures.core.resources.R
+import io.newm.sharedfeatures.theme.Gray16
+import io.newm.sharedfeatures.theme.GraySuit
 
 @Composable
 fun WalletRowItem(
@@ -99,7 +99,7 @@ fun WalletRowItemDetails(connection: WalletConnection) {
                 TextStyle(
                     color = MaterialTheme.colors.onBackground,
                     fontSize = 14.sp,
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Medium,
                 ),
         )
@@ -111,7 +111,7 @@ fun WalletRowItemDetails(connection: WalletConnection) {
                 TextStyle(
                     color = GraySuit,
                     fontSize = 12.sp,
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal,
                 ),
         )

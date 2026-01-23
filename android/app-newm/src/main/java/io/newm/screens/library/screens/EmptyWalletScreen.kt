@@ -17,10 +17,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.newm.core.resources.R
-import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.sharedfeatures.core.resources.R
+import io.newm.sharedfeatures.ui.buttons.PrimaryButton
 
 private const val RECORD_STORE_URL = "https://recordstore.newm.io/"
 

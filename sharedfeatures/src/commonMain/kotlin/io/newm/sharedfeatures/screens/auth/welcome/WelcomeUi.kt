@@ -17,12 +17,12 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
-import io.newm.core.ui.PrivacyPolicyAndTermsSection
-import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.sharedfeatures.screens.WelcomeScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiState
 import io.newm.sharedfeatures.screens.auth.login.PreLoginArtistBackgroundContentTemplate
+import io.newm.sharedfeatures.ui.PrivacyPolicyAndTermsSection
+import io.newm.sharedfeatures.ui.buttons.PrimaryButton
+import io.newm.sharedfeatures.ui.buttons.SecondaryButton
 import me.tatarka.inject.annotations.Inject
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.create_account

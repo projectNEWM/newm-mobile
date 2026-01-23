@@ -7,9 +7,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.newm.core.resources.R
 import io.newm.core.ui.utils.collapsibleCard
 import io.newm.shared.commonPublic.models.NFTTrack
+import io.newm.sharedfeatures.core.resources.R
 
 fun LazyListScope.streamTokensItem(
     tokens: List<NFTTrack>,

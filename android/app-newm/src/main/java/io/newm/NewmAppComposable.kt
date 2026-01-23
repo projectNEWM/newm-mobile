@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,19 +50,7 @@ import androidx.core.net.toUri
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
-import io.newm.core.resources.R
-import io.newm.core.theme.Black
-import io.newm.core.theme.BrightOrange
-import io.newm.core.theme.DarkPink
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Gray100
-import io.newm.core.theme.LightSkyBlue
-import io.newm.core.theme.OceanGreen
-import io.newm.core.theme.YellowJacket
-import io.newm.core.theme.inter
-import io.newm.core.ui.LocalSnackBarHostState
 import io.newm.core.ui.utils.drawWithBrush
-import io.newm.core.ui.utils.iconGradient
 import io.newm.feature.musicplayer.MiniPlayer
 import io.newm.feature.musicplayer.MusicPlayerScreen
 import io.newm.screens.Screen
@@ -69,8 +58,19 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.config.NewmSharedBuildConfig
+import io.newm.sharedfeatures.core.resources.R
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.devmenu.DebugOverlay
+import io.newm.sharedfeatures.theme.Black
+import io.newm.sharedfeatures.theme.BrightOrange
+import io.newm.sharedfeatures.theme.DarkPink
+import io.newm.sharedfeatures.theme.DarkViolet
+import io.newm.sharedfeatures.theme.Gray100
+import io.newm.sharedfeatures.theme.LightSkyBlue
+import io.newm.sharedfeatures.theme.OceanGreen
+import io.newm.sharedfeatures.theme.YellowJacket
+import io.newm.sharedfeatures.ui.LocalSnackBarHostState
+import io.newm.sharedfeatures.ui.utils.iconGradient
 import kotlinx.coroutines.launch
 import com.slack.circuit.runtime.screen.Screen as CircuitScreen
 
@@ -332,7 +332,7 @@ private fun RowScope.HomeBottomNavigationItem(
         label = {
             Text(
                 text = label,
-                fontFamily = inter,
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 9.sp,
                 maxLines = 1,
