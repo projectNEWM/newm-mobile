@@ -5,6 +5,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.shared.di.dagger.ActivityScope
 import io.newm.sharedfeatures.screens.auth.login.LoginComponent
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordComponent
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountComponent
 import io.newm.sharedfeatures.screens.auth.welcome.WelcomeComponent
 import io.newm.sharedfeatures.screens.devmenu.DevMenuComponent
 import me.tatarka.inject.annotations.Provides
@@ -12,7 +14,9 @@ import me.tatarka.inject.annotations.Provides
 interface CircuitComponent :
     WelcomeComponent,
     DevMenuComponent,
-    LoginComponent {
+    LoginComponent,
+    CreateAccountComponent,
+    ResetPasswordComponent {
     val circuit: Circuit
 
     @Provides

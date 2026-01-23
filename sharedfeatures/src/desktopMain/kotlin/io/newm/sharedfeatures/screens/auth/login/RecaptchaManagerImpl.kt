@@ -8,4 +8,9 @@ actual class RecaptchaManagerImpl : RecaptchaManager {
         // No-op for desktop
         return Result.success("mock-token-desktop")
     }
+
+    actual override suspend fun execute(action: String): Result<String> {
+        // No-op for desktop
+        return Result.success("mock-token-desktop-$action")
+    }
 }

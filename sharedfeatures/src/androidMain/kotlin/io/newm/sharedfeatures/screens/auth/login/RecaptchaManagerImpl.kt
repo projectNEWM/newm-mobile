@@ -14,4 +14,13 @@ actual class RecaptchaManagerImpl(
         } catch (e: Exception) {
             Result.failure(e)
         }
+
+    actual override suspend fun execute(action: String): Result<String> =
+        try {
+            val token =
+                recaptchaClientProvider.get().execute(RecaptchaAction.custom(action)).getOrThrow()
+            Result.success(token)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
 }

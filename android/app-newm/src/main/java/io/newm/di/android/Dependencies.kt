@@ -13,8 +13,6 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import io.newm.Logout
 import io.newm.RestartApp
-import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
-import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
 import io.newm.feature.musicplayer.service.DownloadManager
 import io.newm.feature.musicplayer.service.DownloadManagerImpl
 import io.newm.feature.musicplayer.service.DownloadStateManager
@@ -36,6 +34,8 @@ import io.newm.sharedfeatures.screens.auth.login.LoginPresenter
 import io.newm.sharedfeatures.screens.auth.login.RecaptchaClientProvider
 import io.newm.sharedfeatures.screens.auth.login.RecaptchaManager
 import io.newm.sharedfeatures.screens.auth.login.RecaptchaManagerImpl
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenPresenter
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountScreenPresenter
 import io.newm.sharedfeatures.screens.auth.welcome.SocialLoginManager
 import io.newm.sharedfeatures.screens.auth.welcome.SocialLoginManagerImpl
 import io.newm.sharedfeatures.screens.auth.welcome.WelcomePresenter
@@ -61,7 +61,16 @@ val viewModule =
         }
 
         factory { params ->
-            ResetPasswordScreenPresenter(params.get(), get(), get(), get(), get(), get(), get())
+            ResetPasswordScreenPresenter(
+                screen = params[0],
+                navigator = params[1],
+                signupUseCase = get(),
+                loginUseCase = get(),
+                resetPasswordUseCase = get(),
+                recaptchaManager = get(),
+                logger = get(),
+                analyticsTracker = get(),
+            )
         }
         single {
             val sharedBuildConfig = get<NewmSharedBuildConfig>()
