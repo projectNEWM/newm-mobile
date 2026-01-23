@@ -1,6 +1,6 @@
 # Implementation Plan - Enhance Music Player UI/UX and Performance
 
-## Phase 1: Refactoring and Extraction
+## Phase 1: Refactoring and Extraction [checkpoint: ba1a8304]
 
 - [x] Task: Extract Button Components
     - Created `PlayerButtons.kt` and moved all button components there.
