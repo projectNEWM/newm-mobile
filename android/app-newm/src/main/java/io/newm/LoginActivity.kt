@@ -28,26 +28,26 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LocalSnackBarHostState
-import io.newm.feature.login.screen.createaccount.CreateAccountScreenPresenter
-import io.newm.feature.login.screen.createaccount.CreateAccountUi
-import io.newm.feature.login.screen.createaccount.CreateAccountUiState
-import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenPresenter
-import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUi
-import io.newm.feature.login.screen.resetpassword.ResetPasswordScreenUiState
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
-import io.newm.sharedfeatures.screens.CreateAccountScreen
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
 import io.newm.sharedfeatures.screens.LoginScreen
-import io.newm.sharedfeatures.screens.ResetPasswordScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
 import io.newm.sharedfeatures.screens.auth.login.LoginPresenter
 import io.newm.sharedfeatures.screens.auth.login.LoginUi
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreen
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenPresenter
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenUi
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenUiState
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountScreen
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountScreenPresenter
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountUi
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountUiState
 import io.newm.sharedfeatures.screens.auth.welcome.WelcomePresenter
 import io.newm.sharedfeatures.screens.auth.welcome.WelcomeUi
 import io.newm.sharedfeatures.screens.devmenu.DevMenuPresenter
@@ -78,8 +78,7 @@ class LoginActivity : ComponentActivity() {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is CreateAccountScreen -> {
-                    inject<CreateAccountScreenPresenter> { parametersOf(::launchHomeActivity) }
-                        .value
+                    inject<CreateAccountScreenPresenter> { parametersOf(navigator) }.value
                 }
 
                 is WelcomeScreen -> {
@@ -91,7 +90,7 @@ class LoginActivity : ComponentActivity() {
                 }
 
                 is ResetPasswordScreen -> {
-                    inject<ResetPasswordScreenPresenter> { parametersOf(navigator) }.value
+                    inject<ResetPasswordScreenPresenter> { parametersOf(screen, navigator) }.value
                 }
 
                 is DevMenuMainScreen -> {
@@ -125,8 +124,7 @@ class LoginActivity : ComponentActivity() {
 
                 is ResetPasswordScreen -> {
                     ui<ResetPasswordScreenUiState> { state, modifier ->
-                        ResetPasswordScreenUi(eventLogger)
-                            .Content(state = state, modifier = modifier)
+                        ResetPasswordScreenUi(state, eventLogger, modifier)
                     }
                 }
 

@@ -12,7 +12,6 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
-import io.newm.sharedfeatures.screens.CreateAccountScreen
 import io.newm.sharedfeatures.screens.HomeScreen
 import io.newm.sharedfeatures.screens.LoginScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen
@@ -25,6 +24,7 @@ import io.newm.sharedfeatures.screens.WelcomeScreen.UiEvent.OnTermsOfServiceClic
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiState
 import io.newm.sharedfeatures.screens.WelcomeScreen.UiState.Content
 import io.newm.sharedfeatures.screens.auth.login.RecaptchaManager
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountScreen
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

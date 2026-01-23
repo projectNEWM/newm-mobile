@@ -5,9 +5,11 @@ import io.newm.shared.commonInternal.implementations.utilities.mapErrorsSuspend
 import io.newm.shared.commonInternal.repositories.LogInRepository
 import io.newm.shared.commonPublic.models.error.KMMException
 import io.newm.shared.commonPublic.usecases.SignupUseCase
+import me.tatarka.inject.annotations.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class SignupUseCaseImpl(
+@Inject
+class SignupUseCaseImpl(
     private val repository: LogInRepository,
 ) : SignupUseCase {
     @Throws(KMMException::class, CancellationException::class)

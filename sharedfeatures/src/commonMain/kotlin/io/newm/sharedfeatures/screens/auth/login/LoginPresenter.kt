@@ -17,7 +17,7 @@ import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.usecases.LoginUseCase
 import io.newm.sharedfeatures.screens.HomeScreen
 import io.newm.sharedfeatures.screens.LoginScreen
-import io.newm.sharedfeatures.screens.ResetPasswordScreen
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreen
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

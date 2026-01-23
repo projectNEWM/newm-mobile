@@ -48,7 +48,13 @@ open class TextFieldState(
         }
 }
 
-class EmailState : TextFieldState(validator = ::isEmailValid, errorFor = ::emailValidationError)
+class EmailState(
+    defaultValue: String = "",
+) : TextFieldState(
+        defaultValue = defaultValue,
+        validator = ::isEmailValid,
+        errorFor = ::emailValidationError,
+    )
 
 private fun emailValidationError(email: String): StringResource {
     // Note: The original android code passed the email into the string resource.
@@ -63,11 +69,11 @@ private val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
 
 private fun isEmailValid(email: String): Boolean = EMAIL_REGEX.matches(email)
 
-class PasswordState : TextFieldState(validator = ::isPasswordValid, errorFor = { passwordValidationError() })
+open class PasswordState : TextFieldState(validator = ::isPasswordValid, errorFor = { passwordValidationError() })
 
 class ConfirmPasswordState(
     private val passwordState: PasswordState,
-) : TextFieldState() {
+) : PasswordState() {
     override val isValid
         get() = passwordAndConfirmationValid(passwordState.text, text)
 
