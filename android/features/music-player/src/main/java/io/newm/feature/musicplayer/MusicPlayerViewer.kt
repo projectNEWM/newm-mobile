@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalTextStyle
@@ -31,14 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextAlign
@@ -52,19 +49,12 @@ import coil3.request.error
 import coil3.toBitmap
 import io.newm.core.resources.R
 import io.newm.core.theme.Black
-import io.newm.core.theme.DarkPink
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Gray500
-import io.newm.core.theme.GraySuit
 import io.newm.core.theme.White
 import io.newm.core.theme.inter
 import io.newm.core.ui.ZoomableImage
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
-import io.newm.core.ui.utils.drawWithBrush
-import io.newm.core.ui.utils.millisToMinutesSecondsString
-import io.newm.feature.musicplayer.models.PlaybackRepeatMode
-import io.newm.feature.musicplayer.models.PlaybackState
+import io.newm.feature.musicplayer.components.MusicPlayerControls
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.share.ShareButton
@@ -72,18 +62,6 @@ import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-private val playbackTimeStyle
-    @Composable
-    get() =
-        TextStyle(
-            fontSize = 12.sp,
-            fontFamily = inter,
-            fontWeight = FontWeight.Normal,
-            color = GraySuit,
-        )
-
-internal val MusicPlayerBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink))
 
 @Composable
 internal fun MusicPlayerViewer(
@@ -193,206 +171,6 @@ internal fun MusicPlayerViewer(
             MusicPlayerControls(playbackStatus, onEvent)
             Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-}
-
-@Composable
-private fun MusicPlayerControls(
-    playbackStatus: PlaybackStatus,
-    onEvent: (PlaybackUiEvent) -> Unit,
-) {
-    Box {
-        PlaybackControlPanel(playbackStatus = playbackStatus, onEvent = onEvent)
-        if (playbackStatus.duration != null) {
-            MusicPlayerSlider(
-                value = playbackStatus.elapsedFraction,
-                onValueChange = {
-                    onEvent(
-                        PlaybackUiEvent.Seek(
-                            (it * playbackStatus.duration.inWholeMilliseconds).toLong(),
-                        ),
-                    )
-                },
-                colors = SliderDefaults.colors(thumbColor = White, inactiveTrackColor = Gray500),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp).height(4.dp),
-            )
-        }
-    }
-}
-
-@Composable
-fun PlaybackControlPanel(
-    playbackStatus: PlaybackStatus,
-    onEvent: (PlaybackUiEvent) -> Unit,
-) {
-    Box(
-        modifier =
-            Modifier
-                .height(102.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding()
-                .clip(shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)),
-    ) {
-        Column(modifier = Modifier.background(Black).fillMaxSize()) {
-            Row(modifier = Modifier.padding(horizontal = 12.dp).padding(top = 8.dp)) {
-                Text(
-                    text = playbackStatus.position.millisToMinutesSecondsString(),
-                    style = playbackTimeStyle,
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text =
-                        if (playbackStatus.duration == null) {
-                            "-:--"
-                        } else {
-                            playbackStatus.duration.inWholeMilliseconds
-                                .millisToMinutesSecondsString()
-                        },
-                    style = playbackTimeStyle,
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Row(modifier = Modifier.padding(12.dp)) {
-                RepeatButton(
-                    playbackStatus.repeatMode,
-                    onClick = { onEvent(PlaybackUiEvent.Repeat) },
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                PreviousTrackButton(
-                    modifier = Modifier.padding(horizontal = 12.dp),
-                    onClick = { onEvent(PlaybackUiEvent.Previous) },
-                )
-                PlayOrPauseButton(playbackStatus = playbackStatus, onEvent = onEvent)
-                NextTrackButton(
-                    modifier = Modifier.padding(horizontal = 12.dp),
-                    onClick = { onEvent(PlaybackUiEvent.Next) },
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                ShuffleButton(
-                    enabled = playbackStatus.state == PlaybackState.PLAYING,
-                    shuffleMode = playbackStatus.shuffleMode,
-                    onClick = { onEvent(PlaybackUiEvent.ToggleShuffle) },
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun ShuffleButton(
-    onClick: () -> Unit,
-    shuffleMode: Boolean,
-    enabled: Boolean,
-) {
-    IconButton(onClick = onClick, enabled = enabled) {
-        Icon(
-            painter = painterResource(R.drawable.ic_music_player_shuffle),
-            contentDescription = stringResource(R.string.music_player_shuffle_description),
-            tint =
-                when {
-                    enabled.not() -> Gray500
-                    shuffleMode -> DarkViolet
-                    else -> White
-                },
-        )
-    }
-}
-
-@Composable
-private fun PlayOrPauseButton(
-    playbackStatus: PlaybackStatus,
-    onEvent: (PlaybackUiEvent) -> Unit,
-) {
-    when (playbackStatus.state) {
-        PlaybackState.PLAYING,
-        PlaybackState.BUFFERING,
-        -> {
-            PauseButton(onClick = { onEvent(PlaybackUiEvent.Pause) })
-        }
-
-        PlaybackState.PAUSED,
-        PlaybackState.STOPPED,
-        -> {
-            PlayButton(onClick = { onEvent(PlaybackUiEvent.Play) })
-        }
-    }
-}
-
-@Composable
-private fun PreviousTrackButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_prev_track_default),
-            contentDescription = stringResource(R.string.music_player_prev_track_description),
-            tint = Color.White,
-        )
-    }
-}
-
-@Composable
-private fun PlayButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_play),
-            contentDescription = stringResource(R.string.music_player_play_description),
-            modifier = Modifier.drawWithBrush(MusicPlayerBrush),
-        )
-    }
-}
-
-@Composable
-fun PauseButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_pause),
-            contentDescription = stringResource(R.string.music_player_pause_description),
-            modifier = Modifier.drawWithBrush(MusicPlayerBrush),
-        )
-    }
-}
-
-@Composable
-fun NextTrackButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_next_track_default),
-            contentDescription = stringResource(R.string.music_player_next_track_description),
-            tint = Color.White,
-        )
-    }
-}
-
-@Composable
-fun RepeatButton(
-    repeatMode: PlaybackRepeatMode,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val imageRes =
-        when (repeatMode) {
-            PlaybackRepeatMode.REPEAT_OFF -> R.drawable.ic_repeat_off
-            PlaybackRepeatMode.REPEAT_ONE -> R.drawable.ic_music_player_repeat_one
-            PlaybackRepeatMode.REPEAT_ALL -> R.drawable.ic_music_player_repeat_all
-        }
-    IconButton(modifier = modifier, onClick = onClick) {
-        Icon(
-            painter = painterResource(id = imageRes),
-            contentDescription = stringResource(R.string.music_player_repeat_description),
-            tint = if (repeatMode == PlaybackRepeatMode.REPEAT_OFF) White else DarkViolet,
-        )
     }
 }
 

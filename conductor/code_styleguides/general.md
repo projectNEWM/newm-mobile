@@ -21,3 +21,6 @@ This document outlines general coding principles that apply across all languages
 ## Documentation
 - Document *why* something is done, not just *what*.
 - Keep documentation up-to-date with code changes.
+
+## Testing
+- Practice TDD. Always write tests first before implementing changes.

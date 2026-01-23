@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Enhance Music Player UI/UX and Performance**
+- [~] **Track: Enhance Music Player UI/UX and Performance**
   *Link: [./conductor/tracks/music_player_ux_20260122/](./conductor/tracks/music_player_ux_20260122/)*

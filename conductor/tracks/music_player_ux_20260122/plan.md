@@ -2,13 +2,19 @@
 
 ## Phase 1: Refactoring and Extraction
 
-- [ ] Task: Extract Button Components
+- [x] Task: Extract Button Components
+    - Created `PlayerButtons.kt` and moved all button components there.
+    - Updated `MusicPlayerViewer.kt` to import the components.
+    - Staged changes.
     - Create `android/features/music-player/src/main/java/io/newm/feature/musicplayer/components/PlayerButtons.kt`
     - Move `PlayButton`, `PauseButton`, `NextTrackButton`, `PreviousTrackButton`, `ShuffleButton`, `RepeatButton` to this new file.
     - Update `MusicPlayerViewer.kt` imports.
     - Stage changes.
 
-- [ ] Task: Extract Control Panel
+- [x] Task: Extract Control Panel
+    - Created `PlaybackControlPanel.kt` and moved `PlaybackControlPanel` and `MusicPlayerControls` there.
+    - Updated `MusicPlayerViewer.kt` to import the components.
+    - Staged changes.
     - Create `android/features/music-player/src/main/java/io/newm/feature/musicplayer/components/PlaybackControlPanel.kt`
     - Move `PlaybackControlPanel` and `MusicPlayerControls` to this new file (or separate files if they are large).
     - Update `MusicPlayerViewer.kt` imports.
