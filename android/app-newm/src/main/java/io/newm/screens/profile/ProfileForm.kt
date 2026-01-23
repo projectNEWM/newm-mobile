@@ -20,9 +20,12 @@ import io.newm.core.theme.Gray16
 import io.newm.core.theme.Gray23
 import io.newm.core.ui.text.TextFieldWithLabel
 import io.newm.core.ui.text.formTitleStyle
-import io.newm.feature.login.screen.TextFieldState
-import io.newm.feature.login.screen.email.Email
-import io.newm.feature.login.screen.password.Password
+import io.newm.sharedfeatures.screens.auth.login.Password
+import io.newm.sharedfeatures.screens.auth.login.TextFieldState
+import newm_mobile.sharedfeatures.generated.resources.Res
+import newm_mobile.sharedfeatures.generated.resources.profile_form_password_confirm_password
+import newm_mobile.sharedfeatures.generated.resources.profile_form_password_current_password
+import newm_mobile.sharedfeatures.generated.resources.profile_form_password_new_password
 
 @Composable
 fun ProfileForm(
@@ -39,15 +42,17 @@ fun ProfileForm(
         Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(Gray16)) {
             Column(modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp)) {
                 if (canUserEditName) {
-                    Email(
-                        label = R.string.profile_form_first_name,
-                        emailState = firstName,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    TextFieldWithLabel(
+                        labelResId = R.string.profile_form_first_name,
+                        value = firstName.text,
+                        onValueChange = { firstName.text = it },
+                        textfieldBackgroundColor = Gray16,
                     )
-                    Email(
-                        label = R.string.profile_form_last_name,
-                        emailState = lastName,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    TextFieldWithLabel(
+                        labelResId = R.string.profile_form_last_name,
+                        value = lastName.text,
+                        onValueChange = { lastName.text = it },
+                        textfieldBackgroundColor = Gray16,
                     )
                 } else {
                     TextFieldWithLabel(
@@ -83,18 +88,23 @@ fun ProfileForm(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Password(
-                    label = R.string.profile_form_password_current_password,
-                    passwordState = currentPasswordState,
+                    label = Res.string.profile_form_password_current_password,
+                    passwordState =
+                        currentPasswordState
+                            as io.newm.sharedfeatures.screens.auth.login.PasswordState,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 )
                 Password(
-                    label = R.string.profile_form_password_new_password,
-                    passwordState = newPasswordState,
+                    label = Res.string.profile_form_password_new_password,
+                    passwordState =
+                        newPasswordState as io.newm.sharedfeatures.screens.auth.login.PasswordState,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 )
                 Password(
-                    label = R.string.profile_form_password_confirm_password,
-                    passwordState = confirmNewPasswordState,
+                    label = Res.string.profile_form_password_confirm_password,
+                    passwordState =
+                        confirmNewPasswordState
+                            as io.newm.sharedfeatures.screens.auth.login.PasswordState,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 )
             }

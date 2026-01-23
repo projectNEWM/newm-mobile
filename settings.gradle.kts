@@ -30,8 +30,6 @@ include(":android:core:ui-utils")
 
 include(":android:features:barcode-scanner")
 
-include(":android:features:login")
-
 include(":android:features:music-player")
 
 include(":composeapp")

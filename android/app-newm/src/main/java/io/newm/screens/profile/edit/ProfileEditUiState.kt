@@ -1,8 +1,8 @@
 package io.newm.screens.profile.edit
 
 import com.slack.circuit.runtime.CircuitUiState
-import io.newm.feature.login.screen.TextFieldState
 import io.newm.screens.profile.ProfileEditUiEvent
+import io.newm.sharedfeatures.screens.auth.login.TextFieldState
 
 sealed class ProfileEditUiState : CircuitUiState {
     data object Loading : ProfileEditUiState()

@@ -56,6 +56,14 @@ import io.newm.shared.commonPublic.featureflags.FeatureFlags
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.FeatureFlagsListScreen
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreen
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenPresenter
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenUi
+import io.newm.sharedfeatures.screens.auth.resetpassword.ResetPasswordScreenUiState
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountScreen
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountScreenPresenter
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountUi
+import io.newm.sharedfeatures.screens.auth.signup.CreateAccountUiState
 import io.newm.sharedfeatures.screens.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.screens.devmenu.DevMenuUi
 import io.newm.sharedfeatures.screens.devmenu.featureflaglist.FeatureFlagsListPresenter
@@ -217,6 +225,16 @@ class HomeActivity : ComponentActivity() {
                     }
                 }
 
+                is CreateAccountScreen -> {
+                    ui<CreateAccountUiState> { state, modifier -> CreateAccountUi(state, modifier) }
+                }
+
+                is ResetPasswordScreen -> {
+                    ui<ResetPasswordScreenUiState> { state, modifier ->
+                        ResetPasswordScreenUi(state, eventLogger, modifier)
+                    }
+                }
+
                 is DevMenuMainScreen -> {
                     ui<DevMenuMainScreen.UiState> { state, modifier -> DevMenuUi(state, modifier) }
                 }
@@ -276,6 +294,14 @@ class HomeActivity : ComponentActivity() {
 
                 is Screen.Studio -> {
                     inject<StudioPresenter> { parametersOf(navigator) }.value
+                }
+
+                is CreateAccountScreen -> {
+                    inject<CreateAccountScreenPresenter> { parametersOf(navigator) }.value
+                }
+
+                is ResetPasswordScreen -> {
+                    inject<ResetPasswordScreenPresenter> { parametersOf(screen, navigator) }.value
                 }
 
                 is DevMenuMainScreen -> {

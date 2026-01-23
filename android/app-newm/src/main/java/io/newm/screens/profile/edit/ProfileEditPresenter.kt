@@ -13,9 +13,6 @@ import com.slack.circuit.runtime.internal.rememberStableCoroutineScope
 import com.slack.circuit.runtime.presenter.Presenter
 import io.newm.Logout
 import io.newm.core.resources.R
-import io.newm.feature.login.screen.TextFieldState
-import io.newm.feature.login.screen.password.isPasswordValid
-import io.newm.feature.login.screen.password.passwordValidationError
 import io.newm.screens.Screen.PrivacyPolicy
 import io.newm.screens.Screen.TermsOfService
 import io.newm.screens.profile.OnBack
@@ -36,6 +33,9 @@ import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.UpdateProfilePictureUseCase
 import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
+import io.newm.sharedfeatures.screens.auth.login.PasswordState
+import io.newm.sharedfeatures.screens.auth.login.TextFieldState
+import io.newm.sharedfeatures.screens.auth.login.isPasswordValid
 import io.newm.utils.toTempFile
 import kotlinx.coroutines.launch
 
@@ -81,11 +81,11 @@ class ProfileEditPresenter(
         val lastNameState =
             remember(profile?.lastName) { TextFieldState(profile?.lastName.orEmpty()) }
 
-        val currentPasswordState = remember { TextFieldState() }
+        val currentPasswordState = remember { PasswordState() }
 
-        val newPasswordState = remember { TextFieldState() }
+        val newPasswordState = remember { PasswordState() }
 
-        val confirmPasswordState = remember { TextFieldState() }
+        val confirmPasswordState = remember { PasswordState() }
 
         var errorMessage by remember { mutableStateOf<String?>(null) }
 
@@ -268,7 +268,7 @@ class ProfileEditPresenter(
         lastNameState: TextFieldState,
     ): String? {
         if (newPasswordState.text.isNotEmpty() && isPasswordValid(newPasswordState.text).not()) {
-            return passwordValidationError(context)
+            return context.getString(R.string.password_validation_error_message)
         }
 
         if (
