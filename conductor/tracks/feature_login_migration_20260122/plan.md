@@ -31,9 +31,9 @@
 - [x] Task: Verify `ResetPassword` flow on Android emulator.
 - [x] Task: Conductor - User Manual Verification 'Reset Password Screen Migration' (Protocol in workflow.md)
 
-## Phase 4: Finalization
+## Phase 4: Finalization [checkpoint: 5938c5b]
 - [x] Task: Update Circuit configuration to register the new shared screens.
 - [x] Task: Write new paparazzi tests and record snapshots
 - [x] Task: Remove migrated files from `android/features/login`.
 - [x] Task: Run full regression test on Login, Create Account, and Reset Password flows.
-- [ ] Task: Conductor - User Manual Verification 'Finalization' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Finalization' (Protocol in workflow.md)
