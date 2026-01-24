@@ -1,33 +1,51 @@
 package io.newm.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val LightColorPalette =
-    lightColors(
-        primary = Purple,
-        primaryVariant = Pinkish,
-        background = White,
-        surface = White,
-        onPrimary = White,
-        onBackground = Black,
-        onSurface = Black,
-        onError = White,
+private val LightColorScheme =
+    lightColorScheme(
+        primary = Primary,
+        onPrimary = OnPrimary,
+        primaryContainer = PrimaryContainer,
+        onPrimaryContainer = OnPrimaryContainer,
+        secondary = Secondary,
+        onSecondary = OnSecondary,
+        tertiary = Tertiary,
+        onTertiary = OnTertiary,
+        error = Error,
+        onError = OnError,
+        background = Background,
+        onBackground = OnBackground,
+        surface = Surface,
+        onSurface = OnSurface,
+        surfaceVariant = SurfaceVariant,
+        onSurfaceVariant = OnSurfaceVariant,
+        outline = Outline,
     )
 
-private val DarkColorPalette =
-    darkColors(
-        primary = Purple,
-        primaryVariant = Pinkish,
-        background = Black,
-        surface = Gray600,
-        onPrimary = White,
-        onBackground = White,
-        onSurface = White,
-        onError = White,
+private val DarkColorScheme =
+    darkColorScheme(
+        primary = Primary,
+        onPrimary = OnPrimary,
+        primaryContainer = PrimaryContainer,
+        onPrimaryContainer = OnPrimaryContainer,
+        secondary = Secondary,
+        onSecondary = OnSecondary,
+        tertiary = Tertiary,
+        onTertiary = OnTertiary,
+        error = Error,
+        onError = OnError,
+        background = DarkBackground,
+        onBackground = DarkOnBackground,
+        surface = DarkSurface,
+        onSurface = DarkOnSurface,
+        surfaceVariant = SurfaceVariant,
+        onSurfaceVariant = OnSurfaceVariant,
+        outline = Outline,
     )
 
 @Composable
@@ -35,12 +53,17 @@ fun NewmTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colors =
+    val colorScheme =
         if (darkTheme) {
-            DarkColorPalette
+            DarkColorScheme
         } else {
-            LightColorPalette
+            LightColorScheme
         }
 
-    MaterialTheme(colors = colors, typography = Typography, shapes = Shapes, content = content)
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        shapes = Shapes,
+        content = content,
+    )
 }

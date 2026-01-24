@@ -16,9 +16,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import io.newm.core.ui.theme.Gray16
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import org.jetbrains.compose.resources.StringResource
@@ -100,7 +100,12 @@ inline fun <T> LazyListScope.collapsibleCard(
             onEnterFinished = onEnterFinished,
             onExitFinished = onExitFinished,
         ) {
-            Box(modifier = Modifier.fillMaxWidth().background(color = Gray16, shape = itemShape)) {
+            Box(
+                modifier = Modifier.fillMaxWidth().background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = itemShape
+                )
+            ) {
                 content(item)
             }
         }

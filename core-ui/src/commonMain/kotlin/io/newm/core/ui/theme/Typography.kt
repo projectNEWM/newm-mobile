@@ -1,48 +1,88 @@
 package io.newm.core.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-val h1
+val displayLarge
+    @Composable
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 57.sp)
+
+val displayMedium
+    @Composable
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 45.sp)
+
+val displaySmall
+    @Composable
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 36.sp)
+
+val headlineLarge
     @Composable
     get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 32.sp)
 
-val h2
+val headlineMedium
     @Composable
-    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 26.sp)
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 28.sp)
 
-val h3
+val headlineSmall
+    @Composable
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+
+val titleLarge
     @Composable
     get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 22.sp)
 
-val h4
+val titleMedium
     @Composable
-    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 16.sp)
 
-val body1
+val titleSmall
+    @Composable
+    get() = TextStyle(fontFamily = raleway, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+
+val bodyLarge
     @Composable
     get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Medium, fontSize = 16.sp)
 
-val body2
+val bodyMedium
     @Composable
     get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Medium, fontSize = 14.sp)
 
-val button
+val bodySmall
     @Composable
-    get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Medium, fontSize = 12.sp)
+
+val labelLarge
+    @Composable
+    get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+
+val labelMedium
+    @Composable
+    get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+
+val labelSmall
+    @Composable
+    get() = TextStyle(fontFamily = montserrat, fontWeight = FontWeight.Bold, fontSize = 11.sp)
 
 val Typography
     @Composable
     get() =
         Typography(
-            h1 = h1,
-            h2 = h2,
-            h3 = h3,
-            h4 = h4,
-            body1 = body1,
-            body2 = body2,
-            button = button,
+            displayLarge = displayLarge,
+            displayMedium = displayMedium,
+            displaySmall = displaySmall,
+            headlineLarge = headlineLarge,
+            headlineMedium = headlineMedium,
+            headlineSmall = headlineSmall,
+            titleLarge = titleLarge,
+            titleMedium = titleMedium,
+            titleSmall = titleSmall,
+            bodyLarge = bodyLarge,
+            bodyMedium = bodyMedium,
+            bodySmall = bodySmall,
+            labelLarge = labelLarge,
+            labelMedium = labelMedium,
+            labelSmall = labelSmall,
         )

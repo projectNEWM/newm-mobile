@@ -1,6 +1,6 @@
 package io.newm.core.ui
 
-import androidx.compose.material.SnackbarDuration
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 

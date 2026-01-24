@@ -8,16 +8,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
@@ -27,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -40,8 +39,6 @@ import androidx.compose.ui.unit.sp
 import io.newm.core.resources.Res
 import io.newm.core.resources.hide_password_description
 import io.newm.core.resources.show_password_description
-import io.newm.core.ui.theme.Gray100
-import io.newm.core.ui.theme.Gray500
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -52,7 +49,7 @@ val formTitleStyle
             fontSize = 12.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Bold,
-            color = White,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
 val formLabelStyle
@@ -62,13 +59,18 @@ val formLabelStyle
             fontSize = 12.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Bold,
-            color = Gray100,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
 val formTextFieldStyle
     @Composable
     get() =
-        TextStyle(fontSize = 16.sp, fontFamily = FontFamily.Default, fontWeight = FontWeight.Normal)
+        TextStyle(
+            fontSize = 16.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
 
 val formNameStyle
     @Composable
@@ -77,7 +79,7 @@ val formNameStyle
             fontSize = 24.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Bold,
-            color = White,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
 val formEmailStyle
@@ -87,7 +89,7 @@ val formEmailStyle
             fontSize = 14.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Normal,
-            color = Gray100,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
 val versionTextStyle
@@ -97,7 +99,7 @@ val versionTextStyle
             fontSize = 12.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Light,
-            color = Gray100,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
 object TextFieldWithLabelDefaults {
@@ -141,7 +143,7 @@ fun TextFieldWithLabel(
         },
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     helperText: String? = null,
-    textfieldBackgroundColor: Color = MaterialTheme.colors.surface,
+    textfieldBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     singleLine: Boolean = false,
 ) {
     val isInputMasked = remember { mutableStateOf(isPassword) }
@@ -151,9 +153,9 @@ fun TextFieldWithLabel(
         Spacer(modifier = Modifier.height(4.dp))
         val textColor =
             if (enabled) {
-                MaterialTheme.colors.onSurface
+                MaterialTheme.colorScheme.onSurface
             } else {
-                MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             }
 
         val backgroundColor =
@@ -173,11 +175,13 @@ fun TextFieldWithLabel(
                 },
             textStyle = formTextFieldStyle,
             colors =
-                TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Gray500,
-                    unfocusedBorderColor = Gray500,
-                    backgroundColor = backgroundColor,
-                    textColor = textColor,
+                OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.outline,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    unfocusedContainerColor = backgroundColor,
+                    focusedContainerColor = backgroundColor,
+                    focusedTextColor = textColor,
+                    unfocusedTextColor = textColor,
                 ),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
@@ -200,7 +204,7 @@ fun TextFieldWithLabel(
         Text(
             text = helperText.orEmpty(),
             style = formLabelStyle,
-            color = if (isError) MaterialTheme.colors.error else Color.Unspecified,
+            color = if (isError) MaterialTheme.colorScheme.error else Color.Unspecified,
         )
     }
 }
@@ -213,6 +217,7 @@ fun PasswordTrailingIcon(isInputMasked: MutableState<Boolean>) {
                 Icon(
                     imageVector = Icons.Filled.VisibilityOff,
                     contentDescription = stringResource(Res.string.show_password_description),
+                    tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
         } else {
@@ -220,6 +225,7 @@ fun PasswordTrailingIcon(isInputMasked: MutableState<Boolean>) {
                 Icon(
                     imageVector = Icons.Filled.Visibility,
                     contentDescription = stringResource(Res.string.hide_password_description),
+                    tint = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }

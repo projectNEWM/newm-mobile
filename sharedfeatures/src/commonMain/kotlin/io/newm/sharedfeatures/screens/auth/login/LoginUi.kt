@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -64,7 +64,7 @@ internal fun LoginScreenContent(
                 fontSize = 16.sp,
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colorScheme.primary,
                 modifier =
                     Modifier.align(Alignment.End).padding(16.dp).clickable {
                         eventSink(LoginScreen.UiEvent.ForgotPasswordClick)

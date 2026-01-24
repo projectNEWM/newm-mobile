@@ -1,7 +1,7 @@
 package io.newm.core.ui
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.LinkAnnotation
@@ -27,7 +27,7 @@ fun PrivacyPolicyAndTermsSection(
         TextLinkStyles(
             style =
                 SpanStyle(
-                    color = MaterialTheme.colors.primary,
+                    color = MaterialTheme.colorScheme.primary,
                     textDecoration = TextDecoration.Underline,
                 ),
         )
@@ -62,9 +62,9 @@ fun PrivacyPolicyAndTermsSection(
     Text(
         text = annotatedText,
         style =
-            MaterialTheme.typography.body2.copy(
+            MaterialTheme.typography.bodyMedium.copy(
                 fontSize = 12.sp,
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorScheme.onBackground,
             ),
         modifier = modifier,
     )

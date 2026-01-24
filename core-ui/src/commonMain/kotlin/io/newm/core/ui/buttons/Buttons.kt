@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -32,16 +29,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.Res
 import io.newm.core.resources.check_icon_description
-import io.newm.core.ui.theme.DarkViolet
-import io.newm.core.ui.theme.Pinkish
-import io.newm.core.ui.theme.Purple
 import io.newm.core.ui.utils.iconGradient
 import org.jetbrains.compose.resources.stringResource
 
-private val enabledButtonGradient = iconGradient(DarkViolet, Pinkish)
+private val enabledButtonGradient: Brush
+    @Composable
+    get() =
+        iconGradient(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primaryContainer)
 
-private val disabledButtonGradient =
-    iconGradient(DarkViolet.copy(alpha = 0.4f), Pinkish.copy(alpha = 0.4f))
+private val disabledButtonGradient: Brush
+    @Composable
+    get() =
+        iconGradient(
+            MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
+            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+        )
 
 @Composable
 fun NewmButton(
@@ -66,11 +68,14 @@ fun NewmButton(
                 ),
         )
 
-    Button(
+    androidx.compose.material3.Button(
         onClick = onClick,
         modifier = newmModifier,
         elevation = null,
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+        colors =
+            androidx.compose.material3.ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+            ),
         content = content,
     )
 }
@@ -100,13 +105,13 @@ fun PrimaryButton(
                 Icon(
                     painter = it,
                     contentDescription = stringResource(Res.string.check_icon_description),
-                    tint = White,
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
                 Spacer(modifier = Modifier.size(8.dp))
             }
         Text(
             text = text,
-            color = if (enabled) MaterialTheme.colors.onPrimary else Gray,
+            color = if (enabled) MaterialTheme.colorScheme.onPrimary else Gray,
             fontFamily = FontFamily.Default,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.Medium,
@@ -124,7 +129,7 @@ fun SecondaryButton(
     enabled: Boolean = true,
     iconPainter: Painter? = null,
 ) {
-    Button(
+    androidx.compose.material3.Button(
         onClick = onClick,
         modifier =
             modifier
@@ -134,14 +139,21 @@ fun SecondaryButton(
                 .height(40.dp),
         elevation = null,
         enabled = enabled,
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+        colors =
+            androidx.compose.material3.ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+            ),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
             iconPainter?.let {
-                Icon(painter = it, contentDescription = null, tint = Purple)
+                Icon(
+                    painter = it,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
                 Spacer(modifier = Modifier.size(8.dp))
             }
             Text(text = label, style = textStyle)
@@ -149,15 +161,20 @@ fun SecondaryButton(
     }
 }
 
-private val defaultButtonGradient =
-    iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))
+private val defaultButtonGradient: Brush
+    @Composable
+    get() =
+        iconGradient(
+            MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.08f),
+        )
 
-private val defaultButtonLabelStyle
+private val defaultButtonLabelStyle: TextStyle
     @Composable
     get() =
         TextStyle(
             fontSize = 16.sp,
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Medium,
-            color = Purple,
+            color = MaterialTheme.colorScheme.primary,
         )

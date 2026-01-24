@@ -1,10 +1,10 @@
 package io.newm.core.ui
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
@@ -20,8 +20,8 @@ fun ConfirmationDialog(
     isOpen: MutableState<Boolean>,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
-    positiveButtonColor: Color = MaterialTheme.colors.primary,
-    negativeButtonColor: Color = MaterialTheme.colors.background,
+    positiveButtonColor: Color = MaterialTheme.colorScheme.primary,
+    negativeButtonColor: Color = MaterialTheme.colorScheme.background,
 ) {
     val confirmationText = stringResource(Res.string.dialog_confirm)
     val cancelText = stringResource(Res.string.dialog_cancel)
@@ -42,7 +42,7 @@ fun ConfirmationDialog(
                         isOpen.value = false // Close the dialog
                         onConfirm() // Handle the confirm action
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = positiveButtonColor),
+                    colors = ButtonDefaults.buttonColors(containerColor = positiveButtonColor),
                 ) {
                     Text(confirmationText)
                 }
@@ -53,7 +53,7 @@ fun ConfirmationDialog(
                         isOpen.value = false // Close the dialog
                         onDismiss() // Handle the dismiss action
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = negativeButtonColor),
+                    colors = ButtonDefaults.buttonColors(containerColor = negativeButtonColor),
                 ) {
                     Text(cancelText)
                 }
