@@ -13,57 +13,58 @@ import io.newm.core.ui.theme.RainbowThree
 import io.newm.core.ui.theme.RainbowTwo
 
 @Composable
-fun HotPinkBrush(): Brush = Brush.horizontalGradient(
-    colors = listOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.primaryContainer,
-        MaterialTheme.colorScheme.primary
+fun HotPinkBrush(): Brush =
+    Brush.horizontalGradient(
+        colors =
+            listOf(
+                MaterialTheme.colorScheme.primary,
+                MaterialTheme.colorScheme.primaryContainer,
+                MaterialTheme.colorScheme.primary,
+            ),
     )
-)
 
 @Composable
 fun DisabledHotPinkBrush(): Brush =
     Brush.horizontalGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
-            MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
-        ),
+        colors =
+            listOf(
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+            ),
     )
 
 @Composable
 fun SongRingBrush(): Brush =
     Brush.horizontalGradient(
         colors =
-        listOf(
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.colorScheme.tertiary,
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.colorScheme.tertiary,
-            MaterialTheme.colorScheme.secondary,
-        ),
+            listOf(
+                MaterialTheme.colorScheme.secondary,
+                MaterialTheme.colorScheme.tertiary,
+                MaterialTheme.colorScheme.secondary,
+                MaterialTheme.colorScheme.tertiary,
+                MaterialTheme.colorScheme.secondary,
+            ),
     )
 
 @Composable
-fun ActionButtonBackgroundBrush(): Brush = Brush.verticalGradient(
-    colors = listOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.secondary
+fun ActionButtonBackgroundBrush(): Brush =
+    Brush.verticalGradient(
+        colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary),
     )
-)
 
 @Composable
 fun NewmRainbowBrush(): Brush =
     Brush.horizontalGradient(
         colors =
-        listOf(
-            RainbowOne,
-            RainbowTwo,
-            RainbowThree,
-            RainbowFour,
-            RainbowFive,
-            RainbowSix,
-            RainbowSeven,
-            RainbowEight,
-        ),
+            listOf(
+                RainbowOne,
+                RainbowTwo,
+                RainbowThree,
+                RainbowFour,
+                RainbowFive,
+                RainbowSix,
+                RainbowSeven,
+                RainbowEight,
+            ),
     )

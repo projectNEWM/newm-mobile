@@ -30,22 +30,22 @@ import org.jetbrains.compose.resources.stringResource
 
 val buttonGradient: Brush
     @Composable
-    get() = iconGradient(
-        MaterialTheme.colorScheme.secondary.copy(alpha = 0.08f),
-        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.08f)
-    )
+    get() =
+        iconGradient(
+            MaterialTheme.colorScheme.secondary.copy(alpha = 0.08f),
+            MaterialTheme.colorScheme.tertiary.copy(alpha = 0.08f),
+        )
 
 @Composable
 fun ConnectWalletPanel(onButtonClick: () -> Unit) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant),
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)) {
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             Text(
                 text = stringResource(Res.string.connect_wallet_label1),
                 fontFamily = FontFamily.Default,
@@ -64,11 +64,11 @@ fun ConnectWalletPanel(onButtonClick: () -> Unit) {
             Button(
                 onClick = onButtonClick,
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .background(buttonGradient)
-                    .clip(RoundedCornerShape(8.dp)),
+                    Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .background(buttonGradient)
+                        .clip(RoundedCornerShape(8.dp)),
                 elevation = null,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             ) {
