@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.paparazzi)
 }
 
+compose.resources { publicResClass = true }
+
 android {
     namespace = "io.newm.sharedfeatures"
 

@@ -8,6 +8,6 @@ This file tracks all major tracks for the project. Each track has its own detail
   *Link: [./conductor/tracks/music_player_ux_20260122/](./conductor/tracks/music_player_ux_20260122/)*
 ---
 
-- [~] **Track: Migrate CreateAccount and ResetPassword screens from android module to sharedfeatures module.**
+- [x] **Track: Migrate CreateAccount and ResetPassword screens from android module to sharedfeatures module.**
 *Link: [./tracks/feature_login_migration_20260122/](./tracks/feature_login_migration_20260122/)*
 

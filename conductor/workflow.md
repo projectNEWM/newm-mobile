@@ -21,11 +21,13 @@ All tasks follow a strict lifecycle:
 
 3. **Write Failing Tests (Red Phase):**
    - Create a new test file for the feature or bug fix.
+   - For UI changes, write new Paparazzi tests or identify existing ones that must be verified.
    - Write one or more unit tests that clearly define the expected behavior and acceptance criteria for the task.
    - **CRITICAL:** Run the tests and confirm that they fail as expected. This is the "Red" phase of TDD. Do not proceed until you have failing tests.
 
 4. **Implement to Pass Tests (Green Phase):**
    - Write the minimum amount of application code necessary to make the failing tests pass.
+   - For UI changes, run `./gradlew recordPaparazziDebug` to record new snapshots if visual changes are intended, or `./gradlew verifyPaparazziDebug` to ensure no regression if no changes are intended.
    - Run the test suite again and confirm that all tests now pass. This is the "Green" phase.
 
 5. **Refactor (Optional but Recommended):**
@@ -122,13 +124,18 @@ All tasks follow a strict lifecycle:
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message following the format `conductor(plan): Mark phase '<PHASE NAME>' as complete`.
 
-10.  **Announce Completion:** Inform the user that the phase is complete and the checkpoint has been created, with the detailed verification report attached as a git note.
+10. **Create Branch (Charcoal):**
+    - **Action:** Always commit and create a branch after every phase using charcoal cli.
+    - **Command:** `gt b c sky/{branch name} -m "{commit message}"`
+
+11. **Announce Completion:** Inform the user that the phase is complete and the checkpoint has been created, with the detailed verification report attached as a git note.
 
 ### Quality Gates
 
 Before marking any task complete, verify:
 
 - [ ] All tests pass
+- [ ] For UI changes: New snapshots recorded (if changes intended) OR existing snapshots verified (if no changes intended) using Paparazzi
 - [ ] Code coverage meets requirements (>80%)
 - [ ] Code follows project's code style guidelines (as defined in `code_styleguides/`)
 - [ ] All public functions/methods are documented (e.g., docstrings, JSDoc, GoDoc)
@@ -176,6 +183,13 @@ Before marking any task complete, verify:
 - Verify database transactions
 - Test authentication and authorization
 - Check form submissions
+
+### UI Snapshot Testing
+- Any UI change must record and/or write new Paparazzi tests for intended changes.
+- If there are no intended visual differences, verify existing snapshots.
+- Commands:
+  - Record: `./gradlew recordPaparazziDebug`
+  - Verify: `./gradlew verifyPaparazziDebug`
 
 ### Mobile Testing
 - Test on actual iPhone when possible
@@ -256,7 +270,8 @@ A task is complete when:
 
 1. All code implemented to specification
 2. Unit tests written and passing
-3. Code coverage meets project requirements
+3. For UI changes: Paparazzi snapshots recorded/verified
+4. Code coverage meets project requirements
 4. Documentation complete (if applicable)
 5. Code passes all configured linting and static analysis checks
 6. Works beautifully on mobile (if applicable)

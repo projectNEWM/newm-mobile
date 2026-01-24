@@ -34,7 +34,6 @@ import io.newm.core.resources.R
 import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.PrimaryButton
-import io.newm.feature.login.screen.TextFieldState
 import io.newm.screens.profile.OnBack
 import io.newm.screens.profile.OnBottomSheetVisible
 import io.newm.screens.profile.OnLogout
@@ -53,6 +52,7 @@ import io.newm.screens.profile.edit.ProfileEditUiState.Loading
 import io.newm.shared.commonPublic.models.User
 import io.newm.shared.commonPublic.models.canEditName
 import io.newm.shared.commonPublic.models.mocks.mockUsers
+import io.newm.sharedfeatures.screens.auth.login.TextFieldState
 import kotlinx.coroutines.launch
 import network.chaintech.cmpimagepickncrop.CMPImagePickNCropDialog
 
