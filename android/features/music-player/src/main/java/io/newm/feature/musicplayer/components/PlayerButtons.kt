@@ -8,16 +8,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import io.newm.core.resources.R
+import io.newm.core.ui.theme.DarkPink
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.Gray500
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.DarkPink
-import io.newm.sharedfeatures.theme.DarkViolet
-import io.newm.sharedfeatures.theme.Gray500
-import io.newm.sharedfeatures.theme.White
 
 internal val MusicPlayerBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink))
 

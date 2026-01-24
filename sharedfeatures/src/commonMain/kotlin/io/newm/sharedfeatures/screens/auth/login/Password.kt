@@ -6,8 +6,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import io.newm.sharedfeatures.ui.text.TextFieldWithLabel
-import io.newm.sharedfeatures.ui.text.TextFieldWithLabelDefaults
+import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.password
 import org.jetbrains.compose.resources.StringResource

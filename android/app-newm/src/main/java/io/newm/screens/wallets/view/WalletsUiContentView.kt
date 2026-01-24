@@ -15,13 +15,13 @@ import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import io.newm.core.resources.R
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.screens.wallets.util.rememberBarcodeScannerLauncher
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.WalletConnection
-import io.newm.sharedfeatures.core.resources.R
 import kotlinx.coroutines.launch
 
 @Composable

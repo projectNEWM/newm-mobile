@@ -9,12 +9,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import io.newm.core.resources.R
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
 import io.newm.core.ui.utils.shortToast
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
-import io.newm.sharedfeatures.core.resources.R
 
 internal fun ActivityResult.onActivityResultOk(
     context: Context,

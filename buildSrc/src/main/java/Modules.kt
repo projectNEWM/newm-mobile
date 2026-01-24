@@ -1,6 +1,6 @@
 object Modules {
-    const val CORE_RESOURCES = ":sharedfeatures:core-resources"
-    const val CORE_UI_UTILS = ":sharedfeatures:ui-utils"
+    const val CORE_RESOURCES = ":core-resources"
+    const val CORE_UI = ":core-ui"
 
     const val CORE_ANDROID_IMPLEMENTATIONS = ":android:core:android:implementations"
 

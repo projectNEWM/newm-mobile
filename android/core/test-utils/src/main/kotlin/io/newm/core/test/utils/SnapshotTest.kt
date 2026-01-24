@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalInspectionMode
 import app.cash.paparazzi.Paparazzi
-import io.newm.sharedfeatures.theme.NewmTheme
+import io.newm.core.ui.theme.NewmTheme
 import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.junit.Rule
 

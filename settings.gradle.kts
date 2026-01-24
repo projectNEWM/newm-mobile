@@ -22,9 +22,9 @@ include(":android:core:android:implementations")
 
 include(":android:core:test-utils")
 
-include(":sharedfeatures:core-resources")
+include(":core-resources")
 
-include(":sharedfeatures:ui-utils")
+include(":core-ui")
 
 include(":android:features:barcode-scanner")
 

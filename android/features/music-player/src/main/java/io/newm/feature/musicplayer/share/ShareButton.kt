@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import io.newm.sharedfeatures.core.resources.R
+import io.newm.core.resources.R
 
 @Composable
 fun ShareButton(

@@ -9,9 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.ui.text.formEmailStyle
-import io.newm.sharedfeatures.ui.text.formNameStyle
+import io.newm.core.resources.R
+import io.newm.core.ui.text.formEmailStyle
+import io.newm.core.ui.text.formNameStyle
 
 @Composable
 fun ProfileHeader(

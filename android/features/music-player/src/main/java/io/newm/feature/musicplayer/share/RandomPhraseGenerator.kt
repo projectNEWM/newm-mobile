@@ -1,7 +1,7 @@
 package io.newm.feature.musicplayer.share
 
 import android.content.Context
-import io.newm.sharedfeatures.core.resources.R
+import io.newm.core.resources.R
 
 fun Context.getRandomSharePhrase(
     songTitle: String,

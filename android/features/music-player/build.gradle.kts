@@ -37,7 +37,7 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.play.services.auth)
 
-    implementation(project(Modules.CORE_UI_UTILS))
+    implementation(project(Modules.CORE_UI))
     implementation(project(Modules.SHARED))
 
     testImplementation(project(Modules.TEST_UTILS))

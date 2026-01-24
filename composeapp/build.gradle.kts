@@ -62,7 +62,7 @@ kotlin {
             implementation(libs.circuit.foundation)
             implementation(project(Modules.SHARED))
             implementation(project(Modules.SHARED_COMPOSE_FEATURES))
-            implementation(project(Modules.CORE_UI_UTILS))
+            implementation(project(Modules.CORE_UI))
         }
 
         desktopMain.dependencies { implementation(compose.desktop.currentOs) }

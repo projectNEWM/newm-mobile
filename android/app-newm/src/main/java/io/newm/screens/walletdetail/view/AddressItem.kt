@@ -32,9 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.GraySuit
-import io.newm.sharedfeatures.theme.White
+import io.newm.core.resources.R
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.White
 import kotlinx.coroutines.launch
 
 fun LazyListScope.addressItem(address: String) {

@@ -17,21 +17,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
+import io.newm.core.ui.ConfirmationDialog
+import io.newm.core.ui.buttons.NewmButton
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.LightSkyBlue
+import io.newm.core.ui.theme.OceanGreen
+import io.newm.core.ui.theme.Pinkish
+import io.newm.core.ui.theme.Purple
 import io.newm.core.ui.utils.drawWithBrush
+import io.newm.core.ui.utils.iconGradient
 import io.newm.core.ui.utils.shortToast
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.DarkViolet
-import io.newm.sharedfeatures.theme.LightSkyBlue
-import io.newm.sharedfeatures.theme.OceanGreen
-import io.newm.sharedfeatures.theme.Pinkish
-import io.newm.sharedfeatures.theme.Purple
-import io.newm.sharedfeatures.ui.ConfirmationDialog
-import io.newm.sharedfeatures.ui.buttons.NewmButton
-import io.newm.sharedfeatures.ui.utils.iconGradient
 
 private val defaultProfileButtonGradient =
     iconGradient(DarkViolet.copy(alpha = 0.08f), Pinkish.copy(alpha = 0.08f))

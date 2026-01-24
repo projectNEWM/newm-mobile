@@ -43,16 +43,16 @@ import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.allowHardware
 import coil3.toBitmap
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.service.MusicPlayer
-import io.newm.sharedfeatures.theme.White
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import io.newm.sharedfeatures.core.resources.R as CoreR
+import io.newm.core.resources.R as CoreR
 
 @Composable
 fun MiniPlayer(

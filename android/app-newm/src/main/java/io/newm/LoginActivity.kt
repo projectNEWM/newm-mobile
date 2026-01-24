@@ -26,6 +26,8 @@ import com.slack.circuit.retained.LocalRetainedStateRegistry
 import com.slack.circuit.retained.lifecycleRetainedStateRegistry
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
+import io.newm.core.ui.LocalSnackBarHostState
+import io.newm.core.ui.theme.NewmTheme
 import io.newm.screens.forceupdate.ForceAppUpdateState
 import io.newm.screens.forceupdate.ForceAppUpdateUi
 import io.newm.screens.forceupdate.openAppPlayStore
@@ -52,8 +54,6 @@ import io.newm.sharedfeatures.screens.devmenu.DevMenuPresenter
 import io.newm.sharedfeatures.screens.devmenu.DevMenuUi
 import io.newm.sharedfeatures.screens.devmenu.featureflaglist.FeatureFlagsListPresenter
 import io.newm.sharedfeatures.screens.devmenu.featureflaglist.FeatureFlagsListUi
-import io.newm.sharedfeatures.theme.NewmTheme
-import io.newm.sharedfeatures.ui.LocalSnackBarHostState
 import io.newm.utils.DynamicStatusBarSideEffect
 import io.newm.utils.ForceAppUpdateViewModel
 import io.newm.utils.ui

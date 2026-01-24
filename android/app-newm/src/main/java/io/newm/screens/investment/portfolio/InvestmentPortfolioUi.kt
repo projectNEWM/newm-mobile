@@ -32,18 +32,18 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
+import io.newm.core.resources.R
 import io.newm.core.ui.LoadingScreen
+import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.theme.CerisePink
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.SteelPink
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.ErrorScreen
+import io.newm.core.ui.utils.textGradient
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.models.NFTTrack
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.CerisePink
-import io.newm.sharedfeatures.theme.Gray16
-import io.newm.sharedfeatures.theme.GraySuit
-import io.newm.sharedfeatures.theme.SteelPink
-import io.newm.sharedfeatures.theme.White
-import io.newm.sharedfeatures.ui.buttons.SecondaryButton
-import io.newm.sharedfeatures.ui.utils.textGradient
 
 internal const val TAG_INVESTMENT_PORTFOLIO_SCREEN = "TAG_INVESTMENT_PORTFOLIO_SCREEN"
 

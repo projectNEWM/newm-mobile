@@ -122,7 +122,7 @@ dependencies {
     implementation(project(Modules.BARCODE_SCANNER))
     implementation(project(Modules.CORE_ANDROID_IMPLEMENTATIONS))
 
-    implementation(project(Modules.CORE_UI_UTILS))
+    implementation(project(Modules.CORE_UI))
     implementation(project(Modules.CORE_RESOURCES))
     implementation(project(Modules.MUSIC_PLAYER))
     implementation(project(Modules.SHARED))

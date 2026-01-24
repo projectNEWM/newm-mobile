@@ -14,21 +14,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import io.newm.sharedfeatures.core.resources.Res
-import io.newm.sharedfeatures.core.resources.profile_form_email
-import io.newm.sharedfeatures.core.resources.profile_form_first_name
-import io.newm.sharedfeatures.core.resources.profile_form_last_name
-import io.newm.sharedfeatures.core.resources.profile_form_password_confirm_password
-import io.newm.sharedfeatures.core.resources.profile_form_password_current_password
-import io.newm.sharedfeatures.core.resources.profile_form_password_new_password
-import io.newm.sharedfeatures.core.resources.profile_form_password_title
+import io.newm.core.resources.Res
+import io.newm.core.resources.profile_form_email
+import io.newm.core.resources.profile_form_first_name
+import io.newm.core.resources.profile_form_last_name
+import io.newm.core.resources.profile_form_password_confirm_password
+import io.newm.core.resources.profile_form_password_current_password
+import io.newm.core.resources.profile_form_password_new_password
+import io.newm.core.resources.profile_form_password_title
+import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.core.ui.text.formTitleStyle
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.Gray23
 import io.newm.sharedfeatures.screens.auth.login.Password
 import io.newm.sharedfeatures.screens.auth.login.PasswordState
 import io.newm.sharedfeatures.screens.auth.login.TextFieldState
-import io.newm.sharedfeatures.theme.Gray16
-import io.newm.sharedfeatures.theme.Gray23
-import io.newm.sharedfeatures.ui.text.TextFieldWithLabel
-import io.newm.sharedfeatures.ui.text.formTitleStyle
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

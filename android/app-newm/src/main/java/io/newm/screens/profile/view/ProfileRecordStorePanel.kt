@@ -20,9 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.Gray16
-import io.newm.sharedfeatures.theme.White
+import io.newm.core.resources.R
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.White
 
 private val recordStoreLabelStyle
     @Composable

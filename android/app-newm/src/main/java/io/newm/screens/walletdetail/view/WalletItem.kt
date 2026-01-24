@@ -16,8 +16,8 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
+import io.newm.core.resources.R
 import io.newm.shared.commonPublic.models.NFTTrack
-import io.newm.sharedfeatures.core.resources.R
 
 @Composable
 @OptIn(ExperimentalMaterialApi::class)

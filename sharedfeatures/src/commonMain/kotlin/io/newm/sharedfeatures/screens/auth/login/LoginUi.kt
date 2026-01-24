@@ -23,11 +23,11 @@ import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import io.newm.core.ui.ToastSideEffect
+import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabelDefaults
+import io.newm.core.ui.theme.NewmTheme
 import io.newm.sharedfeatures.screens.LoginScreen
-import io.newm.sharedfeatures.theme.NewmTheme
-import io.newm.sharedfeatures.ui.ToastSideEffect
-import io.newm.sharedfeatures.ui.buttons.PrimaryButton
-import io.newm.sharedfeatures.ui.text.TextFieldWithLabelDefaults
 import me.tatarka.inject.annotations.Inject
 import newm_mobile.sharedfeatures.generated.resources.Res
 import newm_mobile.sharedfeatures.generated.resources.login

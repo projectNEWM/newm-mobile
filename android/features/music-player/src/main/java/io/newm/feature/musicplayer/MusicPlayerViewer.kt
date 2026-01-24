@@ -50,7 +50,13 @@ import coil3.request.ImageRequest
 import coil3.request.allowHardware
 import coil3.request.error
 import coil3.toBitmap
+import io.newm.core.resources.R
 import io.newm.core.ui.ZoomableImage
+import io.newm.core.ui.theme.Black
+import io.newm.core.ui.theme.DarkPink
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.feature.musicplayer.components.MusicPlayerControls
@@ -58,12 +64,6 @@ import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.models.Track
 import io.newm.feature.musicplayer.share.ShareButton
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.Black
-import io.newm.sharedfeatures.theme.DarkPink
-import io.newm.sharedfeatures.theme.DarkViolet
-import io.newm.sharedfeatures.theme.GraySuit
-import io.newm.sharedfeatures.theme.White
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

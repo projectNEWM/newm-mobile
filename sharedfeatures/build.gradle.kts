@@ -62,7 +62,7 @@ kotlin {
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.circuit.foundation)
 
-                implementation(project(Modules.CORE_UI_UTILS))
+                implementation(project(Modules.CORE_UI))
                 implementation(project(Modules.SHARED))
             }
         }

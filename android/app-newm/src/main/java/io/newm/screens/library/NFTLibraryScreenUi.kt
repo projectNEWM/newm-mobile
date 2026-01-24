@@ -59,9 +59,33 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
+import io.newm.core.resources.Res
+import io.newm.core.resources.downloaded_description
+import io.newm.core.resources.filter_description
+import io.newm.core.resources.ic_download
+import io.newm.core.resources.ic_downloaded
+import io.newm.core.resources.ic_library_filter
+import io.newm.core.resources.library_download
+import io.newm.core.resources.library_download_description
+import io.newm.core.resources.library_remove_description
+import io.newm.core.resources.library_search
+import io.newm.core.resources.nft_library_error_message
+import io.newm.core.resources.title_nft_library
 import io.newm.core.ui.LoadingScreen
+import io.newm.core.ui.text.SearchBar
+import io.newm.core.ui.theme.CerisePink
+import io.newm.core.ui.theme.DarkPink
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.NewmTheme
+import io.newm.core.ui.theme.Purple
+import io.newm.core.ui.theme.StatusGreen
+import io.newm.core.ui.theme.SteelPink
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.drawWithBrush
+import io.newm.core.ui.utils.textGradient
 import io.newm.feature.musicplayer.service.DownloadState
 import io.newm.screens.library.NFTLibraryEvent.OnApplyFilters
 import io.newm.screens.library.NFTLibraryEvent.OnDownloadTrack
@@ -73,30 +97,6 @@ import io.newm.screens.library.screens.ZeroSearchResults
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.NFTTrack
-import io.newm.sharedfeatures.core.resources.Res
-import io.newm.sharedfeatures.core.resources.downloaded_description
-import io.newm.sharedfeatures.core.resources.filter_description
-import io.newm.sharedfeatures.core.resources.ic_download
-import io.newm.sharedfeatures.core.resources.ic_downloaded
-import io.newm.sharedfeatures.core.resources.ic_library_filter
-import io.newm.sharedfeatures.core.resources.library_download
-import io.newm.sharedfeatures.core.resources.library_download_description
-import io.newm.sharedfeatures.core.resources.library_remove_description
-import io.newm.sharedfeatures.core.resources.library_search
-import io.newm.sharedfeatures.core.resources.nft_library_error_message
-import io.newm.sharedfeatures.core.resources.title_nft_library
-import io.newm.sharedfeatures.theme.CerisePink
-import io.newm.sharedfeatures.theme.DarkPink
-import io.newm.sharedfeatures.theme.DarkViolet
-import io.newm.sharedfeatures.theme.Gray16
-import io.newm.sharedfeatures.theme.GraySuit
-import io.newm.sharedfeatures.theme.NewmTheme
-import io.newm.sharedfeatures.theme.Purple
-import io.newm.sharedfeatures.theme.StatusGreen
-import io.newm.sharedfeatures.theme.SteelPink
-import io.newm.sharedfeatures.theme.White
-import io.newm.sharedfeatures.ui.text.SearchBar
-import io.newm.sharedfeatures.ui.utils.textGradient
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -374,11 +374,9 @@ private fun TrackRowItem(
                 ImageRequest
                     .Builder(LocalContext.current)
                     .data(track.imageUrl)
-                    .error(
-                        io.newm.sharedfeatures.core.resources.R.drawable.ic_default_track_cover_art,
-                    ).placeholder(
-                        io.newm.sharedfeatures.core.resources.R.drawable.ic_default_track_cover_art,
-                    ).build(),
+                    .error(io.newm.core.resources.R.drawable.ic_default_track_cover_art)
+                    .placeholder(io.newm.core.resources.R.drawable.ic_default_track_cover_art)
+                    .build(),
             modifier = Modifier.size(48.dp).clip(RoundedCornerShape(4.dp)),
             contentScale = ContentScale.Crop,
             contentDescription = null,

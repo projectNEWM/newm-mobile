@@ -33,12 +33,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.GraySuit
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.WalletConnection
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.Gray16
-import io.newm.sharedfeatures.theme.GraySuit
 
 @Composable
 fun WalletRowItem(

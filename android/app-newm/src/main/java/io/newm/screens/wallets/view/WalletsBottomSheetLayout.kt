@@ -37,17 +37,17 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
+import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.text.formLabelStyle
+import io.newm.core.ui.theme.Gray23
+import io.newm.core.ui.theme.Gray6F
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.models.WalletConnection
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.Gray23
-import io.newm.sharedfeatures.theme.Gray6F
-import io.newm.sharedfeatures.ui.buttons.PrimaryButton
-import io.newm.sharedfeatures.ui.buttons.SecondaryButton
-import io.newm.sharedfeatures.ui.text.formLabelStyle
 import kotlinx.coroutines.launch
 import java.util.Locale
 

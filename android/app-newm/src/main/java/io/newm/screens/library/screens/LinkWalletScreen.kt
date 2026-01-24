@@ -27,16 +27,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.shortToast
+import io.newm.core.ui.wallet.ConnectWalletPanel
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
 import io.newm.screens.library.TAG_NFT_LIBRARY_SCREEN
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.GraySuit
-import io.newm.sharedfeatures.theme.White
-import io.newm.sharedfeatures.ui.wallet.ConnectWalletPanel
 
 @Composable
 fun LinkWalletScreen(

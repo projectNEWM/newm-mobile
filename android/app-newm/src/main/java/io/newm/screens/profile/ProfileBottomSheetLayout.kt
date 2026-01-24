@@ -22,11 +22,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.newm.BuildConfig
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.Black90
-import io.newm.sharedfeatures.ui.buttons.PrimaryButton
-import io.newm.sharedfeatures.ui.buttons.SecondaryButton
-import io.newm.sharedfeatures.ui.text.versionTextStyle
+import io.newm.core.resources.R
+import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.text.versionTextStyle
+import io.newm.core.ui.theme.Black90
 
 @Composable
 fun ProfileBottomSheetLayout(

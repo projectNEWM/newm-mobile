@@ -20,11 +20,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.Black90
-import io.newm.sharedfeatures.theme.White
-import io.newm.sharedfeatures.ui.buttons.PrimaryButton
-import io.newm.sharedfeatures.ui.buttons.SecondaryButton
+import io.newm.core.resources.R
+import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.theme.Black90
+import io.newm.core.ui.theme.White
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

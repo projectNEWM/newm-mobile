@@ -34,7 +34,7 @@ dependencies {
     implementation(compose.components.resources)
     implementation(libs.guava)
 
-    implementation(project(Modules.CORE_UI_UTILS))
+    implementation(project(Modules.CORE_UI))
     implementation(project(Modules.SHARED))
 }
 

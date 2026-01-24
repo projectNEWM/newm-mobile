@@ -33,15 +33,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
+import io.newm.core.ui.theme.CerisePink
+import io.newm.core.ui.theme.SteelPink
+import io.newm.core.ui.utils.textGradient
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.models.WalletConnection
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.CerisePink
-import io.newm.sharedfeatures.theme.SteelPink
-import io.newm.sharedfeatures.ui.utils.textGradient
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)

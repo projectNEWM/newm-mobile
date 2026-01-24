@@ -36,11 +36,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.newm.core.resources.R
+import io.newm.core.ui.theme.White
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.walletdetail.WalletDetailEvent
 import io.newm.screens.walletdetail.WalletDetailUiState
-import io.newm.sharedfeatures.core.resources.R
-import io.newm.sharedfeatures.theme.White
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
