@@ -30,12 +30,12 @@ import com.slack.circuit.runtime.ui.ui
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabel
+import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.sharedfeatures.screens.auth.login.Email
 import io.newm.sharedfeatures.screens.auth.login.Password
 import io.newm.sharedfeatures.screens.auth.login.PreLoginArtistBackgroundContentTemplate
 import io.newm.sharedfeatures.screens.auth.login.TextFieldState
-import io.newm.sharedfeatures.screens.auth.login.TextFieldWithLabel
-import io.newm.sharedfeatures.screens.auth.login.TextFieldWithLabelDefaults
 import io.newm.sharedfeatures.screens.auth.login.UiMessage
 import io.newm.sharedfeatures.screens.auth.signup.CreateAccountUiState.EmailAndPasswordUiState
 import io.newm.sharedfeatures.screens.auth.signup.CreateAccountUiState.EmailVerificationUiState

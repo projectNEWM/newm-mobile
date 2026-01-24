@@ -30,12 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.CerisePink
-import io.newm.core.theme.SteelPink
-import io.newm.core.theme.inter
+import io.newm.core.ui.theme.CerisePink
+import io.newm.core.ui.theme.SteelPink
 import io.newm.core.ui.utils.textGradient
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.wallets.WalletsEvent
@@ -146,7 +146,7 @@ private fun WalletsTopBarTitle() {
         text = stringResource(id = R.string.wallets_screen_topbar_title),
         style =
             TextStyle(
-                fontFamily = inter,
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
                 brush = textGradient(SteelPink, CerisePink),

@@ -23,10 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.newm.BuildConfig
 import io.newm.core.resources.R
-import io.newm.core.theme.Black90
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.versionTextStyle
+import io.newm.core.ui.theme.Black90
 
 @Composable
 fun ProfileBottomSheetLayout(
@@ -47,10 +47,13 @@ fun ProfileBottomSheetLayout(
                 modifier =
                     Modifier.fillMaxWidth().background(MaterialTheme.colors.surface).padding(16.dp),
             ) {
-                SecondaryButton(labelResId = R.string.privacy_policy, onClick = onShowPrivacyPolicy)
+                SecondaryButton(
+                    label = stringResource(R.string.privacy_policy),
+                    onClick = onShowPrivacyPolicy,
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 SecondaryButton(
-                    labelResId = R.string.profile_terms_and_condition,
+                    label = stringResource(R.string.profile_terms_and_condition),
                     onClick = onShowTermsAndConditions,
                 )
                 Spacer(modifier = Modifier.height(32.dp))

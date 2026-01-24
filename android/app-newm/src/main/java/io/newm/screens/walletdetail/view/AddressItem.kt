@@ -27,14 +27,14 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.White
 import kotlinx.coroutines.launch
 
 fun LazyListScope.addressItem(address: String) {
@@ -53,7 +53,7 @@ fun LazyListScope.addressItem(address: String) {
                         text = stringResource(R.string.address),
                         style =
                             TextStyle(
-                                fontFamily = inter,
+                                fontFamily = FontFamily.Default,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp,
                                 color = White,
@@ -65,7 +65,7 @@ fun LazyListScope.addressItem(address: String) {
                         overflow = TextOverflow.MiddleEllipsis,
                         style =
                             TextStyle(
-                                fontFamily = inter,
+                                fontFamily = FontFamily.Default,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 12.sp,
                                 color = GraySuit,

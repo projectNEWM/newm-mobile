@@ -12,7 +12,7 @@ import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
-import io.newm.core.theme.NewmTheme
+import io.newm.core.ui.theme.NewmTheme
 import io.newm.shared.config.NewmSharedBuildConfig
 import io.newm.sharedfeatures.screens.DevMenuMainScreen
 import io.newm.sharedfeatures.screens.WelcomeScreen

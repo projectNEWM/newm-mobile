@@ -36,6 +36,12 @@ android {
     }
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "newm_mobile.sharedfeatures.generated.resources"
+    generateResClass = auto
+}
+
 kotlin {
     androidTarget {
         compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) }
@@ -55,8 +61,8 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.circuit.foundation)
-                implementation(project(Modules.CORE_THEME))
-                implementation(project(Modules.CORE_UI_UTILS))
+
+                implementation(project(Modules.CORE_UI))
                 implementation(project(Modules.SHARED))
             }
         }

@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.NewmTheme
 import io.newm.core.ui.OnboardingMainImage
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.theme.NewmTheme
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 
 @Composable

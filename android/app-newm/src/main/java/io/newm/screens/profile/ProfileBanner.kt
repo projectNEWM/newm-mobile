@@ -25,7 +25,7 @@ import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
 import io.newm.core.resources.R
-import io.newm.core.theme.White50
+import io.newm.core.ui.theme.White50
 
 @Composable
 fun ProfileBanner(

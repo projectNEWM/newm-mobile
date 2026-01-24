@@ -9,10 +9,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
-import io.newm.core.theme.DarkPink
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Gray500
-import io.newm.core.theme.White
+import io.newm.core.ui.theme.DarkPink
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.Gray500
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.feature.musicplayer.models.PlaybackRepeatMode
 import io.newm.feature.musicplayer.models.PlaybackState

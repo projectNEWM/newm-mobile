@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.Pinkish
-import io.newm.core.theme.Purple
 import io.newm.core.ui.buttons.NewmButton
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.Pinkish
+import io.newm.core.ui.theme.Purple
 import io.newm.core.ui.utils.iconGradient
 import io.newm.screens.profile.view.defaultButtonLabelStyle
 

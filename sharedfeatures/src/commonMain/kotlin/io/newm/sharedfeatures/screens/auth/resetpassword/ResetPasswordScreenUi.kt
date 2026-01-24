@@ -29,11 +29,11 @@ import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 import io.newm.core.ui.ToastSideEffect
 import io.newm.core.ui.buttons.PrimaryButton
+import io.newm.core.ui.text.TextFieldWithLabelDefaults
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.sharedfeatures.screens.auth.login.Email
 import io.newm.sharedfeatures.screens.auth.login.Password
-import io.newm.sharedfeatures.screens.auth.login.TextFieldWithLabelDefaults
 import io.newm.sharedfeatures.screens.auth.login.UiMessage
 import io.newm.sharedfeatures.screens.auth.signup.EmailVerificationContent
 import me.tatarka.inject.annotations.Inject

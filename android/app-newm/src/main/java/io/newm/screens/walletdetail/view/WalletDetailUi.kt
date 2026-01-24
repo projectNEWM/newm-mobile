@@ -32,12 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
+import io.newm.core.ui.theme.White
 import io.newm.screens.profile.edit.ScrimCircle
 import io.newm.screens.walletdetail.WalletDetailEvent
 import io.newm.screens.walletdetail.WalletDetailUiState
@@ -135,7 +135,12 @@ private fun WalletDetailTitle(walletName: String) {
     Text(
         text = walletName,
         color = White,
-        style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Bold, fontSize = 24.sp),
+        style =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+            ),
     )
 }
 

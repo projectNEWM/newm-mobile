@@ -30,12 +30,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextAlign
@@ -48,10 +51,12 @@ import coil3.request.allowHardware
 import coil3.request.error
 import coil3.toBitmap
 import io.newm.core.resources.R
-import io.newm.core.theme.Black
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
 import io.newm.core.ui.ZoomableImage
+import io.newm.core.ui.theme.Black
+import io.newm.core.ui.theme.DarkPink
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.SwipeDirection
 import io.newm.core.ui.utils.SwipeableWrapper
 import io.newm.feature.musicplayer.components.MusicPlayerControls
@@ -62,6 +67,18 @@ import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
+private val playbackTimeStyle
+    @Composable
+    get() =
+        TextStyle(
+            fontSize = 12.sp,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            color = GraySuit,
+        )
+
+internal val MusicPlayerBrush = Brush.horizontalGradient(listOf(DarkViolet, DarkPink))
 
 @Composable
 internal fun MusicPlayerViewer(
@@ -147,7 +164,7 @@ internal fun MusicPlayerViewer(
                 color = White,
                 style =
                     LocalTextStyle.current.copy(
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
                         textAlign = TextAlign.Center,
@@ -162,7 +179,7 @@ internal fun MusicPlayerViewer(
                 style =
                     LocalTextStyle.current.copy(
                         color = White,
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         shadow = Shadow(color = Black, blurRadius = 10f, offset = Offset(2f, 0f)),

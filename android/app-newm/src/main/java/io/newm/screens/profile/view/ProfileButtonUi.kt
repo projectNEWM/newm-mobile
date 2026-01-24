@@ -14,20 +14,20 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.DarkViolet
-import io.newm.core.theme.LightSkyBlue
-import io.newm.core.theme.OceanGreen
-import io.newm.core.theme.Pinkish
-import io.newm.core.theme.Purple
-import io.newm.core.theme.inter
 import io.newm.core.ui.ConfirmationDialog
 import io.newm.core.ui.buttons.NewmButton
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
+import io.newm.core.ui.theme.DarkViolet
+import io.newm.core.ui.theme.LightSkyBlue
+import io.newm.core.ui.theme.OceanGreen
+import io.newm.core.ui.theme.Pinkish
+import io.newm.core.ui.theme.Purple
 import io.newm.core.ui.utils.drawWithBrush
 import io.newm.core.ui.utils.iconGradient
 import io.newm.core.ui.utils.shortToast
@@ -46,7 +46,7 @@ val defaultButtonLabelStyle
     get() =
         TextStyle(
             fontSize = 14.sp,
-            fontFamily = inter,
+            fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Medium,
             color = Purple,
         )
@@ -56,7 +56,7 @@ val disconnectButtonLabelStyle
     get() =
         TextStyle(
             fontSize = 14.sp,
-            fontFamily = inter,
+            fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Medium,
             color = LightSkyBlue,
         )

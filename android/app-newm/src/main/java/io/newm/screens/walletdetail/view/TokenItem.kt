@@ -15,15 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.NewmTheme
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.NewmTheme
+import io.newm.core.ui.theme.White
 
 fun LazyListScope.tokenItem(claimable: Long) {
     item { Spacer(modifier = Modifier.height(8.dp)) }
@@ -39,7 +39,7 @@ fun LazyListScope.tokenItem(claimable: Long) {
                         text = stringResource(R.string.tokens),
                         style =
                             TextStyle(
-                                fontFamily = inter,
+                                fontFamily = FontFamily.Default,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = White,
@@ -49,7 +49,7 @@ fun LazyListScope.tokenItem(claimable: Long) {
                         text = "$$claimable",
                         style =
                             TextStyle(
-                                fontFamily = inter,
+                                fontFamily = FontFamily.Default,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Normal,
                                 color = GraySuit,

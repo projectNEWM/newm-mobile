@@ -14,7 +14,7 @@ import com.slack.circuit.retained.LocalRetainedStateRegistry
 import com.slack.circuit.retained.lifecycleRetainedStateRegistry
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
-import io.newm.core.theme.NewmTheme
+import io.newm.core.ui.theme.NewmTheme
 import io.newm.screens.Screen
 import io.newm.screens.Screen.NFTLibrary
 import io.newm.screens.forceupdate.ForceAppUpdatePresenter

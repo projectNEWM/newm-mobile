@@ -24,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,14 +33,13 @@ import coil3.request.ImageRequest
 import coil3.request.error
 import coil3.request.placeholder
 import io.newm.core.resources.R
-import io.newm.core.theme.CerisePink
-import io.newm.core.theme.Gray16
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.SteelPink
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.theme.CerisePink
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.SteelPink
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.ErrorScreen
 import io.newm.core.ui.utils.textGradient
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
@@ -88,7 +88,7 @@ fun PortfolioScreen(
         Text(
             text = stringResource(id = R.string.title_investment_portfolio),
             modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.h1.copy(textGradient(SteelPink, CerisePink)),
+            style = MaterialTheme.typography.h4.copy(textGradient(SteelPink, CerisePink)),
         )
 
         Box(modifier = Modifier.padding(all = 16.dp).background(color = Gray16).fillMaxWidth()) {
@@ -104,7 +104,7 @@ fun PortfolioScreen(
                 )
                 SecondaryButton(
                     modifier = Modifier.padding(vertical = 32.dp),
-                    labelResId = R.string.claim,
+                    label = stringResource(R.string.claim),
                     onClick = {
                         Toast.makeText(currentContext, "Coming soon!", Toast.LENGTH_SHORT).show()
                     },
@@ -157,7 +157,7 @@ private fun StreamTokenRowItem(track: NFTTrack) {
             Column(modifier = Modifier.padding(start = 12.dp)) {
                 Text(
                     text = track.title,
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
                     color = White,
@@ -165,7 +165,7 @@ private fun StreamTokenRowItem(track: NFTTrack) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = track.artists.joinToString(", "),
-                        fontFamily = inter,
+                        fontFamily = FontFamily.Default,
                         fontWeight = FontWeight.Normal,
                         fontSize = 12.sp,
                         color = GraySuit,

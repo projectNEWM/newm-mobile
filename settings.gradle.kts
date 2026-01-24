@@ -20,13 +20,11 @@ include(":android:app-newm")
 
 include(":android:core:android:implementations")
 
-include(":android:core:resources")
-
 include(":android:core:test-utils")
 
-include(":android:core:theme")
+include(":core-resources")
 
-include(":android:core:ui-utils")
+include(":core-ui")
 
 include(":android:features:barcode-scanner")
 

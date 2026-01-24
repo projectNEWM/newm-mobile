@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import io.newm.core.resources.R
-import io.newm.core.theme.Gray500
+import io.newm.core.ui.theme.Gray500
 
 @Composable
 internal fun WalletDropDownMenu(

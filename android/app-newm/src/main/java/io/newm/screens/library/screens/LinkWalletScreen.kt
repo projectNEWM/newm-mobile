@@ -22,17 +22,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
 import io.newm.core.ui.permissions.AppPermission
 import io.newm.core.ui.permissions.doWithPermission
 import io.newm.core.ui.permissions.rememberRequestPermissionIntent
+import io.newm.core.ui.theme.GraySuit
+import io.newm.core.ui.theme.White
 import io.newm.core.ui.utils.shortToast
 import io.newm.core.ui.wallet.ConnectWalletPanel
 import io.newm.feature.barcode.scanner.BarcodeScannerActivity
@@ -102,7 +102,7 @@ fun LinkWalletScreen(
             Text(
                 text = stringResource(id = R.string.welcome_to_newm),
                 textAlign = TextAlign.Center,
-                fontFamily = inter,
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
                 color = White,
@@ -111,7 +111,7 @@ fun LinkWalletScreen(
             Text(
                 text = stringResource(id = R.string.library_no_wallet_connected_subtitle),
                 textAlign = TextAlign.Center,
-                fontFamily = inter,
+                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 color = GraySuit,

@@ -16,15 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.Black90
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
+import io.newm.core.ui.theme.Black90
+import io.newm.core.ui.theme.White
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -44,7 +44,7 @@ fun ProfilePictureUpdateSheet(
                     text = stringResource(id = R.string.title_profile_picture),
                     style =
                         TextStyle(
-                            fontFamily = inter,
+                            fontFamily = FontFamily.Default,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
                             color = White,
@@ -57,7 +57,7 @@ fun ProfilePictureUpdateSheet(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 SecondaryButton(
-                    labelResId = R.string.profile_remove_picture,
+                    label = stringResource(R.string.profile_remove_picture),
                     onClick = onRemovePicture,
                 )
             }

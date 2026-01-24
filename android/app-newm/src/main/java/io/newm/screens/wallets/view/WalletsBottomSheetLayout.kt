@@ -33,16 +33,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.Gray23
-import io.newm.core.theme.Gray6F
-import io.newm.core.theme.inter
 import io.newm.core.ui.buttons.PrimaryButton
 import io.newm.core.ui.buttons.SecondaryButton
 import io.newm.core.ui.text.formLabelStyle
+import io.newm.core.ui.theme.Gray23
+import io.newm.core.ui.theme.Gray6F
 import io.newm.screens.wallets.WalletsEvent
 import io.newm.screens.wallets.WalletsUiState
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
@@ -130,7 +130,11 @@ private fun RenameContent(
                 modifier = Modifier.weight(1f).padding(start = 16.dp),
                 text = stringResource(id = R.string.wallets_screen_rename_modal_title),
                 style =
-                    TextStyle(fontFamily = inter, fontWeight = FontWeight.Bold, fontSize = 24.sp),
+                    TextStyle(
+                        fontFamily = FontFamily.Default,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                    ),
             )
             IconButton(onClick = { scope.launch { state.hide() } }) {
                 Icon(imageVector = Icons.Default.Close, null)
@@ -206,11 +210,21 @@ private fun DisconnectContent(
     ) {
         Text(
             text = stringResource(id = R.string.wallets_screen_disconnect_wallet_modal_title),
-            style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Bold, fontSize = 24.sp),
+            style =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                ),
         )
         Text(
             text = stringResource(R.string.wallets_screen_disconnect_wallet_modal_desc),
-            style = TextStyle(fontFamily = inter, fontWeight = FontWeight.Normal, fontSize = 14.sp),
+            style =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                ),
         )
         Spacer(modifier = Modifier.height(8.dp))
         PrimaryButton(
@@ -227,7 +241,7 @@ private fun DisconnectContent(
             },
         )
         SecondaryButton(
-            labelResId = R.string.dialog_cancel,
+            label = stringResource(R.string.dialog_cancel),
             onClick = { scope.launch { state.hide() } },
         )
     }

@@ -31,10 +31,10 @@ dependencies {
     implementation(libs.barcode.scanning)
     implementation(libs.play.services.auth)
     implementation(compose.material)
+    implementation(compose.components.resources)
     implementation(libs.guava)
-    implementation(project(Modules.CORE_RESOURCES))
-    implementation(project(Modules.CORE_THEME))
-    implementation(project(Modules.CORE_UI_UTILS))
+
+    implementation(project(Modules.CORE_UI))
     implementation(project(Modules.SHARED))
 }
 

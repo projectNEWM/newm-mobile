@@ -16,12 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.core.theme.Gray16
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.White
 
 @Composable
 fun WalletCardHeader(
@@ -44,7 +44,7 @@ fun WalletCardHeader(
             text = title,
             style =
                 TextStyle(
-                    fontFamily = inter,
+                    fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,
                     color = White,

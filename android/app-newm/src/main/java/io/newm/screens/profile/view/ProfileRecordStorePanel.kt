@@ -15,21 +15,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.newm.core.resources.R
-import io.newm.core.theme.Gray16
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
+import io.newm.core.ui.theme.Gray16
+import io.newm.core.ui.theme.White
 
 private val recordStoreLabelStyle
     @Composable
     get() =
         TextStyle(
             fontSize = 14.sp,
-            fontFamily = inter,
+            fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Medium,
             color = White,
         )
