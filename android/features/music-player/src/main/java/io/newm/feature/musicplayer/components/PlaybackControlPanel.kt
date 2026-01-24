@@ -15,27 +15,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.newm.core.theme.Black
-import io.newm.core.theme.Gray500
-import io.newm.core.theme.GraySuit
-import io.newm.core.theme.White
-import io.newm.core.theme.inter
 import io.newm.core.ui.utils.millisToMinutesSecondsString
 import io.newm.feature.musicplayer.MusicPlayerSlider
 import io.newm.feature.musicplayer.SliderDefaults
 import io.newm.feature.musicplayer.models.PlaybackState
 import io.newm.feature.musicplayer.models.PlaybackStatus
 import io.newm.feature.musicplayer.viewmodel.PlaybackUiEvent
+import io.newm.sharedfeatures.theme.Black
+import io.newm.sharedfeatures.theme.Gray500
+import io.newm.sharedfeatures.theme.GraySuit
+import io.newm.sharedfeatures.theme.White
 
 private val playbackTimeStyle
     @Composable
     get() =
         TextStyle(
             fontSize = 12.sp,
-            fontFamily = inter,
+            fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Normal,
             color = GraySuit,
         )

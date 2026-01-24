@@ -62,7 +62,6 @@ import io.newm.sharedfeatures.core.resources.R
 import io.newm.sharedfeatures.theme.Black
 import io.newm.sharedfeatures.theme.DarkPink
 import io.newm.sharedfeatures.theme.DarkViolet
-import io.newm.sharedfeatures.theme.Gray500
 import io.newm.sharedfeatures.theme.GraySuit
 import io.newm.sharedfeatures.theme.White
 import kotlinx.coroutines.Dispatchers
