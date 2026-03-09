@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
@@ -25,11 +24,10 @@ fun RecordStoreScreenUi(
     state: RecordStoreState,
     eventLogger: NewmAppEventLogger,
 ) {
-    val context = LocalContext.current
     Column(modifier = modifier.fillMaxSize().statusBarsPadding().testTag(TAG_NFT_LIBRARY_SCREEN)) {
         when (state) {
             is RecordStoreState.Content -> {
-                FullScreenWebView(context, RECORD_STORE_URL)
+                FullScreenWebView(url = RECORD_STORE_URL)
             }
 
             RecordStoreState.Loading -> {

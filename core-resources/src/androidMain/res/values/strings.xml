@@ -126,6 +126,9 @@
     <string name="record_store" translatable="false">RecordStore</string>
     <string name="record_store_error_message">It looks like you\'re not connected to the internet. Please check your connection and try again.</string>
     <string name="record_store_error_title">Connection Lost</string>
+    <string name="web_view_load_error_title">Unable to load page</string>
+    <string name="web_view_load_error_message">Something went wrong while loading this page. Please try again.</string>
+    <string name="web_view_retry">Retry</string>
     <string name="reset_password_confirm_new_password">Confirm new password</string>
     <string name="reset_password_enter_email">Enter your email to receive reset instructions.</string>
     <string name="reset_password_enter_email_continue">Continue</string>

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import io.newm.core.resources.R
 import io.newm.core.ui.LoadingScreen
@@ -23,11 +22,10 @@ fun MarketplaceScreenUi(
     state: MarketplaceState,
     eventLogger: NewmAppEventLogger,
 ) {
-    val context = LocalContext.current
     Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         when (state) {
             is MarketplaceState.Content -> {
-                FullScreenWebView(context, MARKETPLACE_URL)
+                FullScreenWebView(url = MARKETPLACE_URL)
             }
 
             MarketplaceState.Loading -> {
