@@ -2,7 +2,9 @@
 CREATE TABLE WalletConnection (
   id TEXT NOT NULL PRIMARY KEY,
   createdAt TEXT NOT NULL,
-  stakeAddress TEXT NOT NULL
+  address TEXT NOT NULL,
+  chain TEXT NOT NULL,
+  name TEXT NOT NULL
 );
 
 -- Fetches all WalletConnections from the database
@@ -12,8 +14,8 @@ FROM WalletConnection;
 
 -- Inserts a new WalletConnection into the database
 insert:
-INSERT OR IGNORE INTO WalletConnection(id, createdAt, stakeAddress)
-VALUES (?, ?, ?);
+INSERT OR IGNORE INTO WalletConnection(id, createdAt, address, chain, name)
+VALUES (?, ?, ?, ?, ?);
 
 -- Finds a WalletConnection by ID
 findWalletConnectionById:
@@ -29,3 +31,9 @@ WHERE id = ?;
 -- Deletes all WalletConnections from the database
 deleteAll:
 DELETE FROM WalletConnection;
+
+-- Updates the name of a WalletConnection by ID
+updateNameById:
+UPDATE WalletConnection
+SET name = ?
+WHERE id = ?;

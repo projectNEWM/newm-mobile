@@ -2,9 +2,7 @@
 
 CREATE TABLE NFTTrack (
     id TEXT PRIMARY KEY,
-    policyId TEXT NOT NULL,
     title TEXT NOT NULL,
-    assetName TEXT NOT NULL,
     amount INTEGER NOT NULL,
     imageUrl TEXT NOT NULL,
     audioUrl TEXT NOT NULL,
@@ -12,7 +10,18 @@ CREATE TABLE NFTTrack (
     artists TEXT NOT NULL,
     genres TEXT NOT NULL,
     moods TEXT NOT NULL,
-    isStreamToken INTEGER NOT NULL DEFAULT 0
+    chainType TEXT NOT NULL,
+    -- Cardano specific
+    policyId TEXT,
+    assetName TEXT,
+    fingerprint TEXT,
+    isStreamToken INTEGER,
+    -- Ethereum specific
+    contractAddress TEXT,
+    tokenType TEXT,
+    tokenId TEXT,
+    -- Allocations (JSON array)
+    allocations TEXT NOT NULL DEFAULT '[]'
 );
 
 -- Select all tracks
@@ -22,8 +31,8 @@ FROM NFTTrack;
 
 -- Insert or replace a track
 insertOrReplaceTrack:
-REPLACE INTO NFTTrack (id, policyId, title, assetName, amount, imageUrl, audioUrl, duration, artists, genres, moods, isStreamToken)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+REPLACE INTO NFTTrack (id, title, amount, imageUrl, audioUrl, duration, artists, genres, moods, chainType, policyId, assetName, fingerprint, isStreamToken, contractAddress, tokenType, tokenId, allocations)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 -- Delete all tracks
 deleteAll:

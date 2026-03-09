@@ -22,6 +22,7 @@ import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
 import io.newm.shared.commonPublic.featureflags.FeatureFlagService
 import io.newm.shared.commonPublic.featureflags.FeatureFlags
+import io.newm.shared.commonPublic.models.ChainType
 import io.newm.shared.commonPublic.models.NFTTrack
 import io.newm.shared.commonPublic.usecases.ConnectWalletUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
@@ -88,19 +89,28 @@ class NFTLibraryPresenter(
 
         var filters: NFTLibraryFilters by rememberRetained {
             mutableStateOf(
-                NFTLibraryFilters(sortType = NFTLibrarySortType.None, showShortTracks = false),
+                NFTLibraryFilters(sortType = NFTLibrarySortType.None, showShortTracks = true),
             )
         }
 
-        val filteredNftTracks =
-            remember(nftTracks, query, filters) { nftTracks.filterAndSort(query, filters) }
+        val (filteredEthereumTracks, filteredCardanoTracks) =
+            remember(nftTracks, query, filters) {
+                val filtered = nftTracks.filterAndSort(query, filters)
+                val ethereum = filtered.filter { it.chainType == ChainType.Ethereum }
+                val cardano = filtered.filter { it.chainType == ChainType.Cardano }
+                ethereum to cardano
+            }
 
         val filteredStreamTokens =
             remember(streamTracks, query, filters) { streamTracks.filterAndSort(query, filters) }
 
         val playList =
-            remember(filteredNftTracks, filteredStreamTokens) {
-                Playlist(filteredNftTracks.toTrack() + filteredStreamTokens.toTrack())
+            remember(filteredEthereumTracks, filteredCardanoTracks, filteredStreamTokens) {
+                Playlist(
+                    filteredEthereumTracks.toTrack() +
+                        filteredCardanoTracks.toTrack() +
+                        filteredStreamTokens.toTrack(),
+                )
             }
 
         val currentTrackId =
@@ -182,7 +192,8 @@ class NFTLibraryPresenter(
 
             else -> {
                 NFTLibraryState.Content(
-                    nftTracks = filteredNftTracks,
+                    ethereumTracks = filteredEthereumTracks,
+                    cardanoTracks = filteredCardanoTracks,
                     streamTokenTracks = filteredStreamTokens,
                     showZeroResultFound = showZeroResultFound,
                     filters = filters,

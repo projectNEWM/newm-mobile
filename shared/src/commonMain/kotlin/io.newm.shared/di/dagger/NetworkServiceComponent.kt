@@ -2,9 +2,9 @@ package io.newm.shared.di.dagger
 
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.EarningsAPI
-import io.newm.shared.commonInternal.api.CardanoWalletAPI
 import io.newm.shared.commonInternal.api.LoginAPI
 import io.newm.shared.commonInternal.api.NEWMWalletConnectionAPI
+import io.newm.shared.commonInternal.api.NFTAPI
 import io.newm.shared.commonInternal.api.NewmCloudinaryAPI
 import io.newm.shared.commonInternal.api.PlaylistAPI
 import io.newm.shared.commonInternal.api.RemoteConfigAPI
@@ -21,10 +21,9 @@ import me.tatarka.inject.annotations.Provides
 
 interface NetworkServiceComponent {
     @Provides
-    fun provideCardanoWalletAPI(authHttpClient: AuthHttpClient): CardanoWalletAPI = CardanoWalletAPI(authHttpClient.client)
+    fun provideNFTAPI(authHttpClient: AuthHttpClient): NFTAPI = NFTAPI(authHttpClient.client)
 
-    @Provides
-    fun providesNFTNetworkService(api: CardanoWalletAPI): NFTNetworkService = NFTNetworkService(api)
+    @Provides fun providesNFTNetworkService(api: NFTAPI): NFTNetworkService = NFTNetworkService(api)
 
     @Provides
     fun provideEarningsAPI(

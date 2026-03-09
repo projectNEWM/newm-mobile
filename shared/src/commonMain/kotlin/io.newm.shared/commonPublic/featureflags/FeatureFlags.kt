@@ -45,7 +45,7 @@ object FeatureFlags {
         override val displayName = "Multi-Wallet Support"
         override val description = "Enable multiple wallet connection and management"
         override val category = FlagCategory.BUSINESS_LOGIC
-        override val defaultValue = false
+        override val defaultValue = true
     }
 
     object ShowNEWMStudio : FeatureFlag {

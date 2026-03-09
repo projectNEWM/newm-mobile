@@ -40,7 +40,7 @@ class InvestmentPortfolioPresenter(
                         .onSuccess { token ->
                             value =
                                 getPortfolioDataUseCase.getInvestmentPortfolio(
-                                    walletAddress = wallets.first().stakeAddress,
+                                    walletAddress = wallets.first().address,
                                     humanVerificationCode = token,
                                 )
                         }.onFailure {

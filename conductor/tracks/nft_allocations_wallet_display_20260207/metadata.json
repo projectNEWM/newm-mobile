@@ -1,0 +1,8 @@
+{
+  "track_id": "nft_allocations_wallet_display_20260207",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-07T10:00:00Z",
+  "updated_at": "2026-02-07T10:00:00Z",
+  "description": "The NFT endpoint has been updated to include allocations so we can determine which wallet connections own specific NFTs. We need to update the codebase to properly persist this new data. If required, we should create and execute the appropriate database migration plan. Additionally, on the Wallet Details screen, we should ensure that only the assets associated with the selected wallet are displayed."
+}

@@ -14,4 +14,12 @@ internal class WalletConnectionNetworkService(
         val response = walletConnectionAPI.disconnectWallet(connectionId)
         return response.call.response.status.value == 204
     }
+
+    suspend fun updateWalletName(
+        connectionId: String,
+        name: String,
+    ): Boolean {
+        val response = walletConnectionAPI.updateWalletName(connectionId, name)
+        return response.status.value in 200..299
+    }
 }

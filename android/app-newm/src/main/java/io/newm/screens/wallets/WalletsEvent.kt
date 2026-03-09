@@ -22,5 +22,6 @@ sealed interface WalletsEvent : CircuitUiEvent {
 
     data class OnWalletDetailView(
         val walletId: String,
+        val name: String,
     ) : WalletsEvent
 }

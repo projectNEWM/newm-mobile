@@ -71,6 +71,8 @@ import io.newm.core.resources.library_remove_description
 import io.newm.core.resources.library_search
 import io.newm.core.resources.nft_library_error_message
 import io.newm.core.resources.title_nft_library
+import io.newm.core.resources.wallet_detail_cardano_header
+import io.newm.core.resources.wallet_detail_ethereum_header
 import io.newm.core.ui.LoadingScreen
 import io.newm.core.ui.text.SearchBar
 import io.newm.core.ui.theme.CerisePink
@@ -161,7 +163,8 @@ fun NFTLibraryScreenUi(
 
                 NFTTracks(
                     modifier = Modifier.weight(1f),
-                    nftTracks = state.nftTracks,
+                    ethereumTracks = state.ethereumTracks,
+                    cardanoTracks = state.cardanoTracks,
                     streamTokenTracks = state.streamTokenTracks,
                     showZeroResultsFound = state.showZeroResultFound,
                     filters = state.filters,
@@ -186,7 +189,8 @@ fun NFTLibraryScreenUi(
 @Composable
 private fun NFTTracks(
     modifier: Modifier = Modifier,
-    nftTracks: List<NFTTrack>,
+    ethereumTracks: List<NFTTrack>,
+    cardanoTracks: List<NFTTrack>,
     streamTokenTracks: List<NFTTrack>,
     showZeroResultsFound: Boolean,
     filters: NFTLibraryFilters,
@@ -239,18 +243,62 @@ private fun NFTTracks(
                     item { ZeroSearchResults() }
                 }
 
-                nftTracks.isNotEmpty() || streamTokenTracks.isNotEmpty() -> {
-                    items(nftTracks + streamTokenTracks, key = { track -> track.id }) { track ->
-                        Box(modifier = Modifier.background(Gray16)) {
-                            TrackRowItemWrapper(
-                                track = track,
-                                onPlaySong = onPlaySong,
-                                onDownloadSong = { onDownloadSong(track) },
-                                isSelected = track.id == currentTrackId,
-                                downloadsEnabled = downloadsEnabled,
-                                downloadState = downloadStates[track.id] ?: DownloadState.None,
-                                onRemoveSong = { onRemoveSong(track) },
+                ethereumTracks.isNotEmpty() ||
+                    cardanoTracks.isNotEmpty() ||
+                    streamTokenTracks.isNotEmpty() -> {
+                    if (ethereumTracks.isNotEmpty()) {
+                        item {
+                            SectionHeader(
+                                title = stringResource(Res.string.wallet_detail_ethereum_header),
                             )
+                        }
+                        items(ethereumTracks, key = { track -> track.id }) { track ->
+                            Box(modifier = Modifier.background(Gray16)) {
+                                TrackRowItemWrapper(
+                                    track = track,
+                                    onPlaySong = onPlaySong,
+                                    onDownloadSong = { onDownloadSong(track) },
+                                    isSelected = track.id == currentTrackId,
+                                    downloadsEnabled = downloadsEnabled,
+                                    downloadState = downloadStates[track.id] ?: DownloadState.None,
+                                    onRemoveSong = { onRemoveSong(track) },
+                                )
+                            }
+                        }
+                    }
+                    if (cardanoTracks.isNotEmpty()) {
+                        item {
+                            SectionHeader(
+                                title = stringResource(Res.string.wallet_detail_cardano_header),
+                            )
+                        }
+                        items(cardanoTracks, key = { track -> track.id }) { track ->
+                            Box(modifier = Modifier.background(Gray16)) {
+                                TrackRowItemWrapper(
+                                    track = track,
+                                    onPlaySong = onPlaySong,
+                                    onDownloadSong = { onDownloadSong(track) },
+                                    isSelected = track.id == currentTrackId,
+                                    downloadsEnabled = downloadsEnabled,
+                                    downloadState = downloadStates[track.id] ?: DownloadState.None,
+                                    onRemoveSong = { onRemoveSong(track) },
+                                )
+                            }
+                        }
+                    }
+                    if (streamTokenTracks.isNotEmpty()) {
+                        items(streamTokenTracks, key = { track -> track.id }) { track ->
+                            Box(modifier = Modifier.background(Gray16)) {
+                                TrackRowItemWrapper(
+                                    track = track,
+                                    onPlaySong = onPlaySong,
+                                    onDownloadSong = { onDownloadSong(track) },
+                                    isSelected = track.id == currentTrackId,
+                                    downloadsEnabled = downloadsEnabled,
+                                    downloadState = downloadStates[track.id] ?: DownloadState.None,
+                                    onRemoveSong = { onRemoveSong(track) },
+                                )
+                            }
                         }
                     }
                 }
@@ -265,6 +313,21 @@ private fun NFTTracks(
 
         SongFilterBottomSheet(filterSheetState, filters, onApplyFilters, eventLogger)
     }
+}
+
+@Composable
+private fun SectionHeader(title: String) {
+    Text(
+        text = title,
+        modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+        style =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                brush = textGradient(SteelPink, CerisePink),
+            ),
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -511,7 +574,8 @@ fun PreviewNftLibrary() {
         NFTLibraryScreenUi(
             state =
                 NFTLibraryState.Content(
-                    nftTracks = emptyList(),
+                    ethereumTracks = emptyList(),
+                    cardanoTracks = emptyList(),
                     streamTokenTracks = emptyList(),
                     showZeroResultFound = false,
                     filters =

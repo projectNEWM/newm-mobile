@@ -16,7 +16,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -38,6 +38,7 @@ import io.newm.core.ui.theme.Gray16
 import io.newm.core.ui.theme.GraySuit
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.ChainType
 import io.newm.shared.commonPublic.models.WalletConnection
 
 @Composable
@@ -89,10 +90,21 @@ fun WalletRowItem(
 
 @Composable
 fun WalletRowItemDetails(connection: WalletConnection) {
-    Icon(imageVector = Icons.Rounded.Info, contentDescription = "Wallet image placeholder")
+    Icon(
+        painter =
+            painterResource(
+                id =
+                    when (connection.chain) {
+                        ChainType.Cardano -> R.drawable.ic_cardano
+                        ChainType.Ethereum -> R.drawable.ic_ethereum
+                        ChainType.Unknown -> R.drawable.ic_blockchain
+                    },
+            ),
+        contentDescription = "Wallet chain icon",
+    )
     Column(modifier = Modifier.width(150.dp)) {
         Text(
-            text = connection.id,
+            text = connection.name,
             maxLines = 1,
             overflow = TextOverflow.MiddleEllipsis,
             style =
@@ -104,7 +116,7 @@ fun WalletRowItemDetails(connection: WalletConnection) {
                 ),
         )
         Text(
-            text = connection.stakeAddress,
+            text = connection.address,
             maxLines = 1,
             overflow = TextOverflow.MiddleEllipsis,
             style =

@@ -36,3 +36,55 @@ fun LazyListScope.tracksItem(
         )
     }
 }
+
+fun LazyListScope.ethereumTracksItem(
+    tracks: List<NFTTrack>,
+    isExpanded: Boolean,
+    headerShape: RoundedCornerShape,
+    onExitFinished: () -> Unit,
+    onClick: () -> Unit,
+) {
+    if (tracks.isNotEmpty()) {
+        item { Spacer(modifier = Modifier.height(8.dp)) }
+        collapsibleCard(
+            items = tracks,
+            isExpanded = isExpanded,
+            onExitFinished = onExitFinished,
+            header = {
+                WalletCardHeader(
+                    title = stringResource(R.string.wallet_detail_ethereum_header),
+                    headerShape = headerShape,
+                    expanded = isExpanded,
+                    onClick = onClick,
+                )
+            },
+            content = { WalletItem(it) },
+        )
+    }
+}
+
+fun LazyListScope.cardanoTracksItem(
+    tracks: List<NFTTrack>,
+    isExpanded: Boolean,
+    headerShape: RoundedCornerShape,
+    onExitFinished: () -> Unit,
+    onClick: () -> Unit,
+) {
+    if (tracks.isNotEmpty()) {
+        item { Spacer(modifier = Modifier.height(8.dp)) }
+        collapsibleCard(
+            items = tracks,
+            isExpanded = isExpanded,
+            onExitFinished = onExitFinished,
+            header = {
+                WalletCardHeader(
+                    title = stringResource(R.string.wallet_detail_cardano_header),
+                    headerShape = headerShape,
+                    expanded = isExpanded,
+                    onClick = onClick,
+                )
+            },
+            content = { WalletItem(it) },
+        )
+    }
+}

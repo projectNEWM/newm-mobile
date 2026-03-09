@@ -58,7 +58,7 @@ internal fun Content(
                         eventLogger.logClickEvent(
                             AppScreens.WalletsScreen.VIEW_DETAILS_WALLET_BUTTON,
                         )
-                        state.eventSink(WalletsEvent.OnWalletDetailView(it.id))
+                        state.eventSink(WalletsEvent.OnWalletDetailView(it.id, it.name))
                     },
                     onRenameClick = {
                         eventLogger.logClickEvent(AppScreens.WalletsScreen.RENAME_WALLET_BUTTON)
@@ -76,7 +76,7 @@ internal fun Content(
                                             R.string.wallets_copy_address_label,
                                             it.id, // TODO ID should be replaced with wallet name
                                         ),
-                                        it.stakeAddress,
+                                        it.address,
                                     ),
                                 ),
                             )

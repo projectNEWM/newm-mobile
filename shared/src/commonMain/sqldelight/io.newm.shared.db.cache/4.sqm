@@ -1,0 +1,39 @@
+-- Migration 4: Add multi-chain (Ethereum) NFT support
+-- NFTTrack: Add chainType, fingerprint, contractAddress, tokenType, tokenId; make policyId, assetName, isStreamToken nullable
+-- WalletConnection: Replace stakeAddress with address, chain, name
+
+-- Recreate NFTTrack table with new schema
+DROP TABLE IF EXISTS NFTTrack;
+
+CREATE TABLE NFTTrack (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    amount INTEGER NOT NULL,
+    imageUrl TEXT NOT NULL,
+    audioUrl TEXT NOT NULL,
+    duration INTEGER NOT NULL,
+    artists TEXT NOT NULL,
+    genres TEXT NOT NULL,
+    moods TEXT NOT NULL,
+    chainType TEXT NOT NULL,
+    -- Cardano specific
+    policyId TEXT,
+    assetName TEXT,
+    fingerprint TEXT,
+    isStreamToken INTEGER,
+    -- Ethereum specific
+    contractAddress TEXT,
+    tokenType TEXT,
+    tokenId TEXT
+);
+
+-- Recreate WalletConnection table with new schema
+DROP TABLE IF EXISTS WalletConnection;
+
+CREATE TABLE WalletConnection (
+  id TEXT NOT NULL PRIMARY KEY,
+  createdAt TEXT NOT NULL,
+  address TEXT NOT NULL,
+  chain TEXT NOT NULL,
+  name TEXT NOT NULL
+);

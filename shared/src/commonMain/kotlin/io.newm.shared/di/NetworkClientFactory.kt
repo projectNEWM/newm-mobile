@@ -7,6 +7,7 @@ import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -60,6 +61,7 @@ class NetworkClientFactory(
             this.expectSuccess = true
             defaultRequest { url(buildConfig.baseUrl) }
             install(ContentNegotiation) { json(json) }
+            install(ContentEncoding)
             if (enableNetworkLogs) {
                 install(Logging) {
                     logger = Logger.SIMPLE
@@ -84,6 +86,7 @@ class NetworkClientFactory(
             defaultRequest { url(buildConfig.baseUrl) }
 
             install(ContentNegotiation) { json(json) }
+            install(ContentEncoding)
             if (enableNetworkLogs) {
                 install(Logging) {
                     logger = Logger.SIMPLE

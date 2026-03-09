@@ -1,14 +1,13 @@
 package io.newm.screens.walletdetail
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.google.android.recaptcha.RecaptchaAction
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
@@ -16,14 +15,14 @@ import io.newm.screens.library.NFTLibraryState
 import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonPublic.analytics.NewmAppEventLogger
 import io.newm.shared.commonPublic.analytics.events.AppScreens
+import io.newm.shared.commonPublic.models.ChainType
 import io.newm.shared.commonPublic.models.NFTTrack
 import io.newm.shared.commonPublic.models.WalletConnection
+import io.newm.shared.commonPublic.models.hasAllocationForWallet
 import io.newm.shared.commonPublic.models.mocks.EmptyWallet
 import io.newm.shared.commonPublic.usecases.FindWalletConnectionUseCase
-import io.newm.shared.commonPublic.usecases.GetInvestmentPortfolioDataUseCase
 import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
-import io.newm.sharedfeatures.screens.auth.login.RecaptchaClientProvider
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
@@ -36,8 +35,6 @@ class WalletDetailPresenter(
     private val findWalletConnectionUseCase: FindWalletConnectionUseCase,
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
     private val nftTracksUseCase: WalletNFTTracksUseCase,
-    private val getPortfolioDataUseCase: GetInvestmentPortfolioDataUseCase,
-    private val recaptchaClientProvider: RecaptchaClientProvider,
 ) : Presenter<WalletDetailUiState> {
     @Composable
     override fun present(): WalletDetailUiState {
@@ -65,22 +62,7 @@ class WalletDetailPresenter(
             remember { nftTracksUseCase.getAllStreamTokensFlow() }
                 .collectAsRetainedState(initial = emptyList())
 
-        val claimableTokenAmount by
-            produceState(initialValue = 0L) {
-                val connection = walletConnection
-                if (connection != null) {
-                    recaptchaClientProvider
-                        .get()
-                        .execute(RecaptchaAction.custom("get_earnings"))
-                        .onSuccess { token ->
-                            value =
-                                getPortfolioDataUseCase.getInvestmentPortfolio(
-                                    walletAddress = connection.stakeAddress,
-                                    humanVerificationCode = token,
-                                )
-                        }.onFailure { logger.error(TAG, "Error getting recaptcha token", it) }
-                }
-            }
+        LaunchedEffect(Unit) { nftTracksUseCase.refresh() }
 
         var isSyncing by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
@@ -99,6 +81,7 @@ class WalletDetailPresenter(
                             scope.launch {
                                 isSyncing = true
                                 syncWalletConnectionsUseCase.syncWalletConnectionsFromNetworkToDevice()
+                                nftTracksUseCase.refresh()
                                 isSyncing = false
                             }
                         }
@@ -116,14 +99,18 @@ class WalletDetailPresenter(
             }
 
             else -> {
+                val walletNftTracks = nftTracks.filter { it.hasAllocationForWallet(walletID) }
+                val walletStreamTokens = streamTokens.filter { it.hasAllocationForWallet(walletID) }
+                val ethereumTracks = walletNftTracks.filter { it.chainType == ChainType.Ethereum }
+                val cardanoTracks = walletNftTracks.filter { it.chainType == ChainType.Cardano }
                 WalletDetailUiState.Content(
                     eventSink,
                     isSyncing,
                     walletName,
                     requireNotNull(walletConnection) { "Wallet connection should not be null" },
-                    nftTracks,
-                    streamTokens,
-                    claimableTokenAmount,
+                    ethereumTracks,
+                    cardanoTracks,
+                    walletStreamTokens,
                 )
             }
         }
