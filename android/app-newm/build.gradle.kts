@@ -5,8 +5,6 @@ apply(from = "../../gradle_include/compose.gradle")
 
 apply(from = "../../gradle_include/circuit.gradle")
 
-apply(from = "../../gradle_include/flipper.gradle")
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.googleServices)
@@ -40,7 +38,7 @@ android {
             merges += "META-INF/LICENSE.md"
             merges += "META-INF/LICENSE-notice.md"
         }
-        jniLibs { useLegacyPackaging = true }
+        jniLibs { useLegacyPackaging = false }
     }
 
     buildTypes {
