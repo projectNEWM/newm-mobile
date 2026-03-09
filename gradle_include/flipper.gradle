@@ -1,5 +1,0 @@
-dependencies {
-    debugImplementation(libs.flipper)
-    debugImplementation(libs.soloader)
-    releaseImplementation(libs.flipper.noop)
-}

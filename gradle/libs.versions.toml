@@ -23,8 +23,6 @@ coreSplashscreen = "1.2.0"
 datastorePreferences = "1.2.0"
 desugar_jdk_libs = "2.1.5"
 firebaseBom = "34.8.0"
-flipper = "0.273.0"
-flipperNoop = "0.273.0"
 googleServices = "4.4.4"
 gradle = "8.13.2"
 gradleVersionsPlugin = "0.53.0"
@@ -52,7 +50,6 @@ playServicesAuth = "21.5.0"
 processPhoenix = "3.0.0"
 recaptcha = "18.8.0"
 sentryPlugin = "5.12.2"
-soloader = "0.12.1"
 spotless = "8.1.0"
 sqldelight = "2.2.1"
 store5 = "5.1.0-alpha08"
@@ -98,8 +95,6 @@ coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-flipper = { module = "com.facebook.flipper:flipper", version.ref = "flipper" }
-flipper-noop = { module = "com.facebook.flipper:flipper-noop", version.ref = "flipperNoop" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
@@ -145,7 +140,6 @@ paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi"
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 process-phoenix = { module = "com.jakewharton:process-phoenix", version.ref = "processPhoenix" }
 recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "recaptcha" }
-soloader = { module = "com.facebook.soloader:soloader", version.ref = "soloader" }
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
