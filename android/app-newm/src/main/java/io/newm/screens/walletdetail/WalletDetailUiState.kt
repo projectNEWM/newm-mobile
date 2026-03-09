@@ -26,8 +26,8 @@ sealed interface WalletDetailUiState : CircuitUiState {
         override val isSyncing: Boolean,
         override val walletName: String,
         val walletConnection: WalletConnection,
-        val nftTracks: List<NFTTrack>,
+        val ethereumTracks: List<NFTTrack>,
+        val cardanoTracks: List<NFTTrack>,
         val streamTokens: List<NFTTrack>,
-        val claimableTokenAmount: Long,
     ) : WalletDetailUiState
 }

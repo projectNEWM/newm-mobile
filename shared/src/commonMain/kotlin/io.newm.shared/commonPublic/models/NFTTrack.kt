@@ -10,9 +10,7 @@ import kotlinx.serialization.Serializable
  * associated image and song URLs, duration, and a list of artists involved.
  *
  * @property id Unique identifier of the NFT track.
- * @property policyId Unique identifier of the policy associated with the NFT track.
  * @property title Name of the NFT track.
- * @property assetName Name of the NFT track asset.
  * @property imageUrl URL of the image associated with the NFT track.
  * @property audioUrl URL of the song file associated with the NFT track.
  * @property duration Duration of the song in seconds.
@@ -24,18 +22,46 @@ import kotlinx.serialization.Serializable
  *   provided.
  */
 @Serializable
+data class NFTAllocation(
+    @SerialName("id") val id: String,
+    @SerialName("amount") val amount: Long,
+    @SerialName("walletId") val walletId: String? = null, // Added walletId
+)
+
+@Serializable
 data class NFTTrack(
     @SerialName("id") val id: String,
-    @SerialName("policyId") val policyId: String,
     @SerialName("title") val title: String,
-    @SerialName("assetName") val assetName: String,
-    @SerialName("amount") val amount: Long,
     @SerialName("imageUrl") val imageUrl: String,
     @SerialName("audioUrl") val audioUrl: String,
     @SerialName("duration") val duration: Long,
     @SerialName("artists") val artists: List<String> = emptyList(),
     @SerialName("genres") val genres: List<String>,
     @SerialName("moods") val moods: List<String> = emptyList(),
-    @SerialName("isStreamToken") val isStreamToken: Boolean,
+    @SerialName("amount") val amount: Long,
+    @SerialName("chainType") val chainType: ChainType,
+    @SerialName("chainMetadata") val chainMetadata: ChainMetadata,
+    @SerialName("allocations") val allocations: List<NFTAllocation> = emptyList(),
     val isDownloaded: Boolean = false,
 )
+
+fun NFTTrack.hasAllocationForWallet(walletId: String): Boolean = allocations.any { it.id == walletId || it.walletId == walletId }
+
+@Serializable sealed class ChainMetadata
+
+@Serializable
+@SerialName("io.newm.server.features.nftsong.model.NftChainMetadata.Cardano")
+data class CardanoChainMetadata(
+    val fingerprint: String,
+    val policyId: String,
+    val assetName: String,
+    val isStreamToken: Boolean,
+) : ChainMetadata()
+
+@Serializable
+@SerialName("io.newm.server.features.nftsong.model.NftChainMetadata.Ethereum")
+data class EthereumChainMetadata(
+    val contractAddress: String,
+    val tokenType: String,
+    val tokenId: String,
+) : ChainMetadata()

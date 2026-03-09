@@ -1,5 +1,7 @@
 package io.newm.shared.commonPublic.models.mocks
 
+import io.newm.shared.commonPublic.models.CardanoChainMetadata
+import io.newm.shared.commonPublic.models.ChainType
 import io.newm.shared.commonPublic.models.NFTTrack
 
 val baseTracks =
@@ -118,9 +120,7 @@ private fun makeMockTrack(
 ): NFTTrack =
     NFTTrack(
         id = id,
-        policyId = "",
         title = name,
-        assetName = "",
         amount = 0,
         imageUrl = imageUrl,
         audioUrl = songUrl,
@@ -128,5 +128,12 @@ private fun makeMockTrack(
         artists = artists,
         genres = arrayOf("Jazz").asList(),
         moods = arrayOf("Rock").asList(),
-        isStreamToken = false,
+        chainType = ChainType.Cardano,
+        chainMetadata =
+            CardanoChainMetadata(
+                fingerprint = "",
+                policyId = "",
+                assetName = "",
+                isStreamToken = false,
+            ),
     )

@@ -52,6 +52,7 @@ kotlin {
                 api(libs.ktor.client.content.negotiation)
                 api(libs.ktor.serialization.kotlinx.json)
                 api(libs.ktor.client.auth)
+                api(libs.ktor.client.encoding)
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.store5)
                 implementation(libs.sqldelight.runtime)

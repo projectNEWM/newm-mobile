@@ -14,7 +14,8 @@ sealed interface NFTLibraryState : CircuitUiState {
     data object EmptyWallet : NFTLibraryState
 
     data class Content(
-        val nftTracks: List<NFTTrack>,
+        val ethereumTracks: List<NFTTrack>,
+        val cardanoTracks: List<NFTTrack>,
         val streamTokenTracks: List<NFTTrack>,
         val showZeroResultFound: Boolean,
         val filters: NFTLibraryFilters,

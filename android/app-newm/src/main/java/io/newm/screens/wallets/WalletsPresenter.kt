@@ -18,6 +18,7 @@ import io.newm.shared.commonPublic.usecases.DisconnectWalletUseCase
 import io.newm.shared.commonPublic.usecases.GetWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.HasWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
+import io.newm.shared.commonPublic.usecases.UpdateWalletNameUseCase
 import kotlinx.coroutines.launch
 
 class WalletsPresenter(
@@ -27,6 +28,7 @@ class WalletsPresenter(
     private val disconnectWalletUseCase: DisconnectWalletUseCase,
     private val connectWalletUseCase: ConnectWalletUseCase,
     private val syncWalletConnectionsUseCase: SyncWalletConnectionsUseCase,
+    private val updateWalletNameUseCase: UpdateWalletNameUseCase,
     private val eventLogger: NewmAppEventLogger,
 ) : Presenter<WalletsUiState> {
     @Composable
@@ -73,11 +75,11 @@ class WalletsPresenter(
 
                         is WalletsEvent.OnRenameWallet -> {
                             eventLogger.logClickEvent(AppScreens.WalletsScreen.WALLET_RENAME_CONFIRM)
-                            // TODO logic to rename wallet
+                            scope.launch { updateWalletNameUseCase.updateName(it.walletId, it.newName) }
                         }
 
                         is WalletsEvent.OnWalletDetailView -> {
-                            navigator.goTo(Screen.WalletDetail(it.walletId, "Wallet Name"))
+                            navigator.goTo(Screen.WalletDetail(it.walletId, it.name))
                         }
                     }
                 }

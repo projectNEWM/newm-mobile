@@ -55,4 +55,21 @@ internal class WalletRepository(
             logger.error("WalletRepository", "Error disconnecting wallet ${e.cause}", e)
             false
         }
+
+    suspend fun updateWalletName(
+        walletConnectionId: String,
+        name: String,
+    ): Boolean =
+        try {
+            val success = networkService.updateWalletName(walletConnectionId, name)
+            if (success) {
+                cacheService.updateWalletConnectionName(walletConnectionId, name)
+            } else {
+                throw KMMException("Error updating wallet name")
+            }
+            success
+        } catch (e: Exception) {
+            logger.error("WalletRepository", "Error updating wallet name ${e.cause}", e)
+            false
+        }
 }

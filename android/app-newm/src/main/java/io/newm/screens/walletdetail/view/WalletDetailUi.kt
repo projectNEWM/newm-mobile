@@ -91,8 +91,10 @@ fun WalletDetailUi(
 
 @Composable
 private fun ContentWrapper(state: WalletDetailUiState.Content) {
-    var trackExpanded by remember { mutableStateOf(true) }
-    var trackHeaderShape by remember { mutableStateOf(HeaderExpandedShape) }
+    var ethereumExpanded by remember { mutableStateOf(true) }
+    var ethereumHeaderShape by remember { mutableStateOf(HeaderExpandedShape) }
+    var cardanoExpanded by remember { mutableStateOf(true) }
+    var cardanoHeaderShape by remember { mutableStateOf(HeaderExpandedShape) }
     var streamExpanded by remember { mutableStateOf(true) }
     var streamHeaderShape by remember { mutableStateOf(HeaderExpandedShape) }
     LazyColumn(
@@ -100,17 +102,28 @@ private fun ContentWrapper(state: WalletDetailUiState.Content) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
     ) {
-        addressItem(state.walletConnection.stakeAddress)
-        tokenItem(state.claimableTokenAmount)
-        tracksItem(
-            tracks = state.nftTracks,
-            isExpanded = trackExpanded,
-            headerShape = trackHeaderShape,
-            onExitFinished = { trackHeaderShape = HeaderCollapsedShape },
+        addressItem(state.walletConnection.address)
+        ethereumTracksItem(
+            tracks = state.ethereumTracks,
+            isExpanded = ethereumExpanded,
+            headerShape = ethereumHeaderShape,
+            onExitFinished = { ethereumHeaderShape = HeaderCollapsedShape },
             onClick = {
-                trackExpanded = !trackExpanded
-                if (trackExpanded) {
-                    trackHeaderShape = HeaderExpandedShape
+                ethereumExpanded = !ethereumExpanded
+                if (ethereumExpanded) {
+                    ethereumHeaderShape = HeaderExpandedShape
+                }
+            },
+        )
+        cardanoTracksItem(
+            tracks = state.cardanoTracks,
+            isExpanded = cardanoExpanded,
+            headerShape = cardanoHeaderShape,
+            onExitFinished = { cardanoHeaderShape = HeaderCollapsedShape },
+            onClick = {
+                cardanoExpanded = !cardanoExpanded
+                if (cardanoExpanded) {
+                    cardanoHeaderShape = HeaderExpandedShape
                 }
             },
         )

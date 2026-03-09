@@ -6,6 +6,7 @@ import io.newm.shared.commonInternal.services.db.deleteAllWalletConnections
 import io.newm.shared.commonInternal.services.db.deleteWalletConnectionById
 import io.newm.shared.commonInternal.services.db.findWalletConnectionByID
 import io.newm.shared.commonInternal.services.db.getWalletConnections
+import io.newm.shared.commonInternal.services.db.updateWalletConnectionName
 import io.newm.shared.commonPublic.models.WalletConnection
 import kotlinx.coroutines.flow.Flow
 
@@ -21,4 +22,9 @@ class WalletConnectionCacheService(
     suspend fun deleteAllWalletConnections() = db.deleteAllWalletConnections()
 
     suspend fun deleteWalletConnectionsById(id: String) = db.deleteWalletConnectionById(id)
+
+    suspend fun updateWalletConnectionName(
+        connectionId: String,
+        name: String,
+    ) = db.updateWalletConnectionName(connectionId, name)
 }

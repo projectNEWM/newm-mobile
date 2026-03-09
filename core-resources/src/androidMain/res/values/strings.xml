@@ -206,6 +206,8 @@
     <string name="wallet_menu_copy">Copy Address</string>
     <string name="wallet_menu_disconnect">Disconnect</string>
     <string name="wallet_detail_music_header">Music NFTs</string>
+    <string name="wallet_detail_ethereum_header">Ethereum</string>
+    <string name="wallet_detail_cardano_header">Cardano</string>
     <string name="wallet_detail_stream_tokens_header">Stream Tokens</string>
     <string name="address">Address</string>
     <string name="tokens">Tokens</string>

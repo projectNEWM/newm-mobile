@@ -5,10 +5,10 @@ import io.newm.shared.NewmAppLogger
 import io.newm.shared.commonInternal.EarningsAPI
 import io.newm.shared.commonInternal.SessionManager
 import io.newm.shared.commonInternal.TokenManager
-import io.newm.shared.commonInternal.api.CardanoWalletAPI
 import io.newm.shared.commonInternal.api.GenresAPI
 import io.newm.shared.commonInternal.api.LoginAPI
 import io.newm.shared.commonInternal.api.NEWMWalletConnectionAPI
+import io.newm.shared.commonInternal.api.NFTAPI
 import io.newm.shared.commonInternal.api.NewmCloudinaryAPI
 import io.newm.shared.commonInternal.api.PlaylistAPI
 import io.newm.shared.commonInternal.api.RemoteConfigAPI
@@ -28,6 +28,7 @@ import io.newm.shared.commonInternal.implementations.ResetPasswordUseCaseImpl
 import io.newm.shared.commonInternal.implementations.SignupUseCaseImpl
 import io.newm.shared.commonInternal.implementations.SyncWalletConnectionsUseCaseImpl
 import io.newm.shared.commonInternal.implementations.UpdateProfilePictureUseCaseImpl
+import io.newm.shared.commonInternal.implementations.UpdateWalletNameUseCaseImpl
 import io.newm.shared.commonInternal.implementations.UserDetailsUseCaseImpl
 import io.newm.shared.commonInternal.implementations.UserSessionUseCaseImpl
 import io.newm.shared.commonInternal.implementations.WalletNFTTracksUseCaseImpl
@@ -64,6 +65,7 @@ import io.newm.shared.commonPublic.usecases.ResetPasswordUseCase
 import io.newm.shared.commonPublic.usecases.SignupUseCase
 import io.newm.shared.commonPublic.usecases.SyncWalletConnectionsUseCase
 import io.newm.shared.commonPublic.usecases.UpdateProfilePictureUseCase
+import io.newm.shared.commonPublic.usecases.UpdateWalletNameUseCase
 import io.newm.shared.commonPublic.usecases.UserDetailsUseCase
 import io.newm.shared.commonPublic.usecases.UserSessionUseCase
 import io.newm.shared.commonPublic.usecases.WalletNFTTracksUseCase
@@ -116,7 +118,7 @@ fun commonModule(enableNetworkLogs: Boolean) =
         single { SessionManager(get(), get(), get()) }
         single<FeatureFlagService> { DefaultFeatureFlagService(get(), get(), get(), get(), get()) }
         // Internal API Services
-        single { CardanoWalletAPI(get(named("auth"))) }
+        single { NFTAPI(get(named("auth"))) }
         single { EarningsAPI(get(named("auth")), get()) }
         single { GenresAPI(get()) }
         single { LoginAPI(get(named("public")), get()) }
@@ -157,16 +159,10 @@ fun commonModule(enableNetworkLogs: Boolean) =
         single<SignupUseCase> { SignupUseCaseImpl(get()) }
         single<SyncWalletConnectionsUseCase> { SyncWalletConnectionsUseCaseImpl(get()) }
         single<UpdateProfilePictureUseCase> { UpdateProfilePictureUseCaseImpl(get(), get()) }
+        single<UpdateWalletNameUseCase> { UpdateWalletNameUseCaseImpl(get()) }
         single<UserDetailsUseCase> { UserDetailsUseCaseImpl(get()) }
         single<UserSessionUseCase> { UserSessionUseCaseImpl(get()) }
         single<WalletNFTTracksUseCase> { WalletNFTTracksUseCaseImpl(get()) }
-    }
-
-fun createJson() =
-    Json {
-        isLenient = true
-        ignoreUnknownKeys = true
-        encodeDefaults = true
     }
 
 internal fun createHttpClient(

@@ -120,7 +120,9 @@ val viewModule =
             )
         }
 
-        factory { params -> WalletsPresenter(params.get(), get(), get(), get(), get(), get(), get()) }
+        factory { params ->
+            WalletsPresenter(params.get(), get(), get(), get(), get(), get(), get(), get())
+        }
 
         factory { params ->
             WalletDetailPresenter(
@@ -132,8 +134,6 @@ val viewModule =
                 syncWalletConnectionsUseCase = get(),
                 logger = get(),
                 nftTracksUseCase = get(),
-                getPortfolioDataUseCase = get(),
-                recaptchaClientProvider = get(),
             )
         }
 
